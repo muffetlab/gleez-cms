@@ -158,13 +158,12 @@ class Theme {
 	 * @param   boolean $title returns only title if its true or full object
 	 * @return  array  Available themes array
 	 */
-	public static function available($title = true)
+	public static function available($title = true): array
 	{
 		$paths 	= (array) Config::get('site.theme_paths', [THEMEPATH]);
 		$cache  = Cache::instance('themes');
 
-		if (!$themes = $cache->get('themes', false))
-		{
+        if (!$themes = $cache->get('themes', [])) {
 			// Make sure THEMEPATH is set else add last
 			if (!in_array(THEMEPATH, $paths))
 			{
