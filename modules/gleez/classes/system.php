@@ -209,7 +209,7 @@ class System {
 			'php_version'           => version_compare(PHP_VERSION, Gleez::PHP_MIN_REQ, '>='),
 			'mysqli'                => function_exists("mysqli_query"),
 			'system_directory'      => is_dir(SYSPATH),
-			'application_directory' => (is_dir(APPPATH) && is_file(APPPATH.'bootstrap'.EXT)),
+            'application_directory' => (is_dir(APPPATH) && is_file(APPPATH . 'bootstrap.php')),
 			'modules_directory'     => is_dir(MODPATH),
 			'config_writable'       => (is_dir(APPPATH.'config') && is_writable(APPPATH.'config')),
 			'cache_writable'        => (is_dir(APPPATH.'cache') && is_writable(APPPATH.'cache')),

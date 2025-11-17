@@ -3,8 +3,8 @@
 // -- Environment setup --------------------------------------------------------
 
 // Load the core core classes
-require GLZPATH.'classes/kohana'.EXT;
-require GLZPATH.'classes/gleez'.EXT;
+require GLZPATH . 'classes/kohana.php';
+require GLZPATH . 'classes/gleez.php';
 
 /**
  * Set the default time zone.

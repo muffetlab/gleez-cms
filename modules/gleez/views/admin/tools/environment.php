@@ -33,10 +33,6 @@
 
 			<?php endif; ?>
 		<tr>
-			<th>EXT</th>
-			<td><code><?php echo EXT?></code></td>
-		</tr>
-		<tr>
 			<th>DOCROOT</th>
 			<td><code><?php echo DOCROOT?></code></td>
 		</tr>

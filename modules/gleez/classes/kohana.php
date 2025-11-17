@@ -655,7 +655,7 @@ class Kohana {
 
 		foreach (Kohana::$_modules as $path)
 		{
-			$init = $path.'init'.EXT;
+            $init = $path . 'init.php';
 
 			if (is_file($init))
 			{
@@ -664,10 +664,10 @@ class Kohana {
 			}
 		}
 
-		if (is_file(GLZPATH.'init'.EXT))
+        if (is_file(GLZPATH . 'init.php'))
 		{
 			//@todo better handling instead of init
-			require_once GLZPATH.'init'.EXT;
+            require_once GLZPATH . 'init.php';
 		}
 
 		return Kohana::$_modules;
@@ -694,8 +694,7 @@ class Kohana {
 	 * that path in the [Cascading Filesystem](kohana/files) will be returned.
 	 * These files will return arrays which must be merged together.
 	 *
-	 * If no extension is given, the default extension (`EXT` set in
-	 * `index.php`) will be used.
+	 * If no extension is given, the default extension `.php` will be used.
 	 *
 	 *     // Returns an absolute path to views/template.php
 	 *     Kohana::find_file('views', 'template');
@@ -719,7 +718,7 @@ class Kohana {
 		if ($ext === NULL)
 		{
 			// Use the default extension
-			$ext = EXT;
+			$ext = '.php';
 		}
 		elseif ($ext)
 		{

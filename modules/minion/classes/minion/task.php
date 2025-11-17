@@ -355,7 +355,7 @@ abstract class Minion_Task {
 			}
 			else
 			{
-				$output[] = strtolower($prefix.substr($file, 0, -strlen(EXT)));
+                $output[] = strtolower($prefix . substr($file, 0, -4));
 			}
 		}
 

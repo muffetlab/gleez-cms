@@ -272,12 +272,12 @@ function koggle(elem)
 										</table>
 				</div>
 													<pre id="error4ac2453378034source6" class="source collapsed"><code><pre class="source"><code><span class="line"><span class="number">101</span> 	// Load empty core extension
-</span><span class="line"><span class="number">102</span> 	require SYSPATH.'classes/kohana'.EXT;
+</span><span class="line"><span class="number">102</span> 	require SYSPATH.'classes/kohana.php';
 </span><span class="line"><span class="number">103</span> }
 </span><span class="line"><span class="number">104</span> 
 </span><span class="line"><span class="number">105</span> // Bootstrap the application
 
-</span><span class="line highlight"><span class="number">106</span> require APPPATH.'bootstrap'.EXT;
+</span><span class="line highlight"><span class="number">106</span> require APPPATH.'bootstrap.php';
 </span></code></pre></code></pre>
 							</li>
 							</ol>

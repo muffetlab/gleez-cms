@@ -941,7 +941,7 @@ class Assets {
 	 * @return  array
 	 * @uses    Kohana::find_file
 	 */
-	protected static function _get_file_path($file, $type = EXT)
+    protected static function _get_file_path($file, $type = '.php')
 	{
 		// @todo need to overwrite the assets set and get to fix this
 		$file = str_replace(array('media/', '.'.$type), '', $file);

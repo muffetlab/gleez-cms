@@ -107,10 +107,10 @@ class Kohana_Unittest_Tests {
 			else
 			{
 				// Make sure we only include php files
-				if (is_file($file) AND substr($file, -strlen(EXT)) === EXT)
+                if (is_file($file) and substr($file, -4) === '.php')
 				{
 					// The default PHPUnit TestCase extension
-					if ( ! strpos($file, 'TestCase'.EXT))
+                    if (!strpos($file, 'TestCase.php'))
 					{
 						$suite->addTestFile($file);
 					}

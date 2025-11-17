@@ -76,7 +76,7 @@ class Log_File extends Log_Writer {
 		$this->_checkDir($directory);
 
 		// Set the name of the log file
-		$filename = $directory.DIRECTORY_SEPARATOR.date('d').EXT;
+        $filename = $directory . DIRECTORY_SEPARATOR . date('d') . '.php';
 
 		if ( ! file_exists($filename))
 		{

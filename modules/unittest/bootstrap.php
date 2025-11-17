@@ -6,7 +6,6 @@ $gleez       = 'modules/gleez';
 $system      = 'system';
 $themes      = 'themes';
 
-define('EXT', '.php');
 define('DOCROOT', realpath(dirname(__FILE__).'/../../').DIRECTORY_SEPARATOR);
 
 error_reporting(E_ALL | E_STRICT);
@@ -50,7 +49,7 @@ defined('KOHANA_START_TIME') || define('KOHANA_START_TIME', microtime(true));
 defined('KOHANA_START_MEMORY') || define('KOHANA_START_MEMORY', memory_get_usage());
 
 // Bootstrap the application
-require APPPATH.'bootstrap'.EXT;
+require APPPATH . 'bootstrap.php';
 
 // Disable output buffering
 if (false !== ($ob_len = ob_get_length())) {
