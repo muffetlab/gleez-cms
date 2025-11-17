@@ -104,7 +104,7 @@ class Upload {
 		}
 
 		// Make the filename into a complete path
-		$filename = realpath($directory).DS.$filename;
+		$filename = realpath($directory).DIRECTORY_SEPARATOR.$filename;
 
 		if (move_uploaded_file($file['tmp_name'], $filename))
 		{
@@ -370,7 +370,7 @@ class Upload {
 
             if ($path)
             {
-                return $upload_dir.DS.$filename;
+                return $upload_dir.DIRECTORY_SEPARATOR.$filename;
             }
         }
 

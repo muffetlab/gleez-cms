@@ -7,8 +7,7 @@ $system      = 'system';
 $themes      = 'themes';
 
 define('EXT', '.php');
-define('DS', DIRECTORY_SEPARATOR);
-define('DOCROOT', realpath(dirname(__FILE__).'/../../').DS);
+define('DOCROOT', realpath(dirname(__FILE__).'/../../').DIRECTORY_SEPARATOR);
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -38,11 +37,11 @@ if (!is_dir($themes) && is_dir(DOCROOT.$themes)) {
 }
 
 // Define the absolute paths for configured directories
-define('APPPATH', realpath($application).DS);
-define('MODPATH', realpath($modules).DS);
-define('GLZPATH', realpath($gleez).DS);
-define('SYSPATH', realpath($system).DS);
-define('THEMEPATH', realpath($themes).DS);
+define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
+define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
+define('GLZPATH', realpath($gleez).DIRECTORY_SEPARATOR);
+define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
+define('THEMEPATH', realpath($themes).DIRECTORY_SEPARATOR);
 
 // Clean up the configuration vars
 unset($application, $modules, $system, $themes);

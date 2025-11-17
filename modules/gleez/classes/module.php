@@ -144,7 +144,7 @@ class Module
 					$m->visible      = isset($m->visible)   ? (bool) $m->visible	 : true;
 					$m->author    	 = isset($m->author)    ? (string) $m->author 	 : 'Gleez Team';
 					$m->authorURL    = isset($m->authorURL) ? (string) $m->authorURL : 'http://gleezcms.org/';
-					$m->path 		 = realpath( dirname($file) ).DS;
+					$m->path 		 = realpath( dirname($file) ).DIRECTORY_SEPARATOR;
 
 					// Skip this module in list if the module is hidden
 					if($m->visible === false && isset($modules[$name]))

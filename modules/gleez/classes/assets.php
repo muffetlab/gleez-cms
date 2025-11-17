@@ -973,11 +973,11 @@ class Assets {
 
 		if(Theme::$is_admin == TRUE)
 		{
-			$path = $path.DS.'admin';
+			$path = $path.DIRECTORY_SEPARATOR.'admin';
 		}
 
 		//set unqiue filename based on criteria
-		$filename  = $path.DS.$type.DS.$type.'-'.md5(implode("|", $files)).$last_modified.'.'.$type;
+		$filename  = $path.DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR.$type.'-'.md5(implode("|", $files)).$last_modified.'.'.$type;
 		$directory = dirname($filename);
 
 		if ( ! is_dir($directory))

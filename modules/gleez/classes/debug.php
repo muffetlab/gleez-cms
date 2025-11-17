@@ -271,27 +271,27 @@ class Debug {
 	{
 		if (strpos($file, APPPATH) === 0)
 		{
-			$file = 'APPPATH'.DS.substr($file, strlen(APPPATH));
+			$file = 'APPPATH'.DIRECTORY_SEPARATOR.substr($file, strlen(APPPATH));
 		}
 		elseif (strpos($file, SYSPATH) === 0)
 		{
-			$file = 'SYSPATH'.DS.substr($file, strlen(SYSPATH));
+			$file = 'SYSPATH'.DIRECTORY_SEPARATOR.substr($file, strlen(SYSPATH));
 		}
 		elseif (strpos($file, MODPATH) === 0)
 		{
-			$file = 'MODPATH'.DS.substr($file, strlen(MODPATH));
+			$file = 'MODPATH'.DIRECTORY_SEPARATOR.substr($file, strlen(MODPATH));
 		}
 		elseif (strpos($file, GLZPATH) === 0)
 		{
-			$file = 'GLZPATH'.DS.substr($file, strlen(GLZPATH));
+			$file = 'GLZPATH'.DIRECTORY_SEPARATOR.substr($file, strlen(GLZPATH));
 		}
 		elseif (strpos($file, THEMEPATH) === 0)
 		{
-			$file = 'THEMEPATH'.DS.substr($file, strlen(THEMEPATH));
+			$file = 'THEMEPATH'.DIRECTORY_SEPARATOR.substr($file, strlen(THEMEPATH));
 		}
 		elseif (strpos($file, DOCROOT) === 0)
 		{
-			$file = 'DOCROOT'.DS.substr($file, strlen(DOCROOT));
+			$file = 'DOCROOT'.DIRECTORY_SEPARATOR.substr($file, strlen(DOCROOT));
 		}
 
 		return $file;

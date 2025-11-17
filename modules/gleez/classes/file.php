@@ -143,7 +143,7 @@ class File extends SplFileInfo {
 	 */
 	public function get_full_name()
 	{
-		return $this->_path . DS . $this->_name;
+		return $this->_path . DIRECTORY_SEPARATOR . $this->_name;
 	}
 
 	/**

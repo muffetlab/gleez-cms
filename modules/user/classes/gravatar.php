@@ -471,7 +471,7 @@ class Gravatar {
 			throw new Gleez_Exception('Gravatar download destination is not writable!', array(), 105);
 		}
 
-		$this->_store_location = $this->_store_location . DS;
+		$this->_store_location = $this->_store_location . DIRECTORY_SEPARATOR;
 
 		return $this;
 	}
