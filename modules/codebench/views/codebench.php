@@ -178,7 +178,7 @@
 	<?php } ?>
 
 	<p id="footer">
-		Page executed in <strong><?php echo round(microtime(TRUE) - GLEEZ_START_TIME, 2) ?>&nbsp;s</strong>
+		Page executed in <strong><?php echo round(microtime(TRUE) - KOHANA_START_MEMORY, 2) ?>&nbsp;s</strong>
 		using <strong><?php echo Text::widont(Text::bytes(memory_get_usage(), 'MB')) ?></strong> of memory.<br />
 		<a href="https://github.com/gleez/cms/blob/master/modules/codebench">Codebench</a>, a <a href="http://gleezcms.org/">Gleez CMS</a> module
 		by <a href="http://www.geertdedeckere.be/article/introducing-codebench">Geert De Deckere</a> and  <a href="http://gleezcms.org/">Gleez Team</a>.

@@ -47,8 +47,8 @@ define('THEMEPATH', realpath($themes).DS);
 // Clean up the configuration vars
 unset($application, $modules, $system, $themes);
 
-defined('GLEEZ_START_TIME') || define('GLEEZ_START_TIME', microtime(true));
-defined('GLEEZ_START_MEMORY') || define('GLEEZ_START_MEMORY', memory_get_usage());
+defined('KOHANA_START_TIME') || define('KOHANA_START_TIME', microtime(true));
+defined('KOHANA_START_MEMORY') || define('KOHANA_START_MEMORY', memory_get_usage());
 
 // Bootstrap the application
 require APPPATH.'bootstrap'.EXT;

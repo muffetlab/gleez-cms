@@ -367,10 +367,10 @@ class Profiler {
 		}
 
 		// Get the application run time
-		$time = microtime(TRUE) - GLEEZ_START_TIME;
+        $time = microtime(TRUE) - KOHANA_START_TIME;
 
 		// Get the total memory usage
-		$memory = memory_get_usage() - GLEEZ_START_MEMORY;
+        $memory = memory_get_usage() - KOHANA_START_MEMORY;
 
 		// Calculate max time
 		if ($stats['max']['time'] === NULL OR $time > $stats['max']['time'])
