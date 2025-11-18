@@ -633,8 +633,8 @@ class Response implements HTTP_Response {
 	 *
 	 * @return  string
 	 */
-	public function render()
-	{
+	public function render(): string
+    {
 		if ( ! $this->_header->offsetExists('content-type'))
 		{
 			// Add the default Content-Type header if required
