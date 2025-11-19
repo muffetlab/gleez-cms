@@ -23,7 +23,6 @@ instances of cache engines through a grouped singleton pattern.
  *  Memcached-tags ([Cache_Memcachetag])
  *  SQLite ([Cache_Sqlite])
  *  Wincache ([Cache_Wincache])
- *  MongoDB ([Cache_Mango])
 
 ## What the Gleez Cache module does (and does not do)
 
@@ -49,6 +48,5 @@ Wincache         | __Memory__   | Excellent | No       | No          | Yes | Win
 File             | __Disk__     | Poor      | No       | No          | No  | Marginally faster than execution
 Memcache (tag)   | __Memory__   | Good      | No (yes) | Yes         | Yes | Generally fast distributed solution, but has a speed hit due to variable network latency and serialization
 Sqlite           | __Disk__     | Poor      | Yes      | No          | No  | Marginally faster than execution
-Mango            | __Disk__     | Good      | Yes      | Yes         | Yes (not yes implemented) | The perspective direction that is only begun to develop
 
 It is possible to have hybrid cache solutions that use a combination of the engines above in different contexts. This is supported with _Gleez Cache_ as well

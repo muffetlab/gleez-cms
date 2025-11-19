@@ -67,10 +67,4 @@ return array(
 			'.svn'
 		)
 	),
-	'mango'  => array(
-		'driver'             => 'mango',
-		'group'              => 'default',
-		'collection'         => 'cache',
-		'default_expire'     => 3600,
-	),
 );

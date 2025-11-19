@@ -119,8 +119,6 @@ Kohana::modules(array(
 	'minion'      => MODPATH.'minion',    // For running tasks via the CLI
 	//'unittest'    => MODPATH.'unittest',  // Unit testing
 	//'codebench'   => MODPATH.'codebench', // Benchmarking tool
-	//'mongodb'     => MODPATH.'mongodb',   // Gleez Mango Component
-	//'mango'       => MODPATH.'mango',     // Mango Reader
 ));
 
 /**
