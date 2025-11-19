@@ -488,7 +488,7 @@ class Post extends ORM_Versioned {
 	 *
 	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
 	 * @return  Post
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Cache::delete
 	 * @uses    Path::delete
@@ -497,7 +497,7 @@ class Post extends ORM_Versioned {
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot delete :model model because it is not loaded.',
+			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.',
 				array(':model' => $this->_object_name)
 			);
 		}

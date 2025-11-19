@@ -115,7 +115,7 @@ class Gleez {
 
 		if (Kohana::$environment !== Kohana::DEVELOPMENT)
 		{
-			Gleez_Exception::$error_view = 'errors/stack';
+			Kohana_Exception::$error_view = 'errors/stack';
 		}
 
 		// Turn off notices and strict errors in production
@@ -142,7 +142,7 @@ class Gleez {
 		if ( ! Gleez::$installed)
 		{
 			Session::$default = 'cookie';
-			Gleez_Exception::$error_view = 'errors/error';
+			Kohana_Exception::$error_view = 'errors/error';
 
 			// Static file serving (CSS, JS, images)
 			Route::set('install/media', 'media(/<file>)', array(
@@ -276,7 +276,7 @@ class Gleez {
 	 *
 	 * @param   string  $file The file name
 	 * @return  string  The file path
-	 * @throws  Gleez_Exception Indicates that the file does not exist
+	 * @throws  Kohana_Exception Indicates that the file does not exist
 	 *
 	 * @uses    Kohana::modules
 	 */
@@ -315,7 +315,7 @@ class Gleez {
 			return $uri;
 		}
 
-		throw new Gleez_Exception('Unable to locate file `:file`. No file exists with the specified file name.', array(
+		throw new Kohana_Exception('Unable to locate file `:file`. No file exists with the specified file name.', array(
 			':file' => $file
 		));
 	}

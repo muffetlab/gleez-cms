@@ -65,7 +65,7 @@ class Encrypt
      *
      * @param string $name Configuration group name [Optional]
      * @return mixed
-     * @throws Gleez_Exception
+     * @throws Kohana_Exception
      */
     public static function instance($name = null)
     {
@@ -80,7 +80,7 @@ class Encrypt
 
             if (!isset($config['key'])) {
                 // No default encryption key is provided!
-                throw new Gleez_Exception(
+                throw new Kohana_Exception(
                     'No encryption key is defined in the encryption configuration group: :group',
                     [':group' => $name]
                 );

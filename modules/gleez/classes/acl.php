@@ -82,13 +82,13 @@ class ACL {
 	 *
 	 * @param   string  $name The name of the permission.
 	 * @return  ACL
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public static function get($name)
 	{
 		if ( ! isset(self::$_all_perms[$name]))
 		{
-			throw new Gleez_Exception('The requested Permission does not exist: :permission',
+			throw new Kohana_Exception('The requested Permission does not exist: :permission',
 				array(':permission' => $name));
 		}
 

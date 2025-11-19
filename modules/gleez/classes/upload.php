@@ -58,7 +58,7 @@ class Upload {
 	 * @return  string   On success, full path to new file
 	 * @return  boolean  FALSE on failure
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    File::getUnique
 	 * @uses    System::mkdir
@@ -92,14 +92,14 @@ class Upload {
 			}
 			catch (Exception $e)
 			{
-				throw new Gleez_Exception('Could not create directory :dir',
+				throw new Kohana_Exception('Could not create directory :dir',
 					array(':dir' => Debug::path($directory)));
 			}
 		}
 
 		if ( ! is_writable(realpath($directory)))
 		{
-			throw new Gleez_Exception('Directory :dir must be writable',
+			throw new Kohana_Exception('Directory :dir must be writable',
 				array(':dir' => Debug::path($directory)));
 		}
 

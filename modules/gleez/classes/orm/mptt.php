@@ -400,7 +400,7 @@ class ORM_MPTT extends ORM {
 	 * Deletes the current node and all descendants.
 	 *
 	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function delete($soft = FALSE)
 	{
@@ -417,7 +417,7 @@ class ORM_MPTT extends ORM {
 
 			$this->delete_space($this->left(), $this->size());
 		}
-		catch (Gleez_Exception $e)
+		catch (Kohana_Exception $e)
 		{
 			$this->_db->rollback();
 			throw $e;
@@ -520,7 +520,7 @@ class ORM_MPTT extends ORM {
 			
 			$this->delete_space($this->left(), $size);
 		}
-		catch (Gleez_Exception $e)
+		catch (Kohana_Exception $e)
 		{
 			$this->_db->rollback();
 			throw $e;
@@ -565,7 +565,7 @@ class ORM_MPTT extends ORM {
 	 *
 	 * @return  ORM_MPTT|boolean
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function root($scope = NULL)
 	{
@@ -575,7 +575,7 @@ class ORM_MPTT extends ORM {
 		}
 		elseif (is_null($scope) AND ! $this->loaded())
 		{
-			throw new Gleez_Exception(':method must be called on an ORM_MPTT object instance.', array(':method' => 'root'));
+			throw new Kohana_Exception(':method must be called on an ORM_MPTT object instance.', array(':method' => 'root'));
 		}
 		
 		return self::factory($this->object_name(), array($this->left_column => 1, $this->scope_column => $scope));

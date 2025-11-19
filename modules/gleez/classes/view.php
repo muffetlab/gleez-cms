@@ -190,7 +190,7 @@ class View {
 	 *
 	 * @return  mixed
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function & __get($key)
 	{
@@ -204,7 +204,7 @@ class View {
 		}
 		else
 		{
-			throw new Gleez_Exception('View variable is not set: :var',
+			throw new Kohana_Exception('View variable is not set: :var',
 				array(':var' => $key)
 			);
 		}
@@ -265,7 +265,7 @@ class View {
 	 * @return  string
 	 *
 	 * @uses    View::render
-	 * @uses    Gleez_Exception::_handler
+	 * @uses    Kohana_Exception::_handler
 	 * @uses    Response::body
 	 */
 	public function __toString()
@@ -282,7 +282,7 @@ class View {
 			 * We use this method here because it's impossible to throw an
 			 * exception from __toString().
 			 */
-			$error_response = Gleez_Exception::_handler($e);
+			$error_response = Kohana_Exception::_handler($e);
 
 			return $error_response->body();
 		}

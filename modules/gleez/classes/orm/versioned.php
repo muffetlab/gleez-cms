@@ -156,7 +156,7 @@ class ORM_Versioned extends ORM {
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
 		}
 
 		// Use primary key value

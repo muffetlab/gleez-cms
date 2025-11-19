@@ -61,7 +61,7 @@ class JSON {
 	 *
 	 * @return  mixed
 	 *
-	 * @throws Gleez_Exception
+	 * @throws Kohana_Exception
 	 */
 	public static function decode($json, $assoc = TRUE, $depth = 512, $options = 0)
 	{
@@ -101,7 +101,7 @@ class JSON {
 
 		if ( ! empty($error))
 		{
-			throw new Gleez_Exception('JSON DECODE: :error', array(':error' => __($error)));
+			throw new Kohana_Exception('JSON DECODE: :error', array(':error' => __($error)));
 		}
 
 		return $result;

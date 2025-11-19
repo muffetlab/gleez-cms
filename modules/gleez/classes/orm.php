@@ -628,7 +628,7 @@ class ORM extends Model implements serializable {
 	 *
 	 * @param   string $column Column name
 	 * @return  mixed
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function __get($column)
 	{
@@ -721,7 +721,7 @@ class ORM extends Model implements serializable {
 		}
 		else
 		{
-			throw new Gleez_Exception('The :property property does not exist in the :class class',
+			throw new Kohana_Exception('The :property property does not exist in the :class class',
 				array(':property' => $column, ':class' => get_class($this)));
 		}
 	}
@@ -753,7 +753,7 @@ class ORM extends Model implements serializable {
 	 * @param   string  $column  Column name
 	 * @param   mixed   $value   Column value
 	 * @return  $this
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function set($column, $value)
 	{
@@ -804,7 +804,7 @@ class ORM extends Model implements serializable {
 		}
 		else
 		{
-			throw new Gleez_Exception('The :property: property does not exist in the :class: class',
+			throw new Kohana_Exception('The :property: property does not exist in the :class: class',
 				array(':property:' => $column, ':class:' => get_class($this)));
 		}
 
@@ -1026,13 +1026,13 @@ class ORM extends Model implements serializable {
 	 *
 	 * @return  Database_Result|ORM
 	 * @uses    Database::SELECT
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function find()
 	{
 		if ($this->_loaded)
 		{
-			throw new Gleez_Exception('Method find() cannot be called on loaded objects');
+			throw new Kohana_Exception('Method find() cannot be called on loaded objects');
 		}
 
 		if ( ! empty($this->_load_with))
@@ -1054,13 +1054,13 @@ class ORM extends Model implements serializable {
 	 *
 	 * @return  Gleez\Database\Result|ORM
 	 * @uses    Database::SELECT
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function find_all()
 	{
 		if ($this->_loaded)
 		{
-			throw new Gleez_Exception('Method find_all() cannot be called on loaded objects');
+			throw new Kohana_Exception('Method find_all() cannot be called on loaded objects');
 		}
 
 		if ( ! empty($this->_load_with))
@@ -1376,13 +1376,13 @@ class ORM extends Model implements serializable {
 	 *
 	 * @param   Validation $validation Validation object [Optional]
 	 * @return  ORM
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function create(Validation $validation = NULL)
 	{
 		if ($this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot create :model model because it is already loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot create :model model because it is already loaded.', array(':model' => $this->_object_name));
 		}
 
 		Module::event($this->_object_name .'_prevalid', $this, $validation);
@@ -1441,13 +1441,13 @@ class ORM extends Model implements serializable {
 	 *
 	 * @param  Validation $validation Validation object [Optional]
 	 * @return ORM
-	 * @throws Gleez_Exception
+	 * @throws Kohana_Exception
 	 */
 	public function update(Validation $validation = NULL)
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot update :model model because it is not loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot update :model model because it is not loaded.', array(':model' => $this->_object_name));
 		}
 
 		Module::event($this->_object_name .'_prevalid', $this, $validation);
@@ -1528,13 +1528,13 @@ class ORM extends Model implements serializable {
 	 * @return  ORM
 	 * @uses    Module::event
 	 * @uses    DB::delete
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function delete($soft = FALSE)
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
 		}
 
 		// Use primary key value
@@ -1566,13 +1566,13 @@ class ORM extends Model implements serializable {
 	 * @param  	boolean $soft    Make delete as soft or hard. Default hard
 	 * @return  ORM
 	 * @uses    Module::event
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function delete_all($soft = FALSE)
 	{
 		if ($this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot delete all :model model because it is loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot delete all :model model because it is loaded.', array(':model' => $this->_object_name));
 		}
 
 		Module::event($this->_object_name .'_pre_delete_all', $this, $soft);
@@ -1597,13 +1597,13 @@ class ORM extends Model implements serializable {
 	 *
 	 * @return  ORM
 	 * @uses    DB::delete
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	protected function forceDelete()
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
 		}
 
 		// Use primary key value
@@ -1622,13 +1622,13 @@ class ORM extends Model implements serializable {
 	 *
 	 * @return  ORM
 	 * @uses    DB::update
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	protected function softDelete()
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot softDelete :model model because it is not loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot softDelete :model model because it is not loaded.', array(':model' => $this->_object_name));
 		}
 
 		if (is_array($this->_deleted_column))

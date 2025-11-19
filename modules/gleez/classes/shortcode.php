@@ -48,7 +48,7 @@ class Shortcode {
 	 *
 	 * @return  array
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Assets::css
 	 * @uses    Assets::js
@@ -57,7 +57,7 @@ class Shortcode {
 	{
 		if ( ! is_callable($callback) )
 		{
-			throw new Gleez_Exception('Invalid Shortcode::callback specified');
+			throw new Kohana_Exception('Invalid Shortcode::callback specified');
 		}
 
 		self::$_tags[$tag] = $callback;

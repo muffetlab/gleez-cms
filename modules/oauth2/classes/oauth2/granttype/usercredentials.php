@@ -49,7 +49,7 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 		}
 
 		if (!isset($userInfo['id'])) {
-			throw new Gleez_Exception("you must set the user_id on the array returned by checkUserCredentials");
+			throw new Kohana_Exception("you must set the user_id on the array returned by checkUserCredentials");
 			//$this->setError(500, 'server_error', 'you must set the user_id on the array returned by checkUserCredentials');
 		}
 

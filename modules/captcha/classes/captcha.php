@@ -78,7 +78,7 @@ abstract class Captcha {
 	/**
 	 * Constructs a new Captcha object.
 	 *
-	 * @throws Gleez_Exception
+	 * @throws Kohana_Exception
 	 * @param string Config group name
 	 * @return void
 	 */
@@ -95,7 +95,7 @@ abstract class Captcha {
 
 		// Load and validate config group
 		if ( ! is_array($config = Kohana::$config->load('captcha')->get($group)))
-			throw new Gleez_Exception('Captcha group not defined in :group configuration',
+			throw new Kohana_Exception('Captcha group not defined in :group configuration',
 					array(':group' => $group));
 
 		// All captcha config groups inherit default config group
@@ -103,7 +103,7 @@ abstract class Captcha {
 		{
 			// Load and validate default config group
 			if ( ! is_array($default = Kohana::$config->load('captcha')->get('default')))
-				throw new Gleez_Exception('Captcha group not defined in :group configuration',
+				throw new Kohana_Exception('Captcha group not defined in :group configuration',
 					array(':group' => 'default'));
 
 			// Merge config group with default config group
@@ -128,7 +128,7 @@ abstract class Captcha {
 			Captcha::$config['background'] = str_replace('\\', '/', realpath($config['background']));
 
 			if ( ! is_file(Captcha::$config['background']))
-				throw new Gleez_Exception('The specified file, :file, was not found.',
+				throw new Kohana_Exception('The specified file, :file, was not found.',
 					array(':file' => Captcha::$config['background']));
 		}
 
@@ -140,7 +140,7 @@ abstract class Captcha {
 			foreach ($config['fonts'] as $font)
 			{
 				if ( ! is_file(Captcha::$config['fontpath'].$font))
-					throw new Gleez_Exception('The specified file, :file, was not found.',
+					throw new Kohana_Exception('The specified file, :file, was not found.',
 						array(':file' => Captcha::$config['fontpath'].$font));
 			}
 		}
@@ -321,7 +321,7 @@ abstract class Captcha {
 	 * Creates an image resource with the dimensions specified in config.
 	 * If a background image is supplied, the image dimensions are used.
 	 *
-	 * @throws Gleez_Exception If no GD2 support
+	 * @throws Kohana_Exception If no GD2 support
 	 * @param string $background Path to the background image file
 	 * @return void
 	 */
@@ -329,7 +329,7 @@ abstract class Captcha {
 	{
 		// Check for GD2 support
 		if ( ! function_exists('imagegd2'))
-			throw new Gleez_Exception('captcha.requires_GD2');
+			throw new Kohana_Exception('captcha.requires_GD2');
 
 		// Create a new image (black)
 		$this->image = imagecreatetruecolor(Captcha::$config['width'], Captcha::$config['height']);

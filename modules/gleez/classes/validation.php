@@ -86,14 +86,14 @@ class Validation implements ArrayAccess {
 	 * Throws an exception because Validation is read-only.
 	 * Implements ArrayAccess method.
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 * @param   string   $offset    key to set
 	 * @param   mixed    $value     value to set
 	 * @return  void
 	 */
 	public function offsetSet($offset, $value)
 	{
-		throw new Gleez_Exception('Validation objects are read-only.');
+		throw new Kohana_Exception('Validation objects are read-only.');
 	}
 
 	/**
@@ -112,13 +112,13 @@ class Validation implements ArrayAccess {
 	 * Throws an exception because Validation is read-only.
 	 * Implements ArrayAccess method.
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 * @param   string  $offset key to unset
 	 * @return  void
 	 */
 	public function offsetUnset($offset)
 	{
-		throw new Gleez_Exception('Validation objects are read-only.');
+		throw new Kohana_Exception('Validation objects are read-only.');
 	}
 
 	/**

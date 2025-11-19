@@ -246,7 +246,7 @@ class Num {
 	 *
 	 * @return  float
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Arr::get
 	 */
@@ -264,7 +264,7 @@ class Num {
 		// Verify the size format and store the matching parts
 		if ( ! preg_match($pattern, $size, $matches))
 		{
-			throw new Gleez_Exception('The byte unit size, ":size", is improperly formatted.',
+			throw new Kohana_Exception('The byte unit size, ":size", is improperly formatted.',
 				array(':size' => $size)
 			);
 		}

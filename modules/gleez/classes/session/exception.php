@@ -8,6 +8,6 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class Session_Exception extends Gleez_Exception {
+class Session_Exception extends Kohana_Exception {
 	const SESSION_CORRUPT = 1;
 }

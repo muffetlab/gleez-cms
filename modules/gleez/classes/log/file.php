@@ -105,7 +105,7 @@ class Log_File extends Log_Writer {
 	 * @uses    System::mkdir
 	 * @uses    Debug::path
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	protected function _checkDir($directory)
 	{
@@ -118,13 +118,13 @@ class Log_File extends Log_Writer {
 			}
 			catch (Exception $e)
 			{
-				throw new Gleez_Exception('Could not create log directory :dir',
+				throw new Kohana_Exception('Could not create log directory :dir',
 					array(':dir' => Debug::path($directory)));
 			}
 		}
 		if ( ! is_writable($directory))
 		{
-			throw new Gleez_Exception('Directory :dir must be writable',
+			throw new Kohana_Exception('Directory :dir must be writable',
 				array(':dir' => Debug::path($directory)));
 		}
 	}

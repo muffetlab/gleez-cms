@@ -167,7 +167,7 @@ class Model_Menu extends ORM_MPTT {
 	 * @param   ORM_MPTT|integer  $parent    The parent
 	 * @param   string|integer    $location  The location [Optional]
 	 * @return  Model_Menu
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function create_at($parent, $location = 'last')
 	{
@@ -186,7 +186,7 @@ class Model_Menu extends ORM_MPTT {
 			
 			if ( ! $target->loaded())
 			{
-				throw new Gleez_Exception("Could not create menu, could not find target for
+				throw new Kohana_Exception("Could not create menu, could not find target for
 							  insert_as_next_sibling id: " . (int) $location);
 			}
 
@@ -201,7 +201,7 @@ class Model_Menu extends ORM_MPTT {
 	 *
 	 * @param   $target  integer  The target term id
 	 * @param   $action  string   The action to perform (before/after/first/last) after
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function move_to($target, $action = 'after')
 	{
@@ -211,7 +211,7 @@ class Model_Menu extends ORM_MPTT {
 		// Make sure it exists
 		if ( ! $target->loaded())
 		{
-			throw new Gleez_Exception("Could not move item, target item did not exist." . (int) $target->id);
+			throw new Kohana_Exception("Could not move item, target item did not exist." . (int) $target->id);
 		}
 
 		if ($action == 'before')
@@ -223,7 +223,7 @@ class Model_Menu extends ORM_MPTT {
 		elseif ($action == 'last')
 			$this->move_to_last_child($target);
 		else
-			throw new Gleez_Exception("Could not move item, action should be 'before', 'after', 'first' or 'last'.");
+			throw new Kohana_Exception("Could not move item, action should be 'before', 'after', 'first' or 'last'.");
 	}
 
 }

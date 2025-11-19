@@ -220,7 +220,7 @@ class Response implements HTTP_Response {
 	 *
 	 * @return  mixed
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function status($status = NULL)
 	{
@@ -235,7 +235,7 @@ class Response implements HTTP_Response {
 		}
 		else
 		{
-			throw new Gleez_Exception(__METHOD__.' unknown status value : :value', array(':value' => $status));
+			throw new Kohana_Exception(__METHOD__.' unknown status value : :value', array(':value' => $status));
 		}
 	}
 
@@ -436,12 +436,12 @@ class Response implements HTTP_Response {
 	 *
 	 * @return  void
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    File::mime_by_ext
 	 * @uses    File::mime
 	 * @uses    Request::send_headers
-	 * @uses    Gleez_Exception::text
+	 * @uses    Kohana_Exception::text
 	 */
 	public function send_file($filename, $download = NULL, array $options = NULL)
 	{
@@ -455,7 +455,7 @@ class Response implements HTTP_Response {
 		{
 			if (empty($download))
 			{
-				throw new Gleez_Exception('Download name must be provided for streaming files');
+				throw new Kohana_Exception('Download name must be provided for streaming files');
 			}
 
 			// Temporary files will automatically be deleted
@@ -508,7 +508,7 @@ class Response implements HTTP_Response {
 
 		if ( ! is_resource($file))
 		{
-			throw new Gleez_Exception('Could not read file to send: :file', array(
+			throw new Kohana_Exception('Could not read file to send: :file', array(
 				':file' => $download,
 			));
 		}
@@ -607,7 +607,7 @@ class Response implements HTTP_Response {
 			catch (Exception $e)
 			{
 				// Create a text version of the exception
-				$error = Gleez_Exception::text($e);
+				$error = Kohana_Exception::text($e);
 
 				if (is_object(Kohana::$log))
 				{

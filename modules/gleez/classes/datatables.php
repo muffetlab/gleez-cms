@@ -22,7 +22,7 @@ class Datatables {
 	 * @param	mixed	string|object
 	 * @param	mixed	NULL|string
 	 * @return	Datatables
-	 * @throws	Gleez_Exception
+	 * @throws      Gleez_Exception
 	 */
 	public static function factory(ORM $object = NULL)
 	{
@@ -222,13 +222,13 @@ class Datatables {
 	 * @param	string  $column     Column for sorting
 	 * @param	string  $direction  Sort order eg. SORT_ASC|SORT_DESC
 	 * @return	$this
-	 * @throws	Gleez_Exception
+	 * @throws      Gleez_Exception
 	 */
 	public function sort($column, $direction = self::SORT_ASC)
 	{
 		if ( ! in_array($direction, array(self::SORT_ASC, self::SORT_DESC)))
 		{
-			throw new Gleez_Exception('Invalid sort order of `' . $direction . '`.');
+			throw new Kohana_Exception('Invalid sort order of `' . $direction . '`.');
 		}
 
 		$this->_sort($column, $direction);
@@ -319,7 +319,7 @@ class Datatables {
 	 * Execute
 	 *
 	 * @return $this
-	 * @throws Gleez_Exception
+	 * @throws Kohana_Exception
 	 */
 	public function execute()
 	{
@@ -327,7 +327,7 @@ class Datatables {
 
 		if (!$request instanceof Request)
 		{
-			throw new Gleez_Exception('DataTables expecting valid Request. If within a sub-request, have controller pass `$this->request`.');
+			throw new Kohana_Exception('DataTables expecting valid Request. If within a sub-request, have controller pass `$this->request`.');
 		}
 
 		$columns = $this->columns();

@@ -1,3 +1,3 @@
 <?php
 
-class Feed_Exception extends Gleez_Exception {}
+class Feed_Exception extends Kohana_Exception {}

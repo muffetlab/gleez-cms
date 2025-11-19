@@ -25,7 +25,7 @@ class Arr {
 	 *
 	 * @return  integer
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public static function count($array)
 	{
@@ -34,7 +34,7 @@ class Arr {
 			return count($array);
 		}
 
-		throw new Gleez_Exception('Parameter 1 for Arr::count() must be array or object of type Countable, :type given.',
+		throw new Kohana_Exception('Parameter 1 for Arr::count() must be array or object of type Countable, :type given.',
 			array(':type' => is_object($array) ? get_class($array) : gettype($array))
 		);
 	}

@@ -7,7 +7,7 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class ORM_Validation_Exception extends Gleez_Exception {
+class ORM_Validation_Exception extends Kohana_Exception {
 
 	/**
 	* Array of validation objects

@@ -7,4 +7,4 @@
  * @copyright  (c) 2011-2013 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class UTF8_Exception extends Gleez_Exception {}
+class UTF8_Exception extends Kohana_Exception {}

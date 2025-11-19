@@ -52,7 +52,7 @@ class Session_Redis extends Session {
 
 		// Check that the PhpRedis extension is loaded.
 		if (!extension_loaded('redis')) {
-			throw new Gleez_Exception('You must have PhpRedis installed and enabled to use.');
+			throw new Kohana_Exception('You must have PhpRedis installed and enabled to use.');
 		}
 
 		if (isset($config['host'])) {

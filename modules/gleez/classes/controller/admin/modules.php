@@ -118,7 +118,7 @@ class Controller_Admin_Modules extends Controller_Admin {
 	 * @uses  Module::event
 	 * @uses  Cache::delete_all
 	 * @uses  Log::add
-	 * @uses  Gleez_Exception::text
+	 * @uses  Kohana_Exception::text
 	 */
 	private function _do_save()
 	{
@@ -164,7 +164,7 @@ class Controller_Admin_Modules extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Log::error(Gleez_Exception::text($e));
+				Log::error(Kohana_Exception::text($e));
 			}
 		}
 

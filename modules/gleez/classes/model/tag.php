@@ -93,14 +93,14 @@ class Model_Tag extends ORM {
 	 *
 	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
 	 * @return  ORM
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
 	public function delete($soft = FALSE)
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
 		}
 
 		if (is_array($this->_deleted_column) && $soft == TRUE)

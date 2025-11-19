@@ -174,14 +174,14 @@ class Cookie {
 	 *
 	 * @return  string
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public static function salt($name, $value)
 	{
 		// Require a valid salt
 		if ( ! Cookie::$salt)
 		{
-			throw new Gleez_Exception('A valid cookie salt is required. Please set Cookie::$salt in your bootstrap.php. For more information check the documentation.');
+			throw new Kohana_Exception('A valid cookie salt is required. Please set Cookie::$salt in your bootstrap.php. For more information check the documentation.');
 		}
 
 		// Determine the user agent

@@ -43,13 +43,13 @@ class File extends SplFileInfo {
 	 *
 	 * @return  File
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public static function instance($file_name)
 	{
 		if (is_null($file_name))
 		{
-			throw new Gleez_Exception('The file name must be specified', 500);
+			throw new Kohana_Exception('The file name must be specified', 500);
 		}
 
 		if (is_null(self::$instance))

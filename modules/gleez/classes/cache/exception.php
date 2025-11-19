@@ -1,3 +1,3 @@
 <?php
 
-class Cache_Exception extends Gleez_Exception {}
+class Cache_Exception extends Kohana_Exception {}

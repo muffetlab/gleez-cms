@@ -489,7 +489,7 @@ class Pagination {
 	 *
 	 * @return  string  Pagination output (HTML)
 	 *
-	 * @uses    Gleez_Exception::handler
+	 * @uses    Kohana_Exception::handler
 	 */
 	public function __toString()
 	{
@@ -499,7 +499,7 @@ class Pagination {
 		}
 		catch(Exception $e)
 		{
-			Gleez_Exception::handler($e);
+			Kohana_Exception::handler($e);
 			return '';
 		}
 	}

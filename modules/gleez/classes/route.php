@@ -111,13 +111,13 @@ class Route {
 	 *
 	 * @return  Route
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public static function get($name)
 	{
 		if ( ! isset(Route::$_routes[$name]))
 		{
-			throw new Gleez_Exception('The requested route does not exist: :route',
+			throw new Kohana_Exception('The requested route does not exist: :route',
 				array(':route' => $name));
 		}
 
@@ -177,7 +177,7 @@ class Route {
 	 *
 	 * @return  boolean
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Cache::get
 	 * @uses    Cache::set
@@ -196,7 +196,7 @@ class Route {
 			catch (Exception $e)
 			{
 				// We most likely have a lambda in a route, which cannot be cached
-				throw new Gleez_Exception('One or more routes could not be cached (:message)',
+				throw new Kohana_Exception('One or more routes could not be cached (:message)',
 					array(':message' => $e->getMessage()),	0,	$e
 				);
 			}
@@ -434,7 +434,7 @@ class Route {
 	 *
 	 * [!!] Default parameters are added before filters are called!
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @param   array   $callback   callback string, array, or closure
 	 *
@@ -444,7 +444,7 @@ class Route {
 	{
 		if ( ! is_callable($callback))
 		{
-			throw new Gleez_Exception('Invalid Route::callback specified');
+			throw new Kohana_Exception('Invalid Route::callback specified');
 		}
 
 		$this->_filters[] = $callback;
@@ -571,7 +571,7 @@ class Route {
 	 *
 	 * @return  string
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Route::REGEX_Key
 	 */
@@ -637,7 +637,7 @@ class Route {
 					else
 					{
 						// Ungrouped parameters are required
-						throw new Gleez_Exception('Required route parameter not passed: :param', array(
+						throw new Kohana_Exception('Required route parameter not passed: :param', array(
 							':param' => $param,
 						));
 					}
@@ -668,7 +668,7 @@ class Route {
 				else
 				{
 					// Ungrouped parameters are required
-					throw new Gleez_Exception('Required route parameter not passed: :param', array(
+					throw new Kohana_Exception('Required route parameter not passed: :param', array(
 						':param' => $param,
 					));
 				}

@@ -393,18 +393,18 @@ class Gravatar {
 	 *
 	 * @return  Gravatar
 	 *
-	 * @throws Gleez_Exception
+	 * @throws Kohana_Exception
 	 */
 	public function setSize($size)
 	{
 		if ( ! is_int($size) AND ! ctype_digit($size))
 		{
-			throw new Gleez_Exception('Avatar size specified must be an integer');
+			throw new Kohana_Exception('Avatar size specified must be an integer');
 		}
 
 		if ($size > 2048 OR $size < 0)
 		{
-			throw new Gleez_Exception('Avatar size must be within 0 pixels and 2048 pixels');
+			throw new Kohana_Exception('Avatar size must be within 0 pixels and 2048 pixels');
 		}
 
 		$this->_size = $size;
@@ -442,7 +442,7 @@ class Gravatar {
 	 *
 	 * @return  Gravatar
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Text::reduce_slashes
 	 * @uses    System::mkdir
@@ -468,7 +468,7 @@ class Gravatar {
 		// Make sure destination is writable
 		if ( ! is_writable($this->_store_location))
 		{
-			throw new Gleez_Exception('Gravatar download destination is not writable!', array(), 105);
+			throw new Kohana_Exception('Gravatar download destination is not writable!', array(), 105);
 		}
 
 		$this->_store_location = $this->_store_location . DIRECTORY_SEPARATOR;
@@ -485,7 +485,7 @@ class Gravatar {
 	 *
 	 * @return  Gravatar
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Valid::email
 	 */
@@ -497,7 +497,7 @@ class Gravatar {
 		// make sure passed email address is valid
 		if ( ! Valid::email($email))
 		{
-			throw new Gleez_Exception('E-mail must be a valid email address');
+			throw new Kohana_Exception('E-mail must be a valid email address');
 		}
 
 		// force lowercase and set property
@@ -520,7 +520,7 @@ class Gravatar {
 	 *
 	 * @return  Gravatar
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Valid::url
 	 */
@@ -538,7 +538,7 @@ class Gravatar {
 		{
 			if ( ! Valid::url($image))
 			{
-				throw new Gleez_Exception('The default image specified is not a recognized gravatar "default" and is not a valid URL');
+				throw new Kohana_Exception('The default image specified is not a recognized gravatar "default" and is not a valid URL');
 			}
 			else
 			{
@@ -562,7 +562,7 @@ class Gravatar {
 	 *
 	 * @return  Gravatar
 	 *
-	 * @throws Gleez_Exception
+	 * @throws Kohana_Exception
 	 */
 	public function setRating($rating)
 	{
@@ -570,7 +570,7 @@ class Gravatar {
 
 		if ( ! isset(self::$_ratings[$rating]))
 		{
-			throw new Gleez_Exception('Invalid rating :rating specified, only "G", "PG", "R", or "X" are allowed to be used.',
+			throw new Kohana_Exception('Invalid rating :rating specified, only "G", "PG", "R", or "X" are allowed to be used.',
 				array(':rating' => $rating)
 			);
 		}
@@ -721,7 +721,7 @@ class Gravatar {
 	 *
 	 * @return  stdClass
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    File::ext_by_mime
 	 */
@@ -735,24 +735,24 @@ class Gravatar {
 		{
 			if ($e->getCode() === 2)
 			{
-				throw new Gleez_Exception('URL does not seem to exist', array(), 403);
+				throw new Kohana_Exception('URL does not seem to exist', array(), 403);
 			}
 			else
 			{
-				throw new Gleez_Exception($e->getMessage(), array(), $e->getCode());
+				throw new Kohana_Exception($e->getMessage(), array(), $e->getCode());
 			}
 		}
 
 		// Make sure content type exists
 		if ( ! isset($headers['Content-Type']))
 		{
-			throw new Gleez_Exception('Content-Type not found', array(), 300);
+			throw new Kohana_Exception('Content-Type not found', array(), 300);
 		}
 
 		// Make sure content type is valid
 		if ( ! in_array($headers['Content-Type'], $this->getValidTypes()))
 		{
-			throw new Gleez_Exception('Content-Type :type is invalid', array(':type' => $headers['Content-Type']), 305);
+			throw new Kohana_Exception('Content-Type :type is invalid', array(':type' => $headers['Content-Type']), 305);
 		}
 
 		// Set file name
@@ -765,7 +765,7 @@ class Gravatar {
 		}
 		catch (ErrorException $e)
 		{
-			throw new Gleez_Exception('File could not been downloaded: :msg', array(':msg' => $e->getMessage()), 400);
+			throw new Kohana_Exception('File could not been downloaded: :msg', array(':msg' => $e->getMessage()), 400);
 		}
 
 		$result = new stdClass;

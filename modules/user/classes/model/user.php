@@ -230,13 +230,13 @@ class Model_User extends ORM {
 	 *
 	 * @return  ORM
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function create(Validation $validation = NULL)
 	{
 		if ($this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot create :model model because it is already loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot create :model model because it is already loaded.', array(':model' => $this->_object_name));
 		}
 
 		$this->init = $this->mail;
@@ -253,7 +253,7 @@ class Model_User extends ORM {
 	 *
 	 * @param   integer  $id  User ID
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Log::error
 	 */
@@ -263,7 +263,7 @@ class Model_User extends ORM {
 		if ($id == User::GUEST_ID OR $id == User::ADMIN_ID)
 		{
 			Log::error('Attempt to delete system user.');
-			throw new Gleez_Exception("You can't delete system users!");
+			throw new Kohana_Exception("You can't delete system users!");
 		}
 
 		parent::before_delete($id, $soft = FALSE);
@@ -272,13 +272,13 @@ class Model_User extends ORM {
 	/**
 	 * Override the create method with defaults
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function update(Validation $validation = NULL)
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot Update :model model because it is not loaded.', array(':model' => $this->_object_name));
+			throw new Kohana_Exception('Cannot Update :model model because it is not loaded.', array(':model' => $this->_object_name));
 		}
 
 		$this->data = $this->_data();

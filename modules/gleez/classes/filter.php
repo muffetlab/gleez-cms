@@ -62,13 +62,13 @@ class Filter {
 	 *
 	 * @return  Filter
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public static function get($name)
 	{
 		if ( ! isset(Filter::$_filters[$name]))
 		{
-			throw new Gleez_Exception('The requested filter does not exist: :filter',
+			throw new Kohana_Exception('The requested filter does not exist: :filter',
 				array(':filter' => $name));
 		}
 
@@ -328,7 +328,7 @@ class Filter {
 		}
 		else
 		{
-			throw new Gleez_Exception('The requested property does not exist: :key', array(':key' => $key));
+			throw new Kohana_Exception('The requested property does not exist: :key', array(':key' => $key));
 		}
 	}
 

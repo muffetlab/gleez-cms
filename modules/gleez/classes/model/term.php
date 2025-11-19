@@ -131,14 +131,14 @@ class Model_Term extends ORM_MPTT {
 	 * Deletes a single post or multiple posts, ignoring relationships.
 	 *
 	 * @return  ORM
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
 	public function delete($soft = FALSE)
 	{
 		if ( ! $this->_loaded)
 		{
-			throw new Gleez_Exception('Cannot delete :model model because it is not loaded.',
+			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.',
 				array(':model' => $this->_object_name)
 			);
 		}
@@ -274,7 +274,7 @@ class Model_Term extends ORM_MPTT {
 	 *
 	 * @param   ORM_MPTT|integer  Primary key value or ORM_MPTT object of parent term
 	 * @param   string|integer    The location [Optional]
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function create_at($parent, $location = 'last')
 	{
@@ -293,7 +293,7 @@ class Model_Term extends ORM_MPTT {
 
 			if ( ! $target->loaded())
 			{
-				throw new Gleez_Exception('Could not create term, could not find target for insert_as_next_sibling id: :location ',
+				throw new Kohana_Exception('Could not create term, could not find target for insert_as_next_sibling id: :location ',
 					array(':location' =>  (int) $location));
 			}
 

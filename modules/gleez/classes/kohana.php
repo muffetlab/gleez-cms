@@ -205,7 +205,7 @@ class Kohana {
 	 * `boolean` | caching    | Cache file locations to speed up [Kohana::find_file].  This has nothing to do with [Kohana::cache], [Fragments](kohana/fragments) or the [Cache module](cache).  <br /> <br />  Recommended setting: `FALSE` while developing, `TRUE` on production servers. | `FALSE`
 	 * `boolean` | expose     | Set the X-Powered-By header
 	 *
-	 * @throws  Gleez_Exception
+	 * @throws  Kohana_Exception
 	 * @param   array   $settings   Array of settings.  See above.
 	 * @return  void
 	 *
@@ -244,7 +244,7 @@ class Kohana {
 		if (Kohana::$errors === TRUE)
 		{
 			// Enable Gleez exception handling, adds stack traces and error source.
-			set_exception_handler(array('Gleez_Exception', 'handler'));
+			set_exception_handler(array('Kohana_Exception', 'handler'));
 
 			// Enable Kohana error handling, converts all PHP errors to exceptions.
 			set_error_handler(array('Kohana', 'error_handler'));
@@ -298,7 +298,7 @@ class Kohana {
 				}
 				catch (Exception $e)
 				{
-					throw new Gleez_Exception('Could not create cache directory :dir',
+					throw new Kohana_Exception('Could not create cache directory :dir',
 						array(':dir' => Debug::path($settings['cache_dir'])));
 				}
 			}
@@ -320,14 +320,14 @@ class Kohana {
 			}
 			catch (Exception $e)
 			{
-				throw new Gleez_Exception('Could not create cache directory :dir',
+				throw new Kohana_Exception('Could not create cache directory :dir',
 					array(':dir' => Debug::path(Kohana::$cache_dir)));
 			}
 		}
 
 		if ( ! is_writable(Kohana::$cache_dir))
 		{
-			throw new Gleez_Exception('Directory :dir must be writable',
+			throw new Kohana_Exception('Directory :dir must be writable',
 				array(':dir' => Debug::path(Kohana::$cache_dir)));
 		}
 
@@ -1037,7 +1037,7 @@ class Kohana {
 		}
 
 		// Retrieve the current exception handler
-		$handler = set_exception_handler(array('Gleez_Exception', 'handler'));
+		$handler = set_exception_handler(array('Kohana_Exception', 'handler'));
 
 		// Restore it back to it's previous state
 		restore_exception_handler();

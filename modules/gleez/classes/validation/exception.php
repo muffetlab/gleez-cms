@@ -5,7 +5,7 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class Validation_Exception extends Gleez_Exception {
+class Validation_Exception extends Kohana_Exception {
 
 	/**
 	 * Validation instance
