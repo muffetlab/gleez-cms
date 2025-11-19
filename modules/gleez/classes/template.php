@@ -146,19 +146,19 @@ abstract class Template extends Controller {
 	 * Tabs navigation
 	 * @var array
 	 */
-	protected $_tabs;
+	protected $_tabs = [];
 
 	/**
 	 * Sub Tabs navigation
 	 * @var array
 	 */
-	protected $_subtabs;
+	protected $_subtabs = [];
 
 	/**
 	 * Quick Links navigation
 	 * @var  array
 	 */
-	protected $_actions;
+	protected $_actions =  [];
 
 	/**
 	 * Benchmark token

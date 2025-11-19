@@ -178,7 +178,7 @@ class Menu {
 
 		foreach ($items as $key => $item)
 		{
-			$has_children = count($item['children']);
+            $has_children = count($item['children'] ?? []);
 			$classes = NULL;
 			$attributes  = array();
 			$caret = NULL;
