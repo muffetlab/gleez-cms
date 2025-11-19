@@ -1,4 +1,5 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
+
 /**
  * Request Client for internal execution
  *
@@ -6,146 +7,109 @@
  * @category   Base
  * @author     Kohana Team
  * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @license    https://kohana.top/license
  * @since      3.1.0
  */
-class Kohana_Request_Client_Internal extends Request_Client {
+class Kohana_Request_Client_Internal extends Request_Client
+{
+    /**
+     * @var    array
+     */
+    protected $_previous_environment;
 
-	/**
-	 * @var    array
-	 */
-	protected $_previous_environment;
+    /**
+     * Processes the request, executing the controller action that handles this
+     * request, determined by the [Route].
+     *
+     *     $request->execute();
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return  Response
+     * @throws Kohana_Exception
+     * @uses    [Kohana::$profiling]
+     * @uses    [Profiler]
+     */
+    public function execute_request(Request $request, Response $response): Response
+    {
+        // Create the class prefix
+        $prefix = 'Controller_';
 
-	/**
-	 * Processes the request, executing the controller action that handles this
-	 * request, determined by the [Route].
-	 *
-	 * 1. Before the controller action is called, the [Controller::before] method
-	 * will be called.
-	 * 2. Next the controller action will be called.
-	 * 3. After the controller action is called, the [Controller::after] method
-	 * will be called.
-	 *
-	 * By default, the output from the controller is captured and returned, and
-	 * no headers are sent.
-	 *
-	 *     $request->execute();
-	 *
-	 * @param   Request $request
-	 * @return  Response
-	 * @throws  Kohana_Exception
-	 * @uses    [Kohana::$profiling]
-	 * @uses    [Profiler]
-	 * @deprecated passing $params to controller methods deprecated since version 3.1
-	 *             will be removed in 3.2
-	 */
-	public function execute_request(Request $request)
-	{
-		// Create the class prefix
-		$prefix = 'controller_';
+        // Directory
+        $directory = $request->directory();
 
-		// Directory
-		$directory = $request->directory();
+        // Controller
+        $controller = $request->controller();
 
-		// Controller
-		$controller = $request->controller();
+        if ($directory) {
+            // Add the directory name to the class prefix
+            $prefix .= str_replace(['\\', '/'], '_', trim($directory, '/')) . '_';
+        }
 
-		if ($directory)
-		{
-			// Add the directory name to the class prefix
-			$prefix .= str_replace(array('\\', '/'), '_', trim($directory, '/')).'_';
-		}
+        if (Kohana::$profiling) {
+            // Set the benchmark name
+            $benchmark = '"' . $request->uri() . '"';
 
-		if (Kohana::$profiling)
-		{
-			// Set the benchmark name
-			$benchmark = '"'.$request->uri().'"';
+            if ($request !== Request::$initial && Request::$current) {
+                // Add the parent request URI
+                $benchmark .= ' « "' . Request::$current->uri() . '"';
+            }
 
-			if ($request !== Request::$initial AND Request::$current)
-			{
-				// Add the parent request uri
-				$benchmark .= ' « "'.Request::$current->uri().'"';
-			}
+            // Start benchmarking
+            $benchmark = Profiler::start('Requests', $benchmark);
+        }
 
-			// Start benchmarking
-			$benchmark = Profiler::start('Requests', $benchmark);
-		}
+        // Store the currently active request
+        $previous = Request::$current;
 
-		// Store the currently active request
-		$previous = Request::$current;
+        // Change the current request to this request
+        Request::$current = $request;
 
-		// Change the current request to this request
-		Request::$current = $request;
+        try {
+            if (!class_exists($prefix . $controller)) {
+                throw HTTP_Exception::factory(404, 'The requested URL :uri was not found on this server.', [':uri' => $request->uri()])->request($request);
+            }
 
-		// Is this the initial request
-		$initial_request = ($request === Request::$initial);
+            // Load the controller using reflection
+            $class = new ReflectionClass($prefix . $controller);
 
-		try
-		{
-			if ( ! class_exists($prefix.$controller))
-			{
-				throw new HTTP_Exception_404('The requested URL :uri was not found on this server.',
-													array(':uri' => $request->uri()));
-			}
+            if ($class->isAbstract()) {
+                throw new Kohana_Exception('Cannot create instances of abstract :controller', [':controller' => $prefix . $controller]);
+            }
 
-			// Load the controller using reflection
-			$class = new ReflectionClass($prefix.$controller);
+            // Create a new instance of the controller
+            $controller = $class->newInstance($request, $response);
 
-			if ($class->isAbstract())
-			{
-				throw new Kohana_Exception('Cannot create instances of abstract :controller',
-					array(':controller' => $prefix.$controller));
-			}
+            // Run the controller's execute() method
+            $response = $class->getMethod('execute')->invoke($controller);
 
-			// Create a new instance of the controller
-			$controller = $class->newInstance($request, $request->response() ? $request->response() : $request->create_response());
+            if (!$response instanceof Response) {
+                // Controller failed to return a Response.
+                throw new Kohana_Exception('Controller failed to return a Response');
+            }
+        } catch (HTTP_Exception $e) {
+            // Store the request context in the Exception
+            if ($e->request() === null) {
+                $e->request($request);
+            }
 
-			$class->getMethod('before')->invoke($controller);
+            // Get the response via the Exception
+            $response = $e->get_response();
+        } catch (Exception $e) {
+            // Generate an appropriate Response object
+            $response = Kohana_Exception::_handler($e);
+        }
 
-			// Determine the action to use
-			$action = $request->action();
+        // Restore the previous request
+        Request::$current = $previous;
 
-			// If the action doesn't exist, it's a 404
-			if ( ! $class->hasMethod('action_'.$action))
-			{
-				throw new HTTP_Exception_404('The requested URL :uri was not found on this server.',
-													array(':uri' => $request->uri()));
-			}
+        if (isset($benchmark)) {
+            // Stop the benchmark
+            Profiler::stop($benchmark);
+        }
 
-			$method = $class->getMethod('action_'.$action);
-			$method->invoke($controller);
+        // Return the response
+        return $response;
+    }
 
-			// Execute the "after action" method
-			$class->getMethod('after')->invoke($controller);
-		}
-		catch (Exception $e)
-		{
-			// Restore the previous request
-			if ($previous instanceof Request)
-			{
-				Request::$current = $previous;
-			}
-
-			if (isset($benchmark))
-			{
-				// Delete the benchmark, it is invalid
-				Profiler::delete($benchmark);
-			}
-
-			// Re-throw the exception
-			throw $e;
-		}
-
-		// Restore the previous request
-		Request::$current = $previous;
-
-		if (isset($benchmark))
-		{
-			// Stop the benchmark
-			Profiler::stop($benchmark);
-		}
-
-		// Return the response
-		return $request->response();
-	}
-} // End Kohana_Request_Client_Internal
+}

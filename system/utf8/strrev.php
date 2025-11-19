@@ -1,4 +1,5 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
+
 /**
  * UTF8::strrev
  *
@@ -6,13 +7,13 @@
  * @author     Kohana Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2005 Harry Fuecks
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt
+ * @license    https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt
  */
-function _strrev($str)
+function _strrev($str): string
 {
-	if (UTF8::is_ascii($str))
-		return strrev($str);
+    if (UTF8::is_ascii($str))
+        return strrev($str);
 
-	preg_match_all('/./us', $str, $matches);
-	return implode('', array_reverse($matches[0]));
+    preg_match_all('/./us', $str, $matches);
+    return implode('', array_reverse($matches[0]));
 }

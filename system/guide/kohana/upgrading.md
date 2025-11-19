@@ -1,108 +1,46 @@
-# Migrating from 3.1.x
+# Upgrading from 3.4 to 3.5
 
-## Config
+## Requirements
 
-The configuration system has been rewritten to make it more flexible. The most significant change is that config groups are now merged across all readers, similar to how files cascade within the cascading filesystem. Therefore you can now override a single config value (perhaps a database connection string, or a 'send-from' email address) and store it in a separate config source (environment config file / database / custom) while inheriting the remaining settings from that group from your application's configuration files.
+Kohana 3.5 supports PHP versions 7.1, 7.2, and 7.3. Compatibility with other PHP versions has not been fully tested, and
+certain features may not function as expected.
 
-In other respects, the majority of the public API should still operate in the same way, however the one major change is the transition from using `Kohana::config()` to `Kohana::$config->load()`, where `Kohana::$config` is an instance of `Config`.
+## Dependency Management
 
-`Config::load()` works almost identically to `Kohana::config()`, e.g.:
+The `composer install` command is required for dependency installation since Kohana 3.4.4. Remember to run this command
+during upgrades.
 
-	Kohana::$config->load('dot.notation')
-	Kohana::$config->load('dot')->notation
+## Constants
 
-A simple find/replace for `Kohana::config`/`Kohana::$config->load` within your project should fix this.
+The global `EXT` constant has been removed. Explicitly specify `.php` or another file extension instead.
 
-The terminology for config sources has also changed.  Pre 3.2 config was loaded from "Config Readers" which both
-read and wrote config.  In 3.2 there are **Config Readers** and **Config Writers**, both of which are a type of 
-**Config Source**.
+## Arr
 
-A **Config Reader** is implemented by implementing the `Kohana_Config_Reader` interface; similarly a **Config Writer**
-is implemented by implementing the `Kohana_Config_Writer` interface.
+The `Arr::callback()` method now guarantees that the second element of the returned array (`$params`) is always an
+array, even when no parameters are provided. You can safely remove null checks for `$params` in your code.
 
-e.g. for Database:
+## Core
 
-	class Kohana_Config_Database_Reader implements Kohana_Config_Reader
-	class Kohana_Config_Database_Writer extends Kohana_Config_Database_Reader implements Kohana_Config_Writer
+- The `Kohana::CODENAME` constant has been removed.
+- The static property `Kohana::$magic_quotes` was deprecated.
 
-Although not enforced, the convention is that writers extend config readers.
+## Encrypt
 
-To help maintain backwards compatability when loading config sources empty classes are provided for the db/file sources
-which extends the source's reader/writer.
+The `Mcrypt` driver has been removed. Use the `OpenSSL` driver instead.
 
-e.g.
+## Request
 
-	class Kohana_Config_File extends Kohana_Config_File_Reader
-	class Kohana_Config_Database extends Kohana_Config_Database_Writer
+The `Request::accept_encoding()`, `Request::accept_lang()`, and `Request::accept_type()` methods have been removed. Use
+the header helper methods instead:
 
-## External requests
+- `$request->headers()->accepts_encoding_at_quality()` — returns the quality for a specific encoding. Retrieving the
+  full list of accepted encodings is not supported.
+- `$request->headers()->accepts_language_at_quality()` — returns the quality for a specific language. Retrieving the
+  full list of accepted languages is not supported.
+- `$request->headers()->accepts_at_quality()` — returns the quality for a specific MIME type. Retrieving the full list
+  of accepted content types is not supported.
 
-In Kohana 3.2, `Request_Client_External` now has three separate drivers to handle external requests;
+## UTF8
 
- - `Request_Client_Curl` is the default driver, using the PHP Curl extension
- - `Request_Client_HTTP` uses the PECL HTTP extension
- - `Request_Client_Stream` uses streams native to PHP and requires no extensions. However this method is slower than the alternatives.
-
-Unless otherwise specified, `Request_Client_Curl` will be used for all external requests. This can be changed for all external requests, or for individual requests.
-
-To set an external driver across all requests, add the following to the `application/bootstrap.php` file;
-
-    // Set all external requests to use PECL HTTP
-    Request_Client_External::$client = 'Request_Client_HTTP';
-
-Alternatively it is possible to set a specific client to an individual Request.
-
-    // Set the Stream client to an individual request and
-    // Execute
-    $response = Request::factory('http://kohanaframework.org')
-        ->client(new Request_Client_Stream)
-        ->execute();
-
-## HTTP cache control
-
-Kohana 3.1 introduced HTTP cache control, providing RFC 2616 fully compliant transparent caching of responses. Kohana 3.2 builds on this moving all caching logic out of `Request_Client` into `HTTP_Cache`.
-
-[!!] HTTP Cache requires the Cache module to be enabled in all versions of Kohana!
-
-In Kohana 3.1, HTTP caching was enabled doing the following;
-
-    // Apply cache to a request
-    $request = Request::factory('foo/bar', Cache::instance('memcache'));
-
-    // In controller, ensure response sets cache control,
-    // this will cache the response for one hour
-    $this->response->headers('cache-control', 
-        'public, max-age=3600');
-
-In Kohana 3.2, HTTP caching is enabled slightly differently;
-
-    // Apply cache to request
-    $request = Request::factory('foo/bar',
-        HTTP_Cache::factory('memcache'));
-
-    // In controller, ensure response sets cache control,
-    // this will cache the response for one hour
-    $this->response->headers('cache-control', 
-        'public, max-age=3600');
-
-## Controller Action Parameters
-
-In 3.1, controller action parameters were deprecated. In 3.2, these behavior has been removed. If you had any code like:
-
-	public function action_index($id)
-	{
-		// ... code
-	}
-
-You'll need to change it to:
-
-	public function action_index()
-	{
-		$id = $this->request->param('id');
-
-		// ... code
-	}
-
-## Form Class
-
-If you used Form::open(), the default behavior has changed. It used to default to "/" (your home page), but now an empty parameter will default to the current URI.
+The `UTF8::strlen()`, `UTF8::strpos()`, `UTF8::strrpos()`, `UTF8::substr()`, `UTF8::strtolower()`, `UTF8::strtoupper()`,
+and `UTF8::stristr()` methods were deprecated. Please use their equivalent multibyte string functions instead.

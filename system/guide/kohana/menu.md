@@ -1,7 +1,7 @@
 ## [Kohana]()
 
+- [Installation](install)
 - Getting Started
-   - [Installation](install)
    - [Conventions and Style](conventions)
    - [Model View Controller](mvc)
       - [Controllers](mvc/controllers)
@@ -24,6 +24,7 @@
    - [Debugging](debugging)
    - [Loading Classes](autoloading)
    - [Transparent Extension](extension)
+   - [Helpers](helpers)
    - [Requests](requests)
    - [Sessions](sessions)
    - [Cookies](cookies)
@@ -36,6 +37,9 @@
    - [Database](security/database)
    - [Encryption](security/encryption)
    - [Deploying](security/deploying)
-- [Tutorials](tutorials)
+- Tutorials
    - [Hello World](tutorials/hello-world)
+   - [Simple MVC](tutorials/simple-mvc)
    - [Custom Error Pages](tutorials/error-pages)
+   - [Clean URLs](tutorials/clean-urls)
+   - [Kohana as a Library](tutorials/library-kohana)
