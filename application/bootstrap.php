@@ -130,6 +130,7 @@ Kohana::modules([
 //    'orm' => MODPATH . 'orm', // Object Relationship Mapping
 //    'unittest' => MODPATH . 'unittest', // Unit testing
 //    'userguide' => MODPATH . 'userguide', // User guide and API documentation
+    'gleez' => MODPATH . 'gleez',
 	'user'        => MODPATH.'user',      // User and group Administration
 	'captcha'     => MODPATH.'captcha',   // Captcha implementation
 ]);
@@ -141,7 +142,7 @@ Kohana::modules([
  * If you have not defined a cookie salt in your Cookie class then
  * uncomment the line below and define a preferably long salt.
  */
-Cookie::$salt = null;
+Cookie::$salt = Kohana::$config->load('cookie')->get('salt');
 
 /**
  * Default path for uploads directory.
