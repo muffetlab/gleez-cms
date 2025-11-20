@@ -92,7 +92,7 @@ class Controller_Page extends Template {
 			return;
 		}
 
-		$config = Config::load('page');
+		$config = Kohana::$config->load('page');
 
 		$view = View::factory('page/list')
 					->set('teaser',      TRUE)
@@ -150,7 +150,7 @@ class Controller_Page extends Template {
 	public function action_view()
 	{
 		$id     = (int) $this->request->param('id', 0);
-		$config = Config::load('page');
+		$config = Kohana::$config->load('page');
 
 		$post = Post::dcache($id, 'page', $config);
 
@@ -234,7 +234,7 @@ class Controller_Page extends Template {
 		ACL::required('create page');
 
 		$this->title = __('Add Page');
-		$config = Config::load('page');
+		$config = Kohana::$config->load('page');
 
 		// Set form destination
 		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
@@ -318,7 +318,7 @@ class Controller_Page extends Template {
 		}
 
 		$this->title = $post->title;
-		$config = Config::load('page');
+		$config = Kohana::$config->load('page');
 
 		// Set form destination
 		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
@@ -471,7 +471,7 @@ class Controller_Page extends Template {
 	 */
 	public function action_term()
 	{
-		$config = Config::load('page');
+		$config = Kohana::$config->load('page');
 
 		if ( ! $config->use_category)
 		{
@@ -558,7 +558,7 @@ class Controller_Page extends Template {
 	 */
 	public function action_tag()
 	{
-		$config = Config::load('page');
+		$config = Kohana::$config->load('page');
 		$id     = (int) $this->request->param('id', 0);
 		$tag    = ORM::factory('tag', array('id' => $id, 'type' => 'page') );
 

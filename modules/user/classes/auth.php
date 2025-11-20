@@ -70,7 +70,7 @@ class Auth {
 		if ( ! isset(Auth::$_instance))
 		{
 			// Load the configuration for this type
-			$config = Config::load('auth');
+			$config = Kohana::$config->load('auth');
 
 			// Create a new session instance
 			Auth::$_instance = new Auth($config);
@@ -518,7 +518,7 @@ class Auth {
 	 */
 	public static function hashKey()
 	{
-		$config = Config::load('site');
+		$config = Kohana::$config->load('site');
 
 		if ( !($key = $config->get('auth_hash_key')) )
 		{

@@ -29,7 +29,7 @@ class Model_Page extends Post {
 	 */
 	public function save(Validation $validation = NULL)
 	{
-		$config = Config::load('page');
+		$config = Kohana::$config->load('page');
 		$this->status = empty($this->status) ? $config->get('default_status', 'draft') : $this->status;
 
 		if( ! $config->use_comment)

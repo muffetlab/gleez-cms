@@ -44,7 +44,7 @@ class Controller_Contact extends Template {
 	{
 		$this->title = __('Contact us');
 
-		$config = Config::load('contact');
+		$config = Kohana::$config->load('contact');
 
 		Assets::js('textareaCounter', 'media/js/jquery.textareaCounter.plugin.js', array('jquery'), FALSE, array('weight' => 10));
 		Assets::js('greet/form', 'media/js/greet.form.js', array('textareaCounter'), FALSE, array('weight' => 15));
@@ -96,7 +96,7 @@ class Controller_Contact extends Template {
 				$body = View::factory('email/contact')
 						->set('name',   $post['name'])
 						->set('body',   $post['body'])
-						->set('config', Config::load('site'))
+						->set('config', Kohana::$config->load('site'))
 						->render();
 
 				// Create an email message

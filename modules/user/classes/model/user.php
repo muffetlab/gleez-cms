@@ -834,7 +834,7 @@ class Model_User extends ORM {
 		$labels = $this->labels();
 		$rules  = $this->rules();
 
-		$config = Config::load('site');
+		$config = Kohana::$config->load('site');
 
 		$data = Validation::factory($data)
 			->rule('mail', 'not_empty')

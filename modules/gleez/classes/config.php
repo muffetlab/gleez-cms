@@ -121,7 +121,7 @@ class Config {
 	 *
 	 * Example:
 	 * ~~~
-	 * $array = Config::load($name);
+	 * $array = Kohana::$config->load($name);
 	 * ~~~
 	 *
 	 * See [Config] for more info

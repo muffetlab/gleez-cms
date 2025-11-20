@@ -23,7 +23,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 	{
 		if (empty($this->_items))
 		{
-			$config = Config::load('page');
+			$config = Kohana::$config->load('page');
 
 			// Cache is Empty so Re-Cache
 			$posts = ORM::factory('post')
@@ -78,7 +78,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 	{
 		if (empty($this->_items))
 		{
-			$config = Config::load($this->_type);
+			$config = Kohana::$config->load($this->_type);
 
 			$id  = $this->request->param('id', 0);
 			$tag = ORM::factory('tag', array('id' => $id, 'type' => $this->_type));
@@ -144,7 +144,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 	{
 		if (empty($this->_items))
 		{
-			$config = Config::load($this->_type);
+			$config = Kohana::$config->load($this->_type);
 
 			$id   = $this->request->param('id', 0);
 			$term = ORM::factory('term')

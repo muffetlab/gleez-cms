@@ -140,7 +140,7 @@ class HTMLFilter {
 			$this->benchmark = Profiler::start('Gleez Filter', __FUNCTION__);
 		}
 		// Load the configuration for this type
-		$config = Config::load('inputfilter');
+		$config = Kohana::$config->load('inputfilter');
 
 		if ($config->allowed_protocols AND is_array($config->allowed_protocols))
 		{

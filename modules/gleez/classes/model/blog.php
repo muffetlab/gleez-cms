@@ -34,7 +34,7 @@ class Model_Blog extends Post {
 	 */
 	public function save(Validation $validation = NULL)
 	{
-		$config = Config::load('blog');
+		$config = Kohana::$config->load('blog');
 		$this->status = empty($this->status) ? $config->get('default_status', 'draft') : $this->status;
 
 		if ( ! $config->use_comment)

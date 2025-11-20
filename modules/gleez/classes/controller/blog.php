@@ -92,7 +92,7 @@ class Controller_Blog extends Template {
 			return;
 		}
 
-		$config = Config::load('blog');
+		$config = Kohana::$config->load('blog');
 
 		$view = View::factory('blog/list')
 			->set('teaser',      TRUE)
@@ -148,7 +148,7 @@ class Controller_Blog extends Template {
 	public function action_view()
 	{
 		$id     = (int) $this->request->param('id', 0);
-		$config = Config::load('blog');
+		$config = Kohana::$config->load('blog');
 
 		$post = Post::dcache($id, 'blog', $config);
 
@@ -234,7 +234,7 @@ class Controller_Blog extends Template {
 		ACL::required('create blog');
 
 		$this->title = __('Add Blog');
-		$config = Config::load('blog');
+		$config = Kohana::$config->load('blog');
 
 		// Set form destination
 		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
@@ -319,7 +319,7 @@ class Controller_Blog extends Template {
 		}
 
 		$this->title = $post->title;
-		$config = Config::load('blog');
+		$config = Kohana::$config->load('blog');
 
 		// Set form destination
 		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
@@ -473,7 +473,7 @@ class Controller_Blog extends Template {
 	 */
 	public function action_term()
 	{
-		$config = Config::load('blog');
+		$config = Kohana::$config->load('blog');
 
 		if ( ! $config->use_category)
 		{
@@ -551,7 +551,7 @@ class Controller_Blog extends Template {
 	 */
 	public function action_tag()
 	{
-		$config = Config::load('blog');
+		$config = Kohana::$config->load('blog');
 		$id = (int) $this->request->param('id', 0);
 		$tag = ORM::factory('tag', array('id' => $id, 'type' => 'blog'));
 

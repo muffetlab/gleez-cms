@@ -77,7 +77,7 @@ class Controller_Admin_Page extends Controller_Admin {
 	{
 		$this->title = __('Page Settings');
 
-		$post     = Config::load('page');
+		$post     = Kohana::$config->load('page');
 		$action   = Route::get('admin/page')->uri(array('action' =>'settings'));
 		$vocabs   = array(__('none'));
 

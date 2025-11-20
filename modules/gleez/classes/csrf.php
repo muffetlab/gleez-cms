@@ -80,7 +80,7 @@ class CSRF {
 	 */
 	private static function _private_key()
 	{
-		$config = Config::load('site');
+		$config = Kohana::$config->load('site');
 
 		if ( !($key = $config->get('gleez_private_key')) )
 		{

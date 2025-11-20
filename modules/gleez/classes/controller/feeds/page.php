@@ -35,7 +35,7 @@ class Controller_Feeds_Page extends Controller_Feeds_Base {
 	{
 		if (empty($this->_items))
 		{
-			$config = Config::load('page');
+			$config = Kohana::$config->load('page');
 
 			// Cache is Empty so Re-Cache
 			$pages = ORM::factory('page')

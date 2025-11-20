@@ -218,7 +218,7 @@ class File extends SplFileInfo {
 	public static function mime_by_ext($extension)
 	{
 		// Load all of the mime types
-		$mimes = Config::load('mimes')->as_array();
+		$mimes = Kohana::$config->load('mimes')->as_array();
 
 		return isset($mimes[$extension]) ? $mimes[$extension][0] : FALSE;
 	}
@@ -233,7 +233,7 @@ class File extends SplFileInfo {
 	public static function mimes_by_ext($extension)
 	{
 		// Load all of the mime types
-		$mimes = Config::load('mimes')->as_array();
+		$mimes = Kohana::$config->load('mimes')->as_array();
 
 		return isset($mimes[$extension]) ? ( (array) $mimes[$extension]) : array();
 	}
@@ -252,7 +252,7 @@ class File extends SplFileInfo {
 		// Fill the static array
 		if (empty($types))
 		{
-			foreach (Config::load('mimes')->as_array() as $ext => $mimes)
+			foreach (Kohana::$config->load('mimes')->as_array() as $ext => $mimes)
 			{
 				foreach ($mimes as $mime)
 				{

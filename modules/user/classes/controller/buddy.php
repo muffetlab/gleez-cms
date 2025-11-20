@@ -21,7 +21,7 @@ class Controller_Buddy extends Template {
 			$this->request->redirect('user/login');
 		}
 
-		if ( Config::load('auth.enable_buddy', FALSE) == FALSE)
+		if ( Kohana::$config->load('auth.enable_buddy', FALSE) == FALSE)
 		{
 			// If user buddy disabled, we return not ofund.
 			throw HTTP_Exception::factory(404, __('Buddy not allowed'));

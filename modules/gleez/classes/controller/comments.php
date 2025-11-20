@@ -65,7 +65,7 @@ class Controller_Comments extends Controller {
 
 		// Get group settings
 		$group  = $this->request->param('group');
-		$config = Config::load($group);
+		$config = Kohana::$config->load($group);
 
 		$this->per_page = $config['comments_per_page'];
 		$this->config   = $config;

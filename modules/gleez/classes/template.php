@@ -242,7 +242,7 @@ abstract class Template extends Controller {
 		if($this->bare == FALSE)
 		{
 			// Load the config
-			$this->_config = Config::load('site');
+			$this->_config = Kohana::$config->load('site');
 
 			if (Kohana::$profiling)
 			{

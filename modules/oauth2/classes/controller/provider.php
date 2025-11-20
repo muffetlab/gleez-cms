@@ -91,7 +91,7 @@ class Controller_Provider extends Template {
 		$this->route = $this->request->route();
 
 		// Load the client config
-		$this->provider_config = Config::load("oauth2.providers.{$this->provider}");
+		$this->provider_config = Kohana::$config->load("oauth2.providers.{$this->provider}");
 		$this->client = OAuth2_Client::factory($this->provider, $this->provider_config['id'], $this->provider_config['secret']);
 
 		if ($token = $this->session->get($this->key('access')))

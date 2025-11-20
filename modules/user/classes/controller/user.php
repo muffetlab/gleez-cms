@@ -77,7 +77,7 @@ class Controller_User extends Template {
 		/** @var $post Model_User */
 		$post   = ORM::factory('user');
 		/** @var $config Config_Group */
-		$config = Config::load('auth');
+		$config = Kohana::$config->load('auth');
 
 		if ( ! $config->register)
 		{
@@ -249,7 +249,7 @@ class Controller_User extends Template {
 		$request  = FALSE;
 		$isFriend = FALSE;
 		$friends  = array();
-		$enable_buddy = (bool) Config::load('auth.enable_buddy', FALSE);
+		$enable_buddy = (bool) Kohana::$config->load('auth.enable_buddy', FALSE);
 
 		// Add Schema.org support
 		$this->schemaType = 'ProfilePage';

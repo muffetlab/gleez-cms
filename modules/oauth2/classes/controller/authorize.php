@@ -44,7 +44,7 @@ class Controller_Authorize extends Template {
 		parent::before();
 
 		// Load the oauth2 config
-		$this->config = Config::load('oauth2')->as_array();
+		$this->config = Kohana::$config->load('oauth2')->as_array();
 
 		// create array of supported response types
 		$this->responseTypes = array(

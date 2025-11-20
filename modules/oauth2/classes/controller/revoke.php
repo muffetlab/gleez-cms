@@ -23,7 +23,7 @@ class Controller_Revoke extends Template {
 		$this->auto_render = FALSE;
 
 		// Load the oauth2 config
-		$this->config = Config::load('oauth2')->as_array();
+		$this->config = Kohana::$config->load('oauth2')->as_array();
 	}
 	
 	public function action_index()

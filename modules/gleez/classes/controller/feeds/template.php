@@ -131,7 +131,7 @@ class Controller_Feeds_Template extends Controller {
 		$this->_offset = ($this->_page == 1) ? $this->_page : ($this->_page - 1) * $this->_limit;
 
 		// Getting settings
-		$this->_config = Config::load('site');
+		$this->_config = Kohana::$config->load('site');
 
 		// Getting site URL
 		$this->_site_url = $this->_config->get('site_url', URL::site(NULL, TRUE));

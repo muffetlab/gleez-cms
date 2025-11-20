@@ -43,7 +43,7 @@ class Theme {
 	 */
 	public static function load_themes()
 	{
-		$config       = Config::load('site');
+		$config       = Kohana::$config->load('site');
 		self::$themes = self::available(FALSE);
 
 		//set admin theme based on path info

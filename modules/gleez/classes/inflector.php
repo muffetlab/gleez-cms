@@ -114,7 +114,7 @@ class Inflector
 
         if (empty(static::$irregular)) {
             // Cache irregular words
-            static::$irregular = Config::load('inflector')->irregular;
+            static::$irregular = Kohana::$config->load('inflector')->irregular;
         }
 
         if ($irregular = array_search($str, static::$irregular)) {
@@ -188,7 +188,7 @@ class Inflector
 
         if (empty(static::$irregular)) {
             // Cache irregular words
-            static::$irregular = Config::load('inflector')->irregular;
+            static::$irregular = Kohana::$config->load('inflector')->irregular;
         }
 
         if (isset(static::$irregular[$str])) {

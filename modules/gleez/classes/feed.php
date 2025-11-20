@@ -62,7 +62,7 @@ abstract class Feed {
 		}
 
 		// Load site configuration
-		$config = Config::load('site')->as_array();
+		$config = Kohana::$config->load('site')->as_array();
 
 		// Create a new feed instance
 		$feed_class = 'Feed_'.ucfirst($driver);

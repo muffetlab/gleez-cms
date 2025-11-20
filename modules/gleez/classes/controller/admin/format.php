@@ -68,7 +68,7 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		// Get required format
 		$format = $this->_format->get($id);
-		$config = Config::load('inputfilter');
+		$config = Kohana::$config->load('inputfilter');
 
 		if (is_null($format))
 		{

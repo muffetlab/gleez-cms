@@ -47,7 +47,7 @@ class Tags {
 	public function __construct($config = array())
 	{
 		// Append default tags configuration
-		$config += Config::load('tags')->as_array();
+		$config += Kohana::$config->load('tags')->as_array();
 
 		// Save the config in the object
 		$this->config = $config;

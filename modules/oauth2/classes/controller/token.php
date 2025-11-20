@@ -31,7 +31,7 @@ class Controller_Token extends Controller
 		$this->auto_render = FALSE;
 
 		// Load the oauth2 config
-		$this->config = Config::load('oauth2')->as_array();
+		$this->config = Kohana::$config->load('oauth2')->as_array();
 
 		// create array of supported grant types
 		$this->grantTypes = array(
