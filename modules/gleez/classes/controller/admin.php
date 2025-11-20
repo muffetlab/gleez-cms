@@ -78,7 +78,7 @@ class Controller_Admin extends Template {
 		}			
 			
 		$view = View::factory('admin/login')
-			->set('use_username', Config::get('auth.username'))
+			->set('use_username', Kohana::$config->load('auth')->get('username'))
 			->set('post',         $user)
 			->set('action',       $action)
 			->bind('errors',      $this->_errors);

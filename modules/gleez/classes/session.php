@@ -82,7 +82,7 @@ abstract class Session {
 		if ( ! isset(Session::$instances[$type]))
 		{
 			// Load the configuration for this type
-			$config = Config::get("session.{$type}");
+			$config = Kohana::$config->load('session')->get($type);
 
 			// Set the session class name
 			$class = 'Session_'.ucfirst($type);

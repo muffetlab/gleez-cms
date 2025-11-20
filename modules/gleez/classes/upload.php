@@ -342,11 +342,11 @@ class Upload {
     {
     	if (is_null($upload_dir))
     	{
-    		$upload_dir = Config::get('media.upload_dir', 'media/pictures');
+    		$upload_dir = Kohana::$config->load('media')->get('upload_dir', 'media/pictures');
     	}
 
         $picture_path  = APPPATH . $upload_dir;
-        $valid_formats = Config::get('media.supported_image_formats', array('jpg', 'gif', 'png'));
+        $valid_formats = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'gif', 'png'));
         $save          = TRUE;
 
         if ( ! is_dir($picture_path))

@@ -61,7 +61,7 @@ class Codebench {
 	public function __construct()
 	{
 		// Set the maximum execution time
-		set_time_limit(Config::get('codebench.max_execution_time', static::DEFAULT_EXECUTION_TIME));
+		set_time_limit(Kohana::$config->load('codebench')->get('max_execution_time', static::DEFAULT_EXECUTION_TIME));
 	}
 
 	/**

@@ -69,10 +69,10 @@ class I18n {
 	public static function initialize()
 	{
 		// Installed Locales
-		self::$_languages = Config::get('site.installed_locales', array());
+		self::$_languages = Kohana::$config->load('site')->get('installed_locales', array());
 
 		// Allow the user or browser to override the default locale
-		$locale_override  = Config::get('site.locale_override', FALSE);
+		$locale_override  = Kohana::$config->load('site')->get('locale_override', FALSE);
 
 		// 1. Check the session specific preference (cookie)
 		$locale = I18n::cookieLocale();
@@ -104,7 +104,7 @@ class I18n {
 		// 6. Default locale
 		if(!$locale)
 		{
-			$locale = Config::get('site.locale', I18n::$default);
+			$locale = Kohana::$config->load('site')->get('locale', I18n::$default);
 		}
 
 		// Set the locale

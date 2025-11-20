@@ -411,7 +411,7 @@ class User {
 		// Merge attributes
 		$attrs = Arr::merge($attrs_default, $attrs);
 
-		$use_gravatar = Config::get('site.use_gravatars', FALSE);
+		$use_gravatar = Kohana::$config->load('site')->get('use_gravatars', FALSE);
 
 		if ($use_gravatar)
 		{

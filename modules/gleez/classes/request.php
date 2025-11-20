@@ -121,7 +121,7 @@ class Request extends Kohana_Request
 	 */
 	public static function get_post_max_size()
 	{
-		$max_size = Config::get('media.post_max_size', NULL);
+		$max_size = Kohana::$config->load('media')->get('post_max_size', NULL);
 
 		// Set post_max_size default value if it not exists
 		if (is_null($max_size))

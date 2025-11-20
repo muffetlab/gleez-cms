@@ -67,14 +67,14 @@ class Validation_Contact extends Validation {
 			),
 			'subject' => array(
 				array('not_empty'),
-				array('max_length', array(':value', Config::get('contact.subject_length', self::SUBJECT_LEN))),
+				array('max_length', array(':value', Kohana::$config->load('contact')->get('subject_length', self::SUBJECT_LEN))),
 			),
 			'category' => array(
 				array('not_empty'),
 			),
 			'body' => array(
 				array('not_empty'),
-				array('max_length', array(':value', Config::get('contact.body_length', self::BODY_LEN))),
+				array('max_length', array(':value', Kohana::$config->load('contact')->get('body_length', self::BODY_LEN))),
 			),
 		);
 	}

@@ -46,7 +46,7 @@ class Email {
 		$this->_mail = new PHPMailer($exceptions);
 
 		// Set some defaults
-		$this->_mail->setFrom(Config::get('site.site_email','webmaster@example.com'), Template::getSiteName());
+		$this->_mail->setFrom(Kohana::$config->load('site')->get('site_email','webmaster@example.com'), Template::getSiteName());
 		$this->_mail->WordWrap = 70;
 		$this->_mail->CharSet  = Kohana::$charset;
 		$this->_mail->XMailer  = Gleez::getVersion(FALSE, TRUE);

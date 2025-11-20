@@ -71,10 +71,10 @@ class Controller_Media extends Controller {
 			// This is ignored by check_cache
 			$this->response->headers('cache-control', 'public, max-age=2592000');
 			
-			if (Config::get('media.cache', FALSE))
+			if (Kohana::$config->load('media')->get('cache', FALSE))
 			{
 				// Set base path
-				$path = Config::get('media.public_dir', 'media');
+				$path = Kohana::$config->load('media')->get('public_dir', 'media');
 			
 				// Override path if we're in admin
 				if ($theme)

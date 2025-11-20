@@ -42,7 +42,7 @@ class Auth {
 		if ( ! Module::is_active('oauth2'))
 			return array();
 
-		$config    = Config::get('oauth2.providers', array());
+		$config    = Kohana::$config->load('oauth2')->get('providers', array());
 		$providers = array();
 
 		foreach($config as $name => $provider)

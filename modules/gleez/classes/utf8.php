@@ -188,7 +188,7 @@ class UTF8 {
 	 */
 	public static function toAscii($str, $asciiOnly = true)
 	{
-		$charMap = Config::get('ascii', array());
+		$charMap = Kohana::$config->load('ascii');
 		$charMap = is_object($charMap) ? $charMap->as_array() : $charMap;
 
 		$str = str_replace(array_keys($charMap), array_values($charMap), $str);

@@ -986,6 +986,6 @@ abstract class Template extends Controller {
 	 */
 	public static function getSiteName($default = 'Gleez CMS')
 	{
-		return Config::get('site.site_name', $default);
+		return Kohana::$config->load('site')->get('site_name', $default);
 	}
 }

@@ -160,7 +160,7 @@ class Theme {
 	 */
 	public static function available($title = true): array
 	{
-		$paths 	= (array) Config::get('site.theme_paths', [THEMEPATH]);
+		$paths 	= (array) Kohana::$config->load('site')->get('theme_paths', [THEMEPATH]);
 		$cache  = Cache::instance('themes');
 
         if (!$themes = $cache->get('themes', [])) {

@@ -711,7 +711,7 @@ class Text {
 			$info = array();
 
 			// Load browsers
-			$browsers = Config::get('user_agents.browser');
+			$browsers = Kohana::$config->load('user_agents')->get('browser');
 
 			foreach ($browsers as $search => $name)
 			{
@@ -738,7 +738,7 @@ class Text {
 		else
 		{
 			// Load the search group for this type
-			$group = Config::get("user_agents.{$value}");
+			$group = Kohana::$config->load('user_agents')->get($value);
 
 			foreach ($group as $search => $name)
 			{
@@ -1020,7 +1020,7 @@ class Text {
 			return $text;
 		}
 
-		$format_id = is_null($format_id) ? Config::get('inputfilter.default_format', 1) : $format_id;
+		$format_id = is_null($format_id) ? Kohana::$config->load('inputfilter')->get('default_format', 1) : $format_id;
 		$langcode  = is_null($langcode) ? I18n::$lang : $langcode;
 
 		// Check for a cached version of this piece of text.
@@ -1444,7 +1444,7 @@ class Text {
 
 		if ( ! $key)
 		{
-			$key = Config::get('site.gleez_private_key', sha1(uniqid(mt_rand(), true)) . md5(uniqid(mt_rand(), true)));
+			$key = Kohana::$config->load('site')->get('gleez_private_key', sha1(uniqid(mt_rand(), true)) . md5(uniqid(mt_rand(), true)));
 		}
 
 		$crypttext = mcrypt_encrypt(MCRYPT_GOST, $key, $string, MCRYPT_MODE_ECB);
@@ -1471,7 +1471,7 @@ class Text {
 
 		if ( ! $key)
 		{
-			$key = Config::get('site.gleez_private_key', sha1(uniqid(mt_rand(), true)) . md5(uniqid(mt_rand(), true)));
+			$key = Kohana::$config->load('site')->get('gleez_private_key', sha1(uniqid(mt_rand(), true)) . md5(uniqid(mt_rand(), true)));
 		}
 
 		$crypttext = static::safe_b64decode($string);

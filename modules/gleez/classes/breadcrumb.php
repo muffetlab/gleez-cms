@@ -130,8 +130,8 @@ class Breadcrumb
 		$view = View::factory(static::$default)
 					->set('items',         $this->items)
 					->set('items_count',   count($this->items))
-					->set('separator',     Config::get('breadcrumb.separator', '&nbsp;&gt;&nbsp;'))
-					->set('last_linkable', Config::get('breadcrumb.last_linkable', false));
+					->set('separator',     Kohana::$config->load('breadcrumb')->get('separator', '&nbsp;&gt;&nbsp;'))
+					->set('last_linkable', Kohana::$config->load('breadcrumb')->get('last_linkable', false));
 
 		return $view->render();
 	}

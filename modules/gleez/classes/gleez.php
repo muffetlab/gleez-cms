@@ -167,7 +167,7 @@ class Gleez {
 		}
 
 		// Set the default session type
-		Session::$default = Config::get('site.session_type');
+		Session::$default = Kohana::$config->load('site')->get('session_type');
 
 		// Initialize Gleez modules
 		Module::load_modules(FALSE);
@@ -239,8 +239,8 @@ class Gleez {
 	 */
 	public static function maintenance_mode()
 	{
-		$maintenance_mode = Config::get('site.maintenance_mode', FALSE);
-		$message          = Config::get('site.offline_message', FALSE);
+		$maintenance_mode = Kohana::$config->load('site')->get('maintenance_mode', FALSE);
+		$message          = Kohana::$config->load('site')->get('offline_message', FALSE);
 		$message          = (empty($message) OR ! $message) ? Gleez::MAINTENANCE_MESSAGE : $message;
 		$request          = Request::initial();
 
@@ -261,7 +261,7 @@ class Gleez {
 	 */
 	public static function block_ips()
 	{
-		$blocked_ips = Config::get('site.blocked_ips', NULL);
+		$blocked_ips = Kohana::$config->load('site')->get('blocked_ips', NULL);
 		$ip          = Request::$client_ip;
 
 		if ( ! empty($blocked_ips) AND in_array($ip, preg_split("/[\s,]+/",$blocked_ips)))
@@ -347,9 +347,9 @@ class Gleez {
 	protected static function _set_cookie()
 	{
 		/** @var Cookie::$salt string */
-		Cookie::$salt = Config::get('cookie.salt');
+		Cookie::$salt = Kohana::$config->load('cookie')->get('salt');
 
 		/** @var Cookie::$expiration string */
-		Cookie::$expiration = Config::get('cookie.lifetime');
+		Cookie::$expiration = Kohana::$config->load('cookie')->get('lifetime');
 	}
 }

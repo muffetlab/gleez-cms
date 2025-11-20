@@ -100,7 +100,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 		$terms = $vocab->select_list('id', 'name', '--');
 		$action = Route::get('admin/term')->uri(array('action' =>'add', 'id' => $vocab->id));
-		$allowed_types = Config::get('media.supported_image_formats', array('jpg', 'png', 'gif'));
+		$allowed_types = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'png', 'gif'));
 
 		$view = View::factory('admin/term/form')
 					->bind('vocab',  $vocab)
@@ -162,7 +162,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 		$action = Route::get('admin/term')->uri(array('action' =>'edit', 'id' => $term->id));
 		$terms = $term->select_list('id', 'name', '--');
-		$allowed_types = Config::get('media.supported_image_formats', array('jpg', 'png', 'gif'));
+		$allowed_types = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'png', 'gif'));
 
 		$view = View::factory('admin/term/form')
 				->bind('vocab',  $term)

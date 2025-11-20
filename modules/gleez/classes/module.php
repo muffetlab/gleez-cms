@@ -122,7 +122,7 @@ class Module
 		{
 			$upgrade = false;
 			$modules = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
-			$paths 	 = (array) Config::get('site.module_paths', array(MODPATH));
+			$paths 	 = (array) Kohana::$config->load('site')->get('module_paths', array(MODPATH));
 
 			// Make sure MODPATH is set else add last
 			if(!in_array(MODPATH, $paths)) {

@@ -54,7 +54,7 @@ class Controller_Client extends Template {
 		}
 		
 		$this->title = __('Oaclient Registration');
-		$grant_types = Config::get('oauth2.grant_types');
+		$grant_types = Kohana::$config->load('oauth2')->get('grant_types');
 		$view        = View::factory('client/form')->set('grant_types', $grant_types)->bind('oaclient', $oaclient)->bind('errors', $this->_errors);
 		
 		$oaclient = ORM::factory('oaclient');
@@ -155,7 +155,7 @@ class Controller_Client extends Template {
 		    }
 		}
 		
-		$grant_types    = Config::get('oauth2.grant_types');
+		$grant_types    = Kohana::$config->load('oauth2')->get('grant_types');
 		$this->title    = __('Edit oaclient');
 		$this->subtitle = Text::plain($oaclient->title);
 		$view           = View::factory('client/form')

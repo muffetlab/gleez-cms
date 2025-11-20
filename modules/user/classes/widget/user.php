@@ -45,8 +45,8 @@ class Widget_User extends Widget {
 		$action      = Route::get('user')->uri($params).URL::query(array('destination' => $destination));
 
 		return View::factory('widget/login')
-				->set('register',     Config::get('auth.register'))
-				->set('use_username', Config::get('auth.username'))
+				->set('register',     Kohana::$config->load('auth')->get('register'))
+				->set('use_username', Kohana::$config->load('auth')->get('username'))
 				->set('providers',    array_filter(Auth::providers()))
 				->set('action',       $action)
 				->set('post',         ORM::factory('user'))

@@ -84,14 +84,14 @@ class Model_User extends ORM {
 		return array(
 			'name' => array(
 				array('not_empty'),
-				array('min_length', array(':value', Config::get('auth.name.length_min', 4))),
-				array('max_length', array(':value', Config::get('auth.name.length_max', 32))),
-				array('regex', array(':value', '/^[' . Config::get('auth.name.chars', 'a-zA-Z0-9_\-\^\.') . ']+$/ui') ),
+				array('min_length', array(':value', Kohana::$config->load('auth')->get('name.length_min', 4))),
+				array('max_length', array(':value', Kohana::$config->load('auth')->get('name.length_max', 32))),
+				array('regex', array(':value', '/^[' . Kohana::$config->load('auth')->get('name.chars', 'a-zA-Z0-9_\-\^\.') . ']+$/ui') ),
 				array(array($this, 'unique'), array('name', ':value')),
 			),
 			'pass' => array(
 				array('not_empty'),
-				array('min_length', array(':value', Config::get('auth.password.length_min', 4))),
+				array('min_length', array(':value', Kohana::$config->load('auth')->get('password.length_min', 4))),
 			),
 			'mail' => array(
 				array('not_empty'),
@@ -456,7 +456,7 @@ class Model_User extends ORM {
 	public static function get_password_validation($values)
 	{
 		return Validation::factory($values)
-			->rule('pass', 'min_length', array(':value', Config::get('auth.password.length_min', 4)))
+			->rule('pass', 'min_length', array(':value', Kohana::$config->load('auth')->get('password.length_min', 4)))
 			->rule('pass_confirm', 'matches', array(':validation', ':field', 'pass'));
 	}
 
@@ -712,7 +712,7 @@ class Model_User extends ORM {
 		// Create an email message
 		$email = Email::factory()
 			->subject(__(':site - Validate account details for :name', array(
-				':site' => Config::get('site.site_name', 'Gleez CMS'),
+				':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'),
 				':name' => ($this->nick ? $this->nick : $this->name)
 			)))
 			->to($this->mail, $this->nick)
@@ -796,7 +796,7 @@ class Model_User extends ORM {
 			// Create an email message
 			$email = Email::factory()
 				->subject(__(':site - Account details for :name (approved)', array(
-					':site' => Config::get('site.site_name', 'Gleez CMS'),
+					':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'),
 					':name' => ($this->nick ? $this->nick : $this->name)
 				)))
 				->to($this->mail, $this->nick)
@@ -916,7 +916,7 @@ class Model_User extends ORM {
 			return FALSE;
 
 		// Confirmation link expired
-		if ($time + Config::get('site.reset_password_expiration', 86400) < time())
+		if ($time + Kohana::$config->load('site')->get('reset_password_expiration', 86400) < time())
 			return FALSE;
 
 		//clear any loaded object in memory

@@ -111,7 +111,7 @@ class Controller_Admin_User extends Controller_Admin {
 		{
 			$data = Validation::factory($this->request->post())
 				->rule('pass', 'not_empty')
-				->rule('pass', 'min_length', array(':value', Config::get('auth.password.length_min', 4)))
+				->rule('pass', 'min_length', array(':value', Kohana::$config->load('auth')->get('password.length_min', 4)))
 				->label('pass', __('Password'));
 
 			if ($data->check())
@@ -206,7 +206,7 @@ class Controller_Admin_User extends Controller_Admin {
 		if ($this->valid_post('user'))
 		{
 			$data = Validation::factory($this->request->post())
-				->rule('pass', 'min_length', array(':value', Config::get('auth.password.length_min', 4)))
+				->rule('pass', 'min_length', array(':value', Kohana::$config->load('auth')->get('password.length_min', 4)))
 				->label('pass', __('Password'));
 
 			if ($data->check())

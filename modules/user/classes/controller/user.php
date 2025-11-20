@@ -161,8 +161,8 @@ class Controller_User extends Template {
 		$action      = Route::get('user')->uri($params).URL::query(array('destination' => $destination));
 
 		$view = View::factory('user/login')
-			->set('register',     Config::get('auth.register'))
-			->set('use_username', Config::get('auth.username'))
+			->set('register',     Kohana::$config->load('auth')->get('register'))
+			->set('use_username', Kohana::$config->load('auth')->get('username'))
 			->set('providers',    array_filter(Auth::providers()))
 			->set('post',         $user)
 			->set('action',       $action)
@@ -436,7 +436,7 @@ class Controller_User extends Template {
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 		}
 
-		$allowed_types = Config::get('media.supported_image_formats', array('jpg', 'png', 'gif'));
+		$allowed_types = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'png', 'gif'));
 		$user = $this->_auth->get_user();
 		$this->title =  __('Upload Photo');
 

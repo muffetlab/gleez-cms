@@ -64,7 +64,7 @@ class Controller_Admin_Tool extends Controller_Admin {
 				->set('count', count($tables))
 				->set('space', $total_space);
 
-		$this->title = __('Database :sub', array(':sub' => '<small>('.Config::get('database.default.connection.database', NULL).')</small>'));
+		$this->title = __('Database :sub', array(':sub' => '<small>('.Kohana::$config->load('database')->get('default.connection.database', NULL).')</small>'));
 		$this->response->body($view);
 	}
 

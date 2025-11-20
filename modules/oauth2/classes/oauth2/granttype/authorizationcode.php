@@ -91,7 +91,7 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 	{
 		try
 		{
-			$issueRefreshToken = Config::get('oauth2.includeRefreshToken', true);
+			$issueRefreshToken = Kohana::$config->load('oauth2')->get('includeRefreshToken', true);
 			
 			return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope, $issueRefreshToken);
 		}

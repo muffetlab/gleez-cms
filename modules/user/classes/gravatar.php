@@ -132,7 +132,7 @@ class Gravatar {
 			if (is_null($config))
 			{
 				// Load the configuration
-				$config = Config::get('gravatar', array());
+				$config = Kohana::$config->load('gravatar');
 			}
 
 			// Create the Gravatar instance
@@ -343,7 +343,7 @@ class Gravatar {
 
 		foreach($this->_valid_formats as $format)
 		{
-			$valid_formats[$format] = Config::get("mimes.{$format}");
+			$valid_formats[$format] = Kohana::$config->load('mimes')->get($format);
 		}
 
 		$valid_types   = array();
