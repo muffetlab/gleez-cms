@@ -64,8 +64,7 @@ class Form {
 		$attrs['action'] = $action;
 
 		// Dynamically sets destination url to from action if exists in url
-		if (Kohana::$is_cli === FALSE AND $desti = Request::current()->query('destination') AND ! empty($desti))
-		{
+        if (PHP_SAPI !== 'cli' and $desti = Request::current()->query('destination') and !empty($desti)) {
 			// Properly parse the path and query
 			$url = URL::explode($action);
 

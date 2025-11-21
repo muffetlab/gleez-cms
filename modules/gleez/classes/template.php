@@ -251,8 +251,7 @@ abstract class Template extends Controller {
 			}
 
 			// Test whether the current request is command line request
-			if (Kohana::$is_cli)
-			{
+            if (PHP_SAPI === 'cli') {
 				$this->_ajax       = FALSE;
 				$this->auto_render = FALSE;
 			}
