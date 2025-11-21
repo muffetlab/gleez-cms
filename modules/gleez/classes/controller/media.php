@@ -25,23 +25,24 @@ class Controller_Media extends Controller {
 		
 		parent::before();
 	}
-	
-	/**
-	 * Static file serving (CSS, JS, images, etc.)
-	 *
-	 * @uses  Request::param
-	 * @uses  Request::uri
-	 * @uses  Kohana::find_file
-	 * @uses  Response::check_cache
-	 * @uses  Response::body
-	 * @uses  Response::headers
-	 * @uses  Response::status
-	 * @uses  File::mime_by_ext
-	 * @uses  File::getExt
-	 * @uses  Config::get
-	 * @uses  Log::add
-	 * @uses  System::mkdir
-	 */
+
+    /**
+     * Static file serving (CSS, JS, images, etc.)
+     *
+     * @throws Request_Exception
+     * @uses  Request::param
+     * @uses  Request::uri
+     * @uses  Kohana::find_file
+     * @uses  Response::check_cache
+     * @uses  Response::body
+     * @uses  Response::headers
+     * @uses  Response::status
+     * @uses  File::mime_by_ext
+     * @uses  File::getExt
+     * @uses  Config::get
+     * @uses  Log::add
+     * @uses  System::mkdir
+     */
 	public function action_serve()
 	{
 		// Get file theme from the request
@@ -59,7 +60,7 @@ class Controller_Media extends Controller {
 		if ($file_name = Kohana::find_file('media', $file, $ext))
 		{
 			// Check if the browser sent an "if-none-match: <etag>" header, and tell if the file hasn't changed
-			$this->response->check_cache(sha1($this->request->uri()) . filemtime($file_name), $this->request);
+            $this->check_cache(sha1($this->request->uri()) . filemtime($file_name));
 			
 			// Send the file content as the response
 			$this->response->body(file_get_contents($file_name));
