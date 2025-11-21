@@ -62,8 +62,8 @@ class Model_Comment extends ORM {
 	 *
 	 * @return  array  Rules
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'author' => array(
 				array('not_empty'),
@@ -98,8 +98,8 @@ class Model_Comment extends ORM {
 	 *
 	 * @return array Labels
 	 */
-	public function labels()
-	{
+	public function labels(): array
+    {
 		return array(
 			'title'       => __('Title'),
 			'body'        => __('Comment'),
@@ -122,8 +122,8 @@ class Model_Comment extends ORM {
 	 * @uses    Text::markup
 	 * @uses    Request::$client_ip
 	 */
-	public function save(Validation $validation = NULL)
-	{
+	public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		// Set some defaults
 		$this->updated = time();
 		$this->format = empty($this->format) ? Kohana::$config->load('inputfilter.default_format', 1) : $this->format;

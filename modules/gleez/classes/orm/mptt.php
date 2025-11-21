@@ -192,8 +192,8 @@ class ORM_MPTT extends ORM {
 	 * @param   Validation $validation  Validation object
 	 * @return  mixed
 	 */
-	public function save(Validation $validation = NULL)
-	{
+	public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		if ( ! $this->loaded())
 		{
 			return $this->make_root($validation);
@@ -402,8 +402,8 @@ class ORM_MPTT extends ORM {
 	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
 	 * @throws  Kohana_Exception
 	 */
-	public function delete($soft = FALSE)
-	{
+	public function delete($soft = FALSE): Kohana_ORM
+    {
 		// Start the transaction
 		$this->_db->begin();
 

@@ -54,8 +54,8 @@ class Model_Page extends Post {
 	 * @param   array  $expected  Array of keys to take from `$values` [Optional]
 	 * @return  ORM
 	 */
-	public function values(array $values, array $expected = NULL)
-	{
+	public function values(array $values, array $expected = NULL): Kohana_ORM
+    {
 		$this->type = $this->_post_type;
 
 		return parent::values($values, $expected);
@@ -93,8 +93,8 @@ class Model_Page extends Post {
 	 * @param   integer  $id  Row ID. The search criteria [Optional]
 	 * @return  integer
 	 */
-	public function count_all($id = NULL)
-	{
+	public function count_all($id = NULL): int
+    {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 
 		return parent::count_all($id);

@@ -46,8 +46,8 @@ class Model_Tag extends ORM {
 	 *
 	 * @return  array  Labels
 	 */
-	public function labels()
-	{
+	public function labels(): array
+    {
 		return array(
 			'name' => __('Tag'),
 			'type'  => __('Type'),
@@ -59,8 +59,8 @@ class Model_Tag extends ORM {
 	 *
 	 * @return  array  Rules
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'name' => array(
 				array('not_empty'),
@@ -75,8 +75,8 @@ class Model_Tag extends ORM {
 	 * @param   Validation  $validation  Validation object [Optional]
 	 * @return  ORM
 	 */
-	public function save(Validation $validation = NULL)
-	{
+	public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		parent::save( $validation );
 
 		if ( $this->loaded())
@@ -96,8 +96,8 @@ class Model_Tag extends ORM {
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-	public function delete($soft = FALSE)
-	{
+	public function delete($soft = FALSE): Kohana_ORM
+    {
 		if ( ! $this->_loaded)
 		{
 			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));

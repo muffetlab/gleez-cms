@@ -47,8 +47,8 @@ class Model_Path extends ORM {
 	 *
 	 * @return  array  Array of labels
 	 */
-	public function labels()
-	{
+	public function labels(): array
+    {
 		return array(
 			'source' => __('URL Path'),
 			'alias'  => __('Alias'),
@@ -61,8 +61,8 @@ class Model_Path extends ORM {
 	 *
 	 * @return  array  Rules
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'source' => array(
 				array('not_empty'),

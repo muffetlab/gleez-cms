@@ -25,8 +25,8 @@ class ORM_Versioned extends ORM {
 	 * @param   Validation  $validation  Validation object
 	 * @return  ORM
 	 */
-	public function update(Validation $validation = NULL)
-	{
+	public function update(Validation $validation = NULL): Kohana_ORM
+    {
 		if ( ! $this->_restore)
 		{
 			$this->_last_version = 1 + ($this->_last_version === NULL ? $this->_object['version'] : $this->_last_version);
@@ -152,8 +152,8 @@ class ORM_Versioned extends ORM {
 	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
 	 * @return  ORM
 	 */
-	public function delete($soft = FALSE)
-	{
+	public function delete($soft = FALSE): Kohana_ORM
+    {
 		if ( ! $this->_loaded)
 		{
 			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));

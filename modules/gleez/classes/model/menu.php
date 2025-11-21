@@ -47,8 +47,8 @@ class Model_Menu extends ORM_MPTT {
 	 *
 	 * @return  array  Rules
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'name' => array(
 				array(array($this, 'is_valid'), array(':validation', ':field')),
@@ -61,8 +61,8 @@ class Model_Menu extends ORM_MPTT {
 	 *
 	 * @return  array  Labels
 	 */
-	public function labels()
-	{
+	public function labels(): array
+    {
 		return array(
 			'title'  => __('Title'),
 			'name'   => __('Slug'),
@@ -129,8 +129,8 @@ class Model_Menu extends ORM_MPTT {
 	 * @param   Validation $validation Validation object
 	 * @return  ORM
 	 */
-	public function save(Validation $validation = NULL)
-	{
+	public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		$this->params = empty($this->params) ? NULL : serialize($this->params);
 
 		return parent::save( $validation );

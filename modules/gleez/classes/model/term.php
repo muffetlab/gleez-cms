@@ -83,8 +83,8 @@ class Model_Term extends ORM_MPTT {
 	 *
 	 * @return array Filters
 	 */
-	public function filters()
-	{
+	public function filters(): array
+    {
 		return array(
 			'image' => array(
 				array(array($this, 'uploadImage'))
@@ -97,8 +97,8 @@ class Model_Term extends ORM_MPTT {
 	 *
 	 * @return  array  Rules
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'name' => array(
 				array('not_empty'),
@@ -112,8 +112,8 @@ class Model_Term extends ORM_MPTT {
 	 * @param   Validation $validation Validation object [Optional]
 	 * @return  ORM
 	 */
-	public function save(Validation $validation = NULL)
-	{
+	public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		$this->type  = empty($this->type) ? 'post' : $this->type;
 
 		parent::save($validation);
@@ -134,8 +134,8 @@ class Model_Term extends ORM_MPTT {
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-	public function delete($soft = FALSE)
-	{
+	public function delete($soft = FALSE): Kohana_ORM
+    {
 		if ( ! $this->_loaded)
 		{
 			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.',

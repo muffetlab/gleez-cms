@@ -47,8 +47,8 @@ class Model_Widget extends ORM {
 	 *
 	 * @return  array  Rules
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'name' => array(
 				array('not_empty'),
@@ -62,8 +62,8 @@ class Model_Widget extends ORM {
 	 * @param   Validation $validation Validation object [Optional]
 	 * @return  ORM
 	 */
-	public function save(Validation $validation = NULL)
-	{
+	public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		if (is_array($this->roles) AND count($this->roles) > 0)
 		{
 			$this->roles = implode(',', $this->roles);
