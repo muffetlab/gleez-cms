@@ -20,7 +20,7 @@ class Controller_User extends Template {
 	 * The before() method is called before controller action
 	 *
 	 * @uses  Assets::css
-	 * @uses  Auth::get_user
+	 * @uses  Gleez_Auth::get_user
 	 * @uses  Request::uri
 	 * @uses  Request::action
 	 */
@@ -49,9 +49,9 @@ class Controller_User extends Template {
 	/**
 	 * Register a new user
 	 *
-	 * @uses    Auth::logged_in
-	 * @uses    Auth::instance
-	 * @uses    Auth::login
+	 * @uses    Gleez_Auth::logged_in
+	 * @uses    Gleez_Auth::instance
+	 * @uses    Gleez_Auth::login
 	 * @uses    Request::redirect
 	 * @uses    Request::action
 	 * @uses    Route::get
@@ -115,7 +115,7 @@ class Controller_User extends Template {
 				$post->signup($form);
 
 				// sign the user in
-				Auth::instance()->login($post->name, $post->pass);
+				Gleez_Auth::instance()->login($post->name, $post->pass);
 
 				Kohana::$log->add(Log::INFO, 'Account :title created successful.', array(':title' => $post->nick));
 				Message::success(__('Account %title created successful!', array('%title' => $post->nick)));
@@ -163,7 +163,7 @@ class Controller_User extends Template {
 		$view = View::factory('user/login')
 			->set('register',     Kohana::$config->load('auth')->get('register'))
 			->set('use_username', Kohana::$config->load('auth')->get('username'))
-			->set('providers',    array_filter(Auth::providers()))
+			->set('providers',    array_filter(Gleez_Auth::providers()))
 			->set('post',         $user)
 			->set('action',       $action)
 			->bind('errors',      $this->_errors);
@@ -195,7 +195,7 @@ class Controller_User extends Template {
 	/**
 	 * Log Out
 	 *
-	 * @uses  Auth::logout
+	 * @uses  Gleez_Auth::logout
 	 * @uses  Request::redirect
 	 * @uses  Route::get
 	 */
@@ -205,7 +205,7 @@ class Controller_User extends Template {
 		$this->auto_render = FALSE;
 
 		// Sign out the user
-		Auth::instance()->logout();
+		Gleez_Auth::instance()->logout();
 
 		// Redirect to the user account and then the signin page if logout worked as expected
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
@@ -235,7 +235,7 @@ class Controller_User extends Template {
 	 *
 	 * @throws  HTTP_Exception_403
 	 *
-	 * @uses    Auth::get_user
+	 * @uses    Gleez_Auth::get_user
 	 * @uses    ACL::check
 	 * @uses    Text::ucfirst
 	 * @uses    Assets::popup
@@ -264,7 +264,7 @@ class Controller_User extends Template {
 
 		if ($this->_auth->logged_in() AND $user->id > 1)
 		{
-			$account = Auth::instance()->get_user();
+			$account = Gleez_Auth::instance()->get_user();
 		}
 
 		if ($account AND $account->id == $user->id)
@@ -315,7 +315,7 @@ class Controller_User extends Template {
 	 * @uses  Request::redirect
 	 * @uses  Route::get
 	 * @uses  Route::uri
-	 * @uses  Auth::get_user
+	 * @uses  Gleez_Auth::get_user
 	 * @uses  Message::success
 	 * @uses  Arr::merge
 	 * @uses  Arr::get
@@ -377,7 +377,7 @@ class Controller_User extends Template {
 	 *
 	 * @uses  Request::redirect
 	 * @uses  Route::get
-	 * @uses  Auth::get_user
+	 * @uses  Gleez_Auth::get_user
 	 * @uses  Message::success
 	 */
 	public function action_password()
@@ -388,7 +388,7 @@ class Controller_User extends Template {
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 200);
 		}
 
-		$user = Auth::instance()->get_user();
+		$user = Gleez_Auth::instance()->get_user();
 		$this->title =  __('Change Password');
 		$destination = Request::initial()->uri();
 		$params = array('action' => $this->request->action());

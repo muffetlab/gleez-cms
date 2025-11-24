@@ -11,7 +11,7 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class Auth extends Kohana_Auth
+class Gleez_Auth extends Auth
 {
 	/**
 	 * Get enabled oAuth2 providers
@@ -105,10 +105,10 @@ class Auth extends Kohana_Auth
 	 * Check if there is an active session. Optionally allows checking for a
 	 * specific role.
 	 *
-	 * @param   string  $role  Role name [Optional]
+	 * @param string|null $role  Role name [Optional]
 	 * @return  boolean
 	 */
-	public function logged_in($role = NULL): bool
+	public function logged_in(string $role = null): bool
     {
 		static $roles;
 
@@ -152,8 +152,8 @@ class Auth extends Kohana_Auth
 	 * @param   mixed   username string, or user ORM object
 	 * @return  string
 	 */
-	public function password($user)
-	{
+	public function password($user): string
+    {
 		if ( ! is_object($user))
 		{
 			$username = $user;
@@ -170,10 +170,10 @@ class Auth extends Kohana_Auth
 	 * Compare password with original (hashed). Works for current (logged in) user
 	 *
 	 * @param   string  $password
-	 * @return  boolean
+	 * @return  bool
 	 */
-	public function check_password($password)
-	{
+	public function check_password($password): bool
+    {
 		$user_model = $this->get_user();
 		$user = $user_model->original_values();
 
@@ -227,10 +227,10 @@ class Auth extends Kohana_Auth
 	 * Forces a user to be logged in, without specifying a password.
 	 *
 	 * @param   mixed    username string, or user ORM object
-	 * @param   boolean  mark the session as forced
+	 * @param   bool $mark_session_as_forced mark the session as forced
 	 * @return  boolean
 	 */
-	public function force_login($user, $mark_session_as_forced = FALSE)
+	public function force_login($user, bool $mark_session_as_forced = false)
 	{
 		if ( ! is_object($user))
 		{
@@ -288,11 +288,11 @@ class Auth extends Kohana_Auth
 	/**
 	 * Log out a user by removing the related session variables.
 	 *
-	 * @param   boolean  $destroy     Completely destroy the session [Optional]
-	 * @param   boolean  $logout_all  Remove all tokens for user [Optional]
+	 * @param bool $destroy     Completely destroy the session [Optional]
+	 * @param bool $logout_all  Remove all tokens for user [Optional]
 	 * @return  boolean
 	 */
-	public function logout($destroy = FALSE, $logout_all = FALSE): bool
+	public function logout(bool $destroy = false, bool $logout_all = false): bool
     {
 		// Set by force_login()
 		$this->_session->delete('auth_forced');
@@ -339,10 +339,10 @@ class Auth extends Kohana_Auth
 	 * @param   string   username
 	 * @param   string   password
 	 * @param   boolean  enable autologin
-	 * @return  boolean
+	 * @return  bool
 	 */
-	protected function _login($user, $password, $remember)
-	{
+	protected function _login($user, $password, $remember): bool
+    {
 		if ( ! is_object($user))
 		{
 			$username = $user;

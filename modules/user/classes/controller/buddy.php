@@ -32,7 +32,7 @@ class Controller_Buddy extends Template {
 
 	public function action_index()
 	{
-		$account  = Auth::instance()->get_user();
+		$account  = Gleez_Auth::instance()->get_user();
 		$id 	  = (int) $this->request->param('id', $account->id);
 		$is_owner = FALSE;
 
@@ -89,7 +89,7 @@ class Controller_Buddy extends Template {
 
 		if ($this->_auth->logged_in())
 		{
-			$account = Auth::instance()->get_user();
+			$account = Gleez_Auth::instance()->get_user();
 		}
 
 		if ($account AND ($user->id === $account->id))
@@ -140,7 +140,7 @@ class Controller_Buddy extends Template {
 		
 		if ($this->_auth->logged_in())
 		{
-			$account = Auth::instance()->get_user();
+			$account = Gleez_Auth::instance()->get_user();
 		}
 		if ($account AND ($user->id === $account->id))
 		{
@@ -179,7 +179,7 @@ class Controller_Buddy extends Template {
 	{
 		$id      = (int) $this->request->param('id');
 		$invitee = ORM::factory('user', $id);
-		$account = Auth::instance()->get_user();
+		$account = Gleez_Auth::instance()->get_user();
 
 		if ( ! $invitee->loaded() )
 		{
@@ -256,7 +256,7 @@ class Controller_Buddy extends Template {
 	{
 		$id      = (int) $this->request->param('id');
 		$friend  = ORM::factory('user', $id);
-		$account = Auth::instance()->get_user();
+		$account = Gleez_Auth::instance()->get_user();
 
 		if ( ! $friend->loaded())
 		{
