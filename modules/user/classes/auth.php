@@ -11,26 +11,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class Auth {
-
-	/**
-	 * Auth instances
-	 * @var string
-	 */
-	protected static $_instance;
-
-	/**
-	 * Kohana session object
-	 * @var object
-	 */
-	protected $_session;
-
-	/**
-	 * Kohana config object
-	 * @var object
-	 */
-	protected $_config;
-
+class Auth extends Kohana_Auth
+{
 	/**
 	 * Get enabled oAuth2 providers
 	 * @return array
@@ -58,33 +40,6 @@ class Auth {
 		}
 
 		return $providers;
-	}
-
-	/**
-	 * Singleton pattern
-	 *
-	 * @return Auth
-	 */
-	public static function instance()
-	{
-		if ( ! isset(Auth::$_instance))
-		{
-			// Load the configuration for this type
-			$config = Kohana::$config->load('auth');
-
-			// Create a new session instance
-			Auth::$_instance = new Auth($config);
-		}
-
-		return Auth::$_instance;
-	}
-
-	public function __construct($config = array())
-	{
-		// Save the config in the object
-		$this->_config = $config;
-
-		$this->_session = Session::instance();
 	}
 
 	/**
@@ -153,8 +108,8 @@ class Auth {
 	 * @param   string  $role  Role name [Optional]
 	 * @return  boolean
 	 */
-	public function logged_in($role = NULL)
-	{
+	public function logged_in($role = NULL): bool
+    {
 		static $roles;
 
 		// Get the user from the session
@@ -187,67 +142,8 @@ class Auth {
 
 			return TRUE;
 		}
-	}
 
-	/**
-	 * Creates a hashed hmac password from a plaintext password. This
-	 * method is deprecated, [Auth::hash] should be used instead.
-	 *
-	 * @deprecated
-	 * @param   string  $password  Plaintext password
-	 * @return  string
-	 */
-	public function hash_password($password)
-	{
-		return $this->hash($password);
-	}
-
-	/**
-	 * Perform a hmac hash, using the configured method.
-	 *
-	 * @param   string  $str  String to hash
-	 * @return  string
-	 */
-	public function hash($str)
-	{
-		$key = self::hashKey();
-
-		return hash_hmac($this->_config['hash_method'], $str, $key);
-	}
-
-	/**
-	 * Attempt to log in a user by using an ORM object and plain-text password.
-	 *
-	 * @param   string   $username  Username to log in
-	 * @param   string   $password  Password to check against
-	 * @param   boolean  $remember  Enable autologin [Optional]
-	 * @return  boolean
-	 */
-	public function login($username, $password, $remember = FALSE)
-	{
-		if (empty($password))
-		{
-			return FALSE;
-		}
-
-		return $this->_login($username, $password, $remember);
-	}
-
-	/**
-	 * Allows a model use email, username and OAuth provider id as unique identifiers for login
-	 *
-	 * @param   string  $value           Unique value
-	 * @param   string  $oauth_provider  OAuth provider name [Optional]
-	 * @return  string  field name
-	 */
-	public function unique_key($value, $oauth_provider = NULL)
-	{
-		if ($oauth_provider)
-		{
-			return $oauth_provider.'_id';
-		}
-
-		return Valid::email($value) ? 'mail' : 'name';
+        return true;
 	}
 
 	/**
@@ -396,8 +292,8 @@ class Auth {
 	 * @param   boolean  $logout_all  Remove all tokens for user [Optional]
 	 * @return  boolean
 	 */
-	public function logout($destroy = FALSE, $logout_all = FALSE)
-	{
+	public function logout($destroy = FALSE, $logout_all = FALSE): bool
+    {
 		// Set by force_login()
 		$this->_session->delete('auth_forced');
 
@@ -496,8 +392,8 @@ class Auth {
 	 * @param   object  user ORM object
 	 * @return  void
 	 */
-	protected function complete_login($user)
-	{
+	protected function complete_login($user): bool
+    {
 		$user->complete_login();
 
 		// Regenerate session_id
@@ -508,25 +404,4 @@ class Auth {
 
 		return TRUE;
 	}
-
-	/**
-	 * Ensure the hash key variable used for Auth.
-	 *
-	 * @return  string  The hash key.
-	 *
-	 * @uses    Config::load
-	 */
-	public static function hashKey()
-	{
-		$config = Kohana::$config->load('site');
-
-		if ( !($key = $config->get('auth_hash_key')) )
-		{
-			$key = sha1(uniqid(mt_rand(), TRUE)) . md5(uniqid(mt_rand(), TRUE));
-			$config->set('auth_hash_key', $key);
-		}
-
-		return $key;
-	}
-
 }

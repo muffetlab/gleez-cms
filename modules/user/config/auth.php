@@ -9,6 +9,8 @@
  */
 return array
 (
+    'driver' => 'ORM',
+
 	/**
 	 * Type of hash to use for passwords.
 	 * Any algorithm supported by the hash function can be used here.
