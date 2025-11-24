@@ -60,7 +60,7 @@ class Controller_Admin_Setting extends Controller_Admin {
 				}
 			}
 
-			Log::info('Site configuration updated.');
+			Kohana::$log->add(Log::INFO, 'Site configuration updated.');
 			Message::success(__('Site configuration updated!'));
 
 			$this->request->redirect(Route::get('admin/setting')->uri());

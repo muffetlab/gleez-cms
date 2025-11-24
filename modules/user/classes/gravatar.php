@@ -458,7 +458,7 @@ class Gravatar {
 		{
 			if ( ! System::mkdir($this->_store_location))
 			{
-				Log::warning("Can't create location :loc1 for picture downloading. Current location: :loc2",
+				Kohana::$log->add(Log::WARNING, "Can't create location :loc1 for picture downloading. Current location: :loc2",
 					array(':loc1' => $this->_store_location, ':loc2' => sys_get_temp_dir())
 				);
 				$this->_store_location = sys_get_temp_dir();

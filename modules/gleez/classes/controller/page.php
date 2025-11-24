@@ -87,7 +87,7 @@ class Controller_Page extends Template {
 
 		if ($total == 0)
 		{
-			Log::info('No posts found.');
+			Kohana::$log->add(Log::INFO, 'No posts found.');
 			$this->response->body( View::factory('page/none') );
 			return;
 		}
@@ -274,7 +274,7 @@ class Controller_Page extends Template {
 			{
 				$post->values($_POST)->save();
 
-				Log::info('Page :title created.', array(':title' => $post->title));
+				Kohana::$log->add(Log::INFO, 'Page :title created.', array(':title' => $post->title));
 				Message::success(__('Page %title created', array('%title' => $post->title)));
 
 				$this->request->redirect($post->url);
@@ -360,7 +360,7 @@ class Controller_Page extends Template {
 			{
 				$post->values($_POST)->save();
 
-				Log::info('Page: :title updated.', array(':title' => $post->title));
+				Kohana::$log->add(Log::INFO, 'Page: :title updated.', array(':title' => $post->title));
 				Message::success(__('Page %title updated', array('%title' => $post->title)));
 
 				$this->request->redirect(empty($destination) ? $post->url : $this->request->query('destination'));
@@ -434,12 +434,12 @@ class Controller_Page extends Template {
 				$title = $post->title;
 				$post->delete();
 
-				Log::info('Page: :title deleted.', array(':title' => $title));
+				Kohana::$log->add(Log::INFO, 'Page: :title deleted.', array(':title' => $title));
 				Message::success(__('Page: :title deleted successful!', array(':title' => $title)));
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting page id: :id, :msg',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting page id: :id, :msg',
 					array(':id' => $post->id, ':msg' => $e->getMessage())
 				);
 				Message::error(__('An error occurred deleting page %post',array('%post' => $post->title)));
@@ -506,7 +506,7 @@ class Controller_Page extends Template {
 
 		if ($total == 0)
 		{
-			Log::info('No posts found.');
+			Kohana::$log->add(Log::INFO, 'No posts found.');
 			$this->response->body(View::factory('page/none'));
 			return;
 		}
@@ -586,7 +586,7 @@ class Controller_Page extends Template {
 
 		if ($total == 0)
 		{
-			Log::info('No posts found.');
+			Kohana::$log->add(Log::INFO, 'No posts found.');
 			$this->response->body(View::factory('page/none'));
 			return;
 		}

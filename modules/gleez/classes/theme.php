@@ -99,7 +99,7 @@ class Theme {
 			}
 			else
 			{
-				Log::error('Missing site theme: :theme', array(':theme' => Theme::$active) );
+				Kohana::$log->add(Log::ERROR, 'Missing site theme: :theme', array(':theme' => Theme::$active) );
 			}
 		}
 

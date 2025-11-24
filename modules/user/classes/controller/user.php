@@ -117,7 +117,7 @@ class Controller_User extends Template {
 				// sign the user in
 				Auth::instance()->login($post->name, $post->pass);
 
-				Log::info('Account :title created successful.', array(':title' => $post->nick));
+				Kohana::$log->add(Log::INFO, 'Account :title created successful.', array(':title' => $post->nick));
 				Message::success(__('Account %title created successful!', array('%title' => $post->nick)));
 
 				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')));
@@ -177,7 +177,7 @@ class Controller_User extends Template {
 
 				// If the post data validates using the rules setup in the user model
 				Message::success(__('Welcome, %title!', array('%title' => $user->nick)));
-				Log::info('User :name logged in.', array(':name' => $user->name));
+				Kohana::$log->add(Log::INFO, 'User :name logged in.', array(':name' => $user->name));
 
 				// redirect to the user account
 				$this->request->redirect(isset($_GET['destination']) ? $_GET['destination'] :'', 200);
@@ -256,7 +256,7 @@ class Controller_User extends Template {
 
 		if ( ! $user->loaded())
 		{
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 
 			// No user is currently logged in
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
@@ -530,7 +530,7 @@ class Controller_User extends Template {
 				$this->_user->reset_password($_POST);
 
 				Message::success(__('Instructions to reset your password are being sent to your email address %mail.', array('%mail' => $_POST['mail'])));
-				Log::info('Password reset instructions mailed to :name at :mail.',
+				Kohana::$log->add(Log::INFO, 'Password reset instructions mailed to :name at :mail.',
 					array(':name' => $this->_user->name, ':mail' => $_POST['mail'])
 				);
 

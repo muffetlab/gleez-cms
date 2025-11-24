@@ -332,7 +332,7 @@ class Upload {
      *
      * @uses    System::mkdir
      * @uses    Message::error
-     * @uses    Log::error
+     * @uses    Log::ERROR
      * @uses    Upload::valid
      * @uses    Upload::save
      * @uses    Config::get
@@ -355,7 +355,7 @@ class Upload {
             {
                 Message::error(__('Failed to create directory %dir for uploading picture.'));
 
-                Log::error('Failed to create directory :dir for uploading picture.',
+                Kohana::$log->add(Log::ERROR, 'Failed to create directory :dir for uploading picture.',
                     array(':dir' => $picture_path)
                 );
 

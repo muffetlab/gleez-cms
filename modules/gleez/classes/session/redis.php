@@ -72,7 +72,7 @@ class Session_Redis extends Session {
 			$this->_redis = new Redis;
 			$this->_redis->connect($this->_host, $this->_port);
 		} catch (Exception $e) {
-			Log::error('An error occurred connecting Redis Session: [:error]', [':error' => $e->getMessage()]);
+			Kohana::$log->add(Log::ERROR, 'An error occurred connecting Redis Session: [:error]', [':error' => $e->getMessage()]);
 		}
 
 		parent::__construct($config, $id);

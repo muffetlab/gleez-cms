@@ -253,7 +253,7 @@ class Filter {
 			}
 			catch (Exception $e)
 			{
-				Log::error('Filter callback response :msg for filter: :filter',
+				Kohana::$log->add(Log::ERROR, 'Filter callback response :msg for filter: :filter',
 					array(':msg' => $e->getMessage(), 'filter' => $filter['name'])
 				);
 

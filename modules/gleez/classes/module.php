@@ -53,7 +53,7 @@ class Module
 		$module->save();
 
 		if (Kohana::$environment === Kohana::DEVELOPMENT) {
-			Log::debug(':name : version is now :version', array(':name' => $name, ':version' => $version));
+			Kohana::$log->add(Log::DEBUG, ':name : version is now :version', array(':name' => $name, ':version' => $version));
 		}
 	}
 
@@ -263,7 +263,7 @@ class Module
 		// Now the module is installed but inactive, so don't leave it in the active path
 		self::_remove_from_path($module_name);
 
-		Log::info('Installed module :module_name', array(':module_name' => $module_name));
+		Kohana::$log->add(Log::INFO, 'Installed module :module_name', array(':module_name' => $module_name));
 	}
 
 	private static function _add_to_path($module)
@@ -351,7 +351,7 @@ class Module
 
 		$version_after = self::get_version($module_name);
 		if ($version_before != $version_after) {
-			Log::info('Upgraded module :module from :before to :after',
+			Kohana::$log->add(Log::INFO, 'Upgraded module :module from :before to :after',
 				array(':module' => $module_name, ':before' => $version_before, ':after' => $version_after)
 			);
 		}
@@ -397,7 +397,7 @@ class Module
 			//Widget::activate($module_name);
 			//Menu_Item::rebuild(true);
 
-			Log::info('Activated module :module_name', array(':module_name' => $module->title));
+			Kohana::$log->add(Log::INFO, 'Activated module :module_name', array(':module_name' => $module->title));
 
 			unset($module, $amodule);
 		}
@@ -430,7 +430,7 @@ class Module
 
 		self::load_modules(true);
 
-		Log::info('Deactivated module :module_name', array(':module_name' => $module_name));
+		Kohana::$log->add(Log::INFO, 'Deactivated module :module_name', array(':module_name' => $module_name));
 	}
 
 	/**
@@ -461,7 +461,7 @@ class Module
 		// remove widgets when the module is uninstalled
 		Widgets::uninstall($module_name);
 
-		Log::info('Uninstalled module :module_name', array(':module_name' => $module_name));
+		Kohana::$log->add(Log::INFO, 'Uninstalled module :module_name', array(':module_name' => $module_name));
 	}
 
 	/**

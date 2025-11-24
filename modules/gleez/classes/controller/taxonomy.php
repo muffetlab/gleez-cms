@@ -51,7 +51,7 @@ class Controller_Taxonomy extends Template {
 
 		if ($total == 0)
 		{
-			Log::error('No posts found.');
+			Kohana::$log->add(Log::ERROR, 'No posts found.');
 			$this->response->body( View::factory('page/none'));
 			return;
 		}

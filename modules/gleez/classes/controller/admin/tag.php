@@ -125,7 +125,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 
 		if ( ! $post->loaded())
 		{
-			Log::error('Attempt to access non-existent tag.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent tag.');
 			Message::error(__("Tag doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/tag')->uri(), 404);
@@ -140,7 +140,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 			{
 				$post->save();
 
-				Log::info('Tag :name saved successful.', array(':name' => $post->name));
+				Kohana::$log->add(Log::INFO, 'Tag :name saved successful.', array(':name' => $post->name));
 				Message::success(__('Tag %name saved successful!', array('%name' => $post->name)));
 
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
@@ -176,7 +176,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 
 		if ( ! $tag->loaded())
 		{
-			Log::error('Attempt to access non-existent tag.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent tag.');
 			Message::error(__("Tag doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/tag')->uri(), 404);
@@ -205,7 +205,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting tag id: :id, :msg',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting tag id: :id, :msg',
 					array(':id' => $tag->id, ':msg' => $e->getMessage())
 				);
 				Message::error('An error occurred deleting tag %tag',array('%tag' => $tag->name));

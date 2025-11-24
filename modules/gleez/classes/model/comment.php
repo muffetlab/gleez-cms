@@ -438,7 +438,7 @@ class Model_Comment extends ORM {
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
-			Log::notice('Unauthorised attempt to access non-existent action :act.',
+			Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to access non-existent action :act.',
 				array(':act' => $action)
 			);
 			return FALSE;
@@ -479,7 +479,7 @@ class Model_Comment extends ORM {
 			}
 			else
 			{
-				Log::notice('Unauthorised attempt to view comment :post.',
+				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to view comment :post.',
 					array(':post' => $this->id)
 				);
 				return FALSE;
@@ -499,7 +499,7 @@ class Model_Comment extends ORM {
 			}
 			else
 			{
-				Log::notice('Unauthorised attempt to edit comment :post.',
+				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to edit comment :post.',
 					array(':post' => $this->id)
 				);
 				return FALSE;
@@ -520,7 +520,7 @@ class Model_Comment extends ORM {
 			}
 			else
 			{
-				Log::notice('Unauthorised attempt to delete comment :post.',
+				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to delete comment :post.',
 					array(':post' => $this->id)
 				);
 				return FALSE;

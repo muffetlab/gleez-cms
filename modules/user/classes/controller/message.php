@@ -217,7 +217,7 @@ class Controller_Message extends Template {
 					'sent'      => $sent
 				))->save();
 
-				Log::info('Message :id successfully :act.', array(':id' => $message->id, ':act' => $act));
+				Kohana::$log->add(Log::INFO, 'Message :id successfully :act.', array(':id' => $message->id, ':act' => $act));
 				Message::success(__('Message successfully :act.', array(':act' => $act)));
 
 				// Redirect to Inbox
@@ -281,12 +281,12 @@ class Controller_Message extends Template {
 				$id    = $message->id;
 				$message->delete();
 
-				Log::info('Message :id deleted.', array(':id' => $id));
+				Kohana::$log->add(Log::INFO, 'Message :id deleted.', array(':id' => $id));
 				Message::success(__('Message %title deleted successful!', array('%title' => $title)));
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting message id: :id, :msg',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting message id: :id, :msg',
 					array(':id' => $message->id, ':msg' => $e->getMessage())
 				);
 				Message::error(__('An error occurred deleting message %title',array('%title' => $message->subject)));
@@ -394,7 +394,7 @@ class Controller_Message extends Template {
 			catch( Exception $e)
 			{
 				Message::error(__('The update has not been performed!'));
-				Log::error('Message updates failed: '.$e->getMessage());
+				Kohana::$log->add(Log::ERROR, 'Message updates failed: '.$e->getMessage());
 			}
 		}
 

@@ -389,7 +389,7 @@ abstract class Template extends Controller {
 
 		if (Kohana::$environment === Kohana::DEVELOPMENT)
 		{
-			Log::debug('Executing Controller [:controller] action [:action]',
+			Kohana::$log->add(Log::DEBUG, 'Executing Controller [:controller] action [:action]',
 				array(
 					':controller' => $this->request->controller(),
 					':action'     => $this->request->action(),

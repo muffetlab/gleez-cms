@@ -25,7 +25,7 @@ class Controller_Tag extends Template {
 	public function action_list()
 	{
 		// @todo
-		Log::error('Attempt to access disabled feature.');
+		Kohana::$log->add(Log::ERROR, 'Attempt to access disabled feature.');
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Controller_Tag extends Template {
 
 		if ($total == 0)
 		{
-			Log::info('No posts found.');
+			Kohana::$log->add(Log::INFO, 'No posts found.');
 			$this->response->body(View::factory('page/none'));
 			return;
 		}

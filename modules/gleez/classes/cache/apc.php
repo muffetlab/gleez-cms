@@ -97,7 +97,7 @@ class Cache_Apc extends Cache {
 		catch (Exception $e)
 		{
 			// Cache is corrupt or not exists, let return happen normally
-			Log::error('An error occurred retrieving corrupt or not exists cache name: [:name]',
+			Kohana::$log->add(Log::ERROR, 'An error occurred retrieving corrupt or not exists cache name: [:name]',
 				array(':name' => $id)
 			);
 		}
@@ -141,7 +141,7 @@ class Cache_Apc extends Cache {
 		}
 		catch (Exception $e)
 		{
-			Log::error('An error occurred setting [:name] to cache.',
+			Kohana::$log->add(Log::ERROR, 'An error occurred setting [:name] to cache.',
 				array(':name' => $id)
 			);
 		}

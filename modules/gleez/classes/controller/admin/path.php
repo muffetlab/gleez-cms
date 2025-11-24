@@ -127,7 +127,7 @@ class Controller_Admin_Path extends Controller_Admin {
 
 		if ( ! $post->loaded())
 		{
-			Log::error('Attempt to access non-existent alias.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent alias.');
 			Message::error(__('Alias doesn\'t exists!'));
 
 			$this->request->redirect(Route::get('admin/path')->uri(array('action' => 'list')), 404);
@@ -178,7 +178,7 @@ class Controller_Admin_Path extends Controller_Admin {
 
 		if ( ! $path->loaded())
 		{
-			Log::error('Attempt to access non-existent alias.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent alias.');
 			Message::error(__('Alias doesn\'t exists!'));
 
 			$this->request->redirect(Route::get('admin/path')->uri( array('action' => 'list')), 404);
@@ -208,7 +208,7 @@ class Controller_Admin_Path extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occured deleting alias id: :id, :msg',
+				Kohana::$log->add(Log::ERROR, 'Error occured deleting alias id: :id, :msg',
 					array(':id' => $path->id, ':message' => $e->getMessage())
 				);
 				Message::error('An error occurred deleting alias %path',array(':path' => $path->alias));

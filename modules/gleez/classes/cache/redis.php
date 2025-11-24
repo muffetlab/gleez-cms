@@ -113,7 +113,7 @@ class Cache_Redis extends Cache {
 		catch (Exception $e)
 		{
 			// Cache is corrupt or not exists, let return happen normally
-			Log::error('An error occurred retrieving corrupt or not exists cache name: [:name]',
+			Kohana::$log->add(Log::ERROR, 'An error occurred retrieving corrupt or not exists cache name: [:name]',
 				array(':name' => System::sanitize_id($this->config('prefix').$id))
 			);
 		}
@@ -157,7 +157,7 @@ class Cache_Redis extends Cache {
 		}
 		catch (Exception $e)
 		{
-			Log::error('An error occurred setting [:name] to cache.',
+			Kohana::$log->add(Log::ERROR, 'An error occurred setting [:name] to cache.',
 				array(':name' => System::sanitize_id($this->config('prefix').$id))
 			);
 		}
@@ -289,7 +289,7 @@ class Cache_Redis extends Cache {
 		catch (Exception $e)
 		{
 			// Cache is corrupt or not exists, let return happen normally
-			Log::error('An error occurred retrieving corrupt or not exists cache name: [:name]',
+			Kohana::$log->add(Log::ERROR, 'An error occurred retrieving corrupt or not exists cache name: [:name]',
 				array(':name' => System::sanitize_id($this->config('prefix').$id))
 			);
 		}

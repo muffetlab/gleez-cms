@@ -42,7 +42,7 @@ class Tags {
 	 *
 	 * Loads configuration options.
 	 *
-	 * @uses  Log::debug
+	 * @uses  Log::DEBUG
 	 */
 	public function __construct($config = array())
 	{
@@ -55,7 +55,7 @@ class Tags {
 		// Enable logging in DEVELOPMENT mode
 		if (Kohana::$environment === Kohana::DEVELOPMENT)
 		{
-			Log::debug('Tags Library loaded');
+			Kohana::$log->add(Log::DEBUG, 'Tags Library loaded');
 		}
 	}
 

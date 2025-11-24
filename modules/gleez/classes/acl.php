@@ -470,7 +470,7 @@ class ACL {
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
-			Log::notice('Unauthorized attempt to access non-existent action :act.',
+			Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.',
 				array(':act' => $action)
 			);
 			return FALSE;
@@ -574,7 +574,7 @@ class ACL {
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
-			Log::notice('Unauthorized attempt to access non-existent action :act.',
+			Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.',
 				array(':act' => $action)
 			);
 			return FALSE;

@@ -317,7 +317,7 @@ class Widgets {
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error processing widget ":name": :msg', array(':name' => $name, ':msg' => $e->getMessage()));
+				Kohana::$log->add(Log::ERROR, 'Error processing widget ":name": :msg', array(':name' => $name, ':msg' => $e->getMessage()));
 			}
 		}
 
@@ -356,11 +356,11 @@ class Widgets {
 			try
 			{
 				ORM::factory('widget')->values($values)->save();
-				Log::debug('Insert widget where module: :module', array(':module' => $module));
+				Kohana::$log->add(Log::DEBUG, 'Insert widget where module: :module', array(':module' => $module));
 			}
 			catch (Database_Exception $e)
 			{
-				Log::error('Unable to insert widgets: :mgs', array(':msg' => $e->getMessage()));
+				Kohana::$log->add(Log::ERROR, 'Unable to insert widgets: :mgs', array(':msg' => $e->getMessage()));
 			}
 		}
 	}
@@ -377,11 +377,11 @@ class Widgets {
 			ORM::factory('widget')->where('module', '=', $module)->delete();
 			Cache::instance('widgets')->delete_all();
 
-			Log::info('Deleted widgets where module: :module', array(':module' => $module));
+			Kohana::$log->add(Log::INFO, 'Deleted widgets where module: :module', array(':module' => $module));
 		}
 		catch (Database_Exception $e)
 		{
-			Log::error('Unable to delete widgets: :msg', array(':msg' => $e->getMessage()));
+			Kohana::$log->add(Log::ERROR, 'Unable to delete widgets: :msg', array(':msg' => $e->getMessage()));
 		}
 	}
 

@@ -164,7 +164,7 @@ class Controller_Admin_Modules extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Log::error(Kohana_Exception::text($e));
+				Kohana::$log->add(Log::ERROR, Kohana_Exception::text($e));
 			}
 		}
 

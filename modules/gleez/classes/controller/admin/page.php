@@ -115,7 +115,7 @@ class Controller_Admin_Page extends Controller_Admin {
 				$post->set($key, $value);
 			}
 
-			Log::info('Page Settings updated.');
+			Kohana::$log->add(Log::INFO, 'Page Settings updated.');
 			Message::success(__('Page Settings updated!'));
 
 			$this->request->redirect(Route::get('admin/page')->uri(array('action' =>'settings')), 200);

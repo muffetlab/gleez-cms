@@ -40,7 +40,7 @@ class Controller_Buddy extends Template {
 
 		if ( ! $user->loaded())
 		{
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 		}
@@ -82,7 +82,7 @@ class Controller_Buddy extends Template {
 
 		if ( ! $user->loaded())
 		{
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 		}
@@ -133,7 +133,7 @@ class Controller_Buddy extends Template {
 		
 		if ( ! $user->loaded())
 			{
-				Log::error('Attempt to access non-existent user.');
+				Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 				// No user is currently logged in
 				$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 			}
@@ -183,7 +183,7 @@ class Controller_Buddy extends Template {
 
 		if ( ! $invitee->loaded() )
 		{
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 		}
@@ -201,7 +201,7 @@ class Controller_Buddy extends Template {
 
 		if ( ! $friend->loaded())
 		{
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 		}
@@ -230,7 +230,7 @@ class Controller_Buddy extends Template {
 
 		if ( ! $friend->loaded())
 		{
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 		}
@@ -260,7 +260,7 @@ class Controller_Buddy extends Template {
 
 		if ( ! $friend->loaded())
 		{
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 		}

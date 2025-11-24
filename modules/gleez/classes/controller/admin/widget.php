@@ -177,7 +177,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 		if ( ! $widget->loaded())
 		{
-			Log::error('Attempt to access non-existent widget.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
 			Message::error(__('Widget doesn\'t exists!'));
 
 			$this->request->redirect(Route::get('admin/widget')->uri());
@@ -258,7 +258,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 		if ( ! $widget->loaded())
 		{
-			Log::error('Attempt to access non-existent widget.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
 			Message::error(__('Widget doesn\'t exists!'));
 
 			$this->request->redirect(Route::get('admin/widget')->uri());
@@ -303,7 +303,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting widget id: :id, :msg',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting widget id: :id, :msg',
 					array(':id' => $widget->id, ':msg' => $e->getMessage())
 				);
 				Message::error(__('An error occurred deleting widget %title', array(':title' => $widget->title)));

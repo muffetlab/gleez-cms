@@ -32,12 +32,12 @@ class Comment {
 		// Get total number of comments
 		if ($parent_id == 0)
 		{
-			Log::debug('Fetching all :state comments', array(':state' => $state));
+			Kohana::$log->add(Log::DEBUG, 'Fetching all :state comments', array(':state' => $state));
 			$total = ORM::factory('comment', array('status' => $state))->count_all();
 		}
 		else
 		{
-			Log::debug('Fetching :state comments for parent id: :id',
+			Kohana::$log->add(Log::DEBUG, 'Fetching :state comments for parent id: :id',
 				array(':state' => $state, ':id' => $parent_id)
 			);
 			$total = ORM::factory('comment', array(
@@ -113,7 +113,7 @@ class Comment {
 					));
 				}
 
-				Log::info('Comment: :title has posted.', array(':title' => $post->title));
+				Kohana::$log->add(Log::INFO, 'Comment: :title has posted.', array(':title' => $post->title));
 
 				// Redirect to post page
 				$controller->request->redirect(Request::current()->uri());

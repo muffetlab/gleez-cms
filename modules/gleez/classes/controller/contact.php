@@ -109,7 +109,7 @@ class Controller_Contact extends Template {
 				// Send the message
 				$email->send();
 
-				Log::info(':name sent an e-mail regarding :cat',
+				Kohana::$log->add(Log::INFO, ':name sent an e-mail regarding :cat',
 					array(':name' => Text::plain($post['name']), ':cat' => $types[$post['category']])
 				);
 				Message::success(__('Your message has been sent.'));

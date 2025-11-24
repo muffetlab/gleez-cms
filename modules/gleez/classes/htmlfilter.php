@@ -168,7 +168,7 @@ class HTMLFilter {
 
 		if (Kohana::PRODUCTION !== Kohana::$environment)
 		{
-			Log::debug('HTML Filter Library initialized');
+			Kohana::$log->add(Log::DEBUG, 'HTML Filter Library initialized');
 		}
 	}
 

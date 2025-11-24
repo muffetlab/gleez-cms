@@ -117,7 +117,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 	 *
 	 * @uses  Message::error
 	 * @uses  Message::success
-	 * @uses  Log::error
+	 * @uses  Log::ERROR
 	 */
 	public function action_edit()
 	{
@@ -127,7 +127,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		if ( ! $post->loaded())
 		{
 			Message::error(__("Category Group doesn't exists!"));
-			Log::error('Attempt to access non-existent Category Group.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent Category Group.');
 
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
 		}
@@ -163,7 +163,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 	 *
 	 * @uses  Message::error
 	 * @uses  Message::success
-	 * @uses  Log::error
+	 * @uses  Log::ERROR
 	 * @uses  Route::get
 	 * @uses  Route::uri
 	 * @uses  Route::url
@@ -176,7 +176,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		if ( ! $term->loaded())
 		{
 			Message::error(__("Category doesn't exists!"));
-			Log::error('Attempt to access non-existent category group.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent category group.');
 
 			$this->request->redirect(Route::get('admin/taxonomy')->uri(array('action' => 'list')));
 		}
@@ -205,7 +205,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting category group id: :id, :message',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting category group id: :id, :message',
 					array(':id' => $term->id, ':message' => $e->getMessage())
 				);
 				Message::error(__('An error occurred deleting category group %term', array('%term' => $term->name)));

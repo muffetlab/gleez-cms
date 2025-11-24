@@ -92,7 +92,7 @@ class Controller_Admin extends Template {
 
 				// If the post data validates using the rules setup in the user model
 				Message::success(__('Welcome, %title!', array('%title' => $user->nick)));
-				Log::info('User :name logged in.', array(':name' => $user->name));
+				Kohana::$log->add(Log::INFO, 'User :name logged in.', array(':name' => $user->name));
 
 				// redirect to the user account
 				$this->request->redirect(isset($_GET['destination']) ? $_GET['destination'] : 'admin', 200);

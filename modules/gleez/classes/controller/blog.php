@@ -87,7 +87,7 @@ class Controller_Blog extends Template {
 
 		if ($total == 0)
 		{
-			Log::info('No blogs found.');
+			Kohana::$log->add(Log::INFO, 'No blogs found.');
 			$this->response->body(View::factory('blog/none'));
 			return;
 		}
@@ -275,7 +275,7 @@ class Controller_Blog extends Template {
 			{
 				$post->values($_POST)->save();
 
-				Log::info('Blog :title created.', array(':title' => $post->title));
+				Kohana::$log->add(Log::INFO, 'Blog :title created.', array(':title' => $post->title));
 				Message::success(__('Blog %title created', array('%title' => $post->title)));
 
 				$this->request->redirect($post->url);
@@ -367,7 +367,7 @@ class Controller_Blog extends Template {
 			{
 				$post->values($_POST)->save();
 
-				Log::info('Blog :title updated.', array(':title' => $post->title));
+				Kohana::$log->add(Log::INFO, 'Blog :title updated.', array(':title' => $post->title));
 				Message::success(__('Blog %title updated', array('%title' => $post->title)));
 
 				$this->request->redirect(empty($destination) ? $post->url : $this->request->query('destination'));
@@ -445,12 +445,12 @@ class Controller_Blog extends Template {
 
 				Cache::instance('blog')->delete('blog-'.$id);
 
-				Log::info('Blog :title deleted.', array(':title' => $title));
+				Kohana::$log->add(Log::INFO, 'Blog :title deleted.', array(':title' => $title));
 				Message::success(__('Blog %title deleted successful!', array('%title' => $title)));
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting blog id: :id, :msg',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting blog id: :id, :msg',
 					array(':id' => $post->id, ':msg' => $e->getMessage())
 				);
 				Message::error(__('An error occurred deleting blog %post',array('%post' => $title)));
@@ -508,7 +508,7 @@ class Controller_Blog extends Template {
 
 		if ($total == 0)
 		{
-			Log::info('No blogs found.');
+			Kohana::$log->add(Log::INFO, 'No blogs found.');
 			$this->response->body(View::factory('blog/none'));
 			return;
 		}
@@ -579,7 +579,7 @@ class Controller_Blog extends Template {
 
 		if ($total == 0)
 		{
-			Log::info('No blogs found.');
+			Kohana::$log->add(Log::INFO, 'No blogs found.');
 			$this->response->body(View::factory('blog/none'));
 			return;
 		}

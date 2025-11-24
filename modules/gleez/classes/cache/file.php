@@ -161,7 +161,7 @@ class Cache_File extends Cache {
 					// if cache gets corrupted ignore silently and log in production
 					if (Kohana::$environment == Kohana::PRODUCTION)
 					{
-						Log::error('Corrupted cache file!');
+						Kohana::$log->add(Log::ERROR, 'Corrupted cache file!');
 						return $default;
 					}
 

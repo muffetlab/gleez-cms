@@ -255,14 +255,14 @@ class Model_User extends ORM {
 	 *
 	 * @throws  Kohana_Exception
 	 *
-	 * @uses    Log::error
+	 * @uses    Log::ERROR
 	 */
 	protected function before_delete($id, $soft = FALSE)
 	{
 		// If it is an internal request (eg. popup dialog) and id < 3
 		if ($id == User::GUEST_ID OR $id == User::ADMIN_ID)
 		{
-			Log::error('Attempt to delete system user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to delete system user.');
 			throw new Kohana_Exception("You can't delete system users!");
 		}
 
@@ -487,7 +487,7 @@ class Model_User extends ORM {
 	 *
 	 * @return  Model_User
 	 *
-	 * @uses    Log::error
+	 * @uses    Log::ERROR
 	 * @uses    Module::event
 	 * @uses    Request::initial
 	 * @uses    Request::redirect
@@ -531,7 +531,7 @@ class Model_User extends ORM {
 				$array->error('name', 'blocked');
 				Module::event('user_blocked', $array);
 
-				Log::error('User: :name account blocked.', array(':name' => $array['name']));
+				Kohana::$log->add(Log::ERROR, 'User: :name account blocked.', array(':name' => $array['name']));
 				throw new Validation_Exception($array, 'Account Blocked');
 			}
 			elseif ($this->loaded() AND Auth::instance()->login($this, $array['password'], $remember))
@@ -549,13 +549,13 @@ class Model_User extends ORM {
 				$array->error('name', 'invalid');
 				Module::event('user_auth_failed', $array);
 
-				Log::error('User: :name failed login.', array(':name' => $array['name']));
+				Kohana::$log->add(Log::ERROR, 'User: :name failed login.', array(':name' => $array['name']));
 				throw new Validation_Exception($array, 'Validation has failed for login');
 			}
 		}
 		else
 		{
-			Log::error('User Login error.');
+			Kohana::$log->add(Log::ERROR, 'User Login error.');
 			throw new Validation_Exception($array, 'Validation has failed for login');
 		}
 	}
@@ -950,7 +950,7 @@ class Model_User extends ORM {
 	 *
 	 * @return  boolean
 	 *
-	 * @uses    Log::info
+	 * @uses    Log::INFO
 	 * @uses    Validation::factory
 	 * @uses    Validation::rule
 	 * @uses    Validation::label
@@ -973,7 +973,7 @@ class Model_User extends ORM {
 		$this->pass = $data['pass'];
 		$this->save();
 
-		Log::info('User %name used one-time login link.', array('%name' => $this->name));
+		Kohana::$log->add(Log::INFO, 'User %name used one-time login link.', array('%name' => $this->name));
 
 		// It could be that the user resets his password before he confirmed his sign-up,
 		// or a the reset password form could be used in case the original sign-up confirmation mail got lost.

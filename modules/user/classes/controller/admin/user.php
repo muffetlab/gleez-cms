@@ -165,7 +165,7 @@ class Controller_Admin_User extends Controller_Admin {
 	 *
 	 * @uses  Message::error
 	 * @uses  Message::success
-	 * @uses  Log::error
+	 * @uses  Log::ERROR
 	 * @uses  Route::get
 	 * @uses  Route::uri
 	 * @uses  Arr::merge
@@ -183,7 +183,7 @@ class Controller_Admin_User extends Controller_Admin {
 		if ( ! $post->loaded() OR $id === 1)
 		{
 			Message::error(__("User doesn't exists!"));
-			Log::error('Attempt to access non-existent user');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user');
 
 			$this->request->redirect(Route::get('admin/user')->uri(array('action' => 'list')), 404);
 		}
@@ -275,7 +275,7 @@ class Controller_Admin_User extends Controller_Admin {
 		if ( ! $user->loaded())
 		{
 			Message::error(__("User doesn't exists!"));
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 
 			$this->request->redirect(Route::get('admin/user')->uri());
 		}
@@ -283,7 +283,7 @@ class Controller_Admin_User extends Controller_Admin {
 		elseif ($user->id < 3)
 		{
 			Message::error(__("You can't delete system users!"));
-			Log::error('Attempt to delete system user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to delete system user.');
 
 			$this->request->redirect(Route::get('admin/user')->uri());
 		}
@@ -312,7 +312,7 @@ class Controller_Admin_User extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting user id: :id, :message',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting user id: :id, :message',
 					array(':id' => $user->id,':message' => $e->getMessage())
 				);
 				$this->_errors = array(__('An error occurred deleting user %user: :message',

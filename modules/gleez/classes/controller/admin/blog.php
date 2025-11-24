@@ -145,7 +145,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 				$config->set($key, $value);
 			}
 
-			Log::info('Blog Settings updated.');
+			Kohana::$log->add(Log::INFO, 'Blog Settings updated.');
 			Message::success(__('Blog Settings updated!'));
 
 			$this->request->redirect(Route::get('admin/blog')->uri(array('action' =>'settings')));

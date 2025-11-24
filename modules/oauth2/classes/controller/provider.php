@@ -140,7 +140,7 @@ class Controller_Provider extends Template {
 		}
 		catch( Exception $e)
 		{
-			Log::error( (string) $e);
+			Kohana::$log->add(Log::ERROR,  (string) $e);
 		}
 	}
 
@@ -171,12 +171,12 @@ class Controller_Provider extends Template {
 		catch (ORM_Validation_Exception $e)
 		{
 			Message::error(__("Couldn't login. Contact administer for error!"));
-			Log::error( (string) $e);
+			Kohana::$log->add(Log::ERROR,  (string) $e);
 		}
 		catch (\Gleez\Database\DatabaseException $e)
 		{
 			// Skiping duplicate record entry exception.
-			Log::error( (string) $e);
+			Kohana::$log->add(Log::ERROR,  (string) $e);
 		}
 		catch(Exception $e)
 		{
@@ -189,7 +189,7 @@ class Controller_Provider extends Template {
 				Message::error(__("Couldn't login. Contact administer for error!"));
 			}
 
-			Log::error((string) $e);
+			Kohana::$log->add(Log::ERROR, (string) $e);
 		}
 
 		// Redirect to the profile page or destination url

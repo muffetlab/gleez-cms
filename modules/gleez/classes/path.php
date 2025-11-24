@@ -101,7 +101,7 @@ class Path {
 		catch (Exception $e)
 		{
 			// log error and return, to avoid breaking process
-			Log::error('Error: :error creating path alias.',
+			Kohana::$log->add(Log::ERROR, 'Error: :error creating path alias.',
 				array(':error' => $e->getMessage())
 			);
 			return FALSE;
@@ -136,7 +136,7 @@ class Path {
 		}
 		catch (Exception $e)
 		{
-			Log::error('Error: :error deleting path alias.', array(':error' => $e->getMessage()));
+			Kohana::$log->add(Log::ERROR, 'Error: :error deleting path alias.', array(':error' => $e->getMessage()));
 			return FALSE;
 		}
 
@@ -179,7 +179,7 @@ class Path {
 		}
 		catch(Exception $e)
 		{
-			Log::error('Error: :error lookup path alias.', array(':error' => $e->getMessage()));
+			Kohana::$log->add(Log::ERROR, 'Error: :error lookup path alias.', array(':error' => $e->getMessage()));
 			return FALSE;
 		}
 
@@ -204,7 +204,7 @@ class Path {
 		}
 		catch (Exception $e)
 		{
-			Log::error('Error: :error getting alias.', array(':error' => $e->getMessage()));
+			Kohana::$log->add(Log::ERROR, 'Error: :error getting alias.', array(':error' => $e->getMessage()));
 			return $source;
 		}
 	}

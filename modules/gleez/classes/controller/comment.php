@@ -33,7 +33,7 @@ class Controller_Comment extends Template {
 
 		if ( ! $comment->loaded())
 		{
-			Log::error('Attempt to access non-existent comment.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent comment.');
 			Message::error(__('Comment doesn\'t exists!'));
 
 			$this->request->redirect($route, 404);
@@ -85,7 +85,7 @@ class Controller_Comment extends Template {
 				/** @var $comment ORM */
 				$comment->values($_POST)->save();
 
-				Log::info('Comment: :title updated.', array(':title' => $comment->title));
+				Kohana::$log->add(Log::INFO, 'Comment: :title updated.', array(':title' => $comment->title));
 				Message::success(__('Comment %title has been updated.', array('%title' => $comment->title)));
 
 				$this->request->redirect(empty($destination) ? $comment->url : $this->request->query('destination'));
@@ -128,12 +128,12 @@ class Controller_Comment extends Template {
 			{
 				$comment->delete();
 
-				Log::info('Comment: :title deleted.', array(':title' => $title));
+				Kohana::$log->add(Log::INFO, 'Comment: :title deleted.', array(':title' => $title));
 				Message::success(__('Comment %title deleted successful!', array('%title' => $title)));
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting comment id: :id, :msg',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting comment id: :id, :msg',
 					array(':id' => $comment->id, ':msg' => $e->getMessage())
 				);
 				Message::error('An error occurred deleting comment %post.',array('%post' => $title));

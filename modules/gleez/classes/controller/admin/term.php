@@ -39,7 +39,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 		if ( ! $vocab->loaded())
 		{
-			Log::error('Attempt to access non-existent category group.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent category group.');
 			Message::error(__("Category Group doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/taxonomy')->uri(), 404);
@@ -90,7 +90,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 		if ( ! $vocab->loaded())
 		{
-			Log::error('Attempt to access non-existent category group.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent category group.');
 			Message::error(__("Category Group doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
@@ -152,7 +152,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 		if ( ! $term->loaded())
 		{
-			Log::error('Attempt to access non-existent category.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent category.');
 			Message::error(__("Category doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
@@ -213,7 +213,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 		if ( ! $term->loaded())
 		{
-			Log::error('Attempt to access non-existent category.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent category.');
 			Message::error(__("Category doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/taxonomy')->uri(), 404);
@@ -240,14 +240,14 @@ class Controller_Admin_Term extends Controller_Admin {
 				$name = $term->name;
 				$term->delete();
 
-				Log::info('Category :name deleted successful.', array(':name' => $name));
+				Kohana::$log->add(Log::INFO, 'Category :name deleted successful.', array(':name' => $name));
 				Message::success(__('Category %name deleted successful!', array('%name' => $name)));
 
 				$this->request->redirect(Route::get('admin/taxonomy')->uri(array('action' =>'list')));
 			}
 			catch (Exception $e)
 			{
-				Log::error('Error occurred deleting category id: :id, :msg',
+				Kohana::$log->add(Log::ERROR, 'Error occurred deleting category id: :id, :msg',
 					array(':id' => $term->id, ':msg' => $e->getMessage())
 				);
 				Message::error(__('An error occurred deleting category %term.', array('%term' => $term->name)));
@@ -290,7 +290,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 			if ($this->level_zero > 1)
 			{
-				Log::error('Category order could not be saved.');
+				Kohana::$log->add(Log::ERROR, 'Category order could not be saved.');
 				Message::error(__('Order of the categories could not be saved.'));
 
 				$this->request->redirect(

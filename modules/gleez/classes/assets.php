@@ -893,7 +893,7 @@ class Assets {
 				// If file doesn't exist, log the fact and skip
 				if ( ! file_exists($file))
 				{
-					Log::error('Could not find file: [:file]', array(':file' => $file));
+					Kohana::$log->add(Log::ERROR, 'Could not find file: [:file]', array(':file' => $file));
 					continue;
 				}
 

@@ -141,7 +141,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 
 		if ( ! $post->loaded())
 		{
-			Log::error('Attempt to access non-existent Menu.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent Menu.');
 			Message::error(__('Menu doesn\'t exists!'));
 
 			// Redirect to listing
@@ -199,7 +199,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 
 		if ( ! $menu->loaded())
 		{
-			Log::error('Attempt to access non-existent menu.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu.');
 			Message::error(__("Menu doesn't exists!"));
 
 			// Redirect to listing
@@ -208,7 +208,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 		// If it is an external request and id == 2
 		elseif ($menu->id == 2)
 		{
-			Log::error('Attempt to delete system menu.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to delete system menu.');
 			Message::error(__("You can't delete system menu!"));
 
 			// Redirect to listing
@@ -234,7 +234,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 			// If it is an internal request (eg. popup dialog) and id < 3
 			if ($menu->id == 2)
 			{
-				Log::error('Attempt to delete system menu.');
+				Kohana::$log->add(Log::ERROR, 'Attempt to delete system menu.');
 				$this->_errors = array(__("You can't delete system menu!"));
 			}
 			else
@@ -250,7 +250,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 				}
 				catch (Exception $e)
 				{
-					Log::error('Error occurred deleting menu :term, id: :id, :msg',
+					Kohana::$log->add(Log::ERROR, 'Error occurred deleting menu :term, id: :id, :msg',
 						array(':id' => $menu->id, ':term' => $menu->name, ':msg' => $e->getMessage()
 						)
 					);

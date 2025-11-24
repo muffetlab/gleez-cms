@@ -104,7 +104,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 		if ( ! $post->loaded() OR $id === 1)
 		{
 			Message::error(__("User doesn't exists!"));
-			Log::error('Attempt to access non-existent user.');
+			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 
 			$this->request->redirect(Route::get('admin/user')->uri(array('action' => 'list')), 404);
 		}
