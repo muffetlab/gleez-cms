@@ -150,6 +150,8 @@ Cookie::$salt = Kohana::$config->load('cookie')->get('salt');
  */
 Upload::$default_directory = APPPATH.'uploads';
 
+Gleez::ready();
+
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.

@@ -24,12 +24,8 @@
  * @license    http://kohanaframework.org/license
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class I18n {
-	/**
-	 * @var  string   target language: en-us, es-es, zh-cn, etc
-	 */
-	public static $lang = 'en-us';
-
+class Gleez_I18n extends I18n
+{
 	/**
 	 * @var  string   target language: en, es, zh, etc
 	 */
@@ -41,19 +37,9 @@ class I18n {
 	public static $active = 'en';
 
 	/**
-	 * @var  string  source language: en-us, es-es, zh-cn, etc
-	 */
-	public static $source = 'en-us';
-
-	/**
 	 * @var  array  array of available languages
 	 */
 	protected static $_languages = array();
-
-	/**
-	 * @var  array  cache of loaded languages
-	 */
-	protected static $_cache = array();
 
 	/**
 	 * @var  string  source language: en-us, es-es, zh-cn, etc
@@ -64,7 +50,7 @@ class I18n {
 	 * Main function to detect and set the default language.
 	 *
 	 *     // Set the language
-	 *     $lang = I18n::initialize();
+	 *     $lang = Gleez_I18n::initialize();
 	 */
 	public static function initialize()
 	{
@@ -75,42 +61,42 @@ class I18n {
 		$locale_override  = Kohana::$config->load('site')->get('locale_override', FALSE);
 
 		// 1. Check the session specific preference (cookie)
-		$locale = I18n::cookieLocale();
+		$locale = Gleez_I18n::cookieLocale();
 
 		// 2. Check the user's preference
 		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'USER'))
 		{
-			$locale = I18n::userLocale();
+			$locale = Gleez_I18n::userLocale();
 		}
 
 		// 3. Check the request client/browser's preference
 		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'CLIENT'))
 		{
-			$locale = I18n::requestLocale();
+			$locale = Gleez_I18n::requestLocale();
 		}
 
 		// 4. Check the url preference and get the language from url
 		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'URL'))
 		{
-			$locale = I18n::urlLocale();
+			$locale = Gleez_I18n::urlLocale();
 		}
 
 		// 5. Check the sub-domain preference and get the language form subdomain
 		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'DOMAIN'))
 		{
-			$locale = I18n::domainLocale();
+			$locale = Gleez_I18n::domainLocale();
 		}
 
 		// 6. Default locale
 		if(!$locale)
 		{
-			$locale = Kohana::$config->load('site')->get('locale', I18n::$default);
+			$locale = Kohana::$config->load('site')->get('locale', Gleez_I18n::$default);
 		}
 
 		// Set the locale
-		I18n::lang($locale);
+		Gleez_I18n::lang($locale);
 
-		return I18n::$lang;
+		return Gleez_I18n::$lang;
 	}
 
 	/**
@@ -129,7 +115,7 @@ class I18n {
 	 *
 	 * <code>
 	 * // Get the language
-	 * $lang = I18n::requestLocale();
+	 * $lang = Gleez_I18n::requestLocale();
 	 * </code>
 	 *
 	 * @return  string
@@ -157,7 +143,7 @@ class I18n {
 	 * Detect language based on the user language settings.
 	 *
 	 *     // Get the language
-	 *     $lang = I18n::userLocale();
+	 *     $lang = Gleez_I18n::userLocale();
 	 *
 	 * @return  string
 	 */
@@ -167,7 +153,7 @@ class I18n {
 		if (User::is_guest())
 		{
 			// Respect cookie if its set already or use default
-			$locale = strtolower(Cookie::get(self::$_cookie, I18n::$default));
+			$locale = strtolower(Cookie::get(self::$_cookie, Gleez_I18n::$default));
 		}
 		else
 		{
@@ -186,7 +172,7 @@ class I18n {
 	 * Detect language based on the request cookie.
 	 *
 	 *     // Get the language
-	 *     $lang = I18n::cookieLocale();
+	 *     $lang = Gleez_I18n::cookieLocale();
 	 *
 	 * @return  string
 	 */
@@ -212,7 +198,7 @@ class I18n {
 	 * Detect language based on the url.
 	 *
 	 *     ex: example.com/fr/
-	 *     $lang = I18n::urlLocale();
+	 *     $lang = Gleez_I18n::urlLocale();
 	 *
 	 * @return  string
 	 */
@@ -233,7 +219,7 @@ class I18n {
 	 * Detect language based on the subdomain.
 	 *
 	 *      ex: fr.example.com
-	 *     	$lang = I18n::domainLocale();
+	 *     	$lang = Gleez_I18n::domainLocale();
 	 *
 	 * @return  string
 	 */
@@ -251,24 +237,24 @@ class I18n {
 	 * Get and set the target language.
 	 *
 	 *     // Get the current language
-	 *     $lang = I18n::lang();
+	 *     $lang = Gleez_I18n::lang();
 	 *
 	 *     // Change the current language to Spanish
-	 *     I18n::lang('es-es');
+	 *     Gleez_I18n::lang('es-es');
 	 *
 	 * @param   string  	$lang   	new language setting
 	 * @return  string
 	 * @since   3.0.2
 	 */
-	public static function lang($lang = NULL)
-	{
+	public static function lang($lang = NULL): string
+    {
 		if ($lang && self::isAvailable($lang) )
 		{
 			// Store target language in I18n
-			I18n::$lang = self::$_languages[$lang]['i18n_code'];
+			Gleez_I18n::$lang = self::$_languages[$lang]['i18n_code'];
 
 			// Store the identified lang as active
-			I18n::$active = $lang;
+			Gleez_I18n::$active = $lang;
 
 			// Set locale
 			setlocale(LC_ALL, self::$_languages[$lang]['locale']);
@@ -281,82 +267,7 @@ class I18n {
 			}
 		}
 
-		return I18n::$lang;
-	}
-
-	/**
-	 * Returns translation of a string. If no translation exists, the original
-	 * string will be returned. No parameters are replaced.
-	 *
-	 *     $hello = I18n::get('Hello friends, my name is :name');
-	 *
-	 * @param   string  $string text to translate
-	 * @param   string  $lang   target language
-	 * @return  string
-	 */
-	public static function get($string, $lang = NULL)
-	{
-		if ( ! $lang)
-		{
-			// Use the global target language
-			$lang = I18n::$lang;
-		}
-
-		// Load the translation table for this language
-		$table = I18n::load($lang);
-
-		// Return the translated string if it exists
-		return isset($table[$string]) ? $table[$string] : $string;
-	}
-
-	/**
-	 * Returns the translation table for a given language.
-	 *
-	 *     // Get all defined Spanish messages
-	 *     $messages = I18n::load('es-es');
-	 *
-	 * @param   string  $lang   language to load
-	 * @return  array
-	 */
-	public static function load($lang)
-	{
-		if (isset(self::$_cache[$lang]))
-		{
-			return self::$_cache[$lang];
-		}
-
-		// New translation table
-		$table = array();
-
-		// Split the language: language, region, locale, etc
-		$parts = explode('-', $lang);
-
-		do
-		{
-			// Create a path for this set of parts
-			$path = implode(DIRECTORY_SEPARATOR, $parts);
-
-			if ($files = Kohana::find_file('i18n', $path, NULL, TRUE))
-			{
-				$t = array();
-				foreach ($files as $file)
-				{
-					// Merge the language strings into the sub table
-					$t = array_merge($t, Kohana::load($file));
-				}
-
-				// Append the sub table, preventing less specific language
-				// files from overloading more specific files
-				$table += $t;
-			}
-
-			// Remove the last part
-			array_pop($parts);
-		}
-		while ($parts);
-
-		// Cache the translation table locally
-		return self::$_cache[$lang] = $table;
+		return Gleez_I18n::$lang;
 	}
 
 	/**
@@ -365,9 +276,9 @@ class I18n {
 	public static function get_plural($string, $count)
 	{
 		// Load the translation table
-		$table = I18n::load(I18n::$lang);
+		$table = Gleez_I18n::load(Gleez_I18n::$lang);
 
-		$key = I18n::get_plural_key(I18n::$lang, $count);
+		$key = Gleez_I18n::get_plural_key(Gleez_I18n::$lang, $count);
 
 		// Return the translated string if it exists
 		return isset($table[$string][$key]) ? $table[$string][$key] : (isset($table[$string]) ? $table[$string] : $string);
@@ -598,7 +509,7 @@ if ( ! function_exists('__'))
 	 *  __('Welcome back, :user', array(':user' => $username));
 	 * </code>
 	 *
-	 * [!!] The target language is defined by [I18n::$lang].
+	 * [!!] The target language is defined by [Gleez_I18n::$lang].
 	 *
 	 * @param   string  $string Text to translate
 	 * @param   array   $values Values to replace in the translated text. [Optional]
@@ -615,16 +526,16 @@ if ( ! function_exists('__'))
 	 * @param   string  $lang   Source language [Optional]
 	 * @return  string
 	 *
-	 * @uses    I18n::get
+	 * @uses    Gleez_I18n::get
 	 * @uses    HTML::chars
 	 */
 	function __($string, array $values = NULL, $lang = 'en-us')
 	{
-		if ($lang !== I18n::$lang)
+		if ($lang !== Gleez_I18n::$lang)
 		{
 			// The message and target languages are different
 			// Get the translation for this message
-			$string = I18n::get($string);
+			$string = Gleez_I18n::get($string);
 		}
 
 		if (empty($values))
@@ -680,9 +591,9 @@ function _e($string, array $values = NULL, $lang = 'en-us')
 
 function __n($count, $singular, $plural, array $values = array(), $lang = 'en-us')
 {
-	if ($lang !== I18n::$lang)
+	if ($lang !== Gleez_I18n::$lang)
 	{
-		$string = $count === 1 ? I18n::get($singular) : I18n::get_plural($plural, $count);
+		$string = $count === 1 ? Gleez_I18n::get($singular) : Gleez_I18n::get_plural($plural, $count);
 	}
 	else
 		$string = $count === 1 ? $singular : $plural;

@@ -129,7 +129,7 @@ class Gleez {
 		Gleez::$isWindows = ('WIN' === strtoupper(substr(PHP_OS, 0, 3)));
 
 		// Initialize the locale from settings
-		I18n::initialize();
+        Gleez_I18n::initialize();
 
 		// Disable the kohana powered headers
 		// @todo Remove it, use Gleez::$expose
