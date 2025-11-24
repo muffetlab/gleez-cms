@@ -21,7 +21,6 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-use Gleez\Database\Database;
 
 class Session_Db extends Session {
 
@@ -130,8 +129,8 @@ class Session_Db extends Session {
 	 *
 	 * @return  string
 	 */
-	public function id()
-	{
+	public function id(): ?string
+    {
 		return $this->_session_id;
 	}
 
@@ -172,8 +171,8 @@ class Session_Db extends Session {
 	 *
 	 * @return  string
 	 */
-	protected function _regenerate()
-	{
+	protected function _regenerate(): ?string
+    {
 		// Create the query to find an ID
 		$query = DB::select($this->_columns['session_id'])
 			->from($this->_table)
@@ -199,8 +198,8 @@ class Session_Db extends Session {
 	 *
 	 * @return  boolean
 	 */
-	protected function _write()
-	{
+	protected function _write(): bool
+    {
 		$hostname = '';
 		if ($this->_update_id === NULL)
 		{
@@ -250,8 +249,8 @@ class Session_Db extends Session {
 	 *
 	 * @return  boolean
 	 */
-	protected function _destroy()
-	{
+	protected function _destroy(): bool
+    {
 		if ($this->_update_id === NULL)
 		{
 			// Session has not been created yet
@@ -305,8 +304,8 @@ class Session_Db extends Session {
 	 *
 	 * @return  boolean
 	 */
-	protected function _restart()
-	{
+	protected function _restart(): bool
+    {
 		$this->_regenerate();
 
 		return TRUE;

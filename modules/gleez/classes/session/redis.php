@@ -88,7 +88,8 @@ class Session_Redis extends Session {
 	 *
 	 * @return  string
 	 */
-	public function id() {
+	public function id(): ?string
+    {
 		return $this->_session_id;
 	}
 
@@ -122,7 +123,8 @@ class Session_Redis extends Session {
 	 *
 	 * @return  string
 	 */
-	protected function _regenerate() {
+	protected function _regenerate(): ?string
+    {
 		// Create a new session id
 		$id = str_replace('.', '-', uniqid(NULL, TRUE));
 
@@ -134,7 +136,8 @@ class Session_Redis extends Session {
 	 *
 	 * @return  boolean
 	 */
-	protected function _write() {
+	protected function _write(): bool
+    {
 		// Save to Redis
 		$this->_redis->set($this->_prefix . $this->_session_id, $this->__toString(), $this->_lifetime);
 
@@ -149,7 +152,8 @@ class Session_Redis extends Session {
 	 *
 	 * @return  boolean
 	 */
-	protected function _destroy() {
+	protected function _destroy(): bool
+    {
 
 		try
 		{
@@ -171,7 +175,8 @@ class Session_Redis extends Session {
 	 *
 	 * @return  boolean
 	 */
-	protected function _restart() {
+	protected function _restart(): bool
+    {
 		$this->_regenerate();
 
 		return TRUE;
