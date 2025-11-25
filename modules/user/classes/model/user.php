@@ -79,8 +79,8 @@ class Model_User extends ORM {
 	 *
 	 * @uses  Config::get
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'name' => array(
 				array('not_empty'),
@@ -117,8 +117,8 @@ class Model_User extends ORM {
 	 *
 	 * @return array Filters
 	 */
-	public function filters()
-	{
+	public function filters(): array
+    {
 		return array(
 			'pass' => array(
 				array(array(Gleez_Auth::instance(), 'hash'))
@@ -134,8 +134,8 @@ class Model_User extends ORM {
 	 *
 	 * @return array Labels
 	 */
-	public function labels()
-	{
+	public function labels(): array
+    {
 		return array(
 			'name'         => __('Username'),
 			'mail'         => __('Email'),
@@ -232,8 +232,8 @@ class Model_User extends ORM {
 	 *
 	 * @throws  Kohana_Exception
 	 */
-	public function create(Validation $validation = NULL)
-	{
+	public function create(Validation $validation = NULL): Kohana_ORM
+    {
 		if ($this->_loaded)
 		{
 			throw new Kohana_Exception('Cannot create :model model because it is already loaded.', array(':model' => $this->_object_name));
@@ -274,8 +274,8 @@ class Model_User extends ORM {
 	 *
 	 * @throws  Kohana_Exception
 	 */
-	public function update(Validation $validation = NULL)
-	{
+	public function update(Validation $validation = NULL): Kohana_ORM
+    {
 		if ( ! $this->_loaded)
 		{
 			throw new Kohana_Exception('Cannot Update :model model because it is not loaded.', array(':model' => $this->_object_name));
@@ -289,8 +289,8 @@ class Model_User extends ORM {
 	/**
 	 * Override the relation add method to reset user roles
 	 */
-	public function add($alias, $far_keys, $data = NULL)
-	{
+	public function add($alias, $far_keys, $data = NULL): Kohana_ORM
+    {
 		parent::add($alias, $far_keys, $data);
 
 		// update data roles
@@ -302,8 +302,8 @@ class Model_User extends ORM {
 	/**
 	 * Override the relation remove method to reset user roles
 	 */
-	public function remove($alias, $far_keys = NULL)
-	{
+	public function remove($alias, $far_keys = NULL): Kohana_ORM
+    {
 		parent::remove($alias, $far_keys);
 
 		// update data roles
@@ -329,8 +329,8 @@ class Model_User extends ORM {
 	 *
 	 * @see  Gleez_ORM_Core::count_all
 	 */
-	public function count_all()
-	{
+	public function count_all(): int
+    {
 		$this->where($this->_object_name.'.id', '!=', User::GUEST_ID);
 
 		return parent::count_all();

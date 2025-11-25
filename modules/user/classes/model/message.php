@@ -71,8 +71,8 @@ class Model_Message extends ORM {
 	 *
 	 * @uses    Config::get
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'recipient' => array(
 				array(array($this, 'toExists'), array(':validation', ':field')),
@@ -92,8 +92,8 @@ class Model_Message extends ORM {
 	 *
 	 * @return array
 	 */
-	public function labels()
-	{
+	public function labels(): array
+    {
 		return array(
 			'recipient' => __('Recipient'),
 			'subject'   => __('Subject'),

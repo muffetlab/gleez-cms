@@ -60,8 +60,8 @@ class Model_User_Token extends ORM {
 		return $this;
 	}
 
-	public function create(Validation $validation = NULL)
-	{
+	public function create(Validation $validation = NULL): Kohana_ORM
+    {
 		$this->token = $this->create_token();
 
 		return parent::create($validation);

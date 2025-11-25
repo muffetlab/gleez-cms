@@ -37,8 +37,8 @@ class Model_Role extends ORM {
 	 *
 	 * @return array Rules
 	 */
-	public function rules()
-	{
+	public function rules(): array
+    {
 		return array(
 			'name' => array(
 				array('not_empty'),
@@ -56,8 +56,8 @@ class Model_Role extends ORM {
 	 *
 	 * @return array Labels
 	 */
-	public function labels()
-	{
+	public function labels(): array
+    {
 		return array(
 			'name'        => __('Name'),
 			'description' => __('Description'),
@@ -68,8 +68,8 @@ class Model_Role extends ORM {
 	/**
 	 * Override the save method to clear cache
 	 */
-	public function save(Validation $validation = NULL)
-	{
+	public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		parent::save( $validation );
 
 		//cleanup the cache
@@ -81,8 +81,8 @@ class Model_Role extends ORM {
 	/**
 	 * Override the delete method to clear cache
 	 */
-	public function delete($soft = FALSE)
-	{
+	public function delete($soft = FALSE): Kohana_ORM
+    {
 		parent::delete($soft);
 
 		//cleanup the cache
