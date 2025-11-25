@@ -27,10 +27,11 @@ class Captcha_Black extends Captcha
 	/**
 	 * Outputs the Captcha image.
 	 *
-	 * @param boolean $html HTML output
-	 * @return mixed
+     * @param bool $html HTML output
+     * @param string|null $type Image type override
+     * @return mixed
 	 */
-	public function render($html = TRUE)
+	public function render($html = TRUE, string $type = null)
 	{
 		// Creates a black image to start from
 		$this->image_create(Captcha::$config['background']);
@@ -68,7 +69,7 @@ class Captcha_Black extends Captcha
 		imagefttext($this->image, $size, $angle, $x, $y, $color, $font, $this->response);
 
 		// Output
-		return $this->image_render($html);
+		return $this->image_render($html, $type);
 	}
 
 }

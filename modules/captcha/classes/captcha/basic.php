@@ -27,10 +27,11 @@ class Captcha_Basic extends Captcha
 	/**
 	 * Outputs the Captcha image.
 	 *
-	 * @param boolean $html HTML output
-	 * @return mixed
+     * @param bool $html HTML output
+     * @param string|null $type Image type override
+     * @return mixed
 	 */
-	public function render($html = TRUE)
+	public function render($html = TRUE, string $type = null)
 	{
 		// Creates $this->image
 		$this->image_create(Captcha::$config['background']);
@@ -77,7 +78,7 @@ class Captcha_Basic extends Captcha
 		}
 
 		// Output
-		return $this->image_render($html);
+		return $this->image_render($html, $type);
 	}
 
 }

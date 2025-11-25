@@ -32,6 +32,13 @@ class Controller_Captcha extends Controller {
 	 */
 	public function action_index()
 	{
+        // Send the correct HTTP header
+        $this->response
+            ->headers('Content-Type', 'image/png')
+            ->headers('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
+            ->headers('Pragma', 'no-cache')
+            ->headers('Connection', 'close');
+
 		// Output the Captcha challenge resource (no html)
 		// Pull the config group name from the URL
 		//$group = $this->request->param('group', 'default');

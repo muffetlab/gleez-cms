@@ -426,20 +426,18 @@ abstract class Captcha {
 	 * Returns the img html element or outputs the image to the browser.
 	 *
 	 * @param boolean $html Output as HTML
+     * @param string|null $type Image type override
 	 * @return mixed HTML, string or void
 	 */
-	public function image_render($html)
+	public function image_render($html, string $type = null)
 	{
 		// Output html element
 		if ($html === TRUE)
 			return '<img src="'.URL::site('captcha/'.Captcha::$config['group']).'" width="'.Captcha::$config['width'].'" height="'.Captcha::$config['height'].'" alt="Captcha" class="captcha" />';
 
-		// Send the correct HTTP header
-		Request::current()->response()
-			->headers('Content-Type', 'image/'.$this->image_type)
-			->headers('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0')
-			->headers('Pragma', 'no-cache')
-			->headers('Connection', 'close');
+        if (in_array($type, ['png', 'gif', 'jpeg'])) {
+            $this->image_type = $type;
+        }
 
 		// Pick the correct output function
 		$function = 'image'.$this->image_type;
@@ -462,8 +460,9 @@ abstract class Captcha {
 	 * Output the Captcha challenge.
 	 *
 	 * @param boolean $html Render output as HTML
+     * @param string|null $type Image type override
 	 * @return mixed
 	 */
-	abstract public function render($html = TRUE);
+	abstract public function render($html = TRUE, string $type = null);
 
 } // End Captcha Class
