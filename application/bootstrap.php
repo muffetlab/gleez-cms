@@ -131,9 +131,10 @@ Kohana::modules([
     'orm' => MODPATH . 'orm', // Object Relationship Mapping
 //    'unittest' => MODPATH . 'unittest', // Unit testing
 //    'userguide' => MODPATH . 'userguide', // User guide and API documentation
-    'gleez' => MODPATH . 'gleez',
 	'user'        => MODPATH.'user',      // User and group Administration
+    'gleez' => MODPATH . 'gleez',
 	'captcha'     => MODPATH.'captcha',   // Captcha implementation
+//    'oauth2' => MODPATH . 'oauth2',
 ]);
 
 /**
