@@ -144,7 +144,17 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 		if ($this->valid_post('widget'))
 		{
-			$widget->values($_POST);
+            $widget->values($_POST, [
+                'title',
+                'region',
+                'status',
+                'icon',
+                'show_title',
+                'visibility',
+                'pages',
+                'body',
+                'format'
+            ]);
 			try
 			{
 				$widget->name = 'static/'. Text::random('alnum', 6);
@@ -222,7 +232,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 		if ($this->valid_post('widget'))
 		{
-			$widget->values($_POST);
+            $widget->values($_POST, ['title', 'region', 'status', 'icon', 'show_title', 'visibility', 'pages']);
 			try
 			{
 				$widget->save();

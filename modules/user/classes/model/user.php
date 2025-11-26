@@ -628,7 +628,7 @@ class Model_User extends ORM {
 
 			$identity = ORM::factory('identity');
 			$identity->user_id = $this->id;
-			$identity->values($provider);
+            $identity->values($provider, ['provider', 'provider_id', 'refresh_token']);
 			$identity->save();
 
 			//send welcome mail
@@ -641,7 +641,7 @@ class Model_User extends ORM {
 			// that is already confirmed by this OAuth provider, so it's considered trusted.
 			$identity = ORM::factory('identity');
 			$identity->user_id = $this->id;
-			$identity->values($provider);
+            $identity->values($provider, ['provider', 'provider_id', 'refresh_token']);
 			$identity->save();
 
 			// Set email if it's available via OAuth provider and save
@@ -686,7 +686,7 @@ class Model_User extends ORM {
 	public function signup(array $data)
 	{
 		// Add user
-		$this->values($data)->save();
+        $this->values($data, ['name', 'mail', 'pass', 'nick', 'gender', 'dob'])->save();
 
 		// Give user the "login" role
 		if ( ! $this->has('roles', User::LOGIN_ROLE_ID))

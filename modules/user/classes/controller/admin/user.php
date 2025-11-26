@@ -119,7 +119,7 @@ class Controller_Admin_User extends Controller_Admin {
 				try
 				{
 					// Affects the sanitized vars to the user object
-					$post->values($this->request->post());
+                    $post->values($this->request->post(), ['name', 'pass', 'nick', 'mail', 'status']);
 
 					// Create the User
 					$post->save();
@@ -219,7 +219,7 @@ class Controller_Admin_User extends Controller_Admin {
 						unset($_POST['pass']);
 					}
 
-					$post->values($_POST);
+                    $post->values($_POST, ['name', 'nick', 'mail', 'status']);
 					$post->save();
 
 					// Make sure to $_POST is set and it is array

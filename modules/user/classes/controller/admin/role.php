@@ -91,7 +91,7 @@ class Controller_Admin_Role extends Controller_Admin {
 
 		if ($this->valid_post('role'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['name', 'description', 'special']);
 			try
 			{
 				$post->save();
@@ -141,7 +141,7 @@ class Controller_Admin_Role extends Controller_Admin {
 
 		if ( $this->valid_post('role') )
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['name', 'description', 'special']);
 
 			try
 			{

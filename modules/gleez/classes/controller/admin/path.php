@@ -92,7 +92,7 @@ class Controller_Admin_Path extends Controller_Admin {
 
 		if($this->valid_post('add_path'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['source', 'alias']);
 			try
 			{
 				$post->save();
@@ -144,7 +144,7 @@ class Controller_Admin_Path extends Controller_Admin {
 
 		if ($this->valid_post('add_path'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['source', 'alias']);
 
 			try
 			{

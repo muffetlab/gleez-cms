@@ -144,7 +144,7 @@ class Auth_GORM extends Auth_ORM
 
 		// Create a new autologin token
 		$token = ORM::factory('user_token')
-			->values($data)
+            ->values($data, ['user_id', 'expires', 'user_agent'])
 			->create();
 
 		// Set the autologin cookie
@@ -184,7 +184,7 @@ class Auth_GORM extends Auth_ORM
 
 				// Create a new autologin token
 				$token = ORM::factory('user_token')
-					->values($data)
+                    ->values($data, ['user_id', 'expires', 'user_agent', 'type', 'created'])
 					->create();
 
 				// Set the autologin cookie

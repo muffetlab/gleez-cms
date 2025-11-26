@@ -93,7 +93,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 
 		if ($this->valid_post('vocab'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['name', 'type', 'description']);
 			try
 			{
 				$post->make_root();
@@ -139,7 +139,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 
 		if ($this->valid_post('vocab'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['name', 'type', 'description']);
 			try
 			{
 				$post->save();

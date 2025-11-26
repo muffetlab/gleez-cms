@@ -354,7 +354,7 @@ class Controller_User extends Template {
 
 			try
 			{
-				$user->values($post)->save();
+                $user->values($post, ['nick', 'homepage', 'mail', 'bio', 'dob'])->save();
 
 				// If the post data validates using the rules setup in the user model
 				Message::success(__("%title successfully updated!", array('%title' => $user->nick)));
@@ -450,7 +450,7 @@ class Controller_User extends Template {
 			try
 			{
 				$post = Arr::merge($this->request->post(), $_FILES);
-				$user->values($post)->save();
+                $user->values($post, ['picture'])->save();
 
 				// If the post data validates using the rules setup in the user model
 				Message::success(__('Photo successfully uploaded!', array('%title' => $user->nick)));

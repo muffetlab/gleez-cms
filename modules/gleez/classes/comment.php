@@ -93,7 +93,7 @@ class Comment {
 			$values = Arr::merge(array('post_id' => $item->id, 'type' => $item->type), $_POST);
 			try
 			{
-				$post->values($values)->save();
+                $post->values($values, ['post_id', 'type', 'body'])->save();
 				if($post->status != 'publish')
 				{
 					Message::success(__('Your comment has been queued for review by site administrators and will be published after approval.') );

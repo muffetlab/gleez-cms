@@ -83,7 +83,7 @@ class Controller_Comment extends Template {
 			try
 			{
 				/** @var $comment ORM */
-				$comment->values($_POST)->save();
+                $comment->values($_POST, ['status', 'body'])->save();
 
 				Kohana::$log->add(Log::INFO, 'Comment: :title updated.', array(':title' => $comment->title));
 				Message::success(__('Comment %title has been updated.', array('%title' => $comment->title)));

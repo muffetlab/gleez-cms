@@ -93,7 +93,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 
 		if ($this->valid_post('menu'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['title', 'descp']);
 			try
 			{
 				$post->make_root();
@@ -153,7 +153,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 
 		if ($this->valid_post('menu'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['title', 'descp']);
 			try
 			{
 				$post->save();

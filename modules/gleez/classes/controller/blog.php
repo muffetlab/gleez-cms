@@ -273,7 +273,7 @@ class Controller_Blog extends Template {
 		{
 			try
 			{
-				$post->values($_POST)->save();
+                $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
 				Kohana::$log->add(Log::INFO, 'Blog :title created.', array(':title' => $post->title));
 				Message::success(__('Blog %title created', array('%title' => $post->title)));
@@ -365,7 +365,7 @@ class Controller_Blog extends Template {
 		{
 			try
 			{
-				$post->values($_POST)->save();
+                $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
 				Kohana::$log->add(Log::INFO, 'Blog :title updated.', array(':title' => $post->title));
 				Message::success(__('Blog %title updated', array('%title' => $post->title)));

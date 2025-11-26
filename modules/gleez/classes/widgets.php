@@ -355,7 +355,7 @@ class Widgets {
 
 			try
 			{
-				ORM::factory('widget')->values($values)->save();
+                ORM::factory('widget')->values($values, ['name', 'title', 'module', 'status', 'region'])->save();
 				Kohana::$log->add(Log::DEBUG, 'Insert widget where module: :module', array(':module' => $module));
 			}
 			catch (Database_Exception $e)

@@ -88,13 +88,13 @@ class Path {
 			if (isset($values['id']) AND is_numeric($values['id']))
 			{
 				$path = ORM::factory('path', $values['id'])
-					->values($values)
+                    ->values($values, ['source', 'alias', 'type', 'action'])
 					->save();
 			}
 			else
 			{
 				$path = ORM::factory('path')
-					->values($values)
+                    ->values($values, ['source', 'alias', 'type', 'action'])
 					->save();
 			}
 		}

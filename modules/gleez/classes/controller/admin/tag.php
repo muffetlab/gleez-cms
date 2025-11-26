@@ -86,7 +86,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 
 		if ($this->valid_post('tag'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['name', 'type']);
 			try
 			{
 				$post->save();
@@ -135,7 +135,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 
 		if ($this->valid_post('tag'))
 		{
-			$post->values($_POST);
+            $post->values($_POST, ['name', 'type']);
 			try
 			{
 				$post->save();

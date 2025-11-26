@@ -81,7 +81,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 					->bind('post', $post)
 					->bind('errors', $this->_errors);
 
-		$post = ORM::factory('menu')->values($_POST);
+        $post = ORM::factory('menu')->values($_POST, ['title', 'url', 'image', 'descp']);
 
 		if ($this->valid_post('menu-item'))
 		{
@@ -135,7 +135,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 					->bind('errors', $this->_errors);
 
 		$post = ORM::factory('menu', $id)
-					->values($_POST);
+            ->values($_POST, ['title', 'url', 'image', 'descp']);
 
 		if ($this->valid_post('menu-item'))
 		{
