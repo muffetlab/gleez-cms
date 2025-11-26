@@ -61,6 +61,12 @@ class Widget_Admin extends Widget {
 
 	public function system_info()
 	{
-		return View::factory('widgets/systeminfo')->render();
+        $dbVersion = DB::query(Database::SELECT, 'SHOW VARIABLES WHERE variable_name = "version"')
+            ->execute()
+            ->get('Value');
+
+        return View::factory('widgets/systeminfo')
+            ->set('dbVersion', $dbVersion)
+            ->render();
 	}
 }
