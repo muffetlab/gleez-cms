@@ -103,6 +103,7 @@ if (isset($_SERVER['KOHANA_ENV'])) {
  */
 Kohana::init([
 	'base_url'   => '/',
+    'index_file' => false,
 	'caching'    => Kohana::$environment === Kohana::PRODUCTION,
 	'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
 ]);
