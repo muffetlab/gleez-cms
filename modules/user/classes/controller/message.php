@@ -201,7 +201,7 @@ class Controller_Message extends Template {
 		if ($this->valid_post('message'))
 		{
 			$sent   = (isset($_POST['draft']) AND $_POST['draft']) ? 0 : time();
-			$sender = Gleez_Auth::instance()->get_user();
+			$sender = Auth_GORM::instance()->get_user();
 			$status = $sent == 0 ? PM::STATUS_DRAFT : PM::STATUS_UNREAD;
 			$act    = $sent == 0 ? __('saved') : __('sent');
 

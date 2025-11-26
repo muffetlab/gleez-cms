@@ -121,7 +121,7 @@ class Model_User extends ORM {
     {
 		return array(
 			'pass' => array(
-				array(array(Gleez_Auth::instance(), 'hash'))
+				array(array(Auth_GORM::instance(), 'hash'))
 			),
 			'picture' => array(
 				array(array($this, 'uploadPhoto'))
@@ -534,7 +534,7 @@ class Model_User extends ORM {
 				Kohana::$log->add(Log::ERROR, 'User: :name account blocked.', array(':name' => $array['name']));
 				throw new Validation_Exception($array, 'Account Blocked');
 			}
-			elseif ($this->loaded() AND Gleez_Auth::instance()->login($this, $array['password'], $remember))
+			elseif ($this->loaded() AND Auth_GORM::instance()->login($array['name'], $array['password'], $remember))
 			{
 				// Redirect after a successful login
 				if (is_string($redirect))
@@ -567,7 +567,7 @@ class Model_User extends ORM {
 			->rule('old_pass', 'not_empty')
 			->rule('pass_confirm', 'not_empty')
 			->rule('pass', 'not_empty')
-			->rule('old_pass', array(Gleez_Auth::instance(), 'check_password') );
+			->rule('old_pass', array(Auth_GORM::instance(), 'check_password') );
 
 		return $this->values($values, $expected)->save($extra_validation);
 	}
@@ -672,8 +672,8 @@ class Model_User extends ORM {
 	 *
 	 * @return  boolean
 	 *
-	 * @uses    Gleez_Auth::instance
-	 * @uses    Gleez_Auth::hash
+	 * @uses    Auth_GORM::instance
+	 * @uses    Auth_GORM::hash
 	 * @uses    URL::site
 	 * @uses    Route::get
 	 * @uses    Route::uri
@@ -698,7 +698,7 @@ class Model_User extends ORM {
 		// Create e-mail body with reset password link
 		// Token consists of email and the last_login field.
 		// So as soon as the user logs in again, the reset link expires automatically
-		$token = Gleez_Auth::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login);
+		$token = Auth_GORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login);
 
 		$body = View::factory('email/confirm_signup', $this->as_array())
 			->set('url', URL::site(
@@ -735,8 +735,8 @@ class Model_User extends ORM {
 	 *
 	 * @return  boolean
 	 *
-	 * @uses    Gleez_Auth::instance
-	 * @uses    Gleez_Auth::hash
+	 * @uses    Auth_GORM::instance
+	 * @uses    Auth_GORM::hash
 	 */
 	public function confirm_signup($id, $token)
 	{
@@ -752,7 +752,7 @@ class Model_User extends ORM {
 			return FALSE;
 
 		// Invalid confirmation token
-		if ($token !== Gleez_Auth::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login))
+		if ($token !== Auth_GORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login))
 			return FALSE;
 
 		//send welcome mail
@@ -820,8 +820,8 @@ class Model_User extends ORM {
 	 * @uses    Config::load
 	 * @uses    Validation::factory
 	 * @uses    Validation::rule
-	 * @uses    Gleez_Auth::instance
-	 * @uses    Gleez_Auth::hash
+	 * @uses    Auth_GORM::instance
+	 * @uses    Auth_GORM::hash
 	 * @uses    URL::site
 	 * @uses    Email::factory
 	 * @uses    Email::subject
@@ -860,7 +860,7 @@ class Model_User extends ORM {
 		// Token consists of email and the last_login field.
 		// So as soon as the user logs in again, the reset link expires automatically
 		$time = time();
-		$token = Gleez_Auth::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login);
+		$token = Auth_GORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login);
 		$url = URL::site(
 			Route::get('user/reset')->uri(
 				array(
@@ -905,8 +905,8 @@ class Model_User extends ORM {
 	 *
 	 * @return  boolean
 	 *
-	 * @uses    Gleez_Auth::instance
-	 * @uses    Gleez_Auth::hash
+	 * @uses    Auth_GORM::instance
+	 * @uses    Auth_GORM::hash
 	 * @uses    Config::get
 	 */
 	public function confirm_reset_password_link($id, $token, $time)
@@ -933,7 +933,7 @@ class Model_User extends ORM {
 		if ( $time < $this->login ) return FALSE;
 
 		// Invalid confirmation token
-		if ($token !== Gleez_Auth::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login))
+		if ($token !== Auth_GORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login))
 			return FALSE;
 
 		return TRUE;
