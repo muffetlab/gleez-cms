@@ -153,4 +153,51 @@ class Auth_GORM extends Auth_ORM
 		// Run the standard completion
 		$this->complete_login($user);
 	}
+
+	/**
+	 * Logs a user in.
+	 *
+	 * @param   string   username
+	 * @param   string   password
+	 * @param   boolean  enable autologin
+	 * @return  bool
+	 */
+	protected function _login($username, $password, $remember): bool
+    {
+        // Load the user
+        $user = ORM::factory('user');
+        $user->where($user->unique_key($username), '=', $username)->find();
+
+		// If the passwords match, perform a login! role id: 2
+		if ($user->has('roles', 2) AND User::check_pass($user, $password) AND $user->id !== 1)
+		{
+			if ($remember === TRUE)
+			{
+				// Token data
+				$data = array(
+					'user_id'    => $user->id,
+					'expires'    => time() + $this->_config['lifetime'],
+					'user_agent' => sha1(Request::$user_agent),
+					'type'	     => 'autologin',
+					'created'    => time(),
+				);
+
+				// Create a new autologin token
+				$token = ORM::factory('user_token')
+					->values($data)
+					->create();
+
+				// Set the autologin cookie
+				Cookie::set('authautologin', $token->token, $this->_config['lifetime']);
+			}
+
+			// Finish the login
+			$this->complete_login($user);
+
+			return TRUE;
+		}
+
+		// Login failed
+		return FALSE;
+	}
 }
