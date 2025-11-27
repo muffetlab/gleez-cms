@@ -335,7 +335,7 @@ class Datatables {
 
 		$requestOrder   = $request->query('order');
 		$requestColumns = $request->query('columns');
-		$requestStart   = $request->query('start');
+		$requestStart   = (int) $request->query('start');
 		$requestSearch  = $request->query('search');
 		$requestLength  = $request->query('length');
 
@@ -359,9 +359,8 @@ class Datatables {
 		}
 
 		// DataTables 1.10
-		if (count($requestStart) > 0 && $requestLength != '-1')
-		{
-			$start  = intval($requestStart);
+        if ($requestStart > 0 && $requestLength != '-1') {
+            $start = $requestStart;
 			$length = intval($requestLength);
 
 			$this->limit($start, $length);
@@ -491,8 +490,6 @@ class Datatables {
 			{
 				View::factory($this->_view, array('datatables' => $this))->render();
 			}
-
-			$this->request()->response()->headers('content-type', 'application/json; charset=' . Kohana::$charset);
 
 			$this->_render = json_encode(array
 			(

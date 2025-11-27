@@ -297,6 +297,7 @@ abstract class Template extends Controller {
 			{
 				$this->_ajax       = TRUE;
 				$this->auto_render = FALSE;
+                $this->response->headers('Content-Type', 'application/json; charset=' . Kohana::$charset);
 			}
 
 			$this->response->headers('X-Powered-By', Gleez::getVersion(TRUE, TRUE) . ' (' . Gleez::CODENAME . ')');
