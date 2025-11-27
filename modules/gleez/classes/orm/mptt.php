@@ -243,7 +243,7 @@ class ORM_MPTT extends Gleez_Model
 		$this->{$this->level_column} = 1;
 		$this->{$this->left_column} = 1;
 		$this->{$this->right_column} = 2;
-		$this->{$this->parent_column} = NULL;
+		$this->{$this->parent_column} = 0;
 
 		try
 		{
