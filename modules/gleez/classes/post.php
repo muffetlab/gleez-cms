@@ -153,8 +153,8 @@ class Post extends ORM_Versioned {
 	 *
 	 * @return  array  Rules
 	 */
-	public function rules()
-	{
+    public function rules(): array
+    {
 		return array(
 			'title' => array(
 				array('not_empty'),
@@ -190,8 +190,8 @@ class Post extends ORM_Versioned {
 	 *
 	 * @return  array  Labels
 	 */
-	public function labels()
-	{
+    public function labels(): array
+    {
 		return array(
 			'title'  => __('Title'),
 			'body'   => __('Body'),
@@ -342,8 +342,8 @@ class Post extends ORM_Versioned {
 	 * @uses    Config::get
 	 * @uses    Cache::delete
 	 */
-	public function save(Validation $validation = NULL)
-	{
+    public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		// Set some defaults
 		$this->status  = empty($this->status)  ? 'draft' : $this->status;
 		$this->promote = empty($this->promote) ? 0 : $this->promote;
@@ -493,8 +493,8 @@ class Post extends ORM_Versioned {
 	 * @uses    Cache::delete
 	 * @uses    Path::delete
 	 */
-	public function delete($soft = FALSE)
-	{
+    public function delete($soft = FALSE): Kohana_ORM
+    {
 		if ( ! $this->_loaded)
 		{
 			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.',

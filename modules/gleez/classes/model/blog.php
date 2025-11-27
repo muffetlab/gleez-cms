@@ -32,8 +32,8 @@ class Model_Blog extends Post {
 	 * @uses    Config::get
 	 * @uses    Cache::delete
 	 */
-	public function save(Validation $validation = NULL)
-	{
+    public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		$config = Kohana::$config->load('blog');
 		$this->status = empty($this->status) ? $config->get('default_status', 'draft') : $this->status;
 
@@ -61,7 +61,7 @@ class Model_Blog extends Post {
 	 * @param   array  $expected  Array of keys to take from `$values` [Optional]
 	 * @return  ORM
 	 */
-	public function values(array $values, array $expected = NULL): Kohana_ORM
+    public function values(array $values, array $expected = NULL): Kohana_ORM
     {
 		$this->type = $this->_post_type;
 
@@ -113,8 +113,8 @@ class Model_Blog extends Post {
 	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
 	 * @return  Post
 	 */
-	public function delete($soft = FALSE)
-	{
+    public function delete($soft = FALSE): Kohana_ORM
+    {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 
 		return parent::delete($soft);
