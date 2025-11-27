@@ -7,7 +7,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class Model_Tag extends ORM {
+class Model_Tag extends Gleez_Model
+{
 
 	/**
 	 * Table columns

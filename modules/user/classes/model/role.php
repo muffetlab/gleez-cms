@@ -8,7 +8,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    http://gleezcms.org/license
  */
-class Model_Role extends ORM {
+class Model_Role extends Gleez_Model
+{
 
 	/**
 	 * Table columns
