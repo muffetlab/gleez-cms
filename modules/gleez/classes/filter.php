@@ -199,7 +199,7 @@ class Filter {
 		$filter_info = Filter::all();
 
 		//sort filters by weight
-		$filters = Arr::array_sort($filters, 'weight');
+        array_multisort(array_column($filters, 'weight'), SORT_ASC, $filters);
 
 		// Give filters the chance to escape HTML-like data such as code or formulas.
 		foreach ($filters as $name => $filter)
