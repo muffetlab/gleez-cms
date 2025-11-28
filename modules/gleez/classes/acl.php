@@ -306,6 +306,10 @@ class ACL {
 			$user = User::active_user();
 		}
 
+        if (!$user) {
+            return false;
+        }
+
 		// User #2 has all privileges:
 		if ($user->id == User::ADMIN_ID)
 		{
