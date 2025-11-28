@@ -112,12 +112,13 @@ class Controller_Admin_Term extends Controller_Admin {
 					->set('allowed_types', $allowed_types);
 
 		/** @var $post Model_Term */
-		$post = ORM::factory('term')->values(Arr::merge($this->request->post(), $_FILES));
+        $post = ORM::factory('term');
 
 		if ($this->valid_post('term'))
 		{
 			try
 			{
+                $post->values(Arr::merge($this->request->post(), $_FILES), ['name', 'image', 'description']);
 				$post->type = $vocab->type;
 				$post->create_at($id, Arr::get($_POST, 'parent', 'last'));
 
@@ -180,7 +181,7 @@ class Controller_Admin_Term extends Controller_Admin {
 			try
 			{
 				$post = Arr::merge($this->request->post(), $_FILES);
-				$term->values($post)->save();
+				$term->values($post, ['name', 'image', 'description'])->save();
 
 				Message::success(__('Category %name saved successful!', array('%name' => $term->name)));
 
