@@ -426,6 +426,8 @@ class ORM_MPTT extends Gleez_Model
 
 		// Commit the transaction
 		$this->_db->commit();
+
+        return $this;
 	}
 	
 	public function move_to_first_child($target)
