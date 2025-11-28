@@ -231,6 +231,8 @@ class Request extends Kohana_Request
      */
     public function execute(): Response
     {
+        $response = parent::execute();
+
 		if (Gleez::$installed)
 		{
 			// Deny access to blocked IP addresses
@@ -240,7 +242,7 @@ class Request extends Kohana_Request
 			Gleez::maintenance_mode();
 		}
 
-		return parent::execute();
+        return $response;
 	}
 
 	/**
