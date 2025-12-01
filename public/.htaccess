@@ -15,8 +15,7 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 
 # Protect hidden files from being viewed
 <Files .*>
-	Order Deny,Allow
-	Deny From All
+	Require all denied
 </Files>
 
 # Gleez CMS supports Friendly URLs via this .htaccess file.
@@ -63,7 +62,7 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
 	RewriteCond %{REQUEST_FILENAME} !-d
 
 	# Rewrite all other URLs to index.php/URL
-	RewriteRule .* index.php/$0 [PT]
+	RewriteRule .* index.php?/$0 [PT]
 </IfModule>
 
 # ----------------------------------------------------------------------
