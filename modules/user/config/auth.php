@@ -20,7 +20,6 @@ return array
 	 * @link http://php.net/hash_algos
 	 */
 	'hash_method' => 'sha1',
-    'hash_key' => 'iZzsgn9HVUqBxUll9Z4ckSxFj8MBOGhl0yFyIAPRi6U1IkdS6fpgE0qhKzVmgAy',
 
 	/**
 	 * Set the auto-login (remember me) cookie lifetime, in seconds.

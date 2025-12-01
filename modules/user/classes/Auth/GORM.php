@@ -80,6 +80,20 @@ class Auth_GORM extends Auth_ORM
 		return $this->_session->get($this->_config['session_key'] . '_provider', NULL);
 	}
 
+    /**
+     * Perform a hmac hash, using the configured method.
+     *
+     * @param   string  $str  String to hash
+     * @return  string
+     */
+    public function hash($str): string
+    {
+        $algo = Kohana::$config->load('auth')->get('hash_method', '');
+        $key = Kohana::$config->load('site')->get('auth_hash_key', '');
+
+        return hash_hmac($algo, $str, $key);
+    }
+
 	/**
 	 * Get the stored password for a username.
 	 *
