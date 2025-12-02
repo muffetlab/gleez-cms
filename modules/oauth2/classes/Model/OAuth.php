@@ -8,7 +8,7 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    http://gleezcms.org/license Gleez CMS License
  */
-class Model_Oauth extends Model_Database {
+class Model_OAuth extends Model_Database {
 
 	public function checkConsent($client_id, $user_id)
 	{

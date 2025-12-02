@@ -1,6 +1,6 @@
 <?php
 
-class Model_Oaclient extends ORM {
+class Model_OAClient extends ORM {
 
 	protected $_table_name = "oauth_clients";
 
