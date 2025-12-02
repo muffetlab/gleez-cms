@@ -1,141 +1,141 @@
 <?php
+
 /**
  * Class method documentation generator.
  *
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2008-2013 Kohana Team
+ * @license    https://kohana.top/license
  */
-class Kohana_Kodoc_Method extends Kodoc {
+class Kohana_Kodoc_Method extends Kodoc
+{
+    /**
+     * @var  ReflectionMethod  The ReflectionMethod for this class
+     */
+    public $method;
 
-	/**
-	 * @var  ReflectionMethod   The ReflectionMethod for this class
-	 */
-	public $method;
+    /**
+     * @var  array  Array of Kodoc_Method_Param
+     */
+    public $params;
 
-	/**
-	 * @var  array    array of Kodoc_Method_Param
-	 */
-	public $params;
+    /**
+     * @var  array  The things this function can return
+     */
+    public $return = [];
 
-	/**
-	 * @var  array   the things this function can return
-	 */
-	public $return = array();
+    /**
+     * @var  string  The source code for this function
+     */
+    public $source;
 
-	/**
-	 * @var  string  the source code for this function
-	 */
-	public $source;
+    /**
+     * @var ReflectionClass
+     */
+    public $class;
 
-	public function __construct($class, $method)
-	{
-		$this->method = new ReflectionMethod($class, $method);
+    /**
+     * @var string
+     */
+    public $modifiers;
 
-		$this->class = $parent = $this->method->getDeclaringClass();
+    /**
+     * @var string
+     */
+    public $description;
 
-		if ($modifiers = $this->method->getModifiers())
-		{
-			$this->modifiers = '<small>'.implode(' ', Reflection::getModifierNames($modifiers)).'</small> ';
-		}
+    /**
+     * @var array
+     */
+    public $tags;
 
-		do
-		{
-			if ($parent->hasMethod($method) AND $comment = $parent->getMethod($method)->getDocComment())
-			{
-				// Found a description for this method
-				break;
-			}
-		}
-		while ($parent = $parent->getParentClass());
+    public function __construct($class, $method)
+    {
+        $this->method = new ReflectionMethod($class, $method);
 
-		list($this->description, $tags) = Kodoc::parse($comment);
+        $this->class = $parent = $this->method->getDeclaringClass();
 
-		if ($file = $this->class->getFileName())
-		{
-			$this->source = Kodoc::source($file, $this->method->getStartLine(), $this->method->getEndLine());
-		}
+        if ($modifiers = $this->method->getModifiers()) {
+            $this->modifiers = '<small>' . implode(' ', Reflection::getModifierNames($modifiers)) . '</small> ';
+        }
 
-		if (isset($tags['param']))
-		{
-			$params = array();
+        do {
+            if ($parent->hasMethod($method) && ($comment = $parent->getMethod($method)->getDocComment())) {
+                // Found a description for this method
+                break;
+            }
+        } while ($parent = $parent->getParentClass());
 
-			foreach ($this->method->getParameters() as $i => $param)
-			{
-				$param = new Kodoc_Method_Param(array($this->method->class, $this->method->name),$i);
+        list($this->description, $tags) = Kodoc::parse($comment);
 
-				if (isset($tags['param'][$i]))
-				{
-					preg_match('/^(\S+)(?:\s*(?:\$'.$param->name.'\s*)?(.+))?$/', $tags['param'][$i], $matches);
+        if ($file = $this->class->getFileName()) {
+            $this->source = Kodoc::source($file, $this->method->getStartLine(), $this->method->getEndLine());
+        }
 
-					$param->type = $matches[1];
+        if (isset($tags['param'])) {
+            $params = [];
 
-					if (isset($matches[2]))
-					{
-						$param->description = ucfirst($matches[2]);
-					}
-				}
-				$params[] = $param;
-			}
+            foreach ($this->method->getParameters() as $i => $param) {
+                $param = new Kodoc_Method_Param([$this->method->class, $this->method->name], $i);
 
-			$this->params = $params;
+                if (isset($tags['param'][$i])) {
+                    preg_match('/^(\S+)(?:\s*(?:\$' . $param->name . '\s*)?(.+))?$/s', $tags['param'][$i], $matches);
 
-			unset($tags['param']);
-		}
+                    $param->type = $matches[1];
 
-		if (isset($tags['return']))
-		{
-			foreach ($tags['return'] as $return)
-			{
-				if (preg_match('/^(\S*)(?:\s*(.+?))?$/', $return, $matches))
-				{
-					$this->return[] = array($matches[1], isset($matches[2]) ? $matches[2] : '');
-				}
-			}
+                    if (isset($matches[2])) {
+                        $param->description = ucfirst($matches[2]);
+                    }
+                }
+                $params[] = $param;
+            }
 
-			unset($tags['return']);
-		}
+            $this->params = $params;
 
-		$this->tags = $tags;
-	}
+            unset($tags['param']);
+        }
 
-	public function params_short()
-	{
-		$out = '';
-		$required = TRUE;
-		$first = TRUE;
-		foreach ($this->params as $param)
-		{
-			if ($required AND $param->default AND $first)
-			{
-				$out .= '[ '.$param;
-				$required = FALSE;
-				$first = FALSE;
-			}
-			elseif ($required AND $param->default)
-			{
-				$out .= '[, '.$param;
-				$required = FALSE;
-			}
-			elseif ($first)
-			{
-				$out .= $param;
-				$first = FALSE;
-			}
-			else
-			{
-				$out .= ', '.$param;
-			}
-		}
+        if (isset($tags['return'])) {
+            foreach ($tags['return'] as $return) {
+                if (preg_match('/^(\S*)(?:\s*(.+?))?$/', $return, $matches)) {
+                    $this->return[] = [$matches[1], $matches[2] ?? ''];
+                }
+            }
 
-		if ( ! $required)
-		{
-			$out .= '] ';
-		}
+            unset($tags['return']);
+        }
 
-		return $out;
-	}
+        $this->tags = $tags;
+    }
 
-} // End Kodoc_Method
+    public function params_short(): string
+    {
+        $out = '';
+        $required = true;
+        $first = true;
+        foreach ($this->params as $param) {
+            if ($required && $param->default && $first) {
+                $out .= '[ ' . $param;
+                $required = false;
+                $first = false;
+            } elseif ($required && $param->default) {
+                $out .= '[, ' . $param;
+                $required = false;
+            } elseif ($first) {
+                $out .= $param;
+                $first = false;
+            } else {
+                $out .= ', ' . $param;
+            }
+        }
+
+        if (!$required) {
+            $out .= '] ';
+        }
+
+        return $out;
+    }
+
+}
