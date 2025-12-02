@@ -994,7 +994,7 @@ class Model_User extends Gleez_Model
 	 */
 	protected function _data()
 	{
-		$data = $this->_original_values['data'];
+        $data = $this->_original_values['data'] ?? null;
 		$olddata =  unserialize($data);
 		$newdata = is_array($this->data) ? $this->data : array();
 
