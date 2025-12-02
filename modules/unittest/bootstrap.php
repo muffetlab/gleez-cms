@@ -1,58 +1,57 @@
 <?php
 
-$application = 'application';
-$modules     = 'modules';
-$gleez       = 'modules/gleez';
-$system      = 'system';
-$themes      = 'themes';
+/**
+ * Set the path to the document root
+ *
+ * This assumes that this file is stored 2 levels below the DOCROOT, if you move
+ * this bootstrap file somewhere else then you'll need to modify this value to
+ * compensate.
+ */
+define('DOCROOT', realpath(__DIR__ . '/../../public') . DIRECTORY_SEPARATOR);
 
-define('DOCROOT', realpath(dirname(__FILE__).'/../../').DIRECTORY_SEPARATOR);
+/**
+ * Set the PHP error reporting level. If you set this in php.ini, you remove this.
+ * @link https://www.php.net/errorfunc.configuration#ini.error-reporting
+ *
+ * When developing your application, it is highly recommended to enable notices
+ * and warnings. Enable them by using: E_ALL
+ *
+ * In a production environment, it is safe to ignore notices and warnings.
+ * Disable them by using: E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED
+ */
+error_reporting(E_ALL);
 
-error_reporting(E_ALL | E_STRICT);
-
-// Make the application relative to the docroot, for symlink'd index.php
-if (!is_dir($application) && is_dir(DOCROOT.$application)) {
-    $application = DOCROOT.$application;
-}
-
-// Make the modules relative to the docroot, for symlink'd index.php
-if (!is_dir($modules) && is_dir(DOCROOT.$modules)) {
-    $modules = DOCROOT.$modules;
-}
-
-// Make the gleez relative to the docroot, for symlink'd index.php
-if (!is_dir($gleez) && is_dir(DOCROOT.$gleez)) {
-    $gleez = DOCROOT.$gleez;
-}
-
-// Make the system relative to the docroot, for symlink'd index.php
-if (!is_dir($system) && is_dir(DOCROOT.$system)) {
-    $system = DOCROOT.$system;
-}
-
-// Make the themes relative to the docroot
-if (!is_dir($themes) && is_dir(DOCROOT.$themes)) {
-    $themes = DOCROOT.$themes;
-}
-
+/**
+ * End of standard configuration! Changing any of the code below should only be
+ * attempted by those with a working knowledge of Kohana internals.
+ *
+ * @link https://kohana.top/guide/using.configuration
+ */
 // Define the absolute paths for configured directories
-define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
-define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
-define('GLZPATH', realpath($gleez).DIRECTORY_SEPARATOR);
-define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
-define('THEMEPATH', realpath($themes).DIRECTORY_SEPARATOR);
+define('APPPATH', realpath(DOCROOT . '../application') . DIRECTORY_SEPARATOR);
+define('MODPATH', realpath(DOCROOT . '../modules') . DIRECTORY_SEPARATOR);
+define('SYSPATH', realpath(DOCROOT . '../system') . DIRECTORY_SEPARATOR);
+define('VENDOR_PATH', realpath(DOCROOT . '../vendor') . DIRECTORY_SEPARATOR);
 
-// Clean up the configuration vars
-unset($application, $modules, $system, $themes);
+/**
+ * Define the start time of the application, used for profiling.
+ */
+if (!defined('KOHANA_START_TIME')) {
+    define('KOHANA_START_TIME', microtime(true));
+}
 
-defined('KOHANA_START_TIME') || define('KOHANA_START_TIME', microtime(true));
-defined('KOHANA_START_MEMORY') || define('KOHANA_START_MEMORY', memory_get_usage());
+/**
+ * Define the memory usage at the start of the application, used for profiling.
+ */
+if (!defined('KOHANA_START_MEMORY')) {
+    define('KOHANA_START_MEMORY', memory_get_usage());
+}
 
 // Bootstrap the application
 require APPPATH . 'bootstrap.php';
 
 // Disable output buffering
-if (false !== ($ob_len = ob_get_length())) {
+if (($ob_len = ob_get_length()) !== false) {
     // flush_end on an empty buffer causes headers to be sent. Only flush if needed.
     if ($ob_len > 0) {
         ob_end_flush();
@@ -61,5 +60,10 @@ if (false !== ($ob_len = ob_get_length())) {
     }
 }
 
-// Enable the unittest module
-Kohana::modules(Kohana::modules() + ['unittest' => MODPATH.'unittest']);
+// Enable the unittest module if it is not already loaded - use the absolute path
+$modules = Kohana::modules();
+$unittest_path = realpath(__DIR__) . DIRECTORY_SEPARATOR;
+if (!in_array($unittest_path, $modules)) {
+    $modules['unittest'] = $unittest_path;
+    Kohana::modules($modules);
+}
