@@ -1,22 +1,17 @@
 <?php
-/**
- * Setting the Routes
- *
- * @package    Codebench\Routing
- * @author     Gleez Team
- * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    http://gleezcms.org/license  Gleez CMS License
- */
 
-/** Routing setup */
-if (!Route::cache())
-{
+// Static file serving
+Route::set('code-bench/media', 'code-bench-media(/<file>)', ['file' => '.+'])
+    ->defaults([
+        'controller' => 'Codebench',
+        'action' => 'media',
+        'file' => null,
+    ]);
 
-	// Catch-all route for Codebench classes to run
-	Route::set('codebench', 'codebench(/<class>)')
-	->defaults(array(
-		'controller' => 'codebench',
-		'action'     => 'index',
-		'class'      => NULL
-	));
-}
+// Catch-all route for Codebench classes to run
+Route::set('codebench', 'codebench(/<class>)')
+    ->defaults([
+        'controller' => 'Codebench',
+        'action' => 'index',
+        'class' => null
+    ]);
