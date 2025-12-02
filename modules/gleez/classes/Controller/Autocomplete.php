@@ -8,7 +8,7 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class Controller_AutoComplete extends Controller {
+class Controller_Autocomplete extends Controller {
 
 	public function before()
 	{
