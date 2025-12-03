@@ -145,14 +145,8 @@ class Filter {
 
 		if ($save)
 		{
-			// set the cache for performance in production
-			if (Kohana::$environment === Kohana::PRODUCTION)
-			{
-				// Cache all defined routes
-				return $cache->set('Filter::cache()', Filter::$_filters);
-			}
-
-			return false;
+            // Cache all defined routes
+            return $cache->set('Filter::cache()', Filter::$_filters);
 		}
 		else
 		{

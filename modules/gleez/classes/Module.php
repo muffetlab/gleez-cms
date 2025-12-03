@@ -523,16 +523,13 @@ class Module
 				}
 			}
 
-			// set the cache for performance in production
-			if (Kohana::$environment === Kohana::PRODUCTION) {
-				$data = array();
-				$data['modules'] = $_cache_modules;
-				$data['active']  = $_cache_active;
-				$data['kohana_modules'] = $kohana_modules;
+            $data = array();
+            $data['modules'] = $_cache_modules;
+            $data['active']  = $_cache_active;
+            $data['kohana_modules'] = $kohana_modules;
 
-				$cache->set('load_modules', $data, Date::DAY);
-				unset($data, $_cache_modules, $_cache_active);
-			}
+            $cache->set('load_modules', $data, Date::DAY);
+            unset($data, $_cache_modules, $_cache_active);
 		}
 
 		Kohana::modules(Arr::merge($kohana_modules, Kohana::modules()));

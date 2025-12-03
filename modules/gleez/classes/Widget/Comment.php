@@ -57,11 +57,7 @@ class Widget_Comment extends Widget {
 				$comments[$blog->id]['post_url'] = $blog->post->url;
 			}
 
-			// set the cache for performance in production
-			if (Kohana::$environment === Kohana::PRODUCTION)
-			{
-                $cache->set('widgets:recent_comments', $comments, DATE::HOUR);
-			}
+            $cache->set('widgets:recent_comments', $comments, DATE::HOUR);
 		}
 	
 		return View::factory('widgets/comment/list')

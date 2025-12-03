@@ -181,11 +181,7 @@ class Theme {
 			}
 		}
 
-		// set the cache for performance in production
-		if (Kohana::$environment === Kohana::PRODUCTION)
-		{
-            $cache->set('themes:themes', $themes, DATE::DAY);
-		}
+        $cache->set('themes:themes', $themes, DATE::DAY);
 
 		if ($title === true && $themes)
 		{

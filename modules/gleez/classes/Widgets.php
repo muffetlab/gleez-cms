@@ -415,11 +415,7 @@ class Widgets {
 				$widgets[] = (object)$_widget->as_array();
 			}
 
-			// set the cache for performance in production
-			if (Kohana::$environment === Kohana::PRODUCTION)
-			{
-                $cache->set('widgets:widgets', $widgets, Date::DAY);
-			}
+            $cache->set('widgets:widgets', $widgets, Date::DAY);
 		}
 
 		foreach ($widgets as $widget)

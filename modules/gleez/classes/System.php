@@ -116,11 +116,7 @@ class System {
 			// Sort array by key name
 			ksort( $icons );
 
-			// set the cache for performance in production
-			if (Kohana::$environment === Kohana::PRODUCTION)
-			{
-                Cache::instance()->set('icons:fa-icons', $icons, Date::WEEK);
-			}
+            Cache::instance()->set('icons:fa-icons', $icons, Date::WEEK);
 		}
 
 		$icons = array("fa-none" => __('none')) + $icons;

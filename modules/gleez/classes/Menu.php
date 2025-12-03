@@ -328,11 +328,7 @@ class Menu {
 
 			if (empty($items)) return;
 
-			// set the cache for performance in production
-			if (Kohana::$environment === Kohana::PRODUCTION)
-			{
-                $cache->set('menus:' . $name, $items, DATE::DAY);
-			}
+            $cache->set('menus:' . $name, $items, DATE::DAY);
 		}
 
 		// Initiate Menu Object
@@ -401,11 +397,7 @@ class Menu {
 
 			if (empty($items)) return;
 
-			// set the cache for performance in production
-			if (Kohana::$environment === Kohana::PRODUCTION)
-			{
-                $cache->set('menus:' . $name, $items, DATE::DAY);
-			}
+            $cache->set('menus:' . $name, $items, DATE::DAY);
 		}
 
 		//Initiate Menu Object
