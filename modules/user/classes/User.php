@@ -120,15 +120,14 @@ class User {
 	public static function count_all()
 	{
 		// initialize the cache
-		$cache = Cache::instance('users');
+        $cache = Cache::instance();
 
 		// To first check cache
-		if(! $all = $cache->get('count_all'))
-		{
+        if (!$all = $cache->get('users:count_all')) {
 			// Counting from database
 			$all = ORM::factory('user')->count_all();
 			// Save to cache on an hour
-			$cache->set('count_all', $all, Date::HOUR);
+            $cache->set('users:count_all', $all, Date::HOUR);
 		}
 
 		// Return the amount of users

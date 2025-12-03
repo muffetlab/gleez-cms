@@ -94,7 +94,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 			}
 
 			Message::success(__('The Widget settings have been updated.'));
-			Cache::instance('widgets')->delete_all();
+            Cache::instance()->delete_all();
 
 			$this->request->redirect(Route::get('admin/widget')->uri());
 		}
@@ -162,7 +162,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 				$widget->save();
 
 				Message::success(__('Widget %name created successful!', array('%name' => $widget->title)));
-				Cache::instance('widgets')->delete_all();
+                Cache::instance()->delete_all();
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/widget')->uri());
@@ -243,7 +243,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 				$handler->save($_POST);
 				Message::success(__('Widget %name updated successful!', array('%name' => $widget->title)));
-				Cache::instance('widgets')->delete_all();
+                Cache::instance()->delete_all();
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/widget')->uri());
@@ -309,7 +309,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 				$handler->delete($_POST);
 
 				Message::success(__('Widget :title deleted successful!', array(':title' => $title)));
-				Cache::instance('widgets')->delete_all();
+                Cache::instance()->delete_all();
 			}
 			catch (Exception $e)
 			{

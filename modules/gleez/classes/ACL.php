@@ -353,16 +353,15 @@ class ACL {
 	{
 		$roles = array();
 
-		$cache = Cache::instance('roles');
-		
-		if( ! $roles = $cache->get('site_roles'))
-		{
+        $cache = Cache::instance();
+
+        if (!$roles = $cache->get('roles:site_roles')) {
 			$roles = ORM::factory('role')->find_all()->as_array('id', 'name');
 			
 			// set the cache for performance in production
 			if (Kohana::$environment === Kohana::PRODUCTION)
 			{
-				$cache->set('site_roles', $roles, DATE::DAY);
+                $cache->set('roles:site_roles', $roles, DATE::DAY);
 			}
 		}
 
@@ -383,10 +382,9 @@ class ACL {
 	{
 		$perms = array();
 
-		$cache = Cache::instance('roles');
-		
-		if( ! $perms = $cache->get('site_perms'))
-		{
+        $cache = Cache::instance();
+
+        if (!$perms = $cache->get('roles:site_perms')) {
 			$result = DB::select('rid', 'permission')
 						->from('permissions')
 						->as_object(TRUE)
@@ -400,7 +398,7 @@ class ACL {
 			// set the cache for performance in production
 			if (Kohana::$environment === Kohana::PRODUCTION)
 			{
-				$cache->set('site_perms', $perms, DATE::DAY);
+                $cache->set('roles:site_perms', $perms, DATE::DAY);
 			}
 		}
 

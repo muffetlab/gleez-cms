@@ -140,8 +140,8 @@ class Controller_Feeds_Template extends Controller {
 		$this->_ttl = $this->_config->get('feed_ttl', Date::HOUR * 60);
 
 		// Initiate cache
-		$this->_cache = Cache::instance('feeds');
-		$this->_cache_key = "feed-{$this->request->controller()}-{$this->request->action()}-{$this->_limit}-{$this->_page}-{$this->_id}";
+        $this->_cache = Cache::instance();
+        $this->_cache_key = "feeds:feed-{$this->request->controller()}-{$this->request->action()}-{$this->_limit}-{$this->_page}-{$this->_id}";
 
 		// Fills the array elements
 		$this->_items = $this->_cache->get($this->_cache_key, array());

@@ -50,11 +50,10 @@ class Widget_Blog extends Widget {
 			return FALSE;
 		}
 
-		$cache = Cache::instance('widgets');
+        $cache = Cache::instance();
 		$view  = View::factory('widgets/blog/list')->bind('items', $items);
 
-		if ( ! $items = $cache->get('recent_blogs'))
-		{
+        if (!$items = $cache->get('widgets:recent_blogs')) {
 			$blogs = ORM::factory('blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
 			$items = array();
@@ -70,7 +69,7 @@ class Widget_Blog extends Widget {
 			}
 
 			// Set the cache
-			$cache->set('recent_blogs', $items, DATE::HOUR);
+            $cache->set('widgets:recent_blogs', $items, DATE::HOUR);
 		}
 
 		return $view->render();
@@ -96,11 +95,10 @@ class Widget_Blog extends Widget {
 			return FALSE;
 		}
 
-		$cache = Cache::instance('widgets');
+        $cache = Cache::instance();
 		$view  = View::factory('widgets/blog/announce')->bind('items', $items);
 
-		if ( ! $items = $cache->get('recent_announce_blogs'))
-		{
+        if (!$items = $cache->get('widgets:recent_announce_blogs')) {
 			$blogs = ORM::factory('blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
 			$items = array();
@@ -118,7 +116,7 @@ class Widget_Blog extends Widget {
 			}
 
 			// Set the cache
-			$cache->set('recent_announce_blogs', $items, DATE::HOUR);
+            $cache->set('widgets:recent_announce_blogs', $items, DATE::HOUR);
 		}
 
 		return $view->render();

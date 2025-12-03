@@ -102,7 +102,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 					->execute();
 
 				Message::success(__('Menu %name created successful!', array('%name' => $post->title)));
-				Cache::instance('menus')->delete($post->name);
+                Cache::instance()->delete('menus:' . $post->name);
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/menu')->uri(), 200);
@@ -158,7 +158,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 			{
 				$post->save();
 				Message::success(__('Menu %name saved successful!', array('%name' => $post->title)));
-				Cache::instance('menus')->delete($post->name);
+                Cache::instance()->delete('menus:' . $post->name);
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/menu')->uri(), 200);
@@ -243,7 +243,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 				{
 					$name = $menu->title;
 					DB::delete('widgets')->where('name', '=', 'menu/'.$menu->name)->execute();
-					Cache::instance('menus')->delete($menu->name);
+                    Cache::instance()->delete('menus:' . $menu->name);
 
 					$menu->delete();
 					Message::success(__('Menu %name deleted successful!', array('%name' => $name)));

@@ -380,7 +380,7 @@ class Post extends ORM_Versioned {
 			$this->aliases();
 		}
 
-		Cache::instance($this->type)->delete($this->type.'-'.$this->id);
+        Cache::instance()->delete($this->type . ':' . $this->type . '-' . $this->id);
 
 		return $this;
 	}
@@ -512,7 +512,7 @@ class Post extends ORM_Versioned {
 			$this->_delete_image();
 
 			$source = $this->rawurl;
-			Cache::instance($this->type)->delete($this->type.'-'.$this->id);
+            Cache::instance()->delete($this->type . ':' . $this->type . '-' . $this->id);
 			parent::delete($soft);
 
 			// Delete the path aliases associated with this object
@@ -905,9 +905,9 @@ class Post extends ORM_Versioned {
 	 */
 	public static function dcache($id, $type, $config)
 	{
-		$cache     = Cache::instance($type);
+        $cache = Cache::instance();
 		$use_cache = (bool) $config->get('use_cache', FALSE);
-		$post      = ($use_cache) ? $cache->get("$type-$id", FALSE) : FALSE;
+        $post = ($use_cache) ? $cache->get($type . ':' . $type . '-' . $id, FALSE) : FALSE;
 
 		if (empty($post))
 		{
@@ -936,7 +936,7 @@ class Post extends ORM_Versioned {
 				$data['image']      = $post->image;
 				$data['content']    = (string) $post->content;
 
-				$cache->set($type.'-'.$id, (object) $data, DATE::WEEK);
+                $cache->set($type . ':' . $type . '-' . $id, (object) $data, DATE::WEEK);
 			}
 		}
 
@@ -973,8 +973,8 @@ class Post extends ORM_Versioned {
 		);
 
 		$params = (object) System::parse_args($args, $default);
-		$cache  = Cache::instance('post');
-		$post   = $params->use_cache ? $cache->get('recent_'.$params->type, NULL) : NULL;
+        $cache = Cache::instance();
+        $post = $params->use_cache ? $cache->get('post:recent_' . $params->type, NULL) : NULL;
 
 		if (empty($post))
 		{
@@ -992,7 +992,7 @@ class Post extends ORM_Versioned {
 
 			if ($params->use_cache)
 			{
-				$cache->set('recent_'.$params->type, $post, Date::HOUR);
+                $cache->set('post:recent_' . $params->type, $post, Date::HOUR);
 			}
 		}
 

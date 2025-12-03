@@ -1025,8 +1025,7 @@ class Text {
 
 		// Check for a cached version of this piece of text.
 		$cache_id = $format_id . ':' . $langcode . ':' . hash('sha256', $text);
-		if ($cache AND $cached = Cache::instance('cache_filter')->get($cache_id))
-		{
+        if ($cache and $cached = Cache::instance()->get('cache_filter:' . $cache_id)) {
 			return $cached;
 		}
 
@@ -1051,7 +1050,7 @@ class Text {
 		// Store in cache with a minimum expiration time of 1 day.
 		if ($cache)
 		{
-			Cache::instance('cache_filter')->set($cache_id, $text, null, time() + Date::DAY);
+            Cache::instance()->set('cache_filter:' . $cache_id, $text, null, time() + Date::DAY);
 		}
 
 		return $text;

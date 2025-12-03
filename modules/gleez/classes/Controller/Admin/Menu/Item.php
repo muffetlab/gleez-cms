@@ -89,7 +89,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			{
 				$post->create_at($id, Arr::get($_POST, 'parent', 'last'));
 				Message::success(__('Menu Item %name saved successful!', array('%name' => $post->title)));
-				Cache::instance('menus')->delete($menu->name);
+                Cache::instance()->delete('menus:' . $menu->name);
 
 				$this->request->redirect(Route::get('admin/menu/item')->uri(array('action' => 'list', 'id' => $menu->id)));
 			}
@@ -143,7 +143,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			{
 				$post->save();
 				Message::success(__('Menu Item %name updated successful!', array('%name' => $post->title)));
-				Cache::instance('menus')->delete_all();
+                Cache::instance()->delete_all();
 
 				$this->request->redirect(Route::get('admin/menu/item')->uri(array('action' => 'list', 'id' => $menu->scp)), 200);
 			}
@@ -202,7 +202,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			{
 				$name = $menu->title;
 				$menu->delete();
-				Cache::instance('menus')->delete_all();
+                Cache::instance()->delete_all();
 				Message::success(__('Menu Item %name deleted successful!', array('%name' => $name)));
 
 				$this->request->redirect(Route::get('admin/menu')->uri(array('action' =>'list')), 200);
@@ -271,7 +271,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 				Message::error(__('Menu Items order could not be saved.'));
 			}
 
-			Cache::instance('menus')->delete_all();
+            Cache::instance()->delete_all();
 			$this->request->redirect(Route::get('admin/menu/item')->uri(array('action'=>'list', 'id' => $id)));
 		}
 	}

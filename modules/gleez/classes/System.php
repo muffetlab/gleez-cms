@@ -106,8 +106,7 @@ class System {
 	public static function icons()
 	{
 		$icons = array();
-		if( !$icons = Cache::instance('icons')->get('fa-icons'))
-		{
+        if (!$icons = Cache::instance()->get('icons:fa-icons')) {
 			if ($path = Kohana::find_file('media/css', 'font-awesome', 'css'))
 			{
 				$array = System::faGetArray($path);
@@ -120,7 +119,7 @@ class System {
 			// set the cache for performance in production
 			if (Kohana::$environment === Kohana::PRODUCTION)
 			{
-				Cache::instance('icons')->set('fa-icons', $icons, Date::WEEK);
+                Cache::instance()->set('icons:fa-icons', $icons, Date::WEEK);
 			}
 		}
 

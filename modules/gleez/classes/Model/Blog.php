@@ -47,7 +47,7 @@ class Model_Blog extends Post {
 			$this->teaser = FALSE;
 		}
 
-		Cache::instance($this->type)->delete('recent_blogs');
+        Cache::instance()->delete($this->type . ':recent_blogs');
 
 		return parent::save($validation);
 	}

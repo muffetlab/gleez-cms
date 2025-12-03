@@ -375,7 +375,7 @@ class Widgets {
 		try
 		{
 			ORM::factory('widget')->where('module', '=', $module)->delete();
-			Cache::instance('widgets')->delete_all();
+            Cache::instance()->delete_all();
 
 			Kohana::$log->add(Log::INFO, 'Deleted widgets where module: :module', array(':module' => $module));
 		}
@@ -398,10 +398,9 @@ class Widgets {
 			return $this->_widgets;
 		}
 
-		$cache = Cache::instance('widgets');
+        $cache = Cache::instance();
 
-		if ( ! $widgets = $cache->get('widgets'))
-		{
+        if (!$widgets = $cache->get('widgets:widgets')) {
 			$_widgets = ORM::factory('widget')
 				->where('status', '=', '1')
 				->order_by('region', 'ASC')
@@ -419,7 +418,7 @@ class Widgets {
 			// set the cache for performance in production
 			if (Kohana::$environment === Kohana::PRODUCTION)
 			{
-				$cache->set('widgets', $widgets, Date::DAY);
+                $cache->set('widgets:widgets', $widgets, Date::DAY);
 			}
 		}
 

@@ -443,7 +443,7 @@ class Controller_Blog extends Template {
 			{
 				$post->delete();
 
-				Cache::instance('blog')->delete('blog-'.$id);
+                Cache::instance()->delete('blog:blog-' . $id);
 
 				Kohana::$log->add(Log::INFO, 'Blog :title deleted.', array(':title' => $title));
 				Message::success(__('Blog %title deleted successful!', array('%title' => $title)));

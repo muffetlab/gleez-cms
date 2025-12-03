@@ -74,7 +74,7 @@ class Model_Role extends Gleez_Model
 		parent::save( $validation );
 
 		//cleanup the cache
-		Cache::instance('roles')->delete_all();
+        Cache::instance()->delete_all();
 
 		return $this;
 	}
@@ -87,7 +87,7 @@ class Model_Role extends Gleez_Model
 		parent::delete($soft);
 
 		//cleanup the cache
-		Cache::instance('roles')->delete_all();
+        Cache::instance()->delete_all();
 
 		return $this;
 	}

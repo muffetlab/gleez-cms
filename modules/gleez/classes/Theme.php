@@ -161,9 +161,9 @@ class Theme {
 	public static function available($title = true): array
 	{
 		$paths 	= (array) Kohana::$config->load('site')->get('theme_paths', [THEMEPATH]);
-		$cache  = Cache::instance('themes');
+        $cache = Cache::instance();
 
-        if (!$themes = $cache->get('themes', [])) {
+        if (!$themes = $cache->get('themes:themes', [])) {
 			// Make sure THEMEPATH is set else add last
 			if (!in_array(THEMEPATH, $paths))
 			{
@@ -184,7 +184,7 @@ class Theme {
 		// set the cache for performance in production
 		if (Kohana::$environment === Kohana::PRODUCTION)
 		{
-			$cache->set('themes', $themes, DATE::DAY);
+            $cache->set('themes:themes', $themes, DATE::DAY);
 		}
 
 		if ($title === true && $themes)

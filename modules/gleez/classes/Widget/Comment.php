@@ -36,10 +36,9 @@ class Widget_Comment extends Widget {
 			return FALSE;
 		}
 
-		$cache = Cache::instance('widgets');
-	
-		if ( ! $comments = $cache->get('recent_comments'))
-		{
+        $cache = Cache::instance();
+
+        if (!$comments = $cache->get('widgets:recent_comments')) {
 			$blogs = ORM::factory('comment')
 					->join('posts')
 					->on('posts.id', '=', 'comment.post_id')
@@ -61,7 +60,7 @@ class Widget_Comment extends Widget {
 			// set the cache for performance in production
 			if (Kohana::$environment === Kohana::PRODUCTION)
 			{
-				$cache->set('recent_comments', $comments, DATE::HOUR);
+                $cache->set('widgets:recent_comments', $comments, DATE::HOUR);
 			}
 		}
 	

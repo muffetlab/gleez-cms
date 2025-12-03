@@ -177,31 +177,6 @@ class Gleez {
 	}
 
 	/**
-	 * Delete all known cache's we set
-	 *
-	 * @uses  Cache::instance
-	 * @uses  Cache::delete_all
-	 */
-	public static function cache_delete()
-	{
-		// Clear any cache for sure
-		Cache::instance('modules')->delete_all();
-		Cache::instance('menus')->delete_all();
-		Cache::instance('widgets')->delete_all();
-		Cache::instance('feeds')->delete_all();
-		Cache::instance('page')->delete_all();
-		Cache::instance('blog')->delete_all();
-		Cache::instance('roles')->delete_all();
-
-		// For each cache instance
-		foreach (Cache::$instances as $group => $instance)
-		{
-			/** @var $instance Cache */
-			$instance->delete_all();
-		}
-	}
-
-	/**
 	 * List of route types
 	 *
 	 * Route name used for creating alias and term/tag routes

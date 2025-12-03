@@ -481,7 +481,7 @@ class Module
 		self::$active  = array();
 
 		$kohana_modules  = array();
-		$cache           = Cache::instance('modules');
+        $cache = Cache::instance();
 		$data            = $cache->get('load_modules', false);
 
 		if (false === $reset && $data && isset($data['kohana_modules'])) {

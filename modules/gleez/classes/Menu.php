@@ -306,10 +306,9 @@ class Menu {
 	 */
 	public static function links($name, $attr = array('class' =>'menus'))
 	{
-		$cache = Cache::instance('menus');
+        $cache = Cache::instance();
 
-		if ( ! $items = $cache->get($name))
-		{
+        if (!$items = $cache->get('menus:' . $name)) {
 			$_menu = ORM::factory('menu')->where('name', '=', (string)$name)->find()->as_array();
 			if ( ! $_menu) return;
 
@@ -332,7 +331,7 @@ class Menu {
 			// set the cache for performance in production
 			if (Kohana::$environment === Kohana::PRODUCTION)
 			{
-				$cache->set($name, $items, DATE::DAY);
+                $cache->set('menus:' . $name, $items, DATE::DAY);
 			}
 		}
 
@@ -380,10 +379,9 @@ class Menu {
 	 */
 	public static function items($name)
 	{
-		$cache = Cache::instance('menus');
+        $cache = Cache::instance();
 
-		if( ! $items = $cache->get($name) )
-		{
+        if (!$items = $cache->get('menus:' . $name)) {
 			$_menu = ORM::factory('menu')->where('name', '=', (string)$name)->find()->as_array();
 			if( ! $_menu) return;
 
@@ -406,7 +404,7 @@ class Menu {
 			// set the cache for performance in production
 			if (Kohana::$environment === Kohana::PRODUCTION)
 			{
-				$cache->set($name, $items, DATE::DAY);
+                $cache->set('menus:' . $name, $items, DATE::DAY);
 			}
 		}
 
