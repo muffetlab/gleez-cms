@@ -144,8 +144,8 @@ class Cache_Redis extends Cache {
 	 *
 	 * @uses    System::sanitize_id
 	 */
-	public function set($id, $data, $lifetime = NULL)
-	{
+    public function set($id, $data, $lifetime = NULL): bool
+    {
 		if ($lifetime === NULL)
 		{
 			$lifetime = Arr::get($this->_config, 'default_expire', Cache::DEFAULT_EXPIRE);
@@ -181,8 +181,8 @@ class Cache_Redis extends Cache {
 	 *
 	 * @uses    System::sanitize_id
 	 */
-	public function delete($id)
-	{
+    public function delete($id): bool
+    {
 		return $this->_redis->del(System::sanitize_id($this->config('prefix').$id));
 	}
 
@@ -221,8 +221,8 @@ class Cache_Redis extends Cache {
 	 *
 	 * @return  boolean
 	 */
-	public function delete_all($mode = Cache::ALL)
-	{
+    public function delete_all($mode = Cache::ALL): bool
+    {
 		if (Cache::ALL === $mode)
 		{
 			return $this->_redis->flushAll();
