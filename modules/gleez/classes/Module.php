@@ -485,9 +485,6 @@ class Module
 		$data            = $cache->get('load_modules', false);
 
 		if (false === $reset && $data && isset($data['kohana_modules'])) {
-			// db has to be initiated @todo fix this bug
-			Database::instance();
-
 			// use data from cache
 			self::$modules  = $data['modules'];
 			self::$active   = $data['active'];
