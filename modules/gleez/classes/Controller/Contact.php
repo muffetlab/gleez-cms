@@ -82,7 +82,27 @@ class Controller_Contact extends Template {
 
 		if ($this->valid_post('contact'))
 		{
-			$post = Validation_Contact::factory($this->request->post());
+            $post = Validation::factory($this->request->post())
+                ->rule('name', 'not_empty')
+                ->rule('name', 'min_length', [':value', 4])
+                ->rule('name', 'max_length', [':value', 60])
+                ->rule('email', 'not_empty')
+                ->rule('email', 'email')
+                ->rule('email', 'email_domain')
+                ->rule('email', 'min_length', [':value', 5])
+                ->rule('email', 'max_length', [':value', 254])
+                ->rule('subject', 'not_empty')
+                ->rule('subject', 'max_length', [':value', Kohana::$config->load('contact')->get('subject_length', 80)])
+                ->rule('category', 'not_empty')
+                ->rule('body', 'not_empty')
+                ->rule('body', 'max_length', [':value', Kohana::$config->load('contact')->get('body_length', 600)])
+                ->labels([
+                    'name' => __('Your Name'),
+                    'email' => __('E-Mail'),
+                    'subject' => __('Subject'),
+                    'category' => __('Category'),
+                    'body' => __('Body')
+                ]);
 
 			if ($post->check())
 			{
