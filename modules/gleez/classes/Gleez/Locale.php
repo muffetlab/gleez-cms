@@ -135,7 +135,7 @@ class Gleez_Locale {
 	 *
 	 * @param   string|Gleez_Locale  $locale  Locale for parsing input [Optional]
 	 *
-	 * @throws  Locale_Exception
+	 * @throws  Kohana_Exception
 	 */
 	public function __construct($locale = NULL)
 	{
@@ -187,7 +187,7 @@ class Gleez_Locale {
 	 *
 	 * @return  string
 	 *
-	 * @throws  Locale_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Locale_Data::getLocaleData
 	 * @uses    Locale_Data::getTerritoryData
@@ -242,7 +242,7 @@ class Gleez_Locale {
 		// This can only happen when someone extends Gleez_Locale and erases the `$_framework`
 		if (is_null($locale))
 		{
-			throw new Locale_Exception('Failed to autodetect of Locale!');
+			throw new Kohana_Exception('Failed to autodetect of Locale!');
 		}
 
 		if (strpos($locale, '-') !== FALSE)
@@ -600,7 +600,7 @@ class Gleez_Locale {
 	 *
 	 * @param   string|Gleez_Locale  $locale   Locale to set
 	 * @param   integer              $quality  The quality to set from 0 to 1 [Optional]
-	 * @throws  Locale_Exception
+	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Locale_Data::locale_data
 	 */
@@ -608,12 +608,12 @@ class Gleez_Locale {
 	{
 		if (in_array($locale, array('detected', 'root', 'framework', 'environment', 'client')))
 		{
-			throw new Locale_Exception('Only full qualified locales can be used as default!');
+			throw new Kohana_Exception('Only full qualified locales can be used as default!');
 		}
 
 		if (($quality < 0.1) or ($quality > 100))
 		{
-			throw new Locale_Exception('Locale quality (priority) must be between 0.1 and 100');
+			throw new Kohana_Exception('Locale quality (priority) must be between 0.1 and 100');
 		}
 
 		if ($quality > 1)
@@ -638,7 +638,7 @@ class Gleez_Locale {
 			}
 			else
 			{
-				throw new Locale_Exception("Can't set unknown locale as default!");
+				throw new Kohana_Exception("Can't set unknown locale as default!");
 			}
 		}
 
