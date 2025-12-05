@@ -15,7 +15,7 @@ if ( ! Route::cache())
 	Route::set('resize', 'media/imagecache/<type>/<dimensions>(/<file>)', array(
 		'dimensions' => '\d+x\d+',
 		'type'       => 'crop|ratio|resize',
-		'file'       => '.+'
+        'file' => '^[\w.\-\/]+$'
 	))
 	->defaults(array(
 		'controller' => 'resize',
