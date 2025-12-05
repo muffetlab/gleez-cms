@@ -85,7 +85,7 @@ class Controller_Admin_Path extends Controller_Admin {
 		$view = View::factory('admin/path/form')
 			->bind('errors', $this->_errors)
 			->bind('post',   $post)
-			->set('url',     URL::site(null, TRUE))
+            ->set('url', URL::site('', TRUE))
 			->set('action',  $action);
 
 		$post = ORM::factory('path');
@@ -139,7 +139,7 @@ class Controller_Admin_Path extends Controller_Admin {
 		$view = View::factory('admin/path/form')
 				->bind('errors', $this->_errors)
 				->bind('post',   $post)
-				->set('url',     URL::site(null, TRUE))
+            ->set('url', URL::site('', TRUE))
 				->set('action',  $action);
 
 		if ($this->valid_post('add_path'))

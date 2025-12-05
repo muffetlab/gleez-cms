@@ -312,7 +312,7 @@ abstract class Template extends Controller {
 			$this->_response_format = $this->request->headers()->preferred_accept(array_keys($this->_accept_formats));
 
 			$site_name = Template::getSiteName();
-			$url       =  URL::site(NULL, TRUE);
+            $url = URL::site('', TRUE);
 
 			View::bind_global('site_name', $site_name);
 			View::bind_global('site_url',  $url);
@@ -346,7 +346,7 @@ abstract class Template extends Controller {
 			// Bind the generic page variables
 			$this->template->set('site_name', Template::getSiteName())
 				->set('site_slogan',   $this->_config->get('site_slogan', __('Innovate IT')))
-				->set('site_url',      URL::site(NULL, TRUE))
+                ->set('site_url', URL::site('', TRUE))
 				->set('site_logo',     $this->_config->get('site_logo', FALSE))
 				->set('sidebar_left',  array())
 				->set('sidebar_right', array())

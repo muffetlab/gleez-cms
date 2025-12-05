@@ -15,7 +15,7 @@
 	<?php include Kohana::find_file('views', 'errors/partial')?>
 
 	<?php // @todo Move to controller ?>
-	<?php $post['site_url'] = ($post['site_url'] === 'www.example.com') ? URL::site(NULL, TRUE) : $post['site_url']; ?>
+    <?php $post['site_url'] = ($post['site_url'] === 'www.example.com') ? URL::site('', TRUE) : $post['site_url']; ?>
 
 <div class="tab-content col-sm-12">
 

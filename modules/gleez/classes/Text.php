@@ -1254,7 +1254,7 @@ class Text {
 		else
 		{
 			static::$_link_count++;
-			static::$_link_list .= "[" . static::$_link_count . "] " . URL::site(null, TRUE);
+            static::$_link_list .= "[" . static::$_link_count . "] " . URL::site('', TRUE);
 
 			if ( substr($link, 0, 1) != '/' )
 			{
