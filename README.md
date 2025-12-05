@@ -6,7 +6,7 @@ With [Gleez CMS](https://gleezcms.org) you can easily build dynamic websites wit
 
 With an emphasis on security and functionality, [Gleez CMS](https://gleezcms.org) is a professional and robust system suitable for any business or organization website. Built on the [PHP](http://php.net) programming language and the [MySQL](http://www.mysql.com) database, [Gleez CMS](https://gleezcms.org) delivers superb performance on any size website.
 
-## Features
+# Features
 
 * Website Navigation and Web Pages
 * Users, User Groups, and Permissions
@@ -24,7 +24,7 @@ With an emphasis on security and functionality, [Gleez CMS](https://gleezcms.org
 * ORM, MongoDB, Redis support
 * Other Details like SEO, Media, Gravatar, etc.
 
-## Demo
+# Demo
 
 You can visit our demo site to become familiar with the basic features of Gleez CMS
 
@@ -35,7 +35,7 @@ You can visit our demo site to become familiar with the basic features of Gleez 
 | *Username*    | demo         | demoadmin     |
 | *Password*    | demo         | demoadmin     |
 
-## Internationalization (i18n Support)
+# Internationalization (i18n Support)
 
 The available locale(s) in Gleez are:
 
@@ -47,16 +47,63 @@ The available locale(s) in Gleez are:
 + Italian
 + Romanian
 
-## Documentation
+# Installation
 
-We create the documentation together with the community and other Gleez users/developers.
-The latest documentation is available on the [Gleez Wiki](https://github.com/gleez/cms/wiki).
+## Disclaimer
 
-* [Installation](https://github.com/gleez/cms/wiki/Installation)
-* [Contributing](https://github.com/gleez/cms/wiki/Contributing)
+Please note that Muffet Laboratory cannot be held responsible for anything that results from the following instructions.
 
-Chat with fellow Gleez users at [#gleez on Freenode](http://webchat.freenode.net/?channels=gleez)
+## Downloading and Unpacking
 
+There are two ways to get Gleez: via a Git client, or via the GitHub web interface.
+
+### Git Client
+
+Open a terminal, go to the directory where you want the project, and run:
+
+```
+git clone git://github.com/muffetlab/gleez-cms.git gleez
+```
+
+### Git Web Interface
+
+Click the `Code` -> `Download ZIP` button on GitHub and extract the downloaded archive to a folder named `gleez`.
+
+## Trusted Hosts Setup
+
+Copy the example URL config to the application config folder:
+
+```
+cp system/config/url.php application/config/url.php
+```
+
+Open `application/config/url.php` and add your hostname(s) to the `trusted_hosts` array.
+
+## File Permissions
+
+Ensure the web server can write to cache, logs and uploads. Example for Linux (adjust user if needed):
+
+```
+chmod +w application/cache application/logs public/media
+```
+
+## Install PHP Dependencies
+
+From the project root (`gleez`) run:
+
+```
+composer install
+```
+
+## Setup via Web Installer
+
+Point your browser to the `gleez` folder (e.g. `http://localhost/gleez`). The installer will walk you through a few
+steps. On the final step the installer displays a generated username and password — copy these credentials to sign in as
+an administrator.
+
+## Editing Content
+
+Log in with the credentials produced by the installer and manage content from the admin interface.
 
 ***
 
