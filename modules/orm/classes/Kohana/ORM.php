@@ -1016,10 +1016,6 @@ class Kohana_ORM extends Model implements serializable
      */
     protected function run_filter(string $field, $value)
     {
-        if ($value === null) {
-            return null;
-        }
-
         $filters = $this->filters();
 
         // Get the filters for this column
