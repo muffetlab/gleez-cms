@@ -113,10 +113,7 @@ class Gleez {
 			Kohana::$config->attach(new Config_Database);
 		}
 
-		if (Kohana::$environment !== Kohana::DEVELOPMENT)
-		{
-			Kohana_Exception::$error_view = 'errors/stack';
-		}
+        Kohana_Exception::$error_view = 'errors/stack';
 
 		// Turn off notices and strict errors in production
 		if (Kohana::$environment === Kohana::PRODUCTION)
