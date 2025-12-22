@@ -274,7 +274,6 @@ CREATE TABLE {permissions} (
 
 INSERT INTO {permissions} (`rid`, `permission`, `module`) VALUES
 (1, 'access content', 'content'),
-(1, 'access profiles', 'user'),
 (1, 'sending mail', 'contact'),
 (3, 'access content', 'content'),
 (3, 'access profiles', 'user'),
