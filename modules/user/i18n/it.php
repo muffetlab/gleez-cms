@@ -150,6 +150,7 @@ return array(
 	'This account is blocked' => 'Qusto account è bloccato',
 	'Email address does not exist' => 'Questa email non esiste',
 	"This is a one-time URL, so it can be used only once. It expires after one day and nothing will happen if it's not used." => 'Questo è un URL monouso, quindi pu&#328; essere usato una sola volta. Scadr&agrave; dopo un giorno e non accadr&agrave; nulla se non viene utilizzato.',
+	'Too many failed login attempts. Please try again later.' => 'Troppi tentativi di accesso non riusciti. Riprova più tardi.',
 	'Try to come up with a complex password' => 'Prova una password più complessa',
 	// U
 	'Update Profile' => 'Aggiorna profilo',

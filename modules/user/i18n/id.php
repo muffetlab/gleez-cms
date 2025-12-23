@@ -174,6 +174,7 @@ return array(
 	'This username already exists' => 'Nama pengguna udah ada',
 	'This username is not available' => 'Nama pengguna ga tersedia',
 	'This username or password is not valid' => 'Nama pengguna atau password ga valid',
+	'Too many failed login attempts. Please try again later.' => 'Terlalu banyak percobaan masuk yang gagal. Silakan coba lagi nanti.',
 	'Try to come up with a complex password' => 'Coba deh, password nya yang aga rumit',
 	// U
 	'Update Profile' => 'Perbarui Profil',

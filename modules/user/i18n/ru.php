@@ -218,6 +218,7 @@ return array(
 	'This username is not available' => 'Это имя пользователя не доступно',
 	'This username or password is not valid' => 'Имя пользователя или пароль не верны',
 	'This will verify your account. In the future you will be able to log in using the username and password that you created during registration.' => 'Это подтвердит регистрацию вашу учётную запись. В будущем вы сможете авторизоваться используя им пользователя (логин) и пароль, которые вы указали при регистрации.',
+	'Too many failed login attempts. Please try again later.' => 'Слишком много неудачных попыток входа. Пожалуйста, попробуйте позже.',
 	'Try to come up with a complex password' => 'Постарайтесь придумать сложный пароль',
 	// U
 	'Update Profile' => 'Обновить профиль пользователя',

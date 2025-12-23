@@ -174,6 +174,7 @@ return array(
 	'This username already exists' => 'Selline kasutajanimi on juba olemas',
 	'This username is not available' => 'See kasutajanimi pole saadaval',
 	'This username or password is not valid' => 'Kasutajanimi või parool on vale',
+	'Too many failed login attempts. Please try again later.' => 'Liiga palju ebaõnnestunud sisselogimiskatseid. Palun proovige hiljem uuesti.',
 	'Try to come up with a complex password' => 'Proovige väljamõelda raske parool',
 	// U
 	'Update Profile' => 'Uuendada kasutaja proofil',

@@ -139,6 +139,7 @@ return array(
   'This username already exists' => '该用户名已经存在',
   'This username is not available' => '该用户名不可用',
   'This username or password is not valid' => '该用户名或密码无效',
+  'Too many failed login attempts. Please try again later.' => '登录尝试次数过多。请稍后再试。',
   'Try to come up with a complex password' => '请试着用一个复杂点的密码',
   'Update Profile' => '更新简介',
   'Upload' => '上传',

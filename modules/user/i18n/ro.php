@@ -150,6 +150,7 @@ return array(
 	'This account is blocked' => 'Acest cont este blocat',
 	'Email address does not exist' => 'Acest email nu exista',
 	"This is a one-time URL, so it can be used only once. It expires after one day and nothing will happen if it's not used." => 'Acest URL expira după prima utilizare sau după o zi.',
+	'Too many failed login attempts. Please try again later.' => 'Prea multe încercări de conectare eșuate. Vă rugăm să încercați din nou mai târziu.',
 	'Try to come up with a complex password' => 'Încearcă să folosești o parolă complexă',
 	// U
 	'Update Profile' => 'Actualizează Profil',
