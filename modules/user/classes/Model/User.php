@@ -547,7 +547,12 @@ class Model_User extends Gleez_Model
 			}
 			else
 			{
-				$array->error('name', 'invalid');
+                if (Auth_GORM::$lastErrorKey) {
+                    $array->error('name', Auth_GORM::$lastErrorKey);
+                    Auth_GORM::$lastErrorKey = null;
+                } else {
+                    $array->error('name', 'invalid');
+                }
 				Module::event('user_auth_failed', $array);
 
 				Kohana::$log->add(Log::ERROR, 'User: :name failed login.', array(':name' => $array['name']));

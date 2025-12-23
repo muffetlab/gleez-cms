@@ -13,6 +13,13 @@
  */
 class Auth_GORM extends Auth_ORM
 {
+    /**
+     * Stores the last error key for failed login attempts.
+     *
+     * @var string|null
+     */
+    public static $lastErrorKey = null;
+
 	/**
 	 * Get enabled oAuth2 providers
 	 * @return array
@@ -178,13 +185,58 @@ class Auth_GORM extends Auth_ORM
 	 */
 	protected function _login($username, $password, $remember): bool
     {
+        $config = Kohana::$config->load('auth')->get('auth');
+        $cache = Cache::instance();
+
+        $maxFailedLogins = (int) ($config['max_failed_logins'] ?? 0);
+        $loginJailTime = (int) ($config['login_jail_time'] ?? 0);
+
+        $failedAttemptsKey = 'auth:failed_attempts:' . $username;
+        $failedAttempts = (int) $cache->get($failedAttemptsKey, 0);
+
+        if ($maxFailedLogins > 0 && $failedAttempts >= $maxFailedLogins) {
+            $lastAttemptTime = (int) $cache->get($failedAttemptsKey . ':time', 0);
+            if (time() - $lastAttemptTime < $loginJailTime) {
+                // Add a small delay to prevent timing attacks on jail status
+                sleep(1);
+
+                Auth_GORM::$lastErrorKey = 'too_many_attempts';
+
+                return false;
+            } else {
+                // Jail time expired, reset attempts
+                $cache->delete($failedAttemptsKey);
+                $cache->delete($failedAttemptsKey . ':time');
+                $failedAttempts = 0;
+            }
+        }
+
         // Load the user
         $user = ORM::factory('user');
         $user->where($user->unique_key($username), '=', $username)->find();
 
+        // If user not found, introduce a delay to prevent enumeration
+        if (!$user->loaded()) {
+            // Delay for 1 second
+            sleep(1);
+
+            if ($maxFailedLogins > 0) {
+                $cache->set($failedAttemptsKey, $failedAttempts + 1, $loginJailTime);
+                $cache->set($failedAttemptsKey . ':time', time(), $loginJailTime);
+            }
+
+            return false;
+        }
+
 		// If the passwords match, perform a login! role id: 2
 		if ($user->has('roles', 2) AND User::check_pass($user, $password) AND $user->id !== 1)
 		{
+            // Successful login, reset failed attempts
+            if ($maxFailedLogins > 0) {
+                $cache->delete($failedAttemptsKey);
+                $cache->delete($failedAttemptsKey . ':time');
+            }
+
 			if ($remember === TRUE)
 			{
 				// Token data
@@ -212,6 +264,11 @@ class Auth_GORM extends Auth_ORM
 		}
 
 		// Login failed
+        if ($maxFailedLogins > 0) {
+            $cache->set($failedAttemptsKey, $failedAttempts + 1, $loginJailTime);
+            $cache->set($failedAttemptsKey . ':time', time(), $loginJailTime);
+        }
+
 		return FALSE;
 	}
 }

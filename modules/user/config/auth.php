@@ -101,9 +101,9 @@ return array
 		/**
 		 * Define the time that user who archive the max_failed_logins
 		 * will need to wait before his next attempt
-		 * @var  string
+		 * @var int
 		 */
-		'login_jail_time' => "15 minutes",
+		'login_jail_time' => 900,
 	),
 
 	/**

@@ -15,4 +15,5 @@ return array(
 	    'not_empty' => 'You must provide an email address',
 	    'invalid' => 'Password or username is incorrect',
 	),
+	'too_many_attempts' => 'Too many failed login attempts. Please try again later.',
 );
