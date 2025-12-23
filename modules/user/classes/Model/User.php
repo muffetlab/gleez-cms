@@ -566,7 +566,7 @@ class Model_User extends Gleez_Model
 		}
 	}
 
-	public function change_pass($values, $expected = NULL )
+    public function change_pass($values)
 	{
 		// Validation for passwords
 		$extra_validation = self::get_password_validation($values)
@@ -575,7 +575,7 @@ class Model_User extends Gleez_Model
 			->rule('pass', 'not_empty')
 			->rule('old_pass', array(Auth_GORM::instance(), 'check_password') );
 
-		return $this->values($values, $expected)->save($extra_validation);
+        return $this->values($values, ['pass'])->save($extra_validation);
 	}
 
 	/**
