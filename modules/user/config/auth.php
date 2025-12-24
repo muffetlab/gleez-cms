@@ -19,7 +19,7 @@ return array
 	 * @link http://php.net/hash
 	 * @link http://php.net/hash_algos
 	 */
-	'hash_method' => 'sha1',
+	'hash_method' => 'sha256',
 
 	/**
 	 * Set the auto-login (remember me) cookie lifetime, in seconds.
