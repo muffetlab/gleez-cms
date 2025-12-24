@@ -456,9 +456,30 @@ class Model_User extends Gleez_Model
 	 */
 	public static function get_password_validation($values)
 	{
-		return Validation::factory($values)
-			->rule('pass', 'min_length', array(':value', Kohana::$config->load('auth')->get('password.length_min', 4)))
-			->rule('pass_confirm', 'matches', array(':validation', ':field', 'pass'));
+        $config = Kohana::$config->load('auth')->get('password');
+
+        $validation = Validation::factory($values)
+            ->rule('pass', 'min_length', [':value', $config['length_min'] ?? 8])
+            ->rule('pass', 'max_length', [':value', $config['length_max'] ?? 32])
+            ->rule('pass_confirm', 'matches', [':validation', ':field', 'pass']);
+
+        if ($config['uppercase'] ?? false) {
+            $validation->rule('pass', 'regex', [':value', '/[A-Z]/']);
+        }
+
+        if ($config['lowercase'] ?? false) {
+            $validation->rule('pass', 'regex', [':value', '/[a-z]/']);
+        }
+
+        if ($config['digits'] ?? false) {
+            $validation->rule('pass', 'regex', [':value', '/[0-9]/']);
+        }
+
+        if ($config['symbols'] ?? false) {
+            $validation->rule('pass', 'regex', [':value', '/[!@#$%^&*()\-_=+{};:,<.>]/']);
+        }
+
+        return $validation;
 	}
 
 	/**

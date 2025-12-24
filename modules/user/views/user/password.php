@@ -27,7 +27,27 @@
 							<span class="input-group-addon"><i class="fa fa-key"></i></span>
 							<?php echo Form::password('pass', NULL, array('class' => 'form-control')); ?>
 						</div>
-						<span class="help-block"><?php echo __('Minimum password length &mdash; :count characters', array(':count' => 4)) ?></span>
+                        <span class="help-block">
+                            <?php
+                            $config = Kohana::$config->load('auth')->get('password');
+                            echo __('Minimum password length &mdash; :count characters', [':count' => $config['length_min'] ?? 8]);
+                            if ($config['length_max'] ?? false) {
+                                echo '<br>' . __('Maximum password length &mdash; :count characters', [':count' => $config['length_max']]);
+                            }
+                            if ($config['uppercase'] ?? false) {
+                                echo '<br>' . __('Must contain at least one uppercase letter');
+                            }
+                            if ($config['lowercase'] ?? false) {
+                                echo '<br>' . __('Must contain at least one lowercase letter');
+                            }
+                            if ($config['digits'] ?? false) {
+                                echo '<br>' . __('Must contain at least one digit');
+                            }
+                            if ($config['symbols'] ?? false) {
+                                echo '<br>' . __('Must contain at least one symbol');
+                            }
+                            ?>
+                        </span>
 					</div>
 				</div>
 

@@ -61,7 +61,12 @@ return array
 	 * @var  array
 	 */
 	'password' => array(
-		'length_min' => 4,
+        'length_min' => 8,
+        'length_max' => 32,
+        'uppercase' => true,
+        'lowercase' => true,
+        'digits' => true,
+        'symbols' => true,
 	),
 
 	/**
