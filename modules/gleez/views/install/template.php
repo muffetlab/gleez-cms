@@ -11,11 +11,6 @@
 		}
 	?>
 	<link rel="shortcut icon" href="<?php echo URL::site($link); ?>" type="image/x-icon">
-	<!-- HTML5 shim and Respond.js, for IE6-8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-		<script src="/media/js/html5.js"></script>
-		<script src="/media/js/respond.min.js"></script>
-	<![endif]-->
 	<?php echo Assets::css(); ?>
 </head>
 
