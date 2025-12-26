@@ -79,7 +79,7 @@ class Controller_Install_Install extends Controller_Template {
 		{
 			// Add styles
 			$this->template->styles = array(
-				$this->_media->uri(array('file' => 'css/bootstrap.css')) => 'screen',
+                $this->_media->uri(array('file' => 'css/bootstrap.min.css')) => 'screen',
 				$this->_media->uri(array('file' => 'css/install.css')) => 'screen',
 			);
 
