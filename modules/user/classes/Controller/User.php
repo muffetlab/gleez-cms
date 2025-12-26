@@ -241,9 +241,12 @@ class Controller_User extends Template {
 	 */
 	public function action_view()
 	{
+        if (!$this->_auth->logged_in()) {
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
+        }
+
 		$id       = (int) $this->request->param('id', 0);
 		$user     = ORM::factory('user', $id);
-		$account  = FALSE;
 		$is_owner = FALSE;
 		$request  = FALSE;
 		$isFriend = FALSE;
@@ -253,47 +256,38 @@ class Controller_User extends Template {
 		// Add Schema.org support
 		$this->schemaType = 'ProfilePage';
 
-		if ( ! $user->loaded())
+        if (
+            !$user->loaded()
+            || !$user->status
+            || $user->id == User::GUEST_ID
+            || $this->_user->id !== $user->id
+            && !ACL::check('administer users')
+            && !ACL::check('access profiles')
+        )
 		{
-			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
-
-			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            throw HTTP_Exception::factory(403, 'Attempt to access without required privileges.');
 		}
 
-		if ($this->_auth->logged_in() AND $user->id > 1)
-		{
-			$account = Auth_GORM::instance()->get_user();
-		}
-
-		if ($account AND $account->id == $user->id)
+        if ($this->_user->id == $user->id)
 		{
 			Assets::popup();
 
 			$this->title = __('My Account');
 		}
-		elseif ($account AND ((ACL::check('access profiles') AND $user->status) OR ACL::check('administer users')))
-		{
-			$this->title = __('Profile %title', array('%title' => Text::ucfirst($user->nick)));
-		}
-		elseif (ACL::check('access profiles') AND $user->status AND $user->id > User::GUEST_ID)
-		{
-			$this->title = __('Profile %title', array('%title' => Text::ucfirst($user->nick)));
-		}
 		else
 		{
-			throw HTTP_Exception::factory(403, 'Attempt to access without required privileges.');
+            $this->title = __('Profile %title', array('%title' => Text::ucfirst($user->nick)));
 		}
 
-		if ($account AND ($user->id === $account->id) AND $enable_buddy)
+        if ($this->_user->id == $user->id && $enable_buddy)
 		{
 			$is_owner = TRUE;
 		}
 
-		if($account && $user && $enable_buddy)
+        if ($enable_buddy)
 		{
-			$request   = Model::factory('buddy')->isRequest($account->id, $user->id);
-			$isFriend  = Model::factory('buddy')->isFriend($account->id, $user->id);
+            $request = Model::factory('buddy')->isRequest($this->_user->id, $user->id);
+            $isFriend = Model::factory('buddy')->isFriend($this->_user->id, $user->id);
 			$friends   = Model::factory('buddy')->friends($user->id, 5);
 		}
 
