@@ -122,7 +122,7 @@ class Model_User extends Gleez_Model
     {
 		return array(
 			'pass' => array(
-				array(array(Auth_GORM::instance(), 'hash'))
+				array(array(Auth_ORM::instance(), 'hash'))
 			),
 			'picture' => array(
 				array(array($this, 'uploadPhoto'))
@@ -556,7 +556,7 @@ class Model_User extends Gleez_Model
 				Kohana::$log->add(Log::ERROR, 'User: :name account blocked.', array(':name' => $array['name']));
 				throw new Validation_Exception($array, 'Account Blocked');
 			}
-			elseif ($this->loaded() AND Auth_GORM::instance()->login($array['name'], $array['password'], $remember))
+			elseif ($this->loaded() AND Auth_ORM::instance()->login($array['name'], $array['password'], $remember))
 			{
 				// Redirect after a successful login
 				if (is_string($redirect))
@@ -568,9 +568,9 @@ class Model_User extends Gleez_Model
 			}
 			else
 			{
-                if (Auth_GORM::$lastErrorKey) {
-                    $array->error('name', Auth_GORM::$lastErrorKey);
-                    Auth_GORM::$lastErrorKey = null;
+                if (Auth_ORM::$lastErrorKey) {
+                    $array->error('name', Auth_ORM::$lastErrorKey);
+                    Auth_ORM::$lastErrorKey = null;
                 } else {
                     $array->error('name', 'invalid');
                 }
@@ -594,7 +594,7 @@ class Model_User extends Gleez_Model
 			->rule('old_pass', 'not_empty')
 			->rule('pass_confirm', 'not_empty')
 			->rule('pass', 'not_empty')
-			->rule('old_pass', array(Auth_GORM::instance(), 'check_password') );
+			->rule('old_pass', array(Auth_ORM::instance(), 'check_password') );
 
         return $this->values($values, ['pass'])->save($extra_validation);
 	}
@@ -699,8 +699,8 @@ class Model_User extends Gleez_Model
 	 *
 	 * @return  boolean
 	 *
-	 * @uses    Auth_GORM::instance
-	 * @uses    Auth_GORM::hash
+	 * @uses    Auth_ORM::instance
+	 * @uses    Auth_ORM::hash
 	 * @uses    URL::site
 	 * @uses    Route::get
 	 * @uses    Route::uri
@@ -725,7 +725,7 @@ class Model_User extends Gleez_Model
 		// Create e-mail body with reset password link
 		// Token consists of email and the last_login field.
 		// So as soon as the user logs in again, the reset link expires automatically
-		$token = Auth_GORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login);
+		$token = Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login);
 
 		$body = View::factory('email/confirm_signup', $this->as_array())
 			->set('url', URL::site(
@@ -762,8 +762,8 @@ class Model_User extends Gleez_Model
 	 *
 	 * @return  boolean
 	 *
-	 * @uses    Auth_GORM::instance
-	 * @uses    Auth_GORM::hash
+	 * @uses    Auth_ORM::instance
+	 * @uses    Auth_ORM::hash
 	 */
 	public function confirm_signup($id, $token)
 	{
@@ -779,7 +779,7 @@ class Model_User extends Gleez_Model
 			return FALSE;
 
 		// Invalid confirmation token
-		if ($token !== Auth_GORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login))
+		if ($token !== Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login))
 			return FALSE;
 
 		//send welcome mail
@@ -847,8 +847,8 @@ class Model_User extends Gleez_Model
 	 * @uses    Config::load
 	 * @uses    Validation::factory
 	 * @uses    Validation::rule
-	 * @uses    Auth_GORM::instance
-	 * @uses    Auth_GORM::hash
+	 * @uses    Auth_ORM::instance
+	 * @uses    Auth_ORM::hash
 	 * @uses    URL::site
 	 * @uses    Email::factory
 	 * @uses    Email::subject
@@ -887,7 +887,7 @@ class Model_User extends Gleez_Model
 		// Token consists of email and the last_login field.
 		// So as soon as the user logs in again, the reset link expires automatically
 		$time = time();
-		$token = Auth_GORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login);
+		$token = Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login);
 		$url = URL::site(
 			Route::get('user/reset')->uri(
 				array(
@@ -932,8 +932,8 @@ class Model_User extends Gleez_Model
 	 *
 	 * @return  boolean
 	 *
-	 * @uses    Auth_GORM::instance
-	 * @uses    Auth_GORM::hash
+	 * @uses    Auth_ORM::instance
+	 * @uses    Auth_ORM::hash
 	 * @uses    Config::get
 	 */
 	public function confirm_reset_password_link($id, $token, $time)
@@ -960,7 +960,7 @@ class Model_User extends Gleez_Model
 		if ( $time < $this->login ) return FALSE;
 
 		// Invalid confirmation token
-		if ($token !== Auth_GORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login))
+		if ($token !== Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login))
 			return FALSE;
 
 		return TRUE;

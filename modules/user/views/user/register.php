@@ -108,7 +108,7 @@
 				<?php
 					_e('You can sign in from any of the following services:');
 
-					$providers = Auth_GORM::providers();
+					$providers = Auth_ORM::providers();
 
 					echo HTML::anchor(Route::get('user')->uri(array('action' => 'login')), '<i class="fa fa-home"></i> '.$site_name, array('class' => 'btn btn-default', 'title' =>__('Login with :provider', array(':provider' => $site_name)), 'rel' => 'tooltip', 'data-placement' => 'right'));
 

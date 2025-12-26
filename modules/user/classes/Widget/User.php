@@ -28,7 +28,7 @@ class Widget_User extends Widget {
 
 	public function login()
 	{
-		$auth    = Auth_GORM::instance();
+		$auth    = Auth_ORM::instance();
 		$request = Request::current();
 
 		// If user already signed-in / don't show the widget on user controller.
@@ -47,7 +47,7 @@ class Widget_User extends Widget {
 		return View::factory('widget/login')
 				->set('register',     Kohana::$config->load('auth')->get('register'))
 				->set('use_username', Kohana::$config->load('auth')->get('username'))
-				->set('providers',    array_filter(Auth_GORM::providers()))
+				->set('providers',    array_filter(Auth_ORM::providers()))
 				->set('action',       $action)
 				->set('post',         ORM::factory('user'))
 				->render();

@@ -60,7 +60,7 @@ class User {
 	public static function active_user()
 	{
 		// @todo (maybe) cache this object so we're not always doing session lookups.
-		return (! (Auth_GORM::instance()->get_user()) ? self::guest() : Auth_GORM::instance()->get_user());
+		return (! (Auth_ORM::instance()->get_user()) ? self::guest() : Auth_ORM::instance()->get_user());
 	}
 
 	/**
@@ -70,7 +70,7 @@ class User {
 	 */
 	public static function is_guest()
 	{
-		return ( ! Auth_GORM::instance()->get_user() ? TRUE : FALSE );
+		return ( ! Auth_ORM::instance()->get_user() ? TRUE : FALSE );
 	}
 
 	/**
@@ -85,7 +85,7 @@ class User {
 			return FALSE;
 		}
 
-		$user = Auth_GORM::instance()->get_user();
+		$user = Auth_ORM::instance()->get_user();
 
 		// To reduce the number of SQL queries, we cache the user's roles in a static variable.
 		if ( ! isset(User::$roles[$user->id]))
@@ -152,9 +152,9 @@ class User {
 			$groups = @explode(',', $groups);
 		}
 
-		if (Auth_GORM::instance()->logged_in())
+		if (Auth_ORM::instance()->logged_in())
 		{
-			$user = Auth_GORM::instance()->get_user();
+			$user = Auth_ORM::instance()->get_user();
 
 			// To reduce the number of SQL queries, we cache the user's roles in a static variable.
 			if ( ! isset(User::$roles[$user->id]))
@@ -269,7 +269,7 @@ class User {
 	 *
 	 * @return boolean TRUE if the password is correct
 	 *
-	 * @uses   Auth_GORM::hash
+	 * @uses   Auth_ORM::hash
 	 */
 	public static function check_pass($user, $password)
 	{
@@ -279,7 +279,7 @@ class User {
 		}
 
 		$valid = $user->pass;
-		$guess = Auth_GORM::instance()->hash($password);
+		$guess = Auth_ORM::instance()->hash($password);
 		
 		return System::hashEquals($valid, $guess);
 	}
@@ -341,9 +341,9 @@ class User {
 	 */
 	public static function providers()
 	{
-		if(! Auth_GORM::instance()->logged_in())
+		if(! Auth_ORM::instance()->logged_in())
 		{
-			$providers = array_filter(Auth_GORM::providers());
+			$providers = array_filter(Auth_ORM::providers());
 			return View::factory('oauth/providers')->set('providers', $providers);
 		}
 	}

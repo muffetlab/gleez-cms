@@ -80,7 +80,7 @@ class Controller_Provider extends Template {
 
 		// Set the provider controller
 		$this->provider = strtolower($this->request->param('provider'));
-		$providers = Auth_GORM::providers();
+		$providers = Auth_ORM::providers();
 
 		// Throw exception if the provider is disabled
 		if( ! array_key_exists($this->provider, array_filter($providers)))

@@ -20,7 +20,7 @@ class Controller_User extends Template {
 	 * The before() method is called before controller action
 	 *
 	 * @uses  Assets::css
-	 * @uses  Auth_GORM::get_user
+	 * @uses  Auth_ORM::get_user
 	 * @uses  Request::uri
 	 * @uses  Request::action
 	 */
@@ -50,9 +50,9 @@ class Controller_User extends Template {
 	 * Register a new user
 	 *
 	 * @throws  HTTP_Exception_403
-	 * @uses    Auth_GORM::logged_in
-	 * @uses    Auth_GORM::instance
-	 * @uses    Auth_GORM::login
+	 * @uses    Auth_ORM::logged_in
+	 * @uses    Auth_ORM::instance
+	 * @uses    Auth_ORM::login
 	 * @uses    Request::redirect
 	 * @uses    Request::action
 	 * @uses    Route::get
@@ -114,7 +114,7 @@ class Controller_User extends Template {
 				$post->signup($form);
 
 				// sign the user in
-				Auth_GORM::instance()->login($post->name, $post->pass);
+				Auth_ORM::instance()->login($post->name, $post->pass);
 
 				Kohana::$log->add(Log::INFO, 'Account :title created successful.', array(':title' => $post->nick));
 				Message::success(__('Account %title created successful!', array('%title' => $post->nick)));
@@ -162,7 +162,7 @@ class Controller_User extends Template {
 		$view = View::factory('user/login')
 			->set('register',     Kohana::$config->load('auth')->get('register'))
 			->set('use_username', Kohana::$config->load('auth')->get('username'))
-			->set('providers',    array_filter(Auth_GORM::providers()))
+			->set('providers',    array_filter(Auth_ORM::providers()))
 			->set('post',         $user)
 			->set('action',       $action)
 			->bind('errors',      $this->_errors);
@@ -194,7 +194,7 @@ class Controller_User extends Template {
 	/**
 	 * Log Out
 	 *
-	 * @uses  Auth_GORM::logout
+	 * @uses  Auth_ORM::logout
 	 * @uses  Request::redirect
 	 * @uses  Route::get
 	 */
@@ -204,7 +204,7 @@ class Controller_User extends Template {
 		$this->auto_render = FALSE;
 
 		// Sign out the user
-		Auth_GORM::instance()->logout();
+		Auth_ORM::instance()->logout();
 
 		// Redirect to the user account and then the signin page if logout worked as expected
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
@@ -234,7 +234,7 @@ class Controller_User extends Template {
 	 *
 	 * @throws  HTTP_Exception_403
 	 *
-	 * @uses    Auth_GORM::get_user
+	 * @uses    Auth_ORM::get_user
 	 * @uses    ACL::check
 	 * @uses    Text::ucfirst
 	 * @uses    Assets::popup
@@ -308,7 +308,7 @@ class Controller_User extends Template {
 	 * @uses  Request::redirect
 	 * @uses  Route::get
 	 * @uses  Route::uri
-	 * @uses  Auth_GORM::get_user
+	 * @uses  Auth_ORM::get_user
 	 * @uses  Message::success
 	 * @uses  Arr::merge
 	 * @uses  Arr::get
@@ -370,7 +370,7 @@ class Controller_User extends Template {
 	 *
 	 * @uses  Request::redirect
 	 * @uses  Route::get
-	 * @uses  Auth_GORM::get_user
+	 * @uses  Auth_ORM::get_user
 	 * @uses  Message::success
 	 */
 	public function action_password()
@@ -381,7 +381,7 @@ class Controller_User extends Template {
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 200);
 		}
 
-		$user = Auth_GORM::instance()->get_user();
+		$user = Auth_ORM::instance()->get_user();
 		$this->title =  __('Change Password');
 		$destination = Request::initial()->uri();
 		$params = array('action' => $this->request->action());

@@ -9,7 +9,7 @@
  */
 return array
 (
-    'driver' => 'GORM',
+    'driver' => 'ORM',
 
 	/**
 	 * Type of hash to use for passwords.

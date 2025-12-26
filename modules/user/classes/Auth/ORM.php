@@ -11,7 +11,7 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
-class Auth_GORM extends Auth_ORM
+class Auth_ORM extends Kohana_Auth_ORM
 {
     /**
      * Stores the last error key for failed login attempts.
@@ -200,7 +200,7 @@ class Auth_GORM extends Auth_ORM
                 // Add a small delay to prevent timing attacks on jail status
                 sleep(1);
 
-                Auth_GORM::$lastErrorKey = 'too_many_attempts';
+                Auth_ORM::$lastErrorKey = 'too_many_attempts';
 
                 return false;
             } else {
