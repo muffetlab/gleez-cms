@@ -225,37 +225,37 @@ return array(
 	'installed_locales' => array(
 		'en' => array(
 			'name'      => 'English',
-			'i18n_code' => 'en',
+			'i18n_code' => 'en-us',
 			'locale'    => array('en_US.utf-8'),
 		),
 		'et' => array(
 			'name'      => 'Estonian',
-			'i18n_code' => 'et',
+			'i18n_code' => 'et-ee',
 			'locale'    => array('et_EE.utf-8'),
 		),
 		'it' => array(
 			'name'      => 'Italian',
-			'i18n_code' => 'it',
+			'i18n_code' => 'it-it',
 			'locale'    => array('it_IT.utf-8'),
 		),
 		'ro' => array(
 			'name'      => 'Romanian',
-			'i18n_code' => 'ro',
+			'i18n_code' => 'ro-ro',
 			'locale'    => array('ro_RO.utf-8'),
 		),
 		'ru' => array(
 			'name'      => 'Russian',
-			'i18n_code' => 'ru',
+			'i18n_code' => 'ru-ru',
 			'locale'    => array('ru_RU.utf-8'),
 		),
 		'zh' => array(
 			'name'      => 'Chinese (Simplified)',
-			'i18n_code' => 'zh',
+			'i18n_code' => 'zh-cn',
 			'locale'    => array('zh_CN.utf-8'),
 		),
 		'id' => array(
 			'name'      => 'Bahasa Indonesia',
-			'i18n_code' => 'id',
+			'i18n_code' => 'id-id',
 			'locale'    => array('id_ID.utf-8'),
 		),
 	),

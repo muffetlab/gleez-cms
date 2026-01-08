@@ -934,15 +934,16 @@ class Form {
 	 * @param   array   $attributes html attributes
 	 * @return  string
 	 * @uses    Form::input
-	 * @link    https://github.com/smalot/bootstrap-datetimepicker
+	 * @link    https://getdatepicker.com/4/
 	 */
 	public static function date($name, $value = NULL, array $attrs = NULL)
 	{
 		$out = '';
 
 		// Assign the datepicker assets
-		Assets::css('bs.dt', 'media/css/bootstrap-datetimepicker.css', array('bootstrap'));
-		Assets::js('bs.dt', 'media/js/datepicker/datetimepicker.js', array('bootstrap'));
+        Assets::css('bs.dt', 'media/css/bootstrap-datetimepicker.min.css', ['bootstrap']);
+        Assets::js('bs.mm', 'media/js/moment/moment.min.js', ['bootstrap']);
+        Assets::js('bs.dt', 'media/js/bootstrap-datetimepicker.min.js', ['bootstrap']);
 
 		if ( ! isset($attrs['id']))
 		{
@@ -954,74 +955,56 @@ class Form {
 		$attrs['type']  = 'text'; 
 		$attrs[]        = 'readonly';
 
-		$control_attrs['class']                     = 'input-group date';
-		$control_attrs['data-provide']              = 'datetimepicker';
-		$control_attrs['data-date-language']        = 'en';
-		$control_attrs['data-date-autoclose']       = true;
-		$control_attrs['data-show-meridian']        = true;
-		$control_attrs['data-date-today-highlight'] = true;
-		$control_attrs['data-picker-position']      = 'bottom-left';
-		//$control_attrs['data-format-type']        = 'php';
-		$control_attrs['data-date-format']          = 'dd M yyyy hh:ii:ss';
+        $options = [
+            'format' => 'DD-MM-YYYY hh:mm:ss',
+            'locale' => 'en',
+            'viewMode' => 'days',
+            'showTodayButton' => false,
+            'widgetPositioning' => ['horizontal' => 'left', 'vertical' => 'bottom'],
+            'ignoreReadonly' => true,
+        ];
 
 		// Add locale support to datepicker. @todo CH and latin support
 		if(I18n::$lang != 'en')
 		{
 			$lang                                   = I18n::$lang;
-			$control_attrs['data-date-language']    = $lang;
-			Assets::js('bs.dt.locale', "media/js/datepicker/locales/bootstrap-datetimepicker.{$lang}.js", array('bs.dt'));
+            $options['locale'] = $lang;
+            Assets::js('bs.mm.locale', "media/js/moment/locale/$lang.js", ['bs.mm']);
 		}
 
-		// @todo inconsistencies between php/js date formats
-		if (isset($attrs['data-date-format']))
+        if (isset($attrs['format']))
 		{
-			$control_attrs['data-date-format'] = $attrs['data-date-format'];
-			unset($attrs['data-date-format']);
+            $options['format'] = $attrs['format'];
+            unset($attrs['format']);
 		}
 
-		if (isset($attrs['data-date-today-btn']))
+        if (isset($attrs['showTodayButton']))
 		{
-			$control_attrs['data-date-today-btn'] = $attrs['data-date-today-btn'];
-			unset($attrs['data-date-today-btn']);
+            $options['showTodayButton'] = $attrs['showTodayButton'];
+            unset($attrs['showTodayButton']);
 		}
 
-		if (isset($attrs['data-start-view']))
+        if (isset($attrs['viewMode']))
 		{
-			$control_attrs['data-start-view'] = $attrs['data-start-view'];
-			unset($attrs['data-start-view']);
-		}
-
-		if (isset($attrs['data-min-view']))
-		{
-			$control_attrs['data-min-view'] = $attrs['data-min-view'];
-			unset($attrs['data-min-view']);
-		}
-
-		if (isset($attrs['data-max-view']))
-		{
-			$control_attrs['data-max-view'] = $attrs['data-max-view'];
-			unset($attrs['data-max-view']);
-		}
-
-		if (isset($attrs['data-view-select']))
-		{
-			$control_attrs['data-view-select'] = $attrs['data-view-select'];
-			unset($attrs['data-view-select']);
+            $options['viewMode'] = $attrs['viewMode'];
+            unset($attrs['viewMode']);
 		}
 
 		// Set the input value
 		if ($value == false)
 		{
-			$attrs['value'] 			= Date::formatted_time(time(), 'd M Y h:i:s');
-			$control_attrs['data-date'] = Date::formatted_time(time(), 'd M Y h:i:s');
+            $attrs['value'] = Date::formatted_time(time(), 'd-m-Y h:i:s');
 		}
 		elseif ($value != false && is_numeric($value))
 		{
-			$attrs['value'] 			= Date::formatted_time($value, 'd M Y h:i:s');
-			$control_attrs['data-date'] = Date::formatted_time($value, 'd M Y h:i:s');
+            $attrs['value'] = Date::formatted_time($value, 'd-m-Y h:i:s');
 		}
 
-		$out .= '<div' . HTML::attributes($control_attrs).'>';
+        Assets::codes($attrs['name'], 'jQuery(document).ready(function ($) {
+            $(\'[data-dtp-provider="' . $attrs['name'] . '"]\').datetimepicker(' . json_encode($options) . ');
+        });', null, false, ['weight' => 1]);
+
+        $out .= '<div' . HTML::attributes(['data-dtp-provider' => $name, 'class' => 'input-group date']) . '>';
 		$out .= '<input'.HTML::attributes($attrs).'>';
 		$out .= '<span class="input-group-addon"><i class="fa fa-calendar"></i></span>';
 		$out .= '</div>';
