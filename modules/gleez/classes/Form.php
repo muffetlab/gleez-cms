@@ -396,9 +396,9 @@ class Form {
 		}
 		else
 		{
-			foreach ($options as $value => $name)
+			foreach ($options as $value => $label)
 			{
-				if (is_array($name))
+				if (is_array($label))
 				{
 					// Create a new optgroup
 					$group = array('label' => $value);
@@ -406,7 +406,7 @@ class Form {
 					// Create a new list of options
 					$_options = array();
 
-					foreach ($name as $_value => $_name)
+					foreach ($label as $_value => $_name)
 					{
 						// Force value to be string
 						$_value = (string) $_value;
@@ -444,13 +444,19 @@ class Form {
 					}
 
 					// Change the option to the HTML string
-					$options[$value] = '<option'.HTML::attributes($option).'>'.HTML::chars($name, FALSE).'</option>';
+					$options[$value] = '<option'.HTML::attributes($option).'>'.HTML::chars($label, FALSE).'</option>';
 				}
 			}
 
 			// Compile the options into a single string
 			$options = "\n".implode("\n", $options)."\n";
 		}
+
+        if ($attributes['useSelect2'] ?? false) {
+            unset($attributes['useSelect2']);
+            $attributes['data-select2-provider'] = $name;
+            Assets::select2($name);
+        }
 
 		return '<select'.HTML::attributes($attributes).'>'.$options.'</select>';
 	}
@@ -1000,8 +1006,8 @@ class Form {
             $attrs['value'] = Date::formatted_time($value, 'd-m-Y h:i:s');
 		}
 
-        Assets::codes($attrs['name'], 'jQuery(document).ready(function ($) {
-            $(\'[data-dtp-provider="' . $attrs['name'] . '"]\').datetimepicker(' . json_encode($options) . ');
+        Assets::codes('bs.dt.' . $name, 'jQuery(document).ready(function ($) {
+            $(\'[data-dtp-provider="' . $name . '"]\').datetimepicker(' . json_encode($options) . ');
         });', null, false, ['weight' => 1]);
 
         $out .= '<div' . HTML::attributes(['data-dtp-provider' => $name, 'class' => 'input-group date']) . '>';

@@ -179,17 +179,6 @@ jQuery.noConflict();
 		return str
 	}
 
-	// Check select2 plugin is loaded
-	if ($.fn.select2){
-		$(window).on('load', function () {
-			$(".select-icons").select2({
-				formatResult: Gleez.theme_icon,
-				formatSelection: Gleez.theme_icon,
-				escapeMarkup: function(m) { return m; }
-			})
-		})
-	}
-
 	//icon theme for select2 plugin
 	Gleez.theme_icon = function(icon) {
 		if (!icon.id) return icon.text; // optgroup

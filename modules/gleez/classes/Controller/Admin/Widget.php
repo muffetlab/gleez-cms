@@ -173,7 +173,6 @@ class Controller_Admin_Widget extends Controller_Admin {
 			}
 		}
 
-		Assets::select2();
 		$this->response->body($view);
 	}
 
@@ -254,7 +253,6 @@ class Controller_Admin_Widget extends Controller_Admin {
 			}
 		}
 
-		Assets::select2();
 		$this->response->body($view);
 	}
 

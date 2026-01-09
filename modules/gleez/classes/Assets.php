@@ -814,12 +814,40 @@ class Assets {
 	/**
 	 * Select2 jQuery plugin
 	 *
-	 * @link  http://ivaynberg.github.com/select2/index.html
+	 * @link https://select2.org
 	 */
-	public static function select2()
+	public static function select2(string $name)
 	{
-		self::js('select2', 'media/js/select2.min.js', array('jquery'), FALSE, array('weight' => -10));
-		self::css('select2','media/css/select2.css');
+        self::js('select2', 'media/js/select2/select2.min.js', ['jquery'], false, ['weight' => -10]);
+
+        // Normalize language code for Select2 (e.g., pt-br -> pt-BR, zh-cn -> zh-CN)
+        $lang = str_replace(['pt-br', 'sr-cyrl', 'zh-cn', 'zh-tw'], ['pt-BR', 'sr-Cyrl', 'zh-CN', 'zh-TW'], I18n::$lang);
+
+        // Fallback to the primary language if the variant doesn't exist (e.g. en-us -> en)
+        if (strpos($lang, '-') !== false && !Kohana::find_file('media', "js/select2/i18n/$lang", 'js')) {
+            $lang = explode('-', $lang)[0];
+        }
+
+        self::js('select2.lang', "media/js/select2/i18n/$lang.js", ['select2'], false, ['weight' => -9]);
+
+        Assets::codes('select2.' . $name, 'jQuery(document).ready(function ($) {
+            var $el = $(\'[data-select2-provider="' . $name . '"]\');
+            var options = {
+                language: \'' . $lang . '\'
+            };
+
+            if ($el.hasClass(\'select-icons\')) {
+                options.templateResult = Gleez.theme_icon;
+                options.templateSelection = Gleez.theme_icon;
+                options.escapeMarkup = function(m) {
+                    return m;
+                };
+            }
+
+            $el.select2(options);
+        });', null, false, ['weight' => -8]);
+
+        self::css('select2', 'media/css/select2.min.css');
 	}
 
 	/**

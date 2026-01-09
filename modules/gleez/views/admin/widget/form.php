@@ -57,7 +57,7 @@
 			<div class="form-group <?php echo isset($errors['icon']) ? 'has-error': ''; ?>">
 				<?php echo Form::label('icon', __('Icon'), array('class' => 'control-label')) ?>
 				<div class="controls sys-icon">
-					<?php echo Form::select('icon', $widget->icons, $widget->icon, array('class' => 'select-icons col-md-12')); ?>
+                    <?php echo Form::select('icon', $widget->icons, $widget->icon, ['class' => 'select-icons col-md-12', 'useSelect2' => true]); ?>
 				</div>
 			</div>
 
