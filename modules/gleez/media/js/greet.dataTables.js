@@ -1,16 +1,12 @@
 /*
  * This is a highly modified version of the bootstrap dataTables.
- * Requires jquery tmpl plugin @link
- * https://github.com/gleez/greet
- * 
+ *
+ * @link https://github.com/gleez/greet
  * @package    Greet\DataTables
- * @version    4.0
  * @requires   jQuery v1.9 or later
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2005-2015 Gleez Technologies
  * @license    The MIT License (MIT)
- * @link       https://github.com/blueimp/JavaScript-Templates
- *
  */
 
 +function ($) {
@@ -24,10 +20,10 @@
 		,   columns = []
 		
 		//dont't init if it's already initialised
-		if ( $.fn.DataTable.fnIsDataTable( table ) ) return
+        if ($.fn.dataTable.isDataTable(table)) return
 		
 		//exit if no url
-		if(options.target == false) return
+        if (options.ajax === false) return
 
 		//use data sortable value to disable sorting/searching for a column
 		$('thead th', $(table)).each(function(){
@@ -40,37 +36,24 @@
 			}
 		})
 
-		if(options.template){
-			options.pagingType = "simple"
-			options.pretty = true
-			options.dom = "<'panel panel-default'<'panel-body hide'<'search-form'<'row'<'col-xs-9'f><'col-xs-3'>>>r><'list-group't><'panel-footer'<'row'<'col-sm-6'i><'col-sm-6'p>>>"
-		}
-
 		var oTable = $table.dataTable({
 			"columns": columns
-			, "order": options.sorting
+            , "order": options.order
 			, "processing": options.processing
-			, "serverSide": options.serverside
-			, "deferRender": options.deferrender
-			, "paging": options.paginate
-			, "pagingType" : options.pagingType
-			, "sarching": options.filter 
-			, "info ": options.info
-			, "dom": options.dom
-			, "lengthChange": options.lengthchange
-			, "stateSave": options.statesave
-			, "stateDuration": options.stateduration
+            , "serverSide": options.serverSide,
+            "stateSave": options.stateSave,
+            "stateDuration": options.stateDuration,
+            "layout": options.layout
 			, "language": {
-					"emptyTable": options.emptytable
-					, "url": options.localize
+                "emptyTable": options.emptyTable
 				}
 			, "ajax": function (data, fnCallback, settings ) {
 				settings.jqXHR = $.ajax( {
-					"url":  options.target,
+                    "url": options.ajax,
 					"data": data,
 					"dataType": "json",
 					"cache": false,
-					"type": settings.sServerMethod
+                    "type": settings.ajax.type || 'GET'
 				}, 300)
 				.done(function(response, textStatus, jqXHR){
 					$(settings.oInstance).trigger('xhr', settings)
@@ -81,184 +64,101 @@
 					$(settings.oInstance).parent().html(errorText)
 				})
 			}
-			, "drawCallback": function( settings ) {
-				if(options.pretty){
-					$table.find("thead").remove()
-				}
-			}
-			, "rowCallback": function ( row, data ) {
-				if(options.pretty && data.length){
-					tmpl.arg = "c";
-					var html = tmpl(options.template, data);
-
-					$(row).empty()
-					$(row).append(html)
-
-					return row
-				}
-			}
-			, "createdRow": function( row, data, dataIndex ) {
-				if(options.pretty && options.template && data.length){
-					// Row click
-					$(row).on('click', function() {
-						//console.log('Row Clicked. Look I have access to all params, thank You closures.', this, data, dataIndex)
-					})
-				}
-			}
 		})
 	}
 
 	/* Default class modification */
-	$.extend( $.fn.dataTableExt.oStdClasses, {
-		"sWrapper": "dataTables_wrapper form-inline",
-		"sFilterInput": "form-control",
-		"sLengthSelect": "form-control input-sm"
+    $.extend(true, $.fn.dataTable.ext.classes, {
+        container: "dt-container form-inline",
+        search: {
+            input: "form-control input-sm"
+        },
+        length: {
+            select: "form-control input-sm"
+        },
+        processing: {
+            container: "dt-processing panel panel-default"
+        },
+        layout: {
+            row: "row dt-layout-row",
+            cell: "dt-layout-cell",
+            tableCell: 'col-12',
+            start: "dt-layout-start col-sm-6",
+            end: "dt-layout-end col-sm-6",
+            full: "dt-layout-full col-sm-12"
+        }
 	} )
 
 	// Pagination renderers to draw the Bootstrap paging,
 	if ( $.fn.dataTable.Api ) {
 		$.fn.dataTable.defaults.renderer = 'bootstrap';
 
-		$.fn.dataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, buttons, page, pages ) {
+        $.fn.dataTable.ext.renderer.pagingButton.bootstrap = function (settings, buttonType, content, active, disabled) {
 			var api = new $.fn.dataTable.Api( settings );
 			var classes = settings.oClasses;
-			var lang = settings.oLanguage.oPaginate;
-			var btnDisplay, btnClass;
+            var btnDisplay;
 
-			var attach = function( container, buttons ) {
-				var i, ien, node, button;
-				var clickHandler = function ( e ) {
-					e.preventDefault();
-					if ( e.data.action !== 'ellipsis' ) {
-						api.page( e.data.action ).draw( false );
-					}
-				};
+            switch (buttonType) {
+                case 'ellipsis':
+                    btnDisplay = '&hellip;';
+                    break;
+                case 'first':
+                    btnDisplay = api.i18n('paginate.first', 'First');
+                    break;
+                case 'previous':
+                    btnDisplay = api.i18n('paginate.previous', 'Previous');
+                    break;
+                case 'next':
+                    btnDisplay = api.i18n('paginate.next', 'Next');
+                    break;
+                case 'last':
+                    btnDisplay = api.i18n('paginate.last', 'Last');
+                    break;
+                default:
+                    btnDisplay = buttonType + 1;
+                    break;
+            }
 
-				for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
-					button = buttons[i];
+            var btnClass = active ? 'active' : (disabled ? 'disabled' : '');
 
-					if ( $.isArray( button ) ) {
-						attach( container, button );
-					}
-					else {
-						btnDisplay = '';
-						btnClass = '';
+            var li = $('<li>').addClass(classes.paging.button + ' ' + btnClass);
+            var a = $('<a>', {
+                'href': (disabled || active) ? null : '#'
+            })
+            .html(btnDisplay)
+            .appendTo(li);
 
-						switch ( button ) {
-							case 'ellipsis':
-								btnDisplay = '&hellip;';
-								btnClass = 'disabled';
-								break;
+            return {
+                display: li,
+                clicker: a
+            };
+        };
 
-							case 'first':
-								btnDisplay = lang.sFirst;
-								btnClass = button + (page > 0 ? '' : ' disabled');
-								break;
-
-							case 'previous':
-								btnDisplay = lang.sPrevious;
-								btnClass = button + (page > 0 ? '' : ' disabled');
-								break;
-
-							case 'next':
-								btnDisplay = lang.sNext;
-								btnClass = button + (page < pages-1 ? '' : ' disabled');
-								break;
-
-							case 'last':
-								btnDisplay = lang.sLast;
-								btnClass = button + (page < pages-1 ? '' : ' disabled');
-								break;
-
-							default:
-								btnDisplay = button + 1;
-								btnClass = page === button ? 'active' : '';
-								break;
-						}
-
-						if ( btnDisplay ) {
-							node = $('<li>', {
-									'class': classes.sPageButton+' '+btnClass,
-									'aria-controls': settings.sTableId,
-									'tabindex': settings.iTabIndex,
-									'id': idx === 0 && typeof button === 'string' ? settings.sTableId +'_'+ button : null
-								} )
-								.append( $('<a>', {'href': '#'}).html(btnDisplay) )
-								.appendTo( container );
-
-							settings.oApi._fnBindAction(
-								node, {action: button}, clickHandler
-							);
-						}
-					}
-				}
-			};
-
-			attach(
-				$(host).empty().html('<ul class="pagination"/>').children('ul'),
-				buttons
-			);
-		}
+        $.fn.dataTable.ext.renderer.pagingContainer.bootstrap = function (settings, buttons) {
+            return $('<ul/>').addClass('pagination').append(buttons);
+        };
 	}
 
 	/* Set the defaults for DataTables initialisation */
 	$.extend(true, $.fn.dataTable.defaults, {
 		"initComplete": function (oSettings, json) {
-			var currentId = $(this).attr('id')
-
-			if (currentId) {
-				var thisLength     = $('#' + currentId + '_length')
-				, thisLengthLabel  = $('#' + currentId + '_length label')
-				, thisLengthSelect = $('#' + currentId + '_length label select')
-				, thisFilter       = $('#' + currentId + '_filter')
-				, thisFilterLabel  = $('#' + currentId + '_filter label')
-				, thisFilterInput  = $('#' + currentId + '_filter label input')
-				, title            = $(this).data('title') || false
-				, pretty           = $(this).data('template') || false
-
-				// Re-arrange the records selection for a form-horizontal layout
-				thisLengthLabel.addClass('control-label').attr('for', currentId + '_length_select')
-				thisLengthSelect.addClass('form-control input-sm').attr('id', currentId + '_length_select')
-
-				// Re-arrange the search input for a form-horizontal layout
-				thisFilter.addClass('form-group')
-				thisFilterInput.appendTo(thisFilter)
-				thisFilterLabel.remove()
-				thisFilterInput.attr('placeholder', 'Search...')
-				thisFilter.parent().removeClass('hide')
-				$(this).find('thread.hide').removeClass('hide')
-
-				// Pretty Support
-				if(title && pretty) {
-					var add = $(document).find('script.card-add').html() || false
-					thisFilter.parents("div.search-form").find("div.col-xs-3").append(add)
-
-					thisFilter.append('<i class="fa fa-search"></i>')
-					thisFilterInput.attr('placeholder', 'Search '+title+'...')
-					thisFilter.parents("div.panel-body.hide").removeClass('hide')
-				}
-			}
 		}
 	})
 
 	DataTable.DEFAULTS = {
-		paginate       : true
-		, info         : true
-		, filter       : true
-		, lengthchange : true
-		, target       : false
-		, columns      : false
-		, sorting      : false
+        ajax: false,
+        order: false
 		, processing   : true
-		, statesave    : true
-		, stateduration: 7200
-		, serverside   : true
-		, deferrender  : true
-		, pretty  	   : false
-		, template     : ''
-		, localize     : ''
-		, emptytable   : "No active record(s) here. Would you like to create one?"
-		, dom          : "<'table_head row'<'col-sm-6 hidden-xs'l><'col-xs-12 col-sm-6 hide'f>r>t<'row'<'col-sm-6'i><'col-sm-6'p>>"
+        , stateSave: true,
+        stateDuration: 7200,
+        serverSide: true,
+        emptyTable: "No active record(s) here. Would you like to create one?",
+        layout: {
+            topStart: 'pageLength',
+            topEnd: 'search',
+            bottomStart: 'info',
+            bottomEnd: 'paging'
+        }
 	}
 
 	// GREET DATATABLEs PLUGIN DEFINITION

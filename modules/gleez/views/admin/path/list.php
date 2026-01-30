@@ -9,17 +9,17 @@
 	<?php echo HTML::anchor($add_url, '<i class="fa fa-plus fa-white"></i> '.__('Add Alias'), array('class' => 'btn btn-success pull-right')) ?>
 	<div class='clearfix'></div><br>
 
-	<table id="admin-list-paths" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-target="<?php echo $url?>" data-sorting='[["1", "desc"]]'>
+	<table id="admin-list-paths" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["1", "desc"]]'>
 		<thead>
 		<tr>
 			<th width="50%" class="sorting_desc"><?php echo __("URL Path"); ?></th>
 			<th width="40%" class="sorting_desc"><?php echo __("Alias"); ?></th>
-			<th width="10%" data-columns='{"bSortable":false, "bSearchable":false}'></th>
+			<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
 		</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="3" class="dataTables_empty"><?php echo __("Loading data from server"); ?></td>
+				<td colspan="3" class="dt-empty"><?php echo __("Loading data from server"); ?></td>
 			</tr>
 		</tbody>
 	</table>

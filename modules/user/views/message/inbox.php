@@ -22,19 +22,19 @@
 							</div>
 						</div>
 					</fieldset>
-					<table id="user-message-inbox" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-target="<?php echo $url?>" data-sorting='[["3", "desc"]]'>
+					<table id="user-message-inbox" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["3", "desc"]]'>
 						<thead>
 							<tr>
-								<th width="5%" data-columns='{"bSortable":false, "bSearchable":false}'> # </th>
-								<th width="15%" data-columns='{"bSearchable":false}'><?php _e('Sender'); ?></th>
+								<th width="5%" data-columns='{"orderable":false, "searchable":false}'> # </th>
+								<th width="15%" data-columns='{"searchable":false}'><?php _e('Sender'); ?></th>
 								<th width="60%"><?php _e('Message'); ?></th>
-								<th width="12%" data-columns='{"bSearchable":false}'><?php _e('Sent'); ?></th>
-								<th width="8%" data-columns='{"bSortable":false, "bSearchable":false}'></th>
+								<th width="12%" data-columns='{"searchable":false}'><?php _e('Sent'); ?></th>
+								<th width="8%" data-columns='{"orderable":false, "searchable":false}'></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td colspan="5" class="dataTables_empty"><?php _e('Loading data from server'); ?></td>
+								<td colspan="5" class="dt-empty"><?php _e('Loading data from server'); ?></td>
 							</tr>
 						</tbody>
 					</table>

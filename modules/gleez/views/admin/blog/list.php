@@ -25,20 +25,20 @@
 					</div>
 				</div>
 			</fieldset>
-			<table id="admin-list-blogs" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-target="<?php echo $url?>" data-sorting='[["4", "desc"]]'>
+			<table id="admin-list-blogs" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["4", "desc"]]'>
 				<thead>
 					<tr>
-						<th width="5%" data-columns='{"bSortable":false, "bSearchable":false}'> # </th>
+						<th width="5%" data-columns='{"orderable":false, "searchable":false}'> # </th>
 						<th width="40%"><?php echo __('Title'); ?></th>
-						<th width="20%" data-columns='{"bSearchable":false}'><?php echo __('Author'); ?></th>
-						<th width="10%" data-columns='{"bSearchable":false, "sClass": "status"}'><?php echo __('Status'); ?></th>
-						<th width="12%" data-columns='{"bSearchable":false}'><?php echo __('Updated'); ?></th>
-						<th width="10%" data-columns='{"bSortable":false, "bSearchable":false}'></th>
+						<th width="20%" data-columns='{"searchable":false}'><?php echo __('Author'); ?></th>
+						<th width="10%" data-columns='{"searchable":false, "className": "status"}'><?php echo __('Status'); ?></th>
+						<th width="12%" data-columns='{"searchable":false}'><?php echo __('Updated'); ?></th>
+						<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="6" class="dataTables_empty"><?php echo __("Loading data from server"); ?></td>
+						<td colspan="6" class="dt-empty"><?php echo __("Loading data from server"); ?></td>
 					</tr>
 				</tbody>
 			</table>

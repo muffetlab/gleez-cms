@@ -339,8 +339,7 @@ class Datatables {
 		$requestSearch  = $request->query('search');
 		$requestLength  = $request->query('length');
 
-		// DataTables 1.10
-		if (count($requestOrder) > 0)
+        if (is_array($requestOrder) && count($requestOrder) > 0)
 		{
 			for ($i = 0; $i < count($requestOrder); $i++)
 			{
@@ -358,7 +357,6 @@ class Datatables {
 			}
 		}
 
-		// DataTables 1.10
         if ($requestStart > 0 && $requestLength != '-1') {
             $start = $requestStart;
 			$length = intval($requestLength);

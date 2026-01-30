@@ -10,18 +10,18 @@
 	<?php echo HTML::anchor(Route::get('admin/tag')->uri(array('action' =>'add')), '<i class="fa fa-plus fa-white"></i> '.__('Add New Tag'), array('class' => 'btn btn-success pull-right')) ?>
 	<div class='clearfix'></div><br>
 
-	<table id = "admin-list-tags" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-target="<?php echo $url?>" data-sorting='[["0", "desc"]]'>
+	<table id = "admin-list-tags" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["0", "desc"]]'>
 		<thead>
 			<tr>
 				<th width="30%" class="sorting_desc"><?php echo __("Name"); ?></th>
 				<th width="45%" class="sorting_desc"><?php echo __("Slug"); ?></th>
 				<th width="15%" class="sorting_desc"><?php echo __("Type"); ?></th>
-				<th width="10%" data-columns='{"bSortable":false, "bSearchable":false}'></th>
+				<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="4" class="dataTables_empty"><?php echo __("Loading data from server"); ?></td>
+				<td colspan="4" class="dt-empty"><?php echo __("Loading data from server"); ?></td>
 			</tr>
 		</tbody>
 	</table>

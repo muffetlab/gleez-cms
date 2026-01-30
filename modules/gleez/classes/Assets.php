@@ -857,9 +857,9 @@ class Assets {
 	 */
 	public static function datatables()
 	{
-		self::js('datatables', 'media/js/jquery.dataTables.min.js', array('jquery'), FALSE, array('weight' => -10));
+        self::js('datatables', 'media/js/datatables.min.js', ['jquery'], false, ['weight' => -10]);
 		self::js('greet.dataTables', 'media/js/greet.dataTables.js', array('bootstrap'), FALSE, array('weight' => -6));
-		self::css('greet.dataTables', 'media/css/greet.dataTables.css', array('datatables'), array('weight' => -2));
+        self::css('datatables.bootstrap', 'media/css/datatables.bootstrap.min.css', null, ['weight' => -2]);
 	}
 
 	/**
