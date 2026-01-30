@@ -36,7 +36,7 @@
 			}
 		})
 
-		var oTable = $table.dataTable({
+		var oTable = $table.DataTable({
 			"columns": columns
             , "order": options.order
 			, "processing": options.processing

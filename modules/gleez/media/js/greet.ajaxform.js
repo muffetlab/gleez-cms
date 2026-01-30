@@ -51,16 +51,17 @@
 
 	Ajaxform.prototype.init = function(element, options) {
 		this.$element   = element
-		$(element).ajaxSubmit(options).removeData('jqxhr')
+        $(element).ajaxSubmit(options)
 	}
 
 	Ajaxform.prototype.beforeSubmit = function(formData, form, options) {
 		//add submit button to form array if its from popup request
 		if(options.button && options.button.length == 1){
-			var subButton   = Array()
-			subButton.name  = options.button.attr('name')
-			subButton.value = options.button.attr('value')
-			subButton.type  = options.button.attr('type')
+            var subButton = {
+                name:  options.button.attr('name'),
+                value: options.button.attr('value'),
+                type:  options.button.attr('type')
+            }
 			
 			//append to form data
 			formData.push(subButton)
@@ -86,7 +87,7 @@
 
 			if(dataTable){
 				//redraw dataTables if its a dataTable popup or form add/edit/delete
-				$(dataTable).dataTable().fnDraw()
+                $(dataTable).DataTable().draw();
 			}
 		
 			//Lets check if the form is in popup window
