@@ -352,7 +352,7 @@ class ACL {
         if (!$roles = $cache->get('roles:site_roles')) {
 			$roles = ORM::factory('role')->find_all()->as_array('id', 'name');
 
-            $cache->set('roles:site_roles', $roles, DATE::DAY);
+            $cache->set('roles:site_roles', $roles, Date::DAY);
 		}
 
 		return $roles;
@@ -385,7 +385,7 @@ class ACL {
 				$perms[$row->rid][$row->permission] = self::ALLOW;
 			}
 
-            $cache->set('roles:site_perms', $perms, DATE::DAY);
+            $cache->set('roles:site_perms', $perms, Date::DAY);
 		}
 
 		return $perms;

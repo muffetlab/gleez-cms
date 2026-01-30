@@ -69,7 +69,7 @@ class Widget_Blog extends Widget {
 			}
 
 			// Set the cache
-            $cache->set('widgets:recent_blogs', $items, DATE::HOUR);
+            $cache->set('widgets:recent_blogs', $items, Date::HOUR);
 		}
 
 		return $view->render();
@@ -116,7 +116,7 @@ class Widget_Blog extends Widget {
 			}
 
 			// Set the cache
-            $cache->set('widgets:recent_announce_blogs', $items, DATE::HOUR);
+            $cache->set('widgets:recent_announce_blogs', $items, Date::HOUR);
 		}
 
 		return $view->render();

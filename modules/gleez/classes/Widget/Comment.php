@@ -57,7 +57,7 @@ class Widget_Comment extends Widget {
 				$comments[$blog->id]['post_url'] = $blog->post->url;
 			}
 
-            $cache->set('widgets:recent_comments', $comments, DATE::HOUR);
+            $cache->set('widgets:recent_comments', $comments, Date::HOUR);
 		}
 	
 		return View::factory('widgets/comment/list')

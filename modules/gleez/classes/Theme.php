@@ -181,7 +181,7 @@ class Theme {
 			}
 		}
 
-        $cache->set('themes:themes', $themes, DATE::DAY);
+        $cache->set('themes:themes', $themes, Date::DAY);
 
 		if ($title === true && $themes)
 		{

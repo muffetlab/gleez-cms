@@ -15,7 +15,7 @@ if (is_file(APPPATH . 'classes/Kohana.php')) {
     require SYSPATH . 'classes/Kohana.php';
 }
 
-require GLZPATH . 'classes/gleez.php';
+require GLZPATH . 'classes/Gleez.php';
 
 /**
  * Set the default time zone.

@@ -328,7 +328,7 @@ class Menu {
 
 			if (empty($items)) return;
 
-            $cache->set('menus:' . $name, $items, DATE::DAY);
+            $cache->set('menus:' . $name, $items, Date::DAY);
 		}
 
 		// Initiate Menu Object
@@ -397,7 +397,7 @@ class Menu {
 
 			if (empty($items)) return;
 
-            $cache->set('menus:' . $name, $items, DATE::DAY);
+            $cache->set('menus:' . $name, $items, Date::DAY);
 		}
 
 		//Initiate Menu Object

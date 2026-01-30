@@ -936,7 +936,7 @@ class Post extends ORM_Versioned {
 				$data['image']      = $post->image;
 				$data['content']    = (string) $post->content;
 
-                $cache->set($type . ':' . $type . '-' . $id, (object) $data, DATE::WEEK);
+                $cache->set($type . ':' . $type . '-' . $id, (object) $data, Date::WEEK);
 			}
 		}
 
