@@ -154,7 +154,7 @@ class Model_User extends Gleez_Model
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
 	 *
 	 * @uses  HTML::chars
@@ -162,15 +162,14 @@ class Model_User extends Gleez_Model
 	 * @uses  Route::uri
 	 * @uses  Path::load
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
 		$nick = parent::__get('nick');
 
-		switch ($field)
-		{
+        switch ($column) {
 			case 'name':
 			case 'mail':
-				return HTML::chars(parent::__get($field));
+                return HTML::chars(parent::__get($column));
 				break;
 			case 'nick':
 				// Return the best version of the user's name.
@@ -194,7 +193,7 @@ class Model_User extends Gleez_Model
 				break;
 		}
 
-		return parent::__get($field);
+        return parent::__get($column);
 	}
 
 	/**

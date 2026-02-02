@@ -974,14 +974,13 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Magic get function, maps field names to class functions.
-	 * 
-	 * @param   string  $column  name of the field to get
+	 *
+     * @param string $column  name of the field to get
 	 * @return  mixed
 	 */
-	public function __get($column)
+    public function __get(string $column)
 	{
-		switch ($column)
-		{
+        switch ($column) {
 			case 'parent':
 				return $this->parent();
 			case 'parents':
@@ -1005,7 +1004,7 @@ class ORM_MPTT extends Gleez_Model
 			case 'fulltree':
 				return $this->fulltree();
 			default:
-				return parent::__get($column);
+                return parent::__get($column);
 		}
 	}
 

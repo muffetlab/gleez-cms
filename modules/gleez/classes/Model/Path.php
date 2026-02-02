@@ -186,16 +186,15 @@ class Model_Path extends Gleez_Model
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
 	 *
 	 * @uses  Route::get
 	 * @uses  Route::uri
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
-		switch ($field)
-		{
+        switch ($column) {
 			case 'edit_url':
 				return Route::get('admin/path')->uri(array('action' => 'edit', 'id' => $this->id));
 			break;
@@ -204,6 +203,6 @@ class Model_Path extends Gleez_Model
 			break;
 		}
 
-		return parent::__get($field);
+        return parent::__get($column);
 	}
 }

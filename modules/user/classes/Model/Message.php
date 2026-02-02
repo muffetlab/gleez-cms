@@ -107,7 +107,7 @@ class Model_Message extends Gleez_Model
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
 	 *
 	 * @uses  Text::plain
@@ -115,10 +115,9 @@ class Model_Message extends Gleez_Model
 	 * @uses  Route::get
 	 * @uses  Route::uri
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
-		switch ($field)
-		{
+        switch ($column) {
 			case 'subject':
 				return Text::plain(parent::__get('subject'));
 			case 'body':
@@ -134,7 +133,7 @@ class Model_Message extends Gleez_Model
 			case 'delete_url':
 				return Route::get('user/message')->uri(array( 'id' => $this->id, 'action' => 'delete'));
 			default:
-				return parent::__get($field);
+                return parent::__get($column);
 		}
 	}
 

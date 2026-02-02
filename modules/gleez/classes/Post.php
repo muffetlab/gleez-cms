@@ -526,7 +526,7 @@ class Post extends ORM_Versioned {
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
 	 *
 	 * @uses  Text::plain
@@ -536,10 +536,9 @@ class Post extends ORM_Versioned {
 	 * @uses  Route::get
 	 * @uses  Route::uri
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
-		switch ($field)
-		{
+        switch ($column) {
 			case 'title':
 				return Text::plain(parent::__get('title'));
 			break;
@@ -606,7 +605,7 @@ class Post extends ORM_Versioned {
 			break;
 		}
 
-		return parent::__get($field);
+        return parent::__get($column);
 	}
 
 	/**

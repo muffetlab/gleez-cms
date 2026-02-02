@@ -155,16 +155,15 @@ class Model_Tag extends Gleez_Model
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
 	 *
 	 * @uses    HTML::chars
 	 * @uses    Path::load
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
-		switch ($field)
-		{
+        switch ($column) {
 			case 'name':
 				return HTML::chars(parent::__get('name'));
 			break;
@@ -189,7 +188,7 @@ class Model_Tag extends Gleez_Model
 			break;
 		}
 
-		return parent::__get($field);
+        return parent::__get($column);
 	}
 
 	/**

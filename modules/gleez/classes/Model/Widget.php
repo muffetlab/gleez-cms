@@ -79,17 +79,16 @@ class Model_Widget extends ORM {
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
 	 *
 	 * @uses  Route::get
 	 * @uses  Route::uri
 	 * @uses  System::icons
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
-		switch ($field)
-		{
+        switch ($column) {
 			case 'edit_url':
 				return Route::get('admin/widget')->uri(array('id' => $this->id, 'action' => 'edit'));
 			break;
@@ -98,7 +97,7 @@ class Model_Widget extends ORM {
 			break;
 		}
 
-		return parent::__get($field);
+        return parent::__get($column);
 	}
 
 }

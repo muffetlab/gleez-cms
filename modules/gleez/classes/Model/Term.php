@@ -194,7 +194,7 @@ class Model_Term extends ORM_MPTT {
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
 	 *
 	 * @uses  HTML::chars
@@ -202,10 +202,9 @@ class Model_Term extends ORM_MPTT {
 	 * @uses  Route::uri
 	 * @uses  Path::load
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
-		switch ($field)
-		{
+        switch ($column) {
 			case 'name':
 				return HTML::chars(parent::__get('name'));
 			break;
@@ -235,7 +234,7 @@ class Model_Term extends ORM_MPTT {
 			break;
 		}
 
-		return parent::__get($field);
+        return parent::__get($column);
 	}
 
 	/**

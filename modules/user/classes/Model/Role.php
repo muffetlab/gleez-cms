@@ -95,16 +95,15 @@ class Model_Role extends Gleez_Model
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
 	 *
 	 * @uses  Route::get
 	 * @uses  Route::uri
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
-		switch ($field)
-		{
+        switch ($column) {
 			case 'edit_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/role')->uri(array('action' => 'edit', 'id' => $this->id));
@@ -118,7 +117,7 @@ class Model_Role extends Gleez_Model
 				break;
 		}
 
-		return parent::__get($field);
+        return parent::__get($column);
 	}
 
 }

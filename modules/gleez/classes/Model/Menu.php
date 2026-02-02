@@ -73,18 +73,15 @@ class Model_Menu extends ORM_MPTT {
 	/**
 	 * Reading data from inaccessible properties
 	 *
-	 * @since   1.1.0
-	 *
-	 * @param   string  $field
+     * @param string $column
 	 * @return  mixed
-	 *
+     * @since   1.1.0
 	 * @uses    Route::get
 	 * @uses    Route::uri
 	 */
-	public function __get($field)
+    public function __get(string $column)
 	{
-		switch ($field)
-		{
+        switch ($column) {
 			case 'list_items_url':
 				return Route::get('admin/menu/item')->uri(array('id' => $this->id));
 			break;
@@ -99,7 +96,7 @@ class Model_Menu extends ORM_MPTT {
 			break;
 		}
 
-		return parent::__get($field);
+        return parent::__get($column);
 	}
 
 	/**

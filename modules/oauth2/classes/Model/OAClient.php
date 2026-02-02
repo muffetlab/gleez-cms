@@ -41,22 +41,22 @@ class Model_OAClient extends ORM {
 		);
 	}
 
-	public function __get($field)
+    public function __get(string $column)
 	{
-		if( $field === 'url')
+        if ($column === 'url')
 			return Route::get('oauth2/client')->uri( array( 'id' => $this->id, 'action' => 'view' ) );
 
-		if( $field === 'edit_url' )
+        if ($column === 'edit_url')
 				return Route::get('oauth2/client')->uri( array( 'id' => $this->id, 'action' => 'edit' ) );
 
-		if( $field === 'delete_url' )
+        if ($column === 'delete_url')
 				return Route::get('oauth2/client')->uri( array( 'id' => $this->id, 'action' => 'delete' ) );
-			
-			return parent::__get($field);
+
+        return parent::__get($column);
 	}
 
-	public function save(Validation $validation = NULL)
-	{
+    public function save(Validation $validation = NULL): Kohana_ORM
+    {
 		$this->user_id   		= User::active_user()->id;
 		$this->client_id 		= sha1($this->user_id.uniqid().microtime());
 		$this->client_secret    = sha1($this->user_id.uniqid().microtime());
