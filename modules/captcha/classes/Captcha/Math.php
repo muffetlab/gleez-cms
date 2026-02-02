@@ -53,10 +53,11 @@ class Captcha_Math extends Captcha
 	/**
 	 * Outputs the Captcha riddle.
 	 *
-	 * @param boolean $html HTML output
-	 * @return mixed
+     * @param true $html
+     * @param string|null $type
+     * @return mixed
 	 */
-	public function render($html = TRUE)
+    public function render($html = true, string $type = null)
 	{
 		return $this->math_exercise;
 	}

@@ -289,9 +289,9 @@ class Model_User extends Gleez_Model
 	/**
 	 * Override the relation add method to reset user roles
 	 */
-	public function add($alias, $far_keys, $data = NULL): Kohana_ORM
+    public function add(string $alias, $far_keys): Kohana_ORM
     {
-		parent::add($alias, $far_keys, $data);
+        parent::add($alias, $far_keys);
 
 		// update data roles
 		$this->_set_roles();
@@ -302,7 +302,7 @@ class Model_User extends Gleez_Model
 	/**
 	 * Override the relation remove method to reset user roles
 	 */
-	public function remove($alias, $far_keys = NULL): Kohana_ORM
+    public function remove(string $alias, $far_keys = null): Kohana_ORM
     {
 		parent::remove($alias, $far_keys);
 

@@ -90,10 +90,10 @@ class Auth_ORM extends Kohana_Auth_ORM
     /**
      * Perform a hmac hash, using the configured method.
      *
-     * @param   string  $str  String to hash
+     * @param string $str  String to hash
      * @return  string
      */
-    public function hash($str): string
+    public function hash(string $str): string
     {
         $algo = Kohana::$config->load('auth')->get('hash_method', '');
         $key = Kohana::$config->load('site')->get('auth_hash_key', '');

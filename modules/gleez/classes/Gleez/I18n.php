@@ -233,20 +233,21 @@ class Gleez_I18n extends I18n
 		return FALSE;
 	}
 
-	/**
-	 * Get and set the target language.
-	 *
-	 *     // Get the current language
-	 *     $lang = Gleez_I18n::lang();
-	 *
-	 *     // Change the current language to Spanish
-	 *     Gleez_I18n::lang('es-es');
-	 *
-	 * @param   string  	$lang   	new language setting
-	 * @return  string
-	 * @since   3.0.2
-	 */
-	public static function lang($lang = NULL): string
+    /**
+     * Get and set the target language.
+     *
+     *     // Get the current language
+     *     $lang = Gleez_I18n::lang();
+     *
+     *     // Change the current language to Spanish
+     *     Gleez_I18n::lang('es-es');
+     *
+     * @param string|null $lang new language setting
+     * @return  string
+     * @throws Kohana_Exception
+     * @since   3.0.2
+     */
+    public static function lang(string $lang = null): string
     {
 		if ($lang && self::isAvailable($lang) )
 		{

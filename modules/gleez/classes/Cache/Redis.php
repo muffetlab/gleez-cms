@@ -102,7 +102,7 @@ class Cache_Redis extends Cache {
 	 * @uses    System::sanitize_id
 	 * @uses    Log::add
 	 */
-	public function get($id, $default = NULL)
+    public function get(string $id, $default = null)
 	{
 		//  Try to fetch a stored variable from the cache
 		try
@@ -122,29 +122,27 @@ class Cache_Redis extends Cache {
 		return $default;
 	}
 
-	/**
-	 * Set a value to cache with id and lifetime
-	 *
-	 * Example:
-	 * ~~~
-	 * $data = 'bar';
-	 *
-	 * // Set 'bar' to 'foo' in redis group, using default expiry
-	 * Cache::instance('redis')->set('foo', $data);
-	 *
-	 * // Set 'bar' to 'foo' in redis group for 30 seconds
-	 * Cache::instance('redis')->set('foo', $data, 30);
-	 * ~~~
-	 *
-	 * @param   string   $id        ID of cache entry
-	 * @param   string   $data      Data to set to cache
-	 * @param   integer  $lifetime  Lifetime in seconds [Optional]
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    System::sanitize_id
-	 */
-    public function set($id, $data, $lifetime = NULL): bool
+    /**
+     * Set a value to cache with id and lifetime
+     *
+     * Example:
+     * ~~~
+     * $data = 'bar';
+     *
+     * // Set 'bar' to 'foo' in redis group, using default expiry
+     * Cache::instance('redis')->set('foo', $data);
+     *
+     * // Set 'bar' to 'foo' in redis group for 30 seconds
+     * Cache::instance('redis')->set('foo', $data, 30);
+     * ~~~
+     *
+     * @param string $id ID of cache entry
+     * @param string $data Data to set to cache
+     * @param int|null $lifetime Lifetime in seconds [Optional]
+     * @return  boolean
+     * @uses    System::sanitize_id
+     */
+    public function set(string $id, $data, int $lifetime = null): bool
     {
 		if ($lifetime === NULL)
 		{
@@ -181,7 +179,7 @@ class Cache_Redis extends Cache {
 	 *
 	 * @uses    System::sanitize_id
 	 */
-    public function delete($id): bool
+    public function delete(string $id): bool
     {
 		return $this->_redis->del(System::sanitize_id($this->config('prefix').$id));
 	}

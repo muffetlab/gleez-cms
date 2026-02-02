@@ -93,13 +93,15 @@ class Session_Redis extends Session {
 		return $this->_session_id;
 	}
 
-	/**
-	 * Loads the raw session data string and returns it.
-	 *
-	 * @param   string  $id  Session id [Optional]
-	 * @return  string
-	 */
-	protected function _read($id = NULL) {
+    /**
+     * Loads the raw session data string and returns it.
+     *
+     * @param string|null $id Session id [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     */
+    protected function _read(string $id = null)
+    {
 		if ($id OR $id = Cookie::get($this->_name)) {
 			$result = $this->_redis->get($this->_prefix . $id);
 
