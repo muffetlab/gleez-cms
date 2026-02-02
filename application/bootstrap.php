@@ -128,10 +128,10 @@ Kohana::modules([
     'database' => MODPATH . 'database', // Database access
     'image' => MODPATH . 'image', // Image manipulation
     'minion' => MODPATH . 'minion', // CLI Tasks
+    'user' => MODPATH . 'user', // User and group Administration
     'orm' => MODPATH . 'orm', // Object Relationship Mapping
 //    'unittest' => MODPATH . 'unittest', // Unit testing
 //    'userguide' => MODPATH . 'userguide', // User guide and API documentation
-	'user'        => MODPATH.'user',      // User and group Administration
     'gleez' => MODPATH . 'gleez',
 	'captcha'     => MODPATH.'captcha',   // Captcha implementation
 //    'oauth2' => MODPATH . 'oauth2',
