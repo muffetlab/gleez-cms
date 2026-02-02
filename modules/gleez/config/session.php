@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'db' => array(
+    'database' => array(
 		/**
 		 * Database settings for session storage
 		 *

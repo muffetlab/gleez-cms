@@ -303,7 +303,7 @@ return array(
 	 * Default session type
 	 * @var string
 	 */
-	'session_type' => 'db',
+    'session_type' => 'database',
 
 	/**
 	 * Define Google Analytics ID

@@ -22,7 +22,7 @@
  * @license    http://gleezcms.org/license  Gleez CMS License
  */
 
-class Session_DB extends Session {
+class Session_Database extends Session {
 
 	/**
 	 * Database instance
