@@ -20,14 +20,10 @@ return array(
 			 * string  session_id   Session identifier
 			 * string  last_active  Timestamp of the last activity
 			 * string  contents     Serialized session data
-			 * string  hostname     Host name
-			 * string  user_id      The used ID
 			 */
 			'session_id'  => 'session_id',
 			'last_active' => 'last_active',
 			'contents'    => 'contents',
-			'hostname'    => 'hostname',
-			'user_id'     => 'user_id'
 		),
 	),
 	'redis' => array(
