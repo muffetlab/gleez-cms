@@ -43,7 +43,7 @@ class Controller_Admin_User extends Controller_Admin {
 
 		if ($is_datatables)
 		{
-			$users = ORM::factory('user');
+            $users = ORM::factory('User');
 
 			// @todo fix dummy id column for roles to match the column order
 			$this->_datatables = $users->dataTables(array('name', 'mail', 'created', 'login', 'id', 'status'));
@@ -101,8 +101,8 @@ class Controller_Admin_User extends Controller_Admin {
 						->bind('errors',    $this->_errors)
 						->bind('post',      $post);
 
-		$post = ORM::factory('user');
-		$all_roles = ORM::factory('role')
+        $post = ORM::factory('User');
+        $all_roles = ORM::factory('Role')
 					->where('id', '>', 1)
 					->find_all()
 					->as_array('name', 'description');
@@ -139,7 +139,7 @@ class Controller_Admin_User extends Controller_Admin {
 					foreach(array_keys($_POST['roles']) as $role)
 					{
 						// add() executes the query immediately, and saves the data
-						$post->add('roles', ORM::factory('role', array('name' => $role)));
+                        $post->add('roles', ORM::factory('Role', array('name' => $role)));
 					}
 
 					Message::success(__("User %name saved successful!", array('%name' => $post->name)));
@@ -178,7 +178,7 @@ class Controller_Admin_User extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-		$post = ORM::factory('user', (int) $id);
+        $post = ORM::factory('User', (int) $id);
 
 		if ( ! $post->loaded() OR $id === 1)
 		{
@@ -190,7 +190,7 @@ class Controller_Admin_User extends Controller_Admin {
 
 		$user_roles = $post->roles->find_all()->as_array('id', 'name');
 
-		$all_roles = ORM::factory('role')
+        $all_roles = ORM::factory('Role')
 					->where('id', '>', 1)
 					->find_all()
 					->as_array('name', 'description');
@@ -242,7 +242,7 @@ class Controller_Admin_User extends Controller_Admin {
 					foreach(array_keys($_POST['roles']) as $role)
 					{
 						// add() executes the query immediately, and saves the data
-						$post->add('roles', ORM::factory('role', array('name' => $role)));
+                        $post->add('roles', ORM::factory('Role', array('name' => $role)));
 					}
 
 					Message::success(__("User %name saved successful!", array('%name' => $post->name)));
@@ -270,7 +270,7 @@ class Controller_Admin_User extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-		$user = ORM::factory('user', $id);
+        $user = ORM::factory('User', $id);
 
 		if ( ! $user->loaded())
 		{

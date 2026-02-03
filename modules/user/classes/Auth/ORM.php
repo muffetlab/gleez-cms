@@ -114,7 +114,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 			$username = $user;
 
 			// Load the user
-			$user = ORM::factory('user');
+            $user = ORM::factory('User');
 			$user->where($user->unique_key($username), '=', $username)->find();
 		}
 
@@ -164,7 +164,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 		);
 
 		// Create a new autologin token
-		$token = ORM::factory('user_token')
+        $token = ORM::factory('User_Token')
             ->values($data, ['user_id', 'expires', 'user_agent'])
 			->create();
 
@@ -212,7 +212,7 @@ class Auth_ORM extends Kohana_Auth_ORM
         }
 
         // Load the user
-        $user = ORM::factory('user');
+        $user = ORM::factory('User');
         $user->where($user->unique_key($username), '=', $username)->find();
 
         // If user not found, introduce a delay to prevent enumeration
@@ -249,7 +249,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 				);
 
 				// Create a new autologin token
-				$token = ORM::factory('user_token')
+                $token = ORM::factory('User_Token')
                     ->values($data, ['user_id', 'expires', 'user_agent', 'type', 'created'])
 					->create();
 

@@ -144,8 +144,8 @@ class Model_Path extends Gleez_Model
 	{
 		$slug   = $str;
 		$suffix = 0;
-		
-		while( $path = ORM::factory('path', array('alias' => $str) )
+
+        while ($path = ORM::factory('Path', array('alias' => $str))
 			AND $path->loaded()
 			AND $path->source != $this->source
 			)

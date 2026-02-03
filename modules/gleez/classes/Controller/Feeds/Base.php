@@ -26,7 +26,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 			$config = Kohana::$config->load('page');
 
 			// Cache is Empty so Re-Cache
-			$posts = ORM::factory('post')
+            $posts = ORM::factory('Post')
 						->where('status', '=', 'publish')
 						->where('promote', '=', 1)
 						->order_by('pubdate', 'DESC')
@@ -81,7 +81,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 			$config = Kohana::$config->load($this->_type);
 
 			$id  = $this->request->param('id', 0);
-			$tag = ORM::factory('tag', array('id' => $id, 'type' => $this->_type));
+            $tag = ORM::factory('Tag', array('id' => $id, 'type' => $this->_type));
 
 			if ( ! $tag->loaded())
 			{
@@ -147,7 +147,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 			$config = Kohana::$config->load($this->_type);
 
 			$id   = $this->request->param('id', 0);
-			$term = ORM::factory('term')
+            $term = ORM::factory('Term')
 						->where('id', '=', $id)
 						->where('type', '=', $this->_type)
 						->where('lvl', '!=', 1)

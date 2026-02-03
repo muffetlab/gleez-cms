@@ -36,7 +36,7 @@ class Controller_Buddy extends Template {
 		$id 	  = (int) $this->request->param('id', $account->id);
 		$is_owner = FALSE;
 
-		$user     = ORM::factory('user', $id);
+        $user = ORM::factory('User', $id);
 
 		if ( ! $user->loaded())
 		{
@@ -77,7 +77,7 @@ class Controller_Buddy extends Template {
 	public function action_sent()
 	{
 		$id       = (int) $this->request->param('id');
-		$user 	  = ORM::factory('user', $id);
+        $user = ORM::factory('User', $id);
 		$account  = FALSE;
 
 		if ( ! $user->loaded())
@@ -127,7 +127,7 @@ class Controller_Buddy extends Template {
 	public function action_pending()
 	{
 		$id 	  = (int) $this->request->param('id');
-		$user     = ORM::factory('user', $id);
+        $user = ORM::factory('User', $id);
 		$is_owner = FALSE;
 		$account  = FALSE;
 		
@@ -178,7 +178,7 @@ class Controller_Buddy extends Template {
 	public function action_add()
 	{
 		$id      = (int) $this->request->param('id');
-		$invitee = ORM::factory('user', $id);
+        $invitee = ORM::factory('User', $id);
 		$account = Auth_ORM::instance()->get_user();
 
 		if ( ! $invitee->loaded() )
@@ -197,7 +197,7 @@ class Controller_Buddy extends Template {
 	public function action_accept()
 	{
 		$id     = (int) $this->request->param('id');
-		$friend = ORM::factory('user', $id);
+        $friend = ORM::factory('User', $id);
 
 		if ( ! $friend->loaded())
 		{
@@ -226,7 +226,7 @@ class Controller_Buddy extends Template {
 	public function action_reject()
 	{
 		$id 	= (int) $this->request->param('id');
-		$friend = ORM::factory('user', $id);
+        $friend = ORM::factory('User', $id);
 
 		if ( ! $friend->loaded())
 		{
@@ -255,7 +255,7 @@ class Controller_Buddy extends Template {
 	public function action_delete()
 	{
 		$id      = (int) $this->request->param('id');
-		$friend  = ORM::factory('user', $id);
+        $friend = ORM::factory('User', $id);
 		$account = Auth_ORM::instance()->get_user();
 
 		if ( ! $friend->loaded())

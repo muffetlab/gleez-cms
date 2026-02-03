@@ -288,7 +288,7 @@ class Model_Term extends ORM_MPTT {
 		}
 		else
 		{
-			$target = ORM::factory('term',(int) $location);
+            $target = ORM::factory('Term', (int) $location);
 
 			if ( ! $target->loaded())
 			{

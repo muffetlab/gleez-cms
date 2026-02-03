@@ -38,7 +38,7 @@ class Controller_Feeds_Blog extends Controller_Feeds_Base {
 			$config = Kohana::$config->load('blog');
 
 			// Cache is Empty so Re-Cache
-			$blogs = ORM::factory('blog')
+            $blogs = ORM::factory('Blog')
 				->where('status', '=', 'publish')
 				->order_by('pubdate', 'DESC')
 				->limit($this->_limit)

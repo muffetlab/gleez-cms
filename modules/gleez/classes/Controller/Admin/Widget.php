@@ -44,7 +44,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		// Add a last region for disabled blocks.
 		$widget_regions = Arr::merge($widget_regions, array(self::$WIDGET_REGION_NONE => self::$WIDGET_REGION_NONE));
 
-		$widgets = ORM::factory('widget')
+        $widgets = ORM::factory('Widget')
 						->order_by('region')
 						->order_by('weight')
 						->find_all();
@@ -110,7 +110,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 	 */
 	public function action_add()
 	{
-		$widget = ORM::factory('widget');
+        $widget = ORM::factory('Widget');
 
 		$widget_regions = array();
 		$adminTheme = Theme::getTheme();
@@ -133,7 +133,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 			$widget_regions[self::$WIDGET_REGION_NONE] = __('Disabled');
 		}
 
-		$all_roles = ORM::factory('role')->find_all()->as_array('id', 'name');
+        $all_roles = ORM::factory('Role')->find_all()->as_array('id', 'name');
 
 		$this->title = __('Add widget');
 		$view = View::factory('admin/widget/form')
@@ -182,7 +182,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 	public function action_edit()
 	{
 		$id     = (int) $this->request->param('id', 0);
-		$widget = ORM::factory('widget', $id);
+        $widget = ORM::factory('Widget', $id);
 
 		if ( ! $widget->loaded())
 		{
@@ -217,7 +217,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 			$widget_regions[self::$WIDGET_REGION_NONE] = __('Disabled');
 		}
 
-		$all_roles = ORM::factory('role')
+        $all_roles = ORM::factory('Role')
 						->find_all()
 						->as_array('id', 'name');
 
@@ -262,7 +262,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
-		$widget = ORM::factory('widget', $id);
+        $widget = ORM::factory('Widget', $id);
 
 		if ( ! $widget->loaded())
 		{

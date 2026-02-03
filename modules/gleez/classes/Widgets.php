@@ -355,7 +355,7 @@ class Widgets {
 
 			try
 			{
-                ORM::factory('widget')->values($values, ['name', 'title', 'module', 'status', 'region'])->save();
+                ORM::factory('Widget')->values($values, ['name', 'title', 'module', 'status', 'region'])->save();
 				Kohana::$log->add(Log::DEBUG, 'Insert widget where module: :module', array(':module' => $module));
 			}
 			catch (Database_Exception $e)
@@ -374,7 +374,7 @@ class Widgets {
 	{
 		try
 		{
-			ORM::factory('widget')->where('module', '=', $module)->delete();
+            ORM::factory('Widget')->where('module', '=', $module)->delete();
             Cache::instance()->delete_all();
 
 			Kohana::$log->add(Log::INFO, 'Deleted widgets where module: :module', array(':module' => $module));
@@ -401,7 +401,7 @@ class Widgets {
         $cache = Cache::instance();
 
         if (!$widgets = $cache->get('widgets:widgets')) {
-			$_widgets = ORM::factory('widget')
+            $_widgets = ORM::factory('Widget')
 				->where('status', '=', '1')
 				->order_by('region', 'ASC')
 				->order_by('weight', 'ASC')

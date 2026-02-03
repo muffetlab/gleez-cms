@@ -33,14 +33,14 @@ class Comment {
 		if ($parent_id == 0)
 		{
 			Kohana::$log->add(Log::DEBUG, 'Fetching all :state comments', array(':state' => $state));
-			$total = ORM::factory('comment', array('status' => $state))->count_all();
+            $total = ORM::factory('Comment', array('status' => $state))->count_all();
 		}
 		else
 		{
 			Kohana::$log->add(Log::DEBUG, 'Fetching :state comments for parent id: :id',
 				array(':state' => $state, ':id' => $parent_id)
 			);
-			$total = ORM::factory('comment', array(
+            $total = ORM::factory('Comment', array(
 				'status'  => $state,
 				'parent'  => $parent_id,
 			))->count_all();
@@ -86,7 +86,7 @@ class Comment {
 		}
 
 		// Load the comment model
-		$post = ORM::factory('comment');
+        $post = ORM::factory('Comment');
 
 		if ($controller->valid_post('comment'))
 		{
@@ -210,7 +210,7 @@ class Comment {
 
 	public static function bulk_update(array $ids, array $actions)
 	{
-		$posts = ORM::factory('comment')->where('id', 'IN', $ids)->find_all();
+        $posts = ORM::factory('Comment')->where('id', 'IN', $ids)->find_all();
 
 		foreach ($posts as $post)
 		{

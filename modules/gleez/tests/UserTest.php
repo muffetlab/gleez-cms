@@ -21,7 +21,7 @@ class Gleez_Usertest extends Unittest_TestCase
 	 */
 	public function testValidUsers($info)
 	{
-		$user = ORM::factory('user');
+        $user = ORM::factory('User');
 		$result = $user->login($info);
 		$this->assertInstanceOf('Model_user', $result);
 	}
@@ -31,7 +31,7 @@ class Gleez_Usertest extends Unittest_TestCase
 	 */
 	public function testInvalidUsers()
 	{
-		$user = ORM::factory('user');
+        $user = ORM::factory('User');
 		$user->login(array('name' => 'sundar1', 'password' => 'gleez1co'));
 	}
 }

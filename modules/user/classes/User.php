@@ -125,7 +125,7 @@ class User {
 		// To first check cache
         if (!$all = $cache->get('users:count_all')) {
 			// Counting from database
-			$all = ORM::factory('user')->count_all();
+            $all = ORM::factory('User')->count_all();
 			// Save to cache on an hour
             $cache->set('users:count_all', $all, Date::HOUR);
 		}
@@ -221,7 +221,7 @@ class User {
 	{
 		try
 		{
-			$user = ORM::factory('user')->where($field, '=', $value)->find();
+            $user = ORM::factory('User')->where($field, '=', $value)->find();
 			if ($user->loaded())
 			{
 				return $user;
@@ -247,7 +247,7 @@ class User {
 	{
 		try
 		{
-			$role = ORM::factory('role', $id);
+            $role = ORM::factory('Role', $id);
 			if ($role->loaded())
 			{
 				return $role;
@@ -328,7 +328,7 @@ class User {
 			->get('user_id');
 
 		// if the user id is found return the user object
-		if($uid AND $uid > 1) return ORM::factory('user', $uid);
+        if ($uid and $uid > 1) return ORM::factory('User', $uid);
 
 		return FALSE;
 	}

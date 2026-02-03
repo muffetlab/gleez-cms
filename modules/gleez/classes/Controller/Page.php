@@ -69,7 +69,7 @@ class Controller_Page extends Template {
 	 */
 	public function action_list()
 	{
-		$posts = ORM::factory('page');
+        $posts = ORM::factory('Page');
 
 		if ( ! ACL::check('administer content'))
 		{
@@ -254,12 +254,12 @@ class Controller_Page extends Template {
 					->bind('post',       $post);
 
 
-		$post = ORM::factory('page');
+        $post = ORM::factory('Page');
 		$post->status = $config->get('default_status', 'draft');
 
 		if($config->get('use_category', FALSE))
 		{
-			$terms = ORM::factory('term', array('type' => 'page', 'lvl' => 1))->select_list('id', 'name', '--');
+            $terms = ORM::factory('Term', array('type' => 'page', 'lvl' => 1))->select_list('id', 'name', '--');
 		}
 
 		if($config->get('use_captcha', FALSE))
@@ -309,7 +309,7 @@ class Controller_Page extends Template {
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$post = ORM::factory('page', $id);
+        $post = ORM::factory('Page', $id);
 
 		if ( ! ACL::post('edit', $post))
 		{
@@ -350,7 +350,7 @@ class Controller_Page extends Template {
 
 		if ($config->get('use_category', FALSE))
 		{
-			$terms = ORM::factory('term', array('type' => 'page', 'lvl' => 1))
+            $terms = ORM::factory('Term', array('type' => 'page', 'lvl' => 1))
 					->select_list('id', 'name', '--');
 		}
 
@@ -403,7 +403,7 @@ class Controller_Page extends Template {
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$post = ORM::factory('page', $id);
+        $post = ORM::factory('Page', $id);
 
 		if ( ! ACL::post('delete', $post))
 		{
@@ -480,7 +480,7 @@ class Controller_Page extends Template {
 
 		$id    = (int) $this->request->param('id', 0);
 		$array = array('id' => $id, 'type' => 'page');
-		$term  = ORM::factory('term', $array )->where('lvl', '!=', 1);
+        $term = ORM::factory('Term', $array)->where('lvl', '!=', 1);
 
 		if ( ! $term->loaded())
 		{
@@ -560,7 +560,7 @@ class Controller_Page extends Template {
 	{
 		$config = Kohana::$config->load('page');
 		$id     = (int) $this->request->param('id', 0);
-		$tag    = ORM::factory('tag', array('id' => $id, 'type' => 'page') );
+        $tag = ORM::factory('Tag', array('id' => $id, 'type' => 'page'));
 
 		if ( ! $tag->loaded())
 		{

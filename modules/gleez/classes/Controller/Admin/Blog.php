@@ -48,10 +48,10 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$view = View::factory('admin/blog/stats')
 				->bind('stats', $stats);
 
-		$categories = ORM::factory('term')->where('type', '=', 'blog')->find_all();
-		$tags       = ORM::factory('tag')->where('type', '=', 'blog')->find_all();
-		$articles   = ORM::factory('blog')->where('type', '=', 'blog')->find_all();
-		$comments   = ORM::factory('comment')->where('type', '=', 'blog')->find_all();
+        $categories = ORM::factory('Term')->where('type', '=', 'blog')->find_all();
+        $tags = ORM::factory('Tag')->where('type', '=', 'blog')->find_all();
+        $articles = ORM::factory('Blog')->where('type', '=', 'blog')->find_all();
+        $comments = ORM::factory('Comment')->where('type', '=', 'blog')->find_all();
 
 		$stats = array();
 		$stats['categories']['total'] = count($categories);
@@ -122,7 +122,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 					->set('mode3',              $mode3)
 					->set('mode4',              $mode4);
 
-		$vocabs = Arr::merge($vocabs, ORM::factory('term')->where('lft', '=', 1)->where('type', '=', 'blog')->find_all()->as_array('id', 'name'));
+        $vocabs = Arr::merge($vocabs, ORM::factory('Term')->where('lft', '=', 1)->where('type', '=', 'blog')->find_all()->as_array('id', 'name'));
 
 		if ($this->valid_post('blog_settings'))
 		{
@@ -180,7 +180,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$destination = '?destination='.$redirect;
 
 		$is_datatables = Request::is_datatables();
-		$blogs = ORM::factory('blog');
+        $blogs = ORM::factory('Blog');
 
 		if ($is_datatables)
 		{

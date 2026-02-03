@@ -39,7 +39,7 @@ class Widget_Comment extends Widget {
         $cache = Cache::instance();
 
         if (!$comments = $cache->get('widgets:recent_comments')) {
-			$blogs = ORM::factory('comment')
+            $blogs = ORM::factory('Comment')
 					->join('posts')
 					->on('posts.id', '=', 'comment.post_id')
 					->where('comment.status', '=', 'publish')

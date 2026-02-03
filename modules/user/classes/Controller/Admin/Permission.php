@@ -25,7 +25,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 			->bind('roles',      $roles)
 			->bind('count',      $total);
 
-		$roles = ORM::factory('role')
+        $roles = ORM::factory('Role')
 			->order_by('name', 'ASC')
 			->find_all();
 
@@ -47,7 +47,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 	public function action_role()
 	{
 		$id = $this->request->param('id', 1);
-		$role = ORM::factory('role', $id);
+        $role = ORM::factory('Role', $id);
 
 		if ( ! $role->loaded())
 		{
@@ -99,7 +99,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 	public function action_user()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$post = ORM::factory('user', $id);
+        $post = ORM::factory('User', $id);
 
 		if ( ! $post->loaded() OR $id === 1)
 		{

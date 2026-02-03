@@ -652,7 +652,7 @@ class Model_User extends Gleez_Model
 			// give "login" role as it is verified
 			$this->add('roles', User::LOGIN_ROLE_ID);
 
-			$identity = ORM::factory('identity');
+            $identity = ORM::factory('Identity');
 			$identity->user_id = $this->id;
             $identity->values($provider, ['provider', 'provider_id', 'refresh_token']);
 			$identity->save();
@@ -665,7 +665,7 @@ class Model_User extends Gleez_Model
 			// If user is found, but provider id is missing add it to details.
 			// We can do this merge, because this means user is found by email address,
 			// that is already confirmed by this OAuth provider, so it's considered trusted.
-			$identity = ORM::factory('identity');
+			$identity = ORM::factory('Identity');
 			$identity->user_id = $this->id;
             $identity->values($provider, ['provider', 'provider_id', 'refresh_token']);
 			$identity->save();
@@ -786,11 +786,11 @@ class Model_User extends Gleez_Model
 
 		// User is already confirmed.
 		// We're not showing an error message.
-		if ($this->has('roles', ORM::factory('role', array('name' => 'user'))))
+        if ($this->has('roles', ORM::factory('Role', array('name' => 'user'))))
 			return TRUE;
 
 		// Give the user the "user" role
-		$this->add('roles', ORM::factory('role', array('name' => 'user')));
+        $this->add('roles', ORM::factory('Role', array('name' => 'user')));
 
 		return TRUE;
 	}

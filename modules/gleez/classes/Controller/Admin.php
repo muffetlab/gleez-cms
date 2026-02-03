@@ -65,7 +65,7 @@ class Controller_Admin extends Template {
 		$this->_sidebars = FALSE;
 
 		$this->title = __('Sign In');
-		$user        = ORM::factory('user');
+        $user = ORM::factory('User');
 
 		// Create form action
 		$destination = isset($_GET['destination']) ? $_GET['destination'] : 'admin';

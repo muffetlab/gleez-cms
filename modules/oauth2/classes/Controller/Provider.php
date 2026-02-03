@@ -262,7 +262,7 @@ class Controller_Provider extends Template {
 		}
 		else if($user == FALSE AND !Auth::instance()->logged_in())
 		{
-			$account = ORM::factory('user')->where('mail', '=', $data['email'])->find();
+            $account = ORM::factory('User')->where('mail', '=', $data['email'])->find();
 
 			if(!$account->loaded()) $creation = TRUE;
 

@@ -52,10 +52,10 @@ class Controller_Admin_Page extends Controller_Admin {
 		$view = View::factory('admin/page/stats')
 				->bind('stats', $stats);
 
-		$categories = ORM::factory('term')->where('type', '=', 'page')->find_all();
-		$tags       = ORM::factory('tag')->where('type', '=', 'page')->find_all();
-		$articles   = ORM::factory('page')->where('type', '=', 'page')->find_all();
-		$comments   = ORM::factory('comment')->where('type', '=', 'page')->find_all();
+        $categories = ORM::factory('Term')->where('type', '=', 'page')->find_all();
+        $tags = ORM::factory('Tag')->where('type', '=', 'page')->find_all();
+        $articles = ORM::factory('Page')->where('type', '=', 'page')->find_all();
+        $comments = ORM::factory('Comment')->where('type', '=', 'page')->find_all();
 
 		$stats = array();
 		$stats['categories']['total'] = count($categories);
@@ -87,7 +87,7 @@ class Controller_Admin_Page extends Controller_Admin {
 					->set('action',  $action);
 
 		$vocabs = Arr::merge($vocabs,
-			ORM::factory('term')
+            ORM::factory('Term')
 				->where('lft', '=', 1)
 				->where('type', '=', 'page')
 				->find_all()
@@ -139,7 +139,7 @@ class Controller_Admin_Page extends Controller_Admin {
 		$destination = '?destination='.$redirect;
 		
 		$is_datatables = Request::is_datatables();
-		$pages = ORM::factory('page');
+        $pages = ORM::factory('Page');
 
 		if ($is_datatables)
 		{

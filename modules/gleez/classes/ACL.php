@@ -350,7 +350,7 @@ class ACL {
         $cache = Cache::instance();
 
         if (!$roles = $cache->get('roles:site_roles')) {
-			$roles = ORM::factory('role')->find_all()->as_array('id', 'name');
+            $roles = ORM::factory('Role')->find_all()->as_array('id', 'name');
 
             $cache->set('roles:site_roles', $roles, Date::DAY);
 		}

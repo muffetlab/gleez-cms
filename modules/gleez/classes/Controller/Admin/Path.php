@@ -37,7 +37,7 @@ class Controller_Admin_Path extends Controller_Admin {
 		Assets::popup();
 
 		$is_datatables = Request::is_datatables();
-		$paths         = ORM::factory('path');
+        $paths = ORM::factory('Path');
 
 		if ($is_datatables)
 		{
@@ -88,7 +88,7 @@ class Controller_Admin_Path extends Controller_Admin {
             ->set('url', URL::site('', TRUE))
 			->set('action',  $action);
 
-		$post = ORM::factory('path');
+        $post = ORM::factory('Path');
 
 		if($this->valid_post('add_path'))
 		{
@@ -123,7 +123,7 @@ class Controller_Admin_Path extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-		$post = ORM::factory('path', (int) $id);
+        $post = ORM::factory('Path', (int) $id);
 
 		if ( ! $post->loaded())
 		{
@@ -174,7 +174,7 @@ class Controller_Admin_Path extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-		$path = ORM::factory('path', $id);
+        $path = ORM::factory('Path', $id);
 
 		if ( ! $path->loaded())
 		{

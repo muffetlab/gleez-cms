@@ -43,7 +43,7 @@ class Controller_Tag extends Template {
 	public function action_view()
 	{
 		$id = (int) $this->request->param('id', 0);
-		$tag = ORM::factory('tag', $id);
+        $tag = ORM::factory('Tag', $id);
 
 		if ( ! $tag->loaded())
 		{

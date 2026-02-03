@@ -54,7 +54,7 @@ class Widget_Blog extends Widget {
 		$view  = View::factory('widgets/blog/list')->bind('items', $items);
 
         if (!$items = $cache->get('widgets:recent_blogs')) {
-			$blogs = ORM::factory('blog')->order_by('created', 'DESC')->limit(10)->find_all();
+            $blogs = ORM::factory('Blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
 			$items = array();
 			foreach($blogs as $blog)
@@ -99,7 +99,7 @@ class Widget_Blog extends Widget {
 		$view  = View::factory('widgets/blog/announce')->bind('items', $items);
 
         if (!$items = $cache->get('widgets:recent_announce_blogs')) {
-			$blogs = ORM::factory('blog')->order_by('created', 'DESC')->limit(10)->find_all();
+            $blogs = ORM::factory('Blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
 			$items = array();
 			foreach($blogs as $blog)

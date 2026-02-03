@@ -35,7 +35,7 @@ class Controller_Admin_Term extends Controller_Admin {
 	public function action_list()
 	{
 		$id    = (int) $this->request->param('id', 0);
-		$vocab = ORM::factory('term', array('id' => $id, 'lft' => 1));
+        $vocab = ORM::factory('Term', array('id' => $id, 'lft' => 1));
 
 		if ( ! $vocab->loaded())
 		{
@@ -86,7 +86,7 @@ class Controller_Admin_Term extends Controller_Admin {
 	{
 		$id    = (int) $this->request->param('id', 0);
 		/** @var $vocab Model_Term */
-		$vocab = ORM::factory('term', array('id' => $id, 'lft' => 1));
+        $vocab = ORM::factory('Term', array('id' => $id, 'lft' => 1));
 
 		if ( ! $vocab->loaded())
 		{
@@ -112,7 +112,7 @@ class Controller_Admin_Term extends Controller_Admin {
 					->set('allowed_types', $allowed_types);
 
 		/** @var $post Model_Term */
-        $post = ORM::factory('term');
+        $post = ORM::factory('Term');
 
 		if ($this->valid_post('term'))
 		{
@@ -149,7 +149,7 @@ class Controller_Admin_Term extends Controller_Admin {
 	{
 		$id   = (int) $this->request->param('id', 0);
 		/** @var $term Model_Term */
-		$term = ORM::factory('term', $id);
+        $term = ORM::factory('Term', $id);
 
 		if ( ! $term->loaded())
 		{
@@ -210,7 +210,7 @@ class Controller_Admin_Term extends Controller_Admin {
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$term = ORM::factory('term', $id);
+        $term = ORM::factory('Term', $id);
 
 		if ( ! $term->loaded())
 		{

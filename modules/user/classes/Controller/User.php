@@ -34,7 +34,7 @@ class Controller_User extends Template {
 		// Note that get_user will also do an auto_login check.
 		if (($this->_user = $this->_auth->get_user()) === FALSE)
 		{
-			$this->_user = ORM::factory('user');
+            $this->_user = ORM::factory('User');
 		}
 
 		if (strpos($this->request->uri(), 'user/reset/', 0) !== FALSE)
@@ -74,7 +74,7 @@ class Controller_User extends Template {
 		}
 
 		/** @var $post Model_User */
-		$post   = ORM::factory('user');
+        $post = ORM::factory('User');
 		/** @var $config Config_Group */
 		$config = Kohana::$config->load('auth');
 
@@ -149,7 +149,7 @@ class Controller_User extends Template {
 		}
 
 		$this->title = __('Sign In');
-		$user        = ORM::factory('user');
+        $user = ORM::factory('User');
 
 		// Disable sidebars on login page
 		$this->_sidebars = FALSE;
@@ -246,7 +246,7 @@ class Controller_User extends Template {
         }
 
 		$id       = (int) $this->request->param('id', 0);
-		$user     = ORM::factory('user', $id);
+        $user = ORM::factory('User', $id);
 		$is_owner = FALSE;
 		$request  = FALSE;
 		$isFriend = FALSE;
@@ -623,7 +623,7 @@ class Controller_User extends Template {
 			$this->_auth->logout(TRUE);
 
 			// Also, override the user object with a new one
-			$this->_user = ORM::factory('user');
+            $this->_user = ORM::factory('User');
 		}
 	}
 }

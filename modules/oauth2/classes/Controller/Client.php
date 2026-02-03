@@ -10,8 +10,8 @@ class Controller_Client extends Template {
 			{
 				throw new HTTP_Exception_404('You have no permission to access oauth2 clients.');
 			}
-			
-			$posts = ORM::factory('oaclient');
+
+            $posts = ORM::factory('OAClient');
 			
 			if ( ! User::is_admin())
 			{
@@ -56,8 +56,8 @@ class Controller_Client extends Template {
 		$this->title = __('Oaclient Registration');
 		$grant_types = Kohana::$config->load('oauth2')->get('grant_types');
 		$view        = View::factory('client/form')->set('grant_types', $grant_types)->bind('oaclient', $oaclient)->bind('errors', $this->_errors);
-		
-		$oaclient = ORM::factory('oaclient');
+
+        $oaclient = ORM::factory('OAClient');
 		
 		if ( isset($_POST['cancel']) AND $this->valid_post() )
 		{
@@ -107,7 +107,7 @@ class Controller_Client extends Template {
 		}
 		
 		$id       = (int) $this->request->param('id');
-		$oaclient = ORM::factory('oaclient', $id);
+        $oaclient = ORM::factory('OAClient', $id);
 		
 		if( ! $oaclient->loaded() )
 		{
@@ -174,7 +174,7 @@ class Controller_Client extends Template {
 		}
 		
 		$id       = (int) $this->request->param('id');
-		$oaclient = ORM::factory('oaclient', $id);
+        $oaclient = ORM::factory('OAClient', $id);
 		
 		if( ! $oaclient->loaded() )
 		{
@@ -197,7 +197,7 @@ class Controller_Client extends Template {
 		
 		$id       = (int) $this->request->param('id');
 		$redirect = empty($this->redirect) ? Route::get('oauth2/client')->uri(array('action' => 'list')) : $this->redirect;
-		$oaclient  = ORM::factory('oaclient', $id);
+        $oaclient = ORM::factory('OAClient', $id);
 		
 		if ( ! $oaclient->loaded() )
 		{

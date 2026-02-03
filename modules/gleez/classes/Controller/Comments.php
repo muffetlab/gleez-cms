@@ -101,7 +101,7 @@ class Controller_Comments extends Controller {
 		// Get parent id
 		$parent_id = (int) $this->request->param('id', 0);
 
-		$posts = ORM::factory('comment')->where('status', '=', $state);
+        $posts = ORM::factory('Comment')->where('status', '=', $state);
 
 		if ($parent_id)
 		{

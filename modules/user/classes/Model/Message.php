@@ -143,17 +143,17 @@ class Model_Message extends Gleez_Model
 	 * Example:
 	 * ~~~
 	 * // Get all messages from inbox. Sorting mode is ascending
-	 * ORM::factory('message')->load(PM::INBOX, 'asc');
+     * ORM::factory('Message')->load(PM::INBOX, 'asc');
 	 *
 	 * // Get all messages from outbox. Sorting mode is descending
-	 * ORM::factory('message')->load(PM::OUTBOX);
+     * ORM::factory('Message')->load(PM::OUTBOX);
 	 *
 	 * // Get all draft messages. Sorting mode is descending
-	 * ORM::factory('message')->load(PM::DRAFTS);
+     * ORM::factory('Message')->load(PM::DRAFTS);
 	 *
 	 * // Get all messages from inbox, outbox and drafts
 	 * // Sorting mode is descending
-	 * ORM::factory('message')->load();
+     * ORM::factory('Message')->load();
 	 * ~~~
 	 *
 	 * [!!] Note: The $direction may be 'asc' for ascending sort mode,
@@ -212,7 +212,7 @@ class Model_Message extends Gleez_Model
 	 *
 	 * Example:
 	 * ~~~
-	 * ORM::factory('message')->loadInbox();
+     * ORM::factory('Message')->loadInbox();
 	 * ~~~
 	 *
 	 * [!!] Note: The $direction may be 'asc' for ascending sort mode,
@@ -232,7 +232,7 @@ class Model_Message extends Gleez_Model
 	 *
 	 * Example:
 	 * ~~~
-	 * ORM::factory('message')->loadInbox();
+     * ORM::factory('Message')->loadInbox();
 	 * ~~~
 	 *
 	 * [!!] Note: The $direction may be 'asc' for ascending sort mode,
@@ -252,7 +252,7 @@ class Model_Message extends Gleez_Model
 	 *
 	 * Example:
 	 * ~~~
-	 * ORM::factory('message')->loadDrafts();
+     * ORM::factory('Message')->loadDrafts();
 	 * ~~~
 	 *
 	 * [!!] Note: The $direction may be 'asc' for ascending sort mode,
@@ -274,7 +274,7 @@ class Model_Message extends Gleez_Model
 	 *
 	 * Example:
 	 * ~~~
-	 * ORM::factory('message', $id)->getOne();
+     * ORM::factory('Message', $id)->getOne();
 	 * ~~~
 	 *
 	 * @return  Model_Message
@@ -320,7 +320,7 @@ class Model_Message extends Gleez_Model
 	 */
 	public function exists($recipient)
 	{
-		$result = ORM::factory('user')
+        $result = ORM::factory('User')
 				->where('name', '=', $recipient)
 				->and_where('name', '!=', 'guest')
 				->find();

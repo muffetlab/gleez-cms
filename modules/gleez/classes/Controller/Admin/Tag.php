@@ -41,7 +41,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 
 		if ($is_datatables)
 		{
-			$tags = ORM::factory('tag');
+            $tags = ORM::factory('Tag');
 			$this->_datatables = $tags->dataTables(array('name', 'id', 'type'));
 
 			foreach ($this->_datatables->result() as $tag)
@@ -81,7 +81,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 	public function action_add()
 	{
 		$this->title = __('Add New Tag');
-		$post        = ORM::factory('tag');
+        $post = ORM::factory('Tag');
 		$action      = Route::get('admin/tag')->uri(array('action' => 'add'));
 
 		if ($this->valid_post('tag'))
@@ -121,7 +121,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$post = ORM::factory('tag', $id);
+        $post = ORM::factory('Tag', $id);
 
 		if ( ! $post->loaded())
 		{
@@ -172,7 +172,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 	public function action_delete()
 	{
 		$id  = (int) $this->request->param('id', 0);
-		$tag = ORM::factory('tag', $id);
+        $tag = ORM::factory('Tag', $id);
 
 		if ( ! $tag->loaded())
 		{

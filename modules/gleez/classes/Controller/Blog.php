@@ -69,7 +69,7 @@ class Controller_Blog extends Template {
 	 */
 	public function action_list()
 	{
-		$posts = ORM::factory('blog');
+        $posts = ORM::factory('Blog');
 
 		if ( ! ACL::check('administer blog'))
 		{
@@ -255,12 +255,12 @@ class Controller_Blog extends Template {
 			->bind('blog',       $post);
 
 
-		$post = ORM::factory('blog');
+        $post = ORM::factory('Blog');
 		$post->status = $config->get('default_status', 'draft');
 
 		if ($config->get('use_category', FALSE))
 		{
-			$terms = ORM::factory('term', array('type' => 'blog', 'lvl' => 1))->select_list('id', 'name', '--');
+            $terms = ORM::factory('Term', array('type' => 'blog', 'lvl' => 1))->select_list('id', 'name', '--');
 		}
 
 		if ($config->get('use_captcha', FALSE))
@@ -310,7 +310,7 @@ class Controller_Blog extends Template {
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
-		$post = ORM::factory('blog', $id);
+        $post = ORM::factory('Blog', $id);
 
 		if ( ! ACL::post('edit', $post))
 		{
@@ -352,7 +352,7 @@ class Controller_Blog extends Template {
 
 		if ($config->get('use_category', FALSE))
 		{
-			$terms = ORM::factory('term', array('type' => 'blog', 'lvl' => 1))
+            $terms = ORM::factory('Term', array('type' => 'blog', 'lvl' => 1))
 				->select_list('id', 'name', '--');
 		}
 
@@ -411,7 +411,7 @@ class Controller_Blog extends Template {
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
-		$post = ORM::factory('blog', $id);
+        $post = ORM::factory('Blog', $id);
 
 		if( ! ACL::post('delete', $post))
 		{
@@ -482,7 +482,7 @@ class Controller_Blog extends Template {
 
 		$id    = (int) $this->request->param('id', 0);
 		$array = array('id' => $id, 'type' => 'blog');
-		$term  = ORM::factory('term', $array)->where('lvl', '!=', 1);
+        $term = ORM::factory('Term', $array)->where('lvl', '!=', 1);
 
 		if ( ! $term->loaded())
 		{
@@ -553,7 +553,7 @@ class Controller_Blog extends Template {
 	{
 		$config = Kohana::$config->load('blog');
 		$id = (int) $this->request->param('id', 0);
-		$tag = ORM::factory('tag', array('id' => $id, 'type' => 'blog'));
+        $tag = ORM::factory('Tag', array('id' => $id, 'type' => 'blog'));
 
 		if ( ! $tag->loaded())
 		{

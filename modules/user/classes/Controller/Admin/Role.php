@@ -34,7 +34,7 @@ class Controller_Admin_Role extends Controller_Admin {
 
 		if ($is_datatables)
 		{
-			$roles = ORM::factory('role');
+            $roles = ORM::factory('Role');
 			$this->_datatables = $roles->dataTables(array('name', 'description', 'special'));
 
 			foreach ($this->_datatables->result() as $role)
@@ -87,7 +87,7 @@ class Controller_Admin_Role extends Controller_Admin {
 					->bind('errors', $this->_errors);
 
 		$this->title = __('Add Role');
-		$post = ORM::factory('role');
+        $post = ORM::factory('Role');
 
 		if ($this->valid_post('role'))
 		{
@@ -121,7 +121,7 @@ class Controller_Admin_Role extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-		$post = ORM::factory('role', $id);
+        $post = ORM::factory('Role', $id);
 
 		if(!$post->loaded())
 		{
@@ -164,7 +164,7 @@ class Controller_Admin_Role extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-		$role = ORM::factory('role', $id);
+        $role = ORM::factory('Role', $id);
 
 		if ( ! $role->loaded())
 		{

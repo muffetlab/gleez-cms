@@ -40,7 +40,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		Assets::popup();
 
 		$is_datatables = Request::is_datatables();
-		$terms  = ORM::factory('term')->where('lft', '=', 1);
+        $terms = ORM::factory('Term')->where('lft', '=', 1);
 
 		if ($is_datatables)
 		{
@@ -89,7 +89,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 				->bind('errors', $this->_errors);
 
 		/** @var $post Model_Term */
-		$post = ORM::factory('term');
+        $post = ORM::factory('Term');
 
 		if ($this->valid_post('vocab'))
 		{
@@ -122,7 +122,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$post = ORM::factory('term', $id);
+        $post = ORM::factory('Term', $id);
 
 		if ( ! $post->loaded())
 		{
@@ -171,7 +171,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$term = ORM::factory('term', $id);
+        $term = ORM::factory('Term', $id);
 
 		if ( ! $term->loaded())
 		{

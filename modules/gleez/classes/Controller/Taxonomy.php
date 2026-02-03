@@ -27,7 +27,7 @@ class Controller_Taxonomy extends Template {
 	public function action_term()
 	{
 		$id = (int) $this->request->param('id', 0);
-		$term = ORM::factory('term', $id);
+        $term = ORM::factory('Term', $id);
 
 		if ( ! $term->loaded())
 		{

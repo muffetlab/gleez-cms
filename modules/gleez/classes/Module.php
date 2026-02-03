@@ -66,7 +66,7 @@ class Module
 	public static function get($name)
 	{
 		if (empty(self::$modules[$name]) || !(self::$modules[$name] instanceof ORM)) {
-			return ORM::factory('module')->where('name', '=', $name)->find();
+            return ORM::factory('Module')->where('name', '=', $name)->find();
 		}
 
 		return self::$modules[$name];
@@ -249,7 +249,7 @@ class Module
 		// loaded. By default, new modules are installed at the end of the priority list.  Since the
 		// id field is monotonically increasing, the easiest way to guarantee that is to set the weight
 		// the same as the id.  We don't know that until we save it for the first time
-		$module = ORM::factory('module')->where('name', '=', $module_name)->find();
+        $module = ORM::factory('Module')->where('name', '=', $module_name)->find();
 		if ($module->loaded()) {
 			$module->weight = $module->id;
 			$module->save();
@@ -492,7 +492,7 @@ class Module
 
 			unset($data);
 		} else {
-			$modules = ORM::factory('module')
+            $modules = ORM::factory('Module')
 				->order_by('weight','ASC')
 				->order_by('name','ASC')
 				->find_all();

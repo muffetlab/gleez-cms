@@ -25,7 +25,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	public function action_list()
 	{
 		$id    = (int) $this->request->param('id');
-		$menu  = ORM::factory('menu', array('id' => $id, 'lft' => 1));
+        $menu = ORM::factory('Menu', array('id' => $id, 'lft' => 1));
 
 		if ( ! $menu->loaded())
 		{
@@ -65,7 +65,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	public function action_add()
 	{
 		$id   = (int) $this->request->param('id');
-		$menu = ORM::factory('menu', array('id' => $id, 'lft' => 1));
+        $menu = ORM::factory('Menu', array('id' => $id, 'lft' => 1));
 
 		if ( ! $menu->loaded())
 		{
@@ -81,7 +81,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 					->bind('post', $post)
 					->bind('errors', $this->_errors);
 
-        $post = ORM::factory('menu')->values($_POST, ['title', 'url', 'image', 'descp']);
+        $post = ORM::factory('Menu')->values($_POST, ['title', 'url', 'image', 'descp']);
 
 		if ($this->valid_post('menu-item'))
 		{
@@ -116,7 +116,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$menu = ORM::factory('menu', $id);
+        $menu = ORM::factory('Menu', $id);
 
 		if ( ! $menu->loaded())
 		{
@@ -132,7 +132,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 					->bind('post', $menu)
 					->bind('errors', $this->_errors);
 
-		$post = ORM::factory('menu', $id)
+        $post = ORM::factory('Menu', $id)
             ->values($_POST, ['title', 'url', 'image', 'descp']);
 
 		if ($this->valid_post('menu-item'))
@@ -170,7 +170,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
-		$menu = ORM::factory('menu', $id);
+        $menu = ORM::factory('Menu', $id);
 
 		if ( ! $menu->loaded())
 		{

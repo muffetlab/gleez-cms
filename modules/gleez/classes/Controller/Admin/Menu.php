@@ -40,7 +40,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 		Assets::popup();
 
 		$is_datatables = Request::is_datatables();
-		$menus         = ORM::factory('menu')->where('lft', '=', 1);
+        $menus = ORM::factory('Menu')->where('lft', '=', 1);
 
 		if ($is_datatables)
 		{
@@ -88,7 +88,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 	 */
 	public function action_add()
 	{
-		$post = ORM::factory('menu');
+        $post = ORM::factory('Menu');
 		$action = Route::get('admin/menu')->uri(array('action' => 'add'));
 
 		if ($this->valid_post('menu'))
@@ -137,7 +137,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
-		$post = ORM::factory('menu', $id);
+        $post = ORM::factory('Menu', $id);
 
 		if ( ! $post->loaded())
 		{
@@ -195,7 +195,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
-		$menu = ORM::factory('menu', $id);
+        $menu = ORM::factory('Menu', $id);
 
 		if ( ! $menu->loaded())
 		{

@@ -22,7 +22,7 @@ class Gleez_Acltest extends Unittest_TestCase
 	 */
 	public function testacl_check($perm, $user_id)
 	{
-		$user = ORM::factory('user', $user_id);
+        $user = ORM::factory('User', $user_id);
 
 		if ($user_id == 1)
 		{

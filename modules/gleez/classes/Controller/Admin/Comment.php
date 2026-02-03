@@ -51,7 +51,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 	{
 		Assets::popup();
 
-		$this->_prepare_list(ORM::factory('comment')->where('status', '=', 'publish'));
+        $this->_prepare_list(ORM::factory('Comment')->where('status', '=', 'publish'));
 
 		$this->title = __('Comments');
 
@@ -71,7 +71,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 	public function action_view()
 	{
 		$id      = (int) $this->request->param('id', 0);
-		$comment = ORM::factory('comment', $id)->access();
+        $comment = ORM::factory('Comment', $id)->access();
 
 		if( ! $comment->loaded())
 		{
@@ -97,7 +97,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 	{
 		Assets::popup();
 
-		$this->_prepare_list(ORM::factory('comment')->where('status', '=', 'draft'));
+        $this->_prepare_list(ORM::factory('Comment')->where('status', '=', 'draft'));
 
 		$this->title = __('Pending Comments');
 
@@ -120,7 +120,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 	{
 		Assets::popup();
 
-		$this->_prepare_list(ORM::factory('comment')->where('status', '=', 'spam'));
+        $this->_prepare_list(ORM::factory('Comment')->where('status', '=', 'spam'));
 
 		$this->title = __('Spam Comments');
 
@@ -154,7 +154,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 		{
 			$comments = array_filter($post['items']);
 
-			ORM::factory('comment')->where('id', 'IN', $comments)->delete_all();
+            ORM::factory('Comment')->where('id', 'IN', $comments)->delete_all();
 			Module::event('comment_bulk_delete', $comments);
 
 			Message::success(__('The delete has been performed!'));

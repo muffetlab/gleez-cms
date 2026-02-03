@@ -145,8 +145,8 @@ class Model_Menu extends ORM_MPTT {
 
 		$i = 1;
 		$original = $str;
-		
-		while ($post = ORM::factory('menu', array('name' => $str)) AND $post->loaded() AND $post->id !== $this->id)
+
+        while ($post = ORM::factory('Menu', array('name' => $str)) and $post->loaded() and $post->id !== $this->id)
 		{
 			$str = $original . '-' . $i;
 			$i++;
@@ -179,7 +179,7 @@ class Model_Menu extends ORM_MPTT {
 		}
 		else
 		{
-			$target = ORM::factory('menu',(int) $location);
+            $target = ORM::factory('Menu', (int) $location);
 			
 			if ( ! $target->loaded())
 			{
@@ -203,7 +203,7 @@ class Model_Menu extends ORM_MPTT {
 	public function move_to($target, $action = 'after')
 	{
 		// Find the target
-		$target = ORM::factory('menu',(int) $target);
+        $target = ORM::factory('Menu', (int) $target);
 
 		// Make sure it exists
 		if ( ! $target->loaded())

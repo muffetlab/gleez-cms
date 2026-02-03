@@ -309,10 +309,10 @@ class Menu {
         $cache = Cache::instance();
 
         if (!$items = $cache->get('menus:' . $name)) {
-			$_menu = ORM::factory('menu')->where('name', '=', (string)$name)->find()->as_array();
+            $_menu = ORM::factory('Menu')->where('name', '=', (string) $name)->find()->as_array();
 			if ( ! $_menu) return;
 
-			$ritems = ORM::factory('menu')
+            $ritems = ORM::factory('Menu')
 				->where('lft', '>', $_menu['lft'])
 				->where('rgt', '<', $_menu['rgt'])
 				->where('scp', '=', $_menu['scp'])
@@ -378,10 +378,10 @@ class Menu {
         $cache = Cache::instance();
 
         if (!$items = $cache->get('menus:' . $name)) {
-			$_menu = ORM::factory('menu')->where('name', '=', (string)$name)->find()->as_array();
+            $_menu = ORM::factory('Menu')->where('name', '=', (string) $name)->find()->as_array();
 			if( ! $_menu) return;
 
-			$ritems = ORM::factory('menu')
+            $ritems = ORM::factory('Menu')
 				->where('lft', '>', $_menu['lft'])
 				->where('rgt', '<', $_menu['rgt'])
 				->where('scp', '=', $_menu['scp'])

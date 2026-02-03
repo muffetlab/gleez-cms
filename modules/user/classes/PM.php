@@ -107,7 +107,7 @@ class PM {
 	 */
 	public static function bulk_update(array $ids, array $actions)
 	{
-		$messages = ORM::factory('message')
+        $messages = ORM::factory('Message')
 			->where('id', 'IN', $ids)
 			->find_all();
 
@@ -137,7 +137,7 @@ class PM {
 	 */
 	public static function bulk_delete(array $ids)
 	{
-		$messages = ORM::factory('message')
+        $messages = ORM::factory('Message')
 			->where('id', 'IN', $ids)
 			->find_all();
 

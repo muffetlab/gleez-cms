@@ -196,7 +196,7 @@ class Controller_Message extends Template {
 				->set('action',      $action)
 				->set('recipient',   FALSE);
 
-		$message = ORM::factory('message');
+        $message = ORM::factory('Message');
 
 		if ($this->valid_post('message'))
 		{
@@ -250,7 +250,7 @@ class Controller_Message extends Template {
 		$id = (int) $this->request->param('id', 0);
 
 		/** @var $message Model_Message */
-		$message = ORM::factory('message', $id);
+        $message = ORM::factory('Message', $id);
 
 		$this->title = __('Delete Message');
 

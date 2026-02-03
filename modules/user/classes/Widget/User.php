@@ -49,7 +49,7 @@ class Widget_User extends Widget {
 				->set('use_username', Kohana::$config->load('auth')->get('username'))
 				->set('providers',    array_filter(Auth_ORM::providers()))
 				->set('action',       $action)
-				->set('post',         ORM::factory('user'))
+            ->set('post', ORM::factory('User'))
 				->render();
 	}
 }

@@ -28,7 +28,7 @@ class Controller_Comment extends Template {
 	public function action_view()
 	{
 		$id       = (int) $this->request->param('id', 0);
-		$comment  = ORM::factory('comment', $id)->access();
+        $comment = ORM::factory('Comment', $id)->access();
 		$route    = Route::get('comment')->uri(array('action' => 'list'));
 
 		if ( ! $comment->loaded())
@@ -60,7 +60,7 @@ class Controller_Comment extends Template {
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
-		$comment  = ORM::factory('comment', $id)->access('edit');
+        $comment = ORM::factory('Comment', $id)->access('edit');
 
 		// Set form destination
 		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
@@ -102,7 +102,7 @@ class Controller_Comment extends Template {
 	public function action_delete()
 	{
 		$id          = (int) $this->request->param('id', 0);
-		$comment     = ORM::factory('comment', $id)->access('delete');
+        $comment = ORM::factory('Comment', $id)->access('delete');
 		$this->title = __('Are you absolutely sure?');
 		$destination = empty($this->redirect) ? array() : array('destination' => $this->redirect);
 		$post        = $this->request->post();
