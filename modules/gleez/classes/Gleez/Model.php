@@ -27,7 +27,7 @@ class Gleez_Model extends ORM
     public function dataTables(array $columns = NULL): Datatables
     {
         if (!empty($columns)) {
-            $this->_datatables = DataTables::factory($this)->columns($columns)->execute();
+            $this->_datatables = Datatables::factory($this)->columns($columns)->execute();
         }
 
         return $this->_datatables;
