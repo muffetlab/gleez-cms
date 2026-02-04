@@ -74,7 +74,7 @@ class Controller_Feeds_Template extends Controller {
 	 * Feed item
 	 * @var array
 	 */
-	protected $_info;
+    protected $_info = [];
 
 	/**
 	 * Feed ttl (min.)
@@ -87,18 +87,6 @@ class Controller_Feeds_Template extends Controller {
 	 * @var string
 	 */
 	protected $_type = 'page';
-
-	/**
-	 * Feed type (rss|atom)
-	 * @var string
-	 */
-	protected $_feed_type;
-
-	/**
-	 * Feed object
-	 * @var Feed
-	 */
-	protected $_feed;
 
 	/**
 	 * Preparing feed
@@ -114,9 +102,6 @@ class Controller_Feeds_Template extends Controller {
 	 */
 	public function before()
 	{
-		// Get route name (rss|atom) for creating object (Gleez_Rss|Gleez_Atom)
-		$this->_feed_type = Route::name(Request::current()->route());
-
 		// Start at which page?
 		$this->_page = (int) $this->request->param('p', 1);
 
@@ -128,7 +113,7 @@ class Controller_Feeds_Template extends Controller {
 		$this->_id = (int) $this->request->param('id', 0);
 
 		// Offset
-		$this->_offset = ($this->_page == 1) ? $this->_page : ($this->_page - 1) * $this->_limit;
+        $this->_offset = ($this->_page - 1) * $this->_limit;
 
 		// Getting settings
 		$this->_config = Kohana::$config->load('site');
@@ -145,12 +130,6 @@ class Controller_Feeds_Template extends Controller {
 
 		// Fills the array elements
 		$this->_items = $this->_cache->get($this->_cache_key, array());
-
-		// Create feed object
-		$this->_feed = Feed::instance($this->_feed_type);
-
-		// Preparing header for XML document
-		$this->_info = $this->_feed->getInfo();
 
 		parent::before();
 
@@ -178,7 +157,7 @@ class Controller_Feeds_Template extends Controller {
 			unset($this->_items['title']);
 		}
 
-		echo $this->_feed->create($this->_info, $this->_items);
+        echo Feed::create($this->_info, $this->_items);
 	}
 
 }
