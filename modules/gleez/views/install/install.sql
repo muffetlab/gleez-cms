@@ -405,8 +405,6 @@ CREATE TABLE {sessions} (
   session_id varchar(24) NOT NULL,
   last_active int(10) unsigned NOT NULL,
   contents longtext NOT NULL,
-  hostname varchar(128) DEFAULT '',
-  user_id int(11) DEFAULT '0',
   PRIMARY KEY (session_id),
   KEY last_active (last_active),
   KEY session (`session_id`)
