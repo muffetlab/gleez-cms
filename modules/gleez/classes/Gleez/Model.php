@@ -13,7 +13,7 @@
 class Gleez_Model extends ORM
 {
     /**
-     * @var object DataTables
+     * @var Datatables
      */
     protected $_datatables;
 
@@ -21,10 +21,10 @@ class Gleez_Model extends ORM
      * Setter/Getter for jquery DataTables support.
      *
      * @param array|null $columns Columns for setting
-     * @return object DataTables
+     * @return Datatables
      * @throws Kohana_Exception
      */
-    public function dataTables(array $columns = NULL): object
+    public function dataTables(array $columns = NULL): Datatables
     {
         if (!empty($columns)) {
             $this->_datatables = DataTables::factory($this)->columns($columns)->execute();
