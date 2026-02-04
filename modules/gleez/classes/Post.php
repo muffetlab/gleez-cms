@@ -79,19 +79,19 @@ class Post extends ORM_Versioned {
 	 */
 	protected $_has_many = array(
 		'tags' => array(
-			'model'       => 'tag',
+            'model' => 'Tag',
 			'through'     => 'posts_tags',
 			'foreign_key' => 'post_id',
 			'far_key'     => 'tag_id'
 		),
 		'terms' => array(
-			'model'       => 'term',
+            'model' => 'Term',
 			'through'     => 'posts_terms',
 			'foreign_key' => 'post_id',
 			'far_key'     => 'term_id'
 		),
 		'comments' => array(
-			'model'       => 'comment',
+            'model' => 'Comment',
 			'foreign_key' => 'post_id'
 		)
 	);

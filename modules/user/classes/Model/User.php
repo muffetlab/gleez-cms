@@ -59,10 +59,10 @@ class Model_User extends Gleez_Model
 	 * @var array Relationships
 	 */
 	protected $_has_many = array(
-		'user_tokens' => array('model' => 'user_token'),
-		'roles'       => array('model' => 'role', 'through' => 'roles_users'),
-		'identities'  => array('model' => 'identity'),
-		'buddies'     => array('model' => 'user', 'through' => 'buddies', 'foreign_key' => 'request_from', 'far_key' => 'request_to'),
+        'user_tokens' => array('model' => 'User_Token'),
+        'roles' => array('model' => 'Role', 'through' => 'roles_users'),
+        'identities' => array('model' => 'Identity'),
+        'buddies' => array('model' => 'User', 'through' => 'buddies', 'foreign_key' => 'request_from', 'far_key' => 'request_to'),
 	);
 
 	protected $_ignored_columns = array('password', 'old_pass');

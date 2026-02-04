@@ -27,7 +27,7 @@ class Model_Tag extends Gleez_Model
 	 */
 	protected $_has_many = array(
 		'posts' => array(
-			'model'       => 'post',
+            'model' => 'Post',
 			'through'     => 'posts_tags',
 			'foreign_key' => 'tag_id'
 		),

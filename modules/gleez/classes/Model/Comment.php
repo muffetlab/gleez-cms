@@ -41,7 +41,7 @@ class Model_Comment extends Gleez_Model
 	 */
 	protected $_belongs_to = array(
 		'post' => array(
-			'model' => 'post',
+            'model' => 'Post',
 			'foreign_key' => 'post_id'
 		),
 		'user' => array(

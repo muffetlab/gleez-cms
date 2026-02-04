@@ -26,7 +26,7 @@ class Model_OAClient extends ORM {
 	protected $_updated_column = array('column' => 'updated', 'format' => TRUE);
 	    
 	protected $_belongs_to = array(
-		'user' => array('model' => 'user', 'foreign_key' => 'user_id'),
+        'user' => array('model' => 'User', 'foreign_key' => 'user_id'),
 	);
 
 	public function rules()
