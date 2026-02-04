@@ -859,7 +859,7 @@ class Assets {
 	{
         self::js('datatables', 'media/js/datatables.min.js', ['jquery'], false, ['weight' => -10]);
 		self::js('greet.dataTables', 'media/js/greet.dataTables.js', array('bootstrap'), FALSE, array('weight' => -6));
-        self::css('datatables.bootstrap', 'media/css/datatables.bootstrap.min.css', null, ['weight' => -2]);
+        self::css('datatables.bootstrap', 'media/css/dataTables.bootstrap.min.css', null, ['weight' => -2]);
 	}
 
 	/**
