@@ -753,7 +753,7 @@ class Post extends ORM_Versioned {
 	 */
 	public static function bulk_update(array $ids, array $actions, $type = 'post')
 	{
-		$posts = ORM::factory($type)
+        $posts = ORM::factory(ucfirst($type))
 			->where('id', 'IN', $ids)
 			->find_all();
 
@@ -780,7 +780,7 @@ class Post extends ORM_Versioned {
 	 */
 	public static function bulk_delete(array $ids, $type = 'post')
 	{
-		$posts = ORM::factory($type)
+        $posts = ORM::factory(ucfirst($type))
 			->where('id', 'IN', $ids)
 			->find_all();
 
@@ -807,7 +807,7 @@ class Post extends ORM_Versioned {
 	{
 		$new_type = (string) $actions[0];
 
-		$posts = ORM::factory($type)
+        $posts = ORM::factory(ucfirst($type))
 			->where('id', 'IN', $ids)
 			->find_all();
 
@@ -910,7 +910,7 @@ class Post extends ORM_Versioned {
 
 		if (empty($post))
 		{
-			$post = ORM::factory($type, $id);
+            $post = ORM::factory(ucfirst($type), $id);
 
 			if ( ! $post->loaded())
 			{
@@ -977,7 +977,7 @@ class Post extends ORM_Versioned {
 
 		if (empty($post))
 		{
-			$post = ORM::factory($params->type)
+            $post = ORM::factory(ucfirst($params->type))
 						->where('status', 'IN', $params->status)
 						->order_by($params->orderby, $params->order)
 						->limit($params->limit)
