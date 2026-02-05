@@ -188,6 +188,8 @@ class Model_Term extends ORM_MPTT {
 
 		$values = Module::action('term_aliases', $values, $this);
 
+        unset($values['type'], $values['action']);
+
 		Path::save($values);
 	}
 

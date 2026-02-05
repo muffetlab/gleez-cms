@@ -480,6 +480,8 @@ class Post extends ORM_Versioned {
 
 		$values = Module::action('post_aliases', $values, $this);
 
+        unset($values['type'], $values['action']);
+
 		Path::save($values);
 	}
 

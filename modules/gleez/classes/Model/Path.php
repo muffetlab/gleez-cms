@@ -102,8 +102,6 @@ class Model_Path extends Gleez_Model
 			$alias = Path::FRONT_ALIAS;
 		}
 
-		$this->type = empty($this->type) ? NULL : $this->type;
-
 		// allow other modules to interact with alias
 		Module::event('path_aliases', $this);
 

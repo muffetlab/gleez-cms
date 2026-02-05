@@ -149,6 +149,9 @@ class Model_Tag extends Gleez_Model
 		$values['action'] = empty($this->action) ? 'tag' : $this->action;
 
 		$values = Module::action('tag_aliases', $values, $this);
+
+        unset($values['type'], $values['action']);
+
 		Path::save($values);
 	}
 
