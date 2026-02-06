@@ -390,7 +390,7 @@ class Text {
 	 */
 	public static function auto_link($text)
 	{
-		return Autolink::filter($text);
+        return AutoLink::filter($text);
 	}
 
 	/**

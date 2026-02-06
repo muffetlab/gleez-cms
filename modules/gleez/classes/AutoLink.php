@@ -53,17 +53,17 @@ class AutoLink {
 		// Match absolute URLs.
 		$url_pattern = "(?:$auth)?(?:$domain|$ip)/?(?:$trail)?";
 		$pattern = "`((?:$protocols)(?:$url_pattern))($punctuation)`";
-		$tasks['Autolink::_parse_full_links'] = $pattern;
+        $tasks['AutoLink::_parse_full_links'] = $pattern;
 	
 		// Match e-mail addresses.
 		$url_pattern = "[A-Za-z0-9._-]+@(?:$domain)";
 		$pattern = "`($url_pattern)`";
-		$tasks['Autolink::_parse_email_links'] = $pattern;
+        $tasks['AutoLink::_parse_email_links'] = $pattern;
 
 		// Match www domains.
 		$url_pattern = "www\.(?:$domain)/?(?:$trail)?";
 		$pattern = "`($url_pattern)($punctuation)`";
-		$tasks['Autolink::_parse_partial_links'] = $pattern;
+        $tasks['AutoLink::_parse_partial_links'] = $pattern;
 	
 		// Each type of URL needs to be processed separately. The text is joined and
 		// re-split after each task, since all injected HTML tags must be correctly
@@ -71,7 +71,7 @@ class AutoLink {
 		foreach ($tasks as $task => $pattern)
 		{
 			//HTML comments need to be handled separately, as they may contain HTML
-			$text = preg_replace_callback('`<!--(.*?)-->`s', 'Autolink::escape', $text);
+            $text = preg_replace_callback('`<!--(.*?)-->`s', 'AutoLink::escape', $text);
 
 			// Split at all tags; ensures that no tags or attributes are processed.
 			$chunks = preg_split('/(<.+?>)/is', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -115,8 +115,8 @@ class AutoLink {
 			}
 
 			$text = implode($chunks);
-			$text = preg_replace_callback('`<!--(.*?)-->`', 'Autolink::unescape', $text);
-			//$text = Autolink::unescape($text);
+            $text = preg_replace_callback('`<!--(.*?)-->`', 'AutoLink::unescape', $text);
+            //$text = AutoLink::unescape($text);
 		}
 
 		return $text;
@@ -136,7 +136,7 @@ class AutoLink {
 		$i = 1;
 
 		$match[$i] = HTML::entities($match[$i]);
-		$caption = Text::plain(Autolink::_url_trim($match[$i]));
+		$caption = Text::plain(AutoLink::_url_trim($match[$i]));
 		$match[$i] = Text::plain($match[$i]);
 		return '<a href="' . $match[$i] . '">' . $caption . '</a>' . $match[$i + 1];
 		*/
@@ -153,7 +153,7 @@ class AutoLink {
 		$i = 1;
 
 		$match[$i] = HTML::entities($match[$i]);
-		$caption = Text::plain(Autolink::_url_trim($match[$i]));
+		$caption = Text::plain(AutoLink::_url_trim($match[$i]));
 		$match[$i] = Text::plain($match[$i]);
 		//return '<a href="http://' . $match[$i] . '">' . $caption . '</a>' . $match[$i + 1];
 		*/
@@ -170,7 +170,7 @@ class AutoLink {
 		$i = 0;
 
 		$match[$i] = HTML::entities($match[$i]);
-		$caption = Text::plain(Autolink::_url_trim($match[$i]));
+		$caption = Text::plain(AutoLink::_url_trim($match[$i]));
 		$match[$i] = Text::plain($match[$i]);
 		return '<a href="mailto:' . $match[$i] . '">' . $caption . '</a>';
 		*/
