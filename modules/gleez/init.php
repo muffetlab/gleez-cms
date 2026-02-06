@@ -97,7 +97,7 @@ if ( ! Route::cache())
 		'slug'       => '[A-Za-z0-9-]+'
 	))
 	->defaults(array(
-		'directory'  => 'admin/menu',
+		'directory'  => 'admin/Menu',
 		'controller' => 'item',
 		'action'     => 'list',
 	));
