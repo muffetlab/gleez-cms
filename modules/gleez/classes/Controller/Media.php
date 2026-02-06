@@ -49,13 +49,13 @@ class Controller_Media extends Controller {
 		$theme = $this->request->param('theme', FALSE);
 
 		// Get the file path from the request
-		$file = $this->request->param('file');
+        $originalFile = $this->request->param('file');
 		
 		// Find the file extension
-		$ext = File::getExt($file);
+        $ext = File::getExt($originalFile);
 		
 		// Remove the extension from the filename
-		$file = substr($file, 0, -(strlen($ext) + 1));
+        $file = substr($originalFile, 0, -(strlen($ext) + 1));
 		
 		if ($file_name = Kohana::find_file('media', $file, $ext))
 		{
@@ -98,7 +98,7 @@ class Controller_Media extends Controller {
 		}
 		else
 		{
-			Kohana::$log->add(Log::ERROR, 'Media controller error while loading file: :file', array(':file' => $file));
+            Kohana::$log->add(Log::ERROR, 'Media controller error while loading file: :file', array(':file' => $originalFile));
 
 			// Return a 404 status
 			$this->response->status(404);
