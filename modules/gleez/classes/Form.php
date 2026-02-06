@@ -971,7 +971,7 @@ class Form {
         ];
 
 		// Add locale support to datepicker. @todo CH and latin support
-		if(I18n::$lang != 'en')
+        if (Gleez_I18n::$lang !== 'en-us')
 		{
 			$lang                                   = I18n::$lang;
             $options['locale'] = $lang;
