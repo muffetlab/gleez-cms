@@ -763,29 +763,38 @@ class Assets {
 	/**
 	 * Rich text editor
 	 *
-	 * By default Gleez uses redactor-js - jQuery based WYSIWYG-editor
-	 * @link  https://github.com/dybskiy/redactor-js
-	 * @link  http://redactorjs.com/
-	 *
-	 * For I18n support see http://imperavi.com/redactor/docs/languages/
+     * By default, Gleez uses TinyMCE as its rich text editor.
+     * @link https://www.tiny.cloud/tinymce/
 	 *
 	 * @param  string  $name  CSS class or ID of editable area [Optional]
 	 * @param  string  $lang  Language  [Optional]
 	 */
-	public static function editor($name = '.textarea', $lang = 'en')
+    public static function editor($name = '.textarea', $lang = 'en-us')
 	{
-// 		self::css('redactor', 'media/css/redactor.css', array('default'), array('weight' => 1));
-// 		self::js('redactor', 'media/js/redactor.min.js', array('jquery'), FALSE, array('weight' => 15));
-// 		self::js('redactor/lang', 'media/js/redactor/langs/'.$lang.'.js', array('jquery'), FALSE, array('weight' => 16));
+        $language = preg_replace_callback('/-([a-z]+)/', function ($matches) {
+            return '_' . strtoupper($matches[1]);
+        }, $lang === 'en-us' ? 'en' : $lang);
 
-// 		self::codes('editor', 'jQuery(document).ready(function(){
-// 					jQuery("'.$name.'").redactor({
-// 						lang: "'.$lang.'",
-// 						minHeight: 300,
-// 						autoresize: false
-// 					});
-// 			});'
-// 		);
+        self::js('tinymce', 'media/js/tinymce/tinymce.min.js', ['jquery'], false, ['weight' => 2]);
+
+        self::codes('editor', 'tinymce.init({
+            selector: \'' . $name . '\',
+            height: 500,
+            license_key: \'gpl\',
+            language_url: \'' . URL::site('media/' . Theme::$active . '/js/tinymce/langs/' . $language . '.js') . '\',
+            language: \'' . $language . '\',
+            plugins: [
+                \'advlist\', \'autolink\', \'lists\', \'link\', \'image\', \'charmap\', \'preview\',
+                \'anchor\', \'searchreplace\', \'visualblocks\', \'code\', \'fullscreen\',
+                \'insertdatetime\', \'media\', \'table\', \'help\', \'wordcount\',
+            ],
+            toolbar: \'undo redo | blocks | \' +
+                \'bold italic backcolor | alignleft aligncenter \' +
+                \'alignright alignjustify | bullist numlist outdent indent | \' +
+                \'removeformat\',
+            promotion: false,
+            branding: false
+        });', null, false, ['weight' => 1]);
 	}
 
 	/**

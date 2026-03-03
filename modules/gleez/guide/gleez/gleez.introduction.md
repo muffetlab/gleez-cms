@@ -54,7 +54,7 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 * Font Awesome [(http://fortawesome.github.io/Font-Awesome/)](http://fortawesome.github.io/Font-Awesome/)
 * Select2 jQuery plugin [(http://ivaynberg.github.io/select2/)](http://ivaynberg.github.io/select2/)
 * DataTables jQuery plugin [(http://datatables.net/)](http://datatables.net/)
-* Redactor jQuery plugin [(https://github.com/dybskiy/redactor-js/)](https://github.com/dybskiy/redactor-js)
+* TinyMCE [(https://www.tiny.cloud/tinymce/)](https://www.tiny.cloud/tinymce/)
 * PHP Markdown [(https://github.com/michelf/php-markdown)](https://github.com/michelf/php-markdown)
 * PHPMailer [(https://github.com/PHPMailer/PHPMailer)](https://github.com/PHPMailer/PHPMailer)
 * Minion [(https://github.com/seyfer/minion/)](https://github.com/seyfer/minion/)
