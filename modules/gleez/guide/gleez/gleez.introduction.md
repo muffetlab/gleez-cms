@@ -45,19 +45,17 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 
 * Greet [(https://github.com/gleez/greet)](https://github.com/gleez/greet)
 * Kohana [(https://kohana.top)](https://kohana.top)
-* Database [(https://github.com/gleez/database)](https://github.com/gleez/database)
-* Bootstrap Twitter [(http://getbootstrap.com/)](http://getbootstrap.com/)
-* jQuery [(http://jquery.com/)](http://jquery.com/)
+* Bootstrap Twitter [(https://getbootstrap.com)](https://getbootstrap.com)
+* jQuery [(https://jquery.com)](https://jquery.com)
 * jQuery Form Plugin [http://malsup.com/jquery/form/](http://malsup.com/jquery/form/)
 * jQuery Tabledrag Plugin [(https://github.com/wadmiraal/jquery-tabledrag/)](https://github.com/wadmiraal/jquery-tabledrag/)
 * jQuery Textarea Characters Counter Plugin [(http://roy-jin.appspot.com/jsp/textareaCounter.jsp)](http://roy-jin.appspot.com/jsp/textareaCounter.jsp)
 * Font Awesome [(http://fortawesome.github.io/Font-Awesome/)](http://fortawesome.github.io/Font-Awesome/)
-* Select2 jQuery plugin [(http://ivaynberg.github.io/select2/)](http://ivaynberg.github.io/select2/)
-* DataTables jQuery plugin [(http://datatables.net/)](http://datatables.net/)
+* Select2 jQuery plugin [(https://select2.org)](https://select2.org)
+* DataTables jQuery plugin [(https://datatables.net)](https://datatables.net)
 * TinyMCE [(https://www.tiny.cloud/tinymce/)](https://www.tiny.cloud/tinymce/)
 * PHP Markdown [(https://github.com/michelf/php-markdown)](https://github.com/michelf/php-markdown)
 * PHPMailer [(https://github.com/PHPMailer/PHPMailer)](https://github.com/PHPMailer/PHPMailer)
-* Minion [(https://github.com/seyfer/minion/)](https://github.com/seyfer/minion/)
 * JSMin [(https://github.com/rgrove/jsmin-php)](https://github.com/rgrove/jsmin-php)
 
 ## Credits
@@ -66,9 +64,9 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 * Gallery3       [(http://gallery.menalto.com)](http://gallery.menalto.com)
 * Kerkness       [(http://kerkness.ca/wiki/doku.php)](http://kerkness.ca/wiki/doku.php)
 * BoltCMS        [(https://github.com/bolt/bolt)](https://github.com/bolt/bolt)
-* s7nCMS         [(http://code.google.com/p/s7ncms/)](http://code.google.com/p/s7ncms/)
+* s7nCMS         [(https://code.google.com/archive/p/s7ncms/)](https://code.google.com/archive/p/s7ncms/)
 * Kohanut        [(https://github.com/bluehawk/kohanut)](https://github.com/bluehawk/kohanut)
-* Wordpress      [(http://wordpress.org)](http://wordpress.org)
-* Zend Framework [(http://framework.zend.com/)](http://framework.zend.com/)
+* Wordpress      [(https://wordpress.org)](https://wordpress.org)
+* Zend Framework [(https://framework.zend.com)](https://framework.zend.com)
 
 We've lifted some codes from these applications and felt this is place for giving credit to them as demanded!
