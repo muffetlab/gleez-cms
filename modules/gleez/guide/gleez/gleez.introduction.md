@@ -44,7 +44,7 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 ## Frameworks & Libraries
 
 * Greet [(https://github.com/gleez/greet)](https://github.com/gleez/greet)
-* Kohana [(http://kohanaframework.org)](http://kohanaframework.org)
+* Kohana [(https://kohana.top)](https://kohana.top)
 * Database [(https://github.com/gleez/database)](https://github.com/gleez/database)
 * Bootstrap Twitter [(http://getbootstrap.com/)](http://getbootstrap.com/)
 * jQuery [(http://jquery.com/)](http://jquery.com/)
