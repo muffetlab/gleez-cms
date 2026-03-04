@@ -233,7 +233,7 @@ class HTML {
 	public static function script($file, array $attributes = NULL, $protocol = NULL, $index = FALSE)
 	{
 		// Allow theme to serve its own media assets
-		if(strpos($file, 'media/js') !== FALSE AND Gleez::$installed AND strpos($file, 'guide/media') === FALSE)
+        if (strpos($file, 'media/js') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
 		{
 			$theme = Theme::$active;
 			$file = str_replace(array('media/js'), "media/{$theme}/js", $file);
@@ -381,7 +381,7 @@ class HTML {
 	public static function style($file, array $attrs = NULL, $protocol = NULL, $index = FALSE)
 	{
 		// Allow theme to serve its own media assets
-		if(strpos($file, 'media/css') !== FALSE AND Gleez::$installed AND strpos($file, 'guide/media') === FALSE)
+        if (strpos($file, 'media/css') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
 		{
 			$theme = Theme::$active;
 			$file = str_replace(array('media/css'), "media/{$theme}/css", $file);
