@@ -13,11 +13,11 @@ Gleez just provides an interface that wraps around your Kohana 3 Module.
 
 1. **Encapsulate your extensions inside a directory with the same name as your extension**
 
-    Suppose you created a Gleez App named `myapp`. You should then put your helpers and libraries inside `classes/myapp`.
+    Suppose you created a Gleez App named `myapp`. You should then put your helpers and libraries inside `classes/Myapp`.
 
-    Your controllers should be located inside `classes/controller/myapp`.
+    Your controllers should be located inside `classes/Controller/Myapp`.
 
-    Your models should be located inside `classes/model/myapp` which will consequently have a table prefix `myapp_`.
+    Your models should be located inside `classes/Model/Myapp` which will consequently have a table prefix `myapp_`.
 
     Keep the name of your extension as one word. Only ASCII English alphabet characters are allowed, no spaces, no underscores, no hyphen.
     You can use the extension Title to describe your extension more clearly. Your app's name is simply a unique and short identifier for your extension.
