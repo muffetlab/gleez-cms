@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .btn-file {
   position: relative;
   overflow: hidden;
@@ -91,9 +90,6 @@
 }
 .fileupload .fileupload-success, .fileupload .fileupload-error {
   display: none;
-  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
-  -moz-opacity:0.9;    /* Mozilla extension */
-  -khtml-opacity:0.9;  /* Safari/Conqueror extension */
   opacity:0.9; /* CSS3 */
   z-index:1000;
   background-color: #fff;
@@ -114,15 +110,10 @@
   padding: 5px 3px;
 }
 .fileupload .loading {
-	background: url('../images/progress.gif') center center no-repeat;
-	/* IE filter */
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
-	-moz-opacity:0.5;    /* Mozilla extension */
-	-khtml-opacity:0.5;  /* Safari/Conqueror extension */
-	opacity:0.5; /* CSS3 */
+    opacity: 0.5;
 	z-index:1000;
-	background-color: #fff;
-	width: 30px;
+    background: #fff url('../images/progress.gif') no-repeat center center;
+    width: 30px;
 	height: 150px;
 	padding: 0;
 	position: absolute;

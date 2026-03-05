@@ -4,18 +4,14 @@
 
 .form-actions input[type="file"] {
   padding: 2px 3px;
-  font-size: 10.5px;
+  font-size: 11px;
   height: 22px;
   line-height: 22px;
 }
 
 .form-actions.rounded {
   border: 1px solid #e5e5e5;
-  border-radius: 3px 3px 3px 3px;
-  -webkit-border-radius: 3px 3px 3px 3px;
-  -moz-border-radius: 3px 3px 3px 3px;
-  -o-border-radius: 3px 3px 3px 3px;
-  -khtml-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px;
 }
 
 .bulk-actions{
@@ -50,25 +46,13 @@ form .captcha label.captchal{
 /* Error message at the top of the form */
 #formerrors{
   background: #c20f2e; color: #fff; margin: 0 0 1.5em 0; padding: 1px 1.5em;
-       /* CSS3 */
        border-radius: 4px;
-       -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-       -o-border-radius: 4px;
-       -khtml-border-radius: 4px;
        box-shadow: 0 0 10px rgba(0,0,0,.25);
-       -webkit-box-shadow: 0 0 10px rgba(0,0,0,.25);
-       -moz-box-shadow: 0 0 10px rgba(0,0,0,.25);
 }
 #formerrors ol{ margin: 0 0 1.5em 0; padding: 0; }
 #formerrors ol li{
   margin: 0 0 3px 1.5em; padding: 7px; background: #a20d27; position: relative; font-size: .85em;
-       /* CSS3 */
        border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-      -o-border-radius: 4px;
-    -khtml-border-radius: 4px;
   text-transform:capitalize;
   list-style: none;
 }
