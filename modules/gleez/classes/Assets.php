@@ -775,13 +775,13 @@ class Assets {
             return '_' . strtoupper($matches[1]);
         }, $lang === 'en-us' ? 'en' : $lang);
 
-        self::js('tinymce', 'media/js/tinymce/tinymce.min.js', ['jquery'], false, ['weight' => 2]);
+        self::js('tinymce', 'media/tinymce/tinymce.min.js', ['jquery'], false, ['weight' => 2]);
 
         self::codes('editor', 'tinymce.init({
             selector: \'' . $name . '\',
             height: 500,
             license_key: \'gpl\',
-            language_url: \'' . URL::site('media/' . Theme::$active . '/js/tinymce/langs/' . $language . '.js') . '\',
+            language_url: \'' . URL::site('media/' . Theme::$active . '/tinymce/langs/' . $language . '.js') . '\',
             language: \'' . $language . '\',
             plugins: [
                 \'advlist\', \'autolink\', \'lists\', \'link\', \'image\', \'charmap\', \'preview\',
