@@ -720,7 +720,10 @@ abstract class Template extends Controller {
 	protected function _set_default_css()
 	{
 		Assets::css('bootstrap', 'media/css/bootstrap.min.css', NULL, array('weight' => -15));
-		Assets::css('font-awesome', 'media/css/font-awesome.min.css',  array('bootstrap'), array('weight' => -13));
+        Assets::css('fontawesome-all', 'media/fontawesome/css/all.min.css', null, ['weight' => -13]);
+        Assets::css('fontawesome-solid', 'media/fontawesome/css/solid.min.css', ['fontawesome-all'], ['weight' => -12]);
+        Assets::css('fontawesome-regular', 'media/fontawesome/css/regular.min.css', ['fontawesome-all'], ['weight' => -12]);
+        Assets::css('fontawesome-brands', 'media/fontawesome/css/brands.min.css', ['fontawesome-all'], ['weight' => -12]);
 		Assets::css('default', 'media/css/default.css', NULL, array('weight' => 0));
 		Assets::css('theme', "media/css/theme.css", array('default'), array('weight' => 50));
 	}

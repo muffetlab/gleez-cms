@@ -107,14 +107,58 @@ class System {
 	{
 		$icons = array();
         if (!$icons = Cache::instance()->get('icons:fa-icons')) {
-			if ($path = Kohana::find_file('media/css', 'font-awesome', 'css'))
-			{
-				$array = System::faGetArray($path);
-				$icons = System::faReadableName($array);
-			}
+            $allPath = Kohana::find_file('media/fontawesome/css', 'all.min', 'css');
+            $brandsPath = Kohana::find_file('media/fontawesome/css', 'brands.min', 'css');
 
-			// Sort array by key name
-			ksort( $icons );
+            if ($allPath) {
+                $allCss = file_get_contents($allPath);
+                $allIcons = System::faGetArray($allPath);
+
+                // Build valid Unicode list from the regular font-face unicode-range.
+                // Only icons whose codepoints are explicitly declared will be offered as "regular".
+                $validCodes = [];
+                if (preg_match_all('/unicode-range:\s*([^;]+);/i', $allCss, $matches, PREG_SET_ORDER)) {
+                    foreach ($matches as $match) {
+                        $ranges = explode(',', $match[1]);
+                        foreach ($ranges as $range) {
+                            $range = trim($range);
+
+                            if (!preg_match('/^U\+([0-9A-F]+)(?:-([0-9A-F]+))?$/i', $range, $m)) {
+                                continue;
+                            }
+
+                            $start = hexdec($m[1]);
+                            $end = isset($m[2]) ? hexdec($m[2]) : $start;
+
+                            for ($code = $start; $code <= $end; $code++) {
+                                $validCodes[$code] = true;
+                            }
+                        }
+                    }
+                }
+
+                $brandIcons = $brandsPath ? System::faGetArray($brandsPath) : [];
+
+                // Sort icon list by class name so we can emit each style variant for a given icon consecutively.
+                ksort($allIcons);
+
+                foreach ($allIcons as $class => $unicode) {
+                    $readable = ucfirst(str_ireplace(['fa-', '-'], ['', ' '], $class));
+
+                    if (isset($brandIcons[$class])) {
+                        // Brand icons only get fab variant
+                        $icons['fab ' . $class] = $readable;
+                    } else {
+                        // Non-brand icons get fas variant
+                        $icons['fas ' . $class] = $readable;
+
+                        // Also add far variant if Unicode is in the valid range
+                        if (isset($validCodes[hexdec(ltrim($unicode, '\\'))])) {
+                            $icons['far ' . $class] = $readable;
+                        }
+                    }
+                }
+            }
 
             Cache::instance()->set('icons:fa-icons', $icons, Date::WEEK);
 		}
@@ -327,7 +371,9 @@ class System {
 		}
 
 		$css = file_get_contents($path);
-		$pattern = '/\.('. $class_prefix .'(?:\w+(?:-)?)+):before\s+{\s*content:\s*"(.+)";\s+}/';
+
+        // Font Awesome 7 pattern: .fa-camera { --fa: "\f030"; }
+        $pattern = '/\.(' . preg_quote($class_prefix, '/') . '[\w-]+)\s*{[^}]*--fa:\s*"([^"]+)"[^}]*}/';
 		preg_match_all($pattern, $css, $matches, PREG_SET_ORDER);
 
 		$icons = array();
