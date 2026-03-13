@@ -407,4 +407,44 @@ class System {
 
 		return $temp;
 	}
+
+    /**
+     * Sorts assets based on dependencies.
+     *
+     * @param array $assets Array of assets
+     * @return array Sorted array of assets
+     */
+    public static function sortDependencies(array $assets): array
+    {
+        $original = $assets;
+        $sorted = [];
+
+        while (count($assets) > 0) {
+            foreach ($assets as $key => $value) {
+                // No dependencies anymore, add it to sorted
+                if (empty($value['deps'])) {
+                    $sorted[$key] = $value;
+                    unset($assets[$key]);
+                } else {
+                    foreach ($value['deps'] as $k => $v) {
+                        // Remove dependency if it doesn't exist, if its dependent on itself, or if the dependent is dependent on it
+                        if (!isset($original[$v]) || $v === $key || isset($assets[$v]) && in_array($key, $assets[$v]['deps'])) {
+                            unset($assets[$key]['deps'][$k]);
+                            continue;
+                        }
+
+                        // This dependency hasn't been sorted yet
+                        if (!isset($sorted[$v])) {
+                            continue;
+                        }
+
+                        // This dependency is taken care of, remove from list
+                        unset($assets[$key]['deps'][$k]);
+                    }
+                }
+            }
+        }
+
+        return $sorted;
+    }
 }

@@ -267,44 +267,7 @@ class Meta {
 	 */
 	protected static function _sort($assets)
 	{
-		$original = $assets;
-		$sorted   = array();
-
-		while (count($assets) > 0)
-		{
-			foreach ($assets as $key => $value)
-			{
-				// No dependencies anymore, add it to sorted
-				if (empty($assets[$key]['deps']))
-				{
-					$sorted[$key] = $value;
-					unset($assets[$key]);
-				}
-				else
-				{
-					foreach ($assets[$key]['deps'] as $k => $v)
-					{
-						// Remove dependency if doesn't exist, if its dependent on itself, or if the dependent is dependent on it
-						if ( ! isset($original[$v]) OR $v === $key OR (isset($assets[$v]) AND in_array($key, $assets[$v]['deps'])))
-						{
-							unset($assets[$key]['deps'][$k]);
-							continue;
-						}
-
-						// This dependency hasn't been sorted yet
-						if ( ! isset($sorted[$v]))
-						{
-							continue;
-						}
-
-						// This dependency is taken care of, remove from list
-						unset($assets[$key]['deps'][$k]);
-					}
-				}
-			}
-		}
-
-		return $sorted;
+        return System::sortDependencies($assets);
 	}
 
 	/**
