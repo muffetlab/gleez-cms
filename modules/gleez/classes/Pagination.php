@@ -504,6 +504,26 @@ class Pagination {
 		}
 	}
 
+    /**
+     * Get the items per page.
+     *
+     * @return int Items per page
+     */
+    public function itemsPerPage(): int
+    {
+        return $this->items_per_page;
+    }
+
+    /**
+     * Get the offset.
+     *
+     * @return int Offset
+     */
+    public function offset(): int
+    {
+        return $this->offset;
+    }
+
 	/**
 	 * Returns a Pagination property
 	 *

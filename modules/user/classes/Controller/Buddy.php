@@ -61,7 +61,7 @@ class Controller_Buddy extends Template {
 			'uri'  			 => $url,
 		));
 
-		$friends  = $model->friends($id, $pagination->items_per_page, $pagination->offset);
+        $friends = $model->friends($id, $pagination->itemsPerPage(), $pagination->offset());
 
 		$view = View::factory('user/buddy')
 					->set('total',      $total)
@@ -111,8 +111,8 @@ class Controller_Buddy extends Template {
 			'items_per_page'	=> 15,
 			'uri'				=> $url,
 		));
-		
-		$sents  = $model->sents($id, $pagination->items_per_page, $pagination->offset);
+
+        $sents = $model->sents($id, $pagination->itemsPerPage(), $pagination->offset());
 			
 		$view = View::factory('user/buddy/sent')
 					->set('id',$id)
@@ -161,8 +161,8 @@ class Controller_Buddy extends Template {
 			'items_per_page'	=> 15,
 			'uri'				=> $url,
 		));
-		
-		$pending  = $model->pending($id, $pagination->items_per_page, $pagination->offset);
+
+        $pending = $model->pending($id, $pagination->itemsPerPage(), $pagination->offset());
 			
 		$view = View::factory('user/buddy/pending')
 					->set('total',$total)

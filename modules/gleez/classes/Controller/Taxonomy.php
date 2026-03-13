@@ -64,8 +64,8 @@ class Controller_Taxonomy extends Template {
 		));
 
 		$posts  = $posts->order_by('created', 'DESC')
-				->limit($pagination->items_per_page)
-				->offset($pagination->offset)
+            ->limit($pagination->itemsPerPage())
+            ->offset($pagination->offset())
 				->find_all();
 
 		$this->response->body($view);

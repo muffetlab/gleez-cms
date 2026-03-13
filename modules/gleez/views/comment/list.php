@@ -1,6 +1,6 @@
 <h4 class="title"><?php echo __('Comments'); ?></h4>
 
-<ol class="comments" START=<?php echo $pagination->offset + 1; ?>>
+<ol class="comments" START=<?php echo $pagination->offset() + 1; ?>>
 	<?php foreach($comments as $i => $comment) : ?>
 		<li class="comment <?php echo $comment->status; ?>" id="comment-<?php echo $comment->id; ?>" >
 			<div class="row">
