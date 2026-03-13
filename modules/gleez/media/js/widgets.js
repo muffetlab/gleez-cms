@@ -64,7 +64,7 @@
 	})
 
 	// Add the behavior to each region select list.
- 	$('select.widget-region-select', 'table#widgets').once('widget-region-select', function () {
+    $('select.widget-region-select', 'table#widgets').once('widget-region-select').each(function () {
 		$(this).change(function (event) {
 			// Make our new row and select field.
 			var row 	= $(this).parents('tr:first')
