@@ -34,22 +34,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 						->offset($this->_offset)
 						->find_all();
 
-			$items = array();
-			foreach($posts as $post)
-			{
-				$item = array();
-				$item['guid']        = $post->id;
-				$item['title']       = $post->title;
-				$item['link']        = URL::site($post->url, TRUE);
-				if ($config->get('use_submitted', FALSE))
-				{
-					$item['author']  = $post->user->nick;
-				}
-				$item['description'] = $post->teaser;
-				$item['pubDate']     = $post->pubdate;
-
-				$items[] = $item;
-			}
+            $items = $this->postsToItems($posts, $config);
 
 			$this->_cache->set($this->_cache_key, $items, $this->_ttl);
 			$this->_items = $items;
@@ -95,23 +80,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 					->offset($this->_offset)
 					->find_all();
 
-			$items = array();
-
-			foreach($posts as $post)
-			{
-				$item = array();
-				$item['guid']        = $post->id;
-				$item['title']       = $post->title;
-				$item['link']        = URL::site($post->url, TRUE);
-				if ($config->get('use_submitted', FALSE))
-				{
-					$item['author']  = $post->user->nick;
-				}
-				$item['description'] = $post->teaser;
-				$item['pubDate']     = $post->pubdate;
-
-				$items[] = $item;
-			}
+            $items = $this->postsToItems($posts, $config);
 
 			$items['title'] = $tag->name;
 			$this->_items   = $items;
@@ -126,6 +95,35 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 			$this->_info['pubDate'] = $this->_items[0]['pubDate'];
 		}
 	}
+
+    /**
+     * Convert posts to feed items.
+     *
+     * @param Database_Result $posts Collection of posts
+     * @param Config_Group $config Configuration object
+     * @return array Feed items
+     * @throws Kohana_Exception
+     */
+    protected function postsToItems(Database_Result $posts, Config_Group $config): array
+    {
+        $items = [];
+
+        foreach ($posts as $post) {
+            $item = [];
+            $item['guid'] = $post->id;
+            $item['title'] = $post->title;
+            $item['link'] = URL::site($post->url, true);
+            if ($config->get('use_submitted', false)) {
+                $item['author'] = $post->user->nick;
+            }
+            $item['description'] = $post->teaser;
+            $item['pubDate'] = $post->pubdate;
+
+            $items[] = $item;
+        }
+
+        return $items;
+    }
 
 	/**
 	 * Get a list of posts (pages|blogs|etc.) with a specific term
@@ -165,23 +163,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 					->offset($this->_offset)
 					->find_all();
 
-			$items = array();
-
-			foreach($posts as $post)
-			{
-				$item = array();
-				$item['guid']        = $post->id;
-				$item['title']       = $post->title;
-				$item['link']        = URL::site($post->url, TRUE);
-				if ($config->get('use_submitted', FALSE))
-				{
-					$item['author']  = $post->user->nick;
-				}
-				$item['description'] = $post->teaser;
-				$item['pubDate']     = $post->pubdate;
-
-				$items[] = $item;
-			}
+            $items = $this->postsToItems($posts, $config);
 
 			$items['title'] = $term->name;
 			$this->_items   = $items;

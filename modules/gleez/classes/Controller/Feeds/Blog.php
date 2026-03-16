@@ -45,22 +45,7 @@ class Controller_Feeds_Blog extends Controller_Feeds_Base {
 				->offset($this->_offset)
 				->find_all();
 
-			$items = array();
-			foreach($blogs as $blog)
-			{
-				$item = array();
-				$item['guid']        = $blog->id;
-				$item['title']       = $blog->title;
-				$item['link']        = URL::site($blog->url, TRUE);
-				if ($config->get('use_submitted', FALSE))
-				{
-					$item['author']  = $blog->user->nick;
-				}
-				$item['description'] = $blog->teaser;
-				$item['pubDate']     = $blog->pubdate;
-
-				$items[] = $item;
-			}
+            $items = $this->postsToItems($blogs, $config);
 
 			$this->_cache->set($this->_cache_key, $items, $this->_ttl);
 			$this->_items = $items;
