@@ -1,25 +1,3 @@
-<?php
-
-	$use_captcha       = (isset($post['use_captcha']) AND $post['use_captcha'] == 1) ? TRUE : FALSE;
-	$use_authors       = (isset($post['use_authors']) AND $post['use_authors'] == 1) ? TRUE : FALSE;
-	$use_comment       = (isset($post['use_comment']) AND $post['use_comment'] == 1) ? TRUE : FALSE;
-	$use_category      = (isset($post['use_category']) AND $post['use_category'] == 1) ? TRUE : FALSE;
-	$use_excerpt       = (isset($post['use_excerpt']) AND $post['use_excerpt'] == 1) ? TRUE : FALSE;
-	$use_tags          = (isset($post['use_tags'])    AND $post['use_tags'] == 1) ? TRUE : FALSE;
-	$use_submitted     = (isset($post['use_submitted']) AND $post['use_submitted'] == 1) ? TRUE : FALSE;
-	$comment_anonymous = (isset($post['comment_anonymous']) AND $post['comment_anonymous'] == 1) ? TRUE : FALSE;
-	$use_cache         = (isset($post['use_cache']) AND $post['use_cache'] == 1) ? TRUE : FALSE;
-
-	$comment1 = (isset($post['comment']) && $post['comment'] == 0) ? TRUE : FALSE;
-	$comment2 = (isset($post['comment']) && $post['comment'] == 1) ? TRUE : FALSE;
-	$comment3 = (isset($post['comment']) && $post['comment'] == 2) ? TRUE : FALSE;
-
-	$mode1 = (isset($post['comment_default_mode']) && $post['comment_default_mode'] == 1) ? TRUE : FALSE;
-	$mode2 = (isset($post['comment_default_mode']) && $post['comment_default_mode'] == 2) ? TRUE : FALSE;
-	$mode3 = (isset($post['comment_default_mode']) && $post['comment_default_mode'] == 3) ? TRUE : FALSE;
-	$mode4 = (isset($post['comment_default_mode']) && $post['comment_default_mode'] == 4) ? TRUE : FALSE;
-?>
-
 <div class="help">
 	<p><?php echo __('Page specific settings, default status, tags, comments etc.'); ?></p>
 </div>
