@@ -25,7 +25,6 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<?php include Kohana::find_file('views', 'errors/ielt7'); ?>
 					<div class="row">
 						<div class="col-md-9">
 							<?php if ( ! empty($error)): ?>
