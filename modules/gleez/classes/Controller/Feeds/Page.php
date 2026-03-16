@@ -23,14 +23,15 @@ class Controller_Feeds_Page extends Controller_Feeds_Base {
 		$this->_type = 'page';
 	}
 
-	/**
-	 * Get list of pages
-	 *
-	 * @uses  Config::load
-	 * @uses  Config_Group::get
-	 * @uses  URL::site
-	 * @uses  Cache::set
-	 */
+    /**
+     * Get list of pages.
+     *
+     * @throws Kohana_Exception
+     * @uses  Config_Group::get
+     * @uses  URL::site
+     * @uses  Cache::set
+     * @uses  Config::load
+     */
 	public function action_list()
 	{
 		if (empty($this->_items))
@@ -45,22 +46,7 @@ class Controller_Feeds_Page extends Controller_Feeds_Base {
 						->offset($this->_offset)
 						->find_all();
 
-			$items = array();
-			foreach($pages as $page)
-			{
-				$item = array();
-				$item['guid']        = $page->id;
-				$item['title']       = $page->title;
-				$item['link']        = URL::site($page->url, TRUE);
-				if ($config->get('use_submitted', FALSE))
-				{
-					$item['author']  = $page->user->nick;
-				}
-				$item['description'] = $page->teaser;
-				$item['pubDate']     = $page->pubdate;
-
-				$items[] = $item;
-			}
+            $items = $this->postsToItems($pages, $config);
 
 			$this->_cache->set($this->_cache_key, $items, $this->_ttl);
 			$this->_items = $items;
