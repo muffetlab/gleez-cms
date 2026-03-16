@@ -1,4 +1,7 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+
 /**
  * Email message building and sending
  *
@@ -40,8 +43,6 @@ class Email {
 	 */
 	public function __construct($exceptions = TRUE)
 	{
-		require_once Kohana::find_file('vendor/PHPMailer', 'PHPMailerAutoload');
-
 		// Create phpmailer object
 		$this->_mail = new PHPMailer($exceptions);
 
