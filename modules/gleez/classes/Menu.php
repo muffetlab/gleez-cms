@@ -297,68 +297,21 @@ class Menu {
 		return $this->items;
 	}
 
-	/**
-	 * Static method to display menu based on its unique name
-	 *
-	 * @param   string   $name The name of the menu
-	 * @param   array    $attr The css class or id array [Optional]
-	 * @return  string
-	 */
+    /**
+     * Static method to display menu based on its unique name.
+     *
+     * @param string $name The name of the menu
+     * @param array $attr The CSS class or ID array
+     * @return string
+     * @throws Kohana_Exception
+     */
 	public static function links($name, $attr = array('class' =>'menus'))
 	{
-        $cache = Cache::instance();
+        $menu = static::buildMenu($name);
 
-        if (!$items = $cache->get('menus:' . $name)) {
-            $_menu = ORM::factory('Menu')->where('name', '=', (string) $name)->find()->as_array();
-			if ( ! $_menu) return;
-
-            $ritems = ORM::factory('Menu')
-				->where('lft', '>', $_menu['lft'])
-				->where('rgt', '<', $_menu['rgt'])
-				->where('scp', '=', $_menu['scp'])
-				->where('active', '=', 1)
-				->order_by('lft', 'ASC')
-				->find_all();
-
-			$items = array();
-			foreach($ritems as $item)
-			{
-				$items[] = $item->as_array();
-			}
-
-			if (empty($items)) return;
-
-            $cache->set('menus:' . $name, $items, Date::DAY);
-		}
-
-		// Initiate Menu Object
-		$menu = static::factory();
-
-		// Start with an empty $right stack
-		$stack = array();
-
-		foreach( $items as &$item)
-		{
-			// check if we should remove a node from the stack
-			while(count($stack) > 0 AND $stack[count($stack) - 1]['rgt'] < $item['rgt'])
-			{
-				array_pop($stack);
-			}
-
-			if(count($stack) > 0)
-			{
-				$menu->add($item['name'], $item['title'], $item['url'], $item['descp'], $item['params'], $item['image'], $stack[count($stack) - 1]['name']);
-			}
-			else
-			{
-				$menu->add($item['name'], $item['title'], $item['url'], $item['descp'], $item['params'], $item['image']);
-			}
-
-			$stack[] = &$item;
-		}
-
-		// unset the stack array to freeup memory
-		unset( $stack );
+        if (!$menu) {
+            return null;
+        }
 
 		// Enable developers to override menu
 		Module::event('menus', $menu);
@@ -367,67 +320,20 @@ class Menu {
 		return $menu->render( $attr );
 	}
 
-	/**
-	 * Static method to return menu object based on its unique name
-	 *
-	 * @param   string   $name The name of the menu
-	 * @return  object   Menu
-	 */
+    /**
+     * Static method to return menu object based on its unique name.
+     *
+     * @param string $name The name of the menu
+     * @return object Menu
+     * @throws Kohana_Exception
+     */
 	public static function items($name)
 	{
-        $cache = Cache::instance();
+        $menu = static::buildMenu($name);
 
-        if (!$items = $cache->get('menus:' . $name)) {
-            $_menu = ORM::factory('Menu')->where('name', '=', (string) $name)->find()->as_array();
-			if( ! $_menu) return;
-
-            $ritems = ORM::factory('Menu')
-				->where('lft', '>', $_menu['lft'])
-				->where('rgt', '<', $_menu['rgt'])
-				->where('scp', '=', $_menu['scp'])
-				->where('active', '=', 1)
-				->order_by('lft', 'ASC')
-				->find_all();
-
-			$items = array();
-			foreach($ritems as $item)
-			{
-				$items[] = $item->as_array();
-			}
-
-			if (empty($items)) return;
-
-            $cache->set('menus:' . $name, $items, Date::DAY);
-		}
-
-		//Initiate Menu Object
-		$menu = static::factory();
-
-		// start with an empty $right stack
-		$stack = array();
-
-		foreach( $items as &$item)
-		{
-			// check if we should remove a node from the stack
-			while(count($stack) > 0 AND $stack[count($stack) - 1]['rgt'] < $item['rgt'])
-			{
-				array_pop($stack);
-			}
-
-			if(count($stack) > 0)
-			{
-				$menu->add($item['name'], $item['title'], $item['url'], $item['descp'], $item['params'], $item['image'], $stack[count($stack) - 1]['name']);
-			}
-			else
-			{
-				$menu->add($item['name'], $item['title'], $item['url'], $item['descp'], $item['params'], $item['image']);
-			}
-
-			$stack[] = &$item;
-		}
-
-		// unset the stack array to freeup memory
-		unset( $stack );
+        if (!$menu) {
+            return null;
+        }
 
 		// Enable developers to override menu
 		Module::event('menus_items', $menu);
@@ -435,6 +341,70 @@ class Menu {
 
 		return $menu;
 	}
+
+    /**
+     * Build menu from cache or database.
+     *
+     * @param string $name The name of the menu
+     * @return Menu|null
+     * @throws Kohana_Exception
+     */
+    private static function buildMenu(string $name): ?Menu
+    {
+        $cache = Cache::instance();
+
+        if (!$items = $cache->get('menus:' . $name)) {
+            $menu = ORM::factory('Menu')->where('name', '=', $name)->find()->as_array();
+            if (!$menu) {
+                return null;
+            }
+
+            $menuItems = ORM::factory('Menu')
+                ->where('lft', '>', $menu['lft'])
+                ->where('rgt', '<', $menu['rgt'])
+                ->where('scp', '=', $menu['scp'])
+                ->where('active', '=', 1)
+                ->order_by('lft', 'ASC')
+                ->find_all();
+
+            $items = [];
+            foreach ($menuItems as $item) {
+                $items[] = $item->as_array();
+            }
+
+            if (empty($items)) {
+                return null;
+            }
+
+            $cache->set('menus:' . $name, $items, Date::DAY);
+        }
+
+        // Initiate menu object
+        $menu = static::factory();
+
+        // Start with an empty $right stack
+        $stack = [];
+
+        foreach ($items as &$item) {
+            // Check if we should remove a node from the stack
+            while (count($stack) > 0 && $stack[count($stack) - 1]['rgt'] < $item['rgt']) {
+                array_pop($stack);
+            }
+
+            if (count($stack) > 0) {
+                $menu->add($item['name'], $item['title'], $item['url'], $item['descp'], $item['params'], $item['image'], $stack[count($stack) - 1]['name']);
+            } else {
+                $menu->add($item['name'], $item['title'], $item['url'], $item['descp'], $item['params'], $item['image']);
+            }
+
+            $stack[] = &$item;
+        }
+
+        // Unset the stack array to free up memory
+        unset($stack);
+
+        return $menu;
+    }
 
 	/**
 	 * Private method to change menu based on its unique name
