@@ -15,9 +15,35 @@ class Controller_Admin_Widget extends Controller_Admin {
 	 */
 	protected static $WIDGET_REGION_NONE = -1;
 
-	/**
-	 * Listing Widgets
-	 */
+    /**
+     * Get all widget regions from admin and front themes.
+     *
+     * @return array
+     * @throws Kohana_Exception
+     */
+    protected static function getWidgetRegions(): array
+    {
+        $widgetRegions = [];
+        $adminTheme = Theme::getTheme();
+        $frontTheme = Theme::getTheme(Kohana::$config->load('site')->get('theme', $adminTheme->name));
+
+        if (!empty($adminTheme->regions)) {
+            $widgetRegions = Arr::merge($widgetRegions, $adminTheme->regions);
+        }
+
+        if (!empty($frontTheme->regions)) {
+            $widgetRegions = Arr::merge($widgetRegions, $frontTheme->regions);
+        }
+
+        // Add a last region for disabled blocks.
+        return Arr::merge($widgetRegions, [self::$WIDGET_REGION_NONE => __('Disabled')]);
+    }
+
+    /**
+     * Listing Widgets.
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_index()
 	{
 		$this->title = __('Widgets');
@@ -27,22 +53,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 					->bind('weight_delta',   $weight_delta)
 					->bind('widgets',        $widget_listing);
 
-		$widget_regions = array();
-		$adminTheme = Theme::getTheme();
-		$frontTheme = Theme::getTheme(Kohana::$config->load('site')->get('theme', $adminTheme->name));
-
-		if(isset($adminTheme->regions) AND ! empty($adminTheme->regions))
-		{
-			$widget_regions = Arr::merge($widget_regions, $adminTheme->regions);
-		}
-
-		if(isset($frontTheme->regions) AND ! empty($frontTheme->regions))
-		{
-			$widget_regions = Arr::merge($widget_regions, $frontTheme->regions);
-		}
-
-		// Add a last region for disabled blocks.
-		$widget_regions = Arr::merge($widget_regions, array(self::$WIDGET_REGION_NONE => self::$WIDGET_REGION_NONE));
+        $widget_regions = static::getWidgetRegions();
 
         $widgets = ORM::factory('Widget')
 						->order_by('region')
@@ -53,11 +64,6 @@ class Controller_Admin_Widget extends Controller_Admin {
 		// of the amount of blocks present. This makes sure all blocks in the same
 		// region get an unique weight.
 		$weight_delta = round(count($widgets) / 2);
-
-		if (isset($widget_regions[self::$WIDGET_REGION_NONE]))
-		{
-			$widget_regions[self::$WIDGET_REGION_NONE] = __('Disabled');
-		}
 
 		foreach ($widget_regions as $key => $value)
 		{
@@ -105,33 +111,16 @@ class Controller_Admin_Widget extends Controller_Admin {
 		Assets::js('widgets', 'media/js/widgets.js', array('jquery'), FALSE, array('weight' => 5));
 	}
 
-	/**
-	 * Adding Widgets
-	 */
+    /**
+     * Adding Widgets.
+     *
+     * @throws Kohana_Exception|ReflectionException
+     */
 	public function action_add()
 	{
         $widget = ORM::factory('Widget');
 
-		$widget_regions = array();
-		$adminTheme = Theme::getTheme();
-		$frontTheme = Theme::getTheme(Kohana::$config->load('site')->get('theme', $adminTheme->name));
-
-		if(isset($adminTheme->regions) AND ! empty($adminTheme->regions))
-		{
-			$widget_regions = Arr::merge($widget_regions, $adminTheme->regions);
-		}
-
-		if(isset($frontTheme->regions) AND ! empty($frontTheme->regions))
-		{
-			$widget_regions = Arr::merge($widget_regions, $frontTheme->regions);
-		}
-		// Add a last region for disabled blocks.
-		$widget_regions = Arr::merge($widget_regions, array(self::$WIDGET_REGION_NONE => self::$WIDGET_REGION_NONE));
-
-		if (isset($widget_regions[self::$WIDGET_REGION_NONE]))
-		{
-			$widget_regions[self::$WIDGET_REGION_NONE] = __('Disabled');
-		}
+        $widget_regions = static::getWidgetRegions();
 
         $all_roles = ORM::factory('Role')->find_all()->as_array('id', 'name');
 
@@ -176,9 +165,11 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Editing Widgets
-	 */
+    /**
+     * Editing Widgets.
+     *
+     * @throws Kohana_Exception|ReflectionException
+     */
 	public function action_edit()
 	{
 		$id     = (int) $this->request->param('id', 0);
@@ -192,30 +183,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/widget')->uri());
 		}
 
-		$widget_regions = array();
-		$adminTheme = Theme::getTheme();
-		$frontTheme = Theme::getTheme(Kohana::$config->load('site')->get('theme', $adminTheme->name));
-
-		if(isset($adminTheme->regions) AND ! empty($adminTheme->regions))
-		{
-			$widget_regions = Arr::merge($widget_regions, $adminTheme->regions);
-		}
-
-		if(isset($frontTheme->regions) AND ! empty($frontTheme->regions))
-		{
-			$widget_regions = Arr::merge($widget_regions, $frontTheme->regions);
-		}
-
-		$handler = Widget::factory($widget->name, $widget);
-		$fields = $handler->form();
-
-		// Add a last region for disabled blocks.
-		$widget_regions = Arr::merge($widget_regions, array(self::$WIDGET_REGION_NONE => self::$WIDGET_REGION_NONE));
-
-		if (isset($widget_regions[self::$WIDGET_REGION_NONE]))
-		{
-			$widget_regions[self::$WIDGET_REGION_NONE] = __('Disabled');
-		}
+        $widget_regions = static::getWidgetRegions();
 
         $all_roles = ORM::factory('Role')
 						->find_all()
