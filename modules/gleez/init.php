@@ -445,7 +445,7 @@ if ( ! ACL::cache())
  * @uses  Filter::set
  * @uses  Text::html
  * @uses  Text::htmlcorrector
- * @uses  Text::autop
+ * @uses  Text::auto_p
  * @uses  HTML::chars
  * @uses  Text::autolink
  * @uses  Text::initialcaps
@@ -470,9 +470,9 @@ if ( ! Filter::cache())
 		))
 		->title(__('Correct faulty and chopped off HTML'));
 
-		Filter::set('autop',  array(
+		Filter::set('auto_p',  array(
 			'prepare callback' => FALSE,
-			'process callback' => 'Text::autop'
+			'process callback' => 'Text::auto_p'
 		))
 		->title(__('Convert line breaks into HTML'))
 		->description(__('Lines and paragraphs break automatically.'));

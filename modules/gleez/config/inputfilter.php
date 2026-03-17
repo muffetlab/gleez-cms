@@ -34,8 +34,8 @@ return array
 					'status'      => TRUE,
 					'settings'    => array('url_length' => 72)
 				),
-				'autop'		     => array(
-					'name'        => 'autop',
+                'auto_p' => array(
+                    'name' => 'auto_p',
 					'weight'      => 1,
 					'status'      => TRUE,
 					'settings'    => array()
@@ -76,8 +76,8 @@ return array
 					'status'       => TRUE,
 					'settings'     => array()
 				),
-				'autop'		=> array(
-					'name'         => 'autop',
+                'auto_p' => array(
+                    'name' => 'auto_p',
 					'weight'       => 10,
 					'status'       => TRUE,
 					'settings'     => array()
