@@ -26,7 +26,7 @@ class Controller_Client extends Template {
 			    
 				$this->_datatables->add_row(array
 				(
-				    HTML::anchor($oaclient->url ,Text::plain($oaclient->title)),
+                    HTML::anchor($oaclient->url, HTML::chars($oaclient->title)),
 				    $oaclient->client_id,
 				    $oaclient->user->nick,
 				    System::date('M d, Y',$oaclient->created),
@@ -157,7 +157,7 @@ class Controller_Client extends Template {
 		
 		$grant_types    = Kohana::$config->load('oauth2')->get('grant_types');
 		$this->title    = __('Edit oaclient');
-		$this->subtitle = Text::plain($oaclient->title);
+        $this->subtitle = HTML::chars($oaclient->title);
 		$view           = View::factory('client/form')
 							->set('grant_types', $grant_types)
 							->bind('oaclient', $oaclient)
@@ -216,7 +216,7 @@ class Controller_Client extends Template {
 		}
 		
 		$this->title    = __('Delete oaclient');
-		$this->subtitle = Text::plain($oaclient->client_id);
+        $this->subtitle = HTML::chars($oaclient->client_id);
 		$form = View::factory('form/confirm')->set('action', $oaclient->delete_url)->set('title', $oaclient->client_id);
 
 		// If deletion is not desired, redirect to post

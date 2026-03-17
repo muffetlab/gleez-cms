@@ -5,7 +5,7 @@
 				<?php echo __('Title'); ?>
 			</th>
 			<td>
-				<?php echo Text::plain($oaclient->title); ?>
+                <?php echo HTML::chars($oaclient->title); ?>
 			</td>
 		</tr>
                 
@@ -23,7 +23,7 @@
 				<?php echo __('Client Id'); ?>
 			</th>
 			<td>
-				<?php echo Text::plain($oaclient->client_id); ?>
+                <?php echo HTML::chars($oaclient->client_id); ?>
 			</td>
 		</tr>
                 
@@ -32,7 +32,7 @@
 				<?php echo __('Client Secret'); ?>
 			</th>
 			<td>
-				<?php echo Text::plain($oaclient->client_secret); ?>
+                <?php echo HTML::chars($oaclient->client_secret); ?>
 			</td>
 		</tr>
                 
@@ -41,7 +41,7 @@
 				<?php echo __('Redirect URI'); ?>
 			</th>
 			<td>
-				<?php echo Text::plain($oaclient->redirect_uri); ?>
+                <?php echo HTML::chars($oaclient->redirect_uri); ?>
 			</td>
 		</tr>
 		
@@ -50,7 +50,7 @@
 				<?php echo __('Status'); ?>
 			</th>
 			<td>
-				<?php echo Text::plain($oaclient->status); ?>
+                <?php echo HTML::chars($oaclient->status); ?>
 			</td>
 		</tr>
 		
@@ -68,7 +68,7 @@
 				<?php echo __('Created By'); ?>
 			</th>
 			<td>
-				<?php echo Text::plain($oaclient->user->nick) ?>
+                <?php echo HTML::chars($oaclient->user->nick) ?>
 			</td>
 		</tr>
 		
