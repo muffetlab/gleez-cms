@@ -170,7 +170,7 @@ class Model_Comment extends Gleez_Model
      * @param string $column
 	 * @return  mixed
 	 *
-	 * @uses    Text::plain
+     * @uses    HTML::chars
 	 * @uses    Text::markup
 	 * @uses    Route::get
 	 * @uses    Route::uri
@@ -179,7 +179,7 @@ class Model_Comment extends Gleez_Model
 	{
         switch ($column) {
 			case 'title':
-				return Text::plain(parent::__get('title'));
+                return HTML::chars(parent::__get('title'));
 			break;
 			case 'body':
 				return Text::markup(parent::__get('body'), $this->format);

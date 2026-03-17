@@ -27,7 +27,7 @@ class Controller_Admin_Path extends Controller_Admin {
 	 *
 	 * @uses  Request::is_datatables
 	 * @uses  ORM::dataTables
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 * @uses  HTML::icon
 	 * @uses  Route::url
 	 * @uses  Assets::popup
@@ -47,8 +47,8 @@ class Controller_Admin_Path extends Controller_Admin {
 			{
 				$this->_datatables->add_row(
 					array(
-						Text::plain($path->source),
-						Text::plain($path->alias),
+                        HTML::chars($path->source),
+                        HTML::chars($path->alias),
 						HTML::icon($path->edit_url, 'fa-edit', array('class'=>'btn btn-sm btn-default action-edit', 'title'=> __('Edit Alias'))) . '&nbsp;' .
 						HTML::icon($path->delete_url, 'fa-trash-o', array('class'=>'btn btn-sm btn-default action-delete', 'title'=> __('Delete Alias'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-paths'))
 					)

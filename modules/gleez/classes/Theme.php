@@ -69,7 +69,7 @@ class Theme {
 		}
 
 		// Admins can override the site theme, temporarily. This lets us preview themes.
-		if (User::is_admin() AND isset($_GET['theme']) AND $override = Text::plain( $_GET['theme']) )
+        if (User::is_admin() and isset($_GET['theme']) and $override = HTML::chars($_GET['theme']))
 		{
 			Theme::$active = $override;
 		}

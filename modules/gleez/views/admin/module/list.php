@@ -25,14 +25,14 @@
 							</td>
 							<td class="module-description-column">
 								<div class="module-title-column">
-									<strong><?php echo Text::plain($module_info->title); ?></strong>
+                                    <strong><?php echo HTML::chars($module_info->title); ?></strong>
 								</div>
 								<div class="module-description">
 									<p><?php echo __($module_info->description); ?></p>
 								</div>
 								<div class="module-version">
 									<?php echo __('Version: %ver | By: :author', array(
-										'%ver' => Text::plain($module_info->version),
+                                            '%ver' => HTML::chars($module_info->version),
 										':author' => HTML::anchor($module_info->authorURL, __($module_info->author))
 									));
 									?>

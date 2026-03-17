@@ -504,7 +504,7 @@ class HTMLFilter {
 			$string = $this->decode_entities($string);
 		}
 
-		return Text::plain($this->strip_dangerous_protocols($string));
+        return HTML::chars($this->strip_dangerous_protocols($string));
 	}
 
 	/**

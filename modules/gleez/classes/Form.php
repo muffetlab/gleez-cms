@@ -768,7 +768,7 @@ class Form {
 	 *
 	 * @return  string
 	 *
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 */
 	public static function radios($name, array $options = array(), $selected = NULL, array $attrs = array())
 	{
@@ -785,7 +785,7 @@ class Form {
 
 		foreach ($options as $k => $v)
 		{
-			$out .= self::label($name, self::radio($name, $k, ($selected == $k) ? TRUE : FALSE).Text::plain($v), $attrs);
+            $out .= self::label($name, self::radio($name, $k, ($selected == $k) ? TRUE : FALSE) . HTML::chars($v), $attrs);
 		}
 
 		return $out;
@@ -816,7 +816,7 @@ class Form {
 
 		foreach ($options as $k => $v)
 		{
-			$output .= self::label($name, self::checkbox($name, $k, (in_array($k, $selected) ? TRUE : FALSE)).Text::plain($v), $attrs);
+            $output .= self::label($name, self::checkbox($name, $k, (in_array($k, $selected) ? TRUE : FALSE)) . HTML::chars($v), $attrs);
 		}
 
 		return $output;

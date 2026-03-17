@@ -29,7 +29,7 @@
 							$static = ($split_name AND $split_name[0] == 'static') ? TRUE : FALSE;
 						?>
 						<td class="widget" id="widget-<?php echo $widget->id ?>">
-							<?php echo Text::plain($widget->title) ?>
+                            <?php echo HTML::chars($widget->title) ?>
 						</td>
 						<td>
 							<?php echo Form::select('widgets['.$widget->name.'][region]', $widget_regions, $widget->region, array('class' => 'form-control input-sm widget-region-select widget-region-'.$region)); ?>

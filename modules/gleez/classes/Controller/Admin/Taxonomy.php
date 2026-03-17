@@ -29,7 +29,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 	 *
 	 * @uses  Assets::popup
 	 * @uses  Request::is_datatables
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 * @uses  HTML::icon
 	 * @uses  Route::get
 	 * @uses  Route::uri
@@ -50,7 +50,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 			{
 				$this->_datatables->add_row(
 					array(
-						Text::plain($term->name).'<div class="description">'.Text::plain($term->description).'</div>',
+                        HTML::chars($term->name) . '<div class="description">' . HTML::chars($term->description) . '</div>',
 						HTML::icon(Route::get('admin/term')->uri(array('action' => 'list', 'id' => $term->id)), 'fa-th-list', array('class'=>'action-list', 'title'=> __('List Categories'))),
 						HTML::icon(Route::get('admin/term')->uri(array('action' => 'add', 'id' => $term->id)), 'fa-plus', array('class'=>'action-add', 'title'=> __('Add Category'))),
 						HTML::icon(Route::get('admin/taxonomy')->uri(array('action' => 'edit', 'id' => $term->id)), 'fa-edit', array('class'=>'action-edit', 'title'=> __('Edit Group'))),

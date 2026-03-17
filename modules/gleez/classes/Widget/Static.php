@@ -18,7 +18,7 @@ class Widget_Static extends Widget {
 	{
 		return View::factory('widgets/static')
 			->set(array(
-					'title' => Text::plain($this->widget->title),
+                'title' => HTML::chars($this->widget->title),
 					'content' => Text::markup($this->widget->body, $this->widget->format)
 			))
 			->render();

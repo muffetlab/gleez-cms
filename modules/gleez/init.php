@@ -446,7 +446,7 @@ if ( ! ACL::cache())
  * @uses  Text::html
  * @uses  Text::htmlcorrector
  * @uses  Text::autop
- * @uses  Text::plain
+ * @uses  HTML::chars
  * @uses  Text::autolink
  * @uses  Text::initialcaps
  * @uses  Text::markdown
@@ -479,7 +479,7 @@ if ( ! Filter::cache())
 
 		Filter::set('plain',  array(
 			'prepare callback' => FALSE,
-			'process callback' => 'Text::plain'
+            'process callback' => 'HTML::chars'
 		))
 		->title(__('Display any HTML as plain text'))
 		->description(__('No HTML tags allowed.'));

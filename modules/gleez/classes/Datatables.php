@@ -136,7 +136,7 @@ class Datatables {
 	 */
 	protected function _sort($column, $direction)
 	{
-		$this->_object->order_by($this->_object_name.'.'.$column, Text::plain($direction));
+        $this->_object->order_by($this->_object_name . '.' . $column, HTML::chars($direction));
 	}
 
 	/**
@@ -152,7 +152,7 @@ class Datatables {
 
 		if (count($columns) > 0)
 		{
-			$query = '%' . Text::plain($query) . '%';
+            $query = '%' . HTML::chars($query) . '%';
 
 			$this->_object->where_open();
 

@@ -72,7 +72,7 @@
 								   <div class="form-group">
 									<?php echo Form::label('edit-filters', str_replace('_', ' ', ucfirst($key)), array('class' => 'control-label')) ?>
 									<?php echo Form::input('filters['.$name.'][settings]['.$key.']', $value, array('class' => 'form-control col-md-5')) ?>
-									<div class="description"><?php //echo Text::plain($filter->description) ?></div>
+                                       <div class="description"><?php //echo HTML::chars($filter->description) ?></div>
 								   </div>
 								<?php endforeach; ?>
 							</div>

@@ -1,7 +1,7 @@
 <h1><?php echo __('Hello!')?></h1>
 
 <p><?php echo __(':name sent a message using the contact form at :site.', array(
-		':name' => Text::plain($name),
+            ':name' => HTML::chars($name),
 		':site' => URL::site('contact', TRUE)
 	));
 ?></p>

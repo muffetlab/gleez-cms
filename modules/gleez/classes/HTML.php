@@ -543,7 +543,7 @@ class HTML {
 	 *
 	 * @return  string Prepared HTML
 	 *
-	 * @uses    Text::plain
+     * @uses    HTML::chars
 	 */
 	public static function tabs($tabs, $attributes = array('class' => 'tabs'))
 	{
@@ -576,7 +576,7 @@ class HTML {
 				$output .= '<li'.self::attributes(array('class' => $class)).'>';
 
 				// Sanitized link text
-				$tab['text'] = Text::plain($tab['text']);
+                $tab['text'] = HTML::chars($tab['text']);
 
 				if(empty($tab['link']))
 				{

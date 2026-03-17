@@ -35,7 +35,7 @@
 					<?php echo Form::hidden('tid:'.$item['id'].'[depth]', $item['lvl'], array('class' => 'term-depth')) ?>
 				</td>
 				<td>
-					<p class="text text-muted"> <?php echo Text::plain($item['description']); ?> </p>
+                    <p class="text text-muted"> <?php echo HTML::chars($item['description']); ?> </p>
 				</td>
 				<td class="action">
 					<?php echo HTML::anchor(Route::get('admin/term')->uri(array('action' => 'edit', 'id' => $item['id'])), '<i class="fa fa-edit"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Edit Term'))); ?>

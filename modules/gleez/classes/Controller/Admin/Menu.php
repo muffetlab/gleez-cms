@@ -32,7 +32,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 	 * @uses  Route::url
 	 * @uses  Assets::popup
 	 * @uses  Request::is_datatables
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 * @uses  HTML::icon
 	 */
 	public function action_list()
@@ -50,7 +50,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 			{
 				$this->_datatables->add_row(
 					array(
-						Text::plain($menu->title).'<div class="description">'.Text::plain($menu->descp).'</div>',
+                        HTML::chars($menu->title) . '<div class="description">' . HTML::chars($menu->descp) . '</div>',
 						HTML::icon($menu->list_items_url, 'fa-th-list', array('class'=>'action-list', 'title'=> __('List Links'))),
 						HTML::icon($menu->add_item_url, 'fa-plus', array('class'=>'action-add', 'title'=> __('Add Link'))),
 						HTML::icon($menu->edit_url, 'fa-edit', array('class'=>'action-edit', 'title'=> __('Edit Menu'))),

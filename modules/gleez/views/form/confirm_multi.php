@@ -12,7 +12,7 @@
 <ul class="bulk-delete">
         
 	<?php foreach($items as $id => $title): ?>
-		<li><?php echo Text::plain($title) ?></li>
+        <li><?php echo HTML::chars($title) ?></li>
 		<?php echo Form::hidden('items[]', $id ); ?>
 	<?php endforeach ?>
 </ul>

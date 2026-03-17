@@ -42,7 +42,7 @@
 		<p class="reasons_big"><?php echo __('There\'s a lot of reasons why this page is <span class="error_type">403</span>.'); ?></p>
 		
 		<p class="reasons_small">
-			<?php echo __("You're not authorized to access <span>(:url)</span> page!", array(':url' => Text::plain($url))) ?>
+            <?php echo __("You're not authorized to access <span>(:url)</span> page!", array(':url' => HTML::chars($url))) ?>
 		</p>
 		
 		<p class="solutions_text">

@@ -41,7 +41,7 @@ class Controller_Autocomplete extends Controller {
 
 			foreach ($result as $user)
 			{
-				$matches[$user['name']] = Text::plain($user['name']);
+                $matches[$user['name']] = HTML::chars($user['name']);
 			}
 		}
 
@@ -66,7 +66,7 @@ class Controller_Autocomplete extends Controller {
 
 			foreach ($result as $user)
 			{
-				$matches[$user['name']] = Text::plain($user['name']);
+                $matches[$user['name']] = HTML::chars($user['name']);
 			}
 		}
 
@@ -112,7 +112,7 @@ class Controller_Autocomplete extends Controller {
 				}
 				else
 				{
-					$matches[$prefix . $n] = Text::plain($tag['name']);
+                    $matches[$prefix . $n] = HTML::chars($tag['name']);
 				}
 			}
 		}

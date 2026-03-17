@@ -51,7 +51,7 @@ class Controller_Admin_Autocomplete extends Controller {
 	 *
 	 * @uses  ACL::required
 	 * @uses  DB::select
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 * @uses  JSON::encode
 	 */
 	public function action_links()
@@ -71,7 +71,7 @@ class Controller_Admin_Autocomplete extends Controller {
 
 			foreach ($result as $link)
 			{
-				$matches[$link['alias']] = Text::plain($link['alias']);
+                $matches[$link['alias']] = HTML::chars($link['alias']);
 			}
 		}
 

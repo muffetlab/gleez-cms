@@ -109,7 +109,7 @@ class Controller_Contact extends Template {
 				// Create the email subject
 				$subject = __('[:category] :subject', array(
 					':category' => $types[$post['category']],
-					':subject'  => Text::plain($post['subject'])
+                    ':subject' => HTML::chars($post['subject'])
 				));
 
 				// Create the email body
@@ -121,16 +121,16 @@ class Controller_Contact extends Template {
 
 				// Create an email message
 				$email = Email::factory()
-						->to(Text::plain($this->_config->get('site_email', 'webmaster@gleezcms.org')), __('Webmaster :site', array(':site' => Template::getSiteName())))
+                    ->to(HTML::chars($this->_config->get('site_email', 'webmaster@gleezcms.org')), __('Webmaster :site', array(':site' => Template::getSiteName())))
 						->subject($subject)
-						->from($post['email'], Text::plain($post['name']))
+                    ->from($post['email'], HTML::chars($post['name']))
 						->message($body, 'text/html'); // @todo message type should be configurable
 
 				// Send the message
 				$email->send();
 
 				Kohana::$log->add(Log::INFO, ':name sent an e-mail regarding :cat',
-					array(':name' => Text::plain($post['name']), ':cat' => $types[$post['category']])
+                    array(':name' => HTML::chars($post['name']), ':cat' => $types[$post['category']])
 				);
 				Message::success(__('Your message has been sent.'));
 

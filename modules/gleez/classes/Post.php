@@ -531,7 +531,7 @@ class Post extends ORM_Versioned {
      * @param string $column
 	 * @return  mixed
 	 *
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 * @uses  Text::markup
 	 * @uses  HTML::links
 	 * @uses  Path::load
@@ -542,7 +542,7 @@ class Post extends ORM_Versioned {
 	{
         switch ($column) {
 			case 'title':
-				return Text::plain(parent::__get('title'));
+                return HTML::chars(parent::__get('title'));
 			break;
 			case 'teaser':
 				return Text::markup($this->rawteaser, $this->format);

@@ -27,7 +27,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 	 *
 	 * @uses  Request::is_datatables
 	 * @uses  ORM::dataTables
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 * @uses  HTML::icon
 	 * @uses  Route::url
 	 * @uses  Route::get
@@ -48,9 +48,9 @@ class Controller_Admin_Tag extends Controller_Admin {
 			{
 				$this->_datatables->add_row(
 					array(
-						Text::plain($tag->name),
+                        HTML::chars($tag->name),
 						HTML::anchor($tag->url, $tag->url),
-						Text::plain($tag->type),
+                        HTML::chars($tag->type),
 
 						HTML::icon($tag->edit_url, 'fa-edit', array('class'=>'btn btn-sm btn-default action-edit', 'title'=> __('Edit Tag'))).'&nbsp;'.
 						HTML::icon($tag->delete_url, 'fa-trash-o', array('class'=>'btn btn-sm btn-default action-delete', 'title'=> __('Delete Tag'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-tags'))
