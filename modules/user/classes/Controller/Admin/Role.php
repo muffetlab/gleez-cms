@@ -41,8 +41,8 @@ class Controller_Admin_Role extends Controller_Admin {
 			{
 				$this->_datatables->add_row(
 					array(
-						Text::plain($role->name),
-						Text::plain($role->description),
+                        HTML::chars($role->name),
+                        HTML::chars($role->description),
 						$role->special ? '<i class="fa fa-check-circle"></i>' : '<i class="fa fa-ban"></i>',
 
 						$role->special

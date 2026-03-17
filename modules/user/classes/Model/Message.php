@@ -110,7 +110,7 @@ class Model_Message extends Gleez_Model
      * @param string $column
 	 * @return  mixed
 	 *
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 * @uses  Text::markup
 	 * @uses  Route::get
 	 * @uses  Route::uri
@@ -119,7 +119,7 @@ class Model_Message extends Gleez_Model
 	{
         switch ($column) {
 			case 'subject':
-				return Text::plain(parent::__get('subject'));
+                return HTML::chars(parent::__get('subject'));
 			case 'body':
 				return Text::markup($this->rawbody, $this->format);
 			case 'rawsubject':

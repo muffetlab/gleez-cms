@@ -17,7 +17,7 @@
 		<?php foreach ($permissions as $key => $access_names): ?>
 			<tr class="permission-group">
 				<td class="permission-key" width="30%" colspan="2">
-					<?php echo ucwords(Text::plain($key)) ?>
+                    <?php echo ucwords(HTML::chars($key)) ?>
 				</td>
 			</tr>
 			<?php foreach ($access_names as $perm => $name): ?>
@@ -25,7 +25,7 @@
 					<td>
 						<?php echo ucwords($name['title']) ?>
 						<div class="description">
-							<?php echo Text::plain($name['description'])?>
+                            <?php echo HTML::chars($name['description']) ?>
 						</div>
 					</td>
 					<td>

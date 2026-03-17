@@ -10,7 +10,7 @@
 		<thead>
 			<tr>
 				<th><?php echo __('Permission') ?></th>
-				<th><?php  _e('Role :role', array(':role' => ucwords(Text::plain($role->name)))) ?></th>
+                <th><?php _e('Role :role', array(':role' => ucwords(HTML::chars($role->name)))) ?></th>
 			</tr>
 		</thead>
 		<?php
@@ -23,7 +23,8 @@
 		<?php foreach ($permissions as $key => $access_names): ?>
 			<tr class="permission-group">
 				<td class="permission-key" width="30%" colspan="2">
-					<?php _e('Subsystem'); ?>:&nbsp;<span class="label label-info"><?php _e(ucwords(Text::plain($key))) ?></span>
+                    <?php _e('Subsystem'); ?>:&nbsp;
+                    <span class="label label-info"><?php _e(ucwords(HTML::chars($key))) ?></span>
 				</td>
 			</tr>
 
@@ -33,7 +34,7 @@
 						<div class="permission-item" id="permission-<?php echo str_replace(' ', '-', $perm) ?>" >
 							<strong><?php echo ucwords($name['title']) ?></strong>
 							<div class="description">
-								<p class="muted"><?php echo Text::plain($name['description'])?></p>
+                                <p class="muted"><?php echo HTML::chars($name['description']) ?></p>
 								<?php if (!empty($name['restrict access'])): ?>
 									<cite class="permission-warning text-warning">
 										<?php echo __('Warning! Give to trusted roles only; this permission has security implications.'); ?>
@@ -45,7 +46,7 @@
 					</td>
 					<td class="role-checkbox">
 						<?php
-							echo Form::checkbox("role[$key$perm][name]", Text::plain($perm), isset($role_perms[$role->id][$perm]));
+                        echo Form::checkbox("role[$key$perm][name]", HTML::chars($perm), isset($role_perms[$role->id][$perm]));
 							echo Form::hidden("role[$key$perm][module]", $key );
 							echo Form::hidden("role[$key$perm][id]", $role->id);
 						?>

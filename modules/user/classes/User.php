@@ -359,7 +359,7 @@ class User {
 		$roles = '<div class="user-roles">';
 		foreach ($user->roles() as $role)
 		{
-			$roles .= '<p><span class="label label-default">'. Text::plain($role) . '</span></p>';
+            $roles .= '<p><span class="label label-default">' . HTML::chars($role) . '</span></p>';
 		}
 		$roles .= '</div>';
 

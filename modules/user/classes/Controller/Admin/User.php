@@ -27,7 +27,7 @@ class Controller_Admin_User extends Controller_Admin {
 	 *
 	 * @uses  Request::is_datatables
 	 * @uses  ORM::dataTables
-	 * @uses  Text::plain
+     * @uses  HTML::chars
 	 * @uses  Text::auto_link
 	 * @uses  User::roles
 	 * @uses  HTML::anchor
@@ -52,7 +52,7 @@ class Controller_Admin_User extends Controller_Admin {
 			{
 				$this->_datatables->add_row(
 					array(
-						HTML::anchor($user->url, Text::plain($user->nick)),
+                        HTML::anchor($user->url, HTML::chars($user->nick)),
 						Text::auto_link($user->mail),
 						Date::formatted_time($user->created, 'M d, Y'),
 						($user->login > 0) ? Date::formatted_time($user->login, 'M d, Y') : __('Never'),

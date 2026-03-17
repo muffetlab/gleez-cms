@@ -62,7 +62,7 @@
 								<dt><i class="fa fa-fw fa-group"></i></dt>
 								<dd class="tagcloud">
 									<?php foreach ($user->roles() as $role): ?>
-										<span><?php echo Text::plain(ucfirst($role)); ?></span>
+                                        <span><?php echo HTML::chars(ucfirst($role)); ?></span>
 									<?php endforeach; ?>
 								</dd>
 							</dl>
@@ -89,7 +89,7 @@
 				<div class="bio">
 					<?php if ($user->bio): ?>
 						<div title="<?php _e('Bio')?>">
-							<p><?php echo Text::plain($user->bio); ?></p>
+                            <p><?php echo HTML::chars($user->bio); ?></p>
 						</div>
 					<?php endif; ?>
 				</div>
