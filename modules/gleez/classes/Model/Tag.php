@@ -99,11 +99,6 @@ class Model_Tag extends Gleez_Model
 	 */
 	public function delete($soft = FALSE): Kohana_ORM
     {
-		if ( ! $this->_loaded)
-		{
-			throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
-		}
-
 		if (is_array($this->_deleted_column) && $soft == TRUE)
 		{
 
