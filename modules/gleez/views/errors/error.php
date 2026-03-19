@@ -4,7 +4,7 @@
 $error_id = uniqid('error');
 
 ?>
-<style type="text/css">
+<style>
 	#kohana_error { background: #ddd; font-size: 1em; font-family:sans-serif; text-align: left; color: #111; }
 	#kohana_error h1,
 	#kohana_error h2 { margin: 0; padding: 1em; font-size: 1em; font-weight: normal; background: #911; color: #fff; }

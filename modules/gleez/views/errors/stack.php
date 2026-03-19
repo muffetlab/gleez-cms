@@ -23,7 +23,7 @@
 ?>
 
 <div class="clear-block"></div>
-<style type="text/css">
+<style>
 
       div.big_box {
         /*padding: 10px;*/
