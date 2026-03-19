@@ -1,4 +1,4 @@
-<html>
+<html lang="<?= I18n::$lang ?>">
 	<head>
 		<title><?php echo __('403 - Access Denied'); ?></title>
 		<style>
