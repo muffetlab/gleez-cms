@@ -84,7 +84,7 @@
 						<p class="pull-left"><?php echo __('&copy; :year :site', array(':year' => date('Y'), ':site' => HTML::anchor(URL::site(false, true), $site_name)));?></p>
 					</div>
 					<div class="col-xs-6 col-md-6">
-						<p class="pull-right"><?php echo __(':powerdby v{gleez_version}', array(':powerdby' => HTML::anchor('http://gleezcms.org/', 'Gleez CMS')))?></p>
+						<p class="pull-right"><?php echo __(':powerdby v{gleez_version}', array(':powerdby' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS')))?></p>
 					</div>
 				</div>
 				<div class="row">

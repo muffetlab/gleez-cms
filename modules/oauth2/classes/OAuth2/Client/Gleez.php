@@ -3,7 +3,7 @@
  * @package    Gleez\OAuth\Client\Gleez
  * @author     Gleez Team
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    http://gleezcms.org/license  Gleez CMS License
+ * @license    https://gleezcms.org/license  Gleez CMS License
  *
  */
 class OAuth2_Client_Gleez extends OAuth2_Client {
@@ -15,7 +15,7 @@ class OAuth2_Client_Gleez extends OAuth2_Client {
 	 */
 	public function get_authorization_endpoint()
 	{
-		return 'http://gleezcms.org/oauth2/auth';
+		return 'https://gleezcms.org/oauth2/auth';
 	}
 
 	/**
@@ -25,7 +25,7 @@ class OAuth2_Client_Gleez extends OAuth2_Client {
 	 */
 	public function get_access_token_endpoint()
 	{
-		return 'http://gleezcms.org/oauth2/token';
+		return 'https://gleezcms.org/oauth2/token';
 	}
 
 	/**
@@ -35,7 +35,7 @@ class OAuth2_Client_Gleez extends OAuth2_Client {
 	 */
 	public function get_user_profile_service_url()
 	{
-		return 'http://gleezcms.org/oauth2/me';
+		return 'https://gleezcms.org/oauth2/me';
 	}
 
 	/**

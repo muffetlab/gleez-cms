@@ -6,7 +6,7 @@
  * @author     Gleez Team
  * @version    1.1.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    http://gleezcms.org/license  Gleez CMS License
+ * @license    https://gleezcms.org/license  Gleez CMS License
  *
  * @todo      [!!] This class does not do any permission checking
  */
@@ -143,7 +143,7 @@ class Module
 					$m->locked       = false;
 					$m->visible      = isset($m->visible)   ? (bool) $m->visible	 : true;
 					$m->author    	 = isset($m->author)    ? (string) $m->author 	 : 'Gleez Team';
-					$m->authorURL    = isset($m->authorURL) ? (string) $m->authorURL : 'http://gleezcms.org/';
+					$m->authorURL    = isset($m->authorURL) ? (string) $m->authorURL : 'https://gleezcms.org/';
 					$m->path 		 = realpath( dirname($file) ).DIRECTORY_SEPARATOR;
 
 					// Skip this module in list if the module is hidden

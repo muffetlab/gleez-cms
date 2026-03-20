@@ -6,7 +6,7 @@
  * @author    Gleez Team
  * @version   1.0.1
  * @copyright (c) 2011-2014 Gleez Technologies
- * @license   http://gleezcms.org/license
+ * @license   https://gleezcms.org/license
  */
 class Controller_Admin_Role extends Controller_Admin {
 

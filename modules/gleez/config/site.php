@@ -141,7 +141,7 @@ return array(
 	 * @var array
 	 */
 	'headers' => array(
-		'X-Powered-By'              => 'Gleez CMS (http://gleezcms.org)',
+		'X-Powered-By'              => 'Gleez CMS (https://gleezcms.org)',
 	//	'Content-Security-Policy'   => "script-src 'self' '{NONCE}' metrics.gleez.com; frame-ancestors 'self';"
 	),
 
@@ -185,7 +185,7 @@ return array(
 		),
 		'tags' => array(
 			'charset'    		      => Kohana::$charset,
-			'generator'  		      => 'Gleez '.Gleez::VERSION.' (http://gleezcms.org)',
+			'generator'  		      => 'Gleez '.Gleez::VERSION.' (https://gleezcms.org)',
 			'author'     		      => 'Gleez Team',
 			'copyright'  		      => 'Copyright (c) Gleez Technologies (P) Limited 2011-2018. All rights reserved.',
 			'robots'     		      => 'index, follow, noodp',

@@ -5,7 +5,7 @@
  * @package   User\I18n
  * @author    dishuostec <dishuostec@gmail.com>
  * @copyright (c) 2011-2013 Gleez Technologies
- * @license   http://gleezcms.org/license Gleez CMS License
+ * @license   https://gleezcms.org/license Gleez CMS License
  */
 return array(
   '%title successfully updated!' => '%title 更新成功！',
