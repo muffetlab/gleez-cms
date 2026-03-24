@@ -29,7 +29,7 @@ class Controller_Admin_Tool extends Controller_Admin {
 		//format the data
 		$phpinfo = str_replace('<table', '<table class="table table-striped table-bordered"', $phpinfo);
 		$phpinfo = str_replace('</table><br />', '</table>', $phpinfo);
-		$phpinfo = str_replace(',', '<br>', $phpinfo);
+        $phpinfo = str_replace('class="e"', 'class="col-sm-4 col-md-3 e"', $phpinfo);
 
 		$view = View::factory('admin/tools/phpinfo')->set('phpinfo', $phpinfo);
 

@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive" style="word-break: break-word;">
 	<?php echo $phpinfo; ?>
 </div>
 
