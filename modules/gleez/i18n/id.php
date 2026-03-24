@@ -322,7 +322,7 @@ return array(
 'Posted In'=>'Di-posting di',
 'Created'=>'Dibuat pada',
 'Power up your Gleez CMS by adding more modules! Each module provides new cool features.' =>'Nyalakan Gleez CMS Anda dengan menambahkan modul lebih ! Setiap modul menyediakan fitur baru yang keren  .',
-'Powered by :gleez' =>'Didukung oleh :gleez',
+'Powered by :gleez v{gleez_version}' =>'Didukung oleh :gleez v{gleez_version}',
 'Profile' =>'Profil',
 'Promote this Post' =>'Promosikan Posting ini',
 'Promote to front page' =>'Promosikan ke halaman depan',

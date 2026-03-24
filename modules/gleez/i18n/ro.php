@@ -302,7 +302,7 @@ return array(
 	'Post List' => 'Lista Articole',
 	'Posts' => 'Articole',
 	'Power up your Gleez CMS by adding more modules! Each module provides new cool features.' => 'Îmbunătățește-ți Gleez CMS-ul introducând mai multe module! Fiecare modul îți dă acces la funcții noi.',
-	'Powered by :gleez' => 'Powered by :gleez',
+	'Powered by :gleez v{gleez_version}' => 'Susținut de :gleez v{gleez_version}',
 	'Profile' => 'Profil',
 	'Promote this Post' => 'Promovează Articolul',
 	'Promote to front page' => 'Promovează pe pagina principală',

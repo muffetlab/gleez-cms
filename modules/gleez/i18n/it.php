@@ -302,7 +302,7 @@ return array(
 	'Post List' => 'Lista dei post',
 	'Posts' => 'Post',
 	'Power up your Gleez CMS by adding more modules! Each module provides new cool features.' => 'Potenzia il tuo Gleez CMS aggiungendo altri moduli! Ogni modulo aggiunge funzionalit&agrave; interessanti.',
-	'Powered by :gleez' => 'Powered by :gleez',
+	'Powered by :gleez v{gleez_version}' => 'Basato su :gleez v{gleez_version}',
 	'Profile' => 'Profilo',
 	'Promote this Post' => 'Promuovi questo post',
 	'Promote to front page' => 'Promuovi alla prima pagina',

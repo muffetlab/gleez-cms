@@ -477,7 +477,7 @@ return array(
 	'Posted In' => 'Опубликовано в',
 	'Posts' => 'Публикации',
 	'Power up your Gleez CMS by adding more modules! Each module provides new cool features.' => 'Улучшите вашу Gleez CMS добавлением дополнительных модулей! Каждый модуль предоставляет интересные возможности.',
-	'Powered by :gleez' => 'Создано с помощью :gleez',
+	'Powered by :gleez v{gleez_version}' => 'Работает на :gleez v{gleez_version}',
 	'Primary Image' => 'Первичное изображение',
 	'Privacy' => 'Конфиденциально',
 	'private' => 'личное',

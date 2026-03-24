@@ -735,7 +735,7 @@ return array(
 	'Posted In' => 'Postitatud',
 	'Posts' => 'Postitused',
 	'Power up your Gleez CMS by adding more modules! Each module provides new cool features.' => 'Täiendage Teie Gleez CMS lisamoodulite lisamisega! Iga moodul pakub huvitavaid võimalusi.',
-	'Powered by :gleez' => 'Koostatud :gleez abiga',
+	'Powered by :gleez v{gleez_version}' => ':gleez v{gleez_version} toega',
 	'Prague' => 'Praaga',
 	'Primary Image' => 'Esialgne kujutis',
 	'Privacy' => 'Konfidentsiaalne',
