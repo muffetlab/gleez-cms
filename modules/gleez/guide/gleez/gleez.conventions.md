@@ -106,7 +106,7 @@ Gleez just provides an interface that wraps around your Kohana 3 Module.
             ),
         ));
 
-    Each permission is an array indexed by permission, Human readable title and description. If you specify restrict access true, admin permission settings page shows an warning that assigning this permission implies security implication, assing to only trusted roles.
+    Each permission is an array indexed by permission, Human readable title and description. If you specify restrict access true, admin permission settings page shows an warning that assigning this permission implies security implication, assign to only trusted roles.
 
     This is just a basic declaration of permissions. More details will be discussed in another chapter. But as a preview, you can specify the controllers and actions related to the permission. This will allow Gleez to automatically check for the user's permissions when certain controllers are accessed.
 

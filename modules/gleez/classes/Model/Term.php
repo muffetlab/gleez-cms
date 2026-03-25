@@ -302,7 +302,7 @@ class Model_Term extends ORM_MPTT {
 	}
 
 	/**
-	 * Upload iimage and return file path
+     * Upload image and return file path.
 	 *
 	 * @param   string  $file Uploaded file
 	 * @return  NULL|string   NULL when filed, otherwise file path

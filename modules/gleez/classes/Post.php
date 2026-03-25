@@ -362,7 +362,7 @@ class Post extends ORM_Versioned {
 		$this->author  = empty($this->author)   ? User::active_user()->id : $this->author;
 		$this->format  = empty($this->format)   ? Kohana::$config->load('inputfilter')->get('default_format', 1) : $this->format;
 
-		// Always save only raw text, unformated text
+        // Always save only raw text, unformatted text
 		$this->teaser  = empty($this->rawteaser) ? $this->_teaser() : $this->rawteaser;
 		$this->body    = $this->rawbody;
 

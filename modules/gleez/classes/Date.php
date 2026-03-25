@@ -64,7 +64,7 @@ class Date extends Kohana_Date
 	 *
 	 * @return array
 	 */
-	public static function weeekdays()
+    public static function weekdays()
 	{
 		return array(
 			0 => __('Sunday'),

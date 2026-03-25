@@ -307,14 +307,14 @@
 		// set this file as iframe upload
 		file.iframe = true
 
-		// add iframe atributes
+        // Add iframe attributes
 		iframe.attr('src',    iframeSrc)
 			  .attr('name',   id)
 			  .attr('id',     id)
 			  .css('display', 'none')
 			  .appendTo('body')
 
-		// add form atributes
+        // Add form attributes
 		form.attr('action',  this.options.remote)
 			.attr('method',  this.options.method)
 			.attr('enctype', 'multipart/form-data')
@@ -449,7 +449,7 @@
 			xhr.send( file.slice(file.start, file.end) )
 		}
 		else {
-			// Blob or Formdata or File
+            // Blob or FormData or File
 			xhr.send(file)
 		}
 	}
@@ -717,7 +717,7 @@
 				}
 			})
 
-			// Add to donequeue
+	        // Add to doneQueue
 			this.doneQueue.push(fileIndex)
 			file.$loading.remove()
 

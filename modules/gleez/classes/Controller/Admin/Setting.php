@@ -20,7 +20,7 @@ class Controller_Admin_Setting extends Controller_Admin {
 	 * @uses  Date::date_time_formats
 	 * @uses  Date::date_formats
 	 * @uses  Date::time_formats
-	 * @uses  Date::weeekdays
+     * @uses  Date::weekdays
 	 * @uses  Date::timezones
 	 * @uses  Template::valid_post
 	 * @uses  Request::redirect
@@ -40,7 +40,7 @@ class Controller_Admin_Setting extends Controller_Admin {
 			->set('date_time_formats',  Date::date_time_formats(1))
 			->set('date_formats',       Date::date_formats(1))
 			->set('time_formats',       Date::time_formats(1))
-			->set('date_weekdays',      Date::weeekdays())
+            ->set('date_weekdays', Date::weekdays())
 			->set('timezones',          Date::timezones())
 			->bind('title',             $this->title)
 			->set('action',             $action)

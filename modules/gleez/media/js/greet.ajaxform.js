@@ -33,8 +33,8 @@
 		options.replaceTarget   = options.replacetarget
 		options.includeHidden   = options.includehidden
 		options.uploadProgress  = options.uploadprogress
-	
-		//delete unsed options
+
+        // Delete unused options
 		delete options.datatype
 		delete options.beforeserialize
 		delete options.beforesubmit

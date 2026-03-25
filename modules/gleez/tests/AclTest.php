@@ -7,7 +7,7 @@
  * @group Gleez.core.acl
  *
  */
-class Gleez_Acltest extends Unittest_TestCase
+class Gleez_AclTest extends Unittest_TestCase
 {
 	public function providerPerms()
 	{
@@ -20,7 +20,7 @@ class Gleez_Acltest extends Unittest_TestCase
 	/**
 	 * @dataProvider providerPerms
 	 */
-	public function testacl_check($perm, $user_id)
+    public function test_acl_check($perm, $user_id)
 	{
         $user = ORM::factory('User', $user_id);
 

@@ -2,7 +2,7 @@
 /**
  * Object Relational Mapping (ORM) "versioned" extension
  *
- * Allows ORM objects to be revisioned instead of updated.
+ * Allows ORM objects to be versioned instead of updated.
  *
  * @package    Gleez\ORM
  * @author     Sandeep Sangamreddi - Gleez

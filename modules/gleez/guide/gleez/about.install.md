@@ -82,10 +82,10 @@ In `application/bootstrap.php`
     'base_url'   => 'http://example.com/subfolder/',
 ~~~
 
-Please use full aboslute url in base_url when running in subfolder is mandatory.
+Please use full absolute url in base_url when running in subfolder is mandatory.
 
 
-Please use full aboslute url in base_url when running in subfolder is mandatory.
+Please use full absolute url in base_url when running in subfolder is mandatory.
 If you put Gleez in a subfolder, the links on all your pages will probably be broken, especially if you move a site that is already made. You could probably fix it by adding a [<base\>](http://w3schools.com/tags/tag_base.asp) tag.
 
 ## Setting up a production environment
@@ -98,7 +98,7 @@ There are a few things you'll want to do with your application before moving int
 
 2. Turn on APC or some kind of opcode caching. This is the single easiest performance boost you can make to PHP itself. The more complex your application, the bigger the benefit of using opcode caching.
 
-[!!] Note: The default bootstrap will set `Kohana::$environment = $_ENV['GLEEZ_ENV']` if set. Docs on how to supply this variable are available in your web server's documentation (e.g. [Apache](http://httpd.apache.org/docs/1.3/mod/mod_env.html#setenv), [Lighttpd](http://redmine.lighttpd.net/wiki/1/Docs:ModSetEnv#Options), [Nginx](http://wiki.nginx.org/NginxHttpFcgiModule#fastcgi_param)). This is considered better practice than many alternative methods to set Kohana::$enviroment.
+[!!] Note: The default bootstrap will set `Kohana::$environment = $_ENV['GLEEZ_ENV']` if set. Docs on how to supply this variable are available in your web server's documentation (e.g. [Apache](http://httpd.apache.org/docs/1.3/mod/mod_env.html#setenv), [Lighttpd](http://redmine.lighttpd.net/wiki/1/Docs:ModSetEnv#Options), [Nginx](http://wiki.nginx.org/NginxHttpFcgiModule#fastcgi_param)). This is considered better practice than many alternative methods to set Kohana::$environment.
 
 		/**
 		 * Set the environment string by the domain (defaults to Kohana::DEVELOPMENT).

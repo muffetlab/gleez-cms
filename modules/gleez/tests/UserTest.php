@@ -7,7 +7,7 @@
  * @group Gleez.core.user
  *
  */
-class Gleez_Usertest extends Unittest_TestCase
+class Gleez_UserTest extends Unittest_TestCase
 {
 	public function providerUsers()
 	{

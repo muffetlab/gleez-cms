@@ -152,7 +152,7 @@
 					var parentTag = row.parent().get(0).tagName.toLowerCase()
 					var index     = (parentTag == 'thead') ? headerIndex : columnIndex
 
-					// Adjust the index to take into account colspans.
+                    // Adjust the index to take into account colSpans.
 					row.children().each(function (n) {
 						if (n < index) {
 							index -= (this.colSpan && this.colSpan > 1) ? this.colSpan - 1 : 0
@@ -174,7 +174,7 @@
 			}
 		}
 
-		// Now hide cells and reduce colspans 
+        // Now hide cells and reduce colSpans
 	    this.hideColumns()
 	}
 
@@ -1231,7 +1231,7 @@
 		// The parent option allows elements to be children of one another.
 		// Pass a "falsy" value to fieldClass to deactivate.
 		// To allow the child-parent relationship to function correctly, each row must contain an input 
-		// with the class defined in sourceFieldClass wich represents the current row. 
+        // with the class defined in sourceFieldClass which represents the current row.
 		// This can be a hidden input.
 		, parent: {
 			// The class of the field containing the "parent" id. Can be any form item.

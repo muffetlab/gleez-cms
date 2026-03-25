@@ -141,7 +141,7 @@
 	  return ~item.toLowerCase().indexOf(term.toLowerCase())
 	}
 
-	// Filters relevent results
+    // Filters relevant results
 	Typeahead.prototype.grepper = function(data) {
 		var that = this
   
@@ -459,7 +459,7 @@
 			data = this.ajax.preProcess(data)
 		}
 	  
-		// Save for selection retrevial
+        // Save for selection retrieval
 		this.ajax.data = data
 	  
 		items = this.grepper(this.ajax.data)

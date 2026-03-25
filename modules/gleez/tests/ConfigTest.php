@@ -27,7 +27,7 @@ class Gleez_ConfigTest extends Unittest_TestCase {
 	/**
 	* @dataProvider provider
 	*/
-	public function testconfig_get($config_name)
+    public function test_config_get($config_name)
 	{	
 		$kohana_dummy = Kohana::$config->load($config_name);
 
@@ -36,9 +36,9 @@ class Gleez_ConfigTest extends Unittest_TestCase {
 		
 		$this->assertSame($kohana_dummy, $gleez_dummy);
 	}
-	
-	
-	public function providerConfigvariable()
+
+
+    public function providerConfigVariable()
 	{
 		return array(
 		    array('dummy', 'currency'),
@@ -47,9 +47,9 @@ class Gleez_ConfigTest extends Unittest_TestCase {
 	}
 	
 	/**
-	 * @dataProvider providerConfigvariable
+     * @dataProvider providerConfigVariable
 	 */
-	public function testconfig_get_config_variable($config_name, $config_variable)
+    public function test_config_get_config_variable($config_name, $config_variable)
 	{
 		$kohana_dummy_variable = Kohana::$config->load($config_name.'.'.$config_variable);
 		
@@ -61,14 +61,14 @@ class Gleez_ConfigTest extends Unittest_TestCase {
 		$this->assertSame($kohana_dummy_variable, $gleez_dummy);
 		$this->assertSame($kohana_variable, $gleez_dummy);
 	}
-	
-	public function testkohanaconfig_get_variable_not_available()
+
+    public function test_kohana_config_get_variable_not_available()
 	{
 		$dummy = Kohana::$config->load('site');
 		$this->assertFalse($dummy->novariable);
 	}
-	
-	public function testconfig_get_variable_not_available()
+
+    public function test_config_get_variable_not_available()
 	{
 		$variable = Kohana::$config->load('dummy')->get('novariable');
 		$this->assertNull($variable);
@@ -86,7 +86,7 @@ class Gleez_ConfigTest extends Unittest_TestCase {
 	/**
 	 * @dataProvider providerDefaults
 	 */
-	public function testkohanaconfig_get_default_for_variable_not_available($config, $variable, $default)
+    public function test_kohana_config_get_default_for_variable_not_available($config, $variable, $default)
 	{
 		$dummy = Kohana::$config->load($config);
 		$this->assertSame($default, $dummy->get($variable, $default));
@@ -95,7 +95,7 @@ class Gleez_ConfigTest extends Unittest_TestCase {
 	/**
 	 * @dataProvider providerDefaults
 	 */
-	public function testconfig_get_default_for_variable_not_available($config, $variable, $default)
+    public function test_config_get_default_for_variable_not_available($config, $variable, $default)
 	{
 		$value = Kohana::$config->load($config)->get($variable, $default);
 		$this->assertSame($default, $value);
@@ -113,15 +113,15 @@ class Gleez_ConfigTest extends Unittest_TestCase {
 	/**
 	 * @dataProvider providerSetDefaults
 	 */
-	public function testkohanadefault_set($config, $variable, $default)
+    public function test_kohana_default_set($config, $variable, $default)
 	{
 		$dummy = Kohana::$config->load($config);
 		$dummy->set($variable, $default);
 		
 		$this->assertSame($default, Kohana::$config->load($config)->get($variable));
 	}
-	
-	public function providerNoconfig()
+
+    public function providerNoConfig()
 	{
 		return array(
 			array('dummy1'),
@@ -130,7 +130,7 @@ class Gleez_ConfigTest extends Unittest_TestCase {
 	}
 	
 	/**
-	 *@dataProvider providerNoconfig
+     * @dataProvider providerNoConfig
 	 */
 	public function testNo_config_present($config_name)
 	{

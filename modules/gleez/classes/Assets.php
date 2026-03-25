@@ -682,7 +682,7 @@ class Assets {
 	 *
 	 * @param   array    $a
 	 * @param   array    $b
-	 * @return  integer  The sorted order for assests
+     * @return  integer  The sorted order for assets
 	 */
 	protected static function sort_assets($a, $b)
 	{
@@ -980,7 +980,7 @@ class Assets {
 			$path = $path.DIRECTORY_SEPARATOR.'admin';
 		}
 
-		//set unqiue filename based on criteria
+        // Set unique filename based on criteria
 		$filename  = $path.DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR.$type.'-'.md5(implode("|", $files)).$last_modified.'.'.$type;
 		$directory = dirname($filename);
 

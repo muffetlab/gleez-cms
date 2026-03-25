@@ -28,7 +28,7 @@ class Format {
 	/**
 	 * Creates a singleton of a Gleez_Format
 	 *
-	 * Access to instantce directly:<br>
+     * Access to instance directly:<br>
 	 * <code>
 	 *   Format::$instance;
 	 * </code>
