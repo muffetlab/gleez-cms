@@ -207,16 +207,14 @@ class ORM_MPTT extends Gleez_Model
 		return FALSE;
 	}
 
-	/**
-	 * Creates a new node as root, or moves a node to root
-	 *
-	 * @param   Validation $validation  Validation object
-	 * @param   integer    $scope       The new scope [Optional]
-	 *
-	 * @return  ORM_MPTT|boolean
-	 *
-	 * @throws  ORM_Validation_Exception
-	 */
+    /**
+     * Creates a new node as root, or moves a node to root
+     *
+     * @param Validation $validation Validation object
+     * @param integer $scope The new scope [Optional]
+     * @return  ORM_MPTT|boolean
+     * @throws Kohana_Exception|ReflectionException
+     */
 	public function make_root(Validation $validation = NULL, $scope = NULL)
 	{
 		// If node already exists, and already root, exit
@@ -252,7 +250,7 @@ class ORM_MPTT extends Gleez_Model
 		catch (ORM_Validation_Exception $e)
 		{
 			// Some fields didn't validate, throw an exception
-			throw $e;
+            throw new Kohana_Exception('Failed to make root: :error', [':error' => $e->getMessage()], $e->getCode());
 		}
 
 		return $this;
