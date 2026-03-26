@@ -24,35 +24,6 @@ class Comment {
 	const PINGBACK          = 1;
 	const TRACKBACK         = 2;
 
-	/**
-	 * List comments
-	 */
-	public function create_list($parent_id = 0, $state = 'publish', $url, $page, $config, $admin = FALSE)
-	{
-		// Get total number of comments
-		if ($parent_id == 0)
-		{
-			Kohana::$log->add(Log::DEBUG, 'Fetching all :state comments', array(':state' => $state));
-            $total = ORM::factory('Comment', array('status' => $state))->count_all();
-		}
-		else
-		{
-			Kohana::$log->add(Log::DEBUG, 'Fetching :state comments for parent id: :id',
-				array(':state' => $state, ':id' => $parent_id)
-			);
-            $total = ORM::factory('Comment', array(
-				'status'  => $state,
-				'parent'  => $parent_id,
-			))->count_all();
-		}
-
-		// Check if there are any comments to display
-		if ($total == 0)
-		{
-			return FALSE;
-		}
-	}
-
 	public static function form($controller, $item, $_action = FALSE, $captcha = FALSE)
 	{
 		// Set default comment form action
