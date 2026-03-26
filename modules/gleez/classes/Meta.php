@@ -120,23 +120,6 @@ class Meta {
 	}
 
 	/**
-	 * Remove a Meta Link, or all
-	 *
-	 * @param   mixed  $handle  Asset name, or NULL to remove all [Optional]
-	 *
-	 * @return  mixed  Empty array or void
-	 */
-	public static function remove_links($handle = NULL)
-	{
-		if (is_null($handle))
-		{
-			return self::$links = array();
-		}
-
-		unset(self::$links[$handle]);
-	}
-
-	/**
 	 * Meta Tag wrapper
 	 *
 	 * Gets or sets Meta Tags
@@ -239,23 +222,6 @@ class Meta {
 		}
 
 		return implode(PHP_EOL, $assets).PHP_EOL;
-	}
-
-	/**
-	 * Remove a Meta Tag, or all
-	 *
-	 * @param   string|NULL  $handle  Asset name, or NULL to remove all  [Optional]
-	 *
-	 * @return  mixed  Empty array or void
-	 */
-	public static function remove_tags($handle = NULL)
-	{
-		if (is_null($handle))
-		{
-			return self::$tags = array();
-		}
-
-		unset(self::$tags[$handle]);
 	}
 
 	/**

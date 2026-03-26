@@ -185,24 +185,6 @@ class Cache_Redis extends Cache {
 	}
 
 	/**
-	 * Delete a cache entry based on regex pattern
-	 *
-	 * Example:
-	 * ~~~
-	 * // Delete 'foo:**' entries from the redis cache
-	 * Cache::instance('redis')->delete_pattern('foo:**:bar');
-	 * ~~~
-	 *
-	 * @param   string  $pattern  The cache key pattern
-	 *
-	 * @return  boolean
-	 */
-	public function delete_pattern($pattern)
-	{
-
-	}
-
-	/**
 	 * Delete all cache entries
 	 *
 	 * Beware of using this method when using shared memory cache systems,
