@@ -273,11 +273,11 @@ class Controller_Admin_Term extends Controller_Admin {
 		{
 			$updated_items = array();
 
-			foreach ($_POST as $mlid => $val)
+            foreach ($_POST as $val)
 			{
-				if (isset($_POST[$mlid]['tid']) AND is_array($_POST[$mlid]) )
+                if (isset($val['tid']) and is_array($val))
 				{
-					$updated_items[$val['tid']] = $_POST[$mlid];
+                    $updated_items[$val['tid']] = $val;
 				}
 
 			}

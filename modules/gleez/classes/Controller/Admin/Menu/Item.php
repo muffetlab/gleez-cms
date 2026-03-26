@@ -225,11 +225,11 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		if ($this->valid_post('menu-item-list') AND $id)
 		{
 			$updated_items = array();
-			foreach ($_POST as $mlid => $val)
+            foreach ($_POST as $val)
 			{
-				if (isset($_POST[$mlid]['mlid']) AND is_array($_POST[$mlid]) )
+                if (isset($val['mlid']) and is_array($val))
 				{
-					$updated_items[$val['mlid']] = $_POST[$mlid];
+                    $updated_items[$val['mlid']] = $val;
 				}
 			}
 			$this->tree = array();
