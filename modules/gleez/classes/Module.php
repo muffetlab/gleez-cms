@@ -126,7 +126,7 @@ class Module
 
 			// Make sure MODPATH is set else add last
 			if(!in_array(MODPATH, $paths)) {
-				array_push($paths, MODPATH);
+                $paths[] = MODPATH;
 			}
 
 			// Iterate over each config path

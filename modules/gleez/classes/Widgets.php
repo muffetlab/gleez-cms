@@ -113,7 +113,7 @@ class Widgets {
 			$this->_regions[$region] = array();
 		}
 
-		array_push($this->_regions[$region], $name);
+        $this->_regions[$region][] = $name;
 
 		// set default widget members
 		$widget->config = FALSE;

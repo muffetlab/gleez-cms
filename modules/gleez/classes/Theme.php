@@ -173,7 +173,7 @@ class Theme {
 			// Make sure THEMEPATH is set else add last
 			if (!in_array(THEMEPATH, $paths))
 			{
-				array_push($paths, THEMEPATH);
+                $paths[] = THEMEPATH;
 			}
 
 			// Iterate over each config path
