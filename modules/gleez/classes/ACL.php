@@ -218,9 +218,6 @@ class ACL {
 	 * @param     Model_User  $user       User object [Optional]
 	 * @param     callable    $callback   A callable function that execute if it is defined [Optional]
 	 * @param     array       $args       The callback arguments
-	 *
-	 * @return    boolean
-	 *
 	 * @throws    HTTP_Exception_403 If the user doesn't have permission
 	 * @throws    Exception          if the `$callback` is a not valid callback
 	 */

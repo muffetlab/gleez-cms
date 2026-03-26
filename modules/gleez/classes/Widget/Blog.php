@@ -26,7 +26,7 @@ class Widget_Blog extends Widget {
 				return $this->recent_announce_blogs();
 			break;
 			default:
-				return;
+                return '';
 		}
 	}
 

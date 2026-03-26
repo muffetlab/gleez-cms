@@ -595,9 +595,9 @@ class Assets {
 
 	/**
 	 * Initial JavaScript setting
-	 * @uses    URL::base
+     * @return  void
 	 * @uses    JSON::encode
-	 * @return  array
+     * @uses    URL::base
 	 */
 	private static function _init_js()
 	{
@@ -767,7 +767,7 @@ class Assets {
 		// If no files to compile, no tag necessary
 		if (empty($files))
 		{
-			return;
+            return '';
 		}
 
 		// Get filename to save compiled files to

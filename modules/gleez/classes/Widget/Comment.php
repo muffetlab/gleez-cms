@@ -24,7 +24,7 @@ class Widget_Comment extends Widget {
 				return $this->recent($this->widget);
 			break;
 			default:
-				return;
+                return '';
 		}
 	}
 

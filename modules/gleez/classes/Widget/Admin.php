@@ -31,7 +31,7 @@ class Widget_Admin extends Widget {
 				return $this->shortcut();
 			break;
 			default:
-				return;
+                return '';
 			}
 	}
 

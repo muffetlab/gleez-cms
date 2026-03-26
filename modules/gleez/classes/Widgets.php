@@ -470,7 +470,7 @@ class Widgets {
 		// Don't render any widget if the content is null or empty
 		if (empty($widget->content))
 		{
-			return;
+            return '';
 		}
 
 		if ($region)

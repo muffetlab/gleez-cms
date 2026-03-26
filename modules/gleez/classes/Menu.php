@@ -163,7 +163,9 @@ class Menu {
 		$items = empty($items) ? $this->items : $items;
 		$attributes = empty($attributes) ? $this->attributes : $attributes;
 
-		if (empty($items)) return;
+        if (empty($items)) {
+            return '';
+        }
 
 		$i++;
 
