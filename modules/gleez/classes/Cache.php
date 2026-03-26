@@ -61,7 +61,6 @@
  */
 abstract class Cache extends Kohana_Cache
 {
-	const ALL = 2;
 	const SEPARATOR = ':';
 	const DEFAULT_EXPIRE = 86400;
 }

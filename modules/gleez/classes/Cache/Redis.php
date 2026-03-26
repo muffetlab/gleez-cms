@@ -196,21 +196,11 @@ class Cache_Redis extends Cache {
 	 * Cache::instance('redis')->delete_all();
 	 * ~~~
 	 *
-	 *
-	 * @param   integer  $mode  The clean mode [Optional]
-	 *
 	 * @return  boolean
 	 */
-    public function delete_all($mode = Cache::ALL): bool
+    public function delete_all(): bool
     {
-		if (Cache::ALL === $mode)
-		{
-			return $this->_redis->flushAll();
-		}
-		else
-		{
-			// @todo
-		}
+        return $this->_redis->flushAll();
 	}
 
 	/**
