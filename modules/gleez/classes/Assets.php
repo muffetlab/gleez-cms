@@ -217,22 +217,6 @@ class Assets {
 	}
 
 	/**
-	 * Remove a CSS asset, or all
-	 *
-	 * @param   mixed  $handle  Asset name, or NULL to remove all [Optional]
-	 * @return  mixed  Empty array or void
-	 */
-	public static function remove_css($handle = NULL)
-	{
-		if (is_null($handle))
-		{
-			return self::$css = array();
-		}
-
-		unset(self::$css[$handle]);
-	}
-
-	/**
 	 * Javascript wrapper
 	 *
 	 * Gets or sets javascript assets
@@ -372,35 +356,6 @@ class Assets {
 	}
 
 	/**
-	 * Remove a javascript asset, or all
-	 *
-	 * @param   mixed  $handle  Remove all if NULL, section if TRUE or FALSE, asset if string
-	 * @return  mixed  Empty array or void
-	 */
-	public static function remove_js($handle = NULL)
-	{
-		if (is_null($handle))
-		{
-			return self::$js = array();
-		}
-
-		if ($handle === TRUE OR $handle === FALSE)
-		{
-			foreach (self::$js as $handle => $data)
-			{
-				if ($data['footer'] === $handle)
-				{
-					unset(self::$js[$handle]);
-				}
-			}
-
-			return;
-		}
-
-		unset(self::$js[$handle]);
-	}
-
-	/**
 	 * Javascript code wrapper
 	 *
 	 * Gets or sets javascript code
@@ -502,35 +457,6 @@ class Assets {
 	}
 
 	/**
-	 * Remove a javascript code, or all codes
-	 *
-	 * @param   mixed  $handle  Remove all if NULL, section if TRUE or FALSE, asset if string [Optional]
-	 * @return  mixed  Empty array or void
-	 */
-	public static function remove_code($handle = NULL)
-	{
-		if (is_null($handle))
-		{
-			return self::$codes = array();
-		}
-
-		if ($handle === TRUE OR $handle === FALSE)
-		{
-			foreach (self::$codes as $handle => $data)
-			{
-				if ($data['footer'] === $handle)
-				{
-					unset(self::$codes[$handle]);
-				}
-			}
-
-			return;
-		}
-
-		unset(self::$codes[$handle]);
-	}
-
-	/**
 	 * Javascript code settings wrapper
 	 *
 	 * Gets or sets javascript code
@@ -542,22 +468,6 @@ class Assets {
 	public static function settings($handle, $code = NULL)
 	{
 		return self::$settings[$handle] = $code;
-	}
-
-	/**
-	 * Remove a js settings asset, all of a groups assets, or all group assets
-	 *
-	 * @param   string  $handle  Asset name
-	 * @return  mixed   Empty array or void
-	 */
-	public static function remove_settings($handle = NULL)
-	{
-		if (is_null($handle))
-		{
-			return self::$settings = array();
-		}
-
-		unset(self::$settings[$handle]);
 	}
 
 	/**
@@ -636,29 +546,6 @@ class Assets {
 		}
 
 		return implode(PHP_EOL, $assets);
-	}
-
-	/**
-	 * Remove a group asset, all of a groups assets, or all group assets
-	 *
-	 * @param   string  $group  Group name [Optional]
-	 * @param   string  $handle Asset name [Optional]
-	 * @return  mixed    Empty array or void
-	 */
-	public static function remove_group($group = NULL, $handle = NULL)
-	{
-		if (is_null($group))
-		{
-			return self::$groups = array();
-		}
-
-		if (is_null($handle))
-		{
-			unset(self::$groups[$group]);
-			return;
-		}
-
-		unset(self::$groups[$group][$handle]);
 	}
 
 	/**
