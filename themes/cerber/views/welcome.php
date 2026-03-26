@@ -4,10 +4,9 @@
 			<p class="lead">Open source, extensible Content Management System that is built on the Kohana Framework.</p>
 			<p>
 				<?php echo HTML::anchor('https://github.com/gleez/cms/', 'Download on GitHub', array('class' => 'btn btn-success btn-large')); ?>
-				<?php
-					if (Module::is_active('userguide'))
-						echo HTML::anchor('/guide/gleez/gleez.introduction/', 'Get started &rarr;', array('class' => 'btn btn-large'));
-				?>
+                <?php if (key_exists('userguide', Kohana::modules())): ?>
+                    <?= HTML::anchor('/guide/gleez/gleez.introduction', 'Get started &rarr;', array('class' => 'btn btn-large')); ?>
+                <?php endif; ?>
 			</p>
 	</div>
 
