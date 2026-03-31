@@ -159,6 +159,7 @@ Gleez::ready();
  * defaults for the URI.
  */
 Route::set('default', '(<controller>(/<action>(/<id>)))')
+    ->filter(['Path', 'lookup'])
     ->defaults([
         'controller' => 'welcome',
         'action' => 'index',

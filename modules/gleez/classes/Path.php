@@ -16,17 +16,22 @@ class Path {
 	 */
 	const FRONT_ALIAS = '<front>';
 
-	/**
-	 * Get a path via its alias
-	 *
-	 * @param   string  $alias  Alias, eg. 'about'
-	 * @return  mixed  array|FALSE
-	 */
-	public static function lookup($alias)
+    /**
+     * Route filter for path aliases.
+     *
+     * @param Route $route Current route object
+     * @param array $params Matched params
+     * @return array|false
+     * @throws Kohana_Exception
+     */
+    public static function lookup(Route $route, array $params)
 	{
 		$regex 	= "#(/p(?P<page>\d+))+$#uD";  // preg_match()
 		$reg_ex = "#(/p\d+)+$#uD";            // preg_replace()
 		$page 	= NULL;                       // default pager id is null
+
+        // Determine alias from route URI to support transformed parameters
+        $alias = $route->uri($params);
 
 		// Save this value for pagination
 		// @todo use preg_replace_callback to handle both set and replace
@@ -40,7 +45,7 @@ class Path {
 		}
 
 		// Remove pagination ex /p1 /p2 etc
-		$alias = @preg_replace($reg_ex, '', rtrim($alias, '/'));
+        $alias = preg_replace($reg_ex, '', $alias);
 
 		// Check if it's a front page request and set <front> tag
 		if (empty($alias) AND $alias == NULL)
