@@ -305,8 +305,13 @@ abstract class Template extends Controller {
 			$this->_auth   = Auth::instance();
 
 			// Get desired response formats
-			$accept_types = Request::accept_type();
-			$accept_types = Arr::extract($accept_types, array_keys($this->_accept_formats));
+            $accept_types = [];
+            foreach (array_keys($this->_accept_formats) as $type) {
+                $quality = $this->request->headers()->accepts_at_quality($type);
+                if ($quality > 0) {
+                    $accept_types[$type] = $quality;
+                }
+            }
 
 			// Set response format to first matched element
 			$this->_response_format = $this->request->headers()->preferred_accept(array_keys($this->_accept_formats));
@@ -321,7 +326,7 @@ abstract class Template extends Controller {
 		if ($this->auto_render && $this->bare == FALSE)
 		{
 			// Throw exception if none of the accept-types are supported
-			if ( ! $accept_types = array_filter($accept_types))
+            if (empty($accept_types))
 			{
 				throw new Http_Exception_415('Unsupported accept-type', 415);
 			}

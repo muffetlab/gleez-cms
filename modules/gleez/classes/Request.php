@@ -32,39 +32,6 @@ class Request extends Kohana_Request
 	protected $_response;
 
 	/**
-	 * Returns the accepted content types
-	 *
-	 * If a specific type is defined, the quality of that type will be returned.
-	 *
-	 * Example:
-	 * ~~~
-	 * $types = Request::accept_type();
-	 * ~~~
-	 *
-	 * @param   string  $type Content MIME type
-	 * @return  mixed   An array of all types or a specific type as a string
-	 * @uses    Request::_parse_accept
-	 */
-	public static function accept_type($type = NULL)
-	{
-		static $accepts;
-
-		if ($accepts === NULL)
-		{
-			// Parse the HTTP_ACCEPT header
-			$accepts = Request::_parse_accept($_SERVER['HTTP_ACCEPT'], array('*/*' => 1.0));
-		}
-
-		if (isset($type))
-		{
-			// Return the quality setting for this type
-			return isset($accepts[$type]) ? $accepts[$type] : $accepts['*/*'];
-		}
-
-		return $accepts;
-	}
-
-	/**
 	 * Checks whether the request called by mobile device by useragent string
 	 * Preg is faster than for loop
 	 *
