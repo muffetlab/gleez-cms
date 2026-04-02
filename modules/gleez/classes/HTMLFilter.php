@@ -137,7 +137,7 @@ class HTMLFilter {
 		if (Gleez::$profiling)
 		{
 			// Start a new benchmark
-			$this->benchmark = Profiler::start('Gleez Filter', __FUNCTION__);
+            $this->_benchmark = Profiler::start('Gleez Filter', __FUNCTION__);
 		}
 		// Load the configuration for this type
 		$config = Kohana::$config->load('inputfilter');
