@@ -56,7 +56,8 @@ class Path {
 		$result = self::load(array('alias' => $alias));
 		if ( ! $result)
 		{
-			return FALSE;
+            // No alias found, return original params to allow normal routing
+            return $params;
 		}
 
 		// reset the self::FRONT_ALIAS tag to '' orelse request fails
