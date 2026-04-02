@@ -215,6 +215,7 @@ class Menu {
 			$id = HTML::attributes(array('id' => 'menu-'.$key));
 
 			//Twitter bootstrap attributes
+            $class = '';
 			if ($has_children)
 			{
 				$attributes['data-toggle'] = 'dropdown';

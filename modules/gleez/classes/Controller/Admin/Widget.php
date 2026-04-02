@@ -185,6 +185,9 @@ class Controller_Admin_Widget extends Controller_Admin {
 
         $widget_regions = static::getWidgetRegions();
 
+        $handler = Widget::factory($widget->name, $widget);
+        $fields = $handler->form();
+
         $all_roles = ORM::factory('Role')
 						->find_all()
 						->as_array('id', 'name');

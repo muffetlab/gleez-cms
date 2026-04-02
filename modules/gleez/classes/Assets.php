@@ -331,6 +331,8 @@ class Assets {
 			return FALSE;
 		}
 
+        $sorted = [];
+
 		foreach (self::_sort($assets) as $handle => $data)
 		{
 			$sorted[] = self::get_js($handle, $format);
@@ -447,6 +449,8 @@ class Assets {
 		{
 			return FALSE;
 		}
+
+        $sorted = [];
 
 		foreach (self::_sort($assets) as $handle => $data)
 		{
