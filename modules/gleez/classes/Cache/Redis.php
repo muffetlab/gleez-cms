@@ -44,6 +44,11 @@ class Cache_Redis extends Cache {
 
 	const CACHE_TYPE = 'user';
 
+    /**
+     * @var Redis Redis instance
+     */
+    protected $_redis;
+
 	/**
 	 * Check for existence of the PhpRedis extension
 	 *

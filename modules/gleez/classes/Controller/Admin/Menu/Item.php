@@ -10,6 +10,26 @@
  */
 class Controller_Admin_Menu_Item extends Controller_Admin {
 
+    /**
+     * @var array Validation errors
+     */
+    protected $_errors;
+
+    /**
+     * @var array Menu tree for bulk update
+     */
+    private $tree;
+
+    /**
+     * @var int Counter for MPTT calculation
+     */
+    private $counter;
+
+    /**
+     * @var int Level zero counter
+     */
+    private $level_zero;
+
 	/**
 	 * The before() method is called before controller action.
 	 */

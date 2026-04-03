@@ -16,6 +16,8 @@ class Controller_Resize extends Controller {
 	public $resized_image;
 	public $resized_image_type;
 
+    public $image_folder;
+
 	public function before()
 	{
 		$this->image_folder = DOCROOT . 'media';
