@@ -11,8 +11,9 @@
 abstract class Template extends Controller {
 
 	/**
-	 * Page template
-	 * @var string
+     * Page template: view path/name (string) until {@see before()} runs, then a {@see View} instance.
+     *
+     * @var string|View
 	 */
 	public $template = 'layouts/default';
 
@@ -349,9 +350,8 @@ abstract class Template extends Controller {
 			$this->redirect = ($this->request->query('destination') !== NULL) ? $this->request->query('destination') : array();
 
 			// Bind the generic page variables
-			$this->template->set('site_name', Template::getSiteName())
+            $this->template
 				->set('site_slogan',   $this->_config->get('site_slogan', __('Innovate IT')))
-                ->set('site_url', URL::site('', TRUE))
 				->set('site_logo',     $this->_config->get('site_logo', FALSE))
 				->set('sidebar_left',  array())
 				->set('sidebar_right', array())
