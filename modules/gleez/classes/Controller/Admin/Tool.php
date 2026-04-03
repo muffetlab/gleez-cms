@@ -37,19 +37,22 @@ class Controller_Admin_Tool extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	public function action_db()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_db()
 	{
 		//get tables names and the size and the index
 		$total_space = 0;
 		$tables_info = array();
 
-		$tables = DB::query('select', 'SHOW TABLE STATUS', FALSE);
+        $tables = DB::query(Database::SELECT, 'SHOW TABLE STATUS')->execute()->as_array();
 
 		foreach ($tables as $table)
 		{
 			$tot_data = $table['Data_length'];
 			$tot_idx  = $table['Index_length'];
-			$tot_free = $table['Data_free'];
 
 			$tables_info[] = array( 'name' => $table['Name'],
 									'rows' => $table['Rows'],
@@ -64,7 +67,7 @@ class Controller_Admin_Tool extends Controller_Admin {
 				->set('count', count($tables))
 				->set('space', $total_space);
 
-		$this->title = __('Database :sub', array(':sub' => '<small>('.Kohana::$config->load('database')->get('default.connection.database', NULL).')</small>'));
+        $this->title = __('Database :sub', array(':sub' => '<small>(' . Kohana::$config->load('database.default.connection.database') . ')</small>'));
 		$this->response->body($view);
 	}
 
