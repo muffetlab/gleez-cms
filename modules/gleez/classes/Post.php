@@ -15,6 +15,15 @@
  */
 class Post extends ORM_Versioned {
 
+    /**
+     * Transient form field for comma-separated tags.
+     *
+     * Kept as a runtime-only property so ORM does not treat it as a database column while _tags() can still access it.
+     *
+     * @var string|null
+     */
+    public $ftags = null;
+
 	/**
 	 * Special tag for stopping widgets setting
 	 * @type string
@@ -217,7 +226,7 @@ class Post extends ORM_Versioned {
 		{
 			if (isset($this->categories) AND is_array($this->categories))
 			{
-				foreach ($this->categories as $id => $term)
+                foreach ($this->categories as $term)
 				{
 					if ($term == 'last' OR ! Valid::numeric($term))
 					{
@@ -324,7 +333,7 @@ class Post extends ORM_Versioned {
 			// generate a unique filename to avoid conflicts
 			$filename = File::getUnique($_FILES['image']['name']);
 
-			if ($file = Upload::save($_FILES['image'], $filename, $this->_image_path))
+            if (Upload::save($_FILES['image'], $filename, $this->_image_path))
 			{
 				$this->image = $filename;
 			}
@@ -448,8 +457,7 @@ class Post extends ORM_Versioned {
 	{
 		if (isset($this->ftags))
 		{
-			$tags = Tags::factory()
-				->tagging($this->ftags, $this, $this->author, FALSE);
+            Tags::factory()->tagging($this->ftags, $this, $this->author, FALSE);
 		}
 	}
 

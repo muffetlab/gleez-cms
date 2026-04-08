@@ -272,6 +272,7 @@ class Controller_Page extends Template {
 		{
 			try
 			{
+                $post->ftags = $this->request->post('ftags');
                 $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
 				Kohana::$log->add(Log::INFO, 'Page :title created.', array(':title' => $post->title));
@@ -358,6 +359,7 @@ class Controller_Page extends Template {
 		{
 			try
 			{
+                $post->ftags = $this->request->post('ftags');
                 $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
 				Kohana::$log->add(Log::INFO, 'Page: :title updated.', array(':title' => $post->title));

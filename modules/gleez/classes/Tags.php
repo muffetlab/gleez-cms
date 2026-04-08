@@ -186,7 +186,7 @@ class Tags {
 			->where($this->config['tag_table'].'.type', '=', $object->type)
 			->where('name', '=', $normalized_tag);
 
-		if ($result->reset(FALSE)->count_all() > 0)
+        if ($result->find()->loaded())
 		{
 			return TRUE;
 		}
