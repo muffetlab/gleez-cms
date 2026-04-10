@@ -11,227 +11,26 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class HTML {
-
-	/**
-	 * Current route
-	 * @var string
-	 */
-	public static $current_route;
-
-	/**
-	 * Preferred order of attributes
-	 * @var array
-	 */
-	public static $attribute_order = array
-	(
-		'action',
-		'method',
-		'type',
-		'id',
-		'name',
-		'value',
-		'href',
-		'src',
-		'width',
-		'height',
-		'cols',
-		'rows',
-		'size',
-		'maxlength',
-		'rel',
-		'media',
-		'accept-charset',
-		'accept',
-		'tabindex',
-		'accesskey',
-		'alt',
-		'title',
-		'class',
-		'style',
-		'selected',
-		'checked',
-		'readonly',
-		'disabled',
-	);
-
-	/**
-	 * Use strict HTML mode?
-	 * @var boolean
-	 */
-	public static $strict = TRUE;
-
-	/**
-	 * Convert special characters to HTML entities
-	 *
-	 * All untrusted content should be passed through this method to prevent XSS injections.
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::chars($username);
-	 * ~~~
-	 *
-	 * @param   string   $value          String to convert
-	 * @param   boolean  $double_encode  Encode existing entities [Optional]
-	 *
-	 * @return  string
-	 */
-	public static function chars($value, $double_encode = TRUE)
-	{
-		return htmlspecialchars( (string) $value, ENT_QUOTES, Kohana::$charset, $double_encode);
-	}
-
-	/**
-	 * Convert all applicable characters to HTML entities
-	 *
-	 * All characters that cannot be represented in HTML with the current character set
-	 * will be converted to entities.
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::entities($username);
-	 * ~~~
-	 *
-	 * @param   string   $value          String to convert
-	 * @param   boolean  $double_encode  Encode existing entities [Optional]
-	 *
-	 * @return  string
-	 */
-	public static function entities($value, $double_encode = TRUE)
-	{
-		return htmlentities( (string) $value, ENT_QUOTES, Kohana::$charset, $double_encode);
-	}
-
-	/**
-	 * Create HTML link anchors
-	 *
-	 * Note that the title is not escaped, to allow HTML elements within links (images, etc).
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::anchor('/user/profile', 'My Profile');
-	 * ~~~
-	 *
-	 * @param   string  $uri         URL or URI string
-	 * @param   string  $title       Link text [Optional]
-	 * @param   array   $attributes  HTML anchor attributes [Optional]
-	 * @param   mixed   $protocol    Protocol to pass to URL::base() [Optional]
-	 * @param   boolean $index       Include the index page [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::base
-	 * @uses    URL::site
-	 * @uses    URL::is_absolute
-	 */
-	public static function anchor($uri, $title = NULL, array $attributes = NULL, $protocol = NULL, $index = TRUE)
-	{
-		if (is_null($title))
-		{
-			// Use the URI as the title
-			$title = $uri;
-		}
-
-		if ($uri === '')
-		{
-			// Only use the base URL
-			$uri = URL::base($protocol, $index);
-		}
-		else
-		{
-			if (strpos($uri, '://') === FALSE && $uri[0] !== '#' && $uri[0] !== '?')
-			{
-				// Make the URI absolute for non-fragment and non-query anchors
-				$uri = URL::site($uri, $protocol, $index);
-			}
-		}
-
-		// Add the sanitized link to the attributes
-		$attributes['href'] = $uri;
-
-		return '<a'.self::attributes($attributes).'>'.$title.'</a>';
-	}
-
-	/**
-	 * Creates an HTML anchor to a file
-	 *
-	 * Note that the title is not escaped, to allow HTML elements within links (images, etc).
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::file_anchor('media/doc/user_guide.pdf', 'User Guide');
-	 * ~~~
-	 *
-	 * @param   string  $file        Name of file to link to
-	 * @param   string  $title       Link text [Optional]
-	 * @param   array   $attributes  HTML anchor attributes [Optional]
-	 * @param   mixed   $protocol    Protocol to pass to URL::base() [Optional]
-	 * @param   boolean $index       Include the index page [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::site
-	 */
-	public static function file_anchor($file, $title = NULL, array $attributes = NULL, $protocol = NULL, $index = FALSE)
-	{
-		if ($title === NULL)
-		{
-			// Use the file name as the title
-			$title = basename($file);
-		}
-
-		// Add the file link to the attributes
-		$attributes['href'] = URL::site($file, $protocol, $index);
-
-		return '<a'.self::attributes($attributes).'>'.$title.'</a>';
-	}
-
-	/**
-	 * Creates an email (mailto:) anchor
-	 *
-	 * Note that the title is not escaped, to allow HTML elements within links (images, etc).
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::mailto($address);
-	 * ~~~
-	 *
-	 * @param   string  $email       Email address to send to
-	 * @param   string  $title       Link text [Optional]
-	 * @param   array   $attributes  HTML anchor attributes [Optional]
-	 *
-	 * @return  string
-	 */
-	public static function mailto($email, $title = NULL, array $attributes = NULL)
-	{
-		if (is_null($title))
-		{
-			// Use the email address as the title
-			$title = $email;
-		}
-
-		return '<a href="&#109;&#097;&#105;&#108;&#116;&#111;&#058;'.$email.'"'.self::attributes($attributes).'>'.$title.'</a>';
-	}
-
-	/**
-	 * Creates a script link
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::script('media/js/jquery.min.js');
-	 * ~~~
-	 *
-	 * @param   string  $file        File name
-	 * @param   array   $attributes  Default attributes [Optional]
-	 * @param   mixed   $protocol    Protocol to pass to URL::base() [Optional]
-	 * @param   boolean $index       Include the index page [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::site
-	 */
-	public static function script($file, array $attributes = NULL, $protocol = NULL, $index = FALSE)
-	{
+class HTML extends Kohana_HTML
+{
+    /**
+     * Creates a script link.
+     *
+     * Example:
+     * ~~~
+     * echo HTML::script('media/js/jquery.min.js');
+     * ~~~
+     *
+     * @param string $file File name
+     * @param array|null $attributes Default attributes
+     * @param mixed $protocol Protocol to pass to URL::base()
+     * @param bool $index Include the index page
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    URL::site
+     */
+    public static function script(string $file, array $attributes = null, $protocol = null, bool $index = false): string
+    {
 		// Allow theme to serve its own media assets
         if (strpos($file, 'media/js') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
 		{
@@ -239,147 +38,27 @@ class HTML {
 			$file = str_replace(array('media/js'), "media/{$theme}/js", $file);
 		}
 
-		if (strpos($file, '://') === FALSE && strpos($file, '//') !== 0)
-		{
-			// Auto detect index file
-			$index = ($index == FALSE AND ! empty(Kohana::$index_file)) ? TRUE : $index;
-
-			// Add the base URL
-			$file = URL::site($file, $protocol, $index);
-		}
-
-		// Set the script link
-		$attributes['src'] = $file;
-
-		// Set the script type
-		$attributes['type'] = 'text/javascript';
-
-		return '<script'.self::attributes($attributes).'></script>';
+		return parent::script($file, $attributes, $protocol, $index);
 	}
 
-	/**
-	 * Creates a image link
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::image('media/img/logo.png', array('alt' => 'My Company'));
-	 * ~~~
-	 *
-	 * @param   string  $file        File name
-	 * @param   array   $attributes  Default attributes [Optional]
-	 * @param   mixed   $protocol    Protocol to pass to URL::base() [Optional]
-	 * @param   boolean $index       Include the index page [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::site
-	 */
-	public static function image($file, array $attributes = NULL, $protocol = NULL, $index = FALSE)
-	{
-		if (strpos($file, '://') === FALSE)
-		{
-			// Auto detect index file
-			$index = ($index == FALSE AND ! empty(Kohana::$index_file)) ? TRUE : $index;
-
-			// Add the base URL
-			$file = URL::site($file, $protocol, $index);
-		}
-
-		// Add the image link
-		$attributes['src'] = $file;
-
-		return '<img'.self::attributes($attributes).' >';
-	}
-
-	/**
-	 * Compiles an array of HTML attributes into an attribute string
-	 *
-	 * Attributes will be sorted using HTML::$attribute_order for consistency.
-	 *
-	 * Example:
-	 * ~~~
-	 * echo '<div'.HTML::attributes($attrs).'>'.$content.'</div>';
-	 * ~~~
-	 *
-	 * @param   array  $attributes  Attribute list [Optional]
-	 *
-	 * @return  string
-	 */
-	public static function attributes(array $attributes = NULL)
-	{
-		if (empty($attributes))
-		{
-			return '';
-		}
-
-		$sorted = array();
-		foreach (self::$attribute_order as $key)
-		{
-			if (isset($attributes[$key]))
-			{
-				// Add the attribute to the sorted list
-				$sorted[$key] = $attributes[$key];
-			}
-		}
-
-		// Combine the sorted attributes
-		$attributes = $sorted + $attributes;
-
-		$compiled = '';
-		foreach ($attributes as $key => $value)
-		{
-			if ($value === NULL)
-			{
-				// Skip attributes that have NULL values
-				continue;
-			}
-
-			if (is_int($key))
-			{
-				// Assume non-associative keys are mirrored attributes
-				$key = $value;
-
-				if ( ! self::$strict)
-				{
-					// Just use a key
-					$value = FALSE;
-				}
-			}
-
-			// Add the attribute key
-			$compiled .= ' '.$key;
-
-			if ($value !== FALSE OR self::$strict)
-			{
-				// Add the attribute value
-				$compiled .= '="'.self::chars($value).'"';
-			}
-		}
-
-		return $compiled;
-	}
-
-	/**
-	 * Creates a style sheet link element
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::style('media/css/screen.css');
-	 * ~~~
-	 *
-	 * [!!] Note: Gleez by default use HTML5. In HTML5 attribute `type` not needed
-	 *
-	 * @param   string  $file      File name
-	 * @param   array   $attrs     Default attributes [Optional]
-	 * @param   mixed   $protocol  Protocol to pass to `URL::base()` [Optional]
-	 * @param   boolean $index     Include the index page [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::site
-	 */
-	public static function style($file, array $attrs = NULL, $protocol = NULL, $index = FALSE)
-	{
+    /**
+     * Creates a style sheet link element.
+     *
+     * Example:
+     * ~~~
+     * echo HTML::style('media/css/screen.css');
+     * ~~~
+     *
+     * @param string $file File name
+     * @param array|null $attributes Default attributes
+     * @param mixed $protocol Protocol to pass to `URL::base()`
+     * @param bool $index Include the index page
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    URL::site
+     */
+    public static function style(string $file, array $attributes = null, $protocol = null, bool $index = false): string
+    {
 		// Allow theme to serve its own media assets
         if (strpos($file, 'media/css') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
 		{
@@ -387,22 +66,7 @@ class HTML {
 			$file = str_replace(array('media/css'), "media/{$theme}/css", $file);
 		}
 
-		if (strpos($file, '://') === FALSE && strpos($file, '//') !== 0)
-		{
-			//Auto detect index file
-			$index = ($index == FALSE AND ! empty(Kohana::$index_file)) ? TRUE : $index;
-
-			// Add the base URL
-			$file = URL::site($file, $protocol, $index);
-		}
-
-		// Set the stylesheet link
-		$attrs['href'] = $file;
-
-		// Set the stylesheet rel
-		$attrs['rel'] = 'stylesheet';
-
-		return '<link'.self::attributes($attrs).'>';
+		return parent::style($file, $attributes, $protocol, $index);
 	}
 
 	/**
