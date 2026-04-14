@@ -38,7 +38,13 @@
 		if (!this.source.length) {
 		  this.ajax = $.extend({}, $.fn.typeahead.defaults, { url: this.options.url })
 		}
-	  
+
+        // Decode initial value if it contains HTML entities
+        const initialVal = this.$element.val();
+        if (initialVal && initialVal.indexOf('&') !== -1) {
+            this.$element.val($('<div/>').html(initialVal).text())
+        }
+
 		this.listen()
 	}
 
@@ -71,7 +77,12 @@
 	  
 	  // Remove the current input.
 	  terms.pop()
-	  
+
+        // Quotes and commas in tag names are special cases, so encode them.
+        if (item.indexOf('"') !== -1 || item.indexOf(',') !== -1) {
+            item = '"' + item.replace(/"/g, '""') + '"'
+        }
+
 	  // Add the selected item.
 	  terms.push(item)
   
@@ -109,6 +120,10 @@
 	  }
 	  else {
 		this.query = this.$element.val()
+            // Decode HTML entities in the input box to ensure subsequent processing uses the original characters
+            if (this.query) {
+                this.query = $('<div/>').html(this.query).text();
+            }
 	
 		if (!this.query || this.query.length < this.options.minLength) {
 	  return this.shown ? this.hide() : this
@@ -138,6 +153,8 @@
   
 	Typeahead.prototype.matcher = function (item) {
 	  var term = this.autocompleteExtractLast(this.query);
+        // Strip leading and trailing quotes if present
+        term = term.replace(/^"(.*)"?$/, '$1').replace(/""/g, '"');
 	  return ~item.toLowerCase().indexOf(term.toLowerCase())
 	}
 
@@ -224,6 +241,8 @@
   
 	Typeahead.prototype.highlighter = function (item) {
 		var term = this.autocompleteExtractLast(this.query);
+        // Strip leading and trailing quotes if present
+        term = term.replace(/^"(.*)"?$/, '$1').replace(/""/g, '"');
 		var query = term.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
 		return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
 			return '<strong>' + match + '</strong>'
@@ -400,8 +419,8 @@
 		clearTimeout(that.ajax.timerId)
 		that.ajax.timerId = null
 	  }
-	  
-	  if (!query || query.length < that.ajax.triggerLength) {
+
+        if (!query || query.length < this.options.minLength) {
 		// Cancel the ajax callback if in progress
 		if (that.ajax.xhr) {
 			that.ajax.xhr.abort()
@@ -487,7 +506,9 @@
 	}
   
 	Typeahead.prototype.autocompleteSplit = function(val) {
-		return val.split(/,\s*/)
+        return val.replace(/(".*?(?:"|$))|,\s*/g, function(m, g1) {
+            return g1 ? m : "###SPLIT###"
+        }).split("###SPLIT###")
 	}
 	
 	Typeahead.prototype.autocompleteExtractLast = function(term) {
