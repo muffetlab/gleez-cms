@@ -83,7 +83,7 @@ class Controller_Autocomplete extends Controller {
 
 		// The user enters a comma-separated list of tags. We only autocomplete the last tag.
 		$tags_typed = Tags::explode($string);
-		$tag_last   = UTF8::strtolower(array_pop($tags_typed));
+        $tag_last = UTF8::strtolower(array_pop($tags_typed) ?? '');
 		$matches    = array();
 
 		if ( ! empty($tag_last))
@@ -92,28 +92,11 @@ class Controller_Autocomplete extends Controller {
 				->where('name', 'LIKE', $tag_last.'%')
 				->where('type', '=', $type);
 
-			// Do not select already entered terms.
-			if ( ! empty($tags_typed))
-			{
-				$query->where('name', 'NOT IN', $tags_typed);
-			}
-
 			$result = $query->limit('10')->execute();
-
-			$prefix = count($tags_typed) ? implode(', ', $tags_typed) . ', ' : '';
 
 			foreach ($result as $tag)
 			{
-				$n = $tag['name'];
-				// Tag names containing commas or quotes must be wrapped in quotes.
-				if (strpos($tag['name'], ',') !== FALSE OR strpos($tag['name'], '"') !== FALSE)
-				{
-					$n = '"' . str_replace('"', '""', $tag['name']) . '"';
-				}
-				else
-				{
-                    $matches[$prefix . $n] = HTML::chars($tag['name']);
-				}
+                $matches[$tag['name']] = $tag['name'];
 			}
 		}
 
