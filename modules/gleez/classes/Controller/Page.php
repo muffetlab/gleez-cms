@@ -601,7 +601,7 @@ class Controller_Page extends Template {
 			'uri'            => $tag->url,
 		));
 
-		$posts = $posts->order_by('created', 'DESC')
+        $posts = $posts->order_by('post.created', 'DESC')
             ->limit($pagination->itemsPerPage())
             ->offset($pagination->offset())
 						->find_all();
