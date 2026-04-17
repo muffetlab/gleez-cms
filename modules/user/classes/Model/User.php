@@ -151,25 +151,25 @@ class Model_User extends Gleez_Model
 		);
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties.
+     *
      * @param string $column
-	 * @return  mixed
-	 *
-	 * @uses  HTML::chars
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Path::load
-	 */
+     * @return mixed
+     * @throws Kohana_Exception
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Path::load
+     * @uses  HTML::chars
+     */
     public function __get(string $column)
 	{
-		$nick = parent::__get('nick');
+        $nick = $this->get('nick');
 
         switch ($column) {
 			case 'name':
 			case 'mail':
-                return HTML::chars(parent::__get($column));
+                return HTML::chars($this->get($column) ?? '');
 				break;
 			case 'nick':
 				// Return the best version of the user's name.
@@ -193,7 +193,7 @@ class Model_User extends Gleez_Model
 				break;
 		}
 
-        return parent::__get($column);
+        return $this->get($column);
 	}
 
 	/**

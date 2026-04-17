@@ -92,15 +92,15 @@ class Model_Role extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties.
+     *
      * @param string $column
-	 * @return  mixed
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+     * @return mixed
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     * @uses  Route::get
+     */
     public function __get(string $column)
 	{
         switch ($column) {
@@ -117,7 +117,7 @@ class Model_Role extends Gleez_Model
 				break;
 		}
 
-        return parent::__get($column);
+        return $this->get($column);
 	}
 
 }

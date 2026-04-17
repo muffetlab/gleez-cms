@@ -104,36 +104,36 @@ class Model_Message extends Gleez_Model
 		);
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties.
+     *
      * @param string $column
-	 * @return  mixed
-	 *
+     * @return mixed
+     * @throws Kohana_Exception
+     * @uses  Text::markup
+     * @uses  Route::get
+     * @uses  Route::uri
      * @uses  HTML::chars
-	 * @uses  Text::markup
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+     */
     public function __get(string $column)
 	{
         switch ($column) {
 			case 'subject':
-                return HTML::chars(parent::__get('subject'));
+                return HTML::chars($this->get('subject') ?? '');
 			case 'body':
 				return Text::markup($this->rawbody, $this->format);
 			case 'rawsubject':
 				// Raw fields without markup. Usage: during edit or etc!
-				return parent::__get('subject');
+                return $this->get('subject');
 			case 'rawbody':
 				// Raw fields without markup. Usage: during edit or etc!
-				return parent::__get('body');
+                return $this->get('body');
 			case 'url':
 				return Route::get('user/message')->uri(array( 'id' => $this->id, 'action' => 'view'));
 			case 'delete_url':
 				return Route::get('user/message')->uri(array( 'id' => $this->id, 'action' => 'delete'));
 			default:
-                return parent::__get($column);
+                return $this->get($column);
 		}
 	}
 
