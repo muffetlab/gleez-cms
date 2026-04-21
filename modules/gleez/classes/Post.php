@@ -188,9 +188,6 @@ class Post extends ORM_Versioned {
 			'categories' => array(
 				array(array($this, 'is_valid'), array('category', ':validation', ':field')),
 			),
-			'image' => array(
-				array(array($this, 'is_valid'), array('image', ':validation', ':field')),
-			),
 		);
 	}
 
@@ -280,23 +277,6 @@ class Post extends ORM_Versioned {
 				}
 			}
 		}
-		// Make sure we have an valid image is uploaded
-		elseif ($name == 'image')
-		{
-			if (isset($_FILES['image']['name']) AND ! empty($_FILES['image']['name']))
-			{
-				$allowed_types = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'png', 'gif'));
-				$data = Validation::factory($_FILES)
-					->rule('image', 'Upload::not_empty')
-					->rule('image', 'Upload::valid')
-					->rule('image', 'Upload::type', array(':value', $allowed_types));
-
-				if ( ! $data->check() )
-				{
-					$validation->error($field, 'invalid', array($validation[$field]));
-				}
-			}
-		}
 	}
 
 	/**
@@ -312,18 +292,37 @@ class Post extends ORM_Versioned {
 		return in_array($value, array_keys(Post::status()));
 	}
 
-	/**
-	 * Override this method to take certain actions before the data is saved
-	 *
-	 * @uses  System::mkdir
-	 * @uses  Upload::save
-	 * @uses  Debug::path
-	 * @uses  File::getUnique
-	 */
+    /**
+     * Override this method to take certain actions before the data is saved.
+     *
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @uses  Upload::save
+     * @uses  Debug::path
+     * @uses  File::getUnique
+     * @uses  System::mkdir
+     */
 	protected function before_save()
 	{
 		if (isset($_FILES['image']['name']) AND ! empty($_FILES['image']['name']))
 		{
+            // Validate image before saving
+            $allowedTypes = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
+            $validation = Validation::factory($_FILES)
+                    ->rule('image', 'Upload::not_empty')
+                    ->rule('image', 'Upload::valid')
+                    ->rule('image', 'Upload::type', [':value', $allowedTypes]);
+
+            if (!$validation->check()) {
+                // Validation failed, don't save the image
+                $errors = $validation->errors('upload');
+                Kohana::$log->add(Log::WARNING, 'Image validation failed in before_save for :file. Errors: :errors', [
+                        ':file' => $_FILES['image']['name'],
+                        ':errors' => print_r($errors, true)
+                ]);
+                return;
+            }
+
 			// create directory if not
 			System::mkdir($this->_image_path);
 
@@ -374,6 +373,8 @@ class Post extends ORM_Versioned {
         // Always save only raw text, unformatted text
 		$this->teaser  = empty($this->rawteaser) ? $this->_teaser() : $this->rawteaser;
 		$this->body    = $this->rawbody;
+
+        $this->before_save();
 
 		parent::save($validation);
 
@@ -555,7 +556,7 @@ class Post extends ORM_Versioned {
 				return $this->terms->find()->id;
 			break;
 			case 'tags_form':
-				return $this->tags->find_all()->as_array('id', 'name');
+                return $this->tags->find_all()->as_array('id', 'rawname');
 			break;
 			case 'taxonomy':
 				return HTML::links($this->terms->find_all(), array('class' => 'nav nav-pills pull-right'));
