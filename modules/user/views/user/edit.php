@@ -85,7 +85,7 @@
 								<?php echo HTML::anchor(Route::get('user')->uri(array('action' => 'profile')), '<i class="fa fa-arrow-left"></i> '.__('Profile'), array('class' => 'btn')); ?>
 							</div>
 							<div class="col-sm-6 form-actions-right">
-								<?php echo Form::button('user_edit', __('Save'), array('class' => 'btn btn-success', 'type' => 'submit'))?>
+                                <?php echo Form::button('user_edit', __('Save'), array('class' => 'btn btn-success')) ?>
 							</div>
 						</div>
 					</div>

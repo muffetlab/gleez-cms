@@ -256,7 +256,7 @@
 
 <div class="form-group">
 	<div class="col-sm-12 clearfix">
-		<?php echo Form::button('settings', __('Save Changes'), array('class' => 'btn btn-success pull-right', 'type' => 'submit'))?>
+        <?php echo Form::button('settings', __('Save Changes'), array('class' => 'btn btn-success pull-right')) ?>
 	</div>
 </div>
 

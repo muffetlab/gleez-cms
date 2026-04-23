@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			<div class="panel-footer form-actions-right">
-				<?php echo Form::button('reset_pass', __('Reset'), array('class' => 'btn btn-danger', 'type' => 'submit'))?>
+                <?php echo Form::button('reset_pass', __('Reset'), array('class' => 'btn btn-danger')) ?>
 			</div>
 		<?php echo Form::close() ?>
 	</div>

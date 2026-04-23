@@ -62,7 +62,7 @@
 
 <div class="form-group">
 	<div class="col-sm-12 form-actions-right">
-		<?php echo Form::button('user', __('Save'), array('class' => 'btn btn-success', 'type' => 'submit'))?>
+        <?php echo Form::button('user', __('Save'), array('class' => 'btn btn-success')) ?>
 	</div>
 </div>
 

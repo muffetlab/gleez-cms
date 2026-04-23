@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			<div class="panel-footer form-actions-right">
-				<?php echo Form::button('password_confirm', __('Apply new password'), array('class' => 'btn btn-primary', 'type' => 'submit'))?>
+                <?php echo Form::button('password_confirm', __('Apply new password'), array('class' => 'btn btn-primary')) ?>
 			</div>
 		<?php echo Form::close(); ?>
 	</div>

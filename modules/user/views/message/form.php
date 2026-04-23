@@ -50,7 +50,7 @@
 			<?php echo HTML::anchor(Route::get('user/message')->uri(array('action' => 'inbox')), '<i class="fa fa-arrow-left"></i> '.__('Back to Inbox'), array('class' => 'btn')); ?>
 		</div>
 		<div class="col-sm-6 form-actions-right">
-			<?php echo Form::button('message', __('Send Message'), array('class' => 'btn btn-success', 'type' => 'submit')); ?>
+            <?php echo Form::button('message', __('Send Message'), array('class' => 'btn btn-success')); ?>
 		</div>
 	</div>
 

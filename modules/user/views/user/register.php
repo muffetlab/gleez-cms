@@ -90,7 +90,7 @@
 			</fieldset>
 		</div>
 		<div class="panel-footer form-actions-right">
-			<?php echo Form::button('register', __('Register new account'), array('class' => 'btn btn-success', 'tabindex' => 11, 'type' => 'submit')) ?>
+            <?php echo Form::button('register', __('Register new account'), array('class' => 'btn btn-success', 'tabindex' => 11)) ?>
 		</div>
 		<?php echo Form::close(); ?>
 	</div>

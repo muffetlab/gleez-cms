@@ -22,7 +22,7 @@
 		</div>
 	</div>
 
-	<?php echo Form::button('add_path', __('Save'), array('class' => 'btn btn-success pull-right', 'type' => 'submit')); ?>
+<?php echo Form::button('add_path', __('Save'), array('class' => 'btn btn-success pull-right')); ?>
 	<div class="clearfix"></div><br>
 
 <?php echo Form::close() ?>
