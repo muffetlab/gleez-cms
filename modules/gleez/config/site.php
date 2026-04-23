@@ -275,10 +275,10 @@ return array(
 
 	/**
 	 * Blocked ips.
-	 * Default to null, comma separated ip-addresses to block
+     * Comma separated ip-addresses to block
 	 * @var string
 	 */
-	'blocked_ips' => NULL,
+    'blocked_ips' => '',
 
 	/**
 	 * Default date first day
