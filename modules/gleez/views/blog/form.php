@@ -34,6 +34,11 @@
 				<div class="form-group <?php echo isset($errors['image']) ? 'has-error': ''; ?>">
 					<?php echo Form::label('image', __('Primary Image'), array('class' => 'control-label') ) ?>
 					<div class="controls blog-img">
+                        <?php if (!empty($blog->image)): ?>
+                            <div class="thumbnail">
+                                <?= HTML::resize($blog->image, ['alt' => $blog->title, 'width' => 144, 'height' => 144, 'type' => 'resize']) ?>
+                            </div>
+                        <?php endif; ?>
 						<?php echo Form::file('image', array('class' => 'form-control')); ?>
 					</div>
 				</div>
