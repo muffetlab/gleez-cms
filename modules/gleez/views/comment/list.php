@@ -25,7 +25,7 @@
 
 						<?php if ($comment->user_can('delete') ): ?>
 							<span class="delete">
-								<?php echo HTML::icon($comment->delete_url, 'fa-trash-o', array('class'=>'action-delete', 'title'=> __('Delete Comment'))); ?>
+                                <?php echo HTML::icon($comment->delete_url, 'fas fa-trash-can', array('class' => 'action-delete', 'title' => __('Delete Comment'))); ?>
 							</span>
 						<?php endif;?>
 					</div>

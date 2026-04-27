@@ -50,7 +50,7 @@ class Controller_Admin_Path extends Controller_Admin {
                         HTML::chars($path->source),
                         HTML::chars($path->alias),
 						HTML::icon($path->edit_url, 'fa-edit', array('class'=>'btn btn-sm btn-default action-edit', 'title'=> __('Edit Alias'))) . '&nbsp;' .
-						HTML::icon($path->delete_url, 'fa-trash-o', array('class'=>'btn btn-sm btn-default action-delete', 'title'=> __('Delete Alias'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-paths'))
+                        HTML::icon($path->delete_url, 'fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Alias'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-paths'))
 					)
 				);
 			}

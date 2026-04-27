@@ -31,7 +31,7 @@ class Controller_Client extends Template {
 				    $oaclient->user->nick,
 				    System::date('M d, Y',$oaclient->created),
 				    HTML::icon($oaclient->edit_url, 'fa-edit', array('class'=>'action-edit', 'data-toggle' => 'popup1', 'title'=> __('Edit'))) . '&nbsp;' .
-				    HTML::icon($oaclient->delete_url, 'fa-trash-o', array('class'=>'action-delete', 'data-toggle' => 'popup', 'title'=> __('Delete')))
+                    HTML::icon($oaclient->delete_url, 'fas fa-trash-can', array('class' => 'action-delete', 'data-toggle' => 'popup', 'title' => __('Delete')))
 				));
 			}
 		}

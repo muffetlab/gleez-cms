@@ -29,7 +29,7 @@
 				</div>
 				
 				<?php if($is_owner): ?>
-					<?php echo HTML::anchor("buddy/delete/".$accept->id , '<i class="fa fa-trash-o"></i>', array('class'=>'action-delete col-md-1', 'title'=> __('Delete'))); ?>
+                    <?php echo HTML::anchor("buddy/delete/" . $accept->id, '<i class="fas fa-trash-can"></i>', array('class' => 'action-delete col-md-1', 'title' => __('Delete'))); ?>
 				<?php endif ;?>
 			</div>
 		<?php endforeach ;?>

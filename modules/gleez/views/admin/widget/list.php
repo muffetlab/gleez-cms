@@ -46,7 +46,7 @@
 
 								if ($static)
 								{
-									echo HTML::anchor(Route::get('admin/widget')->uri(array('action' => 'delete', 'id'=> $widget->id)), ' <i class="fa fa-trash-o"></i>', array('class'=>'action-delete', 'title'=>__('Delete')));
+                                    echo HTML::anchor(Route::get('admin/widget')->uri(array('action' => 'delete', 'id' => $widget->id)), ' <i class="fas fa-trash-can"></i>', array('class' => 'action-delete', 'title' => __('Delete')));
 								}
 
 								unset($static);

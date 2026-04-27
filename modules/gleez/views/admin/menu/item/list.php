@@ -39,7 +39,7 @@
 
 				<td class="action">
 					<?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'edit', 'id' => $item['id'])), '<i class="fa fa-edit"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Edit Item'))) ?>
-					<?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'delete', 'id' => $item['id'])), '<i class="fa fa-trash-o"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Delete Item'))) ?>
+                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'delete', 'id' => $item['id'])), '<i class="fas fa-trash-can"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Delete Item'))) ?>
 				</td>
 			  </tr>
 			<?php endforeach ?>

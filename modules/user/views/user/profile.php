@@ -126,7 +126,7 @@
 						<?php echo HTML::anchor("user/view/".$accept->id , $accept->nick, array('class' => 'action-view', 'title'=> __('view profile'))) ?>
 
 						<?php if($is_owner): ?>
-							<?php echo HTML::anchor("buddy/delete/".$accept->id , '<i class="fa fa-trash-o"></i>', array('class'=>'action-delete pull-right', 'title'=> __('Delete'))); ?>
+                            <?php echo HTML::anchor("buddy/delete/" . $accept->id, '<i class="fas fa-trash-can"></i>', array('class' => 'action-delete pull-right', 'title' => __('Delete'))); ?>
 						<?php endif; ?>
 					</div>
 				<?php endforeach ;?>

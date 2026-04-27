@@ -115,7 +115,7 @@ class Controller_Message extends Template {
 						.' '.
 						HTML::anchor($message->url, Text::limit_chars(strip_tags($message->body), 80)),
 						Date::formatted_time($message->sent, 'M d, Y'),
-						HTML::icon($message->delete_url.$destination, 'fa-trash-o', array('title'=> __('Delete Message'), 'data-toggle' => 'popup', 'data-table' => '#user-message-inbox'))
+                        HTML::icon($message->delete_url . $destination, 'fas fa-trash-can', array('title' => __('Delete Message'), 'data-toggle' => 'popup', 'data-table' => '#user-message-inbox'))
 					)
 				);
 			}

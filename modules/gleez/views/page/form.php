@@ -133,7 +133,7 @@
 						<div id="major-publishing-actions" class="row">
 							<?php if ($post->loaded() AND ACL::post('delete', $post)): ?>
 								<div id="delete-action" class="btn btn-default pull-left">
-									<i class="fa fa-trash-o"></i>
+                                    <i class="fas fa-trash-can"></i>
 									<?php echo HTML::anchor($post->delete_url.URL::query($destination), __('Move to Trash'), array('class' => 'submitdelete')) ?>
 								</div>
 							<?php endif; ?>
