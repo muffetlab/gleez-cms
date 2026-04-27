@@ -573,11 +573,11 @@ class Post extends ORM_Versioned {
 			break;
 			case 'rawteaser':
 				// Raw fields without markup. Usage: during edit or etc!
-				return parent::__get('teaser');
+                return parent::__get('teaser') ?: '';
 			break;
 			case 'rawbody':
 				// Raw fields without markup. Usage: during edit or etc!
-				return parent::__get('body');
+                return parent::__get('body') ?: '';
 			break;
 			case 'rawurl':
 				return Route::get($this->type)->uri(array( 'id' => $this->id, 'action' => 'view'));
