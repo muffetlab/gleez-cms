@@ -139,7 +139,7 @@ class Module
 					$m->active       = self::is_active($name);
 					$m->title 		 = isset($m->title) ? (string) $m->title : $name;
 					$m->code_version = $m->version;
-					$m->version      = self::get_version($name);
+                    $m->version = self::get_version($name) ?: $m->code_version;
 					$m->locked       = false;
 					$m->visible      = isset($m->visible)   ? (bool) $m->visible	 : true;
 					$m->author    	 = isset($m->author)    ? (string) $m->author 	 : 'Gleez Team';
