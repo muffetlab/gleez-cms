@@ -372,13 +372,19 @@ class System {
 
 		$css = file_get_contents($path);
 
-        // Font Awesome 7 pattern: .fa-camera { --fa: "\f030"; }
-        $pattern = '/\.(' . preg_quote($class_prefix, '/') . '[\w-]+)\s*{[^}]*--fa:\s*"([^"]+)"[^}]*}/';
-		preg_match_all($pattern, $css, $matches, PREG_SET_ORDER);
-
 		$icons = array();
+
+        // Match selector lists and Unicode in one regex pass, e.g., ".fa-edit,.fa-pen-to-square{--fa:"\f044"}"
+        $pattern = '/((?:\.' . preg_quote($class_prefix, '/') . '[\w-]+\s*,\s*)*\.' . preg_quote($class_prefix, '/') . '[\w-]+)\s*\{[^{}]*--fa:\s*"([^"]+)"[^{}]*}/';
+        preg_match_all($pattern, $css, $matches, PREG_SET_ORDER);
+
 		foreach ($matches as $match) {
-			$icons[$match[1]] = $match[2];
+            foreach (explode(',', $match[1]) as $selector) {
+                $className = ltrim(trim($selector), '.');
+                if ($className !== '') {
+                    $icons[$className] = $match[2];
+                }
+            }
 		}
 
 		return $icons;
