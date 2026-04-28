@@ -86,7 +86,7 @@
 			</div>
 
 			<div class="form-group <?php echo isset($errors['pages']) ? 'has-error': ''; ?>">
-				<?php echo Form::textarea('pages', $widget->pages, array('class' => 'textarea form-control nowrap', 'rows' => 3)) ?>
+                <?php echo Form::textarea('pages', $widget->pages ?? '', array('class' => 'textarea form-control nowrap', 'rows' => 3)) ?>
 			</div>
 
 			<?php echo $fields; /* custom fields set by widget */ ?>
@@ -94,7 +94,7 @@
 			<?php if ($static): ?>
 				<div class="form-group <?php echo isset($errors['body']) ? 'has-error': ''; ?>">
 					<?php echo Form::label('body', __('Content'), array('class' => 'control-label')) ?>
-					<?php echo Form::textarea('body', $widget->body, array('class' => 'textarea form-control nowrap', 'rows' => 5)) ?>
+                    <?php echo Form::textarea('body', $widget->body ?? '', array('class' => 'textarea form-control nowrap', 'rows' => 5)) ?>
 				</div>
 
 				<div class="form-group <?php echo isset($errors['format']) ? 'has-error': ''; ?>">

@@ -164,22 +164,22 @@ class Model_Comment extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties.
+     *
      * @param string $column
-	 * @return  mixed
-	 *
+     * @return mixed
+     * @throws Kohana_Exception
+     * @uses    Text::markup
+     * @uses    Route::get
+     * @uses    Route::uri
      * @uses    HTML::chars
-	 * @uses    Text::markup
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 */
+     */
     public function __get(string $column)
 	{
         switch ($column) {
 			case 'title':
-                return HTML::chars(parent::__get('title'));
+                return HTML::chars($this->get('title') ?? '');
 			break;
 			case 'body':
 				return Text::markup(parent::__get('body'), $this->format);
@@ -190,7 +190,7 @@ class Model_Comment extends Gleez_Model
 			break;
 			case 'rawbody':
 				// Raw fields without markup. Usage: during edit or etc!
-				return parent::__get('body');
+                return $this->get('body') ?? '';
 			break;
 			case 'url':
 				// Model specific links; view, edit, delete url's.

@@ -16,7 +16,7 @@
 	<div class="form-group <?php echo isset($errors['descp']) ? 'has-error': ''; ?>">
 		<?php echo Form::label('description', __('Description'), array('class' => 'control-label col-md-3')); ?>
 		<div class="controls col-md-6">
-			<?php echo Form::textarea('descp', $post->descp, array('class' => 'form-control col-md-6', 'rows' => 3)); ?>
+            <?php echo Form::textarea('descp', $post->descp ?? '', array('class' => 'form-control col-md-6', 'rows' => 3)); ?>
 		</div>
 	</div>
 

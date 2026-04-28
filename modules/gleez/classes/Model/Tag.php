@@ -150,20 +150,20 @@ class Model_Tag extends Gleez_Model
 		Path::save($values);
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties.
+     *
      * @param string $column
-	 * @return  mixed
-	 *
-	 * @uses    HTML::chars
-	 * @uses    Path::load
-	 */
+     * @return mixed
+     * @throws Kohana_Exception
+     * @uses    Path::load
+     * @uses    HTML::chars
+     */
     public function __get(string $column)
 	{
         switch ($column) {
 			case 'name':
-				return HTML::chars(parent::__get('name'));
+                return HTML::chars($this->get('name') ?? '');
 			break;
 			case 'rawname':
 				// Raw fields without markup. Usage: during edit or etc!

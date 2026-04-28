@@ -25,7 +25,7 @@
 	<div class="form-group <?php echo isset($errors['description']) ? 'has-error': ''; ?>">
 		<?php echo Form::label('description', __('Description'), array('class' => 'control-label col-md-3')) ?>
 		<div class="controls col-md-5">
-			<?php echo Form::textarea('description', $post->description, array('class' => 'form-control', 'rows' => 5)) ?>
+            <?php echo Form::textarea('description', $post->description ?? '', array('class' => 'form-control', 'rows' => 5)) ?>
 			<span class="help-block"><?php _e('Description not visible by default, however some themes may show it. The main purpose of this description - to inform administrator about the group.') ?></span>
 		</div>
 	</div>
