@@ -7,7 +7,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12 form-actions-right">
-			<?php echo HTML::anchor($add_url, '<i class="fa fa-plus fa-white"></i> '.__('Add New Group'), array('class' => 'btn btn-success pull-right')) ?>
+            <?php echo HTML::anchor($add_url, '<i class="fas fa-plus"></i> ' . __('Add New Group'), array('class' => 'btn btn-success pull-right')) ?>
 		</div>
 	</div>
 

@@ -1,4 +1,4 @@
-<?php echo HTML::anchor(Route::get('admin/term')->uri($params), '<i class="fa fa-plus fa-white"></i> '.__('Add New Term'), array('title'=>__('Add New Term'),'class' => 'btn btn-success pull-right')); ?>
+<?php echo HTML::anchor(Route::get('admin/term')->uri($params), '<i class="fas fa-plus"></i> ' . __('Add New Term'), array('title' => __('Add New Term'), 'class' => 'btn btn-success pull-right')); ?>
 <div class="clearfix"></div><br>
 
 <?php echo Form::open(Route::get('admin/term')->uri(array('action' => 'confirm', 'id' => $id)), array('id'=>'menu-form', 'class'=>'form')); ?>

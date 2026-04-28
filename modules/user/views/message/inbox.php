@@ -18,7 +18,7 @@
 								<?php echo Form::submit('message-bulk-actions', __('Apply'), array('class'=>'btn btn-primary col-md-5')); ?>
 							</div>
 							<div class="form-group col-xs-6 col-sm-7 col-md-7 form-actions-right">
-								<?php echo HTML::anchor(Route::get('user/message')->uri(array('action' => 'compose')), '<i class="fa fa-plus fa-white"></i> '.__('Compose'), array('class'=>'btn btn-success')); ?>
+                                <?php echo HTML::anchor(Route::get('user/message')->uri(array('action' => 'compose')), '<i class="fas fa-plus"></i> ' . __('Compose'), array('class' => 'btn btn-success')); ?>
 							</div>
 						</div>
 					</fieldset>

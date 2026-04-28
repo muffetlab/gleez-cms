@@ -7,7 +7,7 @@
 		<?php echo __('Gleez CMS allows users to register, login, log out, maintain user profiles, etc. Users of the site may not use their own names to post content until they have signed up for a user account.'); ?>
 	</div>
 
-	<?php echo HTML::anchor(Route::get('admin/user')->uri(array('action' =>'add')), '<i class="fa fa-plus"></i> '.__('Add New User'), array('class' => 'btn btn-success pull-right')); ?>
+    <?php echo HTML::anchor(Route::get('admin/user')->uri(array('action' => 'add')), '<i class="fas fa-plus"></i> ' . __('Add New User'), array('class' => 'btn btn-success pull-right')); ?>
 	<div class='clearfix'></div><br>
 
 	<table id = "admin-list-users" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["2", "desc"]]'>

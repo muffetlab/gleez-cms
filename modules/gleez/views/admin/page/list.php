@@ -21,7 +21,7 @@
 						<?php echo Form::submit('page-bulk-actions', __('Apply'), array('class'=>'btn btn-default col-md-5')); ?>
 					</div>
 					<div class="form-group col-xs-6 col-sm-7 col-md-8 form-actions-right">
-						<?php echo HTML::anchor(Route::get('page')->uri(array('action' => 'add')), '<i class="fa fa-plus fa-white"></i> '.__('New entry'), array('class'=>'btn btn-success pull-right')); ?>
+                        <?php echo HTML::anchor(Route::get('page')->uri(array('action' => 'add')), '<i class="fas fa-plus"></i> ' . __('New entry'), array('class' => 'btn btn-success pull-right')); ?>
 					</div>
 				</div>
 			</fieldset>

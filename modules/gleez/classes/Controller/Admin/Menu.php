@@ -52,7 +52,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 					array(
                         HTML::chars($menu->title) . '<div class="description">' . HTML::chars($menu->descp) . '</div>',
 						HTML::icon($menu->list_items_url, 'fa-th-list', array('class'=>'action-list', 'title'=> __('List Links'))),
-						HTML::icon($menu->add_item_url, 'fa-plus', array('class'=>'action-add', 'title'=> __('Add Link'))),
+                        HTML::icon($menu->add_item_url, 'fas fa-plus', array('class' => 'action-add', 'title' => __('Add Link'))),
                         HTML::icon($menu->edit_url, 'far fa-edit', array('class' => 'action-edit', 'title' => __('Edit Menu'))),
                         HTML::icon($menu->delete_url, 'fas fa-trash-can', array('class' => 'action-delete', 'title' => __('Delete Menu'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-menus'))
 					)

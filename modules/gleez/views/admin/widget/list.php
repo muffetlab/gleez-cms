@@ -2,7 +2,7 @@
 	<?php echo __('This page provides interface for assigning a widget to a region, and for controlling the order of widgets within regions. Click the configure link next to each widget to configure its specific title and visibility settings.'); ?>
 </div>
 
-<?php echo HTML::anchor(Route::get('admin/widget')->uri( array('action' =>'add')), '<i class="fa fa-plus fa-white"></i>'.__('Add Widget'), array('class' => 'btn btn-success pull-right')) ?>
+<?php echo HTML::anchor(Route::get('admin/widget')->uri(array('action' => 'add')), '<i class="fas fa-plus"></i>' . __('Add Widget'), array('class' => 'btn btn-success pull-right')) ?>
 <div class="clearfix"></div><br>
 <?php echo Form::open( Route::url('admin/widget', array('action' => 'index')), array('id'=>'widgets-form', 'class'=>'form') ); ?>
 	<table id="widgets" class="table table-striped table-bordered table-apparent">
