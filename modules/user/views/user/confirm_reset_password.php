@@ -13,7 +13,7 @@
 					<?php echo Form::label('pass', __('New password'), array('class' => 'col-sm-4 control-label')); ?>
 					<div class="col-sm-8">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
 							<?php echo Form::password('pass', NULL, array('class' => 'form-control')); ?>
 						</div>
 					</div>
@@ -23,7 +23,7 @@
 					<?php echo Form::label('pass_confirm', __('New password (again)'), array('class' => 'col-sm-4 control-label')); ?>
 					<div class="col-sm-8">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
 							<?php echo Form::password('pass_confirm', NULL, array('class' => 'form-control')); ?>
 						</div>
 					</div>

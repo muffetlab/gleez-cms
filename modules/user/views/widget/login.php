@@ -16,7 +16,7 @@
 		<?php echo Form::label('name', __('Password'), array('class' => 'sr-only control-label')) ?>
 
 		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-key"></i></span>
+            <span class="input-group-addon"><i class="fas fa-key"></i></span>
 			<?php echo Form::password('password', NULL, array('class' => 'form-control', 'placeholder' => __('Password'))); ?>
 		</div>
 	</div>

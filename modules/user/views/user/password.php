@@ -14,7 +14,7 @@
 					<?php echo Form::label('old_pass', __('Current password'), array('class' => 'control-label')) ?>
 					<div class="controls">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
 							<?php echo Form::password('old_pass', NULL, array('class' => 'form-control', 'placeholder' => __('************'))); ?>
 						</div>
 					</div>
@@ -24,7 +24,7 @@
 					<?php echo Form::label('pass', __('New password'), array('class' => 'control-label')) ?>
 					<div class="controls">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
 							<?php echo Form::password('pass', NULL, array('class' => 'form-control')); ?>
 						</div>
                         <span class="help-block">
@@ -55,7 +55,7 @@
 					<?php echo Form::label('pass_confirm', __('New password (again)'), array('class' => 'control-label')) ?>
 					<div class="controls">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <span class="input-group-addon"><i class="fas fa-key"></i></span>
 							<?php echo Form::password('pass_confirm', NULL, array('class' => 'form-control')); ?>
 						</div>
 						<span class="help-block"><?php echo __('Confirm new password') ?></span>

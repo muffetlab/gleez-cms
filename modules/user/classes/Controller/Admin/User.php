@@ -59,7 +59,7 @@ class Controller_Admin_User extends Controller_Admin {
 						User::roles($user),
 						$user->status == 1 ? '<span class="status-active"><i class="fa fa-check-circle"></i></span>' : '<span class="status-blocked"><i class="fa fa-ban"></i></span>',
                         HTML::icon(Route::get('admin/user')->uri(array('action' => 'edit', 'id' => $user->id)), 'far fa-edit', array('class' => 'action-edit', 'title' => __('Edit User'))) . '&nbsp;' .
-						HTML::icon(Route::get('admin/permission')->uri(array('action' => 'user', 'id' => $user->id)), 'fa-key',  array('class'=>'', 'title'=> __('Edit Permission'))) . '&nbsp;' .
+                        HTML::icon(Route::get('admin/permission')->uri(array('action' => 'user', 'id' => $user->id)), 'fas fa-key', array('class' => '', 'title' => __('Edit Permission'))) . '&nbsp;' .
                         HTML::icon($user->delete_url, 'fas fa-trash-can', array('class' => 'action-delete', 'title' => __('Delete User'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-users'))
 					)
 				);
