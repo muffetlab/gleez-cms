@@ -19,7 +19,7 @@
 
 						<?php if ($comment->user_can('edit') ): ?>
 							<span class="edit">
-								<?php echo HTML::icon($comment->edit_url, 'fa-edit', array('class'=>'action-edit', 'title'=> __('Edit Comment'))); ?>
+                                <?php echo HTML::icon($comment->edit_url, 'far fa-edit', array('class' => 'action-edit', 'title' => __('Edit Comment'))); ?>
 							</span>
 						<?php endif;?>
 

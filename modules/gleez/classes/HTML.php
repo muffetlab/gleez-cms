@@ -346,7 +346,7 @@ class HTML extends Kohana_HTML
 	 *
 	 * Example:
 	 * ~~~
-	 * echo HTML::icon('/paths/edit/1', 'fa-edit', array('class'=>'action-edit', 'title'=> __('Edit Alias')));
+     * echo HTML::icon('/paths/edit/1', 'far fa-edit', array('class'=>'action-edit', 'title'=> __('Edit Alias')));
 	 * ~~~
 	 *
 	 * @link    http://fontawesome.io/

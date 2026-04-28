@@ -52,7 +52,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 						HTML::anchor($tag->url, $tag->url),
                         HTML::chars($tag->type),
 
-						HTML::icon($tag->edit_url, 'fa-edit', array('class'=>'btn btn-sm btn-default action-edit', 'title'=> __('Edit Tag'))).'&nbsp;'.
+                        HTML::icon($tag->edit_url, 'far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit Tag'))) . '&nbsp;' .
                         HTML::icon($tag->delete_url, 'fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Tag'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-tags'))
 					)
 				);
