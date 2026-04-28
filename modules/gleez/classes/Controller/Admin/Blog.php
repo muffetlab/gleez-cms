@@ -82,45 +82,10 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$action = Route::get('admin/blog')->uri(array('action' =>'settings'));
 		$vocabs = array(__('none'));
 
-		$use_captcha       = (isset($config['use_captcha']) AND $config['use_captcha'] == 1) ? TRUE : FALSE;
-		$use_authors       = (isset($config['use_authors']) AND $config['use_authors'] == 1) ? TRUE : FALSE;
-		$use_comment       = (isset($config['use_comment']) AND $config['use_comment'] == 1) ? TRUE : FALSE;
-		$use_category      = (isset($config['use_category']) AND $config['use_category'] == 1) ? TRUE : FALSE;
-		$use_excerpt       = (isset($config['use_excerpt']) AND $config['use_excerpt'] == 1) ? TRUE : FALSE;
-		$use_tags          = (isset($config['use_tags']) AND $config['use_tags'] == 1) ? TRUE : FALSE;
-		$use_submitted     = (isset($config['use_submitted']) AND $config['use_submitted'] == 1) ? TRUE : FALSE;
-		$comment_anonymous = (isset($config['comment_anonymous']) AND $config['comment_anonymous'] == 1) ? TRUE : FALSE;
-		$use_cache         = (isset($config['use_cache']) AND $config['use_cache'] == 1) ? TRUE : FALSE;
-		$primary_image     = (isset($config['primary_image']) AND $config['primary_image'] == 1) ? TRUE : FALSE;
-		$comment1          = (isset($config['comment']) && $config['comment'] == 0) ? TRUE : FALSE;
-		$comment2          = (isset($config['comment']) && $config['comment'] == 1) ? TRUE : FALSE;
-		$comment3          = (isset($config['comment']) && $config['comment'] == 2) ? TRUE : FALSE;
-		$mode1             = (isset($config['comment_default_mode']) && $config['comment_default_mode'] == 1) ? TRUE : FALSE;
-		$mode2             = (isset($config['comment_default_mode']) && $config['comment_default_mode'] == 2) ? TRUE : FALSE;
-		$mode3             = (isset($config['comment_default_mode']) && $config['comment_default_mode'] == 3) ? TRUE : FALSE;
-		$mode4             = (isset($config['comment_default_mode']) && $config['comment_default_mode'] == 4) ? TRUE : FALSE;
-
 		$view   = View::factory('admin/blog/settings')
 					->bind('vocabs',            $vocabs)
 					->set('config',             $config)
-					->set('action',             $action)
-					->set('use_captcha',        $use_captcha)
-					->set('use_authors',        $use_authors)
-					->set('use_comment',        $use_comment)
-					->set('use_category',       $use_category)
-					->set('use_excerpt',        $use_excerpt)
-					->set('use_tags',           $use_tags)
-					->set('use_submitted',      $use_submitted)
-					->set('comment_anonymous',  $comment_anonymous)
-					->set('use_cache',          $use_cache)
-					->set('primary_image',      $primary_image)
-					->set('comment1',           $comment1)
-					->set('comment2',           $comment2)
-					->set('comment3',           $comment3)
-					->set('mode1',              $mode1)
-					->set('mode2',              $mode2)
-					->set('mode3',              $mode3)
-					->set('mode4',              $mode4);
+                ->set('action', $action);
 
         $vocabs = Arr::merge($vocabs, ORM::factory('Term')->where('lft', '=', 1)->where('type', '=', 'blog')->find_all()->as_array('id', 'name'));
 

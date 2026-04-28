@@ -77,13 +77,13 @@ class Controller_Admin_Page extends Controller_Admin {
 	{
 		$this->title = __('Page Settings');
 
-		$post     = Kohana::$config->load('page');
+        $config = Kohana::$config->load('page');
 		$action   = Route::get('admin/page')->uri(array('action' =>'settings'));
 		$vocabs   = array(__('none'));
 
 		$view = View::factory('admin/page/settings')
 					->set('vocabs',  $vocabs)
-					->set('post',    $post)
+                ->set('config', $config)
 					->set('action',  $action);
 
 		$vocabs = Arr::merge($vocabs,
@@ -98,7 +98,7 @@ class Controller_Admin_Page extends Controller_Admin {
 		{
 			unset($_POST['page_settings'], $_POST['_token'], $_POST['_action']);
 
-			$cats = $post->get('category', array());
+            $cats = $config->get('category', array());
 
 			foreach ($_POST as $key => $value)
 			{
@@ -112,7 +112,7 @@ class Controller_Admin_Page extends Controller_Admin {
 							->execute();
 					}
 				}
-				$post->set($key, $value);
+                $config->set($key, $value);
 			}
 
 			Kohana::$log->add(Log::INFO, 'Page Settings updated.');
