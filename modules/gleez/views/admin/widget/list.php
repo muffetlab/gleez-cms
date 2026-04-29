@@ -42,7 +42,7 @@
 						</td>
 						<td class="action">
 							<?php
-								echo HTML::anchor($widget->edit_url, '<i class="fa fa-cog"></i>', array('class'=>'action-edit', 'title'=>__('Configure')));
+                            echo HTML::anchor($widget->edit_url, '<i class="fas fa-cog"></i>', array('class' => 'action-edit', 'title' => __('Configure')));
 
 								if ($static)
 								{

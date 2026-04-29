@@ -24,7 +24,7 @@
 					<?php if($enable_buddy): ?>
 						<?php echo HTML::anchor('buddy', '<i class="fa fa-fw fa-group"></i> '.__('Friends') .'<i class="fa fa-chevron-right list-group-chevron"></i>' , array('class' => 'list-group-item')); ?>
 					<?php endif; ?>
-					<?php echo HTML::anchor('user/edit', '<i class="fa fa-fw fa-cog"></i> '.__('Settings') .'<i class="fa fa-chevron-right list-group-chevron"></i>' , array('class' => 'list-group-item')); ?>
+                    <?php echo HTML::anchor('user/edit', '<i class="fas fa-fw fa-cog"></i> ' . __('Settings') . '<i class="fa fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item')); ?>
 				</div>
 			</div>
 

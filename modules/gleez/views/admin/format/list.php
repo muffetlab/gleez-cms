@@ -32,7 +32,7 @@
 						'action' => 'configure'
 					);
 
-					echo HTML::anchor(Route::get('admin/format')->uri($route_param), '<i class="fa fa-cog"></i>', array('class' => 'action-list', 'title' => __('Configure')));
+                echo HTML::anchor(Route::get('admin/format')->uri($route_param), '<i class="fas fa-cog"></i>', array('class' => 'action-list', 'title' => __('Configure')));
 				?>
 			</td>
 		</tr>

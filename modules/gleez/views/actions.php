@@ -1,6 +1,6 @@
 <div class="btn-group">
 	<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-		<i class="fa fa-cog"></i> <span class="caret"></span>
+        <i class="fas fa-cog"></i> <span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu">
 		<?php foreach($actions as $action): ?>
