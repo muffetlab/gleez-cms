@@ -38,7 +38,7 @@
 <div class="form-group <?php echo isset($errors['description']) ? 'has-error': ''; ?>">
 	<?php echo Form::label('description', __('Description'), array('class' => 'control-label col-md-3')); ?>
 	<div class="controls col-md-5">
-		<?php echo Form::textarea('description', $post->description, array('class' => 'form-control', 'rows' => 5)) ?>
+        <?php echo Form::textarea('description', $post->description ?? '', array('class' => 'form-control', 'rows' => 5)) ?>
 	</div>
 </div>
 

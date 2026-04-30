@@ -186,22 +186,22 @@ class Model_Term extends ORM_MPTT {
 		Path::save($values);
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties.
+     *
      * @param string $column
-	 * @return  mixed
-	 *
-	 * @uses  HTML::chars
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Path::load
-	 */
+     * @return mixed
+     * @throws Kohana_Exception
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Path::load
+     * @uses  HTML::chars
+     */
     public function __get(string $column)
 	{
         switch ($column) {
 			case 'name':
-				return HTML::chars(parent::__get('name'));
+                return HTML::chars($this->get('name') ?? '');
 			break;
 			case 'image':
 				return is_null(parent::__get('image')) ? 'media/images/camera.png' : parent::__get('image');
