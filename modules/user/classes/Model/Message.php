@@ -127,7 +127,7 @@ class Model_Message extends Gleez_Model
                 return $this->get('subject');
 			case 'rawbody':
 				// Raw fields without markup. Usage: during edit or etc!
-                return $this->get('body');
+                return $this->get('body') ?? '';
 			case 'url':
 				return Route::get('user/message')->uri(array( 'id' => $this->id, 'action' => 'view'));
 			case 'delete_url':
