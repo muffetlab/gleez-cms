@@ -12,7 +12,7 @@
 				<div class="form-group <?php echo isset($errors['mail']) ? 'has-error': ''; ?>">
 					<div class="col-md-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                            <span class="input-group-addon"><i class="fas fa-envelope fa-fw"></i></span>
 							<?php echo Form::input('mail', $post['mail'], array('class' => 'form-control input-lg')); ?>
 						</div>
 					</div>

@@ -30,7 +30,7 @@
 							<?php if (Kohana::$config->load('auth')->get('register')): ?>
 								<li><a href="<?php echo URL::site('/user/register'); ?>"><?php echo __('Sign Up')?></a></li>
 							<?php endif; ?>
-							<li><a href="<?php echo URL::site('/user/login'); ?>"><i class="fa fa-fw fa-chevron-left"></i><?php echo __('Sign In') ?></a></li>
+                            <li><a href="<?php echo URL::site('/user/login'); ?>"><i class="fas fa-fw fa-chevron-left"></i><?php echo __('Sign In') ?></a></li>
 						<?php else:  ?>
 						<li class="dropdown">
 							<?php echo HTML::anchor('#', User::getAvatar($_user, array('size' => 20)).' '.$_user->name.'<b class="caret"></b>', array('data-toggle' => 'dropdown', 'class' => 'dropdown-toggle')); ?>
@@ -41,15 +41,15 @@
 								<li class="divider"></li>
 								<li class="dropdown-header"><?php _e('Profile') ?></li>
                                 <li><a href="<?php echo URL::site('/user/profile') ?>"><i class="fas fa-fw fa-cog"></i> <?php echo __('Profile') ?></a></li>
-								<li><a href="<?php echo URL::site('/message/inbox') ?>"><i class="fa fa-fw fa-envelope"></i> <?php echo __('Messages') ?></a></li>
+                                <li><a href="<?php echo URL::site('/message/inbox') ?>"><i class="fas fa-fw fa-envelope"></i> <?php echo __('Messages') ?></a></li>
 								<li class="dropdown-header"><?php _e('Settings') ?></li>
-								<li><a href="<?php echo URL::site('/user/edit') ?>"><i class="fa fa-fw fa-pencil"></i> <?php echo __('Profile Settings') ?></a></li>
-								<li><a href="<?php echo URL::site('/user/password') ?>"><i class="fa fa-fw fa-lock"></i> <?php echo __('Change Password') ?></a></li>
+                                <li><a href="<?php echo URL::site('/user/edit') ?>"><i class="fas fa-fw fa-pencil"></i> <?php echo __('Profile Settings') ?></a></li>
+                                <li><a href="<?php echo URL::site('/user/password') ?>"><i class="fas fa-fw fa-lock"></i> <?php echo __('Change Password') ?></a></li>
 								<li class="divider"></li>
 								<?php if (User::is_admin()): ?>
-									<li><a href="<?php echo URL::site('/admin') ?>"><i class="fa fa-fw fa-dashboard"></i> <?php echo __('Dashboard') ?></a></li>
+                                    <li><a href="<?php echo URL::site('/admin') ?>"><i class="fas fa-fw fa-dashboard"></i> <?php echo __('Dashboard') ?></a></li>
 								<?php endif; ?>
-								<li><a href="<?php echo URL::site('/user/logout'); ?>"><i class="fa fa-fw fa-power-off"></i> <?php echo __('Sign Out') ?></a></li>
+                                <li><a href="<?php echo URL::site('/user/logout'); ?>"><i class="fas fa-fw fa-power-off"></i> <?php echo __('Sign Out') ?></a></li>
 							</ul>
 						</li>
 						<?php endif; ?>

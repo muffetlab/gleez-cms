@@ -8,23 +8,23 @@
 
 				<div class="list-group">
 					<a href="javascript:;" class="list-group-item">
-						<i class="fa fa-fw fa-asterisk"></i> <?php echo __('Activity Feed'); ?>
-						<i class="fa fa-chevron-right list-group-chevron"></i>
+                        <i class="fas fa-fw fa-asterisk"></i> <?php echo __('Activity Feed'); ?>
+                        <i class="fas fa-chevron-right list-group-chevron"></i>
 					</a>
 					<?php
 						if ($is_owner)
 						{
-							echo HTML::anchor('message/inbox', '<i class="fa fa-fw fa-envelope"></i> '.__('Messages') .'<i class="fa fa-chevron-right list-group-chevron"></i>' , array('class' => 'list-group-item'));
+                            echo HTML::anchor('message/inbox', '<i class="fas fa-fw fa-envelope"></i> ' . __('Messages') . '<i class="fas fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item'));
 						}
 						elseif ( ! User::is_guest())
 						{
-							echo HTML::anchor('message/compose', '<i class="fa fa-fw fa-envelope"></i> '.__('Send Message') .'<i class="fa fa-chevron-right list-group-chevron"></i>' , array('class' => 'list-group-item'));
+                            echo HTML::anchor('message/compose', '<i class="fas fa-fw fa-envelope"></i> ' . __('Send Message') . '<i class="fas fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item'));
 						}
 					?>
 					<?php if($enable_buddy): ?>
-						<?php echo HTML::anchor('buddy', '<i class="fa fa-fw fa-group"></i> '.__('Friends') .'<i class="fa fa-chevron-right list-group-chevron"></i>' , array('class' => 'list-group-item')); ?>
+                        <?php echo HTML::anchor('buddy', '<i class="fas fa-fw fa-people-group"></i> ' . __('Friends') . '<i class="fas fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item')); ?>
 					<?php endif; ?>
-                    <?php echo HTML::anchor('user/edit', '<i class="fas fa-fw fa-cog"></i> ' . __('Settings') . '<i class="fa fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item')); ?>
+                    <?php echo HTML::anchor('user/edit', '<i class="fas fa-fw fa-cog"></i> ' . __('Settings') . '<i class="fas fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item')); ?>
 				</div>
 			</div>
 
@@ -38,19 +38,19 @@
 					<div class="col-md-7">
 						<?php if ($is_owner OR User::is_admin()): ?>
 							<dl title="<?php echo __('Email') ?>">
-								<dt><i class="fa fa-fw fa-envelope"></i></dt>
+                                <dt><i class="fas fa-fw fa-envelope"></i></dt>
 								<dd><a class="email" data-email="<?php echo $user->mail ?>" href="mailto:<?php echo $user->mail ?>"><?php echo $user->mail ?></a></dd>
 							</dl>
 						<?php endif; ?>
 						<?php if ($user->homepage): ?>
 							<dl title="<?php echo __('Home Page') ?>">
-								<dt><i class="fa fa-fw fa-globe"></i></dt>
+                                <dt><i class="fas fa-fw fa-globe"></i></dt>
 								<dd><?php echo HTML::anchor($user->homepage, $user->homepage, array('itemprop' => 'url')); ?></dd>
 							</dl>
 						<?php endif; ?>
 
 						<dl title="<?php echo __('Birthday') ?>">
-							<dt><i class="fa fa-fw fa-calendar"></i></dt>
+                            <dt><i class="fas fa-fw fa-calendar"></i></dt>
 							<dd>
 								<time itemprop="birthDate" content="<?php echo Date::date_format($user->dob, DateTime::ISO8601)?>" datetime="<?php echo Date::date_format($user->dob, DateTime::ISO8601)?>">
 									<?php echo Date::date_format($user->dob); ?>
@@ -59,7 +59,7 @@
 						</dl>
 						<?php if (User::is_admin()): ?>
 							<dl title="<?php echo __('User Groups') ?>">
-								<dt><i class="fa fa-fw fa-group"></i></dt>
+                                <dt><i class="fas fa-fw fa-people-group"></i></dt>
 								<dd class="tagcloud">
 									<?php foreach ($user->roles() as $role): ?>
                                         <span><?php echo HTML::chars(ucfirst($role)); ?></span>
@@ -99,15 +99,15 @@
 
 	<div class="col-md-3 col-sm-4 col-xs-12 col-sidebar-right">
 		<div class="list-group">
-			<a href="#" class="list-group-item"><h3 class="pull-right"><i class="fa fa-sign-in"></i></h3>
+            <a href="#" class="list-group-item"><h3 class="pull-right"><i class="fas fa-sign-in"></i></h3>
 				<h4 class="list-group-item-heading"><?php echo Date::date_format($user->created, 'M d, Y'); ?></h4>
 				<p class="list-group-item-text"><?php echo __('Joined on'); ?></p>
 			</a>
-			<a href="#" class="list-group-item"><h3 class="pull-right"><i class="fa fa-power-off"></i></h3>
+            <a href="#" class="list-group-item"><h3 class="pull-right"><i class="fas fa-power-off"></i></h3>
 				<h4 class="list-group-item-heading"><?php echo $user->logins; ?></h4>
 				<p class="list-group-item-text"><?php echo __('Visits'); ?></p>
 			</a>
-			<a href="#" class="list-group-item"><h3 class="pull-right"><i class="fa fa-fire"></i></h3>
+            <a href="#" class="list-group-item"><h3 class="pull-right"><i class="fas fa-fire"></i></h3>
 				<h4 class="list-group-item-heading"><?php echo Date::date_format($user->login, 'h:i a M d, Y'); ?></h4>
 				<p class="list-group-item-text"><?php echo  __('Last Visit'); ?></p>
 			</a>

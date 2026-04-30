@@ -14,7 +14,7 @@
 							<?php echo Form::label('nick', __('Display Name'), array('class' => 'col-sm-3 control-label')) ?>
 							<div class="col-sm-9">
 								<div class="input-group col-sm-6">
-									<span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <span class="input-group-addon"><i class="fas fa-user"></i></span>
 									<?php echo Form::input('nick', $user->nick, array('class' => 'form-control', 'rel' => 'tooltip', 'data-placement' => 'right', 'title' => __('Will be public'))); ?>
 								</div>
 							</div>
@@ -53,7 +53,7 @@
 							<?php echo Form::label('homepage', __('Home Page'), array('class' => 'col-sm-3 control-label')) ?>
 							<div class="col-sm-9">
 								<div class="input-group col-sm-10">
-									<span class="input-group-addon"><i class="fa fa-link"></i></span>
+                                    <span class="input-group-addon"><i class="fas fa-link"></i></span>
 									<?php echo Form::input('homepage', $user->homepage, array('class' => 'form-control', 'rel' => 'tooltip', 'data-placement' => 'right', 'title' => __('Will be public'))); ?>
 								</div>
 							</div>
@@ -63,7 +63,7 @@
 							<?php echo Form::label('mail', __('E-Mail'), array('class' => 'col-sm-3 control-label')) ?>
 							<div class="col-sm-9">
 								<div class="input-group col-sm-10">
-									<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    <span class="input-group-addon"><i class="fas fa-envelope"></i></span>
 									<?php echo Form::input('mail', $user->mail, array('class' => 'form-control', 'rel' => 'tooltip', 'data-placement' => 'right', 'title' => __('Will be private'))); ?>
 								</div>
 							</div>
@@ -82,7 +82,7 @@
 					<div class="panel-footer">
 						<div class="row">
 							<div class="col-sm-6">
-								<?php echo HTML::anchor(Route::get('user')->uri(array('action' => 'profile')), '<i class="fa fa-arrow-left"></i> '.__('Profile'), array('class' => 'btn')); ?>
+                                <?php echo HTML::anchor(Route::get('user')->uri(array('action' => 'profile')), '<i class="fas fa-arrow-left"></i> ' . __('Profile'), array('class' => 'btn')); ?>
 							</div>
 							<div class="col-sm-6 form-actions-right">
                                 <?php echo Form::button('user_edit', __('Save'), array('class' => 'btn btn-success')) ?>

@@ -47,7 +47,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-6">
-			<?php echo HTML::anchor(Route::get('user/message')->uri(array('action' => 'inbox')), '<i class="fa fa-arrow-left"></i> '.__('Back to Inbox'), array('class' => 'btn')); ?>
+            <?php echo HTML::anchor(Route::get('user/message')->uri(array('action' => 'inbox')), '<i class="fas fa-arrow-left"></i> ' . __('Back to Inbox'), array('class' => 'btn')); ?>
 		</div>
 		<div class="col-sm-6 form-actions-right">
             <?php echo Form::button('message', __('Send Message'), array('class' => 'btn btn-success')); ?>

@@ -231,11 +231,11 @@ class Menu {
 				$attributes['data-parent'] = '#menu-'.$key;
 				$item['url'] ='#collapse-'.$key;
 				$class = 'panel-collapse collapse';
-				$caret = ($i == 2) ? '': '<i class="fa fa-chevron-down submenu"></i>';
+                $caret = ($i == 2) ? '' : '<i class="fas fa-chevron-down submenu"></i>';
 			}
 
 			//set title
-			$title = (isset($item['image'])) ? '<i class="fa fa-fw '.$item['image'].'"></i>' : '';
+            $title = (isset($item['image'])) ? '<i class="fa-fw ' . $item['image'] . '"></i>' : '';
 			// localize item menu
             $title .= '<span>' . HTML::chars(__($item['title'])) . $caret . '</span>';
 

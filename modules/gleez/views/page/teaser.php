@@ -3,13 +3,13 @@
 		<?php if ($config->use_submitted): ?>
 			<div class="col-md-7">
 				<span class="post-created">
-					<i class="fa fa-calendar"></i>
+                    <i class="fas fa-calendar"></i>
 					<time itemprop="datePublished" content="<?php echo Date::date_format($post->created, DateTime::ISO8601)?>" datetime="<?php echo Date::date_format($post->created, DateTime::ISO8601)?>">
 						<?php echo Date::date_format($post->created); ?>
 					</time>
 				</span>
 				<span class="post-author">
-					<i class="fa fa-user"></i>
+                    <i class="fas fa-user"></i>
 					<?php echo HTML::anchor($post->user->url, $post->user->name, array('title' => $post->user->nick, 'itemprop' => 'author')); ?>
 				</span>
 			</div>

@@ -359,7 +359,7 @@ class HTML extends Kohana_HTML
 	 */
 	public static function icon($url, $icon, array $attrs = array())
 	{
-		return self::anchor($url, '<i class="fa '.$icon.'"></i>', $attrs);
+        return self::anchor($url, '<i class="' . $icon . '"></i>', $attrs);
 	}
 
 	/**

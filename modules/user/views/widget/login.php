@@ -7,7 +7,7 @@
 		<?php echo Form::label('name', __('Username/Email'), array('class' => 'sr-only control-label')); ?>
 
 		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <span class="input-group-addon"><i class="fas fa-user"></i></span>
 			<?php echo Form::input('name', $post->name, array('class' => 'form-control', 'placeholder' => __('Email'))); ?>
 		</div>
 	</div>
@@ -53,7 +53,7 @@
 				<?php
 					foreach ($providers as $name => $provider)
 					{
-						echo HTML::anchor($provider['url'], '<i class="fa fa-lg fa-'.$provider['icon'].'"></i>', array('class' => 'btn btn-default', 'title' =>__('Login with :provider', array(':provider' => $name))));
+                        echo HTML::anchor($provider['url'], '<i class="fab fa-lg fa-' . $provider['icon'] . '"></i>', array('class' => 'btn btn-default', 'title' => __('Login with :provider', array(':provider' => $name))));
 					}
 				?>
 			</div>

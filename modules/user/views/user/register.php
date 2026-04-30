@@ -110,11 +110,11 @@
 
 					$providers = Auth_ORM::providers();
 
-					echo HTML::anchor(Route::get('user')->uri(array('action' => 'login')), '<i class="fa fa-home"></i> '.$site_name, array('class' => 'btn btn-default', 'title' =>__('Login with :provider', array(':provider' => $site_name)), 'rel' => 'tooltip', 'data-placement' => 'right'));
+                echo HTML::anchor(Route::get('user')->uri(array('action' => 'login')), '<i class="fas fa-home"></i> ' . $site_name, array('class' => 'btn btn-default', 'title' => __('Login with :provider', array(':provider' => $site_name)), 'rel' => 'tooltip', 'data-placement' => 'right'));
 
 					foreach($providers as $name => $provider)
 					{
-						echo HTML::anchor($provider['url'], '<i class="fa fa-'.$provider['icon'].'"></i>'.ucfirst($name), array('class' => 'btn btn-default', 'title' =>__('Login with :provider', array(':provider' => $name)), 'rel' => 'tooltip', 'data-placement' => 'right'));
+                        echo HTML::anchor($provider['url'], '<i class="fab fa-' . $provider['icon'] . '"></i>' . ucfirst($name), array('class' => 'btn btn-default', 'title' => __('Login with :provider', array(':provider' => $name)), 'rel' => 'tooltip', 'data-placement' => 'right'));
 					}
 				?>
 			</div>

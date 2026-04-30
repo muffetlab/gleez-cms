@@ -20,9 +20,9 @@
 				<?php foreach($gleezEnv['all'] as $label => $value): ?>
 					<p>
 						<?php if(defined($label) && Kohana::$environment == constant($label)):?>
-							<i class="fa fa-check text-success"></i>&nbsp;
+                            <i class="fas fa-check text-success"></i>&nbsp;
 						<?php else: ?>
-							<i class="fa fa-times text-muted"></i>&nbsp;
+                            <i class="fas fa-times text-muted"></i>&nbsp;
 						<?php endif;?>
 						<span class="title"><?php echo $label ?></span>
 						<span class="pull-right"><code><?php echo $value ?></code></span>

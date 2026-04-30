@@ -329,7 +329,7 @@ class Form extends Kohana_Form
 
         $out .= '<div' . HTML::attributes(['data-dtp-provider' => $name, 'class' => 'input-group date']) . '>';
 		$out .= '<input'.HTML::attributes($attrs).'>';
-		$out .= '<span class="input-group-addon"><i class="fa fa-calendar"></i></span>';
+        $out .= '<span class="input-group-addon"><i class="fas fa-calendar"></i></span>';
 		$out .= '</div>';
 
 		return $out;

@@ -27,7 +27,7 @@
 						<?php echo HTML::anchor(Route::get('user')->uri(array('action' => 'profile')), User::getAvatar($_user, array('size' => 20)).' '.$_user->name); ?>
 					</li>
 					<li>
-						<a href="<?php echo URL::site('/user/logout'); ?>" title="<?php echo __('Sign Out') ?>"><i class="fa fa-fw fa-power-off"></i></a>
+                        <a href="<?php echo URL::site('/user/logout'); ?>" title="<?php echo __('Sign Out') ?>"><i class="fas fa-fw fa-power-off"></i></a>
 					</li>
 				</ul>
 			</nav><!--/.nav-collapse -->

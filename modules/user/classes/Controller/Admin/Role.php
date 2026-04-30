@@ -43,15 +43,15 @@ class Controller_Admin_Role extends Controller_Admin {
 					array(
                         HTML::chars($role->name),
                         HTML::chars($role->description),
-						$role->special ? '<i class="fa fa-check-circle"></i>' : '<i class="fa fa-ban"></i>',
+                            $role->special ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-ban"></i>',
 
 						$role->special
-                                ? HTML::icon($role->perm_url, 'fa-lock', array('title' => __('Edit Permissions')))
+                                ? HTML::icon($role->perm_url, 'fas fa-lock', array('title' => __('Edit Permissions')))
                                 : HTML::icon($role->edit_url, 'far fa-edit', array('title' => __('Edit Role')))
                                 . '&nbsp;'
                                 . HTML::icon($role->delete_url, 'fas fa-trash-can', array('title' => __('Delete Role')))
                                 . '&nbsp;'
-                                . HTML::icon($role->perm_url, 'fa-lock', array('title' => __('Edit Permissions')))
+                                . HTML::icon($role->perm_url, 'fas fa-lock', array('title' => __('Edit Permissions')))
 					)
 				);
 			}

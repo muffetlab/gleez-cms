@@ -65,7 +65,7 @@
 			<div class="panel-footer">
 				<div class="row">
 					<div class="col-sm-6">
-						<?php echo HTML::anchor(Route::get('user')->uri(array('action' => 'profile')), '<i class="fa fa-arrow-left"></i> '.__('Profile'), array('class' => 'btn')); ?>
+                        <?php echo HTML::anchor(Route::get('user')->uri(array('action' => 'profile')), '<i class="fas fa-arrow-left"></i> ' . __('Profile'), array('class' => 'btn')); ?>
 					</div>
 					<div class="col-sm-6 form-actions-right">
 						<?php echo Form::submit('change_pass', __('Save'), array('class' => 'btn btn-info')); ?>

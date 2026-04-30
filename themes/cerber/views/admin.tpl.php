@@ -13,7 +13,7 @@
 			<div class="wrapper">
 				<?php if ($title): ?>
 					<div class="page-header">
-						<h1> <i class="fa fa-info-circle"></i> <?php echo $title;?></h1>
+                        <h1><i class="fas fa-info-circle"></i> <?php echo $title; ?></h1>
 					</div>
 				<?php endif; ?>
 				<div class="content-wrapper">

@@ -65,7 +65,7 @@
 						<?php
 						foreach ($providers as $name => $provider)
 						{
-							echo HTML::anchor($provider['url'], '<i class="fa fa-'.$provider['icon'].'"></i>', array('class' => 'btn btn-default', 'title' =>__('Login with :provider', array(':provider' => $name))));
+                            echo HTML::anchor($provider['url'], '<i class="fab fa-' . $provider['icon'] . '"></i>', array('class' => 'btn btn-default', 'title' => __('Login with :provider', array(':provider' => $name))));
 						}
 						?>
 					</div>
