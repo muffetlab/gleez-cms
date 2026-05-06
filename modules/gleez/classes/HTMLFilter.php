@@ -124,14 +124,13 @@ class HTMLFilter {
 	 * Create new Core object and initialize our own settings
 	 *
 	 * @param  string   $text    Text string to filter html
-	 * @param  integer  $format  Format id [Optional]
 	 * @param  array    $filter  Array of allowed tags [Optional]
 	 *
 	 * @used   Config::load
 	 * @used   Config::get
 	 * @used   Profiler::start
 	 */
-	public function __construct($text, $format = 1, array $filter = NULL)
+    public function __construct($text, array $filter = NULL)
 	{
 		// Be sure to only profile if it's enabled
 		if (Gleez::$profiling)
@@ -150,12 +149,6 @@ class HTMLFilter {
 		if ($config->allowed_tags AND is_array($config->allowed_tags))
 		{
 			$this->allowed_tags = $config->allowed_tags;
-		}
-
-		if ( ! array_key_exists($format, $config->formats))
-		{
-			// make sure a valid format id exists, if not set default format id
-			$format = (int) $config->get('default_format', 1);
 		}
 
 		if (isset($filter['settings']['allowed_html']))
@@ -206,14 +199,13 @@ class HTMLFilter {
 	 * string if `$string` is not valid UTF-8.
 	 *
 	 * @param   string   $text    Text string to filter html
-	 * @param   integer  $format  Format id [Optional]
 	 * @param   array    $filter  Array of allowed tags [Optional]
 	 *
 	 * @return  HTMLFilter
 	 */
-	public static function factory($text, $format = 1, array $filter = NULL)
+    public static function factory($text, array $filter = NULL)
 	{
-		return new HTMLFilter($text, $format, $filter);
+        return new HTMLFilter($text, $filter);
 	}
 
 	/**

@@ -195,13 +195,12 @@ class Text extends Kohana_Text
 	 * Provides filtering of input into accepted HTML.
 	 *
 	 * @param $text
-	 * @param $format
 	 * @param $filter
 	 * @return string
 	 */
-	public static function html($text, $format, $filter)
+    public static function html($text, $filter)
 	{
-		$text = (string) HTMLFilter::factory($text, $format, $filter)->render();
+        $text = HTMLFilter::factory($text, $filter)->render();
 
 		if ($filter['settings']['html_nofollow'])
 		{
@@ -230,7 +229,7 @@ class Text extends Kohana_Text
 	 * @link http://michelf.ca/projects/php-markdown/
 	 * @link http://littoral.michelf.ca/code/php-markdown/php-markdown-extra-1.2.6.zip
 	 */
-	public static function markdown($text, $format, $filter)
+    public static function markdown($text)
 	{
 		include_once Kohana::find_file('vendor/Markdown', 'markdown');
 

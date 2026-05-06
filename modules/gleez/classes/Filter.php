@@ -201,7 +201,7 @@ class Filter {
 			$prepare_callback = $filter_info[$name]->prepare_callback;
 			if ($filter['status'] AND !empty($prepare_callback))
 			{
-				$text->text = Filter::execute( $prepare_callback, $text->text, $text->format, $filter );
+                $text->text = Filter::execute($prepare_callback, $text->text, $filter);
 			}
 		}
 
@@ -211,7 +211,7 @@ class Filter {
 			$process_callback = $filter_info[$name]->process_callback;
 			if ($filter['status'] AND !empty($process_callback))
 			{
-				$text->text = Filter::execute( $process_callback, $text->text, $text->format, $filter );
+                $text->text = Filter::execute($process_callback, $text->text, $filter);
 			}
 		}
 
@@ -223,12 +223,11 @@ class Filter {
 	 *
 	 * @param  mixed   $callback   The callback to be executed.
 	 * @param  string  $text       The text to be filtered.
-	 * @param  string  $format     The format id of the text to be filtered.
 	 * @param  object  $filter     The filter object.
 	 *
 	 * @return string  $text       The filtered text
 	 */
-	public static function execute($callback, $text, $format, $filter)
+    public static function execute($callback, $text, $filter)
 	{
 		$args = func_get_args();
 		array_shift($args);
@@ -243,6 +242,10 @@ class Filter {
 		{
 			try
 			{
+                if ($callback === ['Text', 'auto_p']) {
+                    return Text::auto_p($text);
+                }
+
 				return  call_user_func_array($callback, $args);
 			}
 			catch (Exception $e)
