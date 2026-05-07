@@ -274,7 +274,7 @@ class Widgets {
 
 		$response = array();
 
-		foreach ($this->_regions[$this->_region] as $id => $name)
+        foreach ($this->_regions[$this->_region] as $name)
 		{
 			$response[] = $this->get_widget($name, TRUE, $this->_region, $this->_format);
 		}

@@ -342,8 +342,6 @@ class ACL {
 	 */
 	public static function site_roles()
 	{
-		$roles = array();
-
         $cache = Cache::instance();
 
         if (!$roles = $cache->get('roles:site_roles')) {
@@ -367,8 +365,6 @@ class ACL {
 	 */
 	public static function site_perms()
 	{
-		$perms = array();
-
         $cache = Cache::instance();
 
         if (!$perms = $cache->get('roles:site_perms')) {

@@ -166,7 +166,6 @@ class Model_Path extends Gleez_Model
 	{
 		// Load routes
 		$routes = Route::all();
-		$params = NULL;
 
 		foreach ($routes as $name => $route)
 		{

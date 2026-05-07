@@ -56,7 +56,7 @@ class Message {
 		// Add new message
 		if (is_array($message))
 		{
-			foreach ($message as $_type => $_message)
+            foreach ($message as $_message)
 			{
 				$messages[] = (object) array(
 					'type'     => $type,

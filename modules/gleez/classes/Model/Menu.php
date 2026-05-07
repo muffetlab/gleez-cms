@@ -141,8 +141,6 @@ class Model_Menu extends ORM_MPTT {
 	 */
 	private function _unique_slug($str)
 	{
-		static $i;
-
 		$i = 1;
 		$original = $str;
 

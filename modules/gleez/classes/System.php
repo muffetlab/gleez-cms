@@ -105,7 +105,6 @@ class System {
 	 */
 	public static function icons()
 	{
-		$icons = array();
         if (!$icons = Cache::instance()->get('icons:fa-icons')) {
             $allPath = Kohana::find_file('media/fontawesome/css', 'all.min', 'css');
             $brandsPath = Kohana::find_file('media/fontawesome/css', 'brands.min', 'css');

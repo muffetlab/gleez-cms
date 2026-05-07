@@ -356,11 +356,6 @@ class Controller_Blog extends Template {
 				->select_list('id', 'name', '--');
 		}
 
-		if ($config->get('primary_image', FALSE))
-		{
-			$image = $post->image;
-		}
-
 		if($this->valid_post('blog'))
 		{
 			try

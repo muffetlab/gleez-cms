@@ -177,7 +177,7 @@ class Theme {
 			}
 
 			// Iterate over each config path
-			foreach ($paths as $key => $path)
+            foreach ($paths as $path)
 			{
 				foreach (glob($path . "*/theme.info") as $file)
 				{

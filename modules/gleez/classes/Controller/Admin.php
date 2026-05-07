@@ -71,8 +71,8 @@ class Controller_Admin extends Template {
 		$destination = isset($_GET['destination']) ? $_GET['destination'] : 'admin';
 		$params      = array('action' => 'login');
 		$action      = Route::get('admin/login')->uri($params).URL::query(array('destination' => $destination));
-		
-		if($layout = kohana::find_file('views', 'layouts/login'))
+
+        if (kohana::find_file('views', 'layouts/login'))
 		{
 			$this->template->set_filename('layouts/login');
 		}			

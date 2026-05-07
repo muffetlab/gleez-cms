@@ -215,7 +215,7 @@ class Controller_Install_Install extends Controller_Template {
 				'pass' => $password = $_POST['pass'],
 				'hostname' => $hostname = $_POST['hostname'],
 				'database' => $database = $_POST['database'],
-				'table_prefix' => $table_prefix = $_POST['table_prefix']
+                    'table_prefix' => $_POST['table_prefix']
 			);
 
 			try
@@ -381,7 +381,7 @@ class Controller_Install_Install extends Controller_Template {
 			throw new Exception('version');
 		}
 
-		if ($select = mysqli_select_db($link, $database)) 
+        if (mysqli_select_db($link, $database))
 		{
 			return TRUE;
 		}
@@ -389,7 +389,7 @@ class Controller_Install_Install extends Controller_Template {
 		{
 			mysqli_query($link, "CREATE DATABASE `{$database}`");
 
-			if (! $select = mysqli_select_db($link, $database)) 
+            if (!mysqli_select_db($link, $database))
 			{
 				throw new Exception('select');
 			}

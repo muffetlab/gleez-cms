@@ -78,7 +78,6 @@ class Controller_Admin_Format extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/format')->uri(), 404);
 		}
 
-		$fallback_format = (int) $config->default_format;
 		$formats = $this->_format->get_all();
 		$formats[$id]['id'] = $id;
 

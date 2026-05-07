@@ -273,7 +273,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 
 		if ($operation['callback'])
 		{
-			list($func, $params) = Arr::callback($operation['callback']);
+            list($func) = Arr::callback($operation['callback']);
 			if (isset($operation['arguments']))
 			{
 				$args = array_merge(array($blogs), $operation['arguments']);

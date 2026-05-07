@@ -176,8 +176,6 @@ class Text extends Kohana_Text
 
 		Module::event('inputfilter', $textObj);
 
-		$text = (is_string($textObj->text)) ? $textObj->text : $text;
-
 		$text = Filter::process($textObj); // run all filters
 
 		// Store in cache with a minimum expiration time of 1 day.
