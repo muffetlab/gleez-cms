@@ -10,17 +10,49 @@
  */
 class Controller_Admin_Modules extends Controller_Admin {
 
-	/**
-	 * Module list
-	 *
-	 * @uses  Cache::delete
-	 * @uses  Module::load_modules
-	 * @uses  Module::available
-	 * @uses  Route::uri
-	 * @uses  Route::get
-	 */
+    /**
+     * Module list.
+     *
+     * @throws Kohana_Exception
+     * @uses  Module::load_modules
+     * @uses  Module::available
+     * @uses  Route::uri
+     * @uses  Route::get
+     * @uses  Cache::delete
+     */
 	public function action_list()
 	{
+        if ($this->valid_post('modules')) {
+            $messages = ['error' => [], 'warn' => []];
+
+            foreach (Module::available() as $moduleName => $info) {
+                if ($info->locked) {
+                    continue;
+                }
+
+                $desired = Arr::get($this->request->post(), $moduleName) === '1';
+
+                if ($info->active && !$desired && Module::is_active($moduleName)) {
+                    $messages = Arr::merge($messages, Module::can_deactivate($moduleName));
+                } elseif (!$info->active && $desired && !Module::is_active($moduleName)) {
+                    $messages = Arr::merge($messages, Module::can_activate($moduleName));
+                }
+            }
+
+            // Clear any cache for sure
+            Cache::instance()->delete_all();
+
+            if (!empty($messages['error'])) {
+                Message::error($messages['error']);
+            } elseif (!empty($messages['warn'])) {
+                Message::warn($messages['warn']);
+            } else {
+                $this->_do_save();
+
+                $this->request->redirect(Route::get('admin/module')->uri(), 200);
+            }
+        }
+
 		// Clear any cache for sure
 		// Note: Gleez Caching only available in production
 		Cache::instance()->delete('load_modules');
@@ -30,78 +62,10 @@ class Controller_Admin_Modules extends Controller_Admin {
 
 		$view = View::factory('admin/module/list')
 				->set('available', Module::available())
-				->set('action',    Route::get('admin/module')->uri(array('action' => 'confirm')) );
+                ->set('action', Route::get('admin/module')->uri());
 
 		$this->title = __('Modules');
 		$this->response->body($view);
-	}
-
-	/**
-	 * Confirm action
-	 *
-	 * @throws  HTTP_Exception_403
-	 *
-	 * @uses    Arr::get
-	 * @uses    Module::available
-	 * @uses    Module::is_active
-	 * @uses    Module::can_deactivate
-	 * @uses    Module::is_active
-	 * @uses    Module::can_activate
-	 * @uses    Cache::delete_all
-	 * @uses    Route::uri
-	 * @uses    Route::get
-	 * @uses    Request::redirect
-	 */
-	public function action_confirm()
-	{
-		if ( ! $this->valid_post('modules'))
-		{
-			throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action.');
-		}
-
-		$messages = array("error" => array(), "warn" => array());
-		$desired_list = array();
-
-		foreach (Module::available() as $module_name => $info)
-		{
-			if ($info->locked)
-			{
-				continue;
-			}
-
-			if ($desired = Arr::get($_POST, $module_name) == 1)
-			{
-				$desired_list[] = $module_name;
-			}
-
-			if ($info->active AND ! $desired AND Module::is_active($module_name))
-			{
-				$messages = Arr::merge($messages, Module::can_deactivate($module_name));
-			}
-			else if (!$info->active AND $desired AND ! Module::is_active($module_name))
-			{
-				$messages = Arr::merge($messages, Module::can_activate($module_name));
-			}
-		}
-
-		// Clear any cache for sure
-		Cache::instance()->delete_all();
-
-		if (empty($messages["error"]) AND empty($messages["warn"]))
-		{
-			$this->_do_save();
-			$result["reload"] = 1;
-
-			$this->request->redirect(Route::get('admin/module')->uri(), 200);
-		}
-		else
-		{
-			$v = new View('admin_modules_confirm.html');
-			$v->messages = $messages;
-			$v->modules = $desired_list;
-			$result["dialog"] = (string) $v;
-			$result["allow_continue"] = empty($messages["error"]);
-		}
 	}
 
 	/**
