@@ -79,20 +79,10 @@ class Controller_Admin_Page extends Controller_Admin {
 
         $config = Kohana::$config->load('page');
 		$action   = Route::get('admin/page')->uri(array('action' =>'settings'));
-		$vocabs   = array(__('none'));
 
 		$view = View::factory('admin/page/settings')
-					->set('vocabs',  $vocabs)
                 ->set('config', $config)
 					->set('action',  $action);
-
-		$vocabs = Arr::merge($vocabs,
-            ORM::factory('Term')
-				->where('lft', '=', 1)
-				->where('type', '=', 'page')
-				->find_all()
-				->as_array('id', 'name')
-		);
 
 		if ($this->valid_post('page_settings'))
 		{
@@ -275,7 +265,7 @@ class Controller_Admin_Page extends Controller_Admin {
 
 		if ($operation['callback'])
 		{
-			list($func, $params) = Arr::callback($operation['callback']);
+            list($func) = Arr::callback($operation['callback']);
 			if (isset($operation['arguments']))
 			{
 				$args = array_merge(array($pages), $operation['arguments']);
