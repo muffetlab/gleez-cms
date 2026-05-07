@@ -344,7 +344,7 @@ a {
 	padding: 0;
 }
 
-.panel-body ul.menus li .fa {
+.panel-body ul.menus li .fas, .panel-body ul.menus li .far, .panel-body ul.menus li .fab {
 	color: #999;
 	-webkit-transition: color .25s ease-in 0;
 	   -moz-transition: color .25s ease-in 0;
@@ -402,7 +402,7 @@ a {
 }
 
 .panel-body ul.menus li.active a,
-.panel-body ul.menus li.active a .fa {
+.panel-body ul.menus li.active a .fas, .panel-body ul.menus li.active a .far, .panel-body ul.menus li.active a .fab {
 	color: #222;
 }
 
@@ -713,7 +713,7 @@ li.comment{
 	vertical-align: middle;
 }
 
-.btn-sm .fa, .btn-xs .fa {
+.btn-sm .fas, .btn-sm .far, .btn-sm .fab, .btn-xs .fas, .btn-xs .far, .btn-xs .fab {
 	font-size: 13px;
 }
 
