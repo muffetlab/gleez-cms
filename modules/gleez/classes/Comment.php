@@ -24,7 +24,7 @@ class Comment {
 	const PINGBACK          = 1;
 	const TRACKBACK         = 2;
 
-	public static function form($controller, $item, $_action = FALSE, $captcha = FALSE)
+    public static function form($controller, $item, $captcha = FALSE)
 	{
 		// Set default comment form action
 		$action = Request::current()->uri();
@@ -38,16 +38,6 @@ class Comment {
 					->set('item',        $item)
 					->bind('errors',     $errors)
 					->bind('post',       $post);
-
-		// Set form action either from model or action param
-		if ($item->url)
-		{
-			$action = (string)$item->url;
-		}
-		elseif($_action)
-		{
-			$action = $_action;
-		}
 
 		// Set if captcha necessary
 		if ($captcha)
