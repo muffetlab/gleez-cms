@@ -25,7 +25,11 @@ class Controller_Resize extends Controller {
 		parent::before();
 	}
 
-	public function action_image()
+    /**
+     * @throws Kohana_Exception
+     * @throws Request_Exception
+     */
+    public function action_image()
 	{
 		$this->resize_type = $this->request->param('type', 'crop');
 		$dimensions  	   = $this->request->param('dimensions', '80x80');
@@ -38,7 +42,7 @@ class Controller_Resize extends Controller {
 		if( !$this->resized_image ) return;
 
 		// Check if the browser sent an "if-none-match: <etag>" header, and tell if the file hasn't changed
-		$this->response->check_cache(sha1($this->request->uri()).filemtime($this->resized_image), $this->request);
+        $this->check_cache(sha1($this->request->uri()) . filemtime($this->resized_image));
 
 		$this->response->headers('content-type',  $this->resized_image_type);
 		$this->response->body( Image::factory($this->resized_image)->render() );
