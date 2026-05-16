@@ -2,7 +2,7 @@
   	<?php if ($widget->show_title): ?>
 		<div class="panel-heading">
             <h3 class="panel-title">
-                <i class="fa <?php echo HTML::chars($widget->icon); ?>"></i> <?php echo HTML::chars($title); ?>
+                <i class="<?php echo HTML::chars($widget->icon); ?>"></i> <?php echo HTML::chars($title); ?>
             </h3>
 		</div>
   	<?php endif; ?>
