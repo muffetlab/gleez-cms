@@ -437,16 +437,12 @@ class ACL {
 	 * @param   string     $action  The action `view|edit|delete` default `view`
 	 * @param   ORM        $post    The post object
 	 * @param   Model_User $user    The user object to check permission, defaults to loaded in user
-	 * @param   string     $misc    The misc element usually `id|slug` for logging purpose
-	 *
 	 * @return  boolean
-	 *
 	 * @throws  HTTP_Exception_404
-	 *
 	 * @uses    User::active_user
 	 * @uses    Module::event
 	 */
-	public static function post($action = 'view', $post, Model_User $user = NULL, $misc = NULL)
+    public static function post($action = 'view', $post, Model_User $user = NULL)
 	{
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
@@ -541,16 +537,12 @@ class ACL {
 	 * @param   string     $action   The action `view|edit|delete` default `view`
 	 * @param   ORM        $comment  The comment object
 	 * @param   Model_User $user     The user object to check permission, defaults to loaded in user
-	 * @param   string     $misc     The misc element usually `id|slug` for logging purpose
-	 *
 	 * @return  boolean
-	 *
 	 * @throws  HTTP_Exception_404
-	 *
 	 * @uses    User::active_user
 	 * @uses    Module::event
 	 */
-	public static function comment($action = 'view', ORM $comment, Model_User $user = NULL, $misc = NULL)
+    public static function comment($action = 'view', ORM $comment, Model_User $user = NULL)
 	{
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{

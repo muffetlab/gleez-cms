@@ -89,14 +89,14 @@ class Controller_Comments extends Controller {
 		}
 		else
 		{
-			$this->create_list('publish', FALSE);
+            $this->create_list();
 		}
 	}
 
 	/**
 	 * List comments
 	 */
-	protected function create_list($state = 'publish', $admin = FALSE, $uri = '')
+    protected function create_list($state = 'publish', $uri = '')
 	{
 		// Get parent id
 		$parent_id = (int) $this->request->param('id', 0);

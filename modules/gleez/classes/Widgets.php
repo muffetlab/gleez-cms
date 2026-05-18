@@ -276,7 +276,7 @@ class Widgets {
 
         foreach ($this->_regions[$this->_region] as $name)
 		{
-			$response[] = $this->get_widget($name, TRUE, $this->_region, $this->_format);
+            $response[] = $this->get_widget($name, TRUE, $this->_format);
 		}
 
 		return trim(implode(PHP_EOL.PHP_EOL, $response));
@@ -287,13 +287,12 @@ class Widgets {
 	 *
 	 * @param   string   $name     Name of the widget
 	 * @param   boolean  $visible  Visibility permission from widget or FALSE to skip
-	 * @param   boolean  $region   The name of the region ex:left, right or FALSE for all regions
 	 * @param   boolean  $format   The format of the output ex:xhtml, html or FALSE for object
 	 *
 	 * @return  object  Widget widget
 	 * @return  string  HTML widget
 	 */
-	public function get_widget($name, $visible = FALSE, $region = FALSE, $format =  FALSE)
+    public function get_widget($name, $visible = FALSE, $format = FALSE)
 	{
 		$response = FALSE;
 
