@@ -60,12 +60,6 @@ class Model_Message extends Gleez_Model
 	);
 
 	/**
-	 * Ignored columns
-	 * @var array
-	 */
-	protected $_ignored_columns = array('draft');
-
-	/**
 	 * Sets the rules for Contact form
 	 *
 	 * @return  array

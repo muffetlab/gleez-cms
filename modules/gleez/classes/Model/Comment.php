@@ -50,15 +50,6 @@ class Model_Comment extends Gleez_Model
 	);
 
 	/**
-	 * Ignored columns
-	 * @var array
-	 */
-	protected $_ignored_columns = array(
-		'author_name',
-		'author_date'
-	);
-
-	/**
 	 * Rules for the post model
 	 *
 	 * @return  array  Rules
