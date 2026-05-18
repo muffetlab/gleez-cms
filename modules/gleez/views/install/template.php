@@ -66,8 +66,7 @@
 	<div id="footer">
 		<div class="container">
 			<div class="credits">
-                <p class="text-muted"><?php echo __('Powered by :gleez v{gleez_version}', array(':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'))); ?>
-                    &nbsp;<?php echo Gleez::getVersion() ?></p>
+                <p class="text-muted"><?php echo __('Powered by :gleez v{gleez_version}', array(':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'), '{gleez_version}' => Gleez::getVersion(false))); ?></p>
 				<p class="text-muted">&copy; 2011-<?php echo date('Y') ?> Gleez Technologies</p>
 			</div>
 		</div>

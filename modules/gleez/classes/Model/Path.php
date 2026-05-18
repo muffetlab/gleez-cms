@@ -26,15 +26,6 @@ class Model_Path extends Gleez_Model
 		'route_id'         => array( 'type' => 'string' ),
 	);
 
-	/**
-	 * Ignored columns
-	 * @var array
-	 */
-	protected $_ignored_columns = array(
-		'type',
-		'action'
-	);
-
  	/**
 	 * The language code used when no language is explicitly assigned.
 	 * Defined by ISO639-2 for "Undetermined".

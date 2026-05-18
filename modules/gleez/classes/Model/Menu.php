@@ -51,7 +51,7 @@ class Model_Menu extends ORM_MPTT {
     {
 		return array(
 			'name' => array(
-				array(array($this, 'is_valid'), array(':validation', ':field')),
+                array(array($this, 'is_valid'), array(':validation')),
 			),
 		);
 	}
@@ -103,11 +103,10 @@ class Model_Menu extends ORM_MPTT {
 	 * Validation callback
 	 *
 	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
 	 * @uses    Valid::numeric
 	 * @return  void
 	 */
-	public function is_valid(Validation $validation, $field)
+	public function is_valid(Validation $validation)
 	{
 		if ( empty($this->name) AND empty($this->title) )
 		{

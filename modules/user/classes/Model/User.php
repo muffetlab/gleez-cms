@@ -65,8 +65,6 @@ class Model_User extends Gleez_Model
         'buddies' => array('model' => 'User', 'through' => 'buddies', 'foreign_key' => 'request_from', 'far_key' => 'request_to'),
 	);
 
-	protected $_ignored_columns = array('password', 'old_pass');
-
 	/**
 	 * Rules for the user model
 	 *

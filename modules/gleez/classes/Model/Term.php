@@ -70,15 +70,6 @@ class Model_Term extends ORM_MPTT {
 	public $parent_column = 'pid';
 
 	/**
-	 * Ignored columns
-	 * @var array
-	 */
-	protected $_ignored_columns = array(
-		'path',
-		'action'
-	);
-
-	/**
 	 * Filters to run when data is set in this model
 	 *
 	 * @return array Filters

@@ -34,15 +34,6 @@ class Model_Tag extends Gleez_Model
 	);
 
 	/**
-	 * Ignored columns
-	 * @var array
-	 */
-	protected $_ignored_columns = array(
-		'path',
-		'action'
-	);
-
-	/**
 	 * Labels for fields in this model
 	 *
 	 * @return  array  Labels

@@ -21,14 +21,14 @@ class Widget_Comment extends Widget {
 		switch($this->name)
 		{
 			case 'recent':
-				return $this->recent($this->widget);
+                return $this->recent();
 			break;
 			default:
                 return '';
 		}
 	}
 
-	public function recent($widget)
+    public function recent()
 	{
 		// Don't show the widget on edit or delete actions.
 		if (Request::current()->action() == 'edit' OR Request::current()->action() == 'delete')

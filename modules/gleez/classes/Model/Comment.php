@@ -50,15 +50,6 @@ class Model_Comment extends Gleez_Model
 	);
 
 	/**
-	 * Ignored columns
-	 * @var array
-	 */
-	protected $_ignored_columns = array(
-		'author_name',
-		'author_date'
-	);
-
-	/**
 	 * Rules for the post model
 	 *
 	 * @return  array  Rules
@@ -311,17 +302,13 @@ class Model_Comment extends Gleez_Model
 	 *
 	 * @param   boolean|string     $action The action view|edit|delete default view [Optional]
 	 * @param   Model_User|Object  $user   The user object to check permission, defaults to logged in user [Optional]
-	 * @param   string             $misc   The misc element usually id|slug for logging purpose [Optional]
-	 *
-	 * @throws  HTTP_Exception_404
-	 * @throws  HTTP_Exception_403
-	 *
 	 * @return  Post
-	 *
+	 * @throws  HTTP_Exception_403
+	 * @throws  HTTP_Exception_404
 	 * @uses    ACL::check
 	 * @uses    Module::event
 	 */
-	public function access($action = FALSE, Model_User $user = NULL, $misc = NULL)
+    public function access($action = FALSE, Model_User $user = NULL)
 	{
 		if ( ! $action)
 		{
@@ -420,18 +407,14 @@ class Model_Comment extends Gleez_Model
 	 *
 	 * @param   bool|string $action  The action view|edit|delete default view
 	 * @param   Model_User  $user    The user object to check permission, defaults to logged in user
-	 * @param   string      $misc    The misc element usually id|slug for logging purpose
-	 *
-	 * @throws  HTTP_Exception_404
-	 *
 	 * @return  boolean|Model_Comment
-	 *
+	 * @throws  HTTP_Exception_404
 	 * @uses    Log::add
 	 * @uses    User::active_user
 	 * @uses    ACL::check
 	 * @uses    Module::event
 	 */
-	public function user_can($action = FALSE, Model_User $user = NULL, $misc = NULL)
+    public function user_can($action = FALSE, Model_User $user = NULL)
 	{
 		if( ! $action) $action = 'view';
 

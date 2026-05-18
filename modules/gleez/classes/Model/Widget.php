@@ -33,16 +33,6 @@ class Model_Widget extends ORM {
 	);
 
 	/**
-	 * Ignored columns
-	 * @var array
-	 */
-	protected $_ignored_columns = array(
-		'config',
-		'visible',
-		'content'
-	);
-
-	/**
 	 * Rules for the post model
 	 *
 	 * @return  array  Rules
