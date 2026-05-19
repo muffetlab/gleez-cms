@@ -38,9 +38,9 @@
 				</td>
 
 				<td class="action">
-                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'edit', 'id' => $item['id'])), '<i class="far fa-edit"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Edit Item'))) ?>
-                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'delete', 'id' => $item['id'])), '<i class="fas fa-trash-can"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Delete Item'))) ?>
-				</td>
+                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'edit', 'id' => $item['id'])), '<i class="fa far fa-edit"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Edit Item'))) ?>
+                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'delete', 'id' => $item['id'])), '<i class="fa fas fa-trash-can"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Delete Item'))) ?>
+        </td>
 			  </tr>
 			<?php endforeach ?>
 		</tbody>
