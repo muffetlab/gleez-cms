@@ -305,7 +305,7 @@ a {
 	padding: 0;
 }
 
-.panel-body ul.menus li .fas, .panel-body ul.menus li .far, .panel-body ul.menus li .fab {
+.panel-body ul.menus li .fa {
 	color: #999;
 	-webkit-transition: color .25s ease-in 0;
 	   -moz-transition: color .25s ease-in 0;
@@ -353,7 +353,7 @@ a {
 }
 
 .panel-body ul.menus li.active a,
-.panel-body ul.menus li.active a .fas, .panel-body ul.menus li.active a .far, .panel-body ul.menus li.active a .fab {
+.panel-body ul.menus li.active a .fa {
 	color: #222;
 }
 
@@ -654,7 +654,7 @@ li.comment{
 	vertical-align: middle;
 }
 
-.btn-sm .fas, .btn-sm .far, .btn-sm .fab, .btn-xs .fas, .btn-xs .far, .btn-xs .fab {
+.btn-sm .fa, .btn-xs .fa {
 	font-size: 13px;
 }
 
