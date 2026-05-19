@@ -92,13 +92,13 @@
 		
 			//Lets check if the form is in popup window
 			if(popup && typeof data.messages !== undefined && data.messages.length > 0){
-				var text = '<div class="alert alert-success alert-block"><i class="fa fa-info"></i>&nbsp'+data.messages[0].text+'</div>'
+                var text = '<div class="alert alert-success alert-block"><i class="fas fa-info"></i>&nbsp' + data.messages[0].text + '</div>'
 				$(popup).find('.popup-title').html(data.messages[0].type)
 				$(popup).find('.popup-body').html(text)
 				$(popup).find('.popup-footer').html('&nbsp')
 			}
 			else if(popup){
-				var text = '<div class="alert alert-success alert-block"><i class="fa fa-info"></i>&nbspSuccess</div>'
+                var text = '<div class="alert alert-success alert-block"><i class="fas fa-info"></i>&nbspSuccess</div>'
 				$(popup).find('.popup-body').html(text)
 				$(popup).find('.popup-footer').html('&nbsp')
 			}

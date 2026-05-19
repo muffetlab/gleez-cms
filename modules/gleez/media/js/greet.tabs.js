@@ -28,7 +28,7 @@
 	}
 
 	Tabs.DEFAULTS = {
-		  text      : '<i class="fa fa-align-justify"></i>'
+        text: '<i class="fas fa-align-justify"></i>'
 		, delay     : 100
 		, type      : 'json'
 		, cache     : false

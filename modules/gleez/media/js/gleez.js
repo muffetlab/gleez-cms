@@ -182,7 +182,7 @@ jQuery.noConflict();
 	//icon theme for select2 plugin
 	Gleez.theme_icon = function(icon) {
 		if (!icon.id) return icon.text; // optgroup
-		return "<i class='fa " + icon.id.toLowerCase() + "'></i> " + icon.text;
+        return "<i class='" + icon.id.toLowerCase() + "'></i> " + icon.text;
 	}
 
 
