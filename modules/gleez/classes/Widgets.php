@@ -301,7 +301,11 @@ class Widgets {
 			return $response;
 		}
 
-		($visible == TRUE) ? $this->is_visible($widget) : $widget->visible == TRUE;
+        if ($visible == TRUE) {
+            $widget = $this->is_visible($widget);
+        } else {
+            $widget->visible = TRUE;
+        }
 
 		// Enable developers to override widget
 		Module::event('Widget', $widget);
