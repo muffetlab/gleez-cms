@@ -106,14 +106,9 @@ class Filter {
 	{
 		$config = Kohana::$config->load('inputfilter');
 
-		$formats = array();
-
-		foreach($config->formats as $id => $format)
-		{
-			$formats[$id] = $format['name'];
-		}
-
-		return $formats;
+        return array_map(function ($format) {
+            return $format['name'];
+        }, $config->formats);
 	}
 
 	/**

@@ -157,13 +157,9 @@ class Comment {
 
 		if ($list)
 		{
-			$options = array();
-			foreach ($values as $operation => $array)
-			{
-				$options[$operation] = $array['label'];
-			}
-
-			return $options;
+            return array_map(function ($array) {
+                return $array['label'];
+            }, $values);
 		}
 
 		return $values;
