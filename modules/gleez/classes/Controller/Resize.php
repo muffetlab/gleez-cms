@@ -77,7 +77,7 @@ class Controller_Resize extends Controller {
 
 		//if image file not found stop here
 		if( !$this->is_valid($image_original_name) ) return FALSE;
-		$this->resized_image = "$this->image_folder/imagecache/$this->resize_type/{$this->width}x{$this->height}/$this->image_src";
+        $this->resized_image = "$this->image_folder/imagecache/$this->resize_type/{$this->width}x$this->height/$this->image_src";
 
 		if(!file_exists($this->resized_image))
 		{

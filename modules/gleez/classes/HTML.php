@@ -35,7 +35,7 @@ class HTML extends Kohana_HTML
         if (strpos($file, 'media/js') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
 		{
 			$theme = Theme::$active;
-			$file = str_replace(array('media/js'), "media/{$theme}/js", $file);
+            $file = str_replace(array('media/js'), "media/$theme/js", $file);
 		}
 
 		return parent::script($file, $attributes, $protocol, $index);
@@ -63,7 +63,7 @@ class HTML extends Kohana_HTML
         if (strpos($file, 'media/css') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
 		{
 			$theme = Theme::$active;
-			$file = str_replace(array('media/css'), "media/{$theme}/css", $file);
+            $file = str_replace(array('media/css'), "media/$theme/css", $file);
 		}
 
 		return parent::style($file, $attributes, $protocol, $index);
@@ -120,7 +120,7 @@ class HTML extends Kohana_HTML
 			if (isset($width) AND isset($height))
 			{
 				$file = (strpos($file, 'media/') === FALSE) ? $file : str_replace('media/', '', $file);
-				$file = "media/imagecache/$type/{$width}x{$height}/$file";
+                $file = "media/imagecache/$type/{$width}x$height/$file";
 			}
 
 			// Auto detect index file

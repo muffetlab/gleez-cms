@@ -318,7 +318,7 @@ class Menu {
 
 		// Enable developers to override menu
 		Module::event('menus', $menu);
-		Module::event("menus_{$name}", $menu);
+        Module::event("menus_$name", $menu);
 
 		return $menu->render( $attr );
 	}
@@ -340,7 +340,7 @@ class Menu {
 
 		// Enable developers to override menu
 		Module::event('menus_items', $menu);
-		Module::event("menus_items_{$name}", $menu);
+        Module::event("menus_items_$name", $menu);
 
 		return $menu;
 	}

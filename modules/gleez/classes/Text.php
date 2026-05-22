@@ -102,8 +102,8 @@ class Text extends Kohana_Text
 		{
 			if (get_class($node) == 'DOMCdataSection')
 			{
-				$embed_prefix = PHP_EOL."<!--{$comment_start}--><![CDATA[{$comment_start} ><!--{$comment_end}".PHP_EOL;
-				$embed_suffix = PHP_EOL."{$comment_start}--><!]]>{$comment_end}".PHP_EOL;
+                $embed_prefix = PHP_EOL . "<!--$comment_start--><![CDATA[$comment_start ><!--$comment_end" . PHP_EOL;
+                $embed_suffix = PHP_EOL . "$comment_start--><!]]>$comment_end" . PHP_EOL;
 
 				// Prevent invalid cdata escaping as this would throw a DOM error.
 				// This is the same behavior as found in libxml2.

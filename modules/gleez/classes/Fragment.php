@@ -71,7 +71,7 @@ class Fragment {
 
 		$separator = Cache::SEPARATOR;
 
-		return "Fragment::cache({$i18n}{$separator}{$name})";
+        return 'Fragment::cache(' . $i18n . $separator . $name . ')';
 	}
 
 	/**

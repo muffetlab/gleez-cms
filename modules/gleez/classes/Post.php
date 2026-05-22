@@ -733,7 +733,7 @@ class Post extends ORM_Versioned {
 			$options = array('' => __('Bulk Options'));
 			foreach ($values as $operation => $array)
 			{
-				if ($operation == "ct_{$type}") continue;
+                if ($operation == "ct_$type") continue;
 				$options[$operation] = $array['label'];
 			}
 

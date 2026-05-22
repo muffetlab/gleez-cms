@@ -90,7 +90,7 @@ class Meta {
 		}
 		else
 		{
-			$output .= "<!--[if {$conditional}]>{$link}<![endif]-->";
+            $output .= "<!--[if $conditional]>$link<![endif]-->";
 		}
 
 		return $output;
@@ -195,7 +195,7 @@ class Meta {
 		}
 		else
 		{
-			$output .= "<!--[if {$conditional}]>{$meta}<![endif]-->";
+            $output .= "<!--[if $conditional]>$meta<![endif]-->";
 		}
 
 		return $output;
