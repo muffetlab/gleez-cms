@@ -316,15 +316,9 @@ class Assets {
 
 		self::_init_js();
 
-		$assets = array();
-
-		foreach (self::$js as $handle => $data)
-		{
-			if ($data['footer'] === $footer)
-			{
-				$assets[$handle] = $data;
-			}
-		}
+        $assets = array_filter(self::$js, function ($data) use ($footer) {
+            return $data['footer'] === $footer;
+        });
 
 		if (empty($assets))
 		{
@@ -435,15 +429,9 @@ class Assets {
 
 		self::_init_js();
 
-		$assets = array();
-
-		foreach (self::$codes as $handle => $data)
-		{
-			if ($data['footer'] === $footer)
-			{
-				$assets[$handle] = $data;
-			}
-		}
+        $assets = array_filter(self::$codes, function ($data) use ($footer) {
+            return $data['footer'] === $footer;
+        });
 
 		if (empty($assets))
 		{
