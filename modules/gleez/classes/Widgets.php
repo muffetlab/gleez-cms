@@ -488,7 +488,7 @@ class Widgets {
 		}
 
 		$widget->name = str_replace('/', '-', $widget->name);
-		$widget->menu = (bool)(strpos($widget->name, 'menu-') !== false);
+        $widget->menu = strpos($widget->name, 'menu-') !== false;
 
 		return View::factory('widgets/' .$format)
 			->set('content', $widget->content)

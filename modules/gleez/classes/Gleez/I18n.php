@@ -107,7 +107,7 @@ class Gleez_I18n extends I18n
 	 */
 	public static function isAvailable($lang)
 	{
-		return (bool) array_key_exists($lang, self::$_languages);
+        return array_key_exists($lang, self::$_languages);
 	}
 
 	/**

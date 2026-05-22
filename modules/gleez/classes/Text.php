@@ -171,7 +171,7 @@ class Text extends Kohana_Text
 				'format'   => (int)    $format_id,
 				'langcode' => (string) $langcode,
 				'cache'    => (bool)   $cache,
-				'cache_id' => (string) $cache_id
+            'cache_id' => $cache_id
 		), ArrayObject::ARRAY_AS_PROPS);
 
 		Module::event('inputfilter', $textObj);

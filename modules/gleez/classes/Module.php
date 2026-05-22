@@ -268,7 +268,7 @@ class Module
 
 	private static function _add_to_path($module)
 	{
-		$available = (array) static::$available;
+        $available = static::$available;
 
 		if (in_array($module, array_keys($available)) && isset($available[$module])) {
 			$module = $available[$module];
@@ -288,7 +288,7 @@ class Module
 
 	private static function _remove_from_path($module)
 	{
-		$available      = (array) static::$available;
+        $available = static::$available;
 		$kohana_modules = Kohana::modules();
 
 		if (in_array($module, array_keys($available)) && isset($available[$module])) {
