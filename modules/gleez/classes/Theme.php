@@ -110,7 +110,7 @@ class Theme {
 	 * Gets info about theme
 	 *
 	 * @param   boolean|string  $name  Theme name [Optional]
-	 * @return  \Object  	 An object containing information about theme
+     * @return object An object containing information about theme
 	 */
 	public static function getTheme($name = false)
 	{
@@ -130,7 +130,7 @@ class Theme {
 	 * Gets info about theme
 	 *
 	 * @param   string       $file   Theme info file
-	 * @return  \Object  	 An object containing information about theme
+     * @return object An object containing information about theme
 	 */
 	public static function get_info($file)
 	{
