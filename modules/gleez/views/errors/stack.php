@@ -3,7 +3,7 @@
       // Unique error identifier
       $error_id = uniqid('error');
 
-      $code = isset($code) ? $code : 500;
+$code = $code ?? 500;
       switch($code)
       {
 	    case 403:

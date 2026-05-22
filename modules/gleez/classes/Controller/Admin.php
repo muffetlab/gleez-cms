@@ -68,7 +68,7 @@ class Controller_Admin extends Template {
         $user = ORM::factory('User');
 
 		// Create form action
-		$destination = isset($_GET['destination']) ? $_GET['destination'] : 'admin';
+        $destination = $_GET['destination'] ?? 'admin';
 		$params      = array('action' => 'login');
 		$action      = Route::get('admin/login')->uri($params).URL::query(array('destination' => $destination));
 
@@ -95,7 +95,7 @@ class Controller_Admin extends Template {
 				Kohana::$log->add(Log::INFO, 'User :name logged in.', array(':name' => $user->name));
 
 				// redirect to the user account
-				$this->request->redirect(isset($_GET['destination']) ? $_GET['destination'] : 'admin', 200);
+                $this->request->redirect($_GET['destination'] ?? 'admin', 200);
 			}
 			catch (Validation_Exception $e)
 			{

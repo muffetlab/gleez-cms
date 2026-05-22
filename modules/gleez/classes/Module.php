@@ -83,7 +83,7 @@ class Module
 	{
 		$module_list = self::available();
 
-		return isset($module_list->$name) ? $module_list->$name : false;
+        return $module_list->$name ?? false;
 	}
 
 	/**

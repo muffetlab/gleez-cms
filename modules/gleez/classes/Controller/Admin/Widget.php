@@ -78,7 +78,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		foreach ($widgets as $widget)
 		{
 			// Fetch the region for the current widget.
-			$region = (isset($widget->region) ? $widget->region : self::$WIDGET_REGION_NONE);
+            $region = ($widget->region ?? self::$WIDGET_REGION_NONE);
 			$widget_listing[$region][] = $widget;
 		}
 

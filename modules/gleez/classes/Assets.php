@@ -126,7 +126,7 @@ class Assets {
 			$attrs['media'] = 'all';
 		}
 
-		$weight = isset($attrs['weight']) ? $attrs['weight'] : 0;
+        $weight = $attrs['weight'] ?? 0;
 
 		// Unset weight attribute if its set, we processed it already
 		if(isset($attrs['weight']))
@@ -248,7 +248,7 @@ class Assets {
 			return self::get_js($handle, $format);
 		}
 
-		$weight = isset($attrs['weight']) ? $attrs['weight'] : 0;
+        $weight = $attrs['weight'] ?? 0;
 
 		// Unset weight attribute if its set, we processed it already
 		if(isset($attrs['weight']))
@@ -381,7 +381,7 @@ class Assets {
 			return self::get_codes($handle);
 		}
 
-		$weight = isset($attrs['weight']) ? $attrs['weight'] : 0;
+        $weight = $attrs['weight'] ?? 0;
 
 		// Unset weight attribute if its set, we processed it already
 		if(isset($attrs['weight']))
@@ -496,7 +496,7 @@ class Assets {
 			return self::get_group($group, $handle);
 		}
 
-		$weight = isset($attrs['weight']) ? $attrs['weight'] : 0;
+        $weight = $attrs['weight'] ?? 0;
 
 		// Unset weight attribute if its set, we processed it already
 		if (isset($attrs['weight']))

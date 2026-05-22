@@ -363,7 +363,7 @@ class Post extends ORM_Versioned {
 		$this->updated = empty($this->updated) ? time() : $this->updated;
 
 		//Ugly existing image check, not sure why empty behaves strange on $this->rawimage
-		$image = isset($this->_original_values['image']) ? $this->_original_values['image'] : FALSE;
+        $image = $this->_original_values['image'] ?? FALSE;
 
 		$this->image   = empty($image) 		? NULL : $image;
 		$this->type    = empty($this->type)     ? $this->_post_type : $this->type;

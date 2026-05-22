@@ -282,7 +282,7 @@ class Gleez_I18n extends I18n
 		$key = Gleez_I18n::get_plural_key(Gleez_I18n::$lang, $count);
 
 		// Return the translated string if it exists
-		return isset($table[$string][$key]) ? $table[$string][$key] : (isset($table[$string]) ? $table[$string] : $string);
+        return $table[$string][$key] ?? ($table[$string] ?? $string);
 	}
 
 	/**

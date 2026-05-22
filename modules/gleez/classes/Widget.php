@@ -45,7 +45,7 @@ abstract class Widget {
 
 		// Set class name
 		$widget_class = 'Widget_'.ucfirst($name);
-		$name = isset($split_name[0]) ? $split_name[0] : $name;
+        $name = $split_name[0] ?? $name;
 
 		return new $widget_class($name, $widget);
 	}
