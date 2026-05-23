@@ -742,7 +742,6 @@
 	// for in process queue to complete
 	Fileupload.prototype.queueWait = function(timeout) {
 		setTimeout(this.processUpload, timeout)
-		return
 	}
 
 	/**
