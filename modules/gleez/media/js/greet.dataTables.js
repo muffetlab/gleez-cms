@@ -28,8 +28,8 @@
 		//use data sortable value to disable sorting/searching for a column
 		$('thead th', $(table)).each(function(){
 			var obj   = $(this).data("columns")
-		
-			if(obj && obj != undefined){
+
+            if (obj) {
 				columns.push(obj);
 			}else{
 				columns.push(null)

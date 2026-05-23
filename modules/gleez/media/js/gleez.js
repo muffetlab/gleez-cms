@@ -298,7 +298,7 @@ jQuery.noConflict();
 
 	// Inform an error returned from an ajax call.
 	Gleez.informError = function(xhr, silentAbort, returnRes) {
-		if (xhr == undefined || xhr == null)
+        if (xhr === undefined)
 			return;
 
 		if (typeof(xhr) == 'string')
@@ -307,7 +307,7 @@ jQuery.noConflict();
 		var message = xhr.responseText;
 		var code = xhr.status;
 
-		if (message == undefined || message == null || message == '') {
+        if (message === undefined || message === '') {
 			switch (xhr.statusText) {
 			case 'error':
 				if (silentAbort) 
