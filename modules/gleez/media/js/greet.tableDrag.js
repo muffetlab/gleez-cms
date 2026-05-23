@@ -1006,11 +1006,7 @@
 		}
 
 		// Do not let an un-draggable first row have anything put before it.
-		if (this.table.tBodies[0].rows[0] == row && $(row).is(':not(.draggable)')) {
-			return false
-		}
-
-		return true
+        return !(this.table.tBodies[0].rows[0] == row && $(row).is(':not(.draggable)'));
 	}
 
 	/**
