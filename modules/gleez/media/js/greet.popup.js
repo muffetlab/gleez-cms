@@ -592,7 +592,7 @@
 			}
 		})
 
-		return this.modalParent ? true : false
+        return !!this.modalParent
 	}
 
 	Popup.DEFAULTS = {
