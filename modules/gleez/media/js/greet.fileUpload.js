@@ -38,18 +38,8 @@
         // Read file using FormData interface
         this.canFormData = !!(window.FormData)
 
-        // Send file in multipart/form-data with binary xhr
-        this.canSendBinaryString = (
-            (window.XMLHttpRequest && window.XMLHttpRequest.prototype.sendAsBinary)
-            || (window.ArrayBuffer && window.BlobBuilder)
-        )
-
         this.$input = this.$element.find(':file')
         if (this.$input.length === 0) return
-
-        // Clone for iframe support
-        this.$inputClone = this.$input.clone(true)
-        this.$inputParent = this.$element.find(':file').parent()
 
         this.name = this.$input.attr('name') || options.name
 
@@ -239,14 +229,6 @@
 				// Use the faster FormData
 				this.formDataUpload(xhr, file)
 			}
-			else if (this.isHTML5 && window.FileReader && this.canSendBinaryString) {
-				// Send as binary
-				this.binaryStringUpload(xhr, file)
-			}
-			else {
-				// Fallback iframe for older browsers
-				this.iframeUpload(file, fileIndex)
-			}
 		}
 	}
 
@@ -265,120 +247,6 @@
 
 		// Send the form data (multipart/form-data)
 		this.send(xhr, file)
-	}
-
-	Fileupload.prototype.binaryStringUpload = function(xhr, file) {
-		// If FileReader is supported by browser
-		if (window.FileReader) {
-            const reader = new FileReader(),
-                that = this,
-                boundary = this.generateBoundary();
-
-            reader.onload = function (e) {
-                const formData = that.buildMessage(file, boundary, e.target.result);
-
-                // Open the AJAX call
-				xhr.open(that.options.method, that.options.remote, that.options.async)
-				xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + boundary)
-				xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
-
-				// Add headers
-				$.each(that.options.headers, function(k, v) {
-				 	xhr.setRequestHeader(k, v)
-				})
-
-				// Send the file for upload
-				xhr.sendAsBinary(formData)
-			}
-
-			reader.readAsBinaryString(file)
-		}
-	}
-
-	Fileupload.prototype.iframeUpload = function(file, fileIndex) {
-        const id = 'ajaxupload' + new Date().getTime() + Math.round(Math.random() * 100000),
-            form = $('<form></form>'),
-            iframe = $('<iframe></iframe>'),
-            iframeSrc = /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank',
-            fileInput = this.$input,
-            that = this;
-
-        // Set this file as iframe upload
-		file.iframe = true
-
-        // Add iframe attributes
-		iframe.attr('src',    iframeSrc)
-			  .attr('name',   id)
-			  .attr('id',     id)
-			  .css('display', 'none')
-			  .appendTo('body')
-
-        // Add form attributes
-		form.attr('action',  this.options.remote)
-			.attr('method',  this.options.method)
-			.attr('enctype', 'multipart/form-data')
-			.attr('target',  id)
-			.css('display',  'none')
-			.appendTo('body')
-
-		//add the file name and append to form
-		fileInput
-			.attr('name', this.options.inputname)
-			.appendTo(form)
-
-		// add any necessary data to the form
-		$.each(this.options.data, function(key, value) {
-			$('<input type="hidden"/>').attr('name', key).attr('value', value).appendTo(form)
-			//$('<input type="hidden" name="' + key + '" value="' + value + '" />').appendTo(form)
-		})
-
-		iframe.bind('load', function(e) {
-			if (!iframe[0].parentNode) {
-				return
-			}
-
-            const content = iframe.contents().find('body').text();
-            iframe.unbind('load')
-			setTimeout(function () { that.iframeLoad(iframe, form, content, file, fileIndex) }, 250)
-		})
-
-		form.submit()
-	}
-
-	Fileupload.prototype.iframeLoad = function(iframe, form, data, file, fileIndex) {
-        let content;
-        // Remove iframe and form from DOM
-		iframe.remove()
-		form.remove()
-
-		// Reset the input
-        const inputClone = this.$inputClone;
-        this.$inputClone.after(inputClone)
-		this.$inputClone.remove()
-
-		// Append the input to element and events
-		this.$inputParent.append(inputClone)
-		this.$input      = inputClone
-		this.$inputClone = inputClone
-
-		this.listen()
-
-		try {
-			content = $.parseJSON(data)
-
-			if(content.status == 'success'){
-				// Fake the xhr complete for iframe
-				this.uploadComplete(content, file, fileIndex)
-			}
-			else{
-				// Fake the xhr error for iframe
-				this.fileError(false, file, fileIndex)
-			}
-		}
-		catch (e) {
-			// Fake the xhr error for iframe
-			this.fileError(e, file, fileIndex)
-		}
 	}
 
 	Fileupload.prototype.chunkUpload = function(xhr, file, start = 0) {
@@ -493,7 +361,6 @@
 		this.$hidden.attr('name', this.name)
 		this.$input.attr('name', '')
         this.$input.val('')
-        this.$inputClone.val('')
 
 		this.$preview.html('')
 		this.$element.find('.fileupload-filename').text('')
@@ -554,61 +421,6 @@
 		f.readAsArrayBuffer(blob)
 	}
 
-	/**
-	 * @return String A random string
-	 */
-	Fileupload.prototype.generateBoundary = function() {
-		return "-----------------------" + (new Date).getTime()	
-	}
-
-	Fileupload.prototype.buildMessage = function(file, boundary, data) {
-        let dashdash = '--',
-            crlf = '\r\n',
-            /* Build RFC2388 string. */
-            builder = '',
-            info = {
-                type: file.type
-                , size: file.size
-                , name: file.name
-            };
-
-        builder += dashdash
-		builder += boundary
-		builder += crlf
-		
-		// A placeholder MIME type
-		if (!info.type) info.type = 'application/octet-stream';
-		
-		/* Generate headers. */            
-		builder += 'Content-Disposition: form-data; name="' + this.options.inputname + '"'
-		if (info.name) {
-			builder += '; filename="' + info.name + '"'
-		}
-		builder += crlf
-
-		builder += 'Content-Type: ' + info.type
-		builder += crlf
-		builder += crlf
-
-		/* Append binary data. */
-		builder += data
-		builder += crlf
-
-		for (key in this.options.data) {
-			builder += dashdash + boundary + crlf
-			builder += 'Content-Disposition: form-data; name="' + key + '"' + crlf + crlf
-			builder += this.options.data[key] + crlf
-		}
-
-		/* Mark end of the request. */
-		builder += dashdash
-		builder += boundary
-		builder += dashdash
-		builder += crlf
-
-		return builder
-	}
-
 	Fileupload.prototype.loading = function(file) {
 		file.$loading = $('<div class="loading">')
 
@@ -616,11 +428,6 @@
             width = this.$preview.css('max-width') || this.$element.width(),
             offset = this.$preview.offset() || this.$element.offset(),
             that = this;
-
-        if (typeof file.iframe !== "undefined") {
-			this.$preview.css('height', height)
-			this.$preview.css('width',  width)
-		}
 
 		// set height after image is loaded
 		setTimeout( function(e){
