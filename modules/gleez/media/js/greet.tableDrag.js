@@ -1133,15 +1133,17 @@
         const siblings = [];
         const directions = ['prev', 'next'];
         const rowIndentation = this.indents;
+        let checkRowIndentation;
+
         for (let d = 0; d < directions.length; d++) {
             let checkRow = $(this.element)[directions[d]]();
             while (checkRow.length) {
 	      // Check that the sibling contains a similar target field.
-	      if ($('.' + rowSettings.target, checkRow)) {
+                if ($('.' + rowSettings.target, checkRow).length) {
 	        // Either add immediately if this is a flat table, or check to ensure
 	        // that this row has the same level of indentation.
 	        if (this.indentEnabled) {
-	          var checkRowIndentation = $('.indentation', checkRow).length;
+                checkRowIndentation = $('.indentation', checkRow).length;
 	        }
 
 	        if (!(this.indentEnabled) || (checkRowIndentation == rowIndentation)) {
@@ -1155,7 +1157,7 @@
 	      else {
 	        break;
 	      }
-	      checkRow = $(checkRow)[directions[d]]();
+                checkRow = checkRow[directions[d]]();
 	    }
 	    // Since siblings are added in reverse order for previous, reverse the
 	    // completed list of previous siblings. Add the current row and continue.
