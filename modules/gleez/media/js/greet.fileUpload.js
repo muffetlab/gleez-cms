@@ -21,7 +21,6 @@
         this.options = options
         this.$element = $(element)
         this.isHTML5 = false
-        this.isIE = window.navigator.appName == 'Microsoft Internet Explorer'
         this.template = this.$element.clone(true)
         this.multipart = this.options.multipart || !$.support.xhrFileUpload
         this.files = []
@@ -493,21 +492,8 @@
 		this.$hidden.val('')
 		this.$hidden.attr('name', this.name)
 		this.$input.attr('name', '')
-
-		//ie8+ doesn't support changing the value of input with type=file so clone instead
-        if (this.isIE) {
-            const inputClone = this.$input.clone(true);
-            this.$input.after(inputClone)
-			this.$input.remove()
-			this.$input = inputClone
-
-			this.$inputClone.after(inputClone)
-			this.$inputClone.remove()
-			this.$inputClone = inputClone
-		} else {
-			this.$input.val('')
-			this.$inputClone.val('')
-		}
+        this.$input.val('')
+        this.$inputClone.val('')
 
 		this.$preview.html('')
 		this.$element.find('.fileupload-filename').text('')
