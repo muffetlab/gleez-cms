@@ -9,8 +9,7 @@
  * @license    http://gleezcms.org/license  Gleez CMS License
  *
  */
-
-var Gleez = Gleez || { 'settings': {}, 'locale': {} };
+const Gleez = Gleez || {'settings': {}, 'locale': {}};
 
 // Allow other JavaScript libraries to use $.
 jQuery.noConflict();
@@ -45,7 +44,7 @@ jQuery.noConflict();
 
 		if (args) {
 			// Transform arguments before inserting them.
-			for (var key in args) {
+            for (const key in args) {
 				switch (key.charAt(0)) {
 					// Escaped only.
 					case '@':
@@ -105,18 +104,18 @@ jQuery.noConflict();
 	Gleez.getSelection = function (element) {
 		if (typeof element.selectionStart != 'number' && document.selection) {
 			// The current selection.
-			var range1 = document.selection.createRange()
-			var range2 = range1.duplicate()
+            const range1 = document.selection.createRange();
+            const range2 = range1.duplicate();
 
-			// Select all text.
+            // Select all text.
 			range2.moveToElementText(element)
 			// Now move 'dummy' end point to end point of original range.
 			range2.setEndPoint('EndToEnd', range1)
 
 			// Now we can calculate start and end points.
-			var start = range2.text.length - range1.text.length
-			var end = start + range1.text.length
-			return { 'start': start, 'end': end }
+            const start = range2.text.length - range1.text.length;
+            const end = start + range1.text.length;
+            return {'start': start, 'end': end}
 		}
 
 		return { 'start': element.selectionStart, 'end': element.selectionEnd }
@@ -126,8 +125,8 @@ jQuery.noConflict();
 	 * Build an error message from an Ajax response.
 	 */
 	Gleez.ajaxError = function (xmlhttp, uri) {
-		var statusCode, statusText, pathText, responseText, readyStateText, message;
-		if (xmlhttp.status){
+        let statusCode, statusText, pathText, responseText, readyStateText, message;
+        if (xmlhttp.status) {
 			statusCode = "\n" + Gleez.t("An AJAX HTTP error occurred.") +  "\n" + Gleez.t("HTTP Result Code: !status", {'!status': xmlhttp.status});
 		}
 		else{
@@ -171,10 +170,10 @@ jQuery.noConflict();
 	*/
 	Gleez.checkPlain = function (str) {
 		str = String(str)
-		var replace = { '&': '&amp;', '"': '&quot;', '<': '&lt;', '>': '&gt;' }
-		for (var character in replace) {
-			var regex = new RegExp(character, 'g');
-			str = str.replace(regex, replace[character]);
+        const replace = {'&': '&amp;', '"': '&quot;', '<': '&lt;', '>': '&gt;'};
+        for (const character in replace) {
+            const regex = new RegExp(character, 'g');
+            str = str.replace(regex, replace[character]);
 		}
 		return str
 	}
@@ -208,16 +207,16 @@ jQuery.noConflict();
 
 				// As yet unseen. Try to load
 				Gleez.Libraries[Lib] = false;
-				var script  = document.createElement('script');
-				script.type = 'text/javascript';
+                const script = document.createElement('script');
+                script.type = 'text/javascript';
 				node.async  = true;
 				script.src  = Gleez.settings.basePath+Lib;
 				script.onload = function(){
 				    $(document).trigger('attach', Gleez.settings);
 				};
 
-				var src = document.getElementsByTagName('script')[0];
-				src.parentNode.insertBefore(script, src);
+                const src = document.getElementsByTagName('script')[0];
+                src.parentNode.insertBefore(script, src);
 				Gleez.Libraries[Lib] = true;
 			})
 		}
@@ -232,8 +231,8 @@ jQuery.noConflict();
 
 				// As yet unseen. Try to load
 				Gleez.Libraries[Lib] = false;
-				var fileref=document.createElement("link");
-				fileref.setAttribute("rel", "stylesheet");
+                const fileref = document.createElement("link");
+                fileref.setAttribute("rel", "stylesheet");
 				fileref.setAttribute("type", "text/css");
 				fileref.setAttribute("href", Gleez.settings.basePath+Lib);
 				
@@ -254,28 +253,28 @@ jQuery.noConflict();
 			return false;
 		
 		// If there is no message container in the page, add one
-		var informMessages = $('div.messages');
-		if (informMessages.length == 0)
+        let informMessages = $('div.messages');
+        if (informMessages.length == 0)
 		{
 			$('<div class="messages"></div>').appendTo('body');
 			informMessages = $('div.messages');
 		}
-		
-		var wrappers = $('div.messages div.InformWrapper');
 
-		// Loop through the inform messages and add them to the container
-		for (var i = 0; i < response.InformMessages.length; i++){
-			var css = 'alert';
-			if (response.InformMessages[i]['type'])
+        const wrappers = $('div.messages div.InformWrapper');
+
+        // Loop through the inform messages and add them to the container
+        for (let i = 0; i < response.InformMessages.length; i++) {
+            let css = 'alert';
+            if (response.InformMessages[i]['type'])
 			css += ' alert-' + response.InformMessages[i]['type'];
 
 			try
 			{
-				var message = response.InformMessages[i]['text'];
-				var emptyMessage = message == '';
-				var skip = false;
+                let message = response.InformMessages[i]['text'];
+                const emptyMessage = message == '';
+                let skip = false;
 
-				for (var j = 0; j < wrappers.length; j++)
+                for (let j = 0; j < wrappers.length; j++)
 				{
 					if ($(wrappers[j]).text() == $(message).text()) {
 						skip = true;
@@ -304,8 +303,8 @@ jQuery.noConflict();
 		if (typeof(xhr) == 'string')
 			xhr = {responseText: xhr, code: 500};
 
-		var message = xhr.responseText;
-		var code = xhr.status;
+        let message = xhr.responseText;
+        const code = xhr.status;
 
         if (message === undefined || message === '') {
 			switch (xhr.statusText) {
@@ -324,8 +323,8 @@ jQuery.noConflict();
 
 		try
 		{
-			var data = $.parseJSON(message);
-			if (typeof(data.Exception) == 'string')
+            const data = $.parseJSON(message);
+            if (typeof (data.Exception) == 'string')
 			message = data.Exception;
 		} catch(e) {}
 
@@ -346,55 +345,55 @@ jQuery.noConflict();
 		Gleez.inform({'InformMessages' : new Array(options)})
 	}
 
-	var keyString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-	var uTF8Encode = function(string) {
-		string = string.replace(/\x0d\x0a/g, "\x0a");
-		var output = "";
-		for (var n = 0; n < string.length; n++) {
-			var c = string.charCodeAt(n);
-			if (c < 128) {
-				output += String.fromCharCode(c);
-			} else if ((c > 127) && (c < 2048)) {
-				output += String.fromCharCode((c >> 6) | 192);
-				output += String.fromCharCode((c & 63) | 128);
-			} else {
-				output += String.fromCharCode((c >> 12) | 224);
-				output += String.fromCharCode(((c >> 6) & 63) | 128);
-				output += String.fromCharCode((c & 63) | 128);
-			}
-		}
-		return output;
-	}
+    const keyString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    const uTF8Encode = function (string) {
+        string = string.replace(/\x0d\x0a/g, "\x0a");
+        let output = "";
+        for (let n = 0; n < string.length; n++) {
+            const c = string.charCodeAt(n);
+            if (c < 128) {
+                output += String.fromCharCode(c);
+            } else if ((c > 127) && (c < 2048)) {
+                output += String.fromCharCode((c >> 6) | 192);
+                output += String.fromCharCode((c & 63) | 128);
+            } else {
+                output += String.fromCharCode((c >> 12) | 224);
+                output += String.fromCharCode(((c >> 6) & 63) | 128);
+                output += String.fromCharCode((c & 63) | 128);
+            }
+        }
+        return output;
+    };
 
-	var uTF8Decode = function(input) {
-		var string = "";
-		var i = 0;
-		var c = 0, c1 = 0, c2 = 0, c3 = 0;
-		while ( i < input.length ) {
-			c = input.charCodeAt(i);
-			if (c < 128) {
-				string += String.fromCharCode(c);
-				i++;
-			} else if ((c > 191) && (c < 224)) {
-				c2 = input.charCodeAt(i+1);
-				string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-				i += 2;
-			} else {
-				c2 = input.charCodeAt(i+1);
-				c3 = input.charCodeAt(i+2);
-				string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-				i += 3;
-			}
-		}
-		return string;
-	}
+    const uTF8Decode = function (input) {
+        let string = "";
+        let i = 0;
+        let c = 0, c1 = 0, c2 = 0, c3 = 0;
+        while (i < input.length) {
+            c = input.charCodeAt(i);
+            if (c < 128) {
+                string += String.fromCharCode(c);
+                i++;
+            } else if ((c > 191) && (c < 224)) {
+                c2 = input.charCodeAt(i + 1);
+                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                i += 2;
+            } else {
+                c2 = input.charCodeAt(i + 1);
+                c3 = input.charCodeAt(i + 2);
+                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                i += 3;
+            }
+        }
+        return string;
+    };
 
-	$.extend({
+    $.extend({
 		base64Encode: function(input) {
-			var output = "";
-			var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-			var i = 0;
-			input = uTF8Encode(input);
+            let output = "";
+            let chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+            let i = 0;
+            input = uTF8Encode(input);
 			while (i < input.length) {
 				chr1 = input.charCodeAt(i++);
 				chr2 = input.charCodeAt(i++);
@@ -413,11 +412,11 @@ jQuery.noConflict();
 			return output;
 		},
 		base64Decode: function(input) {
-			var output = "";
-			var chr1, chr2, chr3;
-			var enc1, enc2, enc3, enc4;
-			var i = 0;
-			input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+            let output = "";
+            let chr1, chr2, chr3;
+            let enc1, enc2, enc3, enc4;
+            let i = 0;
+            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
 			while (i < input.length) {
 				enc1 = keyString.indexOf(input.charAt(i++));
 				enc2 = keyString.indexOf(input.charAt(i++));
@@ -452,7 +451,9 @@ jQuery.noConflict();
 	};
 
 	Gleez.theme = function (func) {
-		for (var i = 1, args = []; i < arguments.length; i++) {
+        let args = [];
+        let i = 1;
+        for (; i < arguments.length; i++) {
 			args.push(arguments[i]);
 		}
 
@@ -479,8 +480,8 @@ jQuery.noConflict();
 	Gleez.isXS = function() {
 		if(Gleez._isXS === null ) {
 			//check if we're in the Bootstrap XS environment
-			var $check = $("<div class='visible-xs'>").appendTo($("body"));
-			Gleez._isXS = $check.is(":visible");
+            const $check = $("<div class='visible-xs'>").appendTo($("body"));
+            Gleez._isXS = $check.is(":visible");
 			$check.remove();
 		}
 
@@ -490,8 +491,8 @@ jQuery.noConflict();
 	Gleez.isSM = function() {
 		if(Gleez._isSM === null ) {
 			//check if we're in the Bootstrap XS environment
-			var $check = $("<div class='visible-sm'>").appendTo($("body"));
-			Gleez._isSM = $check.is(":visible");
+            const $check = $("<div class='visible-sm'>").appendTo($("body"));
+            Gleez._isSM = $check.is(":visible");
 			$check.remove();
 		}
 

@@ -19,37 +19,37 @@
 	// GREET AJAXFROM CLASS DEFINITION
 	// ======================
 
-	var Ajaxform = function (element, options) {
-		//Set the options
-		options.dataType        = options.datatype
-		options.beforeSerialize = options.beforeserialize
-		options.beforeSubmit    = options.beforesubmit || Ajaxform.prototype.beforeSubmit
-		options.success       	= options.success || Ajaxform.prototype.showResponse
-		options.error       	= options.error || Ajaxform.prototype.errorResponse
-		options.resetForm       = options.resetform
-		options.clearForm       = options.clearform
-		options.closeKeepAlive  = options.closekeepalive
-		options.extraData       = options.extradata
-		options.replaceTarget   = options.replacetarget
-		options.includeHidden   = options.includehidden
-		options.uploadProgress  = options.uploadprogress
+    const Ajaxform = function (element, options) {
+        // Set the options
+        options.dataType = options.datatype
+        options.beforeSerialize = options.beforeserialize
+        options.beforeSubmit = options.beforesubmit || Ajaxform.prototype.beforeSubmit
+        options.success = options.success || Ajaxform.prototype.showResponse
+        options.error = options.error || Ajaxform.prototype.errorResponse
+        options.resetForm = options.resetform
+        options.clearForm = options.clearform
+        options.closeKeepAlive = options.closekeepalive
+        options.extraData = options.extradata
+        options.replaceTarget = options.replacetarget
+        options.includeHidden = options.includehidden
+        options.uploadProgress = options.uploadprogress
 
         // Delete unused options
-		delete options.datatype
-		delete options.beforeserialize
-		delete options.beforesubmit
-		delete options.resetform
-		delete options.clearform
-		delete options.closekeepalive
-		delete options.extradata
-		delete options.replacetarget
-		delete options.includehidden
-		delete options.uploadprogress
+        delete options.datatype
+        delete options.beforeserialize
+        delete options.beforesubmit
+        delete options.resetform
+        delete options.clearform
+        delete options.closekeepalive
+        delete options.extradata
+        delete options.replacetarget
+        delete options.includehidden
+        delete options.uploadprogress
 
-		this.init(element, options)
-	}
+        this.init(element, options)
+    };
 
-	Ajaxform.prototype.init = function(element, options) {
+    Ajaxform.prototype.init = function (element, options) {
 		this.$element   = element
         $(element).ajaxSubmit(options)
 	}
@@ -57,13 +57,13 @@
 	Ajaxform.prototype.beforeSubmit = function(formData, form, options) {
 		//add submit button to form array if its from popup request
 		if(options.button && options.button.length == 1){
-            var subButton = {
-                name:  options.button.attr('name'),
+            const subButton = {
+                name: options.button.attr('name'),
                 value: options.button.attr('value'),
-                type:  options.button.attr('type')
-            }
-			
-			//append to form data
+                type: options.button.attr('type')
+            };
+
+            // Append to form data
 			formData.push(subButton)
 		}
 	
@@ -75,14 +75,15 @@
 	}
 
 	Ajaxform.prototype.showResponse = function(data, status, xhr, form) {
-		if (data.FormSaved == false && data.errors){
+        let text;
+        if (data.FormSaved == false && data.errors) {
 			Ajaxform.prototype.validationErrors(data, form);
 		}
 		else if (data.FormSaved == true){
-			var popup     = $(form).data('popup') || false
-			,   dataTable = $(form).data('datatable') || false
+            const popup = $(form).data('popup') || false,
+                dataTable = $(form).data('datatable') || false;
 
-			//remove the form from the dom
+            // Remove the form from the dom
 			$(form).remove()
 
 			if(dataTable){
@@ -92,14 +93,14 @@
 		
 			//Lets check if the form is in popup window
 			if(popup && typeof data.messages !== undefined && data.messages.length > 0){
-                var text = '<div class="alert alert-success alert-block"><i class="fas fa-info"></i>&nbsp' + data.messages[0].text + '</div>'
-				$(popup).find('.popup-title').html(data.messages[0].type)
+                text = '<div class="alert alert-success alert-block"><i class="fas fa-info"></i>&nbsp' + data.messages[0].text + '</div>';
+                $(popup).find('.popup-title').html(data.messages[0].type)
 				$(popup).find('.popup-body').html(text)
 				$(popup).find('.popup-footer').html('&nbsp')
 			}
 			else if(popup){
-                var text = '<div class="alert alert-success alert-block"><i class="fas fa-info"></i>&nbspSuccess</div>'
-				$(popup).find('.popup-body').html(text)
+                text = '<div class="alert alert-success alert-block"><i class="fas fa-info"></i>&nbspSuccess</div>';
+                $(popup).find('.popup-body').html(text)
 				$(popup).find('.popup-footer').html('&nbsp')
 			}
 		}
@@ -111,19 +112,19 @@
 	}
 
 	Ajaxform.prototype.validationErrors = function(data, form) {
-		var title = 'Error'
-		  , tmpl = '<div class="alert alert-danger alert-block">'
-	
-		tmpl += '<h4 class="alert-heading">' + title + '</h4><ul>'
+        let title = 'Error',
+            tmpl = '<div class="alert alert-danger alert-block">';
+
+        tmpl += '<h4 class="alert-heading">' + title + '</h4><ul>'
 
 		// Loop through the errors
 		$.each(data.errors, function(i, value) {
 			// And add the error to the list.
 			tmpl += '<li>' + value + '</li>';
 			// Let's guesstimate the input that gave us an error
-			var $inputField = $('[name*="'+i+'"]')
-	
-			if ($inputField.length){
+            const $inputField = $('[name*="' + i + '"]');
+
+            if ($inputField.length) {
 				$($inputField).parent('div.controls').parent('div.form-group').addClass('has-error')
 			}
 		})
@@ -145,20 +146,20 @@
 			window.location.href = data.location
 		}
 		else {
-			var replace_selector = $el.attr('data-replace')
-			  , replace_closest_selector = $el.attr('data-replace-closest')
-			  , replace_inner_selector = $el.attr('data-replace-inner')
-			  , replace_closest_inner_selector = $el.attr('data-replace-closest-inner')
-			  , append_selector = $el.attr('data-append')
-			  , prepend_selector = $el.attr('data-prepend')
-			  , refresh_selector = $el.attr('data-refresh')
-			  , refresh_closest_selector = $el.attr('data-refresh-closest')
-			  , clear_selector = $el.attr('data-clear')
-			  , remove_selector = $el.attr('data-remove')
-			  , clear_closest_selector = $el.attr('data-clear-closest')
-			  , remove_closest_selector = $el.attr('data-remove-closest')
-	
-			if (replace_selector) {
+            const replace_selector = $el.attr('data-replace'),
+                replace_closest_selector = $el.attr('data-replace-closest'),
+                replace_inner_selector = $el.attr('data-replace-inner'),
+                replace_closest_inner_selector = $el.attr('data-replace-closest-inner'),
+                append_selector = $el.attr('data-append'),
+                prepend_selector = $el.attr('data-prepend'),
+                refresh_selector = $el.attr('data-refresh'),
+                refresh_closest_selector = $el.attr('data-refresh-closest'),
+                clear_selector = $el.attr('data-clear'),
+                remove_selector = $el.attr('data-remove'),
+                clear_closest_selector = $el.attr('data-clear-closest'),
+                remove_closest_selector = $el.attr('data-remove-closest');
+
+            if (replace_selector) {
 				$(replace_selector).replaceWith(data.html)
 			}
 			if (replace_closest_selector) {
@@ -205,22 +206,22 @@
 		}
 	
 		if (data.fragments) {
-			for (var s in data.fragments) {
+            for (const s in data.fragments) {
 				$(s).replaceWith(data.fragments[s])
 			}
 		}
 		if (data['inner-fragments']) {
-			for (var i in data['inner-fragments']) {
+            for (const i in data['inner-fragments']) {
 				$(i).html(data['inner-fragments'][i])
 			}
 		}
 		if (data['append-fragments']) {
-			for (var a in data['append-fragments']) {
+            for (const a in data['append-fragments']) {
 				$(a).append(data['append-fragments'][a])
 			}
 		}
 		if (data['prepend-fragments']) {
-			for (var p in data['prepend-fragments']) {
+            for (const p in data['prepend-fragments']) {
 				$(p).prepend(data['prepend-fragments'][p])
 			}
 		}
@@ -229,28 +230,28 @@
 	}
 
 	Ajaxform.prototype.captureSubmittingElement = function(e) {
-		var target = e.target
-		var $el = $(target)
-		
-		if (!($el.is("[type=submit],[type=image]"))) {
+        let target = e.target;
+        const $el = $(target);
+
+        if (!($el.is("[type=submit],[type=image]"))) {
 			// is this a child element of the submit el?  (ex: a span within a button)
-			var t = $el.closest('[type=submit]')
-			if (t.length === 0) {
+            const t = $el.closest('[type=submit]');
+            if (t.length === 0) {
 				return
 			}
 			
 			target = t[0]
 		}
-		
-		var form = this
-		form.clk = target
+
+        const form = this;
+        form.clk = target
 		if (target.type == 'image') {
 			if (e.offsetX !== undefined) {
 			form.clk_x = e.offsetX;
 			form.clk_y = e.offsetY;
 			} else if (typeof $.fn.offset == 'function') {
-			var offset = $el.offset();
-			form.clk_x = e.pageX - offset.left;
+                const offset = $el.offset();
+                form.clk_x = e.pageX - offset.left;
 			form.clk_y = e.pageY - offset.top;
 			} else {
 			form.clk_x = e.pageX - target.offsetLeft;
@@ -264,15 +265,15 @@
 	// GREET AJAXFROM PLUGIN DEFINITION
 	// =======================
 
-	var old = $.fn.aform
+    const old = $.fn.aform;
 
-	$.fn.aform = function (option) {
+    $.fn.aform = function (option) {
 		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('ajaxform')
-			var options = $.extend({}, $.fn.aform.defaults, $this.data(), typeof option == 'object' && option)
-	
-			if (!data) $this.data('ajaxform', (data = new Ajaxform(this, options)))
+            const $this = $(this);
+            let data = $this.data('ajaxform');
+            const options = $.extend({}, $.fn.aform.defaults, $this.data(), typeof option == 'object' && option);
+
+            if (!data) $this.data('ajaxform', (data = new Ajaxform(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
@@ -320,11 +321,11 @@
    // ==============
 
 	$(document).on('submit.ajaxform.data-api, click.ajaxform.data-api', '[data-toggle="ajaxform"]', function (e) {
-		var $this = $(this)
-		, $target = $this.data('form') || $this.parents('form')
-		, option  = $.extend({}, $target.data(), $this.data())
+        const $this = $(this),
+            $target = $this.data('form') || $this.parents('form'),
+            option = $.extend({}, $target.data(), $this.data());
 
-		// if event has been canceled, don't proceed
+        // If event has been canceled, don't proceed
 		if (!e.isDefaultPrevented()) {
 			e.preventDefault()
 			

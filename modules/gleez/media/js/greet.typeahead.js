@@ -17,27 +17,27 @@
 	/* GREET TYPEAHEAD PUBLIC CLASS DEFINITION
 	 * ================================= */
 
-	var Typeahead = function (element, options) {
-		this.$element = $(element)
-		this.options  = $.extend({}, $.fn.typeahead.defaults, options)
-		this.$menu    = $(this.options.menu)
-		this.shown    = false
-		this.results  = {}
-		
-		this.matcher     = this.options.matcher || this.matcher
-		this.sorter      = this.options.sorter  || this.sorter
-		this.updater     = this.options.updater || this.updater
-		this.source      = this.options.source  || this.source
-		this.grepper     = this.options.grepper || this.grepper
-		this.render      = this.options.render  || this.render
-		this.select      = this.options.select  || this.select
-		this.highlighter = this.options.highlighter || this.highlighter
-		
-		this.hiddenElementID  = this.options.field || false
-	  
-		if (!this.source.length) {
-		  this.ajax = $.extend({}, $.fn.typeahead.defaults, { url: this.options.url })
-		}
+    const Typeahead = function (element, options) {
+        this.$element = $(element)
+        this.options = $.extend({}, $.fn.typeahead.defaults, options)
+        this.$menu = $(this.options.menu)
+        this.shown = false
+        this.results = {}
+
+        this.matcher = this.options.matcher || this.matcher
+        this.sorter = this.options.sorter || this.sorter
+        this.updater = this.options.updater || this.updater
+        this.source = this.options.source || this.source
+        this.grepper = this.options.grepper || this.grepper
+        this.render = this.options.render || this.render
+        this.select = this.options.select || this.select
+        this.highlighter = this.options.highlighter || this.highlighter
+
+        this.hiddenElementID = this.options.field || false
+
+        if (!this.source.length) {
+            this.ajax = $.extend({}, $.fn.typeahead.defaults, {url: this.options.url})
+        }
 
         // Decode initial value if it contains HTML entities
         const initialVal = this.$element.val();
@@ -45,12 +45,12 @@
             this.$element.val($('<div/>').html(initialVal).text())
         }
 
-		this.listen()
-	}
+        this.listen()
+    };
 
-	Typeahead.prototype.select = function () {
-		var val = this.$menu.find('.active').attr('data-value')
-		this.$element
+    Typeahead.prototype.select = function () {
+        const val = this.$menu.find('.active').attr('data-value');
+        this.$element
 		  .val(this.updater(val))
 		  .change()
 		return this.hide()
@@ -64,14 +64,14 @@
 	}
   
 	Typeahead.prototype.updater = function (item) {
-	  var terms = this.autocompleteSplit(this.query)
-  
-	  if(typeof this.results[item] !== 'undefined'){
-		var data  = this.results[item]
-		
-		if (data.hasOwnProperty(this.options.value)) {
-	  var value = data[this.options.value]
-	  this.hiddenElement(this.hiddenElementID, value)
+        const terms = this.autocompleteSplit(this.query);
+
+        if (typeof this.results[item] !== 'undefined') {
+            const data = this.results[item];
+
+            if (data.hasOwnProperty(this.options.value)) {
+                const value = data[this.options.value];
+                this.hiddenElement(this.hiddenElementID, value)
 		}
 	  }
 	  
@@ -90,11 +90,11 @@
 	}
 
 	Typeahead.prototype.show = function () {
-	  var pos = $.extend({}, this.$element.position(), {
-		height: this.$element[0].offsetHeight
-	  })
-  
-	  this.$menu
+        const pos = $.extend({}, this.$element.position(), {
+            height: this.$element[0].offsetHeight
+        });
+
+        this.$menu
 		.insertAfter(this.$element)
 		.css({
 	  top: pos.top + pos.height
@@ -114,8 +114,8 @@
 	}
   
 	Typeahead.prototype.lookup = function (event) {
-	  var items
-	  if (this.ajax) {
+        let items;
+        if (this.ajax) {
 		this.ajaxer()
 	  }
 	  else {
@@ -136,9 +136,9 @@
 	}
 
 	Typeahead.prototype.process = function (items) {
-	  var that = this
-  
-	  items = $.grep(items, function (item) {
+        const that = this;
+
+        items = $.grep(items, function (item) {
 		return that.matcher(item)
 	  })
   
@@ -152,7 +152,7 @@
 	}
   
 	Typeahead.prototype.matcher = function (item) {
-	  var term = this.autocompleteExtractLast(this.query);
+        let term = this.autocompleteExtractLast(this.query);
         // Strip leading and trailing quotes if present
         term = term.replace(/^"(.*)"?$/, '$1').replace(/""/g, '"');
 	  return ~item.toLowerCase().indexOf(term.toLowerCase())
@@ -160,19 +160,19 @@
 
     // Filters relevant results
 	Typeahead.prototype.grepper = function(data) {
-		var that = this
-  
-		if (data && data.length && !data[0].hasOwnProperty(that.options.display)) {
+        const that = this;
+
+        if (data && data.length && !data[0].hasOwnProperty(that.options.display)) {
 		  return null
 		}
-		
-		var items = [];
-		// Gleez cms returns an object array, but we need a string array.
+
+        let items = [];
+        // Gleez cms returns an object array, but we need a string array.
 		$.map(data, function(result, item){
-		  var label
-		  ,	  save = false
-		  
-		  //check if the result is object or string
+            let label,
+                save = false;
+
+            // Check if the result is object or string
 		  if(typeof result == 'string' || result instanceof String){
 		label = result
 		  }
@@ -204,12 +204,12 @@
 	}
   
 	Typeahead.prototype.sorter = function (items) {
-		var beginswith = []
-		, caseSensitive = []
-		, caseInsensitive = []
-		, item
-	
-		while (item = items.shift()) {
+        let beginswith = [],
+            caseSensitive = [],
+            caseInsensitive = [],
+            item;
+
+        while (item = items.shift()) {
 			if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
 			else if (~item.indexOf(this.query)) caseSensitive.push(item)
 			else caseInsensitive.push(item)
@@ -219,10 +219,10 @@
 	}
 
 	Typeahead.prototype.smartHighlighter = function (item) {
-		var data = this.results[item]
-		, markup = "<div class='typeahead_wrapper'>"
-		
-		if (data.image !== undefined) {
+        let data = this.results[item],
+            markup = "<div class='typeahead_wrapper'>";
+
+        if (data.image !== undefined) {
 		  markup += "<img class='typeahead_photo' src='" + data.image + "' />";
 		}
 		
@@ -240,19 +240,19 @@
 	}
   
 	Typeahead.prototype.highlighter = function (item) {
-		var term = this.autocompleteExtractLast(this.query);
+        let term = this.autocompleteExtractLast(this.query);
         // Strip leading and trailing quotes if present
         term = term.replace(/^"(.*)"?$/, '$1').replace(/""/g, '"');
-		var query = term.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-		return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+        const query = term.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
+        return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
 			return '<strong>' + match + '</strong>'
 		})
 	}
 	
 	Typeahead.prototype.render = function (items) {
-		var that = this
-	
-		items = $(items).map(function (i, item) {
+        const that = this;
+
+        items = $(items).map(function (i, item) {
 			i = $(that.options.item).attr('data-value', item)
 			i.find('a').html(that.highlighter(item))
 			return i[0]
@@ -264,10 +264,10 @@
 	}
   
 	Typeahead.prototype.next = function (event) {
-		var active = this.$menu.find('.active').removeClass('active')
-		  , next = active.next()
-	
-		if (!next.length) {
+        let active = this.$menu.find('.active').removeClass('active'),
+            next = active.next();
+
+        if (!next.length) {
 			next = $(this.$menu.find('li')[0])
 		}
 	
@@ -275,10 +275,10 @@
 	}
   
 	Typeahead.prototype.prev = function (event) {
-		var active = this.$menu.find('.active').removeClass('active')
-		  , prev = active.prev()
-	
-		if (!prev.length) {
+        let active = this.$menu.find('.active').removeClass('active'),
+            prev = active.prev();
+
+        if (!prev.length) {
 			prev = this.$menu.find('li').last()
 		}
 	
@@ -303,8 +303,8 @@
 	}
   
 	Typeahead.prototype.eventSupported = function(eventName) {
-		var isSupported = eventName in this.$element
-		if (!isSupported) {
+        let isSupported = eventName in this.$element;
+        if (!isSupported) {
 			this.$element.setAttribute(eventName, 'return;')
 			isSupported = typeof this.$element[eventName] === 'function'
 		}
@@ -402,10 +402,10 @@
 
 	// Handle AJAX source
 	Typeahead.prototype.ajaxer = function () {
-	  var that = this
-	  , query = that.$element.val()
-	  
-	  if (query === that.query) {
+        const that = this,
+            query = that.$element.val();
+
+        if (query === that.query) {
 		return that
 	  }
   
@@ -441,21 +441,21 @@
 
 	// Execute an AJAX request
 	Typeahead.prototype.ajaxExecute = function(query) {
-		var that = this
-		
-		this.ajaxToggleLoadClass(true)
+        const that = this;
+
+        this.ajaxToggleLoadClass(true)
 		
 		// Cancel last call if already in progress
 		if (this.ajax.xhr) this.ajax.xhr.abort()
 		
 		// Get the desired term and construct the autocomplete URL for it.
-		var term = this.autocompleteExtractLast(query)
-		
-		var params = this.ajax.preDispatch ? this.ajax.preDispatch(query) : ''
-		var jAjax  = (this.ajax.method === "post") ? $.post : $.get
-		var url    = this.ajax.url+'/'+ this.URLEncode(term)
-		
-		this.ajax.xhr = jAjax(url, params, $.proxy(this.ajaxLookup, this))
+        const term = this.autocompleteExtractLast(query);
+
+        const params = this.ajax.preDispatch ? this.ajax.preDispatch(query) : '';
+        const jAjax = (this.ajax.method === "post") ? $.post : $.get;
+        const url = this.ajax.url + '/' + this.URLEncode(term);
+
+        this.ajax.xhr = jAjax(url, params, $.proxy(this.ajaxLookup, this))
 		
 		this.ajax.xhr.fail(function (jqXHR, textStatus, errorThrown) {
 			//remove the throbbing class
@@ -468,9 +468,9 @@
 
 	// Perform a lookup in the AJAX results
 	Typeahead.prototype.ajaxLookup = function (data) {
-		var items
-		
-		this.ajaxToggleLoadClass(false)
+        let items;
+
+        this.ajaxToggleLoadClass(false)
 	  
 		if (!this.ajax.xhr) return
 		
@@ -499,7 +499,7 @@
 	}
 	
 	Typeahead.prototype.in_array = function (needle, haystack) {
-		for(var i in haystack) {
+        for (const i in haystack) {
 		  if(haystack[i] == needle) return true
 		}
 		return false
@@ -533,15 +533,15 @@
 
 	/* GREET TYPEAHEAD PLUGIN DEFINITION
 	 * =========================== */
-  
-	var old = $.fn.typeahead
-  
-	$.fn.typeahead = function (option) {
+
+    const old = $.fn.typeahead;
+
+    $.fn.typeahead = function (option) {
 		return this.each(function () {
-		  var $this = $(this)
-		, data = $this.data('typeahead')
-		, options = typeof option == 'object' && option
-		  if (!data) $this.data('typeahead', (data = new Typeahead(this, options)))
+            let $this = $(this),
+                data = $this.data('typeahead'),
+                options = typeof option == 'object' && option;
+            if (!data) $this.data('typeahead', (data = new Typeahead(this, options)))
 		  if (typeof option == 'string') data[option]()
 		})
 	}
@@ -580,8 +580,8 @@
 	 * ================== */
    
 	$(document).on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
-		var $this = $(this)
-		if ($this.data('typeahead')) return
+        const $this = $(this);
+        if ($this.data('typeahead')) return
 		$this.typeahead($this.data())
 	})
 

@@ -12,23 +12,23 @@
 
 !function ($) { "use strict";
 
-	var textareaOptions = {
-		'maxCharacterSize': $('#countTextarea').data("maxChars"),
-		'originalStyle'   : 'help-block',
-		'warningStyle'    : 'text-warning',
-		'warningNumber'   : 40,
-		'displayFormat'   : $('#countTextarea').data("displayFormat")
-	};
+    const textareaOptions = {
+        'maxCharacterSize': $('#countTextarea').data("maxChars"),
+        'originalStyle': 'help-block',
+        'warningStyle': 'text-warning',
+        'warningNumber': 40,
+        'displayFormat': $('#countTextarea').data("displayFormat")
+    };
 
-	var inputOptions = {
-		'maxCharacterSize': $('#countInput').data("maxChars"),
-		'originalStyle'   : 'help-block',
-		'warningStyle'    : 'text-warning',
-		'warningNumber'   : 10,
-		'displayFormat'   : $('#countInput').data("displayFormat")
-	};
+    const inputOptions = {
+        'maxCharacterSize': $('#countInput').data("maxChars"),
+        'originalStyle': 'help-block',
+        'warningStyle': 'text-warning',
+        'warningNumber': 10,
+        'displayFormat': $('#countInput').data("displayFormat")
+    };
 
-	// Textarea counter
+    // Textarea counter
 	$('#countTextarea').textareaCount(textareaOptions);
 
 	// Input counter

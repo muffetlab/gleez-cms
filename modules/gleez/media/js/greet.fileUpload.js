@@ -17,64 +17,64 @@
 	// GREET FILEUPLOAD PUBLIC CLASS DEFINITION
 	// ======================
 
-	var Fileupload = function (element, options) {
-		this.options   = options
-		this.$element  = $(element)
-		this.isHTML5   = false
-		this.isIE      = window.navigator.appName == 'Microsoft Internet Explorer'
-		this.template  = this.$element.clone(true)
-		this.multipart = this.options.multipart || !$.support.xhrFileUpload
-		this.files     = []
+    const Fileupload = function (element, options) {
+        this.options = options
+        this.$element = $(element)
+        this.isHTML5 = false
+        this.isIE = window.navigator.appName == 'Microsoft Internet Explorer'
+        this.template = this.$element.clone(true)
+        this.multipart = this.options.multipart || !$.support.xhrFileUpload
+        this.files = []
 
-		// Define queues to manage upload process
-		this.workQueue = []
-		this.processingQueue = []
-		this.doneQueue = []
+        // Define queues to manage upload process
+        this.workQueue = []
+        this.processingQueue = []
+        this.doneQueue = []
 
-		// Check if HTML5 is available
-		if(window.File && window.FileList && window.Blob && (window.FileReader || window.FormData)){
-			this.isHTML5 = true
-		}
+        // Check if HTML5 is available
+        if (window.File && window.FileList && window.Blob && (window.FileReader || window.FormData)) {
+            this.isHTML5 = true
+        }
 
-		// Read file using FormData interface
-		this.canFormData = !!(window.FormData)
+        // Read file using FormData interface
+        this.canFormData = !!(window.FormData)
 
-		// Send file in multipart/form-data with binary xhr
-		this.canSendBinaryString = (
-			(window.XMLHttpRequest && window.XMLHttpRequest.prototype.sendAsBinary)
-			|| (window.ArrayBuffer && window.BlobBuilder)
-		)
+        // Send file in multipart/form-data with binary xhr
+        this.canSendBinaryString = (
+            (window.XMLHttpRequest && window.XMLHttpRequest.prototype.sendAsBinary)
+            || (window.ArrayBuffer && window.BlobBuilder)
+        )
 
-		this.$input = this.$element.find(':file')
-		if (this.$input.length === 0) return
+        this.$input = this.$element.find(':file')
+        if (this.$input.length === 0) return
 
-		// Clone for iframe support
-		this.$inputClone  = this.$input.clone(true)
-		this.$inputParent = this.$element.find(':file').parent()
+        // Clone for iframe support
+        this.$inputClone = this.$input.clone(true)
+        this.$inputParent = this.$element.find(':file').parent()
 
-		this.name = this.$input.attr('name') || options.name
+        this.name = this.$input.attr('name') || options.name
 
-		this.$hidden = this.$element.find('input[type=hidden][name="' + this.name + '"]')
-		if (this.$hidden.length === 0) {
-			this.$hidden = $('<input type="hidden"/>')
-			this.$element.prepend(this.$hidden)
-		}
+        this.$hidden = this.$element.find('input[type=hidden][name="' + this.name + '"]')
+        if (this.$hidden.length === 0) {
+            this.$hidden = $('<input type="hidden"/>')
+            this.$element.prepend(this.$hidden)
+        }
 
-		this.$preview = this.$element.find('.fileupload-preview')
-		var height = this.$preview.css('height')
-		if (this.$preview.css('display') != 'inline' && height != '0px' && height != 'none') this.$preview.css('line-height', height)
+        this.$preview = this.$element.find('.fileupload-preview')
+        const height = this.$preview.css('height');
+        if (this.$preview.css('display') != 'inline' && height != '0px' && height != 'none') this.$preview.css('line-height', height)
 
-		this.original = {
-			exists: this.$element.hasClass('fileupload-exists'),
-			preview: this.$preview.html(),
-			hiddenVal: this.$hidden.val()
-		}
+        this.original = {
+            exists: this.$element.hasClass('fileupload-exists'),
+            preview: this.$preview.html(),
+            hiddenVal: this.$hidden.val()
+        }
 
-		this.listen()
-		this.$element.trigger('init.gt.fileupload', this)
-	}
+        this.listen()
+        this.$element.trigger('init.gt.fileupload', this)
+    };
 
-	Fileupload.prototype.listen = function() {
+    Fileupload.prototype.listen = function () {
 		this.$input.on('change.gt.fileupload', $.proxy(this.change, this))
 		$(this.$input[0].form).on('reset.gt.fileupload', $.proxy(this.reset, this))
 
@@ -141,11 +141,11 @@
 		this.$element.find('.fileupload-success').css('display', 'none')
 		this.$element.find('.fileupload-message').css('display', 'none')
 
-		var files = e.target.files || []
-		,   i     = 0
-		,   file
+        let files = e.target.files || [],
+            i = 0,
+            file;
 
-		this.files = []
+        this.files = []
 		this.total = e.target.files.length || 0
 
 		// Add everything to the workQueue
@@ -161,10 +161,10 @@
 	}
 
 	Fileupload.prototype.processUpload = function() {
-		var fileIndex
-		, that = this
+        let fileIndex,
+            that = this;
 
-		// Check to see if are in queue mode
+        // Check to see if are in queue mode
 		if (this.options.queuefiles > 0 && this.processingQueue.length >= this.options.queuefiles) {
 			this.queueWait(this.options.queuewait)
 		} 
@@ -201,10 +201,10 @@
 			file.status = Fileupload.UPLOADING
 
 			// Create a new AJAX request
-			var xhr  = file.xhr = new XMLHttpRequest()
-			,   that = this
+            const xhr = file.xhr = new XMLHttpRequest(),
+                that = this;
 
-			this.$element.trigger('upload.gt.fileupload', [file, fileIndex])
+            this.$element.trigger('upload.gt.fileupload', [file, fileIndex])
 
 			if(this.isHTML5){
 				// Add event handlers
@@ -215,8 +215,8 @@
 				xhr.onload = function(e) {
 					if (xhr.readyState === 4 && xhr.status === 200) {
 						try {
-							var response = xhr.responseText
-							response     = $.parseJSON(response)
+                            let response = xhr.responseText;
+                            response = $.parseJSON(response)
 							that.uploadComplete(response, file, fileIndex)
 						}
 						catch(ev) {
@@ -252,9 +252,9 @@
 	}
 
 	Fileupload.prototype.formDataUpload = function(xhr, file) {
-		var formData = new FormData()
+        const formData = new FormData();
 
-		// Add the form data
+        // Add the form data
 		formData.append(this.options.inputname, file)
 
 		// Add the rest of the formData
@@ -271,14 +271,14 @@
 	Fileupload.prototype.binaryStringUpload = function(xhr, file) {
 		// If FileReader is supported by browser
 		if (window.FileReader) {
-			var reader = new FileReader()
-			, that     = this
-			, boundary = this.generateBoundary()
+            const reader = new FileReader(),
+                that = this,
+                boundary = this.generateBoundary();
 
-			reader.onload = function(e) {
-				var formData = that.buildMessage(file, boundary, e.target.result)
+            reader.onload = function (e) {
+                const formData = that.buildMessage(file, boundary, e.target.result);
 
-				// Open the AJAX call
+                // Open the AJAX call
 				xhr.open(that.options.method, that.options.remote, that.options.async)
 				xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + boundary)
 				xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
@@ -297,14 +297,14 @@
 	}
 
 	Fileupload.prototype.iframeUpload = function(file, fileIndex) {
-		var id      = 'ajaxupload' + new Date().getTime() + Math.round(Math.random() * 100000)
-		, form      = $('<form></form>')
-		, iframe    = $('<iframe></iframe>')
-		, iframeSrc = /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
-		, fileInput = this.$input
-		, that      = this
+        const id = 'ajaxupload' + new Date().getTime() + Math.round(Math.random() * 100000),
+            form = $('<form></form>'),
+            iframe = $('<iframe></iframe>'),
+            iframeSrc = /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank',
+            fileInput = this.$input,
+            that = this;
 
-		// set this file as iframe upload
+        // Set this file as iframe upload
 		file.iframe = true
 
         // Add iframe attributes
@@ -338,8 +338,8 @@
 				return
 			}
 
-			var content = iframe.contents().find('body').text()
-			iframe.unbind('load')
+            const content = iframe.contents().find('body').text();
+            iframe.unbind('load')
 			setTimeout(function () { that.iframeLoad(iframe, form, content, file, fileIndex) }, 250)
 		})
 
@@ -347,14 +347,14 @@
 	}
 
 	Fileupload.prototype.iframeLoad = function(iframe, form, data, file, fileIndex) {
-		var content
-		// Remove iframe and form from DOM
+        let content;
+        // Remove iframe and form from DOM
 		iframe.remove()
 		form.remove()
 
 		// Reset the input
-		var inputClone = this.$inputClone
-		this.$inputClone.after(inputClone)
+        const inputClone = this.$inputClone;
+        this.$inputClone.after(inputClone)
 		this.$inputClone.remove()
 
 		// Append the input to element and events
@@ -383,9 +383,9 @@
 	}
 
 	Fileupload.prototype.chunkUpload = function(xhr, file, start = 0) {
-		var bpc      = this.options.chunksize || 1024 * 1024
+        const bpc = this.options.chunksize || 1024 * 1024;
 
-		file.chunked = true
+        file.chunked = true
 		file.paused  = false
 		file.index   = (start == 0) ? 0 : file.index + 1
 		file.slices  = Math.max(Math.ceil(file.size / bpc), 1)
@@ -456,12 +456,12 @@
 
 	Fileupload.prototype.preview = function(file) {
 		if (this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match('image.*') : file.name.match(/\.(gif|png|jpe?g)$/i)) && typeof FileReader !== "undefined") {
-			var reader = new FileReader()
-			var preview = this.$preview
-			var element = this.$element
+            const reader = new FileReader();
+            const preview = this.$preview;
+            const element = this.$element;
 
-			reader.onload = function(re) {
-				var $img = $('<img>') // .attr('src', re.target.result)
+            reader.onload = function (re) {
+                const $img = $('<img>'); // .attr('src', re.target.result)
 				$img[0].src = re.target.result
 				file.result = re.target.result
 
@@ -495,9 +495,9 @@
 		this.$input.attr('name', '')
 
 		//ie8+ doesn't support changing the value of input with type=file so clone instead
-		if (this.isIE) { 
-			var inputClone = this.$input.clone(true)
-			this.$input.after(inputClone)
+        if (this.isIE) {
+            const inputClone = this.$input.clone(true);
+            this.$input.after(inputClone)
 			this.$input.remove()
 			this.$input = inputClone
 
@@ -547,21 +547,21 @@
 	* Blob to ArrayBuffer (needed ex. on Android 4.0.4)
 	**/
 	Fileupload.prototype.blobToArrayBuffer = function(str, callback) {
-		var blob
+        let blob;
 
-		BlobBuilder = window.MozBlobBuilder || window.WebKitBlobBuilder || window.BlobBuilder
+        BlobBuilder = window.MozBlobBuilder || window.WebKitBlobBuilder || window.BlobBuilder
 
 		if (typeof(BlobBuilder) !== 'undefined') {
-			var bb = new BlobBuilder()
-			bb.append(str)
+            const bb = new BlobBuilder();
+            bb.append(str)
 			blob = bb.getBlob()
 		} else {
 			blob = new Blob([str])
 		}
 
-		var f = new FileReader()
+        const f = new FileReader();
 
-		f.onload = function(e) {
+        f.onload = function (e) {
 		    callback(e.target.result)
 		}
 		
@@ -576,17 +576,17 @@
 	}
 
 	Fileupload.prototype.buildMessage = function(file, boundary, data) {
-		var dashdash = '--'
-		 ,  crlf     = '\r\n'
-		/* Build RFC2388 string. */
-		 ,  builder  = ''
-		 ,  info     = {
-			    type: file.type
-			    , size: file.size
-			    , name: file.name 
-		    }
+        let dashdash = '--',
+            crlf = '\r\n',
+            /* Build RFC2388 string. */
+            builder = '',
+            info = {
+                type: file.type
+                , size: file.size
+                , name: file.name
+            };
 
-		builder += dashdash
+        builder += dashdash
 		builder += boundary
 		builder += crlf
 		
@@ -626,12 +626,12 @@
 	Fileupload.prototype.loading = function(file) {
 		file.$loading = $('<div class="loading">')
 
-		var height = this.$preview.css('max-height') || this.$element.height()
-		, width    = this.$preview.css('max-width') || this.$element.width()
-		, offset   = this.$preview.offset() || this.$element.offset()
-		, that     = this
+        const height = this.$preview.css('max-height') || this.$element.height(),
+            width = this.$preview.css('max-width') || this.$element.width(),
+            offset = this.$preview.offset() || this.$element.offset(),
+            that = this;
 
-		if(typeof file.iframe !== "undefined"){
+        if (typeof file.iframe !== "undefined") {
 			this.$preview.css('height', height)
 			this.$preview.css('width',  width)
 		}
@@ -639,10 +639,10 @@
 		// set height after image is loaded
 		setTimeout( function(e){
 			if(typeof file.$loading !== "undefined" && that.$preview.length > 0) {
-				var newHeight = that.$preview.children('img').height() || height
-				,   newWidth  = that.$preview.children('img').width()  || width
+                const newHeight = that.$preview.children('img').height() || height,
+                    newWidth = that.$preview.children('img').width() || width;
 
-				file.$loading .css('height', parseInt(newHeight) + 10)
+                file.$loading.css('height', parseInt(newHeight) + 10)
 							  .css('width',  parseInt(newWidth) + 10)
 			}
 		}, 500)
@@ -656,11 +656,11 @@
 
 	Fileupload.prototype.fileProgress = function(event, file, fileIndex) {
 		if (event.lengthComputable) {
-			var total   = event.total
-			,   loaded  = event.loaded
-			,   progress
+            let total = event.total,
+                loaded = event.loaded,
+                progress;
 
-			if(file.chunked){
+            if (file.chunked) {
 				loaded   = parseInt(event.loaded + file.start)
 				total    = file.size
 			}
@@ -694,9 +694,9 @@
 	}
 
 	Fileupload.prototype.uploadComplete = function(response, file, fileIndex) {
-		var that = this
+        const that = this;
 
-		if(file.chunked && typeof file.end !== "undefined" && file.end != file.size) {
+        if (file.chunked && typeof file.end !== "undefined" && file.end != file.size) {
 			this.chunkUpload(file.xhr, file, file.end)
 		}
 		else {
@@ -728,9 +728,9 @@
 
 	Fileupload.prototype.acceptErrors = function(file, error) {
 		this.$element.trigger('error.gt.fileupload', [file, error])
-		var $message = this.$element.find('.fileupload-message')
+        const $message = this.$element.find('.fileupload-message');
 
-		if ($message.length > 0 && error){
+        if ($message.length > 0 && error) {
 			$message
 				.empty()
 				.css('display', 'block')
@@ -795,15 +795,15 @@
 	// FILEUPLOAD PLUGIN DEFINITION
 	// ==========================
 
-	var old = $.fn.fileupload
+    const old = $.fn.fileupload;
 
-	$.fn.fileupload = function (option) {
-		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('gt.fileupload')
-			var options = $.extend({}, Fileupload.DEFAULTS, $this.data(), typeof option == 'object' && option)
+    $.fn.fileupload = function (option) {
+        return this.each(function () {
+            const $this = $(this);
+            let data = $this.data('gt.fileupload');
+            const options = $.extend({}, Fileupload.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
-			if (!data) $this.data('gt.fileupload', (data = new Fileupload(this, options)))
+            if (!data) $this.data('gt.fileupload', (data = new Fileupload(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
@@ -823,12 +823,12 @@
 	// ==================
 
 	$(document).on('click.fileupload.data-api', '[data-provides="fileupload"]', function (e) {
-		var $this = $(this)
-		if ($this.data('gt.fileupload')) return
+        const $this = $(this);
+        if ($this.data('gt.fileupload')) return
 		$this.fileupload($this.data())
 
-		var $target = $(e.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');
-		if ($target.length > 0) {
+        const $target = $(e.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');
+        if ($target.length > 0) {
 			e.preventDefault()
 			$target.trigger('click.gt.fileupload')
 		}

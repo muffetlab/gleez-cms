@@ -15,59 +15,59 @@
 	// GREET DATATABLE CLASS DEFINITION
 	// ======================
 
-	var DataTable = function(table, options) {
-		var $table = $(table)
-		,   columns = []
-		
+    const DataTable = function (table, options) {
+        const $table = $(table),
+            columns = [];
+
         // Don't init if it's already initialised
         if ($.fn.dataTable.isDataTable(table)) return
-		
-		//exit if no url
+
+        // Exit if no url
         if (options.ajax === false) return
 
-		//use data sortable value to disable sorting/searching for a column
-		$('thead th', $(table)).each(function(){
-			var obj   = $(this).data("columns")
+        // Use data sortable value to disable sorting/searching for a column
+        $('thead th', $(table)).each(function () {
+            const obj = $(this).data("columns");
 
             if (obj) {
-				columns.push(obj);
-			}else{
-				columns.push(null)
-			}
-		})
+                columns.push(obj);
+            } else {
+                columns.push(null)
+            }
+        })
 
-		var oTable = $table.DataTable({
-			"columns": columns
-            , "order": options.order
-			, "processing": options.processing
-            , "serverSide": options.serverSide,
+        const oTable = $table.DataTable({
+            "columns": columns,
+            "order": options.order,
+            "processing": options.processing,
+            "serverSide": options.serverSide,
             "stateSave": options.stateSave,
             "stateDuration": options.stateDuration,
-            "layout": options.layout
-			, "language": {
+            "layout": options.layout,
+            "language": {
                 "emptyTable": options.emptyTable
-				}
-			, "ajax": function (data, fnCallback, settings ) {
-				settings.jqXHR = $.ajax( {
+            },
+            "ajax": function (data, fnCallback, settings) {
+                settings.jqXHR = $.ajax({
                     "url": options.ajax,
-					"data": data,
-					"dataType": "json",
-					"cache": false,
+                    "data": data,
+                    "dataType": "json",
+                    "cache": false,
                     "type": settings.ajax.type || 'GET'
-				}, 300)
-				.done(function(response, textStatus, jqXHR){
-					$(settings.oInstance).trigger('xhr', settings)
-					fnCallback( response )
-				})
-				.fail(function (jqXHR, textStatus, errorThrown) {
-                    var errorText = '<div class="empty_page alert alert-block"><i class="fas fa-info-circle"></i>&nbsp' + errorThrown + '</div>'
-					$(settings.oInstance).parent().html(errorText)
-				})
-			}
-		})
-	}
+                }, 300)
+                    .done(function (response, textStatus, jqXHR) {
+                        $(settings.oInstance).trigger('xhr', settings)
+                        fnCallback(response)
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        const errorText = '<div class="empty_page alert alert-block"><i class="fas fa-info-circle"></i>&nbsp' + errorThrown + '</div>';
+                        $(settings.oInstance).parent().html(errorText)
+                    })
+            }
+        });
+    };
 
-	/* Default class modification */
+    /* Default class modification */
     $.extend(true, $.fn.dataTable.ext.classes, {
         container: "dt-container form-inline",
         search: {
@@ -94,9 +94,9 @@
 		$.fn.dataTable.defaults.renderer = 'bootstrap';
 
         $.fn.dataTable.ext.renderer.pagingButton.bootstrap = function (settings, buttonType, content, active, disabled) {
-			var api = new $.fn.dataTable.Api( settings );
-			var classes = settings.oClasses;
-            var btnDisplay;
+            const api = new $.fn.dataTable.Api(settings);
+            const classes = settings.oClasses;
+            let btnDisplay;
 
             switch (buttonType) {
                 case 'ellipsis':
@@ -119,14 +119,14 @@
                     break;
             }
 
-            var btnClass = active ? 'active' : (disabled ? 'disabled' : '');
+            const btnClass = active ? 'active' : (disabled ? 'disabled' : '');
 
-            var li = $('<li>').addClass(classes.paging.button + ' ' + btnClass);
-            var a = $('<a>', {
+            const li = $('<li>').addClass(classes.paging.button + ' ' + btnClass);
+            const a = $('<a>', {
                 'href': (disabled || active) ? null : '#'
             })
-            .html(btnDisplay)
-            .appendTo(li);
+                .html(btnDisplay)
+                .appendTo(li);
 
             return {
                 display: li,
@@ -164,15 +164,15 @@
 	// GREET DATATABLEs PLUGIN DEFINITION
 	// =======================
 
-	var old = $.fn.gdatatable
+    const old = $.fn.gdatatable;
 
-	$.fn.gdatatable = function (option) {
+    $.fn.gdatatable = function (option) {
 		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('gdatatable')
-			var options = $.extend({}, DataTable.DEFAULTS, $this.data(), typeof option == 'object' && option)
-			
-			if (!data) $this.data('gdatatable', (data = new DataTable(this, options)))
+            const $this = $(this);
+            let data = $this.data('gdatatable');
+            const options = $.extend({}, DataTable.DEFAULTS, $this.data(), typeof option == 'object' && option);
+
+            if (!data) $this.data('gdatatable', (data = new DataTable(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
@@ -194,8 +194,8 @@
 		if (!$.fn.dataTable) return
 		
 		$('[data-toggle="datatable"]').each(function () {
-			var $table = $(this)
-			$table.gdatatable($table.data())
+            const $table = $(this);
+            $table.gdatatable($table.data())
 		})
 	})
 
@@ -204,8 +204,8 @@
 		if (!$.fn.dataTable) return
 		
 		$('[data-toggle="datatable"]').each(function () {
-			var $table = $(this)
-			$table.gdatatable($table.data())
+            const $table = $(this);
+            $table.gdatatable($table.data())
 		})
 	})
 

@@ -19,11 +19,11 @@
 	// GREET CHART CLASS DEFINITION
 	// ======================
 
-	var Chart = function(element, options) {
-		this.init(element, options)
-	}
+    const Chart = function (element, options) {
+        this.init(element, options)
+    };
 
-	Chart.prototype.init = function (element, options) {
+    Chart.prototype.init = function (element, options) {
 		this.options   = options
 		this.$element  = $(element).delegate('[data-dismiss="chart"]', 'click.dismiss.chart', $.proxy(this.stop, this))
 		this.fire      = true
@@ -64,10 +64,9 @@
 		// set lock and Add loading indicator
 		this.loading = true;
 		this.$element.append('<div class="Loading">&#160;</div>')
-		var that = this
-		
-		
-		//do the ajax call
+        const that = this;
+
+        // Do the ajax call
 		$.ajax({
 			url: this.options.url,
 			type: "GET",
@@ -162,15 +161,15 @@
 	// GREET CHART PLUGIN DEFINITION
 	// =======================
 
-	var old = $.fn.gchart
+    const old = $.fn.gchart;
 
-	$.fn.gchart = function (option) {
+    $.fn.gchart = function (option) {
 		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('gchart')
-			var options = $.extend({}, Chart.DEFAULTS, $this.data(), typeof option == 'object' && option)
-			
-			if (!data) $this.data('gchart', (data = new Chart(this, options)))
+            const $this = $(this);
+            let data = $this.data('gchart');
+            const options = $.extend({}, Chart.DEFAULTS, $this.data(), typeof option == 'object' && option);
+
+            if (!data) $this.data('gchart', (data = new Chart(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
@@ -190,16 +189,16 @@
 
 	$(window).on('load.gchart.data-api', function () {
 		$('[data-toggle="chart"]').each(function () {
-			var $target = $(this)
-			$target.gchart($target.data())
+            const $target = $(this);
+            $target.gchart($target.data())
 		})
 	})
 
 	// Added pajax and jquery mobile support
 	$(document).on('pjax:complete pagecontainerchange', function () {
 		$('[data-toggle="chart"]').each(function () {
-			var $target = $(this)
-			$target.gchart($target.data())
+            const $target = $(this);
+            $target.gchart($target.data())
 		})
 	})
 

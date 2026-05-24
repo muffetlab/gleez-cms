@@ -18,16 +18,16 @@
 	// TABS CLASS DEFINITION
 	// ====================
 
-	var Tabs = function (element, options) {
-		this.$element  = $(element)
-		this.options  = options
-		this.collection
-		this.dropDown
-		this.tabTimer
-		this.resizeTimer
-	}
+    const Tabs = function (element, options) {
+        this.$element = $(element)
+        this.options = options
+        this.collection
+        this.dropDown
+        this.tabTimer
+        this.resizeTimer
+    };
 
-	Tabs.DEFAULTS = {
+    Tabs.DEFAULTS = {
         text: '<i class="fas fa-align-justify"></i>'
 		, delay     : 100
 		, type      : 'json'
@@ -41,9 +41,9 @@
 
 	// Load remote data into tab content
 	Tabs.prototype.ajax = function () {
-		var href = this.$element.attr('href')
+        const href = this.$element.attr('href');
 
-		if(href && /#/.test(href)){
+        if (href && /#/.test(href)) {
 			this.options.container = $('#' + href.split('#')[1])
 		}
 
@@ -56,9 +56,9 @@
 
 	Tabs.prototype.remote = function () {
 		if (this.options.remote && this.options.tabreload){
-			var that = this
-		
-			//do the ajax call
+            const that = this;
+
+            // Do the ajax call
 			$.ajax({
 				url: this.options.remote,
 				type: "GET",
@@ -76,9 +76,9 @@
 	}
 
 	Tabs.prototype.reveal = function (data, tabs, jqXHR) {
-		var json = false
+        let json = false;
 
-		// First see if we've retrieved json or something else
+        // First see if we've retrieved json or something else
 		try {
 			json = $.parseJSON(jqXHR.responseText)
 		} catch (e) {
@@ -90,9 +90,9 @@
 			data = $.base64Decode(json.Body)
 		}
 
-		var $data = $($.parseHTML(data))
+        const $data = $($.parseHTML(data));
 
-		if (data && this.options.container) {
+        if (data && this.options.container) {
 			this.options.container.empty().html($data)
 		}
 
@@ -115,8 +115,8 @@
 	}
 
 	Tabs.prototype.resizeLayout = function () {
-		var that = this
-		this.dropDown.removeClass('hide')
+        const that = this;
+        this.dropDown.removeClass('hide')
 
 		// Find the extra tabs to push to dropdown
 		this.$element.find('>li')
@@ -142,8 +142,8 @@
 	Tabs.prototype.tabTimer = function () {
 		// delay the json call if it has been given a value
 		if(this.options.tabdelay) {
-			var that = this
-			clearTimeout(this.tabTimer)
+            const that = this;
+            clearTimeout(this.tabTimer)
 
 			this.tabTimer = setTimeout(function(){that.remote()}, this.options.tabdelay)
 		} else {
@@ -154,8 +154,8 @@
 	// Delay the resize layout with 100
 	Tabs.prototype.resizeTimer = function () {
 		if(this.options.delay) {
-			var that = this
-			clearTimeout(this.resizeTimer)
+            const that = this;
+            clearTimeout(this.resizeTimer)
 			
 			this.resizeTimer = setTimeout(function(){that.resizeLayout()}, this.options.delay)
 		}
@@ -163,11 +163,11 @@
 
 	// Try to navigate to the tab/accordion last given in the URL
 	Tabs.prototype.reShow = function () {
-		var hash       = document.location.hash
-		, hasTab       = false
-		, hasAccordion = false
+        let hash = document.location.hash,
+            hasTab = false,
+            hasAccordion = false;
 
-		if (hash && this.options.tabreshow) {
+        if (hash && this.options.tabreshow) {
 			hasTab       = $('[data-toggle=tab][href='+hash+']')
 			hasAccordion = $('[data-toggle=collapse][href='+hash+']')
 
@@ -187,15 +187,15 @@
 	// GREET TABS PLUGIN DEFINITION
 	// =======================
 
-	var old = $.fn.tabs
+    const old = $.fn.tabs;
 
-	$.fn.tabs = function (option) {
-		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('tabs')
-			var options = $.extend({}, Tabs.DEFAULTS, $this.data(), typeof option == 'object' && option)
+    $.fn.tabs = function (option) {
+        return this.each(function () {
+            const $this = $(this);
+            let data = $this.data('tabs');
+            const options = $.extend({}, Tabs.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
-			if (!data) $this.data('tabs', (data = new Tabs(this, options)))
+            if (!data) $this.data('tabs', (data = new Tabs(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
