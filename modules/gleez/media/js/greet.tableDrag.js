@@ -160,20 +160,21 @@
 	 * 'Drupal.tableDrag.showWeight' cookie.
 	 */
 	TableDrag.prototype.initColumns = function () {
-        let cell;
-        const hidden = this.tableSettings[group].hidden;
         for (const group in {group: 1, weight: 1, parent: 1}) {
+            let cell;
+            const hidden = this.tableSettings[group].hidden;
+
 			// Find the first field in this group.
 			if (this.tableSettings[group].fieldClass !== undefined) {
                 const field = $('.' + this.tableSettings[group].fieldClass + ':first', this.table);
 
-                if (/*field.size()*/ field.length && this.tableSettings[group].hidden) {
+                if (field.length && this.tableSettings[group].hidden) {
                     cell = field.parents('td:first');
                 }
 			}
 
 			// Mark the column containing this field so it can be hidden.
-			if (hidden && cell[0] && cell.css('display') != 'none') {
+            if (hidden && cell && cell.length && cell.css('display') != 'none') {
 				// Add 1 to our indexes. The nth-child selector is 1 based, not 0 based.
 				// Match immediate children of the parent element to allow nesting.
                 const columnIndex = $('> td', cell.parent()).index(cell.get(0)) + 1;
