@@ -97,10 +97,22 @@
                     touch = event.originalEvent.changedTouches[0];
                 }
 
-                const simulatedEvent = document.createEvent("MouseEvent");
-                simulatedEvent.initMouseEvent('mousemove', true, true, window, 1,
-                    touch.screenX, touch.screenY, touch.clientX, touch.clientY,
-                    false, false, false, false, 0/*left*/, null);
+                const simulatedEvent = new MouseEvent('mousemove', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    detail: 1,
+                    screenX: touch.screenX,
+                    screenY: touch.screenY,
+                    clientX: touch.clientX,
+                    clientY: touch.clientY,
+                    ctrlKey: false,
+                    altKey: false,
+                    shiftKey: false,
+                    metaKey: false,
+                    button: 0,
+                    relatedTarget: null
+                });
 
                 touch.target.dispatchEvent(simulatedEvent)
                 event.preventDefault()
@@ -116,10 +128,22 @@
                     touch = event.originalEvent.changedTouches[0];
                 }
 
-                const simulatedEvent = document.createEvent("MouseEvent");
-                simulatedEvent.initMouseEvent('mouseup', true, true, window, 1,
-                    touch.screenX, touch.screenY, touch.clientX, touch.clientY,
-                    false, false, false, false, 0/*left*/, null);
+                const simulatedEvent = new MouseEvent('mouseup', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    detail: 1,
+                    screenX: touch.screenX,
+                    screenY: touch.screenY,
+                    clientX: touch.clientX,
+                    clientY: touch.clientY,
+                    ctrlKey: false,
+                    altKey: false,
+                    shiftKey: false,
+                    metaKey: false,
+                    button: 0,
+                    relatedTarget: null
+                });
 
                 touch.target.dispatchEvent(simulatedEvent)
                 event.preventDefault()
@@ -475,10 +499,22 @@
                 touch = event.originalEvent.changedTouches[0];
             }
 
-            const simulatedEvent = document.createEvent("MouseEvent");
-            simulatedEvent.initMouseEvent('mousedown', true, true, window, 1,
-			                             touch.screenX, touch.screenY, touch.clientX, touch.clientY,
-			                             false, false, false, false, 0/*left*/, null);
+            const simulatedEvent = new MouseEvent('mousedown', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                detail: 1,
+                screenX: touch.screenX,
+                screenY: touch.screenY,
+                clientX: touch.clientX,
+                clientY: touch.clientY,
+                ctrlKey: false,
+                altKey: false,
+                shiftKey: false,
+                metaKey: false,
+                button: 0,
+                relatedTarget: null
+            });
 
 			touch.target.dispatchEvent(simulatedEvent)
 			event.preventDefault()
