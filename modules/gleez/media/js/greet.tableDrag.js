@@ -895,17 +895,14 @@
 	}
 
 	TableDrag.prototype.checkScroll = function (cursorY) {
-        const de = document.documentElement;
-        const b = document.body;
-
-        const windowHeight = this.windowHeight = window.innerHeight || (de.clientHeight && de.clientWidth != 0 ? de.clientHeight : b.offsetHeight);
-        const scrollY = this.scrollY = (document.all ? (!de.scrollTop ? b.scrollTop : de.scrollTop) : (window.pageYOffset ? window.pageYOffset : window.scrollY));
+        this.windowHeight = window.innerHeight;
+        const scrollY = this.scrollY = window.scrollY;
         const trigger = this.scrollSettings.trigger;
         let delta = 0;
 
         // Return a scroll speed relative to the edge of the screen.
-		if (cursorY - scrollY > windowHeight - trigger) {
-			delta = trigger / (windowHeight + scrollY - cursorY)
+        if (cursorY - scrollY > this.windowHeight - trigger) {
+            delta = trigger / (this.windowHeight + scrollY - cursorY)
 			delta = (delta > 0 && delta < trigger) ? delta : trigger
 			return delta * this.scrollSettings.amount
 		}
