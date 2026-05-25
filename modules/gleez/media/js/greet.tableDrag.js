@@ -527,7 +527,7 @@
 	 * Mousemove event handler, bound to document.
 	 */
 	TableDrag.prototype.dragRow = function (event, self) {
-		if (self.dragObject) {
+        if (self.dragObject && self.rowObject) {
 			self.currentMouseCoords = self.mouseCoords(event)
 
             const y = self.currentMouseCoords.y - self.dragObject.initMouseOffset.y;
@@ -588,10 +588,12 @@
 	 * Blur event handler, bound to drag handle for keyboard support.
 	 */
 	TableDrag.prototype.dropRow = function (event, self) {
-        const droppedRow = self.rowObject.element;
+        let droppedRow = null;
 
         // Drop row functionality shared between mouseup and blur events.
         if (self.rowObject != null) {
+            droppedRow = self.rowObject.element;
+
             // The row is already in the right place so we just release it.
 			if (self.rowObject.changed == true) {
 				// Update the fields in the dropped row.
@@ -631,7 +633,9 @@
 
 		// Functionality specific only to mouseup event.
 		if (self.dragObject != null) {
-			$('.tabledrag-handle', droppedRow).removeClass('tabledrag-handle-hover')
+            if (droppedRow) {
+                $('.tabledrag-handle', droppedRow).removeClass('tabledrag-handle-hover')
+            }
 
 			self.dragObject = null
 			$('body').removeClass('drag')
