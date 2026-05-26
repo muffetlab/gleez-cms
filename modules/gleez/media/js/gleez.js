@@ -338,8 +338,8 @@ jQuery.noConflict();
 
 	// Send an informMessage to the screen.
 	Gleez.informMessage = function(message, options) {
-		if (!options)   options = new Array();
-		
+        if (!options) options = [];
+
 		options['text'] = message;
 		Gleez.inform({'InformMessages' : new Array(options)})
 	}
