@@ -142,7 +142,7 @@ jQuery.noConflict();
 		// and the test causes an exception. So we need to catch the exception here.
 		try
 		{
-		    statusText = "\n" + Gleez.t("StatusText: !statusText", {'!statusText': $.trim(xmlhttp.statusText)});
+            statusText = "\n" + Gleez.t("StatusText: !statusText", {'!statusText': (xmlhttp.statusText || '').trim()});
 		}
 		catch (e) {}
 
@@ -151,7 +151,7 @@ jQuery.noConflict();
 		// xmlhttp.responseText is going to throw an exception. So we'll catch it.
 		try
 		{
-			responseText = "\n" + Gleez.t("ResponseText: !responseText", {'!responseText': $.trim(xmlhttp.responseText) } );
+            responseText = "\n" + Gleez.t("ResponseText: !responseText", {'!responseText': (xmlhttp.responseText || '').trim()});
 		} catch (e) {}
 
 		// Make the responseText more readable by stripping HTML tags and newlines.
