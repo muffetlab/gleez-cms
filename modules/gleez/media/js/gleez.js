@@ -256,8 +256,7 @@ jQuery.noConflict();
         let informMessages = $('div.messages');
         if (informMessages.length == 0)
 		{
-			$('<div class="messages"></div>').appendTo('body');
-			informMessages = $('div.messages');
+            informMessages = $('<div class="messages"></div>').appendTo('body');
 		}
 
         const wrappers = $('div.messages div.InformWrapper');

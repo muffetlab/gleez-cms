@@ -41,7 +41,8 @@
 		return null
 	}
 
-    const widgets = $('table#widgets').tabledrag({
+    const $widgetsTable = $('table#widgets');
+    const widgets = $widgetsTable.tabledrag({
         weight: {
             fieldClass: 'row-weight',
             hidden: true
@@ -51,11 +52,11 @@
     });
 
     // Add a handler for when a row is swapped, update empty regions.
-	$('table#widgets').on('swapRow.tabledrag', function (event, object) {
+    $widgetsTable.on('swapRow.tabledrag', function (event, object) {
 		checkEmptyRegions(this, object)
 	})
 
-	$('table#widgets').on('dropRow.tabledrag', function (event, dragObject) {
+    $widgetsTable.on('dropRow.tabledrag', function (event, dragObject) {
 		// Use "region-message" row instead of "region" row because
 		// "region-{region_name}-message" is less prone to regexp match errors.
         const regionRow = $(dragObject.rowObject.element).prevAll('tr.region-message').get(0);

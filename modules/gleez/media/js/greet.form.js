@@ -12,26 +12,28 @@
 
 !function ($) { "use strict";
 
+    const $countTextarea = $('#countTextarea');
     const textareaOptions = {
-        'maxCharacterSize': $('#countTextarea').data("maxChars"),
+        'maxCharacterSize': $countTextarea.data("maxChars"),
         'originalStyle': 'help-block',
         'warningStyle': 'text-warning',
         'warningNumber': 40,
-        'displayFormat': $('#countTextarea').data("displayFormat")
+        'displayFormat': $countTextarea.data("displayFormat")
     };
 
+    const $countInput = $('#countInput');
     const inputOptions = {
-        'maxCharacterSize': $('#countInput').data("maxChars"),
+        'maxCharacterSize': $countInput.data("maxChars"),
         'originalStyle': 'help-block',
         'warningStyle': 'text-warning',
         'warningNumber': 10,
-        'displayFormat': $('#countInput').data("displayFormat")
+        'displayFormat': $countInput.data("displayFormat")
     };
 
     // Textarea counter
-	$('#countTextarea').textareaCount(textareaOptions);
+    $countTextarea.textareaCount(textareaOptions);
 
 	// Input counter
-	$('#countInput').textareaCount(inputOptions);
+    $countInput.textareaCount(inputOptions);
 
 }(window.jQuery);
