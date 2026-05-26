@@ -432,13 +432,13 @@
 					 	if ($(item).is('.tabledrag-root')) {
 							// Swap with the next group (necessarily a top-level one).
                             groupHeight = 0;
-                            nextGroup = new self.row(nextRow, 'keyboard', self.indentEnabled, self.maxDepth, false);
+                            const nextGroup = new self.row(nextRow, 'keyboard', self.indentEnabled, self.maxDepth, false);
 							if (nextGroup) {
 								$(nextGroup.group).each(function () {
 									groupHeight += $(this).is(':hidden') ? 0 : this.offsetHeight
 								})
 
-								nextGroupRow = $(nextGroup.group).filter(':last').get(0)
+                                const nextGroupRow = $(nextGroup.group).filter(':last').get(0)
 								self.rowObject.swap('after', nextGroupRow, self)
 
 								// No need to check for indentation, 0 is the only valid one.
