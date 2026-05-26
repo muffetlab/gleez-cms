@@ -302,17 +302,7 @@
 			file = file.formData
 		}
 
-		// Android default browser in version 4.0.4 has webkitSlice instead of slice()
-		if (file.chunked && file.webkitSlice) {
-			file = file.webkitSlice(file.start, file.end)
-
-			// we cannot send a blob, because body payload will be empty thats why we send an ArrayBuffer
-			this.blobToArrayBuffer(file, function(buf) {
-				xhr.send(buf)
-			})
-		}
-		else if (file.chunked && file.end) {
-			// but if we support slice() everything should be ok
+        if (file.chunked && file.end) {
 			xhr.send( file.slice(file.start, file.end) )
 		}
 		else {
@@ -394,31 +384,6 @@
 	Fileupload.prototype.trigger = function(e) {
 		this.$input.trigger('click')
 		e.preventDefault()
-	}
-
-	/**
-	* Blob to ArrayBuffer (needed ex. on Android 4.0.4)
-	**/
-	Fileupload.prototype.blobToArrayBuffer = function(str, callback) {
-        let blob;
-
-        BlobBuilder = window.MozBlobBuilder || window.WebKitBlobBuilder || window.BlobBuilder
-
-		if (typeof(BlobBuilder) !== 'undefined') {
-            const bb = new BlobBuilder();
-            bb.append(str)
-			blob = bb.getBlob()
-		} else {
-			blob = new Blob([str])
-		}
-
-        const f = new FileReader();
-
-        f.onload = function (e) {
-		    callback(e.target.result)
-		}
-		
-		f.readAsArrayBuffer(blob)
 	}
 
 	Fileupload.prototype.loading = function(file) {
