@@ -21,10 +21,8 @@
     /**
      * Constructor for the tableDrag object. Provides table and field manipulation.
      *
-     * @param table
-     *   DOM object for the table to be made draggable.
-     * @param tableSettings
-     *   Settings for the table added via drupal_add_dragtable().
+     * @param table DOM object for the table to be made draggable.
+     * @param options Settings for the table added via drupal_add_dragtable().
      */
     const TableDrag = function (table, options) {
         const self = this;
@@ -1063,10 +1061,9 @@
 	/**
 	 * Perform the swap between two rows.
 	 *
-	 * @param position
-	 *   Whether the swap will occur 'before' or 'after' the given row.
-	 * @param row
-	 *   DOM element what will be swapped with the row group.
+     * @param position Whether the swap will occur 'before' or 'after' the given row.
+     * @param row DOM element what will be swapped with the row group.
+     * @param self Reference to the TableDrag instance.
 	 */
 	TableDrag.prototype.row.prototype.swap = function (position, row, self) {
 		$(row)[position](this.group)
@@ -1164,8 +1161,7 @@
 	 * Find all siblings for a row, either according to its subgroup or indentation.
 	 * Note that the passed in row is included in the list of siblings.
 	 *
-	 * @param settings
-	 *   The field settings we're using to identify what constitutes a sibling.
+     * @param rowSettings The field settings we're using to identify what constitutes a sibling.
 	 */
 	TableDrag.prototype.row.prototype.findSiblings = function (rowSettings) {
         const siblings = [];
