@@ -205,7 +205,7 @@
 					if (xhr.readyState === 4 && xhr.status === 200) {
 						try {
                             let response = xhr.responseText;
-                            response = $.parseJSON(response)
+                            response = JSON.parse(response)
 							that.uploadComplete(response, file, fileIndex)
 						}
 						catch(ev) {

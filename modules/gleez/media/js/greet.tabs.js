@@ -80,7 +80,7 @@
 
         // First see if we've retrieved json or something else
 		try {
-			json = $.parseJSON(jqXHR.responseText)
+            json = JSON.parse(jqXHR.responseText)
 		} catch (e) {
 			json = false
 			console.log(e)

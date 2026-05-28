@@ -244,7 +244,7 @@ jQuery.noConflict();
 
 		try
 		{
-            const data = $.parseJSON(message);
+            const data = JSON.parse(message);
             if (typeof (data.Exception) == 'string')
 			message = data.Exception;
 		} catch(e) {}
