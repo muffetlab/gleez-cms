@@ -104,29 +104,6 @@ jQuery.noConflict();
 	}
 
 	/**
-	 * Get the text selection in a textarea.
-	*/
-	Gleez.getSelection = function (element) {
-		if (typeof element.selectionStart != 'number' && document.selection) {
-			// The current selection.
-            const range1 = document.selection.createRange();
-            const range2 = range1.duplicate();
-
-            // Select all text.
-			range2.moveToElementText(element)
-			// Now move 'dummy' end point to end point of original range.
-			range2.setEndPoint('EndToEnd', range1)
-
-			// Now we can calculate start and end points.
-            const start = range2.text.length - range1.text.length;
-            const end = start + range1.text.length;
-            return {'start': start, 'end': end}
-		}
-
-		return { 'start': element.selectionStart, 'end': element.selectionEnd }
-	}
-
-	/**
 	 * Build an error message from an Ajax response.
 	 */
 	Gleez.ajaxError = function (xmlhttp, uri) {
@@ -187,66 +164,6 @@ jQuery.noConflict();
 	Gleez.theme_icon = function(icon) {
 		if (!icon.id) return icon.text; // optgroup
         return "<i class='" + icon.id.toLowerCase() + "'></i> " + icon.text;
-	}
-
-
-	/**
-	 * Dynamic injection of css and js files
-	 *
-	 * @todo add minor events
-	 */
-	Gleez.requires = function(Library, filetype)
-	{
-		if(Library == null || Library == false) return;
-		if (!(Library instanceof Array)) Library = [Library];
-		
-		//if filename is a JavaScript file
-		if (filetype=="js"){
-			$(Library).each(function (i,Lib){
-				// Skip any libs that are ready or processing
-				if (Gleez.Libraries[Lib] === false || Gleez.Libraries[Lib] === true)
-				{
-					$(document).trigger('attach', Gleez.settings);
-					return;
-				}
-
-				// As yet unseen. Try to load
-				Gleez.Libraries[Lib] = false;
-                const script = document.createElement('script');
-                script.type = 'text/javascript';
-				node.async  = true;
-				script.src  = Gleez.settings.basePath+Lib;
-				script.onload = function(){
-				    $(document).trigger('attach', Gleez.settings);
-				};
-
-                const src = document.getElementsByTagName('script')[0];
-                src.parentNode.insertBefore(script, src);
-				Gleez.Libraries[Lib] = true;
-			})
-		}
-
-		//if filename is an CSS file
-		if (filetype=="css")
-		{
-			$(Library).each(function (i,Lib){
-				// Skip any libs that are ready or processing
-				if (Gleez.Libraries[Lib] === false || Gleez.Libraries[Lib] === true)
-					return
-
-				// As yet unseen. Try to load
-				Gleez.Libraries[Lib] = false;
-                const fileref = document.createElement("link");
-                fileref.setAttribute("rel", "stylesheet");
-				fileref.setAttribute("type", "text/css");
-				fileref.setAttribute("href", Gleez.settings.basePath+Lib);
-				
-				if (typeof fileref != "undefined"){
-					document.getElementsByTagName("head")[0].appendChild(fileref);
-					Gleez.Libraries[Lib] = true;
-				}
-			})
-		}
 	}
 
 	// Take any "inform" messages out of an ajax response and display them on the screen.
