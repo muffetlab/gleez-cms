@@ -9,7 +9,12 @@
  * @license    http://gleezcms.org/license  Gleez CMS License
  *
  */
-window.Gleez = window.Gleez || {'settings': {}, 'locale': {}};
+window.Gleez = window.Gleez || {
+    'settings': {},
+    'locale': {
+        strings: undefined
+    }
+};
 
 // Allow other JavaScript libraries to use $.
 jQuery.noConflict();
