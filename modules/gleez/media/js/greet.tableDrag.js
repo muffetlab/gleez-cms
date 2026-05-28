@@ -78,15 +78,15 @@
 
         // Add mouse bindings to the document. The self variable is passed along
         // as event handlers do not have direct access to the tableDrag object.
-        $(document).bind('mousemove', function (event) {
+        $(document).on('mousemove', function (event) {
             return self.dragRow(event, self)
         })
-        $(document).bind('mouseup', function (event) {
+        $(document).on('mouseup', function (event) {
             return self.dropRow(event, self)
         })
 
         // To stimulate MouseEvent in touch screen devices
-        $(document).bind('touchmove', function (event) {
+        $(document).on('touchmove', function (event) {
             let touch;
             if ($("body").hasClass("drag")) {
                 if (event.originalEvent.touches && event.originalEvent.touches.length) {
@@ -117,7 +117,7 @@
             }
         })
 
-        $(document).bind('touchend', function (event) {
+        $(document).on('touchend', function (event) {
             let touch;
             if ($("body").hasClass("drag")) {
                 if (event.originalEvent.touches && event.originalEvent.touches.length) {
@@ -490,7 +490,7 @@
 		})
 
 		// To stimulate MouseEvent in touch screen devices
-		handle.bind('touchstart', function(event) {
+        handle.on('touchstart', function (event) {
             let touch;
             if (event.originalEvent.touches && event.originalEvent.touches.length) {
                 touch = event.originalEvent.touches[0];

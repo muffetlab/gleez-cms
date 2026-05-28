@@ -167,7 +167,7 @@
 				.attr('href',		  '#')
 				.attr('data-dismiss', 'popup')
 				.text(cText)
-				.delegate('[data-dismiss="popup"]', 'click.dismiss.popup', $.proxy(this.hide, this))
+            .on('click.dismiss.popup', $.proxy(this.hide, this))
 
 		//Add the content and title to popup and buttons to footer
 		this.$element.find('.popup-title').html(this.options.title)
@@ -188,12 +188,12 @@
 			.not('input[name$="no"]')
 			.not('input[name$="cancel"]')
 			.attr('data-toggle', 'ajaxform')
-			.data('popup', popup.$element)
+            .data('popup', this.$element)
 
 		//add close handler to no/cancel buttons
         const buttons = response.find('[type=submit]input[name^="no"], [type=submit]input[name^="cancel"]');
         $(buttons).attr('data-dismiss', 'popup')
-				.delegate('[data-dismiss="popup"]', 'click.dismiss.popup', $.proxy(this.hide, this))
+            .on('click.dismiss.popup', $.proxy(this.hide, this))
 		
 		//add the content and title to popup
 		this.$element.find('.popup-title').html(this.options.title)
