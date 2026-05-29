@@ -190,13 +190,16 @@
     const old = $.fn.tabs;
 
     $.fn.tabs = function (option) {
+        const args = Array.prototype.slice.call(arguments, 1);
         return this.each(function () {
             const $this = $(this);
             let data = $this.data('tabs');
             const options = $.extend({}, Tabs.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
             if (!data) $this.data('tabs', (data = new Tabs(this, options)))
-			if (typeof option == 'string') data[option]()
+            if (typeof option == 'string') {
+                data[option].apply(data, args);
+            }
 		})
 	}
 

@@ -631,14 +631,18 @@
     const old = $.fn.popup;
 
     $.fn.popup = function (option) {
+        const args = Array.prototype.slice.call(arguments, 1);
 		return this.each(function () {
             const $this = $(this);
             let data = $this.data('popup');
             const options = $.extend({}, Popup.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
             if (!data) $this.data('popup', (data = new Popup(this, options)))
-			if (typeof option == 'string') data[option](_relatedTarget)
-			else if (options.show) data.show(_relatedTarget)
+            if (typeof option == 'string') {
+                data[option].apply(data, args);
+            } else if (options.show) {
+                data.show.apply(data, args);
+            }
 		})
 	}
 

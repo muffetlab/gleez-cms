@@ -556,13 +556,16 @@
     const old = $.fn.fileupload;
 
     $.fn.fileupload = function (option) {
+        const args = Array.prototype.slice.call(arguments, 1);
         return this.each(function () {
             const $this = $(this);
             let data = $this.data('gt.fileupload');
             const options = $.extend({}, Fileupload.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
             if (!data) $this.data('gt.fileupload', (data = new Fileupload(this, options)))
-			if (typeof option == 'string') data[option]()
+            if (typeof option == 'string') {
+                data[option].apply(data, args);
+            }
 		})
 	}
 
