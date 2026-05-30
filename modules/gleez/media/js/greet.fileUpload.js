@@ -255,7 +255,7 @@
 
         file.chunked = true
 		file.paused  = false
-        file.index = (start === 0 ? 0 : file.index + 1
+        file.index = (start === 0) ? 0 : file.index + 1
 		file.slices  = Math.max(Math.ceil(file.size / bpc), 1)
 
 		file.start   = start
