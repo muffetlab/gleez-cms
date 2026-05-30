@@ -392,8 +392,8 @@ class Controller_Install_Install extends Controller_Template {
 		return $row->Value;
 	}
 
-	private function unpack_sql($config)
-	{
+    private function unpack_sql($config): void
+    {
 		$prefix = $config["table_prefix"];
 		$buf = null;
 
@@ -414,9 +414,7 @@ class Controller_Install_Install extends Controller_Template {
 				$buf = "";
 			}
 		}
-		
-		return true;
-	}
+    }
 
 	private function prepend_prefix($prefix, $sql)
 	{

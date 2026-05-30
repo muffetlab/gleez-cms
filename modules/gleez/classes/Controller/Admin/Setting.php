@@ -73,13 +73,12 @@ class Controller_Admin_Setting extends Controller_Admin {
 	 * Sets Front page route
 	 *
 	 * @param   string  $source  Path for alias
-	 * @return  ORM Model_Path
-	 *
+     * @return  void
 	 * @uses    Path::delete
 	 * @uses    Path::save
 	 */
-	private function _set_front_page($source)
-	{
+    private function _set_front_page($source): void
+    {
 		// Delete previous alias if any
 		Path::delete(array('alias' => Path::FRONT_ALIAS));
 
@@ -88,6 +87,6 @@ class Controller_Admin_Setting extends Controller_Admin {
 		$values['source'] = $source;
 		$values['alias']  = Path::FRONT_ALIAS;
 
-		return Path::save($values);
-	}
+        Path::save($values);
+    }
 }

@@ -128,10 +128,10 @@ class Tags {
 	 * @param  Model    $object   The Model Object
 	 * @param  array    $tags     Array of tags to be add
 	 *
-	 * @return boolean
-	 */
-	private function _tag_object_array($user_id, Model $object, $tags)
-	{
+     * @return void
+     */
+    private function _tag_object_array($user_id, Model $object, $tags): void
+    {
 		foreach($tags as $tag)
 		{
 			$tag = trim($tag);
@@ -141,9 +141,7 @@ class Tags {
 				$this->safe_tag($user_id, $object, $tag);
 			}
 		}
-
-		return TRUE;
-	}
+    }
 
 	/**
 	 * Safe Tag
