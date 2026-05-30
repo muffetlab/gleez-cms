@@ -141,7 +141,7 @@ jQuery.noConflict();
 		responseText = responseText.replace(/[\n]+\s+/g,"\n");
 
 		// We don't need readyState except for status == 0.
-		readyStateText = xmlhttp.status == 0 ? ("\n" + Gleez.t("ReadyState: !readyState", {'!readyState': xmlhttp.readyState})) : "";
+        readyStateText = xmlhttp.status === 0 ? ("\n" + Gleez.t("ReadyState: !readyState", {'!readyState': xmlhttp.readyState})) : "";
 
 		message = statusCode + pathText + statusText + responseText + readyStateText;
 		return message
@@ -170,14 +170,13 @@ jQuery.noConflict();
 	Gleez.inform = function(response) {
 		
 		if (!response)  return false;
-		
-		if (!response.InformMessages || response.InformMessages.length == 0)
+
+        if (!response.InformMessages || response.InformMessages.length === 0)
 			return false;
 		
 		// If there is no message container in the page, add one
         let informMessages = $('div.messages');
-        if (informMessages.length == 0)
-		{
+        if (informMessages.length === 0) {
             informMessages = $('<div class="messages"></div>').appendTo('body');
 		}
 
@@ -192,12 +191,12 @@ jQuery.noConflict();
 			try
 			{
                 let message = response.InformMessages[i]['text'];
-                const emptyMessage = message == '';
+                const emptyMessage = message === '';
                 let skip = false;
 
                 for (let j = 0; j < wrappers.length; j++)
 				{
-					if ($(wrappers[j]).text() == $(message).text()) {
+                    if ($(wrappers[j]).text() === $(message).text()) {
 						skip = true;
 					}
 				}
@@ -249,7 +248,7 @@ jQuery.noConflict();
 			message = data.Exception;
 		} catch(e) {}
 
-		if (message == '')
+        if (message === '')
 			message = Gleez.t('There was an error performing your request. Please try again.')
 
 		if (returnRes) 
@@ -347,10 +346,10 @@ jQuery.noConflict();
 				chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
 				chr3 = ((enc3 & 3) << 6) | enc4;
 				output = output + String.fromCharCode(chr1);
-				if (enc3 != 64) {
+                if (enc3 !== 64) {
 					output = output + String.fromCharCode(chr2);
 				}
-				if (enc4 != 64) {
+                if (enc4 !== 64) {
 					output = output + String.fromCharCode(chr3);
 				}
 			}

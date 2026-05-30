@@ -51,7 +51,8 @@
 
         this.$preview = this.$element.find('.fileupload-preview')
         const height = this.$preview.css('height');
-        if (this.$preview.css('display') != 'inline' && height != '0px' && height != 'none') this.$preview.css('line-height', height)
+        if (this.$preview.css('display') !== 'inline' && height !== '0px' && height !== 'none')
+            this.$preview.css('line-height', height)
 
         this.original = {
             exists: this.$element.hasClass('fileupload-exists'),
@@ -185,7 +186,7 @@
 	}
 
 	Fileupload.prototype.upload = function(file, fileIndex) {
-		if (file.status == Fileupload.ADDED && file.status != Fileupload.UPLOADING) {
+        if (file.status === Fileupload.ADDED && file.status !== Fileupload.UPLOADING) {
 			file.processing = true
 			file.status = Fileupload.UPLOADING
 
@@ -254,7 +255,7 @@
 
         file.chunked = true
 		file.paused  = false
-		file.index   = (start == 0) ? 0 : file.index + 1
+        file.index = (start === 0 ? 0 : file.index + 1
 		file.slices  = Math.max(Math.ceil(file.size / bpc), 1)
 
 		file.start   = start
@@ -325,7 +326,8 @@
 				element.find('.fileupload-filename').text(file.name)
 
 				// if parent has max-height, using `(max-)height: 100%` on child doesn't take padding and border into account
-				if (preview.css('max-height') != 'none') $img.css('max-height', parseInt(preview.css('max-height'), 10) - parseInt(preview.css('padding-top'), 10) - parseInt(preview.css('padding-bottom'), 10)  - parseInt(preview.css('border-top'), 10) - parseInt(preview.css('border-bottom'), 10))
+                if (preview.css('max-height') !== 'none')
+                    $img.css('max-height', parseInt(preview.css('max-height'), 10) - parseInt(preview.css('padding-top'), 10) - parseInt(preview.css('padding-bottom'), 10) - parseInt(preview.css('border-top'), 10) - parseInt(preview.css('border-bottom'), 10))
 
 				preview.html($img)
 				element.addClass('fileupload-exists').removeClass('fileupload-new')
@@ -454,7 +456,7 @@
 	Fileupload.prototype.uploadComplete = function(response, file, fileIndex) {
         const that = this;
 
-        if (file.chunked && typeof file.end !== "undefined" && file.end != file.size) {
+        if (file.chunked && typeof file.end !== "undefined" && file.end !== file.size) {
 			this.chunkUpload(file.xhr, file, file.end)
 		}
 		else {
@@ -463,7 +465,7 @@
 			file.upload.progress  = 100
 			file.upload.bytesSent = file.upload.total
 
-			if(file.iframe == true){
+            if (file.iframe === true) {
 				this.$preview.empty()
 				$('<img />').attr('src', response.file.src).appendTo(this.$preview)
 			}

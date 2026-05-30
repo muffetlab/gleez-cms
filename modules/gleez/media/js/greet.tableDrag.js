@@ -37,7 +37,7 @@
         this.oldY = 0; // Used to determine up or down direction from last mouse move.
         this.changed = false; // Whether anything in the entire table has changed.
         this.maxDepth = 0; // Maximum amount of allowed parenting.
-        this.rtl = $(this.table).css('direction') == 'rtl' ? -1 : 1; // Direction of the table.
+        this.rtl = $(this.table).css('direction') === 'rtl' ? -1 : 1; // Direction of the table
 
         // Configure the scroll settings.
         this.scrollSettings = {amount: 4, interval: 50, trigger: 70}
@@ -172,7 +172,7 @@
 			}
 
 			// Mark the column containing this field so it can be hidden.
-            if (hidden && cell && cell.length && cell.css('display') != 'none') {
+            if (hidden && cell && cell.length && cell.css('display') !== 'none') {
 				// Add 1 to our indexes. The nth-child selector is 1 based, not 0 based.
 				// Match immediate children of the parent element to allow nesting.
                 const columnIndex = $('> td', cell.parent()).index(cell.get(0)) + 1;
@@ -181,7 +181,7 @@
                 $('> thead > tr, > tbody > tr, > tr', this.table).each(function () {
                     const row = $(this);
                     const parentTag = row.parent().get(0).tagName.toLowerCase();
-                    let index = (parentTag == 'thead') ? headerIndex : columnIndex;
+                    let index = (parentTag === 'thead') ? headerIndex : columnIndex;
 
                     // Adjust the index to take into account colSpans.
 					row.children().each(function (n) {
@@ -259,8 +259,8 @@
             if (field.length) {
 				// Return a copy of the row settings.
                 const rowSettings = this.tableSettings[group];
-                rowSettings.relationship = group == 'group' ? 'group' : (group == 'parent' ? 'parent' : (group == 'weight' ? 'sibling' : 'self'))
-				rowSettings.action = group == 'group' ? 'depth' : (group == 'parent' ? 'match' : (group == 'weight' ? 'order' : 'order'))
+                rowSettings.relationship = group === 'group' ? 'group' : (group === 'parent' ? 'parent' : (group === 'weight' ? 'sibling' : 'self'))
+                rowSettings.action = group === 'group' ? 'depth' : (group === 'parent' ? 'match' : (group === 'weight' ? 'order' : 'order'))
 				return rowSettings
 			}
 		}
@@ -326,7 +326,7 @@
 			}
 
 			// Hack for IE6 that flickers uncontrollably if select lists are moved.
-			if (navigator.userAgent.indexOf('MSIE 6.') != -1) {
+            if (navigator.userAgent.indexOf('MSIE 6.') !== -1) {
 				$('select', this.table).css('display', 'none')
 			}
 
@@ -363,7 +363,7 @@
 		handle.keydown(function (event) {
             let groupHeight;
             // If a rowObject doesn't yet exist and this isn't the tab key.
-			if (event.keyCode != 9 && !self.rowObject) {
+            if (event.keyCode !== 9 && !self.rowObject) {
 			  self.rowObject = new self.row(item, 'keyboard', self.indentEnabled, self.maxDepth, true);
 			}
 
@@ -397,8 +397,7 @@
 								// No need to check for indentation, 0 is the only valid one.
 								window.scrollBy(0, -groupHeight)
 							}
-						}
-						else if (self.table.tBodies[0].rows[0] != previousRow || $(previousRow).is('.draggable')) {
+                        } else if (self.table.tBodies[0].rows[0] !== previousRow || $(previousRow).is('.draggable')) {
 							// Swap with the previous row (unless previous row is the first one
 							// and undraggable).
 							self.rowObject.swap('before', previousRow, self)
@@ -456,7 +455,7 @@
 			    break
 			}
 
-			if (self.rowObject && self.rowObject.changed == true) {
+            if (self.rowObject && self.rowObject.changed === true) {
 				$(item).addClass('drag')
 
 				if (self.oldRowElement) {
@@ -532,7 +531,7 @@
             const x = self.currentMouseCoords.x - self.dragObject.initMouseOffset.x;
 
             // Check for row swapping and vertical scrolling.
-			if (y != self.oldY) {
+            if (y !== self.oldY) {
 				self.rowObject.direction = y > self.oldY ? 'down' : 'up'
 				self.oldY = y; // Update the old value.
 
@@ -543,7 +542,7 @@
 				clearInterval(self.scrollInterval)
 
 				// Continue scrolling if the mouse has moved in the scroll direction.
-				if (scrollAmount > 0 && self.rowObject.direction == 'down' || scrollAmount < 0 && self.rowObject.direction == 'up') {
+                if (scrollAmount > 0 && self.rowObject.direction === 'down' || scrollAmount < 0 && self.rowObject.direction === 'up') {
 					self.setScroll(scrollAmount)
 				}
 
@@ -551,7 +550,7 @@
                 const currentRow = self.findDropTargetRow(x, y);
 
                 if (currentRow) {
-					if (self.rowObject.direction == 'down') {
+                    if (self.rowObject.direction === 'down') {
 						self.rowObject.swap('after', currentRow, self)
 					}
 					else {
@@ -593,7 +592,7 @@
             droppedRow = self.rowObject.element;
 
             // The row is already in the right place so we just release it.
-			if (self.rowObject.changed == true) {
+            if (self.rowObject.changed === true) {
 				// Update the fields in the dropped row.
 				self.updateFields(droppedRow)
 
@@ -607,7 +606,7 @@
 
 		      	self.rowObject.markChanged()
 
-		      	if (self.changed == false) {
+                if (self.changed === false) {
 		    		$(Gleez.theme('tableDragChangedWarning')).insertBefore(self.table).hide().fadeIn('slow')
 					self.changed = true
 		      	}
@@ -640,7 +639,7 @@
 			clearInterval(self.scrollInterval)
 
 			// Hack for IE6 that flickers uncontrollably if select lists are moved.
-			if (navigator.userAgent.indexOf('MSIE 6.') != -1) {
+            if (navigator.userAgent.indexOf('MSIE 6.') !== -1) {
 				$('select', this.table).css('display', 'block')
 			}
 		}
@@ -690,7 +689,7 @@
             // Because Safari does not report offsetHeight on table rows, but does on
 	    // table cells, grab the firstChild of the row and use that instead.
 	    // http://jacob.peargrove.com/blog/2006/technical/table-row-offsettop-bug-in-safari.
-	    if (row.offsetHeight == 0) {
+            if (row.offsetHeight === 0) {
             rowHeight = parseInt(row.firstChild.offsetHeight, 10) / 2;
         }
 	    // Other browsers.
@@ -703,14 +702,14 @@
 	      if (this.indentEnabled) {
 	        // Check that this row is not a child of the row being dragged.
               for (n in this.rowObject.group) {
-	          if (this.rowObject.group[n] == row) {
+                    if (this.rowObject.group[n] === row) {
 	            return null;
 	          }
 	        }
 	      }
 	      else {
 	        // Do not allow a row to be swapped with itself.
-	        if (row == this.rowObject.element) {
+                if (row === this.rowObject.element) {
 	          return null;
 	        }
 	      }
@@ -762,22 +761,22 @@
             useSibling = false,
             sourceRow;
 
-        if (rowSettings == undefined || rowSettings.relationship == undefined) {
+        if (rowSettings === undefined || rowSettings.relationship === undefined) {
 			return
 		}
 		// Set the row as its own target.
-		else if (rowSettings.relationship == 'self' || rowSettings.relationship == 'group') {
+        else if (rowSettings.relationship === 'self' || rowSettings.relationship === 'group') {
 			sourceRow = changedRow
 		}
 		// Siblings are easy, check previous and next rows.
-		else if (rowSettings.relationship == 'sibling') {
+        else if (rowSettings.relationship === 'sibling') {
             previousRow = $(changedRow).prev('tr').get(0);
             const nextRow = $(changedRow).next('tr').get(0);
             sourceRow = changedRow
 
 			if ($(previousRow).is('.draggable') && $('.' + group, previousRow).length) {
 				if (this.indentEnabled) {
-					if ($('.indentations', previousRow).size() == $('.indentations', changedRow)) {
+                    if ($('.indentations', previousRow).size() === $('.indentations', changedRow)) {
 						sourceRow = previousRow
 					}
 				}
@@ -787,7 +786,7 @@
 			}
 			else if ($(nextRow).is('.draggable') && $('.' + group, nextRow).length) {
 				if (this.indentEnabled) {
-					if ($('.indentations', nextRow).size() == $('.indentations', changedRow)) {
+                    if ($('.indentations', nextRow).size() === $('.indentations', changedRow)) {
 						sourceRow = nextRow
 					}
 				}
@@ -798,7 +797,7 @@
 		}
 		// Parents, look up the tree until we find a field not in this group.
 		// Go up as many parents as indentations in the changed row.
-		else if (rowSettings.relationship == 'parent') {
+        else if (rowSettings.relationship === 'parent') {
             previousRow = $(changedRow).prev('tr');
             while (previousRow.length && $('.indentation', previousRow).length >= this.rowObject.indents) {
 				previousRow = previousRow.prev('tr')
@@ -815,7 +814,7 @@
 				// be at the root level. Find the first item, then compare this row
 				// against it as a sibling.
 				sourceRow = $(this.table).find('tr.draggable:first').get(0)
-				if (sourceRow == this.rowObject.element) {
+                if (sourceRow === this.rowObject.element) {
 					sourceRow = $(this.rowObject.group[this.rowObject.group.length - 1]).next('tr.draggable').get(0)
 				}
 				useSibling = true
@@ -839,7 +838,7 @@
 
         // Check if a target element exists in this row.
 	  if (targetElement) {
-            const sourceClass = '.' + (rowSettings.relationship == 'parent' ? rowSettings.sourceFieldClass : rowSettings.fieldClass);
+            const sourceClass = '.' + (rowSettings.relationship === 'parent' ? rowSettings.sourceFieldClass : rowSettings.fieldClass);
             const sourceElement = $(sourceClass, sourceRow);
             switch (rowSettings.action) {
 	      case 'depth':
@@ -1001,10 +1000,10 @@
 				rows.push(currentRow[0])
 				if (addClasses) {
 					$('.indentation', currentRow).each(function (indentNum) {
-						if (child == 1 && (indentNum == parentIndentation)) {
+                        if (child === 1 && (indentNum === parentIndentation)) {
 							$(this).addClass('tree-child-first')
 						}
-						if (indentNum == parentIndentation) {
+                        if (indentNum === parentIndentation) {
 							$(this).addClass('tree-child')
 						}
 						else if (indentNum > parentIndentation) {
@@ -1037,7 +1036,7 @@
 		if (this.indentEnabled) {
             let prevRow, nextRow;
 
-            if (this.direction == 'down') {
+            if (this.direction === 'down') {
 				prevRow = row
 				nextRow = $(row).next('tr').get(0)
 			}
@@ -1055,7 +1054,7 @@
 		}
 
 		// Do not let an un-draggable first row have anything put before it.
-        return !(this.table.tBodies[0].rows[0] == row && $(row).is(':not(.draggable)'));
+        return !(this.table.tBodies[0].rows[0] === row && $(row).is(':not(.draggable)'));
 	}
 
 	/**
@@ -1180,7 +1179,7 @@
                 checkRowIndentation = $('.indentation', checkRow).length;
 	        }
 
-	        if (!(this.indentEnabled) || (checkRowIndentation == rowIndentation)) {
+                    if (!(this.indentEnabled) || (checkRowIndentation === rowIndentation)) {
 	          siblings.push(checkRow[0]);
 	        }
 	        else if (checkRowIndentation < rowIndentation) {
@@ -1195,7 +1194,7 @@
 	    }
 	    // Since siblings are added in reverse order for previous, reverse the
 	    // completed list of previous siblings. Add the current row and continue.
-	    if (directions[d] == 'prev') {
+            if (directions[d] === 'prev') {
 	      siblings.reverse()
 	      siblings.push(this.element)
 	    }
@@ -1223,7 +1222,7 @@
         const marker = Gleez.theme('tableDragChangedMarker');
         const cell = $('td:first', this.element);
 
-        if ($('span.tabledrag-changed', cell).length == 0) {
+        if ($('span.tabledrag-changed', cell).length === 0) {
 			cell.append(marker)
 		}
 	}

@@ -19,14 +19,14 @@
     const checkEmptyRegions = function (table, rowObject) {
         $('tr.region-message', table).each(function () {
             // If the dragged row is in this region, but above the message row, swap it down one space.
-            if ($(this).prev('tr').get(0) == rowObject.element) {
+            if ($(this).prev('tr').get(0) === rowObject.element) {
                 // Prevent a recursion problem when using the keyboard to move rows up.
-                if ((rowObject.method != 'keyboard' || rowObject.direction == 'down')) {
+                if ((rowObject.method !== 'keyboard' || rowObject.direction === 'down')) {
                     rowObject.swap('after', this);
                 }
             }
             // This region has become empty.
-            if ($(this).next('tr').is(':not(.draggable)') || $(this).next('tr').size() == 0) {
+            if ($(this).next('tr').is(':not(.draggable)') || $(this).next('tr').size() === 0) {
                 $(this).removeClass('region-populated').addClass('region-empty')
             }
             // This region has become populated.
@@ -64,7 +64,7 @@
         const regionField = $('select.widget-region-select', dragObject.rowObject.element);
 
         // Check whether the newly picked region is available for this block.
-		if ($('option[value=' + regionName + ']', regionField).length == 0) {
+        if ($('option[value=' + regionName + ']', regionField).length === 0) {
 			// If not, alert the user and keep the block in its old region setting.
 			alert(Gleez.t('The widget cannot be placed in this region.'))
 

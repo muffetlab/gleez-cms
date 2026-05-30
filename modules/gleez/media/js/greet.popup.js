@@ -94,7 +94,7 @@
 			this.forms = $data.filter('form')
 			
 			//if only one form, remove and create custom buttons in popup footer
-			if(this.forms.length == 1){
+            if (this.forms.length === 1) {
 				this.singleForm($data)
 			}
 			else if(this.forms.length > 1){
@@ -218,7 +218,7 @@
 
         if (this.isShown && this.options.consumetab) {
 			this.$element.on('keydown.tabindex.popup', '[data-tabindex]', function (e) {
-				if (e.keyCode && e.keyCode == 9){
+                if (e.keyCode && e.keyCode === 9) {
                     let $next = $(this),
                         $rollover = $(this);
 
@@ -444,7 +444,7 @@
         const that = this;
         if (this.isShown && this.options.keyboard) {
 			this.$element.on('keyup.dismiss.popup', function (e) {
-				e.which == 27 && that.hide()
+                e.which === 27 && that.hide()
 			})
 		} else if (!this.isShown) {
 			this.$element.off('keyup.dismiss.popup')
@@ -457,7 +457,7 @@
 			if (!this.$element.attr('tabindex')) this.$element.attr('tabindex', -1);
 
 			this.$element.on('keyup.dismiss.popup', function (e) {
-				e.which == 27 && that.hide();
+                e.which === 27 && that.hide();
 			});
 		} else if (!this.isShown) {
 			this.$element.off('keyup.dismiss.popup')

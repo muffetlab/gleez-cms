@@ -500,7 +500,7 @@
 	
 	Typeahead.prototype.in_array = function (needle, haystack) {
         for (const i in haystack) {
-		  if(haystack[i] == needle) return true
+            if (haystack[i] === needle) return true
 		}
 		return false
 	}

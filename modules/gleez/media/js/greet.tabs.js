@@ -105,7 +105,7 @@
 		this.dropDown = this.$element.find('>li.tabdrop').not('.no-tabdrop')
 		this.collection = []
 
-		if(this.dropDown.length == 0){
+        if (this.dropDown.length === 0) {
 			this.dropDown = $('<li class="dropdown hide pull-right tabdrop"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+this.options.text+' <b class="caret"></b></a><ul class="dropdown-menu"></ul></li>')
 							.prependTo(this.$element)
 		}
@@ -132,8 +132,7 @@
 					.find('ul.dropdown-menu')
 					.empty()
 					.append(this.collection)
-		}
-		else if(this.dropDown.find('ul.dropdown-menu>li').length == 0){
+        } else if (this.dropDown.find('ul.dropdown-menu>li').length === 0) {
 			this.dropDown.addClass('hide')
 		}
 	}
@@ -177,7 +176,7 @@
 
 			if (hasAccordion) {	
 				// for some reason we cannot execute the 'show' event for an accordion properly, so here's a workaround
-				if (hasAccordion[0] != $('[data-toggle=collapse]:first')[0]) {
+                if (hasAccordion[0] !== $('[data-toggle=collapse]:first')[0]) {
 					hasAccordion.click()
 				}
 			}

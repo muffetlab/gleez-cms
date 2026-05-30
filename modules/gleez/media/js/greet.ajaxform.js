@@ -56,7 +56,7 @@
 
 	Ajaxform.prototype.beforeSubmit = function(formData, form, options) {
 		//add submit button to form array if its from popup request
-		if(options.button && options.button.length == 1){
+        if (options.button && options.button.length === 1) {
             const subButton = {
                 name: options.button.attr('name'),
                 value: options.button.attr('value'),
@@ -76,10 +76,9 @@
 
 	Ajaxform.prototype.showResponse = function(data, status, xhr, form) {
         let text;
-        if (data.FormSaved == false && data.errors) {
+        if (data.FormSaved === false && data.errors) {
 			Ajaxform.prototype.validationErrors(data, form);
-		}
-		else if (data.FormSaved == true){
+        } else if (data.FormSaved === true) {
             const popup = $(form).data('popup') || false,
                 dataTable = $(form).data('datatable') || false;
 
@@ -245,7 +244,7 @@
 
         const form = this;
         form.clk = target
-		if (target.type == 'image') {
+        if (target.type === 'image') {
 			if (e.offsetX !== undefined) {
 			form.clk_x = e.offsetX;
 			form.clk_y = e.offsetY;
