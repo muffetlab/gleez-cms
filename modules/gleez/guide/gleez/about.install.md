@@ -10,16 +10,16 @@ To install Gleez, follow these instructions:
 2. Upload the contents of the `gleezcms` folder to your server
 3. Create a database called `gleezcms`, and a database user with access to that database in [phpMyAdmin](http://www.phpmyadmin.net/), [Adminer](http://www.adminer.org/) or equivalent
 4. If your operating system is based on access rights, such as Linux or UNIX. Files should have permissions set to 644 and folders should be set to 755, except:
-  * Set `/application/cache` and its sub-folders to 777
-  * Set `/application/logs` and its sub-folders to 777
-  * Set `/application/media` and its sub-folders to 777
-  * Set `/application/config` and its sub-folders to 777
-  * Set `/media` and its sub-folders to 777
+   * Set `/application/cache` and its sub-folders to 777
+   * Set `/application/logs` and its sub-folders to 777
+   * Set `/application/media` and its sub-folders to 777
+   * Set `/application/config` and its sub-folders to 777
+   * Set `/media` and its sub-folders to 777
 
-  For example you can execute immediately after Gleez installation this commands:
-  * `cd path_to_the_your_installed_gleez_dir\application`
-  * `find -type d -exec chmod -R a=rwx {} \;`
-  * `cd .. && chmod a=rwx media`
+   For example you can execute immediately after Gleez installation this commands:
+   * `cd path_to_the_your_installed_gleez_dir\application`
+   * `find -type d -exec chmod -R a=rwx {} \;`
+   * `cd .. && chmod a=rwx media`
 5. Go to `http://your_site_name/` and follow the Gleez Installer steps
 6. When finished, change the admin password
 
