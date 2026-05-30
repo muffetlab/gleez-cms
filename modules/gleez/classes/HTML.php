@@ -319,12 +319,9 @@ class HTML extends Kohana_HTML
 		$attr['height'] = 16;
 		$image_class    = '';
 
-		if (is_array($class))
+        if (is_array($class))
 		{
-			foreach ($class as $name)
-			{
-				$image_class .= $name;
-			}
+            $image_class = implode('', $class);
 		}
 		elseif (is_string($class))
 		{
