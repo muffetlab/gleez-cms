@@ -94,16 +94,6 @@ jQuery.noConflict();
 	}
 
 	/**
-	 * Encodes a Gleez path for use in a URL.
-	 *
-	 * For aesthetic reasons slashes are not escaped.
-	 */
-	Gleez.encodePath = function (item, uri) {
-		uri = uri || location.href
-		return encodeURIComponent(item).replace(/%2F/g, '/')
-	}
-
-	/**
 	 * Build an error message from an Ajax response.
 	 */
 	Gleez.ajaxError = function (xmlhttp, uri) {
