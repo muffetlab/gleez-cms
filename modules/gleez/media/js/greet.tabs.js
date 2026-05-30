@@ -76,7 +76,7 @@
 	}
 
 	Tabs.prototype.reveal = function (data, tabs, jqXHR) {
-        let json = false;
+        let json;
 
         // First see if we've retrieved json or something else
 		try {

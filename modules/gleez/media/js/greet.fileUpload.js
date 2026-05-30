@@ -132,7 +132,7 @@
 		this.$element.find('.fileupload-message').css('display', 'none')
 
         let files = e.target.files || [],
-            i = 0,
+            i,
             file;
 
         this.files = []

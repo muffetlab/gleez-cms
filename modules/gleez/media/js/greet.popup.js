@@ -66,7 +66,7 @@
 	}
 
 	Popup.prototype.reveal = function (data, popup, jqXHR) {
-        let json = false;
+        let json;
 
         this.dataTable()
 		
