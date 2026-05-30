@@ -485,16 +485,12 @@ class HTMLFilter {
 	 * Returns cleaned up and HTML-escaped version of `$string`
 	 *
 	 * @param   string   $string  The string with the attribute value
-	 * @param   boolean  $decode  Whether to decode entities in the $string? [Optional]
-	 * @return  string
+     * @return  string
 	 */
-	private function xss_bad_protocol($string, $decode = TRUE)
-	{
-		// Get the plain text representation of the attribute value (i.e. its meaning).
-		if ($decode)
-		{
-			$string = $this->decode_entities($string);
-		}
+    private function xss_bad_protocol($string)
+    {
+        // Get the plain text representation of the attribute value (i.e. its meaning).
+        $string = $this->decode_entities($string);
 
         return HTML::chars($this->strip_dangerous_protocols($string));
 	}

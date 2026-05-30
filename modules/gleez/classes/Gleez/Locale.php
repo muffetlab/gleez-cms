@@ -183,8 +183,6 @@ class Gleez_Locale {
 	 * Prepare and returns a single locale on detection
 	 *
 	 * @param   string|Gleez_Locale  $locale  Locale to work on
-	 * @param   boolean              $strict  Strict preparation [Optional]
-	 *
 	 * @return  string
 	 *
 	 * @throws  Kohana_Exception
@@ -192,7 +190,7 @@ class Gleez_Locale {
 	 * @uses    Locale_Data::getLocaleData
 	 * @uses    Locale_Data::getTerritoryData
 	 */
-	private static function _prepare_locale($locale, $strict = FALSE)
+    private static function _prepare_locale($locale)
 	{
 		if ($locale instanceof Gleez_Locale)
 		{
@@ -211,33 +209,30 @@ class Gleez_Locale {
 			self::$_detected            = self::$_client_locales + self::$_environment_locales + self::$_framework;
 		}
 
-		if ( ! $strict)
-		{
-			if ($locale === 'client')
-			{
-				$locale = self::$_client_locales;
-			}
+        if ($locale === 'client')
+        {
+            $locale = self::$_client_locales;
+        }
 
-			if ($locale === 'environment')
-			{
-				$locale = self::$_environment_locales;
-			}
+        if ($locale === 'environment')
+        {
+            $locale = self::$_environment_locales;
+        }
 
-			if ($locale === 'framework')
-			{
-				$locale = self::$_framework;
-			}
+        if ($locale === 'framework')
+        {
+            $locale = self::$_framework;
+        }
 
-			if (($locale === 'detected') OR (is_null($locale)))
-			{
-				$locale = self::$_detected;
-			}
+        if (($locale === 'detected') OR (is_null($locale)))
+        {
+            $locale = self::$_detected;
+        }
 
-			if (is_array($locale))
-			{
-				$locale = key($locale);
-			}
-		}
+        if (is_array($locale))
+        {
+            $locale = key($locale);
+        }
 
 		// This can only happen when someone extends Gleez_Locale and erases the `$_framework`
 		if (is_null($locale))
