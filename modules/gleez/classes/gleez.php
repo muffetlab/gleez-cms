@@ -20,7 +20,7 @@ class Gleez {
 	 * Minimal required version of php
 	 * @type string
 	 */
-	const PHP_MIN_REQ = '5.4.1';
+	const PHP_MIN_REQ = '7.0.0';
 
 	/**
 	 * Release codename
