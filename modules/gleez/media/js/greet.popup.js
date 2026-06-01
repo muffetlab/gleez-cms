@@ -233,8 +233,8 @@
 								$rollover = $(this);
 						}
 					})
-					
-					$next[0] !== $(this)[0] ? $next.focus() : $rollover.focus()
+
+                    $next[0] !== $(this)[0] ? $next.trigger('focus') : $rollover.trigger('focus')
 					
 					e.preventDefault()
 				}
@@ -394,10 +394,10 @@
             transition ?
 				that.$element.find('.popup-dialog') // wait for modal to slide in
 				.one($.support.transition.end, function () {
-					that.$element.focus().trigger(e)
+                    that.$element.trigger('focus').trigger(e)
 				})
 				.emulateTransitionEnd(300) :
-				that.$element.focus().trigger(e)
+                that.$element.trigger('focus').trigger(e)
 		})
 	}
 
@@ -435,7 +435,7 @@
 		.off('focusin.popup') // guard against infinite focus loop
 		.on('focusin.popup', function (e) {
 			if (that.$element[0] !== e.target && !$.contains(that.$element[0], e.target)) {
-				that.$element.focus()
+                that.$element.trigger('focus')
 			}
 		})
 	}
@@ -495,7 +495,7 @@
 				that.modalParent.$element.off('hidden.popup.submodal')
 				that.modalParent.escape()
 				that.modalParent.enforceFocus()
-				that.modalParent.$element.focus()
+                that.modalParent.$element.trigger('focus')
 				that.modalParent = null
 			}
 
@@ -673,7 +673,7 @@
 		$target
 			.popup(option)
 			.one('hide', function () {
-			$this.focus()
+                $this.trigger('focus')
 		})
 	})
 

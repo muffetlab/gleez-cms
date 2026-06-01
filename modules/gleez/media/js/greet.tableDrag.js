@@ -346,7 +346,7 @@
 		})
 
 		// Similar to the hover event, add a class when the handle is focused.
-		handle.focus(function () {
+        handle.on('focus', function () {
 			$(this).addClass('tabledrag-handle-hover')
 			self.safeBlur = true
 		})
@@ -406,7 +406,7 @@
 							window.scrollBy(0, -parseInt(item.offsetHeight, 10))
 						}
 
-						handle.get(0).focus(); // Regain focus after the DOM manipulation.
+                        handle.get(0).trigger('focus'); // Regain focus after the DOM manipulation.
 					}
 			    break
 				case 39: // Right arrow.
@@ -450,7 +450,7 @@
 							window.scrollBy(0, parseInt(item.offsetHeight, 10));
 						}
 
-					  handle.get(0).focus(); // Regain focus after the DOM manipulation.
+                        handle.get(0).trigger('focus'); // Regain focus after the DOM manipulation.
 					}
 			    break
 			}

@@ -386,7 +386,7 @@
 		e.stopPropagation()
 		e.preventDefault()
 		this.select()
-		this.$element.focus()
+        this.$element.trigger('focus')
 	}
 
 	Typeahead.prototype.mouseenter = function (e) {
