@@ -400,7 +400,7 @@ class HTMLFilter {
 							$attrarr[] = $attrname;
 						}
 
-						$attr = preg_replace('/^\s+/', '', $attr);
+                        $attr = ltrim($attr);
 					}
 					break;
 
