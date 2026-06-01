@@ -370,7 +370,7 @@ class ACL {
         if (!$perms = $cache->get('roles:site_perms')) {
 			$result = DB::select('rid', 'permission')
 						->from('permissions')
-						->as_object(TRUE)
+                ->as_object()
 						->execute();
 
 			foreach ($result as $row)

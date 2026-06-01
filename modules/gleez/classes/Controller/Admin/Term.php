@@ -128,7 +128,7 @@ class Controller_Admin_Term extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -190,7 +190,7 @@ class Controller_Admin_Term extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -267,7 +267,7 @@ class Controller_Admin_Term extends Controller_Admin {
 	 */
 	public function action_confirm()
 	{
-		$id = $this->request->param('id', NULL);
+        $id = $this->request->param('id');
 
 		if ($this->valid_post('term-list') AND ! is_null($id))
 		{

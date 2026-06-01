@@ -19,7 +19,7 @@
 				<?php echo Form::label('roles', __('Roles'), array('class' => 'control-label')) ?>
 				<?php foreach($roles as $role => $name): ?>
 					<div class="checkbox">
-						<?php echo Form::label('roles', Form::checkbox('roles['.$role.']', $role, FALSE).ucfirst($name)); ?>
+                        <?php echo Form::label('roles', Form::checkbox('roles[' . $role . ']', $role) . ucfirst($name)); ?>
 					</div>
 				<?php endforeach ?>
 			</div>

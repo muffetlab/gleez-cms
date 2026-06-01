@@ -895,7 +895,7 @@ abstract class Template extends Controller {
 			// Allow for override. Set the form saved true for ajax request, if no errors
 			if (empty($this->_errors))
 			{
-				$this->SetFormSaved(TRUE);
+                $this->SetFormSaved();
 			}
 			else
 			{

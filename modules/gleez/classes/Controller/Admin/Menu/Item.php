@@ -115,7 +115,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -167,7 +167,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 

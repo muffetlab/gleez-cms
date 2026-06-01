@@ -139,7 +139,7 @@ class Controller_Contact extends Template {
 			}
 			else
 			{
-				$this->_errors = $post->errors('contact', TRUE);
+                $this->_errors = $post->errors('contact');
 			}
 		}
 

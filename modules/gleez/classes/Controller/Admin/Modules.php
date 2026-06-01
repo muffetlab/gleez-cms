@@ -58,7 +58,7 @@ class Controller_Admin_Modules extends Controller_Admin {
 		Cache::instance()->delete('load_modules');
 
 		// Load modules
-		Module::load_modules(TRUE);
+        Module::load_modules();
 
 		$view = View::factory('admin/module/list')
 				->set('available', Module::available())

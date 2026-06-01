@@ -283,7 +283,7 @@ class Controller_Page extends Template {
 			catch (ORM_Validation_Exception $e)
 			{
 				// @todo Add messages
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -369,7 +369,7 @@ class Controller_Page extends Template {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 

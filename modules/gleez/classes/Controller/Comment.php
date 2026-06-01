@@ -92,7 +92,7 @@ class Controller_Comment extends Template {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 

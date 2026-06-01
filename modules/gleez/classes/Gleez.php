@@ -233,7 +233,7 @@ class Gleez {
 	 */
 	public static function block_ips()
 	{
-		$blocked_ips = Kohana::$config->load('site')->get('blocked_ips', NULL);
+        $blocked_ips = Kohana::$config->load('site')->get('blocked_ips');
 		$ip          = Request::$client_ip;
 
 		if ( ! empty($blocked_ips) AND in_array($ip, preg_split("/[\s,]+/",$blocked_ips)))

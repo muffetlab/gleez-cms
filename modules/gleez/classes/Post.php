@@ -977,7 +977,7 @@ class Post extends ORM_Versioned {
 
 		$params = (object) System::parse_args($args, $default);
         $cache = Cache::instance();
-        $post = $params->use_cache ? $cache->get('post:recent_' . $params->type, NULL) : NULL;
+        $post = $params->use_cache ? $cache->get('post:recent_' . $params->type) : NULL;
 
 		if (empty($post))
 		{

@@ -99,7 +99,7 @@ class Controller_Admin extends Template {
 			}
 			catch (Validation_Exception $e)
 			{
-				$this->_errors = $e->array->errors('login', TRUE);
+                $this->_errors = $e->array->errors('login');
 			}
 		}
 

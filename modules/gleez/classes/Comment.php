@@ -82,7 +82,7 @@ class Comment {
 			catch (ORM_Validation_Exception $e)
 			{
 				// @todo Add messages
-				$errors = $e->errors('models', TRUE);
+                $errors = $e->errors('models');
 			}
 		}
 

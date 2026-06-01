@@ -64,7 +64,7 @@ class Controller_Admin_Format extends Controller_Admin {
 	 */
 	public function action_configure()
 	{
-		$id = $this->request->param('id', NULL);
+        $id = $this->request->param('id');
 
 		// Get required format
 		$format = $this->_format->get($id);

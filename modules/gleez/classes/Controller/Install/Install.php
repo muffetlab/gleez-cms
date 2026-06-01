@@ -445,7 +445,7 @@ class Controller_Install_Install extends Controller_Template {
 
 		// Update user
         $algo = Kohana::$config->load('auth')->get('hash_method', '');
-		$password = Text::random('alnum', 8);
+        $password = Text::random('alnum');
         $pass = hash_hmac($algo, $password, $aKey);
 		mysqli_query($link, "UPDATE `{$prefix}users` SET `pass` = '$pass', `created` = $time, `updated` = $time WHERE `id` = 2");
 

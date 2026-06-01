@@ -866,7 +866,7 @@ class Assets {
 		if ( ! is_dir($directory))
 		{
 			// Recursively create the directories needed for the file
-			System::mkdir($directory, 0777, TRUE);
+            System::mkdir($directory);
 		}
 
 		return $filename;

@@ -60,7 +60,7 @@ class Controller_Comments extends Controller {
 		if ($this->request === Request::initial())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt was made to access comments controller externally.');
-			$this->request->redirect('');
+            $this->request->redirect();
 		}
 
 		// Get group settings

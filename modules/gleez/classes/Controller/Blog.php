@@ -283,7 +283,7 @@ class Controller_Blog extends Template {
 			catch (ORM_Validation_Exception $e)
 			{
 				// @todo Added messages
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -370,7 +370,7 @@ class Controller_Blog extends Template {
 			catch (ORM_Validation_Exception $e)
 			{
 				// @todo Add messages
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 

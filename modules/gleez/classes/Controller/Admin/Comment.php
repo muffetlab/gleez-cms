@@ -221,7 +221,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 	{
 		// Filter out unchecked comments
 		$comments   = array_filter($post['comments']);
-		$operations = Comment::bulk_actions(FALSE);
+        $operations = Comment::bulk_actions();
 		$operation  = $operations[$post['operation']];
 
 		if ($operation['callback'])

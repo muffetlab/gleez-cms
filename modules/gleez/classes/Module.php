@@ -233,7 +233,7 @@ class Module
 		self::_add_to_path($module_name);
 
 		//Call DB migrations for this module
-		self::migrate($module_name, 'up');
+        self::migrate($module_name);
 
 		$installer_class = ucfirst($module_name).'_Installer';
 		if (is_callable( array($installer_class, "install"))) {
@@ -258,7 +258,7 @@ class Module
 		// clear any cache for sure
 		Cache::instance()->delete('load_modules');
 
-		self::load_modules(true);
+        self::load_modules();
 
 		// Now the module is installed but inactive, so don't leave it in the active path
 		self::_remove_from_path($module_name);
@@ -318,7 +318,7 @@ class Module
 	public static function upgrade($module_name)
 	{
 		//Its safe to call here, migrations wont run twice. It runs only if not already run
-		self::migrate($module_name, 'up');
+        self::migrate($module_name);
 
 		$version_before  = self::get_version($module_name);
 		$installer_class = ucfirst($module_name).'_Installer';
@@ -347,7 +347,7 @@ class Module
 		// clear any cache for sure
 		Cache::instance()->delete('load_modules');
 
-		self::load_modules(true);
+        self::load_modules();
 
 		$version_after = self::get_version($module_name);
 		if ($version_before != $version_after) {
@@ -369,7 +369,7 @@ class Module
 
 		if($module) {
 			//Its safe to call here, migrations wont run twice. It runs only if not already run
-			self::migrate($module_name, 'up');
+            self::migrate($module_name);
 
 			$installer_class = ucfirst($module_name).'_Installer';
 
@@ -391,7 +391,7 @@ class Module
 			// clear any cache for sure
 			Cache::instance()->delete('load_modules');
 
-			self::load_modules(true);
+            self::load_modules();
 
 			// @todo
 			//Widget::activate($module_name);
@@ -428,7 +428,7 @@ class Module
 		// clear any cache for sure
 		Cache::instance()->delete('load_modules');
 
-		self::load_modules(true);
+        self::load_modules();
 
 		Kohana::$log->add(Log::INFO, 'Deactivated module :module_name', array(':module_name' => $module_name));
 	}
@@ -456,7 +456,7 @@ class Module
 			$module->delete();
 		}
 
-		self::load_modules(true);
+        self::load_modules();
 
 		// remove widgets when the module is uninstalled
 		Widgets::uninstall($module_name);
