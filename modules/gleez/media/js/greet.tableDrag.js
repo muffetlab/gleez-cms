@@ -211,7 +211,6 @@
 
 	/**
 	 * Hide the columns containing weight/parent form elements.
-	 * Undo showColumns().
 	 */
 	TableDrag.prototype.hideColumns = function () {
 		// Hide weight/parent cells and headers.
@@ -227,26 +226,6 @@
 
 		// Trigger an event to allow other scripts to react to this display change.
 		$(this.table).trigger('columnschange', 'hide')
-	}
-
-	/**
-	 * Show the columns containing weight/parent form elements
-	 * Undo hideColumns().
-	 */
-	TableDrag.prototype.showColumns = function () {
-		// Show weight/parent cells and headers.
-		$('.tabledrag-hide', this.table).css('display', '')
-
-		// Hide TableDrag handles.
-		$('.tabledrag-handle', this.table).css('display', 'none')
-
-		// Increase the colspan for any columns where it was previously reduced.
-		$('.tabledrag-has-colspan', this.table).each(function () {
-			this.colSpan = this.colSpan + 1
-		})
-
-		// Trigger an event to allow other scripts to react to this display change.
-		$(this.table).trigger('columnschange', 'show'); // @todo Cache $(this.table)
 	}
 
 	/**
@@ -346,7 +325,7 @@
 		})
 
 		// Similar to the hover event, add a class when the handle is focused.
-		handle.focus(function () {
+        handle.on('focus', function () {
 			$(this).addClass('tabledrag-handle-hover')
 			self.safeBlur = true
 		})
@@ -406,7 +385,7 @@
 							window.scrollBy(0, -parseInt(item.offsetHeight, 10))
 						}
 
-						handle.get(0).focus(); // Regain focus after the DOM manipulation.
+                        handle.get(0).trigger('focus'); // Regain focus after the DOM manipulation.
 					}
 			    break
 				case 39: // Right arrow.
@@ -450,7 +429,7 @@
 							window.scrollBy(0, parseInt(item.offsetHeight, 10));
 						}
 
-					  handle.get(0).focus(); // Regain focus after the DOM manipulation.
+                        handle.get(0).trigger('focus'); // Regain focus after the DOM manipulation.
 					}
 			    break
 			}
@@ -684,7 +663,6 @@
         let n = 0, len = rows.length;
         for (; n < len; ++n) {
             let row = rows[n];
-            const indentDiff = 0;
             const rowY = $(row).offset().top;
             // Because Safari does not report offsetHeight on table rows, but does on
 	    // table cells, grab the firstChild of the row and use that instead.
@@ -1325,7 +1303,7 @@
 	// GREET TABLEDRAG DATA-API
 	// ==============
 
-	$(window).on('load.tabledrag.data-api', function (e) {
+    $(window).on('load.tabledrag.data-api', function () {
 		$('[data-toggle="tabledrag"]').each(function () {
             const $table = $(this);
             $table.tabledrag($table.data())
@@ -1333,7 +1311,7 @@
 	})
 	
 	// Added pajax and jquery mobile support
-	$(document).on('pjax:complete pagecontainerchange', function (e) {
+    $(document).on('pjax:complete pagecontainerchange', function () {
 		$('[data-toggle="tabledrag"]').each(function () {
             const $table = $(this);
             $table.tabledrag($table.data())

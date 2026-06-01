@@ -112,8 +112,8 @@
 	  this.shown = false
 	  return this
 	}
-  
-	Typeahead.prototype.lookup = function (event) {
+
+    Typeahead.prototype.lookup = function () {
         let items;
         if (this.ajax) {
 		this.ajaxer()
@@ -168,7 +168,7 @@
 
         let items = [];
         // Gleez cms returns an object array, but we need a string array.
-		$.map(data, function(result, item){
+        $.map(data, function (result) {
             let label,
                 save = false;
 
@@ -217,27 +217,6 @@
 	
 		return beginswith.concat(caseSensitive, caseInsensitive)
 	}
-
-	Typeahead.prototype.smartHighlighter = function (item) {
-        let data = this.results[item],
-            markup = "<div class='typeahead_wrapper'>";
-
-        if (data.image !== undefined) {
-		  markup += "<img class='typeahead_photo' src='" + data.image + "' />";
-		}
-		
-		if (data.name !== undefined) {
-		  markup += "<div class='typeahead_primary'>" + data.name + "</div>";
-		}
-		
-		if (data.group !== undefined) {
-		  markup += "<div class='typeahead_secondary'>" + data.group + "</div>";
-		}
-		
-		markup +="</div>";
-		
-		return markup
-	}
   
 	Typeahead.prototype.highlighter = function (item) {
         let term = this.autocompleteExtractLast(this.query);
@@ -262,8 +241,8 @@
 		this.$menu.html(items)
 		return this
 	}
-  
-	Typeahead.prototype.next = function (event) {
+
+    Typeahead.prototype.next = function () {
         let active = this.$menu.find('.active').removeClass('active'),
             next = active.next();
 
@@ -273,8 +252,8 @@
 	
 		next.addClass('active')
 	}
-  
-	Typeahead.prototype.prev = function (event) {
+
+    Typeahead.prototype.prev = function () {
         let active = this.$menu.find('.active').removeClass('active'),
             prev = active.prev();
 
@@ -373,11 +352,11 @@
 		e.preventDefault()
 	}
 
-	Typeahead.prototype.focus = function (e) {
+    Typeahead.prototype.focus = function () {
 		this.focused = true
 	}
-  
-	Typeahead.prototype.blur = function (e) {
+
+    Typeahead.prototype.blur = function () {
 		this.focused = false
 		if (!this.mousedover && this.shown) this.hide()
 	}
@@ -386,7 +365,7 @@
 		e.stopPropagation()
 		e.preventDefault()
 		this.select()
-		this.$element.focus()
+        this.$element.trigger('focus')
 	}
 
 	Typeahead.prototype.mouseenter = function (e) {
@@ -395,7 +374,7 @@
 		$(e.currentTarget).addClass('active')
 	}
 
-	Typeahead.prototype.mouseleave = function (e) {
+    Typeahead.prototype.mouseleave = function () {
 		this.mousedover = false
 		if (!this.focused && this.shown) this.hide()
 	}
@@ -433,7 +412,7 @@
 	  
 	  // Query is good to send, set a timer
 	  that.ajax.timerId = setTimeout(function() {
-		$.proxy(that.ajaxExecute(query), that)
+            that.ajaxExecute(query)
 	  }, that.ajax.timeout)
 	
 	  return that
@@ -523,13 +502,6 @@
 		s = s.replace (/%2F/g, '/'); //escape slash for admin/menu autocomplete
 		return s
 	}
-  
-	Typeahead.prototype.URLDecode = function (s) {
-	  ////s = s.replace (/\+/g, '%20');
-	  s = s.replace (/\//g, '%2F')
-	  s = decodeURIComponent (s)
-	  return s;
-	}
 
 	/* GREET TYPEAHEAD PLUGIN DEFINITION
 	 * =========================== */
@@ -561,9 +533,8 @@
 	  , url: null
 	  , timeout: 300
 	  , method: 'get'
-	  , itemSelected: function () { }
 	}
-  
+
 	$.fn.typeahead.Constructor = Typeahead
 
 
@@ -578,8 +549,8 @@
    
 	/* GREET TYPEAHEAD DATA-API
 	 * ================== */
-   
-	$(document).on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
+
+    $(document).on('focus.typeahead.data-api', '[data-provide="typeahead"]', function () {
         const $this = $(this);
         if ($this.data('typeahead')) return
 		$this.typeahead($this.data())

@@ -36,7 +36,7 @@
             }
         })
 
-        const oTable = $table.DataTable({
+        $table.DataTable({
             "columns": columns,
             "order": options.order,
             "processing": options.processing,
@@ -55,7 +55,7 @@
                     "cache": false,
                     "type": settings.ajax.type || 'GET'
                 }, 300)
-                    .done(function (response, textStatus, jqXHR) {
+                    .done(function (response) {
                         $(settings.oInstance).trigger('xhr', settings)
                         fnCallback(response)
                     })
@@ -139,12 +139,6 @@
         };
 	}
 
-	/* Set the defaults for DataTables initialisation */
-	$.extend(true, $.fn.dataTable.defaults, {
-		"initComplete": function (oSettings, json) {
-		}
-	})
-
 	DataTable.DEFAULTS = {
         ajax: false,
         order: false
@@ -190,7 +184,7 @@
 	// GREET DATATABLES DATA-API
 	// ==============
 
-	$(window).on('load.datatable.data-api', function (e) {
+    $(window).on('load.datatable.data-api', function () {
 		if (!$.fn.dataTable) return
 		
 		$('[data-toggle="datatable"]').each(function () {
@@ -200,7 +194,7 @@
 	})
 
 	// Added pajax and jquery mobile support
-	$(document).on('pjax:complete pagecontainerchange', function (e) {
+    $(document).on('pjax:complete pagecontainerchange', function () {
 		if (!$.fn.dataTable) return
 		
 		$('[data-toggle="datatable"]').each(function () {
