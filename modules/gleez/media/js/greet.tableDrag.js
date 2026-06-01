@@ -211,7 +211,6 @@
 
 	/**
 	 * Hide the columns containing weight/parent form elements.
-	 * Undo showColumns().
 	 */
 	TableDrag.prototype.hideColumns = function () {
 		// Hide weight/parent cells and headers.
@@ -227,26 +226,6 @@
 
 		// Trigger an event to allow other scripts to react to this display change.
 		$(this.table).trigger('columnschange', 'hide')
-	}
-
-	/**
-	 * Show the columns containing weight/parent form elements
-	 * Undo hideColumns().
-	 */
-	TableDrag.prototype.showColumns = function () {
-		// Show weight/parent cells and headers.
-		$('.tabledrag-hide', this.table).css('display', '')
-
-		// Hide TableDrag handles.
-		$('.tabledrag-handle', this.table).css('display', 'none')
-
-		// Increase the colspan for any columns where it was previously reduced.
-		$('.tabledrag-has-colspan', this.table).each(function () {
-			this.colSpan = this.colSpan + 1
-		})
-
-		// Trigger an event to allow other scripts to react to this display change.
-		$(this.table).trigger('columnschange', 'show'); // @todo Cache $(this.table)
 	}
 
 	/**

@@ -30,7 +30,6 @@
 		this.forms 		 = false
 		
 		this.windowWidth	= $(window).width()
-		this.windowHeight	= $(window).height()
 
 		this.options.loading && this.loading()
 		this.local()
@@ -327,7 +326,6 @@
 		if (!this.options.width && !this.options.height) return
 		
 		this.windowWidth  = $(window).width()
-		this.windowHeight = $(window).height()
 		
 		this.layout()
 	}

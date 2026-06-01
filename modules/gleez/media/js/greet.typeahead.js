@@ -217,27 +217,6 @@
 	
 		return beginswith.concat(caseSensitive, caseInsensitive)
 	}
-
-	Typeahead.prototype.smartHighlighter = function (item) {
-        let data = this.results[item],
-            markup = "<div class='typeahead_wrapper'>";
-
-        if (data.image !== undefined) {
-		  markup += "<img class='typeahead_photo' src='" + data.image + "' />";
-		}
-		
-		if (data.name !== undefined) {
-		  markup += "<div class='typeahead_primary'>" + data.name + "</div>";
-		}
-		
-		if (data.group !== undefined) {
-		  markup += "<div class='typeahead_secondary'>" + data.group + "</div>";
-		}
-		
-		markup +="</div>";
-		
-		return markup
-	}
   
 	Typeahead.prototype.highlighter = function (item) {
         let term = this.autocompleteExtractLast(this.query);
@@ -523,13 +502,6 @@
 		s = s.replace (/%2F/g, '/'); //escape slash for admin/menu autocomplete
 		return s
 	}
-  
-	Typeahead.prototype.URLDecode = function (s) {
-	  ////s = s.replace (/\+/g, '%20');
-	  s = s.replace (/\//g, '%2F')
-	  s = decodeURIComponent (s)
-	  return s;
-	}
 
 	/* GREET TYPEAHEAD PLUGIN DEFINITION
 	 * =========================== */
@@ -561,9 +533,8 @@
 	  , url: null
 	  , timeout: 300
 	  , method: 'get'
-	  , itemSelected: function () { }
 	}
-  
+
 	$.fn.typeahead.Constructor = Typeahead
 
 

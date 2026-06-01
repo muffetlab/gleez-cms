@@ -160,29 +160,6 @@
 		}
 	}
 
-	// Try to navigate to the tab/accordion last given in the URL
-	Tabs.prototype.reShow = function () {
-        let hash = document.location.hash,
-            hasTab = false,
-            hasAccordion = false;
-
-        if (hash && this.options.tabreshow) {
-			hasTab       = $('[data-toggle=tab][href='+hash+']')
-			hasAccordion = $('[data-toggle=collapse][href='+hash+']')
-
-			if (hasTab) {
-				hasTab.tab('show')
-			}
-
-			if (hasAccordion) {	
-				// for some reason we cannot execute the 'show' event for an accordion properly, so here's a workaround
-                if (hasAccordion[0] !== $('[data-toggle=collapse]:first')[0]) {
-					hasAccordion.click()
-				}
-			}
-		}
-	}
-
 	// GREET TABS PLUGIN DEFINITION
 	// =======================
 
