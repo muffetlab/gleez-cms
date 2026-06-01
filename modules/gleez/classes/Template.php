@@ -799,7 +799,7 @@ abstract class Template extends Controller {
 		$_token  = $this->request->post('_token');
 		$_action = $this->request->post('_action');
 
-		$has_csrf = ! empty($_token) AND ! empty($_action);
+        $has_csrf = !empty($_token) && !empty($_action);
 		$valid_csrf = CSRF::valid($_token, $_action);
 
 		if ($has_csrf AND ! $valid_csrf)

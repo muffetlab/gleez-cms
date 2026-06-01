@@ -13,36 +13,58 @@
  *
  */
 
-+function ($) { 'use strict';
++function ($) {
+    'use strict';
+
+    const checkEmptyRegions = function (table, rowObject) {
+        $('tr.region-message', table).each(function () {
+            // If the dragged row is in this region, but above the message row, swap it down one space.
+            if ($(this).prev('tr').get(0) === rowObject.element) {
+                // Prevent a recursion problem when using the keyboard to move rows up.
+                if ((rowObject.method !== 'keyboard' || rowObject.direction === 'down')) {
+                    rowObject.swap('after', this);
+                }
+            }
+            // This region has become empty.
+            if ($(this).next('tr').is(':not(.draggable)') || $(this).next('tr').size() === 0) {
+                $(this).removeClass('region-populated').addClass('region-empty')
+            }
+            // This region has become populated.
+            else if ($(this).is('.region-empty')) {
+                $(this).removeClass('region-empty').addClass('region-populated')
+            }
+        })
+    };
 
 	// tableDrag is required and we should be on the widgets admin page.
 	if (typeof $.fn.tabledrag == 'undefined') {
 		return null
 	}
 
-	var widgets 	= 	$('table#widgets').tabledrag({
-							weight: {
-								fieldClass: 'row-weight',
-								hidden: true 
-							}
-							, parent: 'row-dummy'
-							, group: 'row-dummy'
-					})
+    const $widgetsTable = $('table#widgets');
+    const widgets = $widgetsTable.tabledrag({
+        weight: {
+            fieldClass: 'row-weight',
+            hidden: true
+        }
+        , parent: 'row-dummy'
+        , group: 'row-dummy'
+    });
 
-	// Add a handler for when a row is swapped, update empty regions.
-	$('table#widgets').on('swapRow.tabledrag', function (event, object) {
+    // Add a handler for when a row is swapped, update empty regions.
+    $widgetsTable.on('swapRow.tabledrag', function (event, object) {
 		checkEmptyRegions(this, object)
 	})
 
-	$('table#widgets').on('dropRow.tabledrag', function (event, dragObject) {
+    $widgetsTable.on('dropRow.tabledrag', function (event, dragObject) {
 		// Use "region-message" row instead of "region" row because
 		// "region-{region_name}-message" is less prone to regexp match errors.
-		var regionRow   = $(dragObject.rowObject.element).prevAll('tr.region-message').get(0)
-		var regionName  = regionRow.className.replace(/([^ ]+[ ]+)*region-([^ ]+)-message([ ]+[^ ]+)*/, '$2')
-		var regionField = $('select.widget-region-select', dragObject.rowObject.element)
+        const regionRow = $(dragObject.rowObject.element).prevAll('tr.region-message').get(0);
+        const regionName = regionRow.className.replace(/([^ ]+[ ]+)*region-([^ ]+)-message([ ]+[^ ]+)*/, '$2');
+        const regionField = $('select.widget-region-select', dragObject.rowObject.element);
 
-		// Check whether the newly picked region is available for this block.
-		if ($('option[value=' + regionName + ']', regionField).length == 0) {
+        // Check whether the newly picked region is available for this block.
+        if ($('option[value=' + regionName + ']', regionField).length === 0) {
 			// If not, alert the user and keep the block in its old region setting.
 			alert(Gleez.t('The widget cannot be placed in this region.'))
 
@@ -51,10 +73,10 @@
 			regionField.change()
 		}
 		else if ($(dragObject.rowObject.element).prev('tr').is('.region-message')) {
-			var weightField   = $('select.row-weight', dragObject.rowObject.element)
-			var oldRegionName = weightField[0].className.replace(/([^ ]+[ ]+)*widget-weight-([^ ]+)([ ]+[^ ]+)*/, '$2')
+            const weightField = $('select.row-weight', dragObject.rowObject.element);
+            const oldRegionName = weightField[0].className.replace(/([^ ]+[ ]+)*widget-weight-([^ ]+)([ ]+[^ ]+)*/, '$2');
 
-			if (!regionField.is('.widget-region-' + regionName)) {
+            if (!regionField.is('.widget-region-' + regionName)) {
 				regionField.removeClass('widget-region-' + oldRegionName).addClass('widget-region-' + regionName)
 				weightField.removeClass('widget-weight-' + oldRegionName).addClass('widget-weight-' + regionName)
 
@@ -65,14 +87,14 @@
 
 	// Add the behavior to each region select list.
     $('select.widget-region-select', 'table#widgets').once('widget-region-select').each(function () {
-		$(this).change(function (event) {
+        $(this).change(function () {
 			// Make our new row and select field.
-			var row 	= $(this).parents('tr:first')
-			, select 	= $(this)
-			, table 	= $('table#widgets')
-			, tableDrag = widgets.vObject()
+            const row = $(this).parents('tr:first'),
+                select = $(this),
+                table = $('table#widgets'),
+                tableDrag = widgets.vObject();
 
-			tableDrag.rowObject = new tableDrag.row(row)
+            tableDrag.rowObject = new tableDrag.row(row)
 
 			// Find the correct region and insert the row as the first in the region.
 			$('tr.region-message', table).each(function () {
@@ -106,27 +128,7 @@
 		})
 	})
 
-	var checkEmptyRegions = function (table, rowObject) {
-		$('tr.region-message', table).each(function () {
-			// If the dragged row is in this region, but above the message row, swap it down one space.
-			if ($(this).prev('tr').get(0) == rowObject.element) {
-				// Prevent a recursion problem when using the keyboard to move rows up.
-				if ((rowObject.method != 'keyboard' || rowObject.direction == 'down')) {
-					rowObject.swap('after', this);
-				}
-			}
-			// This region has become empty.
-			if ($(this).next('tr').is(':not(.draggable)') || $(this).next('tr').size() == 0) {
-				$(this).removeClass('region-populated').addClass('region-empty')
-			}
-			// This region has become populated.
-			else if ($(this).is('.region-empty')) {
-				$(this).removeClass('region-empty').addClass('region-populated')
-			}
-		})
-	}
-
-	// A custom message for the blocks page specifically.
+    // A custom message for the blocks page specifically.
 	Gleez.theme.tableDragChangedWarning = function () {
 		return '<div class="tabledrag-changed-warning alert alert-warning">' + Gleez.theme('tableDragChangedMarker') + ' ' + Gleez.t('The changes to these widgets will not be saved until the <em>Save widgets</em> button is clicked.') + '</div>';
 	}

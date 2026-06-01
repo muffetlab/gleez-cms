@@ -533,7 +533,7 @@ class Pagination {
 	 */
 	public function __get($key)
 	{
-		return isset($this->$key) ? $this->$key : NULL;
+        return $this->$key ?? NULL;
 	}
 
 	/**

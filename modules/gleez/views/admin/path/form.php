@@ -10,7 +10,7 @@
 		<?php echo Form::label('source', __('Existing URL Path'), array('class' => 'control-label col-md-4')); ?>
 		<div class="controls col-md-5">
 			<?php echo Form::input('source', $post->source, array('class' => 'form-control col-md-5')); ?>
-			<p class="help-block"><?php echo HTML::anchor($site_url.(isset($post->source) ? $post->source : '')); ?></p>
+            <p class="help-block"><?php echo HTML::anchor($site_url . ($post->source ?? '')); ?></p>
 		</div>
 	</div>
 
@@ -18,7 +18,7 @@
 		<?php echo Form::label('alias', __('Alias'), array('class' => 'control-label col-md-4')); ?>
 		<div class="controls col-md-5">
 			<?php echo Form::input('alias', $post->alias, array('class' => 'form-control col-md-5')); ?>
-			<p class="help-block"><?php echo HTML::anchor($site_url.(isset($post->alias) ? $post->alias : '')); ?></p>
+            <p class="help-block"><?php echo HTML::anchor($site_url . ($post->alias ?? '')); ?></p>
 		</div>
 	</div>
 

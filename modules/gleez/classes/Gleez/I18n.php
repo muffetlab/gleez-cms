@@ -107,7 +107,7 @@ class Gleez_I18n extends I18n
 	 */
 	public static function isAvailable($lang)
 	{
-		return (bool) array_key_exists($lang, self::$_languages);
+        return array_key_exists($lang, self::$_languages);
 	}
 
 	/**
@@ -282,7 +282,7 @@ class Gleez_I18n extends I18n
 		$key = Gleez_I18n::get_plural_key(Gleez_I18n::$lang, $count);
 
 		// Return the translated string if it exists
-		return isset($table[$string][$key]) ? $table[$string][$key] : (isset($table[$string]) ? $table[$string] : $string);
+        return $table[$string][$key] ?? ($table[$string] ?? $string);
 	}
 
 	/**
@@ -343,7 +343,7 @@ class Gleez_I18n extends I18n
 					return 'two';
 				} else if (is_int($count) AND ($i = $count % 100) >= 3 AND $i <= 10) {
 					return 'few';
-				} else if (is_int($count) AND ($i = $count % 100) >= 11 AND $i <= 99) {
+                } else if (is_int($count) && $count % 100 >= 11) {
 					return 'many';
 				} else {
 					return 'other';
@@ -402,7 +402,7 @@ class Gleez_I18n extends I18n
 			case 'mo':
 				if ($count == 1) {
 					return 'one';
-				} else if (is_int($count) AND $count == 0 AND ($i = $count % 100) >= 1 AND $i <= 19) {
+                } else if ($count === 0 || ($i = $count % 100) >= 1 && $i <= 19) {
 					return 'few';
 				} else {
 					return 'other';
@@ -411,7 +411,11 @@ class Gleez_I18n extends I18n
 			case 'lt':
 				if (is_int($count) AND $count % 10 == 1 AND $count % 100 != 11) {
 					return 'one';
-				} else if (is_int($count) AND ($i = $count % 10) >= 2 AND $i <= 9 AND ($i = $count % 100) < 11 AND $i > 19) {
+                } else if (
+                    is_int($count)
+                    && $count % 10 >= 2
+                    && (($i = $count % 100) < 11 || $i > 19)
+                ) {
 					return 'few';
 				} else {
 					return 'other';
@@ -426,9 +430,16 @@ class Gleez_I18n extends I18n
 			case 'sh':
 				if (is_int($count) AND $count % 10 == 1 AND $count % 100 != 11) {
 					return 'one';
-				} else if (is_int($count) AND ($i = $count % 10) >= 2 AND $i <= 4 AND ($i = $count % 100) < 12 AND $i > 14) {
+                } else if (
+                    is_int($count)
+                    && ($i = $count % 10) >= 2 && $i <= 4
+                    && (($j = $count % 100) < 12 || $j > 14)
+                ) {
 					return 'few';
-				} else if (is_int($count) AND ($count % 10 == 0 OR (($i = $count % 10) >= 5 AND $i <= 9) OR (($i = $count % 100) >= 11 AND $i <= 14))) {
+                } else if (
+                    is_int($count)
+                    && ($count % 10 == 0 || $count % 10 >= 5 || ($i = $count % 100) >= 11 && $i <= 14)
+                ) {
 					return 'many';
 				} else {
 					return 'other';
@@ -447,8 +458,12 @@ class Gleez_I18n extends I18n
 			case 'pl':
 				if ($count == 1) {
 					return 'one';
-				} else if (is_int($count) AND ($i = $count % 10) >= 2 AND $i <= 4 &&
-					($i = $count % 100) < 12 AND $i > 14 AND ($i = $count % 100) < 22 AND $i > 24) {
+                } else if (
+                    is_int($count)
+                    && ($i = $count % 10) >= 2 && $i <= 4
+                    && (($j = $count % 100) < 12 || $j > 14)
+                    && (($k = $count % 100) < 22 || $k > 24)
+                ) {
 					return 'few';
 				} else {
 					return 'other';

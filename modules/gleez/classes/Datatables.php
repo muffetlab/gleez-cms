@@ -256,7 +256,7 @@ class Datatables {
 	 */
 	public function count()
 	{
-		return (int) $this->_count;
+        return $this->_count;
 	}
 
 	/**
@@ -266,7 +266,7 @@ class Datatables {
 	 */
 	public function count_total()
 	{
-		return (int) $this->_count_total;
+        return $this->_count_total;
 	}
 
 	/**
@@ -492,8 +492,8 @@ class Datatables {
 			$this->_render = json_encode(array
 			(
 				'draw'              => intval($this->request()->query('draw')),
-				'recordsTotal'      => intval($this->_count_total),
-				'recordsFiltered'   => intval($this->_count),
+                'recordsTotal' => $this->_count_total,
+                'recordsFiltered' => $this->_count,
 				'data'              => $this->_rows
 			));
 		}

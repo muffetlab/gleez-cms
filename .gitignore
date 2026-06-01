@@ -3,3 +3,5 @@
 Thumbs.db
 /vendor
 composer.lock
+qodana.yaml
+/.trae

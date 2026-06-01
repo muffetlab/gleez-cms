@@ -912,7 +912,7 @@ class ORM_MPTT extends Gleez_Model
 	 */
 	protected function scope_available($scope)
 	{
-		return (bool) ! self::factory($this->_object_name)
+        return !self::factory($this->_object_name)
 			->where($this->scope_column, '=', $scope)
 			->count_all();
 	}

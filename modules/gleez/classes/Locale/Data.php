@@ -61,7 +61,6 @@ class Locale_Data {
 		'Finnish'          => 'fi',
 		'French'           => 'fr',
 		'Frisian'          => 'fy',
-		'Macedonian'       => 'mk',
 		'Gaelic'           => 'gd',
 		'Galician'         => 'gl',
 		'Georgian'         => 'ka',

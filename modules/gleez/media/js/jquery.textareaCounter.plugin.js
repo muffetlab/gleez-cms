@@ -129,10 +129,7 @@
 		
 		function isWin(){
 			var strOS = navigator.appVersion;
-			if (strOS.toLowerCase().indexOf('win') != -1){
-				return true;
-			}
-			return false;
+            return strOS.toLowerCase().indexOf('win') != -1;
 		}
 		
 		function getNewlineCount(content){

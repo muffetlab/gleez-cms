@@ -357,7 +357,7 @@ class Controller_Install_Install extends Controller_Template {
 		}
 		else 
 		{
-			mysqli_query($link, "CREATE DATABASE `{$database}`");
+            mysqli_query($link, "CREATE DATABASE `$database`");
 
             if (!mysqli_select_db($link, $database))
 			{
@@ -420,7 +420,7 @@ class Controller_Install_Install extends Controller_Template {
 
 	private function prepend_prefix($prefix, $sql)
 	{
-		return  preg_replace("#{([a-zA-Z0-9_]+)}#", "{$prefix}$1", $sql);
+        return preg_replace("#{([a-zA-Z0-9_]+)}#", $prefix . '$1', $sql);
 	}
 
 	private function add_user()

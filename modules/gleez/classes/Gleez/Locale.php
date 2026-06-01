@@ -166,7 +166,7 @@ class Gleez_Locale {
 	 */
 	public function toString()
 	{
-		return (string) $this->_locale;
+        return $this->_locale;
 	}
 
 	/**

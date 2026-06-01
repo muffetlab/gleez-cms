@@ -17,11 +17,11 @@
 	// GREET POPUP CLASS DEFINITION
 	// ======================
 
-	var Popup = function (element, options) {
-		this.init(element, options)
-	}
+    const Popup = function (element, options) {
+        this.init(element, options)
+    };
 
-	Popup.prototype.init = function (element, options) {
+    Popup.prototype.init = function (element, options) {
 		this.options     = options
 		this.$element  	 = $(element)
 		this.$backdrop 	 =
@@ -30,7 +30,6 @@
 		this.forms 		 = false
 		
 		this.windowWidth	= $(window).width()
-		this.windowHeight	= $(window).height()
 
 		this.options.loading && this.loading()
 		this.local()
@@ -43,15 +42,14 @@
 
 	Popup.prototype.remote = function () {
 		if (this.options.remote){
-			var that = this
-		
-			//do the ajax call
+            const that = this;
+
+            // Do the ajax call
 			$.ajax({
 				url: this.options.remote,
 				type: "GET",
 				dataType: this.options.type,
-				cache: this.options.cache,
-				beforeSend: function ( xhr ) {}
+                cache: this.options.cache
 			}, 300)
 			.done(function(data, textStatus, jqXHR){
 				that.show()
@@ -66,13 +64,13 @@
 	}
 
 	Popup.prototype.reveal = function (data, popup, jqXHR) {
-		var json = false
+        let json;
 
-		this.dataTable()
+        this.dataTable()
 		
 		// First see if we've retrieved json or something else
 		try {
-			json = $.parseJSON(jqXHR.responseText)
+            json = JSON.parse(jqXHR.responseText)
 		} catch (e) {
 			json = false
 			console.log(e)
@@ -86,15 +84,15 @@
 			}
 		}
 
-		var $data = $($.parseHTML(data))
+        const $data = $($.parseHTML(data));
 
-		// Now, if there are any forms in the popup, hijack them if necessary.
+        // Now, if there are any forms in the popup, hijack them if necessary.
 		// Pass the popup object to the form as data() to handle popup events from form
 		if (data && this.options.consumeform) {
 			this.forms = $data.filter('form')
 			
 			//if only one form, remove and create custom buttons in popup footer
-			if(this.forms.length == 1){
+            if (this.forms.length === 1) {
 				this.singleForm($data)
 			}
 			else if(this.forms.length > 1){
@@ -113,17 +111,17 @@
 	}
 
 	Popup.prototype.singleForm = function (response) {
-		var sButton
-		,   cButton
-		,   sText
-		,   cText
-		,   sAttr
-		,   cAttr
-		,   submitBtn = $('<a>Save changes</a>')
-		,   closeBtn  = $('<a>Close</a>')
-		,   e         = $.Event('form.show.popup')
+        let sButton,
+            cButton,
+            sText,
+            cText,
+            sAttr,
+            cAttr,
+            submitBtn = $('<a>Save changes</a>'),
+            closeBtn = $('<a>Close</a>'),
+            e = $.Event('form.show.popup');
 
-		this.$element.trigger(e)
+        this.$element.trigger(e)
 		
 		//Do auto valid submit button detection
 		sButton = response.find('[type=submit]')
@@ -167,7 +165,7 @@
 				.attr('href',		  '#')
 				.attr('data-dismiss', 'popup')
 				.text(cText)
-				.delegate('[data-dismiss="popup"]', 'click.dismiss.popup', $.proxy(this.hide, this))
+            .on('click.dismiss.popup', $.proxy(this.hide, this))
 
 		//Add the content and title to popup and buttons to footer
 		this.$element.find('.popup-title').html(this.options.title)
@@ -178,8 +176,8 @@
 	}
 
 	Popup.prototype.multipleForms = function (response) {
-		var e = $.Event('forms.show.popup')
-		this.$element.trigger(e)
+        const e = $.Event('forms.show.popup');
+        this.$element.trigger(e)
 		
 		//the valid submit buttons
 		response.find('[type=submit]')
@@ -188,12 +186,12 @@
 			.not('input[name$="no"]')
 			.not('input[name$="cancel"]')
 			.attr('data-toggle', 'ajaxform')
-			.data('popup', popup.$element)
+            .data('popup', this.$element)
 
 		//add close handler to no/cancel buttons
-		var buttons = response.find('[type=submit]input[name^="no"], [type=submit]input[name^="cancel"]')
-		$(buttons).attr('data-dismiss', 'popup')
-				.delegate('[data-dismiss="popup"]', 'click.dismiss.popup', $.proxy(this.hide, this))
+        const buttons = response.find('[type=submit]input[name^="no"], [type=submit]input[name^="cancel"]');
+        $(buttons).attr('data-dismiss', 'popup')
+            .on('click.dismiss.popup', $.proxy(this.hide, this))
 		
 		//add the content and title to popup
 		this.$element.find('.popup-title').html(this.options.title)
@@ -201,27 +199,28 @@
 	}
 
 	Popup.prototype.dataTable = function () {
-		if (this.options.consumedt && this.options.table){
-			var dTable = $(this.options.table)
-			this.options.table = false
+        let dTable;
+        if (this.options.consumedt && this.options.table) {
+            dTable = $(this.options.table);
+            this.options.table = false
 			if(dTable.length > 0) this.options.table = dTable
 		}
 		else if (this.options.consumedt && !this.options.table){
-			var dTable = $(this.options.click).closest('table.dataTable')
-			if(dTable.length > 0) this.options.table = dTable
+            dTable = $(this.options.click).closest('table.dataTable');
+            if (dTable.length > 0) this.options.table = dTable
 		}
 	}
 
 	Popup.prototype.tab = function () {
-		var that = this;
+        const that = this;
 
-		if (this.isShown && this.options.consumetab) {
+        if (this.isShown && this.options.consumetab) {
 			this.$element.on('keydown.tabindex.popup', '[data-tabindex]', function (e) {
-				if (e.keyCode && e.keyCode == 9){
-					var $next = $(this)
-					,   $rollover = $(this)
-					
-					that.$element.find('[data-tabindex]:enabled:not([readonly])').each(function (e) {
+                if (e.keyCode && e.keyCode === 9) {
+                    let $next = $(this),
+                        $rollover = $(this);
+
+                    that.$element.find('[data-tabindex]:enabled:not([readonly])').each(function (e) {
 						if (!e.shiftKey){
 							$next = $next.data('tabindex') < $(this).data('tabindex') ?
 								$next = $(this) :
@@ -232,8 +231,8 @@
 								$rollover = $(this);
 						}
 					})
-					
-					$next[0] !== $(this)[0] ? $next.focus() : $rollover.focus()
+
+                    $next[0] !== $(this)[0] ? $next.trigger('focus') : $rollover.trigger('focus')
 					
 					e.preventDefault()
 				}
@@ -252,12 +251,12 @@
 	Popup.prototype.loading = function (callback) {
 		callback = callback || function () {}
 
-		var animate = this.$element.hasClass('fade') ? 'fade' : '';
+        const animate = this.$element.hasClass('fade') ? 'fade' : '';
 
-		if (!this.isLoading) {
-			var doAnimate = $.support.transition && animate;
+        if (!this.isLoading) {
+            const doAnimate = $.support.transition && animate;
 
-			this.$loading = $('<div class="loading-spinner ' + animate + '">')
+            this.$loading = $('<div class="loading-spinner ' + animate + '">')
 				.append(this.options.spinner)
 				.appendTo(document.body)
 
@@ -273,8 +272,8 @@
 		} else if (this.isLoading && this.$loading) {
 			this.$loading.removeClass('in');
 
-			var that = this;
-			$.support.transition && this.$element.hasClass('fade')?
+            const that = this;
+            $.support.transition && this.$element.hasClass('fade') ?
 				this.$loading.one($.support.transition.end, function () { that.removeLoading() }) :
 				this.removeLoading();
 
@@ -286,8 +285,8 @@
 	Popup.prototype.layout = function () {
 		if (this.options.width && this.windowWidth > 768){
 			this.$element.find('.popup-dialog').css('width', this.options.width)
-			var that = this
-			this.$element.find('.popup-dialog').css('margin-left', function () {
+            const that = this;
+            this.$element.find('.popup-dialog').css('margin-left', function () {
 				if (/%/ig.test(that.options.width)){
 					return -(parseInt(that.options.width) / 2) + '%'
 				} else {
@@ -301,10 +300,10 @@
 		}
 		
 		if (this.options.height){
-			var prop = this.options.height ? 'height' : 'max-height'
-			, value  = this.options.height || this.options.maxHeight
-			
-			if (value){
+            const prop = this.options.height ? 'height' : 'max-height',
+                value = this.options.height || this.options.maxHeight;
+
+            if (value) {
 				this.$element.find('.popup-body')
 				.css('overflow', 'auto')
 				.css(prop, value)
@@ -312,8 +311,8 @@
 		}
 
 		if (this.options.modaloverflow){
-			var modalOverflow = $(window).height() - 10 < this.$element.height()
-			if (modalOverflow || this.options.modaloverflow) {
+            const modalOverflow = $(window).height() - 10 < this.$element.height();
+            if (modalOverflow || this.options.modaloverflow) {
 				this.$element
 					.css('margin-top', 0)
 					.addClass('popup-overflow')
@@ -326,7 +325,6 @@
 		if (!this.options.width && !this.options.height) return
 		
 		this.windowWidth  = $(window).width()
-		this.windowHeight = $(window).height()
 		
 		this.layout()
 	}
@@ -336,10 +334,10 @@
 	}
 
 	Popup.prototype.show = function (_relatedTarget) {
-		var that = this
-		var e    = $.Event('show.popup', { relatedTarget: _relatedTarget })
+        const that = this;
+        const e = $.Event('show.popup', {relatedTarget: _relatedTarget});
 
-		this.$element.trigger(e)
+        this.$element.trigger(e)
 
 		if (this.isShown || e.isDefaultPrevented()) return
 
@@ -355,9 +353,9 @@
 		this.$element.on('click.dismiss.popup', '[data-dismiss="popup"]', $.proxy(this.hide, this))
 
 		this.backdrop(function () {
-			var transition = $.support.transition && that.$element.hasClass('fade')
+            const transition = $.support.transition && that.$element.hasClass('fade');
 
-			if (!that.$element.parent().length) {
+            if (!that.$element.parent().length) {
 				that.layout()
 				that.$element.appendTo(that.options.manager) //don't move modals dom position
 			}
@@ -388,15 +386,15 @@
 
 			that.enforceFocus()
 
-			var e = $.Event('shown.popup', { relatedTarget: _relatedTarget })
+            const e = $.Event('shown.popup', {relatedTarget: _relatedTarget});
 
-			transition ?
+            transition ?
 				that.$element.find('.popup-dialog') // wait for modal to slide in
 				.one($.support.transition.end, function () {
-					that.$element.focus().trigger(e)
+                    that.$element.trigger('focus').trigger(e)
 				})
 				.emulateTransitionEnd(300) :
-				that.$element.focus().trigger(e)
+                that.$element.trigger('focus').trigger(e)
 		})
 	}
 
@@ -429,21 +427,21 @@
 	}
 
 	Popup.prototype.enforceFocus = function () {
-		var that = this
-		$(document)
+        const that = this;
+        $(document)
 		.off('focusin.popup') // guard against infinite focus loop
 		.on('focusin.popup', function (e) {
 			if (that.$element[0] !== e.target && !$.contains(that.$element[0], e.target)) {
-				that.$element.focus()
+                that.$element.trigger('focus')
 			}
 		})
 	}
 
 	Popup.prototype.escape = function () {
-		var that = this
-		if (this.isShown && this.options.keyboard) {
+        const that = this;
+        if (this.isShown && this.options.keyboard) {
 			this.$element.on('keyup.dismiss.popup', function (e) {
-				e.which == 27 && that.hide()
+                e.which === 27 && that.hide()
 			})
 		} else if (!this.isShown) {
 			this.$element.off('keyup.dismiss.popup')
@@ -451,12 +449,12 @@
 	}
 
 	Popup.prototype.keys = function () {
-		var that = this
-		if (this.isShown && this.options.keyboard) {
+        const that = this;
+        if (this.isShown && this.options.keyboard) {
 			if (!this.$element.attr('tabindex')) this.$element.attr('tabindex', -1);
 
 			this.$element.on('keyup.dismiss.popup', function (e) {
-				e.which == 27 && that.hide();
+                e.which === 27 && that.hide();
 			});
 		} else if (!this.isShown) {
 			this.$element.off('keyup.dismiss.popup')
@@ -464,24 +462,24 @@
 	}
 
 	Popup.prototype.hideWithTransition = function () {
-		var that    = this
-		var timeout = setTimeout(function () {
-		  that.$element.off($.support.transition.end)
-		  that.hidePopup()
-		}, 500)
+        const that = this;
+        const timeout = setTimeout(function () {
+            that.$element.off($.support.transition.end)
+            that.hidePopup()
+        }, 500);
 
-		this.$element.one($.support.transition.end, function () {
+        this.$element.one($.support.transition.end, function () {
 		  clearTimeout(timeout)
 		  that.hidePopup()
 		})
 	}
 
 	Popup.prototype.hidePopup = function () {
-		var that  = this
-		var prop  = this.options.height ? 'height' : 'max-height';
-		var value = this.options.height || this.options.maxHeight;
+        const that = this;
+        const prop = this.options.height ? 'height' : 'max-height';
+        const value = this.options.height || this.options.maxHeight;
 
-		if (value){
+        if (value) {
 			this.$element.find('.popup-body')
 				.css('overflow', '')
 				.css(prop, '');
@@ -494,7 +492,7 @@
 				that.modalParent.$element.off('hidden.popup.submodal')
 				that.modalParent.escape()
 				that.modalParent.enforceFocus()
-				that.modalParent.$element.focus()
+                that.modalParent.$element.trigger('focus')
 				that.modalParent = null
 			}
 
@@ -512,14 +510,14 @@
 	}
 
 	Popup.prototype.backdrop = function (callback) {
-		var that    = this
-		var animate = this.$element.hasClass('fade') ? 'fade' : ''
-		var count   = 0
+        const that = this;
+        const animate = this.$element.hasClass('fade') ? 'fade' : '';
+        let count = 0;
 
-		if (this.isShown && this.options.backdrop) {
-			var $inBackdrops = $('.popup-backdrop.in')
+        if (this.isShown && this.options.backdrop) {
+            const $inBackdrops = $('.popup-backdrop.in');
 
-			if ($inBackdrops.length) {
+            if ($inBackdrops.length) {
 				//skip adding new backdrop, reuse the existing
 				this.$backdrop = $inBackdrops.first()
 				count = this.$backdrop.data('popup.refcount') || 0
@@ -529,9 +527,9 @@
 				return
 			}
 
-			var doAnimate = $.support.transition && animate
+            const doAnimate = $.support.transition && animate;
 
-			$(document.body).addClass('popup-open')
+            $(document.body).addClass('popup-open')
 
 			this.$backdrop = $('<div class="popup-backdrop ' + animate + '" />')
 			.appendTo(document.body)
@@ -581,18 +579,18 @@
 	* updates the this.modalParent property.
 	*/
 	Popup.prototype.findModalParent = function() {
-		var that = this
-		$('.popup.in').each(function() {
-			var $elem = $(this)
-			var data = $elem.data('popup')
-			if (data && data.isShown) {
+        const that = this;
+        $('.popup.in').each(function () {
+            const $elem = $(this);
+            const data = $elem.data('popup');
+            if (data && data.isShown) {
 				if (!that.modalParent || $elem.css('z-index') > that.modalParent.$element.css('z-index')) {
 					that.modalParent = data
 				}
 			}
 		})
 
-		return this.modalParent ? true : false
+        return !!this.modalParent
 	}
 
 	Popup.DEFAULTS = {
@@ -627,17 +625,21 @@
 	// GREET POPUP PLUGIN DEFINITION
 	// =======================
 
-	var old = $.fn.popup
+    const old = $.fn.popup;
 
-	$.fn.popup = function (option) {
+    $.fn.popup = function (option) {
+        const args = Array.prototype.slice.call(arguments, 1);
 		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('popup')
-			var options = $.extend({}, Popup.DEFAULTS, $this.data(), typeof option == 'object' && option)
+            const $this = $(this);
+            let data = $this.data('popup');
+            const options = $.extend({}, Popup.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
-			if (!data) $this.data('popup', (data = new Popup(this, options)))
-			if (typeof option == 'string') data[option](_relatedTarget)
-			else if (options.show) data.show(_relatedTarget)
+            if (!data) $this.data('popup', (data = new Popup(this, options)))
+            if (typeof option == 'string') {
+                data[option].apply(data, args);
+            } else if (options.show) {
+                data.show.apply(data, args);
+            }
 		})
 	}
 
@@ -655,12 +657,12 @@
 	// ==============
 
 	$(document).on('click.popup.data-api', '[data-toggle="popup"]', function (e) {
-		var $this   = $(this)
-		var href    = $this.attr('href')
-		var $target = $(Popup.DEFAULTS.template.replace('{popup.id}', 'popup-'+ new Date().getTime()))
-		var option  = $.extend({ remote:!/#/.test(href) && href }, $target.data(), $this.data())
+        const $this = $(this);
+        const href = $this.attr('href');
+        const $target = $(Popup.DEFAULTS.template.replace('{popup.id}', 'popup-' + new Date().getTime()));
+        const option = $.extend({remote: !/#/.test(href) && href}, $target.data(), $this.data());
 
-		e.preventDefault()
+        e.preventDefault()
 
 		//reference the click handler for further use
 		option.click = $this
@@ -668,7 +670,7 @@
 		$target
 			.popup(option)
 			.one('hide', function () {
-			$this.focus()
+                $this.trigger('focus')
 		})
 	})
 

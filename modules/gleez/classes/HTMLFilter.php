@@ -180,7 +180,7 @@ class HTMLFilter {
 	 */
 	public function __toString()
 	{
-		return (string) $this->render();
+        return $this->render();
 	}
 
 	/**
@@ -189,7 +189,7 @@ class HTMLFilter {
 	 */
 	public function render()
 	{
-		return (string) $this->filter_xss($this->_text);
+        return $this->filter_xss($this->_text);
 	}
 
 	/**

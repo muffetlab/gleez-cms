@@ -248,7 +248,7 @@ class Controller_Blog extends Template {
 			->set('created',     FALSE)
 			->set('author',      FALSE)
 			->set('path',        FALSE)
-			->set('tags',        isset($_POST['ftags']) ? $_POST['ftags'] : FALSE)
+            ->set('tags', $_POST['ftags'] ?? FALSE)
 			->set('image',        FALSE)
 			->bind('errors',     $this->_errors)
 			->bind('terms',      $terms)

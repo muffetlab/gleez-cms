@@ -123,7 +123,7 @@ class Controller_Admin_Path extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-        $post = ORM::factory('Path', (int) $id);
+        $post = ORM::factory('Path', $id);
 
 		if ( ! $post->loaded())
 		{

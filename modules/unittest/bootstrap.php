@@ -32,6 +32,8 @@ define('APPPATH', realpath(DOCROOT . '../application') . DIRECTORY_SEPARATOR);
 define('MODPATH', realpath(DOCROOT . '../modules') . DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath(DOCROOT . '../system') . DIRECTORY_SEPARATOR);
 define('VENDOR_PATH', realpath(DOCROOT . '../vendor') . DIRECTORY_SEPARATOR);
+define('GLZPATH', realpath(DOCROOT . '../modules/gleez') . DIRECTORY_SEPARATOR);
+define('THEMEPATH', realpath(DOCROOT . '../themes') . DIRECTORY_SEPARATOR);
 
 /**
  * Define the start time of the application, used for profiling.

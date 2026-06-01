@@ -301,7 +301,11 @@ class Widgets {
 			return $response;
 		}
 
-		($visible == TRUE) ? $this->is_visible($widget) : $widget->visible == TRUE;
+        if ($visible == TRUE) {
+            $widget = $this->is_visible($widget);
+        } else {
+            $widget->visible = TRUE;
+        }
 
 		// Enable developers to override widget
 		Module::event('Widget', $widget);
@@ -484,7 +488,7 @@ class Widgets {
 		}
 
 		$widget->name = str_replace('/', '-', $widget->name);
-		$widget->menu = (bool)(strpos($widget->name, 'menu-') !== false);
+        $widget->menu = strpos($widget->name, 'menu-') !== false;
 
 		return View::factory('widgets/' .$format)
 			->set('content', $widget->content)

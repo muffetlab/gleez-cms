@@ -18,15 +18,15 @@
 		</tr>
 		<tr>
 			<th><?php _e('Server Software') ?></th>
-			<td><?php echo isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : __('Not available'); ?></td>
+            <td><?php echo $_SERVER['SERVER_SOFTWARE'] ?? __('Not available'); ?></td>
 		</tr>
 		<tr>
 			<th><?php _e('Server Signature') ?></th>
-			<td><?php echo isset($_SERVER['SERVER_SIGNATURE']) ? $_SERVER['SERVER_SIGNATURE'] : __('Not available'); ?></td>
+            <td><?php echo $_SERVER['SERVER_SIGNATURE'] ?? __('Not available'); ?></td>
 		</tr>
 		<tr>
 			<th><?php _e('Server Name') ?></th>
-			<td><?php echo isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : __('Not available'); ?></td>
+            <td><?php echo $_SERVER['SERVER_NAME'] ?? __('Not available'); ?></td>
 		</tr>
 		<tr>
 			<th><?php _e('Server Address') ?></th>
@@ -38,7 +38,7 @@
 		</tr>
 		<tr>
 			<th><?php _e('Server Port') ?></th>
-			<td><?php echo isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : __('Not available'); ?></td>
+            <td><?php echo $_SERVER['SERVER_PORT'] ?? __('Not available'); ?></td>
 		</tr>
 		<tr>
 			<th><?php _e('OS Type') ?></th>

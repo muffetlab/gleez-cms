@@ -31,7 +31,15 @@
     },
     "require": {
         "php": ">=7.1,<7.4",
+        "ext-ctype": "*",
+        "ext-curl": "*",
+        "ext-dom": "*",
         "ext-json": "*",
+        "ext-mysqli": "*",
         "phpmailer/phpmailer": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "phpunit/phpunit-dom-assertions": "^2.6.0"
     }
 }

@@ -404,10 +404,7 @@ class ACL {
 		{
 			if(isset($site_perms[$role]) AND is_array($site_perms[$role]))
 			{
-				self::$_perm[$user->id] = array_merge(
-					(array) self::$_perm[$user->id],
-					(array) $site_perms[$role]
-				);
+                self::$_perm[$user->id] = array_merge(self::$_perm[$user->id], $site_perms[$role]);
 			}
 		}
 
