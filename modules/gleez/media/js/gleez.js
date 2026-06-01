@@ -256,29 +256,11 @@ jQuery.noConflict();
 	}
 
     const keyString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-    const uTF8Encode = function (string) {
-        string = string.replace(/\x0d\x0a/g, "\x0a");
-        let output = "";
-        for (let n = 0; n < string.length; n++) {
-            const c = string.charCodeAt(n);
-            if (c < 128) {
-                output += String.fromCharCode(c);
-            } else if ((c > 127) && (c < 2048)) {
-                output += String.fromCharCode((c >> 6) | 192);
-                output += String.fromCharCode((c & 63) | 128);
-            } else {
-                output += String.fromCharCode((c >> 12) | 224);
-                output += String.fromCharCode(((c >> 6) & 63) | 128);
-                output += String.fromCharCode((c & 63) | 128);
-            }
-        }
-        return output;
-    };
 
     const uTF8Decode = function (input) {
         let string = "";
         let i = 0;
-        let c = 0, c1 = 0, c2 = 0, c3 = 0;
+        let c = 0, c2 = 0, c3 = 0;
         while (i < input.length) {
             c = input.charCodeAt(i);
             if (c < 128) {

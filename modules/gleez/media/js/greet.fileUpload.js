@@ -394,11 +394,10 @@
 
         const height = this.$preview.css('max-height') || this.$element.height(),
             width = this.$preview.css('max-width') || this.$element.width(),
-            offset = this.$preview.offset() || this.$element.offset(),
             that = this;
 
 		// set height after image is loaded
-		setTimeout( function(e){
+        setTimeout(function () {
 			if(typeof file.$loading !== "undefined" && that.$preview.length > 0) {
                 const newHeight = that.$preview.children('img').height() || height,
                     newWidth = that.$preview.children('img').width() || width;

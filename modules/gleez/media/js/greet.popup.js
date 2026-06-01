@@ -49,8 +49,7 @@
 				url: this.options.remote,
 				type: "GET",
 				dataType: this.options.type,
-				cache: this.options.cache,
-				beforeSend: function ( xhr ) {}
+                cache: this.options.cache
 			}, 300)
 			.done(function(data, textStatus, jqXHR){
 				that.show()

@@ -112,8 +112,8 @@
 	  this.shown = false
 	  return this
 	}
-  
-	Typeahead.prototype.lookup = function (event) {
+
+    Typeahead.prototype.lookup = function () {
         let items;
         if (this.ajax) {
 		this.ajaxer()
@@ -168,7 +168,7 @@
 
         let items = [];
         // Gleez cms returns an object array, but we need a string array.
-		$.map(data, function(result, item){
+        $.map(data, function (result) {
             let label,
                 save = false;
 
@@ -241,8 +241,8 @@
 		this.$menu.html(items)
 		return this
 	}
-  
-	Typeahead.prototype.next = function (event) {
+
+    Typeahead.prototype.next = function () {
         let active = this.$menu.find('.active').removeClass('active'),
             next = active.next();
 
@@ -252,8 +252,8 @@
 	
 		next.addClass('active')
 	}
-  
-	Typeahead.prototype.prev = function (event) {
+
+    Typeahead.prototype.prev = function () {
         let active = this.$menu.find('.active').removeClass('active'),
             prev = active.prev();
 
@@ -352,11 +352,11 @@
 		e.preventDefault()
 	}
 
-	Typeahead.prototype.focus = function (e) {
+    Typeahead.prototype.focus = function () {
 		this.focused = true
 	}
-  
-	Typeahead.prototype.blur = function (e) {
+
+    Typeahead.prototype.blur = function () {
 		this.focused = false
 		if (!this.mousedover && this.shown) this.hide()
 	}
@@ -374,7 +374,7 @@
 		$(e.currentTarget).addClass('active')
 	}
 
-	Typeahead.prototype.mouseleave = function (e) {
+    Typeahead.prototype.mouseleave = function () {
 		this.mousedover = false
 		if (!this.focused && this.shown) this.hide()
 	}
@@ -549,8 +549,8 @@
    
 	/* GREET TYPEAHEAD DATA-API
 	 * ================== */
-   
-	$(document).on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
+
+    $(document).on('focus.typeahead.data-api', '[data-provide="typeahead"]', function () {
         const $this = $(this);
         if ($this.data('typeahead')) return
 		$this.typeahead($this.data())

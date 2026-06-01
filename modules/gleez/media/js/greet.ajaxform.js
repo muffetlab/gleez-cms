@@ -105,7 +105,7 @@
 		}
 	}
 
-	Ajaxform.prototype.errorResponse = function(xhr, status, error, form) {
+    Ajaxform.prototype.errorResponse = function (xhr, status, error) {
 		console.log('Error Response')
 		console.log(error)
 	}

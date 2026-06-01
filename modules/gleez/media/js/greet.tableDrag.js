@@ -663,7 +663,6 @@
         let n = 0, len = rows.length;
         for (; n < len; ++n) {
             let row = rows[n];
-            const indentDiff = 0;
             const rowY = $(row).offset().top;
             // Because Safari does not report offsetHeight on table rows, but does on
 	    // table cells, grab the firstChild of the row and use that instead.
@@ -1304,7 +1303,7 @@
 	// GREET TABLEDRAG DATA-API
 	// ==============
 
-	$(window).on('load.tabledrag.data-api', function (e) {
+    $(window).on('load.tabledrag.data-api', function () {
 		$('[data-toggle="tabledrag"]').each(function () {
             const $table = $(this);
             $table.tabledrag($table.data())
@@ -1312,7 +1311,7 @@
 	})
 	
 	// Added pajax and jquery mobile support
-	$(document).on('pjax:complete pagecontainerchange', function (e) {
+    $(document).on('pjax:complete pagecontainerchange', function () {
 		$('[data-toggle="tabledrag"]').each(function () {
             const $table = $(this);
             $table.tabledrag($table.data())

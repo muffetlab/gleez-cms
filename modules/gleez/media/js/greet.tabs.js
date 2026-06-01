@@ -63,14 +63,10 @@
 				url: this.options.remote,
 				type: "GET",
 				dataType: this.options.type,
-				cache: this.options.cache,
-				beforeSend: function ( xhr ) {}
+                cache: this.options.cache
 			}, 300)
 			.done(function(data, textStatus, jqXHR){
 				that.reveal(data, that, jqXHR)
-			})
-			.fail(function (jqXHR, textStatus, errorThrown) {
-				//that.show()
 			})
 		}
 	}
@@ -199,14 +195,14 @@
 	})
 
 	// Move Tabs to dropdown if tabs do not fit in a single row
-	$(window).on('load.tabs.data-api', function (e) {
+    $(window).on('load.tabs.data-api', function () {
 		$('[data-toggle="tabdrop"]').each(function () {
 			$(this).tabs('drop')
 		})
 	})
 
 	// Added pajax and jquery mobile support
-	$(document).on('pjax:complete pagecontainerchange', function (e) {
+    $(document).on('pjax:complete pagecontainerchange', function () {
 		$('[data-toggle="tabdrop"]').each(function () {
 			$(this).tabs('drop')
 		})
