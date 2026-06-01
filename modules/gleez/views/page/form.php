@@ -99,8 +99,8 @@
 
 							<div class="form-group <?php echo isset($errors['sticky']) ? 'has-error': ''; ?>">
 								<?php
-									$sticky  = (isset($post->sticky) AND $post->sticky == 1) ? TRUE : FALSE;
-									$promote = (isset($post->promote) AND $post->promote == 1) ? TRUE : FALSE;
+                                $sticky = isset($post->sticky) && $post->sticky == 1;
+                                $promote = isset($post->promote) && $post->promote == 1;
 									echo Form::hidden('sticky', 0);
 									echo Form::hidden('promote', 0);
 								?>
@@ -174,9 +174,9 @@
 									$post->comment = $config->comment;
 								}
 
-								$comment1 = (isset($post->comment) AND $post->comment == 0) ? TRUE : FALSE;
-								$comment2 = (isset($post->comment) AND $post->comment == 1) ? TRUE : FALSE;
-								$comment3 = (isset($post->comment) AND $post->comment == 2) ? TRUE : FALSE;
+                            $comment1 = isset($post->comment) && $post->comment == 0;
+                            $comment2 = isset($post->comment) && $post->comment == 1;
+                            $comment3 = isset($post->comment) && $post->comment == 2;
 							?>
 
 							<?php echo Form::label('comment', __('Discussion') ) ?>

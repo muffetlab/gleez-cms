@@ -111,7 +111,7 @@
 						<?php
 							// @important the hidden filed should be before checkbox
 							echo Form::hidden('use_gravatars', 0);
-							echo Form::label('use_gravatars', Form::checkbox('use_gravatars', TRUE, (isset($post['use_gravatars']) AND $post['use_gravatars'] == 1) ? TRUE : FALSE));
+                        echo Form::label('use_gravatars', Form::checkbox('use_gravatars', TRUE, isset($post['use_gravatars']) && $post['use_gravatars'] == 1));
 						?>
 					</div>
 				</div>
@@ -216,8 +216,8 @@
 
 	<div class="tab-pane" id="offline">
 		<div class="form-group <?php echo isset($errors['maintenance_mode']) ? 'has-error': ''; ?>">
-			<?php $offline0 = (isset($post['maintenance_mode']) && $post['maintenance_mode'] == 0) ? TRUE : FALSE; ?>
-			<?php $offline1 = (isset($post['maintenance_mode']) && $post['maintenance_mode'] == 1) ? TRUE : FALSE; ?>
+            <?php $offline0 = isset($post['maintenance_mode']) && $post['maintenance_mode'] == 0; ?>
+            <?php $offline1 = isset($post['maintenance_mode']) && $post['maintenance_mode'] == 1; ?>
 
 			<?php echo Form::label('maintenance_mode', __('Maintenance Mode'), array('class' => 'col-sm-3 control-label'))?>
 			<div class="col-sm-9">

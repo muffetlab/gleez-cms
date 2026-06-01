@@ -967,7 +967,7 @@ abstract class Template extends Controller {
 		else
 		{
 			// Force true/false
-			$this->_formsaved = ($Saved) ? TRUE : FALSE;
+            $this->_formsaved = (bool) $Saved;
 		}
 	}
 

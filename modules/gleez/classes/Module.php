@@ -141,7 +141,7 @@ class Module
 					$m->code_version = $m->version;
                     $m->version = self::get_version($name) ?: $m->code_version;
 					$m->locked       = false;
-					$m->visible      = isset($m->visible)   ? (bool) $m->visible	 : true;
+                    $m->visible = !isset($m->visible) || $m->visible;
 					$m->author    	 = isset($m->author)    ? (string) $m->author 	 : 'Gleez Team';
 					$m->authorURL    = isset($m->authorURL) ? (string) $m->authorURL : 'https://gleezcms.org/';
 					$m->path 		 = realpath( dirname($file) ).DIRECTORY_SEPARATOR;

@@ -244,7 +244,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		}
 
 		$split_name = explode('/', $widget->name);
-		$static = ($split_name AND $split_name[0] == 'static') ? TRUE : FALSE;
+        $static = $split_name && $split_name[0] == 'static';
 
 		// we can only delete if its a custom widget
 		if( ! $static)

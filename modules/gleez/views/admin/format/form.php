@@ -39,7 +39,7 @@
 							</td>
 							<td>
 								<?php
-									$n_status = (in_array($name, array_keys($enabled_filters)) ? TRUE : FALSE);
+                                $n_status = in_array($name, array_keys($enabled_filters));
 									echo Form::checkbox('filters['.$name.'][status]', $n_status, $n_status);
 								?>
 							</td>
