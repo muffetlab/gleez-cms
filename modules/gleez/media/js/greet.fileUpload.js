@@ -255,7 +255,7 @@
 
         file.chunked = true
 		file.paused  = false
-        file.index = (start === 0 ? 0 : file.index + 1
+        file.index = (start === 0) ? 0 : file.index + 1
 		file.slices  = Math.max(Math.ceil(file.size / bpc), 1)
 
 		file.start   = start
@@ -317,6 +317,7 @@
             const reader = new FileReader();
             const preview = this.$preview;
             const element = this.$element;
+            const that = this;
 
             reader.onload = function (re) {
                 const $img = $('<img>'); // .attr('src', re.target.result)
@@ -332,7 +333,7 @@
 				preview.html($img)
 				element.addClass('fileupload-exists').removeClass('fileupload-new')
 
-				element.trigger('change.gt.fileupload', [this.files, file, this.$element])
+                element.trigger('change.gt.fileupload', [that.files, file, that.$element])
 			}
 
 			reader.readAsDataURL(file)
