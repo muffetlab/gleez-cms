@@ -433,7 +433,7 @@
 	  
 	  // Query is good to send, set a timer
 	  that.ajax.timerId = setTimeout(function() {
-		$.proxy(that.ajaxExecute(query), that)
+            that.ajaxExecute(query)
 	  }, that.ajax.timeout)
 	
 	  return that
