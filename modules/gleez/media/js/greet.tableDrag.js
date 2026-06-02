@@ -266,14 +266,14 @@
 		}
 
 		// Add hover action for the handle.
-		handle.hover(function () {
+        handle.on('mouseenter', function () {
 			self.dragObject == null ? $(this).addClass('tabledrag-handle-hover') : null
-		}, function () {
+        }).on('mouseleave', function () {
 			self.dragObject == null ? $(this).removeClass('tabledrag-handle-hover') : null
 		})
 
 		// Add the mousedown action for the handle.
-		handle.mousedown(function (event) {
+        handle.on('mousedown', function (event) {
 			// Create a new dragObject recording the event information.
 			self.dragObject = {};
 			self.dragObject.initMouseOffset = self.getMouseOffset(item, event);
@@ -284,7 +284,7 @@
 
 			// If there's a lingering row object from the keyboard, remove its focus.
 			if (self.rowObject) {
-			  $('a.tabledrag-handle', self.rowObject.element).blur();
+                $('a.tabledrag-handle', self.rowObject.element).trigger('blur');
 			}
 
 			// Create a new rowObject for manipulation of this row.
@@ -320,7 +320,7 @@
 		})
 
 		// Prevent the anchor tag from jumping us to the top of the page.
-		handle.click(function () {
+        handle.on('click', function () {
 			return false
 		})
 
@@ -331,7 +331,7 @@
 		})
 
 		// Remove the handle class on blur and fire the same function as a mouseup.
-		handle.blur(function (event) {
+        handle.on('blur', function (event) {
 			$(this).removeClass('tabledrag-handle-hover');
 			if (self.rowObject && self.safeBlur) {
 				self.dropRow(event, self)
@@ -339,7 +339,7 @@
 		})
 
 		// Add arrow-key support to the handle.
-		handle.keydown(function (event) {
+        handle.on('keydown', function (event) {
             let groupHeight;
             // If a rowObject doesn't yet exist and this isn't the tab key.
             if (event.keyCode !== 9 && !self.rowObject) {
@@ -457,7 +457,7 @@
 		// Compatibility addition, return false on keypress to prevent unwanted scrolling.
 		// IE and Safari will suppress scrolling on keydown, but all other browsers
 		// need to return false on keypress. http://www.quirksmode.org/js/keys.html
-		handle.keypress(function (event) {
+        handle.on('keypress', function (event) {
 			switch (event.keyCode) {
 				case 37: // Left arrow.
 				case 38: // Up arrow.

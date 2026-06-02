@@ -70,7 +70,7 @@
 
 			// Simulate that there was a selected element change, so the row is put
 			// back to from where the user tried to drag it.
-			regionField.change()
+            regionField.trigger('change')
 		}
 		else if ($(dragObject.rowObject.element).prev('tr').is('.region-message')) {
             const weightField = $('select.row-weight', dragObject.rowObject.element);
@@ -87,7 +87,7 @@
 
 	// Add the behavior to each region select list.
     $('select.widget-region-select', 'table#widgets').once('widget-region-select').each(function () {
-        $(this).change(function () {
+        $(this).on('change', function () {
 			// Make our new row and select field.
             const row = $(this).parents('tr:first'),
                 select = $(this),
