@@ -278,7 +278,7 @@ class Module
 			Kohana::modules($modules);
 
 			// Rebuild the include path so the module installer can benefit from auto loading
-			Kohana::include_paths(true);
+            Kohana::include_paths();
 
 			return $module;
 		}
@@ -300,7 +300,7 @@ class Module
 			}
 
 			Kohana::modules($kohana_modules);
-			Kohana::include_paths(true);
+            Kohana::include_paths();
 		}
 	}
 

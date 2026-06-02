@@ -118,7 +118,7 @@ class Model_Comment extends Gleez_Model
     {
 		// Set some defaults
 		$this->updated = time();
-		$this->format = empty($this->format) ? Kohana::$config->load('inputfilter.default_format', 1) : $this->format;
+        $this->format = empty($this->format) ? Kohana::$config->load('inputfilter.default_format') : $this->format;
 		$this->author = empty($this->author) ? User::active_user()->id : $this->author;
 
 		if ( ! $this->loaded())

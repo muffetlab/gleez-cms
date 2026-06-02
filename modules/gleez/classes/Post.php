@@ -443,7 +443,7 @@ class Post extends ORM_Versioned {
 				// Add the term relationship
 				if ( isset($term) AND !empty($term) AND $term != 'last')
 				{
-					$this->add('terms', (int)$term, array('parent_id' => (int)$id, 'type' => $this->type));
+                    $this->add('terms', (int) $term);
 				}
 			}
 		}

@@ -98,7 +98,7 @@ class Model_Tag extends Gleez_Model
 		{
 			$source = $this->rawurl;
 
-			parent::delete($soft);
+            parent::delete();
 
 			// Delete the path aliases associated with this object
 			Path::delete( array('source' => $source) );

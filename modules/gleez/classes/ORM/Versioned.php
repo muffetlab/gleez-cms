@@ -160,7 +160,7 @@ class ORM_Versioned extends Gleez_Model
 		// Use primary key value
 		$id = $this->pk();
 
-		if ($status = parent::delete($soft))
+        if ($status = parent::delete())
 		{
 			if (is_array($this->_deleted_column) && $soft == TRUE)
 			{

@@ -315,7 +315,7 @@ class Widgets {
 		{
 			try
 			{
-				$widget->content = Widget::factory($name, $widget, $widget->config)->render();
+                $widget->content = Widget::factory($name, $widget)->render();
 				$response = ($format === FALSE) ? $widget : trim($this->_html($widget, $this->_region, $this->_format));
 			}
 			catch (Exception $e)

@@ -49,7 +49,7 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		if ( ! $this->_internal)
 		{
-			Assets::tabledrag('text-format-order', 'order', 'sibling', 'text-format-order-weight');
+            Assets::tabledrag();
 		}
 	}
 
