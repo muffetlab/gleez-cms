@@ -46,17 +46,15 @@ class Date extends Kohana_Date
 	 */
 	public static function amounts_min()
 	{
-		$amounts = array(
-			1         => __('Minute'),
-			30        => __('Half an hour'),
-			60        => __('Hour'),
-			1440      => __('Day'),
-			10080     => __('Week'),
-			302400    => __('Month'),
-			107654400 => __('Year'),
-		);
-
-		return $amounts;
+        return array(
+            1 => __('Minute'),
+            30 => __('Half an hour'),
+            60 => __('Hour'),
+            1440 => __('Day'),
+            10080 => __('Week'),
+            302400 => __('Month'),
+            107654400 => __('Year'),
+        );
 	}
 
 	/**

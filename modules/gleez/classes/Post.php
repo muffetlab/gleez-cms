@@ -627,9 +627,7 @@ class Post extends ORM_Versioned {
 			'publish' => __('Published'),
 		);
 
-		$values = Module::action('post_status', $states);
-
-		return $values;
+        return Module::action('post_status', $states);
 	}
 
 	/**
@@ -655,9 +653,7 @@ class Post extends ORM_Versioned {
 			unset($links['more']);
 		}
 
-		$values = Module::action('post_links', $links);
-
-		return $values;
+        return Module::action('post_links', $links);
 	}
 
 	/**

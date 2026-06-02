@@ -111,9 +111,7 @@ class Comment {
 			'delete'    => __('Delete'),
 		);
 
-		$values = Module::action('comment_status', $states);
-
-		return $values;
+        return Module::action('comment_status', $states);
 	}
 
 	/**

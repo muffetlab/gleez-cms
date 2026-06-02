@@ -248,7 +248,6 @@ class Text extends Kohana_Text
 		// Adds <span class="initial"> tag around the initial letter of each paragraph.
 		// Only add after an opening <p> tag, ignoring any leading spaces. First letter must be a letter or number (no symbols).
 		// Works with contractions.
-		$processed_text = preg_replace('/(<p[^>]*>\s*)([A-Z0-9])([A-Z\'\s]{1})/i', '$1<span class="initial">$2</span>$3', $text);
-		return $processed_text;
+        return preg_replace('/(<p[^>]*>\s*)([A-Z0-9])([A-Z\'\s]{1})/i', '$1<span class="initial">$2</span>$3', $text);
 	}
 }

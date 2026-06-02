@@ -162,8 +162,7 @@ class System {
             Cache::instance()->set('icons:fa-icons', $icons, Date::WEEK);
 		}
 
-		$icons = array("fa-none" => __('none')) + $icons;
-		return $icons;
+        return array("fa-none" => __('none')) + $icons;
 	}
 
 	/**
@@ -266,9 +265,7 @@ class System {
 		);
 
 		// Allow other modules to override or add
-		$criteria = Module::action('system_check', $criteria);
-
-		return $criteria;
+        return Module::action('system_check', $criteria);
 	}
 
 	/**

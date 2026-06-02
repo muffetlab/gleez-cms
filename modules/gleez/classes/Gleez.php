@@ -189,9 +189,7 @@ class Gleez {
 			'user'  => __('User')
 		);
 
-		$values = Module::action('gleez_types', $states);
-
-		return $values;
+        return Module::action('gleez_types', $states);
 	}
 
 	/**
@@ -302,9 +300,8 @@ class Gleez {
 	public static function getVersion($with_v = TRUE, $full = FALSE)
 	{
 		$version = $with_v ? 'v' . Gleez::VERSION : Gleez::VERSION;
-		$version = $full ? 'Gleez CMS ' . $version : $version;
 
-		return $version;
+        return $full ? 'Gleez CMS ' . $version : $version;
 	}
 
 	/**
