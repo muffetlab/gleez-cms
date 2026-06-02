@@ -181,7 +181,7 @@ class Text extends Kohana_Text
 		// Store in cache with a minimum expiration time of 1 day.
 		if ($cache)
 		{
-            Cache::instance()->set('cache_filter:' . $cache_id, $text, null, time() + Date::DAY);
+            Cache::instance()->set('cache_filter:' . $cache_id, $text, time() + Date::DAY);
 		}
 
 		return $text;
