@@ -30,21 +30,6 @@ class Datatables {
 	}
 
 	/**
-	 * Whether or not current request is via DataTables
-	 *
-	 * @param   mixed  $request  Request [Optional]
-	 * @return  boolean
-	 *
-	 * @uses    Request::current
-	 */
-	public static function is_request(Request $request = NULL)
-	{
-		$request = ($request) ? $request : Request::current();
-
-		return (bool) $request->query('sEcho');
-	}
-
-	/**
 	 * Object to perform paginate operations on
 	 * @var object
 	 */
@@ -260,16 +245,6 @@ class Datatables {
 	}
 
 	/**
-	 * Get total count prior to operations
-	 *
-	 * @return	integer
-	 */
-	public function count_total()
-	{
-        return $this->_count_total;
-	}
-
-	/**
 	 * Set or get columns
 	 *
 	 * @param	array  $columns  Columns for setting [Optional]
@@ -283,24 +258,6 @@ class Datatables {
 		}
 
 		$this->_columns = $columns;
-
-		return $this;
-	}
-
-	/**
-	 * Set or get search columns
-	 *
-	 * @param   array  $columns  Columns [Optional]
-	 * @return  $this
-	 */
-	public function search_columns(array $columns = NULL)
-	{
-		if ($columns === NULL)
-		{
-			return $this->_search_columns;
-		}
-
-		$this->_search_columns = $columns;
 
 		return $this;
 	}
