@@ -64,40 +64,37 @@ class Model_Page extends Post {
 	/**
 	 * Finds and loads a single database row into the object
 	 *
-	 * @param   integer $id  Row ID. The search criteria [Optional]
 	 * @return  Database_Result|ORM
 	 */
-	public function find($id = NULL)
+    public function find()
 	{
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 
-		return parent::find($id);
+        return parent::find();
 	}
 
 	/**
 	 * Finds multiple database rows and returns an iterator of the rows found
 	 *
-	 * @param   integer  $id  Row ID. The search criteria [Optional]
 	 * @return  Database_Result|ORM
 	 */
-	public function find_all($id = NULL)
+    public function find_all()
 	{
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 
-		return parent::find_all($id);
+        return parent::find_all();
 	}
 
 	/**
 	 * Count the number of records in the table
 	 *
-	 * @param   integer  $id  Row ID. The search criteria [Optional]
 	 * @return  integer
 	 */
-	public function count_all($id = NULL): int
+    public function count_all(): int
     {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 
-		return parent::count_all($id);
+        return parent::count_all();
 	}
 
 	/**
