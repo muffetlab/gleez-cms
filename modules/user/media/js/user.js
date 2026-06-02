@@ -35,20 +35,20 @@
 	 */
 	function picture_upload()
 	{
-		var bar = $('.bar');
-		var percent = $('.percent');
-		var status = $('#status');
+        const bar = $('.bar');
+        const percent = $('.percent');
+        const status = $('#status');
 
-		$('form').ajaxForm({
+        $('form').ajaxForm({
 			beforeSend: function() {
 				status.empty();
 				$('.progress').show();
-				var percentVal = '0%';
-				bar.width(percentVal);
+                const percentVal = '0%';
+                bar.width(percentVal);
 			},
 			uploadProgress: function(event, position, total, percentComplete) {
-				var percentVal = percentComplete + '%';
-				bar.width(percentVal);
+                const percentVal = percentComplete + '%';
+                bar.width(percentVal);
 			},
 			complete: function(xhr) {
 				location.reload();
