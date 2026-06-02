@@ -314,12 +314,10 @@ class Form extends Kohana_Form
 		}
 
 		// Set the input value
-		if ($value == false)
+        if (!$value)
 		{
             $attrs['value'] = Date::formatted_time(time(), 'd-m-Y h:i:s');
-		}
-		elseif ($value != false && is_numeric($value))
-		{
+        } elseif (is_numeric($value)) {
             $attrs['value'] = Date::formatted_time($value, 'd-m-Y h:i:s');
 		}
 

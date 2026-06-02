@@ -240,7 +240,7 @@ abstract class Template extends Controller {
 				$this->nonce = base64_encode(random_bytes(20));
 		}
 
-		if($this->bare == FALSE)
+        if (!$this->bare)
 		{
 			// Load the config
 			$this->_config = Kohana::$config->load('site');
@@ -324,7 +324,7 @@ abstract class Template extends Controller {
 			View::bind_global('site_url',  $url);
 		}
 
-		if ($this->auto_render && $this->bare == FALSE)
+        if ($this->auto_render && !$this->bare)
 		{
 			// Throw exception if none of the accept-types are supported
             if (empty($accept_types))
@@ -410,7 +410,7 @@ abstract class Template extends Controller {
 	 */
 	public function after()
 	{
-		if ($this->auto_render && $this->bare == FALSE)
+        if ($this->auto_render && !$this->bare)
 		{
 			// Controller name as the default page id if none set
 			empty($this->_page_id) AND $this->_page_id = $this->request->controller();
@@ -506,9 +506,7 @@ abstract class Template extends Controller {
 
 			// Assign the template as the request response and render it
 			$this->response->body($this->template);
-		}
-		elseif ($this->_ajax && $this->bare == FALSE)
-		{
+        } elseif ($this->_ajax && !$this->bare) {
 			$output = $this->response->body();
 			$this->process_ajax();
 
@@ -524,14 +522,12 @@ abstract class Template extends Controller {
 			}
 
 			$this->response->body($output);
-		}
-		elseif ($this->_internal && $this->bare == FALSE)
-		{
+        } elseif ($this->_internal && !$this->bare) {
 			$output = $this->response->body();
 			$this->response->body($output);
 		}
 
-		if($this->bare == FALSE)
+        if (!$this->bare)
 		{
 			if (isset($this->_benchmark))
 			{

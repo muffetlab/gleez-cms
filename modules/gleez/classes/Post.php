@@ -506,7 +506,7 @@ class Post extends ORM_Versioned {
 	 */
     public function delete($soft = FALSE): Kohana_ORM
     {
-		if (is_array($this->_deleted_column) && $soft == TRUE)
+        if (is_array($this->_deleted_column) && $soft)
 		{
 
 		}

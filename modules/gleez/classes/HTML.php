@@ -124,7 +124,7 @@ class HTML extends Kohana_HTML
 			}
 
 			// Auto detect index file
-			$index = ($index == FALSE AND ! empty(Kohana::$index_file)) ? TRUE : $index;
+            $index = (!$index and !empty(Kohana::$index_file)) ? TRUE : $index;
 
 			// Add the base URL
 			$file = URL::base($protocol, $index).$file;

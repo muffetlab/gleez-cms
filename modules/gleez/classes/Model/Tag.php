@@ -90,7 +90,7 @@ class Model_Tag extends Gleez_Model
 	 */
 	public function delete($soft = FALSE): Kohana_ORM
     {
-		if (is_array($this->_deleted_column) && $soft == TRUE)
+        if (is_array($this->_deleted_column) && $soft)
 		{
 
 		}

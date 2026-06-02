@@ -854,7 +854,7 @@ class Assets {
 			$last_modified = max(filemtime($raw_file), $last_modified);
 		}
 
-		if(Theme::$is_admin == TRUE)
+        if (Theme::$is_admin)
 		{
 			$path = $path.DIRECTORY_SEPARATOR.'admin';
 		}

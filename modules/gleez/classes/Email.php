@@ -217,7 +217,7 @@ class Email {
 		try
 		{
 			// Send mail if its not queued
-			if($this->queue == FALSE)
+            if (!$this->queue)
 			{
 				$this->_mail->send();
 			}

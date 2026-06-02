@@ -301,7 +301,7 @@ class Widgets {
 			return $response;
 		}
 
-        if ($visible == TRUE) {
+        if ($visible) {
             $widget = $this->is_visible($widget);
         } else {
             $widget->visible = TRUE;

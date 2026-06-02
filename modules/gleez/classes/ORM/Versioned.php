@@ -162,7 +162,7 @@ class ORM_Versioned extends Gleez_Model
 
         if ($status = parent::delete())
 		{
-			if (is_array($this->_deleted_column) && $soft == TRUE)
+            if (is_array($this->_deleted_column) && $soft)
 			{
 				$data = array();
 
