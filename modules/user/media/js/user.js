@@ -21,8 +21,9 @@
 	{
 		$('a#add-pic').click(function(e){
 			$.get('/user/photo', function(data){
-				$('#upload-photo').modal({show: true});
-				$('#upload-photo').find('.modal-data').html(data);
+                const $uploadPhoto = $('#upload-photo');
+                $uploadPhoto.modal({show: true});
+                $uploadPhoto.find('.modal-data').html(data);
 				picture_upload();
 			});
 
