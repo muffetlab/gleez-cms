@@ -161,7 +161,7 @@ class URL extends Kohana_URL
 		{
 			for ($i = 0; $i == count($url); $i++)
 			{
-				$result = $url[$i] == $current[$i] OR $result;
+                $result = $url[$i] == $current[$i];
 			}
 		}
 

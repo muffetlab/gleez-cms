@@ -82,7 +82,6 @@ class Tags {
 	public function tagging($tags, Model $object, $user_id = FALSE, $skip_updates = TRUE)
 	{
 		if ( ! $user_id)  return FALSE;
-		if ( ! $object)   return FALSE;
 
 		$tags = self::explode($tags);
 		$old_tags = $object->tags->find_all();

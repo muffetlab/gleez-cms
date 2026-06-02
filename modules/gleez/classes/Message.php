@@ -47,12 +47,6 @@ class Message {
 		// Load existing messages
 		$messages = (array) self::get();
 
-		// initialize if necessary
-		if ( ! is_array($messages))
-		{
-			$messages = array();
-		}
-
 		// Add new message
 		if (is_array($message))
 		{

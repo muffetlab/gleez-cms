@@ -211,7 +211,7 @@ class Gleez {
 	{
 		$maintenance_mode = Kohana::$config->load('site')->get('maintenance_mode', FALSE);
 		$message          = Kohana::$config->load('site')->get('offline_message', FALSE);
-		$message          = (empty($message) OR ! $message) ? Gleez::MAINTENANCE_MESSAGE : $message;
+        $message = empty($message) ? Gleez::MAINTENANCE_MESSAGE : $message;
 		$request          = Request::initial();
 
 		if ($maintenance_mode AND ($request instanceof Request) AND ($request->controller() != 'user' AND $request->action() != 'login') AND !ACL::check('administer site') AND $request->controller() != 'media')

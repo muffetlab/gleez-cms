@@ -61,7 +61,7 @@ class Path {
 		}
 
 		// reset the self::FRONT_ALIAS tag to '' orelse request fails
-		if ($alias === self::FRONT_ALIAS AND $result)
+        if ($alias === self::FRONT_ALIAS)
 		{
 			$result['alias'] = '';
 		}

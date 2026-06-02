@@ -122,9 +122,7 @@ class Model_Path extends Gleez_Model
 				$this->route_name  = $params['route'];
 			}
 			$this->alias = $alias;
-		}
-		elseif ( ! isset($params['controller']) OR ! isset($params) OR empty($params['controller']) OR empty($params))
-		{
+        } else {
 			$validation->error($field, 'invalid_source', array($validation[$field]));
 		}
 	}
