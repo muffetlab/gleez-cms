@@ -19,7 +19,7 @@
 	 */
 	function scan_modals()
 	{
-		$('a#add-pic').click(function(e){
+        $('a#add-pic').on('click', function (e) {
 			$.get('/user/photo', function(data){
                 const $uploadPhoto = $('#upload-photo');
                 $uploadPhoto.modal({show: true});
