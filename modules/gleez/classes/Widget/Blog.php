@@ -64,7 +64,7 @@ class Widget_Blog extends Widget {
 				$items[$blog->id]['url']      = $blog->url;
 				$items[$blog->id]['user']     = $blog->user->name;
 				$items[$blog->id]['user_url'] = $blog->user->url;
-				$items[$blog->id]['date']     = $blog->updated ? $blog->updated : $blog->created;
+                $items[$blog->id]['date'] = $blog->updated ?: $blog->created;
 
 			}
 

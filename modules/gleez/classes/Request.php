@@ -60,7 +60,7 @@ class Request extends Kohana_Request
 	 */
 	public static function is_datatables(Request $request = NULL)
 	{
-		$request = ($request) ? $request : Request::current();
+        $request = $request ?: Request::current();
 
 		return (bool) $request->query('draw');
 	}
