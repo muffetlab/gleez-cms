@@ -546,13 +546,12 @@ class Module
 
 	/**
 	 * Run a specific event on all active modules.
-	 * @param string $name the event name
-	 * @param mixed  $data data to pass to each event handler
+     *
+     * @param string $name The event name
+     * @param mixed ...$args Data to pass to each event handler
 	 */
-	public static function event($name, &$data = null)
+    public static function event($name, ...$args)
 	{
-		$args = func_get_args();
-		array_shift($args);
 		$function = str_replace(".", "_", $name);
 
 		if (method_exists('Gleez_Event', $function)) {
@@ -590,15 +589,15 @@ class Module
 	}
 
 	/**
-	 * Call to execute a Module action
-	 * @param string The name of the action to execute
-	 * @param mixed The value to action.
+     * Call to execute a Module action.
+     *
+     * @param string $action The name of the action to execute
+     * @param mixed $return The initial return value
+     * @param mixed ...$filterargs Additional arguments to pass to the action handler
 	 */
-	public static function action()
+    public static function action($action, $return, ...$filterargs)
 	{
-		list($action, $return) = func_get_args();
 		$function = str_replace(".", "_", $action);
-		$filterargs = array_slice(func_get_args(), 2);
 
 		foreach (self::$active as $name => $module) {
 			$class = ucfirst($name).'_Action';
