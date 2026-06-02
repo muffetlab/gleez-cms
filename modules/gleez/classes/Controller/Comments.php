@@ -85,8 +85,7 @@ class Controller_Comments extends Controller {
 		if ($id == 0)
 		{
 			Kohana::$log->add(Log::INFO, 'Attempt to load all public comments without a defined parent.');
-			return;
-		}
+        }
 		else
 		{
             $this->create_list();
