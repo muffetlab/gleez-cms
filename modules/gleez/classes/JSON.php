@@ -106,27 +106,4 @@ class JSON {
 
 		return $result;
 	}
-
-	/**
-	 * Encodes the given value into a Mongo-like JSON string
-	 *
-	 * [!!] This function only works with UTF-8 encoded data
-	 *
-	 * Example:
-	 * ~~~
-	 * $j = JSON::encodeMongo(array('$id' => 1234567890));
-	 * ~~~
-	 *
-	 * @param   mixed  $value  The data to be encoded
-	 *
-	 * @return  string
-	 */
-	public static function encodeMongo($value)
-	{
-		$json = json_encode($value);
-		$json = preg_replace('/{"\$id":"(\w+)"}/','ObjectId("$1")', $json);
-
-		return $json;
-	}
-
 }
