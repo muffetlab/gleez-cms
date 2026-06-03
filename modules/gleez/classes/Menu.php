@@ -239,7 +239,7 @@ class Menu {
 			// localize item menu
             $title .= '<span>' . HTML::chars(__($item['title'])) . $caret . '</span>';
 
-			if($item['descp'] && !empty($item['descp']))
+            if (!empty($item['descp']))
 			{
 				// localize item desc
                 $title .= '<span class="menu-descp">' . HTML::chars(__($item['descp'])) . '</span>';
