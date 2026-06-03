@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Admin Tag Controller
  *
@@ -10,11 +13,17 @@
  */
 class Controller_Admin_Tag extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer tags');
@@ -22,17 +31,18 @@ class Controller_Admin_Tag extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * List tags
-	 *
-	 * @uses  Request::is_datatables
-	 * @uses  ORM::dataTables
+    /**
+     * List tags
+     *
+     * @throws Kohana_Exception
+     * @uses  ORM::dataTables
      * @uses  HTML::chars
-	 * @uses  HTML::icon
-	 * @uses  Route::url
-	 * @uses  Route::get
-	 * @uses  Assets::popup
-	 */
+     * @uses  HTML::icon
+     * @uses  Route::url
+     * @uses  Route::get
+     * @uses  Assets::popup
+     * @uses  Request::is_datatables
+     */
 	public function action_list()
 	{
 		Assets::popup();
@@ -70,14 +80,15 @@ class Controller_Admin_Tag extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Add new tag
-	 *
-	 * @uses  Message::success
-	 * @uses  Route::url
-	 * @uses  Route::get
-	 * @uses  Request::redirect
-	 */
+    /**
+     * Add new tag
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Route::url
+     * @uses  Route::get
+     * @uses  Request::redirect
+     * @uses  Message::success
+     */
 	public function action_add()
 	{
 		$this->title = __('Add New Tag');
@@ -108,16 +119,17 @@ class Controller_Admin_Tag extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit tag
-	 *
-	 * @uses  Message::success
-	 * @uses  Message::error
-	 * @uses  Route::url
-	 * @uses  Route::get
-	 * @uses  Request::redirect
-	 * @uses  Log::add
-	 */
+    /**
+     * Edit tag
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Message::error
+     * @uses  Route::url
+     * @uses  Route::get
+     * @uses  Request::redirect
+     * @uses  Log::add
+     * @uses  Message::success
+     */
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
@@ -160,15 +172,16 @@ class Controller_Admin_Tag extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete tag
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Route::url
-	 * @uses  Route::get
-	 * @uses  Request::redirect
-	 */
+    /**
+     * Delete tag
+     *
+     * @throws Kohana_Exception
+     * @uses  Message::success
+     * @uses  Route::url
+     * @uses  Route::get
+     * @uses  Request::redirect
+     * @uses  Message::error
+     */
 	public function action_delete()
 	{
 		$id  = (int) $this->request->param('id', 0);

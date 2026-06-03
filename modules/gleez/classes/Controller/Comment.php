@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Comment Controller
  *
@@ -10,11 +13,16 @@
  */
 class Controller_Comment extends Template {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('access comment');
@@ -25,7 +33,11 @@ class Controller_Comment extends Template {
 		parent::before();
 	}
 
-	public function action_view()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_view()
 	{
 		$id       = (int) $this->request->param('id', 0);
         $comment = ORM::factory('Comment', $id)->access();
@@ -47,16 +59,17 @@ class Controller_Comment extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit comment
-	 *
-	 * @uses  Request::query
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  URL::query
-	 * @uses  Message::success
-	 * @uses  Log::add
-	 */
+    /**
+     * Edit comment
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  URL::query
+     * @uses  Message::success
+     * @uses  Log::add
+     * @uses  Request::query
+     */
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -99,7 +112,11 @@ class Controller_Comment extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_delete()
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function action_delete()
 	{
 		$id          = (int) $this->request->param('id', 0);
         $comment = ORM::factory('Comment', $id)->access('delete');

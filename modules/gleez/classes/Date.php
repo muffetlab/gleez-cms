@@ -349,46 +349,43 @@ class Date extends Kohana_Date
 		return $time_format;
 	}
 
-	/**
-	 * Return a unix timestamp in a user specified format including date and time
-	 *
-	 * @param  integer $timestamp Unix timestamp
-	 * @param  string  $format    Timestamp format [Optional]
-	 *
-	 * @return string
-	 *
-	 * @uses   Config::get
-	 */
+    /**
+     * Return a unix timestamp in a user specified format including date and time
+     *
+     * @param integer $timestamp Unix timestamp
+     * @param string $format Timestamp format [Optional]
+     * @return string
+     * @throws Exception
+     * @uses   Config::get
+     */
 	public static function date_time($timestamp, $format = NULL)
 	{
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site')->get('date_time_format') : $format);
 	}
 
-	/**
-	 * Return a unix timestamp in a user specified format that's just the date
-	 *
-	 * @param  integer $timestamp Unix timestamp
-	 * @param  string  $format    Timestamp format [Optional]
-	 *
-	 * @return string
-	 *
-	 * @uses   Config::get
-	 */
+    /**
+     * Return a unix timestamp in a user specified format that's just the date
+     *
+     * @param integer $timestamp Unix timestamp
+     * @param string $format Timestamp format [Optional]
+     * @return string
+     * @throws Exception
+     * @uses   Config::get
+     */
 	public static function date_format($timestamp, $format = NULL)
 	{
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.date_format') : $format);
 	}
 
-	/**
-	 * Return a unix timestamp in a user specified format that's just the time
-	 *
-	 * @param  integer $timestamp Unix timestamp
-	 * @param  string  $format    Timestamp format [Optional]
-	 *
-	 * @return string
-	 *
-	 * @uses   Config::get
-	 */
+    /**
+     * Return a unix timestamp in a user specified format that's just the time
+     *
+     * @param integer $timestamp Unix timestamp
+     * @return string
+     * @throws Kohana_Exception
+     * @throws Exception
+     * @uses   Config::get
+     */
 	public static function time($timestamp, $format = NULL)
 	{
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.time_format') : $format);

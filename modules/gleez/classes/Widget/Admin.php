@@ -14,7 +14,11 @@ class Widget_Admin extends Widget {
 	public function save(array $post) {}
 	public function delete(array $post) {}
 
-	public function render()
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function render()
 	{
 		switch($this->name)
 		{
@@ -31,7 +35,11 @@ class Widget_Admin extends Widget {
 			}
 	}
 
-	public function shortcut()
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function shortcut()
 	{
 		$menus = Menu::items('management')->get_items();
 		unset($menus['administer']);
@@ -40,7 +48,10 @@ class Widget_Admin extends Widget {
 				->render();
 	}
 
-	public function donate()
+    /**
+     * @throws View_Exception
+     */
+    public function donate()
 	{
 		return View::factory('widgets/static')->set(array(
 			'title' => __('Donate'),
@@ -48,14 +59,21 @@ class Widget_Admin extends Widget {
 		))->render();
 	}
 
-	public function welcome()
+    /**
+     * @throws View_Exception
+     */
+    public function welcome()
 	{
 		return View::factory('widgets/welcome')->set(array(
 			'title' => __('Welcome'),
 		))->render();
 	}
 
-	public function system_info()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function system_info()
 	{
         $dbVersion = DB::query(Database::SELECT, 'SHOW VARIABLES WHERE variable_name = "version"')
             ->execute()

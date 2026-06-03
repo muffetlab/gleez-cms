@@ -74,18 +74,17 @@ class Request extends Kohana_Request
 		return defined('HHVM_VERSION');	
 	}
 
-	/**
-	 * Gets POST max size in bytes
-	 *
-	 * @link    http://php.net/post-max-size
-	 *
-	 * @return  float
-	 *
-	 * @uses    Config::get
-	 * @uses    Config::set
-	 * @uses    Num::bytes
-	 * @uses    Request::DEFAULT_POST_MAX_SIZE
-	 */
+    /**
+     * Gets POST max size in bytes
+     *
+     * @link    http://php.net/post-max-size
+     * @return  float
+     * @uses    Config::get
+     * @uses    Config::set
+     * @uses    Num::bytes
+     * @uses    Request::DEFAULT_POST_MAX_SIZE
+     * @throws Kohana_Exception
+     */
 	public static function get_post_max_size()
 	{
         $max_size = Kohana::$config->load('media')->get('post_max_size');
@@ -113,23 +112,24 @@ class Request extends Kohana_Request
 		return min($gleez_settings, $php_settings);
 	}
 
-	/**
-	 * Redirects as the request response. If the URL does not include a
-	 * protocol, it will be converted into a complete URL.
-	 *
-	 * Example:
-	 * ~~~
-	 * $request->redirect($url);
-	 * ~~~
-	 *
-	 * [!!] No further processing can be done after this method is called!
-	 *
-	 * @param   string   $url   Redirect location
-	 * @param   integer  $code  Status code: 301, 302, etc
-	 * @return  void
-	 * @uses    URL::site
-	 * @uses    Request::send_headers
-	 */
+    /**
+     * Redirects as the request response. If the URL does not include a
+     * protocol, it will be converted into a complete URL.
+     *
+     * Example:
+     * ~~~
+     * $request->redirect($url);
+     * ~~~
+     *
+     * [!!] No further processing can be done after this method is called!
+     *
+     * @param string $url Redirect location
+     * @param integer $code Status code: 301, 302, etc
+     * @return  void
+     * @throws Kohana_Exception
+     * @uses    Request::send_headers
+     * @uses    URL::site
+     */
 	public function redirect($url = '', $code = 302)
 	{
 		$referrer = $this->uri();

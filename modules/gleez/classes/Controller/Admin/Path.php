@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Admin Path Controller
  *
@@ -10,11 +13,17 @@
  */
 class Controller_Admin_Path extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer paths');
@@ -22,16 +31,17 @@ class Controller_Admin_Path extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * List path aliases
-	 *
-	 * @uses  Request::is_datatables
-	 * @uses  ORM::dataTables
+    /**
+     * List path aliases
+     *
+     * @throws Kohana_Exception
+     * @uses  ORM::dataTables
      * @uses  HTML::chars
-	 * @uses  HTML::icon
-	 * @uses  Route::url
-	 * @uses  Assets::popup
-	 */
+     * @uses  HTML::icon
+     * @uses  Route::url
+     * @uses  Assets::popup
+     * @uses  Request::is_datatables
+     */
 	public function action_list()
 	{
 		Assets::popup();
@@ -69,14 +79,15 @@ class Controller_Admin_Path extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Add path alias
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  URL::site
-	 * @uses  Message::success
-	 */
+    /**
+     * Add path alias
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Route::uri
+     * @uses  URL::site
+     * @uses  Message::success
+     * @uses  Route::get
+     */
 	public function action_add()
 	{
 		$this->title = __('Creating an Alias');
@@ -110,15 +121,16 @@ class Controller_Admin_Path extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit path alias
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  URL::site
-	 */
+    /**
+     * Edit path alias
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Route::uri
+     * @uses  Message::error
+     * @uses  Message::success
+     * @uses  URL::site
+     * @uses  Route::get
+     */
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -163,13 +175,14 @@ class Controller_Admin_Path extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete path alias
-	 *
-	 * @uses  Message::error
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Delete path alias
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Message::error
+     */
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);

@@ -83,12 +83,13 @@ class Gleez_Locale {
 	 */
 	public static $cookie = 'language';
 
-	/**
-	 * Singleton instance of Gleez_Locale
-	 *
-	 * @param   string|Gleez_Locale  $locale  Locale for parsing input [Optional]
-	 * @return  Gleez_Locale
-	 */
+    /**
+     * Singleton instance of Gleez_Locale
+     *
+     * @param string|Gleez_Locale $locale Locale for parsing input [Optional]
+     * @return  Gleez_Locale
+     * @throws Kohana_Exception
+     */
 	public static function instance($locale = NULL)
 	{
 		if ( ! isset(Gleez_Locale::$_instance))
@@ -542,13 +543,13 @@ class Gleez_Locale {
 		return FALSE;
 	}
 
-	/**
-	 * Sets a new locale
-	 *
-	 * @param  string|Gleez_Locale  $locale  New locale to set [Optional]
-	 *
-	 * @uses   Locale_Data::getLocaleData
-	 */
+    /**
+     * Sets a new locale
+     *
+     * @param string|Gleez_Locale $locale New locale to set [Optional]
+     * @throws Kohana_Exception
+     * @uses   Locale_Data::getLocaleData
+     */
 	public function set_locale($locale = NULL)
 	{
 		$locale      = self::_prepare_locale($locale);

@@ -50,8 +50,9 @@ class Inflector
      * been defined as uncountable in `config/inflector.php`. If this is the
      * case, please report [an issue](https://github.com/gleez/cms/issues).
      *
-     * @param   string  $str Word to check
+     * @param string $str Word to check
      * @return  boolean
+     * @throws Kohana_Exception
      */
     public static function uncountable($str)
     {
@@ -84,9 +85,10 @@ class Inflector
      *
      * [!!] Special inflections are defined in `config/inflector.php`.
      *
-     * @param   string  $str    word to singularize
-     * @param   integer $count  count of thing
+     * @param string $str word to singularize
+     * @param integer $count count of thing
      * @return  string
+     * @throws Kohana_Exception
      * @uses    Inflector::uncountable
      */
     public static function singular($str, $count = null)
@@ -154,9 +156,10 @@ class Inflector
      *
      * [!!] Special inflections are defined in `config/inflector.php`.
      *
-     * @param   string  $str    word to pluralize
-     * @param   integer $count  count of thing
+     * @param string $str word to pluralize
+     * @param integer $count count of thing
      * @return  string
+     * @throws Kohana_Exception
      * @uses    static::uncountable
      */
     public static function plural($str, $count = null)

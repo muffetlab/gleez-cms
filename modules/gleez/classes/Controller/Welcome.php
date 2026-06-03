@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Welcome Controller
  *
@@ -16,9 +19,14 @@ class Controller_Welcome extends Template {
 	 */
 	public $template = 'layouts/welcome';
 
-	/**
-	 * The before() method is called before controller action.
-	 */
+    /**
+     * The before() method is called before controller action.
+     *
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     */
 	public function before()
 	{
 		// The action_index() is default
@@ -30,9 +38,11 @@ class Controller_Welcome extends Template {
 		parent::before();
 	}
 
-	/**
-	 * Prepare welcome page
-	 */
+    /**
+     * Prepare welcome page
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_welcome()
 	{
 		// If Gleez CMS don't installed

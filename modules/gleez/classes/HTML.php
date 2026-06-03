@@ -69,25 +69,24 @@ class HTML extends Kohana_HTML
 		return parent::style($file, $attributes, $protocol, $index);
 	}
 
-	/**
-	 * Creates a resized image link to resize images on fly with caching
-	 *
-	 * Width, height and type attributes are required to resize the image.
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::resize('media/img/logo.png', array('alt' => 'My Company', 'width' => 50, 'height' => 50, 'type' => 'ratio'));
-	 * ~~~
-	 *
-	 * @param   string   $file        File name
-	 * @param   array    $attributes  Default attributes + type = crop|ratio [Optional]
-	 * @param   mixed    $protocol    Protocol to pass to `URL::base()` [Optional]
-	 * @param   boolean  $index       Include the index page [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::base
-	 */
+    /**
+     * Creates a resized image link to resize images on fly with caching
+     *
+     * Width, height and type attributes are required to resize the image.
+     *
+     * Example:
+     * ~~~
+     * echo HTML::resize('media/img/logo.png', array('alt' => 'My Company', 'width' => 50, 'height' => 50, 'type' => 'ratio'));
+     * ~~~
+     *
+     * @param string $file File name
+     * @param array $attributes Default attributes + type = crop|ratio [Optional]
+     * @param mixed $protocol Protocol to pass to `URL::base()` [Optional]
+     * @param boolean $index Include the index page [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    URL::base
+     */
 	public static function resize($file, array $attributes = NULL, $protocol = NULL, $index = FALSE)
 	{
 		if (strlen($file) <= 1)
@@ -136,14 +135,14 @@ class HTML extends Kohana_HTML
 		return '<img'.self::attributes($attributes).'>';
 	}
 
-	/**
-	 * Print out a themed set of links
-	 *
-	 * @param   array  $links       Links
-	 * @param   array  $attributes  Attributes, for example CSS class [Optional]
-	 *
-	 * @return  string
-	 */
+    /**
+     * Print out a themed set of links
+     *
+     * @param array $links Links
+     * @param array $attributes Attributes, for example CSS class [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function links($links, $attributes = array('class' => 'links'))
 	{
 		$output = '';
@@ -199,16 +198,15 @@ class HTML extends Kohana_HTML
 		return $output;
 	}
 
-	/**
-	 * Print out a themed set of tabs
-	 *
-	 * @param   array  $tabs        Tabs
-	 * @param   array  $attributes  Attributes, for example CSS class [Optional]
-	 *
-	 * @return  string Prepared HTML
-	 *
+    /**
+     * Print out a themed set of tabs
+     *
+     * @param array $tabs Tabs
+     * @param array $attributes Attributes, for example CSS class [Optional]
+     * @return  string Prepared HTML
+     * @throws Kohana_Exception
      * @uses    HTML::chars
-	 */
+     */
 	public static function tabs($tabs, $attributes = array('class' => 'tabs'))
 	{
 		$output = '';
@@ -259,37 +257,35 @@ class HTML extends Kohana_HTML
 		return $output;
 	}
 
-	/**
-	 * Takes a URI and will return bool true if it matches or is contained (at
-	 * the start) of the current request URI.
-	 *
-	 * @param   string  $uri  URI
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    URL::is_active
-	 */
+    /**
+     * Takes a URI and will return bool true if it matches or is contained (at
+     * the start) of the current request URI.
+     *
+     * @param string $uri URI
+     * @return  boolean
+     * @throws Kohana_Exception
+     * @uses    URL::is_active
+     */
 	public static function is_active($uri)
 	{
 		return URL::is_active($uri);
 	}
 
-	/**
-	 * Create a iconic button
-	 *
-	 * Example:
-	 * ~~~
+    /**
+     * Create a iconic button
+     *
+     * Example:
+     * ~~~
      * echo HTML::icon('/paths/edit/1', 'far fa-edit', array('class'=>'action-edit', 'title'=> __('Edit Alias')));
-	 * ~~~
-	 *
-	 * @link    http://fontawesome.io/
-	 *
-	 * @param   string  $url    URL
-	 * @param   string  $icon   FontAwesome like icon  class
-	 * @param   array   $attrs  Attributes, for example CSS class or title [Optional]
-	 *
-	 * @return  string
-	 */
+     * ~~~
+     *
+     * @link    http://fontawesome.io/
+     * @param string $url URL
+     * @param string $icon FontAwesome like icon  class
+     * @param array $attrs Attributes, for example CSS class or title [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function icon($url, $icon, array $attrs = array())
 	{
         return self::anchor($url, '<i class="' . $icon . '"></i>', $attrs);

@@ -80,16 +80,17 @@ class Gleez {
 	 */
 	public static $isWindows= false;
 
-	/**
-	 * Runs the Gleez environment
-	 *
-	 * @uses  Gleez::_set_cookie
-	 * @uses  Route::set
-	 * @uses  Route::defaults
-	 * @uses  Config::load
-	 * @uses  I18n::initialize
-	 * @uses  Module::load_modules
-	 */
+    /**
+     * Runs the Gleez environment
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::set
+     * @uses  Route::defaults
+     * @uses  Config::load
+     * @uses  I18n::initialize
+     * @uses  Module::load_modules
+     * @uses  Gleez::_set_cookie
+     */
 	public static function ready()
 	{
 		if (self::$_init)
@@ -192,21 +193,21 @@ class Gleez {
         return Module::action('gleez_types', $states);
 	}
 
-	/**
-	 * Check for maintenance_mode
-	 *
-	 * If Gleez is in maintenance mode, then force all non-admins to get routed
-	 * to a "This site is down for maintenance" page.
-	 *
-	 * @throws  HTTP_Exception_503
-	 *
-	 * @uses    Request::initial
-	 * @uses    Config::load
-	 * @uses    Request::controller
-	 * @uses    Request::action
-	 * @uses    ACL::check
-	 * @uses    Config::get
-	 */
+    /**
+     * Check for maintenance_mode
+     *
+     * If Gleez is in maintenance mode, then force all non-admins to get routed
+     * to a "This site is down for maintenance" page.
+     *
+     * @throws  HTTP_Exception_503
+     * @throws Kohana_Exception
+     * @uses    Request::initial
+     * @uses    Config::load
+     * @uses    Request::controller
+     * @uses    Request::action
+     * @uses    ACL::check
+     * @uses    Config::get
+     */
 	public static function maintenance_mode()
 	{
 		$maintenance_mode = Kohana::$config->load('site')->get('maintenance_mode', FALSE);
@@ -220,15 +221,15 @@ class Gleez {
 		}
 	}
 
-	/**
-	 * Check to see if an IP address has been blocked and deny access to blocked IP addresses
-	 *
-	 * @throws  HTTP_Exception_403
-	 *
-	 * @uses    Config::get
-	 * @uses    Log::add
-	 * @uses    Request::$client_ip
-	 */
+    /**
+     * Check to see if an IP address has been blocked and deny access to blocked IP addresses
+     *
+     * @throws  HTTP_Exception_403
+     * @throws Kohana_Exception
+     * @uses    Config::get
+     * @uses    Log::add
+     * @uses    Request::$client_ip
+     */
 	public static function block_ips()
 	{
         $blocked_ips = Kohana::$config->load('site')->get('blocked_ips');
@@ -304,15 +305,17 @@ class Gleez {
         return $full ? 'Gleez CMS ' . $version : $version;
 	}
 
-	/**
-	 * Set default cookie [salt](gleez/cookie/config#salt)
-	 * and [lifetime](gleez/cookie/config#expiration)
-	 *
-	 * Also you can define a salt for the `Cookie` class in bootstrap.php:
-	 * ~~~
-	 * Cookie::$salt = [really-long-cookie-salt-here]
-	 * ~~~
-	 */
+    /**
+     * Set default cookie [salt](gleez/cookie/config#salt)
+     * and [lifetime](gleez/cookie/config#expiration)
+     *
+     * Also you can define a salt for the `Cookie` class in bootstrap.php:
+     * ~~~
+     * Cookie::$salt = [really-long-cookie-salt-here]
+     * ~~~
+     *
+     * @throws Kohana_Exception
+     */
 	protected static function _set_cookie()
 	{
 		/** @var Cookie::$salt string */

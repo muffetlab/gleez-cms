@@ -120,31 +120,29 @@ class Text extends Kohana_Text
 		}
 	}
 
-	/**
-	 * Run all the enabled filters on a piece of text.
-	 *
-	 * Note: Because filters can inject JavaScript or execute PHP code, security is
-	 * vital here. When a user supplies a text format, you should validate it using
-	 * filter_access() before accepting/using it. This is normally done in the
-	 * validation stage of the Form API. You should for example never make a preview
-	 * of content in a disallowed format.
-	 *
-	 * @param   string   $text       The text to be filtered
-	 * @param   integer  $format_id  The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
-	 * @param   string   $langcode   The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
-	 * @param   boolean  $cache      Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to FALSE when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
-	 *
-	 * @return  mixed
-	 *
-	 * @uses    Config::load
-	 * @uses    Config_Group::get
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 * @uses    Module::event
-	 * @uses    Filter::process
-	 *
-	 * @todo    Make @params description shorter
-	 */
+    /**
+     * Run all the enabled filters on a piece of text.
+     *
+     * Note: Because filters can inject JavaScript or execute PHP code, security is
+     * vital here. When a user supplies a text format, you should validate it using
+     * filter_access() before accepting/using it. This is normally done in the
+     * validation stage of the Form API. You should for example never make a preview
+     * of content in a disallowed format.
+     *
+     * @param string $text The text to be filtered
+     * @param integer $format_id The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
+     * @param string $langcode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
+     * @param boolean $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to FALSE when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     * @uses    Config_Group::get
+     * @uses    Cache::get
+     * @uses    Cache::set
+     * @uses    Module::event
+     * @uses    Filter::process
+     * @todo    Make @params description shorter
+     */
 	public static function markup($text, $format_id = NULL, $langcode = NULL, $cache = FALSE)
 	{
 		// Save some cpu cycles if text is empty or null
@@ -187,15 +185,16 @@ class Text extends Kohana_Text
 		return $text;
 	}
 
-	/**
-	 * HTML filter
-	 *
-	 * Provides filtering of input into accepted HTML.
-	 *
-	 * @param $text
-	 * @param $filter
-	 * @return string
-	 */
+    /**
+     * HTML filter
+     *
+     * Provides filtering of input into accepted HTML.
+     *
+     * @param $text
+     * @param $filter
+     * @return string
+     * @throws Kohana_Exception
+     */
     public static function html($text, $filter)
 	{
         $text = HTMLFilter::factory($text, $filter)->render();

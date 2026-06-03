@@ -97,12 +97,14 @@ class System {
 		return $out;
 	}
 
-	/**
-	 * Dynamically generate icons list from font-awesome.css file and cached for performance
-	 *
-	 * @link   http://fontawesome.io/
-	 * @return array
-	 */
+    /**
+     * Dynamically generate icons list from font-awesome.css file and cached for performance
+     *
+     * @link   http://fontawesome.io/
+     * @return array
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
 	public static function icons()
 	{
         if (!$icons = Cache::instance()->get('icons:fa-icons')) {
@@ -268,22 +270,21 @@ class System {
         return Module::action('system_check', $criteria);
 	}
 
-	/**
-	 * Get PHP memory_limit
-	 *
-	 * It can be used to obtain a human-readable form
-	 * of a PHP memory_limit.
-	 *
-	 * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or FALSE
-	 *      returns [System::MIN_MEMORY_LIMIT]
-	 *
-	 * @since   1.4.0
-	 *
-	 * @return  int|string
-	 *
-	 * @uses    Num::bytes
-	 * @uses    Text::bytes
-	 */
+    /**
+     * Get PHP memory_limit
+     *
+     * It can be used to obtain a human-readable form
+     * of a PHP memory_limit.
+     *
+     * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or FALSE
+     *      returns [System::MIN_MEMORY_LIMIT]
+     *
+     * @return  int|string
+     * @throws Kohana_Exception
+     * @uses    Num::bytes
+     * @uses    Text::bytes
+     * @since   1.4.0
+     */
 	public static function get_memory_limit()
 	{
 		$memory_limit = Num::bytes(ini_get('memory_limit'));

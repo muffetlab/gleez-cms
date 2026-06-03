@@ -32,12 +32,15 @@ class Module
 	 */
 	public static $available = array();
 
-	/**
-	 * Set the version of the corresponding Module_Model
-	 *
-	 * @param string  $name     Module name
-	 * @param float   $version  Module version
-	 */
+    /**
+     * Set the version of the corresponding Module_Model
+     *
+     * @param string $name Module name
+     * @param float $version Module version
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public static function set_version($name, $version)
 	{
 		$module = self::get($name);
@@ -57,12 +60,13 @@ class Module
 		}
 	}
 
-	/**
-	 * Load the corresponding Model_Module
-	 *
-	 * @param   string  $name  Module name
-	 * @return  ORM
-	 */
+    /**
+     * Load the corresponding Model_Module
+     *
+     * @param string $name Module name
+     * @return  ORM
+     * @throws Kohana_Exception
+     */
 	public static function get($name)
 	{
 		if (empty(self::$modules[$name]) || !(self::$modules[$name] instanceof ORM)) {
@@ -72,13 +76,14 @@ class Module
 		return self::$modules[$name];
 	}
 
-	/**
-	 * Get the information about a module
-	 *
-	 * @param   string  $name  Module name
-	 * @return  ArrayObject  An ArrayObject containing the module information from the module.info file
-	 * @return  boolean      false if not found
-	 */
+    /**
+     * Get the information about a module
+     *
+     * @param string $name Module name
+     * @return  ArrayObject  An ArrayObject containing the module information from the module.info file
+     * @return  boolean      false if not found
+     * @throws Kohana_Exception
+     */
 	public static function info($name)
 	{
 		$module_list = self::available();
@@ -108,14 +113,15 @@ class Module
 		return array_key_exists($name, self::$active);
 	}
 
-	/**
-	 * Return the list of available modules, including uninstalled modules
-	 *
-	 * @uses  Message::warn
-	 * @uses  HTML::anchor
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Return the list of available modules, including uninstalled modules
+     *
+     * @throws Kohana_Exception
+     * @uses  HTML::anchor
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Message::warn
+     */
 	public static function available()
 	{
 		if (empty(self::$available))
@@ -185,12 +191,13 @@ class Module
 		return self::$active;
 	}
 
-	/**
-	 * Check that the module can be activated. (i.e. all the prerequisites exist)
-	 *
-	 * @param  string $module_name Module name
-	 * @return array An array of warning or error messages to be displayed
-	 */
+    /**
+     * Check that the module can be activated. (i.e. all the prerequisites exist)
+     *
+     * @param string $module_name Module name
+     * @return array An array of warning or error messages to be displayed
+     * @throws Kohana_Exception
+     */
 	public static function can_activate($module_name)
 	{
 		self::_add_to_path($module_name);
@@ -222,12 +229,14 @@ class Module
 		return $data->messages;
 	}
 
-	/**
-	 * Install a module.  This will call <module>_installer::install(), which is responsible for
-	 * creating database tables, setting module variables and calling module::set_version().
-	 * Note that after installing, the module must be activated before it is available for use.
-	 * @param string $module_name
-	 */
+    /**
+     * Install a module.  This will call <module>_installer::install(), which is responsible for
+     * creating database tables, setting module variables and calling module::set_version().
+     * Note that after installing, the module must be activated before it is available for use.
+     *
+     * @param string $module_name
+     * @throws Kohana_Exception|ReflectionException
+     */
 	public static function install($module_name)
 	{
 		self::_add_to_path($module_name);
@@ -266,7 +275,10 @@ class Module
 		Kohana::$log->add(Log::INFO, 'Installed module :module_name', array(':module_name' => $module_name));
 	}
 
-	private static function _add_to_path($module)
+    /**
+     * @throws Kohana_Exception
+     */
+    private static function _add_to_path($module)
 	{
         $available = static::$available;
 
@@ -286,7 +298,10 @@ class Module
 		return false;
 	}
 
-	private static function _remove_from_path($module)
+    /**
+     * @throws Kohana_Exception
+     */
+    private static function _remove_from_path($module)
 	{
         $available = static::$available;
 		$kohana_modules = Kohana::modules();
@@ -357,12 +372,17 @@ class Module
 		}
 	}
 
-	/**
-	 * Activate an installed module.  This will call <module>_installer::activate() which should take
-	 * any steps to make sure that the module is ready for use.  This will also activate any
-	 * existing graphics rules for this module.
-	 * @param string $module_name
-	 */
+    /**
+     * Activate an installed module.  This will call <module>_installer::activate() which should take
+     * any steps to make sure that the module is ready for use.  This will also activate any
+     * existing graphics rules for this module.
+     *
+     * @param string $module_name
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	static function activate($module_name)
 	{
 		$module = self::_add_to_path($module_name);
@@ -403,12 +423,17 @@ class Module
 		}
 	}
 
-	/**
-	 * Deactivate an installed module.  This will call <module>_installer::deactivate() which should
-	 * take any cleanup steps to make sure that the module isn't visible in any way.  Note that the
-	 * module remains available in Kohana's cascading file system until the end of the request!
-	 * @param string $module_name
-	 */
+    /**
+     * Deactivate an installed module.  This will call <module>_installer::deactivate() which should
+     * take any cleanup steps to make sure that the module isn't visible in any way.  Note that the
+     * module remains available in Kohana's cascading file system until the end of the request!
+     *
+     * @param string $module_name
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	static function deactivate($module_name)
 	{
 		$installer_class = ucfirst($module_name).'_Installer';
@@ -433,11 +458,13 @@ class Module
 		Kohana::$log->add(Log::INFO, 'Deactivated module :module_name', array(':module_name' => $module_name));
 	}
 
-	/**
-	 * Uninstall a deactivated module.  This will call <module>_installer::uninstall() which should
-	 * take whatever steps necessary to make sure that all traces of a module are gone.
-	 * @param string $module_name
-	 */
+    /**
+     * Uninstall a deactivated module.  This will call <module>_installer::uninstall() which should
+     * take whatever steps necessary to make sure that all traces of a module are gone.
+     *
+     * @param string $module_name
+     * @throws Kohana_Exception
+     */
 	public static function uninstall($module_name)
 	{
 		//Call DB migrations for this module
@@ -464,17 +491,18 @@ class Module
 		Kohana::$log->add(Log::INFO, 'Uninstalled module :module_name', array(':module_name' => $module_name));
 	}
 
-	/**
-	 * Load the active modules
-	 *
-	 * This is called at bootstrap time
-	 *
-	 * @param  boolean  $reset  Reset true to clear the cache.
-	 *
-	 * @uses   Cache::get
-	 * @uses   Log::add
-	 * @uses   Arr::merge
-	 */
+    /**
+     * Load the active modules
+     *
+     * This is called at bootstrap time
+     *
+     * @param boolean $reset Reset true to clear the cache.
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses   Cache::get
+     * @uses   Log::add
+     * @uses   Arr::merge
+     */
 	public static function load_modules($reset = true)
 	{
 		self::$modules = array();
@@ -615,12 +643,13 @@ class Module
 		return $return;
 	}
 
-	/**
-	 * Return the version of the installed module
-	 *
-	 * @param   string  $name  Module name
-	 * @return  float   Module version
-	 */
+    /**
+     * Return the version of the installed module
+     *
+     * @param string $name Module name
+     * @return  float   Module version
+     * @throws Kohana_Exception
+     */
 	public static function get_version($name)
 	{
 		return self::get($name)->version;

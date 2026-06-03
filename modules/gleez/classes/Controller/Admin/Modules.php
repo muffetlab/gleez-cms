@@ -71,7 +71,8 @@ class Controller_Admin_Modules extends Controller_Admin {
 	/**
 	 * Do save
 	 *
-	 * @uses  Arr::get
+     * @throws Cache_Exception|Kohana_Exception
+     * @uses  Arr::get
 	 * @uses  Module::available
 	 * @uses  Module::is_active
 	 * @uses  Module::deactivate

@@ -102,18 +102,18 @@ class Model_Comment extends Gleez_Model
 		);
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @return  ORM
-	 *
-	 * @uses    User::active_user
-	 * @uses    ACL::check
-	 * @uses    Text::limit_words
-	 * @uses    Text::markup
-	 * @uses    Request::$client_ip
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation $validation Validation object
+     * @return  ORM
+     * @throws Kohana_Exception|ReflectionException
+     * @uses    ACL::check
+     * @uses    Text::limit_words
+     * @uses    Text::markup
+     * @uses    Request::$client_ip
+     * @uses    User::active_user
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		// Set some defaults
@@ -192,19 +192,19 @@ class Model_Comment extends Gleez_Model
         return parent::__get($column);
 	}
 
-	/**
-	 * Make sure we have an valid author id set, or a guest id
-	 *
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
-	 *
-	 * @uses    User::lookup_by_name
-	 * @uses    DB::select
-	 * @uses    DB::expr
-	 * @uses    Validation::error
-	 */
+    /**
+     * Make sure we have an valid author id set, or a guest id
+     *
+     * Validation callback.
+     *
+     * @param Validation $validation Validation object
+     * @param string $field Field name
+     * @throws Kohana_Exception
+     * @uses    DB::select
+     * @uses    DB::expr
+     * @uses    Validation::error
+     * @uses    User::lookup_by_name
+     */
 	public function valid_author(Validation $validation, $field)
 	{
 		if ( ! empty($this->author_name) AND ! ($account = User::lookup_by_name($this->author_name)))
@@ -266,16 +266,16 @@ class Model_Comment extends Gleez_Model
 		}
 	}
 
-	/**
-	 * Check by triggering error if post exists
-	 *
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
-	 *
-	 * @uses    DB::select
-	 */
+    /**
+     * Check by triggering error if post exists
+     *
+     * Validation callback.
+     *
+     * @param Validation $validation Validation object
+     * @param string $field Field name
+     * @throws Kohana_Exception
+     * @uses    DB::select
+     */
 	public function valid_post(Validation $validation, $field)
 	{
 		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
@@ -290,17 +290,18 @@ class Model_Comment extends Gleez_Model
 		}
 	}
 
-	/**
-	 * Make sure the user has permission to do the action on this object
-	 *
-	 * @param   boolean|string     $action The action view|edit|delete default view [Optional]
-	 * @param   Model_User|Object  $user   The user object to check permission, defaults to logged in user [Optional]
-	 * @return  Post
-	 * @throws  HTTP_Exception_403
-	 * @throws  HTTP_Exception_404
-	 * @uses    ACL::check
-	 * @uses    Module::event
-	 */
+    /**
+     * Make sure the user has permission to do the action on this object
+     *
+     * @param boolean|string $action The action view|edit|delete default view [Optional]
+     * @param Model_User|null $user The user object to check permission, defaults to logged in user [Optional]
+     * @return  Post
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @uses    ACL::check
+     * @uses    Module::event
+     */
     public function access($action = FALSE, Model_User $user = NULL)
 	{
 		if ( ! $action)
@@ -393,20 +394,22 @@ class Model_Comment extends Gleez_Model
 	}
 
 
-	/**
-	 * Make sure the user has permission to do the action on this object
-	 *
-	 * Similar to Comment::access but this return True/False instead of exception
-	 *
-	 * @param   bool|string $action  The action view|edit|delete default view
-	 * @param   Model_User  $user    The user object to check permission, defaults to logged in user
-	 * @return  boolean|Model_Comment
-	 * @throws  HTTP_Exception_404
-	 * @uses    Log::add
-	 * @uses    User::active_user
-	 * @uses    ACL::check
-	 * @uses    Module::event
-	 */
+    /**
+     * Make sure the user has permission to do the action on this object
+     *
+     * Similar to Comment::access but this return True/False instead of exception
+     *
+     * @param bool|string $action The action view|edit|delete default view
+     * @param Model_User|null $user The user object to check permission, defaults to logged in user
+     * @return  boolean|Model_Comment
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @uses    Log::add
+     * @uses    User::active_user
+     * @uses    ACL::check
+     * @uses    Module::event
+     */
     public function user_can($action = FALSE, Model_User $user = NULL)
 	{
 		if( ! $action) $action = 'view';

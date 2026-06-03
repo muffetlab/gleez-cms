@@ -10,21 +10,22 @@
  */
 class Controller_Admin_Setting extends Controller_Admin {
 
-	/**
-	 * General Settings
-	 *
-	 * @uses  Config::load
-	 * @uses  Message::success
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Date::date_time_formats
-	 * @uses  Date::date_formats
-	 * @uses  Date::time_formats
+    /**
+     * General Settings
+     *
+     * @throws Kohana_Exception
+     * @uses  Config::load
+     * @uses  Message::success
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Date::date_time_formats
+     * @uses  Date::date_formats
+     * @uses  Date::time_formats
      * @uses  Date::weekdays
-	 * @uses  Date::timezones
-	 * @uses  Template::valid_post
-	 * @uses  Request::redirect
-	 */
+     * @uses  Date::timezones
+     * @uses  Template::valid_post
+     * @uses  Request::redirect
+     */
 	public function action_index()
 	{
 		$this->title = __('Settings');

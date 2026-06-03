@@ -15,7 +15,12 @@ class Widget_Blog extends Widget {
 	public function save(array $post){}
 	public function delete(array $post){}
 
-	public function render()
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws Cache_Exception
+     */
+    public function render()
 	{
 		switch($this->name)
 		{
@@ -28,16 +33,18 @@ class Widget_Blog extends Widget {
 		}
 	}
 
-	/**
-	 * Get recent blogs
-	 *
-	 * @return  string
-	 *
-	 * @uses    Request::current
-	 * @uses    Request::action
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 */
+    /**
+     * Get recent blogs
+     *
+     * @return  string
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses    Request::current
+     * @uses    Request::action
+     * @uses    Cache::get
+     * @uses    Cache::set
+     */
 	public function recent_blogs()
 	{
 		$action = Request::current()->action();
@@ -73,16 +80,18 @@ class Widget_Blog extends Widget {
 		return $view->render();
 	}
 
-	/**
-	 * Receive the latest blog in the format Picture + Title
-	 *
-	 * @return  string
-	 *
-	 * @uses    Request::current
-	 * @uses    Request::action
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 */
+    /**
+     * Receive the latest blog in the format Picture + Title
+     *
+     * @return  string
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses    Request::current
+     * @uses    Request::action
+     * @uses    Cache::get
+     * @uses    Cache::set
+     */
 	public function recent_announce_blogs()
 	{
 		$action = Request::current()->action();

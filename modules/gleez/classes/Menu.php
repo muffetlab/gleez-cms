@@ -148,14 +148,14 @@ class Menu {
 		return $this;
 	}
 
-	/**
-	 * Renders the HTML output for the menu
-	 *
-	 * @param   array   $attributes  Associative array of html attributes [Optional]
-	 * @param   array   $items       The parent item's array, only used internally [Optional]
-	 *
-	 * @return  string  HTML unordered list
-	 */
+    /**
+     * Renders the HTML output for the menu
+     *
+     * @param array $attributes Associative array of html attributes [Optional]
+     * @param array $items The parent item's array, only used internally [Optional]
+     * @return  string  HTML unordered list
+     * @throws Kohana_Exception
+     */
 	public function render(array $attributes = NULL, array $items = NULL)
 	{
 		static $i;

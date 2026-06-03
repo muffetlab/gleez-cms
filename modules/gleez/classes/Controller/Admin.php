@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Admin Base Controller
  *
@@ -34,12 +37,17 @@ class Controller_Admin extends Template {
 	 */
 	protected $_current_user;
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 * @uses  Theme::$is_admin
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  ACL::required
+     * @uses  Theme::$is_admin
+     */
 	public function before()
 	{
 		// Inform tht we're in admin section for themers/developers
@@ -52,8 +60,12 @@ class Controller_Admin extends Template {
 
 		parent::before();
 	}
-	
-	public function action_login(){
+
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function action_login(){
 		
 		if ($this->_auth->logged_in())
 		{

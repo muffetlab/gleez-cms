@@ -54,13 +54,15 @@ class Widgets {
 	 */
 	protected $_format;
 
-	/**
-	 * Singleton pattern
-	 *
-	 * @param  string  $region  Region. By default `right`. [Optional]
-	 * @param  string  $format  Format. By default `html`. [Optional]
-	 * @return Widgets instance
-	 */
+    /**
+     * Singleton pattern
+     *
+     * @param string $region Region. By default `right`. [Optional]
+     * @param string $format Format. By default `html`. [Optional]
+     * @return Widgets instance
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
 	public static function instance($region = 'right', $format = 'html')
 	{
 		if ( ! isset(Widgets::$instance))
@@ -71,12 +73,14 @@ class Widgets {
 		return Widgets::$instance;
 	}
 
-	/**
-	 * Constructor, globally sets region and format
-	 *
-	 * @param $region
-	 * @param $format
-	 */
+    /**
+     * Constructor, globally sets region and format
+     *
+     * @param $region
+     * @param $format
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
 	public function __construct($region, $format)
 	{
 		// Store the region locally
@@ -245,14 +249,15 @@ class Widgets {
 		}
 	}
 
-	/**
-	 * Renders the HTML output for the widgets
-	 *
-	 * @param   string  $region  Theme region [Optional]
-	 * @param   string  $format  Widget format [Optional]
-	 * @return  string  HTML widgets
-	 * @return  boolean If widget not exists
-	 */
+    /**
+     * Renders the HTML output for the widgets
+     *
+     * @param string $region Theme region [Optional]
+     * @param string $format Widget format [Optional]
+     * @return  string  HTML widgets
+     * @return  boolean If widget not exists
+     * @throws Kohana_Exception
+     */
 	public function render($region = NULL, $format = NULL)
 	{
 		//set region, respect $this->region();
@@ -282,14 +287,15 @@ class Widgets {
 		return trim(implode(PHP_EOL.PHP_EOL, $response));
 	}
 
-	/**
-	 * Returns the named widget
-	 *
-	 * @param   string   $name     Name of the widget
-	 * @param   boolean  $visible  Visibility permission from widget or FALSE to skip
-	 * @param   boolean  $format   The format of the output ex:xhtml, html or FALSE for object
+    /**
+     * Returns the named widget
+     *
+     * @param string $name Name of the widget
+     * @param boolean $visible Visibility permission from widget or FALSE to skip
+     * @param boolean $format The format of the output ex:xhtml, html or FALSE for object
      * @return  object|string|null Widget object, HTML string, or null
-	 */
+     * @throws Kohana_Exception
+     */
     public function get_widget($name, $visible = FALSE, $format = FALSE)
 	{
 		if ( ! $widget = $this->get($name))
@@ -386,11 +392,13 @@ class Widgets {
 		}
 	}
 
-	/**
-	 * Load the widgets from database
-	 *
-	 * @return $this|array|string
-	 */
+    /**
+     * Load the widgets from database
+     *
+     * @return $this|array|string
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
 	protected function load()
 	{
 		// if the widgets have been loaded already, just return it.
@@ -429,7 +437,10 @@ class Widgets {
 		return $this;
 	}
 
-	protected function is_visible($widget)
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function is_visible($widget)
 	{
 		static $current_route;
 		$widget->visible = TRUE;
@@ -457,7 +468,10 @@ class Widgets {
 		return $widget;
 	}
 
-	private function _html($widget, $region = FALSE, $format )
+    /**
+     * @throws View_Exception
+     */
+    private function _html($widget, $region = FALSE, $format )
 	{
 		$zebra = $id = FALSE;
 

@@ -120,16 +120,16 @@ class HTMLFilter {
 	 */
 	protected $_benchmark;
 
-	/**
-	 * Create new Core object and initialize our own settings
-	 *
-	 * @param  string   $text    Text string to filter html
-	 * @param  array    $filter  Array of allowed tags [Optional]
-	 *
-	 * @used   Config::load
-	 * @used   Config::get
-	 * @used   Profiler::start
-	 */
+    /**
+     * Create new Core object and initialize our own settings
+     *
+     * @param string $text Text string to filter html
+     * @param array $filter Array of allowed tags [Optional]
+     * @used   Config::load
+     * @used   Config::get
+     * @used   Profiler::start
+     * @throws Kohana_Exception
+     */
     public function __construct($text, array $filter = NULL)
 	{
 		// Be sure to only profile if it's enabled
@@ -192,17 +192,17 @@ class HTMLFilter {
         return $this->filter_xss($this->_text);
 	}
 
-	/**
-	 * Creates and returns an XSS safe version of $string
-	 *
-	 * Returns an XSS safe version of `$string`, or an empty
-	 * string if `$string` is not valid UTF-8.
-	 *
-	 * @param   string   $text    Text string to filter html
-	 * @param   array    $filter  Array of allowed tags [Optional]
-	 *
-	 * @return  HTMLFilter
-	 */
+    /**
+     * Creates and returns an XSS safe version of $string
+     *
+     * Returns an XSS safe version of `$string`, or an empty
+     * string if `$string` is not valid UTF-8.
+     *
+     * @param string $text Text string to filter html
+     * @param array $filter Array of allowed tags [Optional]
+     * @return  HTMLFilter
+     * @throws Kohana_Exception
+     */
     public static function factory($text, array $filter = NULL)
 	{
         return new HTMLFilter($text, $filter);

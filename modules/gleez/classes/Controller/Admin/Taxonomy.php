@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Admin Taxonomy Controller
  *
@@ -12,11 +15,17 @@
  */
 class Controller_Admin_Taxonomy extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer terms');
@@ -24,17 +33,18 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * List Category Groups
-	 *
-	 * @uses  Assets::popup
-	 * @uses  Request::is_datatables
+    /**
+     * List Category Groups
+     *
+     * @throws Kohana_Exception
+     * @uses  Request::is_datatables
      * @uses  HTML::chars
-	 * @uses  HTML::icon
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Route::url
-	 */
+     * @uses  HTML::icon
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Route::url
+     * @uses  Assets::popup
+     */
 	public function action_list()
 	{
 		Assets::popup();
@@ -73,13 +83,16 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Add New Category Group
-	 *
-	 * @uses  Message::success
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Add New Category Group
+     *
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Message::success
+     */
 	public function action_add()
 	{
 		$this->title = __('New Category Group');
@@ -112,13 +125,14 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit Category Group
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Log::ERROR
-	 */
+    /**
+     * Edit Category Group
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Message::success
+     * @uses  Log::ERROR
+     * @uses  Message::error
+     */
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
@@ -158,16 +172,17 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete Category Group
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Log::ERROR
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Route::url
-	 */
+    /**
+     * Delete Category Group
+     *
+     * @throws Kohana_Exception
+     * @uses  Message::success
+     * @uses  Log::ERROR
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Route::url
+     * @uses  Message::error
+     */
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);

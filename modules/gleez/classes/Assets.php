@@ -87,18 +87,20 @@ class Assets {
 	 */
 	public static $groups = array();
 
-	/**
-	 * CSS wrapper
-	 *
-	 * Gets or sets CSS assets
-	 *
-	 * @param   string  $handle  Asset name [Optional]
-	 * @param   string  $src     Asset source [Optional]
-	 * @param   mixed   $deps    Dependencies [Optional]
-	 * @param   array   $attrs   An array of attributes for the <link> element [Optional]
-	 * @param   string  $format  Format that be returned [Optional]
-	 * @return  mixed   Setting returns asset array, getting returns asset HTML
-	 */
+    /**
+     * CSS wrapper
+     *
+     * Gets or sets CSS assets
+     *
+     * @param string $handle Asset name [Optional]
+     * @param string $src Asset source [Optional]
+     * @param mixed $deps Dependencies [Optional]
+     * @param array $attrs An array of attributes for the <link> element [Optional]
+     * @param string $format Format that be returned [Optional]
+     * @return  mixed   Setting returns asset array, getting returns asset HTML
+     * @throws Kohana_Exception
+     * @throws Exception
+     */
 	public static function css($handle = NULL, $src = NULL, $deps = NULL, $attrs = NULL, $format = self::FORMAT_TAG)
 	{
 		$config = Kohana::$config->load('media');
@@ -206,19 +208,21 @@ class Assets {
 		}
 	}
 
-	/**
-	 * Javascript wrapper
-	 *
-	 * Gets or sets javascript assets
-	 *
-	 * @param   mixed   $handle  Asset name if `string`, sets `$footer` if boolean
-	 * @param   string  $src     Asset source [Optional]
-	 * @param   mixed   $deps    Dependencies [Optional]
-	 * @param   boolean $footer  Whether to show in header or footer [Optional]
-	 * @param   array   $attrs   An array of attributes for the <script> element [Optional]
-	 * @param   string  $format  Format that be returned [Optional]
-	 * @return  mixed   Setting returns asset array, getting returns asset HTML
-	 */
+    /**
+     * Javascript wrapper
+     *
+     * Gets or sets javascript assets
+     *
+     * @param mixed $handle Asset name if `string`, sets `$footer` if boolean
+     * @param string $src Asset source [Optional]
+     * @param mixed $deps Dependencies [Optional]
+     * @param boolean $footer Whether to show in header or footer [Optional]
+     * @param array $attrs An array of attributes for the <script> element [Optional]
+     * @param string $format Format that be returned [Optional]
+     * @return  mixed   Setting returns asset array, getting returns asset HTML
+     * @throws Kohana_Exception
+     * @throws Exception
+     */
 	public static function js($handle, $src = NULL, $deps = NULL, $footer = FALSE, $attrs = NULL, $format = Assets::FORMAT_TAG)
 	{
 		$config = Kohana::$config->load('media');
@@ -331,18 +335,19 @@ class Assets {
 		}
 	}
 
-	/**
-	 * Javascript code wrapper
-	 *
-	 * Gets or sets javascript code
-	 *
-	 * @param   mixed   $handle  Asset name if string, sets $footer if boolean
-	 * @param   string  $code    Asset code/CSP nonce [Optional]
-	 * @param   mixed   $deps    Dependencies [Optional]
-	 * @param   boolean $footer  Whether to show in header or footer [Optional]
-	 * @param   array   $attrs   An array of attributes for the <script> element [Optional]
-	 * @return  mixed   Setting returns asset array, getting returns asset HTML
-	 */
+    /**
+     * Javascript code wrapper
+     *
+     * Gets or sets javascript code
+     *
+     * @param mixed $handle Asset name if string, sets $footer if boolean
+     * @param string $code Asset code/CSP nonce [Optional]
+     * @param mixed $deps Dependencies [Optional]
+     * @param boolean $footer Whether to show in header or footer [Optional]
+     * @param array $attrs An array of attributes for the <script> element [Optional]
+     * @return  mixed   Setting returns asset array, getting returns asset HTML
+     * @throws Kohana_Exception
+     */
 	public static function codes($handle, $code = NULL, $deps = NULL, $footer = FALSE, $attrs = NULL)
 	{
 		if ($handle === TRUE OR $handle === FALSE )
@@ -393,13 +398,14 @@ class Assets {
 		<!--//--><![CDATA['.PHP_EOL.$asset['code'].PHP_EOL.'<!--//-->]]></script>';
 	}
 
-	/**
-	 * Get all javascript codes of section (header or footer)
-	 *
-	 * @param   boolean  $footer  FALSE for head, TRUE for footer [Optional]
-	 * @param   string   $nonce  CSP nonce [Optional]
-	 * @return  string   Asset HTML
-	 */
+    /**
+     * Get all javascript codes of section (header or footer)
+     *
+     * @param boolean $footer FALSE for head, TRUE for footer [Optional]
+     * @param string $nonce CSP nonce [Optional]
+     * @return  string   Asset HTML
+     * @throws Kohana_Exception
+     */
 	public static function all_codes($footer = FALSE, $nonce = NULL)
 	{
 		if (empty(self::$codes))
@@ -556,8 +562,9 @@ class Assets {
 		return ($a_weight > $b_weight) ? +1 : -1;
 	}
 
-	/**
-	 */
+    /**
+     * @throws Kohana_Exception
+     */
 	public static function tabledrag()
 	{
         self::js('jquery_once', 'media/js/jquery.once.min.js', array('jquery'), FALSE, array('weight' => -10));
@@ -565,12 +572,13 @@ class Assets {
 		self::css('tabledrag', 'media/css/greet.tableDrag.css');
 	}
 
-	/**
-	 * Initial JavaScript setting
+    /**
+     * Initial JavaScript setting
      * @return  void
-	 * @uses    JSON::encode
+     * @throws Kohana_Exception
      * @uses    URL::base
-	 */
+     * @uses    JSON::encode
+     */
 	private static function _init_js()
 	{
 		if(isset(self::$js) OR isset(self::$codes) OR isset(self::$settings))
@@ -586,15 +594,15 @@ class Assets {
 		}
 	}
 
-	/**
-	 * Rich text editor
-	 *
+    /**
+     * Rich text editor
      * By default, Gleez uses TinyMCE as its rich text editor.
+     *
      * @link https://www.tiny.cloud/tinymce/
-	 *
-	 * @param  string  $name  CSS class or ID of editable area [Optional]
-	 * @param  string  $lang  Language  [Optional]
-	 */
+     * @param string $name CSS class or ID of editable area [Optional]
+     * @param string $lang Language  [Optional]
+     * @throws Kohana_Exception
+     */
     public static function editor($name = '.textarea', $lang = 'en-us')
 	{
         $language = preg_replace_callback('/-([a-z]+)/', function ($matches) {
@@ -623,17 +631,16 @@ class Assets {
         });', null, false, ['weight' => 1]);
 	}
 
-	/**
-	 * Paste google stats code
-	 *
-	 * Note: `"\t"` and `PHP_EOL` needed only for convenient output
-	 * @param  string  $ua  User Agent ID
-	 * @param  string  $site  Site URL without protocol, eg. gleez.com
-	 *
-	 * @link   https://www.google.com/analytics/
-	 *
-	 * @todo   DON'T WORK
-	 */
+    /**
+     * Paste google stats code
+     *
+     * Note: `"\t"` and `PHP_EOL` needed only for convenient output
+     * @param string $ua User Agent ID
+     * @param string $site Site URL without protocol, eg. gleez.com
+     * @throws Kohana_Exception
+     * @todo   DON'T WORK
+     * @link   https://www.google.com/analytics/
+     */
 	public static function google_stats($ua, $site)
 	{
 		self::codes('google-stats',
@@ -646,11 +653,12 @@ class Assets {
 		);
 	}
 
-	/**
-	 * Select2 jQuery plugin
-	 *
-	 * @link https://select2.org
-	 */
+    /**
+     * Select2 jQuery plugin
+     *
+     * @link https://select2.org
+     * @throws Kohana_Exception
+     */
 	public static function select2(string $name)
 	{
         self::js('select2', 'media/js/select2/select2.min.js', ['jquery'], false, ['weight' => -10]);
@@ -685,11 +693,12 @@ class Assets {
         self::css('select2', 'media/css/select2.min.css');
 	}
 
-	/**
-	 * DataTables jQuery plugin
-	 *
-	 * @link  http://datatables.net/
-	 */
+    /**
+     * DataTables jQuery plugin
+     *
+     * @link  http://datatables.net/
+     * @throws Kohana_Exception
+     */
 	public static function datatables()
 	{
         self::js('datatables', 'media/js/datatables.min.js', ['jquery'], false, ['weight' => -10]);
@@ -697,9 +706,11 @@ class Assets {
         self::css('datatables.bootstrap', 'media/css/dataTables.bootstrap.min.css', null, ['weight' => -2]);
 	}
 
-	/**
-	 * Sets CSS and JS assets for popup modal windows
-	 */
+    /**
+     * Sets CSS and JS assets for popup modal windows
+     *
+     * @throws Kohana_Exception
+     */
 	public static function popup()
 	{
 		self::css('form', 'media/css/form.css', array('weight' => 2));

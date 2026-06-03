@@ -25,22 +25,25 @@ class Email {
 	 */
 	protected $_mail;
 
-	/**
-	 * Create a new email message
-	 *
-	 * @param   boolean  $exceptions  PHPMailer should throw external exceptions? [Optional]
-	 * @return  Email
-	 */
+    /**
+     * Create a new email message
+     *
+     * @param boolean $exceptions PHPMailer should throw external exceptions? [Optional]
+     * @return  Email
+     * @throws Kohana_Exception
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
 	public static function factory($exceptions = TRUE)
 	{
 		return new Email($exceptions);
 	}
 
-	/**
-	 * Class constructor
-	 *
-	 * @param   boolean  $exceptions  PHPMailer should throw external exceptions? [Optional]
-	 */
+    /**
+     * Class constructor
+     *
+     * @param boolean $exceptions PHPMailer should throw external exceptions? [Optional]
+     * @throws \PHPMailer\PHPMailer\Exception|Kohana_Exception
+     */
 	public function __construct($exceptions = TRUE)
 	{
 		// Create phpmailer object
@@ -69,16 +72,17 @@ class Email {
 		return $this;
 	}
 
-	/**
-	 * Set the message body
-	 *
-	 * Multiple bodies with different types can be added by calling this method
-	 * multiple times. Every email is required to have a "plain" message body.
-	 *
-	 * @param   string  $body  New message body
-	 * @param   string  $type  Mime type: text/html, text/plain [Optional]
-	 * @return  Email
-	 */
+    /**
+     * Set the message body
+     *
+     * Multiple bodies with different types can be added by calling this method
+     * multiple times. Every email is required to have a "plain" message body.
+     *
+     * @param string $body New message body
+     * @param string $type Mime type: text/html, text/plain [Optional]
+     * @return  Email
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
 	public function message($body, $type = NULL)
 	{
 		if ( ! $type OR $type === 'text/plain')
@@ -95,19 +99,20 @@ class Email {
 		return $this;
 	}
 
-	/**
-	 * Add one or more email recipients
-	 *
-	 * Example:
-	 * ~~~
-	 * // A single recipient
-	 * $email->to('john.doe@domain.com', 'John Doe');
-	 * ~~~
-	 *
-	 * @param   string  $email  Single email address
-	 * @param   string  $name   Full name [Optional]
-	 * @return  Email
-	 */
+    /**
+     * Add one or more email recipients
+     *
+     * Example:
+     * ~~~
+     * // A single recipient
+     * $email->to('john.doe@domain.com', 'John Doe');
+     * ~~~
+     *
+     * @param string $email Single email address
+     * @param string $name Full name [Optional]
+     * @return  Email
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
 	public function to($email, $name = NULL)
 	{
 		$this->_mail->addAddress($email, $name);
@@ -115,13 +120,14 @@ class Email {
 		return $this;
 	}
 
-	/**
-	 * Add a "carbon copy" email recipient
-	 *
-	 * @param   string  $email  Email address
-	 * @param   string  $name   Full name [Optional]
-	 * @return  Email
-	 */
+    /**
+     * Add a "carbon copy" email recipient
+     *
+     * @param string $email Email address
+     * @param string $name Full name [Optional]
+     * @return  Email
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
 	public function cc($email, $name = NULL)
 	{
 		$this->_mail->addCC($email, $name);
@@ -129,13 +135,14 @@ class Email {
 		return $this;
 	}
 
-	/**
-	 * Add a "blind carbon copy" email recipient
-	 *
-	 * @param   string  $email  Email address
-	 * @param   string  $name   Full name [Optional]
-	 * @return  Email
-	 */
+    /**
+     * Add a "blind carbon copy" email recipient
+     *
+     * @param string $email Email address
+     * @param string $name Full name [Optional]
+     * @return  Email
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
 	public function bcc($email, $name = NULL)
 	{
 		$this->_mail->addBCC($email, $name);
@@ -143,13 +150,14 @@ class Email {
 		return $this;
 	}
 
-	/**
-	 * Add email senders
-	 *
-	 * @param   string  $email  Email address
-	 * @param   string  $name   Full name [Optional]
-	 * @return  Email
-	 */
+    /**
+     * Add email senders
+     *
+     * @param string $email Email address
+     * @param string $name Full name [Optional]
+     * @return  Email
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
 	public function from($email, $name = NULL )
 	{
 		$this->_mail->setFrom($email, $name);
@@ -157,13 +165,14 @@ class Email {
 		return $this;
 	}
 
-	/**
-	 * Add "reply to" email sender
-	 *
-	 * @param   string  $email  Email address
-	 * @param   string  $name   Full name [Optional]
-	 * @return  Email
-	 */
+    /**
+     * Add "reply to" email sender
+     *
+     * @param string $email Email address
+     * @param string $name Full name [Optional]
+     * @return  Email
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
 	public function reply_to($email, $name = NULL)
 	{
 		$this->_mail->addReplyTo($email, $name);

@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Admin Format Controller
  *
@@ -10,22 +13,30 @@
  */
 class Controller_Admin_Format extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action.
-	 */
+    /**
+     * The before() method is called before controller action.
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     */
 	public function before()
 	{
 		ACL::required('administer formats');
 		parent::before();
 	}
 
-	/**
-	 * Formats list
-	 *
-	 * @uses  View::factory
-	 * @uses  Format::get_all
-	 * @uses  Assets::tabledrag
-	 */
+    /**
+     * Formats list
+     *
+     * @throws View_Exception|Kohana_Exception
+     * @uses  Format::get_all
+     * @uses  Assets::tabledrag
+     * @uses  View::factory
+     */
 	public function action_list()
 	{
 		$this->title = __('Text formats');
@@ -53,15 +64,16 @@ class Controller_Admin_Format extends Controller_Admin {
 		}
 	}
 
-	/**
-	 * Formats setting
-	 *
-	 * @uses  InputFilter::filters
-	 * @uses  Assets::tabledrag
-	 * @uses  Config::load
-	 * @uses  Message::error
-	 * @uses  Filter::all
-	 */
+    /**
+     * Formats setting
+     *
+     * @throws Kohana_Exception
+     * @uses  Assets::tabledrag
+     * @uses  Config::load
+     * @uses  Message::error
+     * @uses  Filter::all
+     * @uses  InputFilter::filters
+     */
 	public function action_configure()
 	{
         $id = $this->request->param('id');

@@ -16,15 +16,15 @@ class CSRF {
 	 */
 	public static $csrf_ttl = 1800;
 
-	/**
-	 * Get CSRF token
-	 *
-	 * @param   string   $id      Custom token id, e.g. uid [Optional]
-	 * @param   string   $action  Optional action
-	 * @param   integer  $time    Used only internally [Optional]
-	 *
-	 * @return  string
-	 */
+    /**
+     * Get CSRF token
+     *
+     * @param string $id Custom token id, e.g. uid [Optional]
+     * @param string $action Optional action
+     * @param integer $time Used only internally [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function token($id = '', $action, $time = 0)
 	{
 		// Get id string for token, could be uid or ip etc
@@ -36,15 +36,15 @@ class CSRF {
 		return sha1($time . self::key() . $id . $action);
 	}
 
-	/**
-	 * Validate CSRF token
-	 *
-	 * @param   string   $token   Token [Optional]
-	 * @param   string   $action  Optional action [Optional]
-	 * @param   string   $id      Custom token id, e.g. uid [Optional]
-	 *
-	 * @return  boolean
-	 */
+    /**
+     * Validate CSRF token
+     *
+     * @param string $token Token [Optional]
+     * @param string $action Optional action [Optional]
+     * @param string $id Custom token id, e.g. uid [Optional]
+     * @return  boolean
+     * @throws Kohana_Exception
+     */
 	public static function valid($token = NULL, $action = '', $id = '')
 	{
 		// get token and action from Form POST
@@ -59,11 +59,12 @@ class CSRF {
 		return System::hashEquals($token, self::token($id, $action, $time)) || System::hashEquals($token, self::token($id, $action, $time - 1));
 	}
 
-	/**
-	 * User specific key used to generate unique tokens.
-	 *
-	 * @return string  The user specific private key.
-	 */
+    /**
+     * User specific key used to generate unique tokens.
+     *
+     * @return string  The user specific private key.
+     * @throws Kohana_Exception
+     */
 	public static function key()
 	{
 		$token  = Session::instance()->id();
@@ -71,13 +72,13 @@ class CSRF {
 		return sha1($secret . $token);
 	}
 
-	/**
-	 * Ensure the private key variable used to generate tokens is set.
-	 *
-	 * @return  string  The private key.
-	 *
-	 * @uses    Config::load
-	 */
+    /**
+     * Ensure the private key variable used to generate tokens is set.
+     *
+     * @return  string  The private key.
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     */
 	private static function _private_key()
 	{
 		$config = Kohana::$config->load('site');

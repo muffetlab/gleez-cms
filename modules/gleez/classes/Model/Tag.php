@@ -61,12 +61,15 @@ class Model_Tag extends Gleez_Model
 		);
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation  $validation  Validation object [Optional]
-	 * @return  ORM
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation|null $validation Validation object [Optional]
+     * @return  ORM
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		parent::save( $validation );
@@ -174,17 +177,17 @@ class Model_Tag extends Gleez_Model
         return parent::__get($column);
 	}
 
-	/**
-	 * Check by triggering error if name exists.
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation Validation object
-	 * @param   string      $field      Field name
-	 *
-	 * @uses    DB::select
-	 * @uses    DB::expr
-	 * @uses    Validation::error
-	 */
+    /**
+     * Check by triggering error if name exists.
+     * Validation callback.
+     *
+     * @param Validation $validation Validation object
+     * @param string $field Field name
+     * @throws Kohana_Exception
+     * @uses    DB::expr
+     * @uses    Validation::error
+     * @uses    DB::select
+     */
 	public function tag_available(Validation $validation, $field)
 	{
 		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))

@@ -227,9 +227,11 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Deleting Widgets
-	 */
+    /**
+     * Deleting Widgets
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);

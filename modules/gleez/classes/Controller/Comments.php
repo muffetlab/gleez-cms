@@ -51,9 +51,11 @@ class Controller_Comments extends Controller {
 	 */
 	protected $config = NULL;
 
-	/**
-	 * Perform format check
-	 */
+    /**
+     * Perform format check
+     *
+     * @throws Kohana_Exception
+     */
 	public function before()
 	{
 		// Make sure request is an internal request
@@ -74,9 +76,11 @@ class Controller_Comments extends Controller {
 		parent::before();
 	}
 
-	/**
-	 * Retrieve public list of good comments
-	 */
+    /**
+     * Retrieve public list of good comments
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_public()
 	{
 		$id = $this->request->param('id', 0);
@@ -92,9 +96,11 @@ class Controller_Comments extends Controller {
 		}
 	}
 
-	/**
-	 * List comments
-	 */
+    /**
+     * List comments
+     *
+     * @throws Kohana_Exception
+     */
     protected function create_list($state = 'publish', $uri = '')
 	{
 		// Get parent id

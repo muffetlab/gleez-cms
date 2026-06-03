@@ -9,13 +9,14 @@
  * @license    https://gleezcms.org/license Gleez CMS License 
  */
 class Controller_Media extends Controller {
-	
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  Request::param
-	 * @uses  Theme::set_theme
-	 */
+
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Kohana_Exception
+     * @uses  Theme::set_theme
+     * @uses  Request::param
+     */
 	public function before()
 	{
 		if ($theme = $this->request->param('theme', FALSE))
@@ -30,6 +31,7 @@ class Controller_Media extends Controller {
      * Static file serving (CSS, JS, images, etc.)
      *
      * @throws Request_Exception
+     * @throws Kohana_Exception
      * @uses  Request::param
      * @uses  Request::uri
      * @uses  Kohana::find_file

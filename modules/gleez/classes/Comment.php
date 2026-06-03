@@ -24,6 +24,11 @@ class Comment {
 	const PINGBACK          = 1;
 	const TRACKBACK         = 2;
 
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     */
     public static function form($controller, $item, $captcha = FALSE)
 	{
 		// Set default comment form action
@@ -163,7 +168,10 @@ class Comment {
 		return $values;
 	}
 
-	public static function bulk_update(array $ids, array $actions)
+    /**
+     * @throws Kohana_Exception
+     */
+    public static function bulk_update(array $ids, array $actions)
 	{
         $posts = ORM::factory('Comment')->where('id', 'IN', $ids)->find_all();
 

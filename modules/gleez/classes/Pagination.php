@@ -110,25 +110,26 @@ class Pagination {
 	 */
 	protected $_uri = '';
 
-	/**
-	 * Creates a new Pagination object
-	 *
-	 * @param   array    $config   Configuration [Optional]
-	 * @param   Request  $request  Request [Optional]
-	 *
-	 * @return  Pagination
-	 */
+    /**
+     * Creates a new Pagination object
+     *
+     * @param array $config Configuration [Optional]
+     * @param Request $request Request [Optional]
+     * @return  Pagination
+     * @throws Kohana_Exception
+     */
 	public static function factory(array $config = array(), Request $request = NULL)
 	{
 		return new self($config, $request);
 	}
 
-	/**
-	 * Class constructor
-	 *
-	 * @param   array    $config   Configuration [Optional]
-	 * @param   Request  $request  Request [Optional]
-	 */
+    /**
+     * Class constructor
+     *
+     * @param array $config Configuration [Optional]
+     * @param Request $request Request [Optional]
+     * @throws Kohana_Exception
+     */
 	public function __construct(array $config = array(), Request $request = NULL)
 	{
 		// Overwrite system defaults with application defaults
@@ -157,18 +158,17 @@ class Pagination {
 		$this->setup($config);
 	}
 
-	/**
-	 * Retrieves a pagination config group from the config file
-	 *
-	 * One config group can refer to another as its parent, which will be
-	 * recursively loaded.
-	 *
-	 * @param   string  $group  Pagination config group [Optional]
-	 *
-	 * @return  array
-	 *
-	 * @uses    Config::load
-	 */
+    /**
+     * Retrieves a pagination config group from the config file
+     *
+     * One config group can refer to another as its parent, which will be
+     * recursively loaded.
+     *
+     * @param string $group Pagination config group [Optional]
+     * @return  array
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     */
 	public function config_group($group = 'default')
 	{
 		// Load the pagination config file
@@ -195,16 +195,17 @@ class Pagination {
 		return $config;
 	}
 
-	/**
-	 * Loads configuration settings into the object
-	 * and (re)calculates pagination if needed.
-	 *
-	 * Allows you to update config settings after a Pagination object
-	 * has been constructed.
-	 *
-	 * @param   array   $config  Configuration [Optional]
-	 * @return  object  Pagination
-	 */
+    /**
+     * Loads configuration settings into the object
+     * and (re)calculates pagination if needed.
+     *
+     * Allows you to update config settings after a Pagination object
+     * has been constructed.
+     *
+     * @param array $config Configuration [Optional]
+     * @return  object  Pagination
+     * @throws Kohana_Exception
+     */
 	public function setup(array $config = array())
 	{
 		if (isset($config['group']))
@@ -264,15 +265,14 @@ class Pagination {
 		return $this;
 	}
 
-	/**
-	 * Generates the full URL for a certain page
-	 *
-	 * @param   integer  $page  Page number [Optional
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::site
-	 */
+    /**
+     * Generates the full URL for a certain page
+     *
+     * @param integer $page Page number [Optional
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    URL::site
+     */
 	public function url($page = 1)
 	{
 		// Clean the page number
@@ -329,12 +329,13 @@ class Pagination {
 		return $page > 0 AND $page <= $this->total_pages;
 	}
 
-	/**
-	 * Renders the pagination links.
-	 *
-	 * @param   mixed   string of the view to use, or a Kohana_View object
-	 * @return  string  pagination output (HTML)
-	 */
+    /**
+     * Renders the pagination links.
+     *
+     * @param mixed   string of the view to use, or a Kohana_View object
+     * @return  string  pagination output (HTML)
+     * @throws View_Exception
+     */
 	public function render($view = NULL)
 	{
 		// Automatically hide pagination whenever it is superfluous
@@ -382,16 +383,15 @@ class Pagination {
 		return $this;
 	}
 
-	/**
-	 * Route setter/getter
-	 *
-	 * @param	mixed  $route  String route name/ Route object [Optional]
-	 *
-	 * @return  Route       Route if used as getter
-	 * @return  Pagination  Chainable as setter
-	 *
-	 * @uses    Route::get
-	 */
+    /**
+     * Route setter/getter
+     *
+     * @param mixed $route String route name/ Route object [Optional]
+     * @return  Route       Route if used as getter
+     * @return  Pagination  Chainable as setter
+     * @throws Kohana_Exception
+     * @uses    Route::get
+     */
 	public function route($route = NULL)
 	{
 		if (is_null($route))
@@ -484,13 +484,13 @@ class Pagination {
 		return ($query === '') ? '' : ('?'.$query);
 	}
 
-	/**
-	 * Renders the pagination links
-	 *
-	 * @return  string  Pagination output (HTML)
-	 *
-	 * @uses    Kohana_Exception::handler
-	 */
+    /**
+     * Renders the pagination links
+     *
+     * @return  string  Pagination output (HTML)
+     * @throws Kohana_Exception
+     * @uses    Kohana_Exception::handler
+     */
 	public function __toString()
 	{
 		try
@@ -535,13 +535,14 @@ class Pagination {
         return $this->$key ?? NULL;
 	}
 
-	/**
-	 * Updates a single config setting, and recalculates pagination if needed
-	 *
-	 * @param   string  config key
-	 * @param   mixed   config value
-	 * @return  void
-	 */
+    /**
+     * Updates a single config setting, and recalculates pagination if needed
+     *
+     * @param string  config key
+     * @param mixed   config value
+     * @return  void
+     * @throws Kohana_Exception
+     */
 	public function __set($key, $value)
 	{
 		$this->setup(array($key => $value));

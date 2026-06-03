@@ -70,15 +70,16 @@ class Model_Menu extends ORM_MPTT {
 		);
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties
+     *
      * @param string $column
-	 * @return  mixed
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @uses    Route::get
+     * @uses    Route::uri
      * @since   1.1.0
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 */
+     */
     public function __get(string $column)
 	{
         switch ($column) {
@@ -115,12 +116,15 @@ class Model_Menu extends ORM_MPTT {
 		}
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation $validation Validation object
-	 * @return  ORM
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation|null $validation Validation object
+     * @return  ORM
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		$this->params = empty($this->params) ? NULL : serialize($this->params);
@@ -148,17 +152,18 @@ class Model_Menu extends ORM_MPTT {
 		return $str;
 	}
 
-	/**
-	 * Create a new term in the tree as a child of $parent
-	 *
-	 * - if `$location` is "first" or "last" the term will be the first or last child
-	 * - if `$location` is an int, the term will be the next sibling of term with id $location
-	 *    
-	 * @param   ORM_MPTT|integer  $parent    The parent
-	 * @param   string|integer    $location  The location [Optional]
-	 * @return  Model_Menu
-	 * @throws  Kohana_Exception
-	 */
+    /**
+     * Create a new term in the tree as a child of $parent
+     *
+     * - if `$location` is "first" or "last" the term will be the first or last child
+     * - if `$location` is an int, the term will be the next sibling of term with id $location
+     *
+     * @param ORM_MPTT|integer $parent The parent
+     * @param string|integer $location The location [Optional]
+     * @return  Model_Menu
+     * @throws  Kohana_Exception
+     * @throws ReflectionException
+     */
 	public function create_at($parent, $location = 'last')
 	{
 		// Create the term as first child, last child, or as next sibling based on location
@@ -186,13 +191,14 @@ class Model_Menu extends ORM_MPTT {
 		return $this;
 	}
 
-	/**
-	 * Move the item to $target based on action
-	 *
-	 * @param   $target  integer  The target term id
-	 * @param   $action  string   The action to perform (before/after/first/last) after
-	 * @throws  Kohana_Exception
-	 */
+    /**
+     * Move the item to $target based on action
+     *
+     * @param   $target  integer  The target term id
+     * @param   $action  string   The action to perform (before/after/first/last) after
+     * @throws  Kohana_Exception
+     * @throws ReflectionException
+     */
 	public function move_to($target, $action = 'after')
 	{
 		// Find the target

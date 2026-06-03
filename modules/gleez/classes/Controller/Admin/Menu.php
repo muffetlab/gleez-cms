@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Admin Menu Controller
  *
@@ -10,11 +13,17 @@
  */
 class Controller_Admin_Menu extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer menu');
@@ -22,19 +31,20 @@ class Controller_Admin_Menu extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * List menus
-	 *
-	 * @uses  ORM::reset
-	 * @uses  ORM::dataTables
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Route::url
-	 * @uses  Assets::popup
-	 * @uses  Request::is_datatables
+    /**
+     * List menus
+     *
+     * @throws Kohana_Exception
+     * @uses  ORM::reset
+     * @uses  ORM::dataTables
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Route::url
+     * @uses  Assets::popup
+     * @uses  Request::is_datatables
      * @uses  HTML::chars
-	 * @uses  HTML::icon
-	 */
+     * @uses  HTML::icon
+     */
 	public function action_list()
 	{
 		Assets::popup();
@@ -73,19 +83,20 @@ class Controller_Admin_Menu extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Add menu
-	 *
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  DB::insert
-	 * @uses  ORM::save
-	 * @uses  ORM::make_root
-	 * @uses  Message::success
-	 * @uses  Cache::delete
-	 * @uses  Message::success
-	 */
+    /**
+     * Add menu
+     *
+     * @throws Kohana_Exception
+     * @uses  Request::redirect
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  DB::insert
+     * @uses  ORM::save
+     * @uses  ORM::make_root
+     * @uses  Message::success
+     * @uses  Cache::delete
+     * @uses  Message::success
+     */
 	public function action_add()
 	{
         $post = ORM::factory('Menu');
@@ -122,18 +133,19 @@ class Controller_Admin_Menu extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit menu
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Log::add
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Cache::delete
-	 * @uses  ORM::save
-	 */
+    /**
+     * Edit menu
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Message::success
+     * @uses  Log::add
+     * @uses  Request::redirect
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Cache::delete
+     * @uses  ORM::save
+     * @uses  Message::error
+     */
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -177,21 +189,22 @@ class Controller_Admin_Menu extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete menu
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Request::redirect
-	 * @uses  Request::uri
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Route::url
-	 * @uses  Cache::delete
-	 * @uses  ORM::delete
-	 * @uses  DB::delete
-	 * @uses  Log::add
-	 */
+    /**
+     * Delete menu
+     *
+     * @throws Kohana_Exception
+     * @uses  Message::error
+     * @uses  Message::success
+     * @uses  Request::redirect
+     * @uses  Request::uri
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Route::url
+     * @uses  Cache::delete
+     * @uses  ORM::delete
+     * @uses  DB::delete
+     * @uses  Log::add
+     */
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);

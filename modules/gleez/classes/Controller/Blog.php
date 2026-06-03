@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Blog Controller
  *
@@ -10,13 +13,18 @@
  */
 class Controller_Blog extends Template {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  Request::param
-	 * @uses  Request::action
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  Request::action
+     * @uses  ACL::required
+     * @uses  Request::param
+     */
 	public function before()
 	{
 		$id = $this->request->param('id', FALSE);
@@ -36,9 +44,11 @@ class Controller_Blog extends Template {
 		parent::before();
 	}
 
-	/**
-	 * The after() method is called after controller action
-	 */
+    /**
+     * The after() method is called after controller action
+     *
+     * @throws Kohana_Exception
+     */
 	public function after()
 	{
 		if ($this->request->action() == 'add' OR $this->request->action() == 'edit')
@@ -53,20 +63,21 @@ class Controller_Blog extends Template {
 		parent::after();
 	}
 
-	/**
-	 * List of blog posts
-	 *
-	 * @uses  ACL::check
-	 * @uses  ORM::reset
-	 * @uses  Log::add
-	 * @uses  Gleez_Config::load
-	 * @uses  Gleez_Config_Group::get
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Meta::links
-	 * @uses  URL::canonical
-	 * @uses  URL::site
-	 */
+    /**
+     * List of blog posts
+     *
+     * @throws Kohana_Exception
+     * @uses  ACL::check
+     * @uses  ORM::reset
+     * @uses  Log::add
+     * @uses  Gleez_Config::load
+     * @uses  Gleez_Config_Group::get
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Meta::links
+     * @uses  URL::canonical
+     * @uses  URL::site
+     */
 	public function action_list()
 	{
         $posts = ORM::factory('Blog');
@@ -131,20 +142,28 @@ class Controller_Blog extends Template {
 		}
 	}
 
-	/**
-	 * Blog view post
-	 *
-	 * @uses    Gleez_Config::load
-	 * @uses    Post::dcache
-	 * @uses    ACL::post
-	 * @uses    ACL::check
-	 * @uses    Auth::logged_in
-	 * @uses    Comment::form
-	 * @uses    User::providers
-	 * @uses    Meta::links
-	 * @uses    URL::canonical
-	 * @throws  HTTP_Exception_403
-	 */
+    /**
+     * Blog view post
+     *
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws HTTP_Exception_404
+     * @throws HTTP_Exception_503
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws Request_Exception
+     * @throws View_Exception
+     * @uses    Gleez_Config::load
+     * @uses    Post::dcache
+     * @uses    ACL::post
+     * @uses    ACL::check
+     * @uses    Auth::logged_in
+     * @uses    Comment::form
+     * @uses    User::providers
+     * @uses    Meta::links
+     * @uses    URL::canonical
+     */
 	public function action_view()
 	{
 		$id     = (int) $this->request->param('id', 0);
@@ -215,20 +234,24 @@ class Controller_Blog extends Template {
 		}
 	}
 
-	/**
-	 * Creates blog post
-	 *
-	 * @uses  ACL::required
-	 * @uses  Config::load
-	 * @uses  Config_Group::get
-	 * @uses  Request::query
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  URL::query
-	 * @uses  ORM::select_list
-	 * @uses  Log::add
-	 * @uses  Message::success
-	 */
+    /**
+     * Creates blog post
+     *
+     * @throws HTTP_Exception_403
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @uses  ACL::required
+     * @uses  Config::load
+     * @uses  Config_Group::get
+     * @uses  Request::query
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  URL::query
+     * @uses  ORM::select_list
+     * @uses  Log::add
+     * @uses  Message::success
+     */
 	public function action_add()
 	{
 		ACL::required('create blog');
@@ -290,23 +313,27 @@ class Controller_Blog extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit blog post
-	 *
-	 * @uses    ACL::post
-	 * @uses    Gleez_Config::load
-	 * @uses    Request::query
-	 * @uses    Request::redirect
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 * @uses    URL::query
-	 * @uses    Tags::implode
-	 * @uses    Date::date_time
-	 * @uses    Path::load
-	 * @uses    Message::success
-	 * @uses    Log::add
-	 * @throws  HTTP_Exception_403
-	 */
+    /**
+     * Edit blog post
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @uses    ACL::post
+     * @uses    Gleez_Config::load
+     * @uses    Request::query
+     * @uses    Request::redirect
+     * @uses    Route::get
+     * @uses    Route::uri
+     * @uses    URL::query
+     * @uses    Tags::implode
+     * @uses    Date::date_time
+     * @uses    Path::load
+     * @uses    Message::success
+     * @uses    Log::add
+     */
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -387,22 +414,25 @@ class Controller_Blog extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete page
-	 *
-	 * @uses    ACL::post
-	 * @uses    Request::query
-	 * @uses    Request::redirect
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 * @uses    URL::query
-	 * @uses    ORM::delete
-	 * @uses    Cache::delete
-	 * @uses    Message::success
-	 * @uses    Message::error
-	 * @uses    Log::add
-	 * @throws  HTTP_Exception_403
-	 */
+    /**
+     * Delete page
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses    ACL::post
+     * @uses    Request::query
+     * @uses    Request::redirect
+     * @uses    Route::get
+     * @uses    Route::uri
+     * @uses    URL::query
+     * @uses    ORM::delete
+     * @uses    Cache::delete
+     * @uses    Message::success
+     * @uses    Message::error
+     * @uses    Log::add
+     */
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -460,12 +490,13 @@ class Controller_Blog extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Category selector
-	 *
-	 * @throws  HTTP_Exception_403
-	 * @throws  HTTP_Exception_404
-	 */
+    /**
+     * Category selector
+     *
+     * @throws  HTTP_Exception_403
+     * @throws  HTTP_Exception_404
+     * @throws Kohana_Exception
+     */
 	public function action_term()
 	{
 		$config = Kohana::$config->load('blog');
@@ -539,11 +570,12 @@ class Controller_Blog extends Template {
 		}
 	}
 
-	/**
-	 * Tags view
-	 *
-	 * @throw HTTP_Exception_404
-	 */
+    /**
+     * Tags view
+     *
+     * @throw HTTP_Exception_404
+     * @throws Kohana_Exception
+     */
 	public function action_tag()
 	{
 		$config = Kohana::$config->load('blog');

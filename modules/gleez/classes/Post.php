@@ -143,11 +143,12 @@ class Post extends ORM_Versioned {
 	 */
 	protected $_image_url;
 
-	/**
-	 * Constructs a new model and loads a record if given
-	 *
-	 * @param  mixed $id  Parameter for find or object to load [Optional]
-	 */
+    /**
+     * Constructs a new model and loads a record if given
+     *
+     * @param mixed $id Parameter for find or object to load [Optional]
+     * @throws Kohana_Exception
+     */
 	public function __construct($id = NULL)
 	{
 		// Set primary image defaults
@@ -339,17 +340,17 @@ class Post extends ORM_Versioned {
 		}
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation $validation Validation object [Optional]
-	 * @return  Post
-	 *
-	 * @uses    URL::site
-	 * @uses    User::active_user
-	 * @uses    Config::get
-	 * @uses    Cache::delete
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation $validation Validation object [Optional]
+     * @return  Post
+     * @throws Kohana_Exception|ReflectionException
+     * @uses    User::active_user
+     * @uses    Config::get
+     * @uses    Cache::delete
+     * @uses    URL::site
+     */
     public function save(Validation $validation = NULL): Kohana_ORM
     {
 		// Set some defaults
@@ -422,9 +423,11 @@ class Post extends ORM_Versioned {
 		return Text::limit_words($this->rawbody, $size, ' ...');
 	}
 
-	/**
-	 * Adds or deletes terms
-	 */
+    /**
+     * Adds or deletes terms
+     *
+     * @throws Kohana_Exception
+     */
 	private function _terms()
 	{
 		if ( !empty($this->categories))
@@ -449,11 +452,12 @@ class Post extends ORM_Versioned {
 		}
 	}
 
-	/**
-	 * Adds or deletes terms
-	 *
-	 * @uses    Tags::tagging
-	 */
+    /**
+     * Adds or deletes terms
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses    Tags::tagging
+     */
 	private function _tags()
 	{
 		if (isset($this->ftags))
@@ -527,19 +531,19 @@ class Post extends ORM_Versioned {
 		return $this;
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties
+     *
      * @param string $column
-	 * @return  mixed
-	 *
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @uses  Text::markup
+     * @uses  HTML::links
+     * @uses  Path::load
+     * @uses  Route::get
+     * @uses  Route::uri
      * @uses  HTML::chars
-	 * @uses  Text::markup
-	 * @uses  HTML::links
-	 * @uses  Path::load
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+     */
     public function __get(string $column)
 	{
         switch ($column) {
@@ -721,18 +725,19 @@ class Post extends ORM_Versioned {
 		return $values;
 	}
 
-	/**
-	 * Bulk update posts
-	 *
-	 * Usage:
-	 * ~~~
-	 * Post::bulk_update(array(1, 2, 3, ...), array('status' => 'publish', 'promote' => 1), 'blog');
-	 * ~~~
-	 *
-	 * @param   array   $ids      Array of post id's
-	 * @param   array   $actions  Array of post actions
-	 * @param   string  $type     Type of post [Optional]
-	 */
+    /**
+     * Bulk update posts
+     *
+     * Usage:
+     * ~~~
+     * Post::bulk_update(array(1, 2, 3, ...), array('status' => 'publish', 'promote' => 1), 'blog');
+     * ~~~
+     *
+     * @param array $ids Array of post id's
+     * @param array $actions Array of post actions
+     * @param string $type Type of post [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function bulk_update(array $ids, array $actions, $type = 'post')
 	{
         $posts = ORM::factory(ucfirst($type))
@@ -749,17 +754,18 @@ class Post extends ORM_Versioned {
 		}
 	}
 
-	/**
-	 * Bulk delete posts
-	 *
-	 * Example:
-	 * ~~~
-	 * Post::bulk_delete(array(1, 2, 3, ...), 'blog');
-	 * ~~~
-	 *
-	 * @param  array   $ids   Array of post id's
-	 * @param  string  $type  Type of post [Optional]
-	 */
+    /**
+     * Bulk delete posts
+     *
+     * Example:
+     * ~~~
+     * Post::bulk_delete(array(1, 2, 3, ...), 'blog');
+     * ~~~
+     *
+     * @param array $ids Array of post id's
+     * @param string $type Type of post [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function bulk_delete(array $ids, $type = 'post')
 	{
         $posts = ORM::factory(ucfirst($type))
@@ -772,19 +778,20 @@ class Post extends ORM_Versioned {
 		}
 	}
 
-	/**
-	 * Bulk convert post type(s)
-	 *
-	 * Example:
-	 * ~~~
-	 * Post::bulk_convert(array(1, 2, 3, ...), 'blog');
-	 * ~~~
-	 *
-	 * @param   array   $ids      Array of post id's
-	 * @param   array   $actions  Array of post type (new type)
-	 * @param   string  $type     Type of post [Optional]
-	 * @uses    Path::delete
-	 */
+    /**
+     * Bulk convert post type(s)
+     *
+     * Example:
+     * ~~~
+     * Post::bulk_convert(array(1, 2, 3, ...), 'blog');
+     * ~~~
+     *
+     * @param array $ids Array of post id's
+     * @param array $actions Array of post type (new type)
+     * @param string $type Type of post [Optional]
+     * @uses    Path::delete
+     * @throws Kohana_Exception
+     */
 	public static function bulk_convert(array $ids, array $actions, $type)
 	{
 		$new_type = (string) $actions[0];
@@ -823,14 +830,16 @@ class Post extends ORM_Versioned {
 		}
 	}
 
-	/**
-	 * Display widgets inline of post body
-	 *
-	 * @param   string  $content  The post content
-	 * @param   string  $region   The widget's region name
-	 * @return  string  The replaced content with widgets
-	 * @uses    Widgets::render
-	 */
+    /**
+     * Display widgets inline of post body
+     *
+     * @param string $content The post content
+     * @param string $region The widget's region name
+     * @return  string  The replaced content with widgets
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses    Widgets::render
+     */
 	public static function widgets($content, $region = 'post_inline')
 	{
 		// Save some cpu cycles, when the content is empty
@@ -875,15 +884,18 @@ class Post extends ORM_Versioned {
 		return $content;
 	}
 
-	/**
-	 * Dynamic per post cache for performance
-	 *
-	 * @param   integer  $id      The post id
-	 * @param   string   $type    The post type
-	 * @param   object   $config  The post type config object
-	 * @return  object   $post    The post object
-	 * @throws  HTTP_Exception_404
-	 */
+    /**
+     * Dynamic per post cache for performance
+     *
+     * @param integer $id The post id
+     * @param string $type The post type
+     * @param object $config The post type config object
+     * @return  object   $post    The post object
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
 	public static function dcache($id, $type, $config)
 	{
         $cache = Cache::instance();
@@ -924,22 +936,22 @@ class Post extends ORM_Versioned {
 		return $post;
 	}
 
-	/**
-	 * Gets recent articles (post, page, blog, etc.)
-	 *
-	 * Return FALSE if articles not found
-	 *
-	 * @since   1.1.0
-	 *
-	 * @param   array  $args  Array of arguments. Overrides defaults [Optional]
-	 * @return  mixed
-	 *
-	 * @uses    Arr::unpack_string
-	 * @uses    Post::status
-	 * @uses    System::parse_args
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 */
+    /**
+     * Gets recent articles (post, page, blog, etc.)
+     *
+     * Return FALSE if articles not found
+     *
+     * @param array $args Array of arguments. Overrides defaults [Optional]
+     * @return  mixed
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @since   1.1.0
+     * @uses    Arr::unpack_string
+     * @uses    Post::status
+     * @uses    System::parse_args
+     * @uses    Cache::get
+     * @uses    Cache::set
+     */
 	public static function recent_posts(array $args = array())
 	{
 		$default = array(

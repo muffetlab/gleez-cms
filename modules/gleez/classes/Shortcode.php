@@ -112,29 +112,29 @@ class Shortcode {
 		return self::$_tags;
 	}
 
-	/**
-	 * Saves or loads the Shortcode cache
-	 *
-	 * If your Shortcodes will remain the same for a long period of time,
-	 * use this to reload the Shortcodes from the cache rather than redefining
-	 * them on every page load.
-	 *
-	 * Example:
-	 * ~~~
-	 * if ( ! Shortcode::cache())
-	 * {
-	 *     // Set Shortcodes here
-	 *     Shortcode::cache(TRUE);
-	 * }
-	 * ~~~
-	 *
-	 * @param   boolean  $save    Cache the current Shortcodes [Optional]
-	 * @param   boolean  $append  Append, rather than replace, cached Shortcodes when loading [Optional]
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    Kohana::cache
-	 */
+    /**
+     * Saves or loads the Shortcode cache
+     *
+     * If your Shortcodes will remain the same for a long period of time,
+     * use this to reload the Shortcodes from the cache rather than redefining
+     * them on every page load.
+     *
+     * Example:
+     * ~~~
+     * if ( ! Shortcode::cache())
+     * {
+     *     // Set Shortcodes here
+     *     Shortcode::cache(TRUE);
+     * }
+     * ~~~
+     *
+     * @param boolean $save Cache the current Shortcodes [Optional]
+     * @param boolean $append Append, rather than replace, cached Shortcodes when loading [Optional]
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses    Kohana::cache
+     */
 	public static function cache($save = FALSE, $append = FALSE)
 	{
 		$cache = Cache::instance();

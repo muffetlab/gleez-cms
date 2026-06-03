@@ -201,14 +201,14 @@ class Datatables {
 		return $this;
 	}
 
-	/**
-	 * Set sort order
-	 *
-	 * @param	string  $column     Column for sorting
-	 * @param	string  $direction  Sort order eg. SORT_ASC|SORT_DESC
-	 * @return	$this
-	 * @throws      Gleez_Exception
-	 */
+    /**
+     * Set sort order
+     *
+     * @param string $column Column for sorting
+     * @param string $direction Sort order eg. SORT_ASC|SORT_DESC
+     * @return    $this
+     * @throws Kohana_Exception
+     */
 	public function sort($column, $direction = self::SORT_ASC)
 	{
 		if ( ! in_array($direction, array(self::SORT_ASC, self::SORT_DESC)))
@@ -422,21 +422,23 @@ class Datatables {
 		return $this;
 	}
 
-	/**
-	 * Render
-	 *
-	 * @return  string
-	 */
+    /**
+     * Render
+     *
+     * @return  string
+     * @throws View_Exception
+     */
 	public function __toString()
 	{
 		return $this->render();
 	}
 
-	/**
-	 * Render
-	 *
-	 * @return	string
-	 */
+    /**
+     * Render
+     *
+     * @return    string
+     * @throws View_Exception
+     */
 	public function render()
 	{
 		if ($this->_render === NULL)

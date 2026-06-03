@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Abstract template class for automatic templating
  *
@@ -224,12 +227,15 @@ abstract class Template extends Controller {
 	/** @var String|null */
 	protected $nonce;
 
-	/**
-	 * Loads the template View object, if it is direct request
-	 *
-	 * @return  void
-	 * @throws  Http_Exception_415  If none of the accept-types are supported
-	 */
+    /**
+     * Loads the template View object, if it is direct request
+     *
+     * @return  void
+     * @throws Http_Exception_415 If none of the accept-types are supported
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     */
 	public function before()
 	{
 		// Execute parent::before first
@@ -403,11 +409,12 @@ abstract class Template extends Controller {
 		}
 	}
 
-	/**
-	 * If debugging is enabled, append profiler stats for non-production environments.
-	 *
-	 * @return  void
-	 */
+    /**
+     * If debugging is enabled, append profiler stats for non-production environments.
+     *
+     * @return  void
+     * @throws Kohana_Exception
+     */
 	public function after()
 	{
         if ($this->auto_render && !$this->bare)
@@ -567,9 +574,11 @@ abstract class Template extends Controller {
 		$this->template->head_title = implode($this->title_separator, $head_title);
 	}
 
-	/**
-	 * Set the default server headers
-	 */
+    /**
+     * Set the default server headers
+     *
+     * @throws Kohana_Exception
+     */
 	protected function _set_default_server_headers()
 	{
 		$headers = $this->_config->get('headers', array());
@@ -601,14 +610,15 @@ abstract class Template extends Controller {
 		}
 	}
 
-	/**
-	 * Set the default meta links
-	 *
-	 * Used configuration settings.
-	 *
-	 * @uses    Meta::links
-	 * @uses    Arr::get
-	 */
+    /**
+     * Set the default meta links
+     *
+     * Used configuration settings.
+     *
+     * @throws Kohana_Exception
+     * @uses    Arr::get
+     * @uses    Meta::links
+     */
 	protected function _set_default_meta_links()
 	{
 		$meta  = $this->_config->get('meta', array());
@@ -713,11 +723,12 @@ abstract class Template extends Controller {
 		return $this;
 	}
 
-	/**
-	 * Set default CSS
-	 *
-	 * @uses  Assets::css
-	 */
+    /**
+     * Set default CSS
+     *
+     * @throws Kohana_Exception
+     * @uses  Assets::css
+     */
 	protected function _set_default_css()
 	{
 		Assets::css('bootstrap', 'media/css/bootstrap.min.css', NULL, array('weight' => -15));
@@ -729,11 +740,12 @@ abstract class Template extends Controller {
 		Assets::css('theme', "media/css/theme.css", array('default'), array('weight' => 50));
 	}
 
-	/**
-	 * Set default JavaScript
-	 *
-	 * @uses  Assets::js
-	 */
+    /**
+     * Set default JavaScript
+     *
+     * @throws Kohana_Exception
+     * @uses  Assets::js
+     */
 	protected function _set_default_js()
 	{
 		Assets::js('bootstrap', 'media/js/bootstrap.min.js', array('jquery'), FALSE, array('weight' => -8));
@@ -750,25 +762,25 @@ abstract class Template extends Controller {
 		}
 	}
 
-	/**
-	 * Returns TRUE if the POST has a valid CSRF
-	 *
-	 * Usage:<br>
-	 * <code>
-	 * 	if ($this->valid_post('upload_photo')) { ... }
-	 * </code>
-	 *
-	 * @param   string|NULL  $submit Submit value [Optional]
-	 * @return  boolean  Return TRUE if it's valid $_POST
-	 *
-	 * @uses    Request::is_post
-	 * @uses    Request::post_max_size_exceeded
-	 * @uses    Request::get_post_max_size
-	 * @uses    Request::post
-	 * @uses    Message::error
-	 * @uses    CSRF::valid
-	 * @uses    Captcha::valid
-	 */
+    /**
+     * Returns TRUE if the POST has a valid CSRF
+     *
+     * Usage:<br>
+     * <code>
+     *    if ($this->valid_post('upload_photo')) { ... }
+     * </code>
+     *
+     * @param string|NULL $submit Submit value [Optional]
+     * @return  boolean  Return TRUE if it's valid $_POST
+     * @throws Kohana_Exception
+     * @uses    Request::is_post
+     * @uses    Request::post_max_size_exceeded
+     * @uses    Request::get_post_max_size
+     * @uses    Request::post
+     * @uses    Message::error
+     * @uses    CSRF::valid
+     * @uses    Captcha::valid
+     */
 	public function valid_post($submit = NULL)
 	{
 		if ( ! $this->request->is_post())
@@ -880,10 +892,12 @@ abstract class Template extends Controller {
 		return (empty($uri) OR ($uri === $this->_config->front_page));
 	}
 
-	/**
-	 *  Process the response as JSON with some extra information about the
-	 *  (success status of the form) so that jQuery knows what to do with the result.
-	 */
+    /**
+     *  Process the response as JSON with some extra information about the
+     *  (success status of the form) so that jQuery knows what to do with the result.
+     *
+     * @throws Kohana_Exception
+     */
 	protected function process_ajax()
 	{
 		if ( $this->request->method() == HTTP_Request::POST )
@@ -977,17 +991,16 @@ abstract class Template extends Controller {
 		return $this->nonce;
 	}
 
-	/**
-	 * Get site name
-	 *
-	 * It is just helper, which gets site name
-	 *
-	 * @since   1.2.0
-	 *
-	 * @param   mixed  $default  The return value if the site name isn't found [Optional]
-	 *
-	 * @return  mixed
-	 */
+    /**
+     * Get site name
+     *
+     * It is just helper, which gets site name
+     *
+     * @param mixed $default The return value if the site name isn't found [Optional]
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @since   1.2.0
+     */
 	public static function getSiteName($default = 'Gleez CMS')
 	{
 		return Kohana::$config->load('site')->get('site_name', $default);

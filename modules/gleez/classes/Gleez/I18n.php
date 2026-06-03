@@ -46,12 +46,14 @@ class Gleez_I18n extends I18n
 	 */
 	public static $_cookie = 'lang';
 
-	/**
-	 * Main function to detect and set the default language.
-	 *
-	 *     // Set the language
-	 *     $lang = Gleez_I18n::initialize();
-	 */
+    /**
+     * Main function to detect and set the default language.
+     *
+     *     // Set the language
+     *     $lang = Gleez_I18n::initialize();
+     *
+     * @throws Kohana_Exception
+     */
 	public static function initialize()
 	{
 		// Installed Locales
@@ -139,14 +141,15 @@ class Gleez_I18n extends I18n
 		return false;
 	}
 
-	/**
-	 * Detect language based on the user language settings.
-	 *
-	 *     // Get the language
-	 *     $lang = Gleez_I18n::userLocale();
-	 *
-	 * @return  string
-	 */
+    /**
+     * Detect language based on the user language settings.
+     *
+     *     // Get the language
+     *     $lang = Gleez_I18n::userLocale();
+     *
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function userLocale()
 	{
 		// Can't set guest users locale, default's to site locale
@@ -168,14 +171,15 @@ class Gleez_I18n extends I18n
 		return FALSE;
 	}
 
-	/**
-	 * Detect language based on the request cookie.
-	 *
-	 *     // Get the language
-	 *     $lang = Gleez_I18n::cookieLocale();
-	 *
-	 * @return  string
-	 */
+    /**
+     * Detect language based on the request cookie.
+     *
+     *     // Get the language
+     *     $lang = Gleez_I18n::cookieLocale();
+     *
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function cookieLocale()
 	{
 		$cookie_data = strtolower(Cookie::get(self::$_cookie));
@@ -194,14 +198,15 @@ class Gleez_I18n extends I18n
 		return FALSE;
 	}
 
-	/**
-	 * Detect language based on the url.
-	 *
-	 *     ex: example.com/fr/
-	 *     $lang = Gleez_I18n::urlLocale();
-	 *
-	 * @return  string
-	 */
+    /**
+     * Detect language based on the url.
+     *
+     *     ex: example.com/fr/
+     *     $lang = Gleez_I18n::urlLocale();
+     *
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function urlLocale()
 	{
 		$uri = Request::detect_uri();

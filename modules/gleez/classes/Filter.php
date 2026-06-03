@@ -90,18 +90,18 @@ class Filter {
 		return Filter::$_filters;
 	}
 
-	/**
-	 * Retrieve(s) all available format by name formats from config
-	 *
-	 * Example:
-	 * ~~~
-	 * $formats = Filter::formats();
-	 * ~~~
-	 *
-	 * @return  array
-	 *
-	 * @uses    Config::load
-	 */
+    /**
+     * Retrieve(s) all available format by name formats from config
+     *
+     * Example:
+     * ~~~
+     * $formats = Filter::formats();
+     * ~~~
+     *
+     * @return  array
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     */
 	public static function formats()
 	{
 		$config = Kohana::$config->load('inputfilter');
@@ -111,29 +111,29 @@ class Filter {
         }, $config->formats);
 	}
 
-	/**
-	 * Setter/Getter for the filter cache
-	 *
-	 * If your filters will remain the same for a long period of time,
-	 * use this to reload the filters from the cache rather than redefining
-	 * them on every page load.
-	 *
-	 * Example:
-	 * ~~~
-	 * if ( ! Filter::cache())
-	 * {
-	 *     // Set filters here
-	 *     Filter::cache(TRUE);
-	 * }
-	 *
-	 * @param   boolean  $save    Cache the current filters [Optional]
-	 * @param   boolean  $append  Append, rather than replace, cached filters when loading [Optional]
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 */
+    /**
+     * Setter/Getter for the filter cache
+     *
+     * If your filters will remain the same for a long period of time,
+     * use this to reload the filters from the cache rather than redefining
+     * them on every page load.
+     *
+     * Example:
+     * ~~~
+     * if ( ! Filter::cache())
+     * {
+     *     // Set filters here
+     *     Filter::cache(TRUE);
+     * }
+     *
+     * @param boolean $save Cache the current filters [Optional]
+     * @param boolean $append Append, rather than replace, cached filters when loading [Optional]
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses    Cache::get
+     * @uses    Cache::set
+     */
 	public static function cache($save = FALSE, $append = FALSE)
 	{
 		$cache = Cache::instance();
@@ -169,12 +169,13 @@ class Filter {
 		}
 	}
 
-	/**
-	 * Method to run all enabled filters by the format id on given string
-	 *
-	 * @param  object  $text       The text object to be filtered.
-	 * @return string  $text       The filtered text
-	 */
+    /**
+     * Method to run all enabled filters by the format id on given string
+     *
+     * @param object $text The text object to be filtered.
+     * @return string  $text       The filtered text
+     * @throws Kohana_Exception
+     */
 	public static function process($text)
 	{
 		$config = Kohana::$config->load('inputfilter');
@@ -292,7 +293,10 @@ class Filter {
 		$this->_callbacks = $callbacks;
 	}
 
-	public function __get($key)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function __get($key)
 	{
 		if($key == 'title')
 		{

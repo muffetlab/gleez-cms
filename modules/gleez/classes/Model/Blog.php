@@ -22,16 +22,16 @@ class Model_Blog extends Post {
 	protected $_post_type = 'blog';
 
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation  $validation  Validation object [Optional]
-	 * @return  Post
-	 *
-	 * @uses    Config::load
-	 * @uses    Config::get
-	 * @uses    Cache::delete
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation $validation Validation object [Optional]
+     * @return  Post
+     * @throws Kohana_Exception|ReflectionException
+     * @uses    Config::get
+     * @uses    Cache::delete
+     * @uses    Config::load
+     */
     public function save(Validation $validation = NULL): Kohana_ORM
     {
 		$config = Kohana::$config->load('blog');
@@ -68,11 +68,12 @@ class Model_Blog extends Post {
 		return parent::values($values, $expected);
 	}
 
-	/**
-	 * Finds and loads a single database row into the object
-	 *
-	 * @return  Database_Result|ORM
-	 */
+    /**
+     * Finds and loads a single database row into the object
+     *
+     * @return  Database_Result|ORM
+     * @throws Kohana_Exception
+     */
     public function find()
 	{
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
@@ -80,11 +81,12 @@ class Model_Blog extends Post {
         return parent::find();
 	}
 
-	/**
-	 * Finds multiple database rows and returns an iterator of the rows found
-	 *
-	 * @return  Database_Result|ORM
-	 */
+    /**
+     * Finds multiple database rows and returns an iterator of the rows found
+     *
+     * @return  Database_Result|ORM
+     * @throws Kohana_Exception
+     */
     public function find_all()
 	{
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
@@ -92,11 +94,12 @@ class Model_Blog extends Post {
         return parent::find_all();
 	}
 
-	/**
-	 * Count the number of records in the table
-	 *
-	 * @return  integer
-	 */
+    /**
+     * Count the number of records in the table
+     *
+     * @return  integer
+     * @throws Kohana_Exception
+     */
     public function count_all(): int
     {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
@@ -104,12 +107,13 @@ class Model_Blog extends Post {
         return parent::count_all();
 	}
 
-	/**
-	 * Deletes a single record or multiple records, ignoring relationships
-	 *
-	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
-	 * @return  Post
-	 */
+    /**
+     * Deletes a single record or multiple records, ignoring relationships
+     *
+     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @return  Post
+     * @throws Kohana_Exception
+     */
     public function delete($soft = FALSE): Kohana_ORM
     {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);

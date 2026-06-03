@@ -50,6 +50,9 @@ class Controller_Resize extends Controller {
 
 	}
 
+    /**
+     * @throws Kohana_Exception
+     */
     private function cache(): void
     {
 		// is it a remote image?
@@ -93,7 +96,10 @@ class Controller_Resize extends Controller {
 		}
     }
 
-	private function is_valid($image_path)
+    /**
+     * @throws Kohana_Exception
+     */
+    private function is_valid($image_path)
 	{
 		try
 		{

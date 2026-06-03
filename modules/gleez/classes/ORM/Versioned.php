@@ -20,12 +20,15 @@ class ORM_Versioned extends Gleez_Model
 	 */
 	protected $_restore =  FALSE;
 
-	/**
-	 * Overload `ORM::update` to support versioned data
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @return  ORM
-	 */
+    /**
+     * Overload `ORM::update` to support versioned data
+     *
+     * @param Validation|null $validation Validation object
+     * @return  ORM
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function update(Validation $validation = NULL): Kohana_ORM
     {
         $object = null;
@@ -77,12 +80,13 @@ class ORM_Versioned extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Restores the object with data from stored version
-	 *
-	 * @param   integer  version number you want to restore
-	 * @return  ORM
-	 */
+    /**
+     * Restores the object with data from stored version
+     *
+     * @param integer  version number you want to restore
+     * @return  ORM
+     * @throws Kohana_Exception|ReflectionException
+     */
 	public function restore($version)
 	{
 		if ( ! $this->loaded())
@@ -123,12 +127,13 @@ class ORM_Versioned extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Loads a version from current object
-	 *
-	 * @chainable
-	 * @return  ORM
-	 */
+    /**
+     * Loads a version from current object
+     *
+     * @chainable
+     * @return  ORM
+     * @throws Kohana_Exception
+     */
 	public function version( $version = FALSE )
 	{
 		if ( ! $this->loaded())
@@ -148,13 +153,14 @@ class ORM_Versioned extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Overloads ORM::delete() to delete all versioned entries of current object
-	 * and the object itself
-	 *
-	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
-	 * @return  ORM
-	 */
+    /**
+     * Overloads ORM::delete() to delete all versioned entries of current object
+     * and the object itself
+     *
+     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @return  ORM
+     * @throws Kohana_Exception
+     */
 	public function delete($soft = FALSE): Kohana_ORM
     {
 		// Use primary key value
@@ -190,11 +196,12 @@ class ORM_Versioned extends Gleez_Model
 		return $status;
 	}
 
-	/**
-	 * Determines the name of a foreign key for a specific table.
-	 *
-	 * @return  string
-	 */
+    /**
+     * Determines the name of a foreign key for a specific table.
+     *
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public function foreign_key()
 	{
 		return Inflector::singular($this->_table_name).$this->_foreign_key_suffix;

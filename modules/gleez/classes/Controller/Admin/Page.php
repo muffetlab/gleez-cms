@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Admin Page Controller
  *
@@ -10,11 +13,17 @@
  */
 class Controller_Admin_Page extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer page');
@@ -22,12 +31,13 @@ class Controller_Admin_Page extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * The after() method is called after controller action
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * The after() method is called after controller action
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     * @uses  Route::get
+     */
 	public function after()
 	{
 		// Tabs
@@ -40,11 +50,12 @@ class Controller_Admin_Page extends Controller_Admin {
 		parent::after();
 	}
 
-	/**
-	 * Page management dashboard
-	 *
-	 * Displays Page statistics
-	 */
+    /**
+     * Page management dashboard
+     *
+     * Displays Page statistics
+     * @throws View_Exception|Kohana_Exception
+     */
 	public function action_index()
 	{
 		$this->title = __('Page Statistics');
@@ -66,13 +77,14 @@ class Controller_Admin_Page extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Setting the display of pages
-	 *
-	 * @uses  Arr::merge
-	 * @uses  Config::load
-	 * @uses  Message::success
-	 */
+    /**
+     * Setting the display of pages
+     *
+     * @throws Kohana_Exception
+     * @uses  Config::load
+     * @uses  Message::success
+     * @uses  Arr::merge
+     */
 	public function action_settings()
 	{
 		$this->title = __('Page Settings');
@@ -114,11 +126,13 @@ class Controller_Admin_Page extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Displays list of pages
-	 *
-	 * @uses  Assets::popup
-	 */
+    /**
+     * Displays list of pages
+     *
+     * @throws Kohana_Exception
+     * @throws Exception
+     * @uses  Assets::popup
+     */
 	public function action_list()
 	{
 		Assets::popup();
@@ -163,17 +177,18 @@ class Controller_Admin_Page extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Perform bulk actions
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Request::redirect
-	 * @uses  Post::bulk_delete
-	 * @uses  Message::success
-	 * @uses  Message::error
-	 * @uses  DB::select
-	 */
+    /**
+     * Perform bulk actions
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     * @uses  Request::redirect
+     * @uses  Post::bulk_delete
+     * @uses  Message::success
+     * @uses  Message::error
+     * @uses  DB::select
+     * @uses  Route::get
+     */
 	public function action_bulk()
 	{
 		$redirect = Route::get('admin/page')->uri(array('action' => 'list'));

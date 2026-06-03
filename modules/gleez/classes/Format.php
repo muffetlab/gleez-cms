@@ -25,17 +25,18 @@ class Format {
 	/** @var array Format configuration */
 	protected $_config = array();
 
-	/**
-	 * Creates a singleton of a Gleez_Format
-	 *
+    /**
+     * Creates a singleton of a Gleez_Format
+     *
      * Access to instance directly:<br>
-	 * <code>
-	 *   Format::$instance;
-	 * </code>
-	 *
-	 * @param   array   $config  Pass a configuration array to bypass the Kohana config [Optional]
-	 * @return  Format  Format instance
-	 */
+     * <code>
+     *   Format::$instance;
+     * </code>
+     *
+     * @param array $config Pass a configuration array to bypass the Kohana config [Optional]
+     * @return  Format  Format instance
+     * @throws Kohana_Exception
+     */
 	public static function instance(array $config = array())
 	{
 		if ( ! is_null(Format::$instance))

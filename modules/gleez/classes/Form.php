@@ -159,6 +159,7 @@ class Form extends Kohana_Form
      * @param mixed $selected Selected option string, or an array of selected options
      * @param array|null $attributes HTML attributes
      * @return  string
+     * @throws Kohana_Exception
      * @uses    HTML::attributes
      */
     public static function select(string $name, array $options = null, $selected = null, array $attributes = null): string
@@ -201,18 +202,17 @@ class Form extends Kohana_Form
         return parent::button($name, $body, $attributes);
 	}
 
-	/**
-	 * Creates weight select field
-	 *
-	 * @param   string   $name      Input name
-	 * @param   integer  $selected  Selected option int [Optional]
-	 * @param   array    $attrs     HTML attributes [Optional]
-	 * @param   integer  $delta     Delta [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    Form::select
-	 */
+    /**
+     * Creates weight select field
+     *
+     * @param string $name Input name
+     * @param integer $selected Selected option int [Optional]
+     * @param array $attrs HTML attributes [Optional]
+     * @param integer $delta Delta [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    Form::select
+     */
 	public static function weight($name, $selected = 0, array $attrs = NULL, $delta = 15)
 	{
 		$options = array();
@@ -225,17 +225,16 @@ class Form extends Kohana_Form
 		return self::select($name, $options, $selected, $attrs);
 	}
 
-	/**
-	 * Create a form field for filtering
-	 *
-	 * @param   string $column  Column
-	 * @param   array  $vals    Filter values
-	 * @param   array  $attrs   Filter attributes [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    Arr::get
-	 */
+    /**
+     * Create a form field for filtering
+     *
+     * @param string $column Column
+     * @param array $vals Filter values
+     * @param array $attrs Filter attributes [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    Arr::get
+     */
 	public static function filter($column, array $vals, array $attrs = array())
 	{
 		if ( ! isset($attrs['style']))
@@ -247,18 +246,19 @@ class Form extends Kohana_Form
 		return self::input("filter[$column]", Arr::get($vals, $column), $attrs);
 	}
 
-	/**
-	 * Creates a form input for date.
-	 *
-	 *     echo Form::date('author_date', $created);
-	 *
-	 * @param   string  $name       input name
-	 * @param   string  $value      input value
-	 * @param   array   $attributes html attributes
-	 * @return  string
-	 * @uses    Form::input
-	 * @link    https://getdatepicker.com/4/
-	 */
+    /**
+     * Creates a form input for date.
+     *
+     *     echo Form::date('author_date', $created);
+     *
+     * @param string $name input name
+     * @param string $value input value
+     * @param array $attributes html attributes
+     * @return  string
+     * @throws Exception
+     * @link    https://getdatepicker.com/4/
+     * @uses    Form::input
+     */
 	public static function date($name, $value = NULL, array $attrs = NULL)
 	{
 		$out = '';

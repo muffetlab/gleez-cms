@@ -33,14 +33,15 @@ class Theme {
 	 */
 	public static $themes = array();
 
-	/**
-	 * Load the active theme.
-	 *
-	 * This is called at bootstrap time.
-	 * We will only ever have one theme active for any given request.
-	 *
-	 * @uses Kohana::modules
-	 */
+    /**
+     * Load the active theme.
+     *
+     * This is called at bootstrap time.
+     * We will only ever have one theme active for any given request.
+     *
+     * @throws Kohana_Exception
+     * @uses Kohana::modules
+     */
 	public static function load_themes()
 	{
 		$config       = Kohana::$config->load('site');
@@ -78,11 +79,12 @@ class Theme {
 		Theme::set_theme();
 	}
 
-	/**
-	 * Sets active theme if none supplied or uses the supplied one
-	 *
-	 * @param  boolean|string  $theme  Theme name [Optional]
-	 */
+    /**
+     * Sets active theme if none supplied or uses the supplied one
+     *
+     * @param boolean|string $theme Theme name [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function set_theme($theme = FALSE)
 	{
 		if( !empty($theme)) Theme::$active = $theme;
@@ -152,12 +154,13 @@ class Theme {
 		return $theme;
 	}
 
-	/**
-	 * Gets list of available themes
-	 *
-	 * @param   boolean $title returns only title if its true or full object
-	 * @return  array  Available themes array
-	 */
+    /**
+     * Gets list of available themes
+     *
+     * @param boolean $title returns only title if its true or full object
+     * @return  array  Available themes array
+     * @throws Kohana_Exception
+     */
 	public static function available($title = true): array
 	{
 		$paths 	= (array) Kohana::$config->load('site')->get('theme_paths', [THEMEPATH]);
@@ -202,7 +205,10 @@ class Theme {
 		return $themes;
 	}
 
-	public static function route_list()
+    /**
+     * @throws Kohana_Exception
+     */
+    public static function route_list()
 	{
 		return implode("|", array_keys( self::available()) );
 	}

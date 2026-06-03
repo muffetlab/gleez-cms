@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Tag Controller
  *
@@ -10,11 +13,16 @@
  */
 class Controller_Tag extends Template {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses    ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses    ACL::required
+     */
 	public function before()
 	{
 		ACL::required('access content');
@@ -28,18 +36,19 @@ class Controller_Tag extends Template {
 		Kohana::$log->add(Log::ERROR, 'Attempt to access disabled feature.');
 	}
 
-	/**
-	 * List of pages (blogs/posts/etc.) with a specific tag
-	 *
-	 * @throws  HTTP_Exception_404
-	 *
-	 * @uses    Log::add
-	 * @uses    Text::ucfirst
-	 * @uses    ACL::check
-	 * @uses    Meta::links
-	 * @uses    URL::canonical
-	 * @uses    Route::url
-	 */
+    /**
+     * List of pages (blogs/posts/etc.) with a specific tag
+     *
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses    Log::add
+     * @uses    Text::ucfirst
+     * @uses    ACL::check
+     * @uses    Meta::links
+     * @uses    URL::canonical
+     * @uses    Route::url
+     */
 	public function action_view()
 	{
 		$id = (int) $this->request->param('id', 0);

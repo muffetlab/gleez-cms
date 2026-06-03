@@ -11,11 +11,13 @@
  */
 class Controller_Feeds_Blog extends Controller_Feeds_Base {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * Setting the type for tags, categories, etc.
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * Setting the type for tags, categories, etc.
+     *
+     * @throws Kohana_Exception
+     */
 	public function before()
 	{
 		parent::before();
@@ -23,14 +25,15 @@ class Controller_Feeds_Blog extends Controller_Feeds_Base {
 		$this->_type = 'blog';
 	}
 
-	/**
-	 * Get list of pages
-	 *
-	 * @uses  Config::load
-	 * @uses  Config_Group::get
-	 * @uses  URL::site
-	 * @uses  Cache::set
-	 */
+    /**
+     * Get list of pages
+     *
+     * @throws Kohana_Exception
+     * @uses  Config_Group::get
+     * @uses  URL::site
+     * @uses  Cache::set
+     * @uses  Config::load
+     */
 	public function action_list()
 	{
 		if (empty($this->_items))
@@ -62,9 +65,9 @@ class Controller_Feeds_Blog extends Controller_Feeds_Base {
 	/**
 	 * Get a list of pages with a specific term
 	 *
-	 * @since  1.1.0
-	 *
-	 * @uses  Controller_Feed_Base::_term
+     * @throws HTTP_Exception|Kohana_Exception
+     * @since  1.1.0
+     * @uses  Controller_Feed_Base::_term
 	 */
 	public function action_term()
 	{
@@ -74,9 +77,9 @@ class Controller_Feeds_Blog extends Controller_Feeds_Base {
 	/**
 	 * Get a list of blogs with a specific tag
 	 *
-	 * @since  1.1.0
-	 *
-	 * @uses  Controller_Feed_Base::_tag
+     * @throws HTTP_Exception|Kohana_Exception
+     * @since  1.1.0
+     * @uses  Controller_Feed_Base::_tag
 	 */
 	public function action_tag()
 	{

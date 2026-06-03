@@ -1,4 +1,7 @@
 <?php
+
+use Random\RandomException;
+
 /**
  * Gleez Contact Controller
  *
@@ -10,11 +13,16 @@
  */
 class Controller_Contact extends Template {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws RandomException
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('sending mail');
@@ -22,24 +30,26 @@ class Controller_Contact extends Template {
 		parent::before();
 	}
 
-	/**
-	 * Sending mails
-	 *
-	 * @since 1.0.0  First time this method was introduced
-	 * @since 1.1.0  Added jQuery Textarea Characters Counter Plugin
-	 *
-	 * @link  http://roy-jin.appspot.com/jsp/textareaCounter.jsp
-	 *
-	 * @uses  Request::query
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  URL::query
-	 * @uses  URL::site
-	 * @uses  Validation::rule
-	 * @uses  Config::get
-	 * @uses  Config::load
-	 * @uses  Assets::js
-	 */
+    /**
+     * Sending mails
+     *
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @throws \PHPMailer\PHPMailer\Exception
+     * @since 1.0.0  First time this method was introduced
+     * @since 1.1.0  Added jQuery Textarea Characters Counter Plugin
+     * @link  http://roy-jin.appspot.com/jsp/textareaCounter.jsp
+     * @uses  Request::query
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  URL::query
+     * @uses  URL::site
+     * @uses  Validation::rule
+     * @uses  Config::get
+     * @uses  Config::load
+     * @uses  Assets::js
+     */
 	public function action_mail()
 	{
 		$this->title = __('Contact us');

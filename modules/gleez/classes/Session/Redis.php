@@ -42,12 +42,13 @@ class Session_Redis extends Session {
 	 */
 	protected $_prefix = 'session/';
 
-	/**
-	 * Class constructor
-	 *
-	 * @param  array   $config  Configuration [Optional]
-	 * @param  string  $id      Session id [Optional]
-	 */
+    /**
+     * Class constructor
+     *
+     * @param array $config Configuration [Optional]
+     * @param string $id Session id [Optional]
+     * @throws Kohana_Exception
+     */
 	public function __construct(array $config = NULL, $id = NULL) {
 
 		// Check that the PhpRedis extension is loaded.
@@ -133,11 +134,12 @@ class Session_Redis extends Session {
 		return $this->_session_id = $id;
 	}
 
-	/**
-	 * Writes the current session.
-	 *
-	 * @return  boolean
-	 */
+    /**
+     * Writes the current session.
+     *
+     * @return  boolean
+     * @throws Kohana_Exception
+     */
 	protected function _write(): bool
     {
 		// Save to Redis

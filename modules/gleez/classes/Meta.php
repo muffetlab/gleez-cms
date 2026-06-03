@@ -22,20 +22,19 @@ class Meta {
 	 */
 	public static $tags = array();
 
-	/**
-	 * Meta Link wrapper
-	 *
-	 * Gets or sets Meta Links
-	 *
-	 * @param   string  $handle  The link URL [Optional]
-	 * @param   array	$attrs   An associative array of link settings [Optional]
-	 *
-	 * @return  array   Setting returns asset array
-	 * @return  string  Getting returns asset content
-	 *
-	 * @uses    URL::is_absolute
-	 * @uses    URL::site
-	 */
+    /**
+     * Meta Link wrapper
+     *
+     * Gets or sets Meta Links
+     *
+     * @param string $handle The link URL [Optional]
+     * @param array $attrs An associative array of link settings [Optional]
+     * @return  array   Setting returns asset array
+     * @return  string  Getting returns asset content
+     * @throws Kohana_Exception
+     * @uses    URL::site
+     * @uses    URL::is_absolute
+     */
 	public static function links($handle = NULL, array $attrs = array())
 	{
 		// Return all meta links

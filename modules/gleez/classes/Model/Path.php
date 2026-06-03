@@ -71,17 +71,18 @@ class Model_Path extends Gleez_Model
 		);
 	}
 
-	/**
-	 * Check by triggering error if process
-	 *
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation  Object for validation
-	 * @param   string      $field       Field name
-	 * @return  void
-	 *
-	 * @uses    Module::event
-	 */
+    /**
+     * Check by triggering error if process
+     *
+     * Validation callback.
+     *
+     * @param Validation $validation Object for validation
+     * @param string $field Field name
+     * @return  void
+     * @throws Kohana_Exception
+     * @throws Request_Exception
+     * @uses    Module::event
+     */
 	public function process_alias(Validation $validation, $field)
 	{
 		// always set unique alias if its set
@@ -144,13 +145,15 @@ class Model_Path extends Gleez_Model
 		return $str;
 	}
 
-	/**
-	 * Process URI
-	 *
-	 * @param   string  $uri  URI
-	 * @return  array|boolean
-	 * @uses    Route::all
-	 */
+    /**
+     * Process URI
+     *
+     * @param string $uri URI
+     * @return  array|boolean
+     * @throws Kohana_Exception
+     * @throws Request_Exception
+     * @uses    Route::all
+     */
 	private function _process_uri($uri)
 	{
 		// Load routes
@@ -169,15 +172,15 @@ class Model_Path extends Gleez_Model
 		return FALSE;
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties
+     *
      * @param string $column
-	 * @return  mixed
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     * @uses  Route::get
+     */
     public function __get(string $column)
 	{
         switch ($column) {

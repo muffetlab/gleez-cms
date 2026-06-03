@@ -19,7 +19,8 @@ class Gleez_AclTest extends Unittest_TestCase
 	
 	/**
 	 * @dataProvider providerPerms
-	 */
+     * @throws Cache_Exception|Kohana_Exception
+     */
     public function test_acl_check($perm, $user_id)
 	{
         $user = ORM::factory('User', $user_id);
@@ -41,7 +42,8 @@ class Gleez_AclTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @covers Route::cache
-	 */
+     * @throws Cache_Exception|Kohana_Exception
+     */
 	public function test_cache_stores_route_objects()
 	{
 		$acls = ACL::all();
