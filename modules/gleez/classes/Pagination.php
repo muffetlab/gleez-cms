@@ -500,7 +500,6 @@ class Pagination {
 		catch(Exception $e)
 		{
 			Kohana_Exception::handler($e);
-			return '';
 		}
 	}
 

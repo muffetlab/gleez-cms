@@ -164,14 +164,10 @@ class Assets {
 		{
 			case self::FORMAT_TAG:
 				return HTML::style($asset['src'], $asset['attrs']);
-				break;
-
-			case self::FORMAT_FILENAME:
+            case self::FORMAT_FILENAME:
 			case self::FORMAT_AJAX:
 				return $asset['src'];
-				break;
-
-			default:
+            default:
 				throw new Exception("Unknown format: $format.");
 		}
 	}
@@ -201,17 +197,11 @@ class Assets {
 		{
 			case self::FORMAT_TAG:
 				return implode(PHP_EOL, $assets).PHP_EOL;
-				break;
-
-			case self::FORMAT_FILENAME:
+            case self::FORMAT_FILENAME:
 				return self::compile($assets, $format, 'css');
-				break;
-
-			case self::FORMAT_AJAX:
+            case self::FORMAT_AJAX:
 				return $assets;
-				break;
-
-			default:
+            default:
 				throw new Exception("Unknown format: $format.");
 		}
 	}
@@ -287,14 +277,10 @@ class Assets {
 		{
 			case self::FORMAT_TAG:
 				return HTML::script($asset['src']);
-				break;
-
-			case self::FORMAT_FILENAME:
+            case self::FORMAT_FILENAME:
 			case self::FORMAT_AJAX:
 				return $asset['src'];
-				break;
-
-			default:
+            default:
 				throw new Exception("Unknown format: $format.");
 		}
 	}
@@ -336,17 +322,11 @@ class Assets {
 		{
 			case self::FORMAT_TAG:
 				return implode(PHP_EOL, $sorted).PHP_EOL;
-				break;
-
-			case self::FORMAT_FILENAME:
+            case self::FORMAT_FILENAME:
 				return self::compile($sorted);
-				break;
-
-			case self::FORMAT_AJAX:
+            case self::FORMAT_AJAX:
 				return $sorted;
-				break;
-
-			default:
+            default:
 				throw new Exception("Unknown format: $format.");
 		}
 	}

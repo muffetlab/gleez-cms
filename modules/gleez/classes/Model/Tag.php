@@ -155,27 +155,21 @@ class Model_Tag extends Gleez_Model
         switch ($column) {
 			case 'name':
                 return HTML::chars($this->get('name') ?? '');
-			break;
-			case 'rawname':
+            case 'rawname':
 				// Raw fields without markup. Usage: during edit or etc!
 				return parent::__get('name');
-			break;
-			case 'rawurl':
+            case 'rawurl':
 				return Route::get($this->type)->uri(array('action' => 'tag', 'id' => $this->id));
-			break;
-			case 'edit_url':
+            case 'edit_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/tag')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/tag')->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-			case 'url':
+            case 'url':
 			case 'link':
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}

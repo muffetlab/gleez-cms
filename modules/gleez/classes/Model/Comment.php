@@ -171,30 +171,23 @@ class Model_Comment extends Gleez_Model
         switch ($column) {
 			case 'title':
                 return HTML::chars($this->get('title') ?? '');
-			break;
-			case 'body':
+            case 'body':
 				return Text::markup(parent::__get('body'), $this->format);
-			break;
-			case 'rawtitle':
+            case 'rawtitle':
 				// Raw fields without markup. Usage: during edit or etc!
 				return parent::__get('title');
-			break;
-			case 'rawbody':
+            case 'rawbody':
 				// Raw fields without markup. Usage: during edit or etc!
                 return $this->get('body') ?? '';
-			break;
-			case 'url':
+            case 'url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('comment')->uri( array('id' => $this->id, 'action' => 'view'));
-			break;
-			case 'edit_url':
+            case 'edit_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}

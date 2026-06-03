@@ -81,11 +81,9 @@ class Model_Widget extends ORM {
         switch ($column) {
 			case 'edit_url':
 				return Route::get('admin/widget')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'icons':
+            case 'icons':
 				return System::icons();
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}

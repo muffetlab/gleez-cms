@@ -22,8 +22,7 @@ class Widget_Comment extends Widget {
 		{
 			case 'recent':
                 return $this->recent();
-			break;
-			default:
+            default:
                 return '';
 		}
 	}

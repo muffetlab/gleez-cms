@@ -193,32 +193,25 @@ class Model_Term extends ORM_MPTT {
         switch ($column) {
 			case 'name':
                 return HTML::chars($this->get('name') ?? '');
-			break;
-			case 'image':
+            case 'image':
 				return is_null(parent::__get('image')) ? 'media/images/camera.png' : parent::__get('image');
-			break;
-			case 'rawname':
+            case 'rawname':
 				// Raw fields without markup. Usage: during edit or etc!
 				return parent::__get('name');
-			break;
-			case 'rawurl':
+            case 'rawurl':
 				// Raw fields without markup. Usage: during edit or etc!
 				return Route::get($this->type)->uri(array('action' => 'term', 'id' => $this->id));
-			break;
-			case 'url':
+            case 'url':
 			case 'link':
 				// Model specific links; view, edit, delete url's.
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
-			break;
-			case 'edit_url':
+            case 'edit_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/term')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/term')->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}

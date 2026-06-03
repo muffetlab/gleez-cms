@@ -183,11 +183,9 @@ class Model_Path extends Gleez_Model
         switch ($column) {
 			case 'edit_url':
 				return Route::get('admin/path')->uri(array('action' => 'edit', 'id' => $this->id));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				return Route::get('admin/path')->uri(array('action' => 'delete', 'id' => $this->id));
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}

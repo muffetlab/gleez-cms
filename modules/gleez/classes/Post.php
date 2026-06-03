@@ -545,69 +545,51 @@ class Post extends ORM_Versioned {
         switch ($column) {
 			case 'title':
                 return HTML::chars(parent::__get('title'));
-			break;
-			case 'teaser':
+            case 'teaser':
 				return Text::markup($this->rawteaser, $this->format);
-			break;
-			case 'body':
+            case 'body':
 				return Text::markup($this->rawbody, $this->format);
-			break;
-			case 'terms_form':
+            case 'terms_form':
 				return $this->terms->find()->id;
-			break;
-			case 'tags_form':
+            case 'tags_form':
                 return $this->tags->find_all()->as_array('id', 'rawname');
-			break;
-			case 'taxonomy':
+            case 'taxonomy':
 				return HTML::links($this->terms->find_all(), array('class' => 'nav nav-pills pull-right'));
-			break;
-			case 'tagcloud':
+            case 'tagcloud':
 				return HTML::links($this->tags->find_all(), array('class' => 'nav nav-pills'));
-			break;
-			case 'links':
+            case 'links':
 				return HTML::links($this->links(), array('class' => 'links inline'));
-			break;
-			case 'rawtitle':
+            case 'rawtitle':
 				// Raw fields without markup. Usage: during edit or etc!
 				return parent::__get('title');
-			break;
-			case 'rawteaser':
+            case 'rawteaser':
 				// Raw fields without markup. Usage: during edit or etc!
                 return parent::__get('teaser') ?: '';
-			break;
-			case 'rawbody':
+            case 'rawbody':
 				// Raw fields without markup. Usage: during edit or etc!
                 return parent::__get('body') ?: '';
-			break;
-			case 'rawurl':
+            case 'rawurl':
 				return Route::get($this->type)->uri(array( 'id' => $this->id, 'action' => 'view'));
-			break;
-			case 'rawimage':
+            case 'rawimage':
 				// Raw fields without path. Usage: during edit or etc!
 				return parent::__get('image');
-			break;
-			case 'url':
+            case 'url':
 				// Model specific links; view, edit, delete url's
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
-			break;
-			case 'edit_url':
+            case 'edit_url':
 				return Route::get($this->type)->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				return Route::get($this->type)->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-			case 'image':
+            case 'image':
 				return $this->rawimage ? $this->_image_url.$this->rawimage : NULL;
-			break;
-			case 'count_comments':
+            case 'count_comments':
 				return (int) DB::select(array(DB::expr('COUNT(*)'), 'mycount'))
 					->from('comments')
 					->where('status', '=', 'publish')
 					->where('post_id', '=', $this->id)
 					->execute()
 					->get('mycount');
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}

@@ -21,11 +21,9 @@ class Widget_Blog extends Widget {
 		{
 			case 'recent':
 				return $this->recent_blogs();
-			break;
-			case 'announce':
+            case 'announce':
 				return $this->recent_announce_blogs();
-			break;
-			default:
+            default:
                 return '';
 		}
 	}

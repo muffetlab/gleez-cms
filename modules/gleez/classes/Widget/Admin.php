@@ -20,17 +20,13 @@ class Widget_Admin extends Widget {
 		{
 			case 'donate':
 				return $this->donate();
-			break;
-			case 'welcome':
+            case 'welcome':
 				return $this->welcome();
-			break;
-			case 'info':
+            case 'info':
 				return $this->system_info();
-			break;
-			case 'shortcut':
+            case 'shortcut':
 				return $this->shortcut();
-			break;
-			default:
+            default:
                 return '';
 			}
 	}

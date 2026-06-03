@@ -84,17 +84,13 @@ class Model_Menu extends ORM_MPTT {
         switch ($column) {
 			case 'list_items_url':
 				return Route::get('admin/menu/item')->uri(array('id' => $this->id));
-			break;
-			case 'add_item_url':
+            case 'add_item_url':
 				return Route::get('admin/menu/item')->uri(array('id' => $this->id, 'action' => 'add'));
-			break;
-			case 'edit_url':
+            case 'edit_url':
 				return Route::get('admin/menu')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				return Route::get('admin/menu')->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}
