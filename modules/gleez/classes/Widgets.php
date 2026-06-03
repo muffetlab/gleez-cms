@@ -288,17 +288,13 @@ class Widgets {
 	 * @param   string   $name     Name of the widget
 	 * @param   boolean  $visible  Visibility permission from widget or FALSE to skip
 	 * @param   boolean  $format   The format of the output ex:xhtml, html or FALSE for object
-	 *
-	 * @return  object  Widget widget
-	 * @return  string  HTML widget
+     * @return  object|string|null Widget object, HTML string, or null
 	 */
     public function get_widget($name, $visible = FALSE, $format = FALSE)
 	{
-		$response = FALSE;
-
 		if ( ! $widget = $this->get($name))
 		{
-			return $response;
+            return null;
 		}
 
         if ($visible) {
@@ -310,6 +306,8 @@ class Widgets {
 		// Enable developers to override widget
 		Module::event('Widget', $widget);
 		Module::event('Widget_'.ucfirst($name), $widget);
+
+        $response = null;
 
 		if ($widget->status AND $widget->visible)
 		{
