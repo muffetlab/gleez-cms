@@ -80,15 +80,14 @@ class Module
      * Get the information about a module
      *
      * @param string $name Module name
-     * @return  ArrayObject  An ArrayObject containing the module information from the module.info file
-     * @return  boolean      false if not found
+     * @return ArrayObject|null An ArrayObject containing the module information from the module.info file, or null if not found
      * @throws Kohana_Exception
      */
 	public static function info($name)
 	{
 		$module_list = self::available();
 
-        return $module_list->$name ?? false;
+        return $module_list->$name ?? null;
 	}
 
 	/**
