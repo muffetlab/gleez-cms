@@ -446,7 +446,7 @@ class ACL {
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function post($action = 'view', $post, Model_User $user = NULL)
+    public static function post($action, $post, Model_User $user = NULL)
 	{
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
@@ -548,7 +548,7 @@ class ACL {
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function comment($action = 'view', ORM $comment, Model_User $user = NULL)
+    public static function comment($action, ORM $comment, Model_User $user = NULL)
 	{
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{

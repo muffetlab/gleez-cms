@@ -25,7 +25,7 @@ class CSRF {
      * @return  string
      * @throws Kohana_Exception
      */
-	public static function token($id = '', $action, $time = 0)
+    public static function token($id, $action, $time = 0)
 	{
 		// Get id string for token, could be uid or ip etc
 		if (empty($id)) $id =  sha1(Request::$user_agent);

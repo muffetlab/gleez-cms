@@ -471,7 +471,7 @@ class Widgets {
     /**
      * @throws View_Exception
      */
-    private function _html($widget, $region = FALSE, $format )
+    private function _html($widget, $region, $format)
 	{
 		$zebra = $id = FALSE;
 

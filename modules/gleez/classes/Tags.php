@@ -159,7 +159,7 @@ class Tags {
      * @throws Kohana_Exception|ReflectionException
      * @uses    Inflector::singular
      */
-	public function safe_tag($user_id = 0, Model $object, $tag = '')
+    public function safe_tag($user_id, Model $object, $tag = '')
 	{
 		$object_id = $object->id;
 
