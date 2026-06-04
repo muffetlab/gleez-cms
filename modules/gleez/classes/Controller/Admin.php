@@ -1,7 +1,5 @@
 <?php
 
-use Random\RandomException;
-
 /**
  * Admin Base Controller
  *
@@ -44,7 +42,6 @@ class Controller_Admin extends Template {
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
-     * @throws RandomException
      * @uses  ACL::required
      * @uses  Theme::$is_admin
      */

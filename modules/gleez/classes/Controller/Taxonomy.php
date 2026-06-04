@@ -1,7 +1,5 @@
 <?php
 
-use Random\RandomException;
-
 /**
  * Taxonomy Controller
  *
@@ -17,7 +15,6 @@ class Controller_Taxonomy extends Template {
      * @throws HTTP_Exception_403
      * @throws Kohana_Exception
      * @throws Http_Exception_415
-     * @throws RandomException
      * @throws HTTP_Exception
      * @throws View_Exception
      */

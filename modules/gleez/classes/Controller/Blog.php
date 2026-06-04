@@ -1,7 +1,5 @@
 <?php
 
-use Random\RandomException;
-
 /**
  * Blog Controller
  *
@@ -20,7 +18,6 @@ class Controller_Blog extends Template {
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
-     * @throws RandomException
      * @uses  Request::action
      * @uses  ACL::required
      * @uses  Request::param

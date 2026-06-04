@@ -1,7 +1,5 @@
 <?php
 
-use Random\RandomException;
-
 /**
  * Welcome Controller
  *
@@ -25,7 +23,6 @@ class Controller_Welcome extends Template {
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
-     * @throws RandomException
      */
 	public function before()
 	{

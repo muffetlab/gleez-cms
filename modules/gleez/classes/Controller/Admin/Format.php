@@ -1,7 +1,5 @@
 <?php
 
-use Random\RandomException;
-
 /**
  * Admin Format Controller
  *
@@ -21,7 +19,6 @@ class Controller_Admin_Format extends Controller_Admin {
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
-     * @throws RandomException
      */
 	public function before()
 	{

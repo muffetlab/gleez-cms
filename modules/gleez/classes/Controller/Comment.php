@@ -1,7 +1,5 @@
 <?php
 
-use Random\RandomException;
-
 /**
  * Comment Controller
  *
@@ -20,7 +18,6 @@ class Controller_Comment extends Template {
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
-     * @throws RandomException
      * @uses  ACL::required
      */
 	public function before()

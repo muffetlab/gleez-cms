@@ -1,7 +1,5 @@
 <?php
 
-use Random\RandomException;
-
 /**
  * Abstract template class for automatic templating
  *
@@ -234,7 +232,7 @@ abstract class Template extends Controller {
      * @throws Http_Exception_415 If none of the accept-types are supported
      * @throws Kohana_Exception
      * @throws View_Exception
-     * @throws RandomException
+     * @throws Exception
      */
 	public function before()
 	{

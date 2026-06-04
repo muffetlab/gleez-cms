@@ -1,7 +1,5 @@
 <?php
 
-use Random\RandomException;
-
 /**
  * Admin Term Controller
  *
@@ -21,7 +19,6 @@ class Controller_Admin_Term extends Controller_Admin {
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
-     * @throws RandomException
      * @uses  ACL::required
      */
 	public function before()
