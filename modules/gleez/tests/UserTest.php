@@ -25,12 +25,11 @@ class Gleez_UserTest extends Unittest_TestCase
 		$result = $user->login($info);
 		$this->assertInstanceOf('Model_user', $result);
 	}
-	
-	/**
-	 * @expectedException Validation_Exception
-	 */
-	public function testInvalidUsers()
+
+    public function testInvalidUsers()
 	{
+        $this->expectException(Validation_Exception::class);
+
         $user = ORM::factory('User');
 		$user->login(array('name' => 'sundar1', 'password' => 'gleez1co'));
 	}
