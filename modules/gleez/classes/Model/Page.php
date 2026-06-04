@@ -51,15 +51,15 @@ class Model_Page extends Post {
 	 *
 	 * This method should be used for loading in post data, etc.
 	 *
-	 * @param   array  $values    Array of `column => val`
-	 * @param   array  $expected  Array of keys to take from `$values` [Optional]
+     * @param array $values Array of column => value pairs
+     * @param array $columns Array of columns to be set
 	 * @return  ORM
 	 */
-    public function values(array $values, array $expected = NULL): Kohana_ORM
+    public function values(array $values, array $columns): Kohana_ORM
     {
 		$this->type = $this->_post_type;
 
-		return parent::values($values, $expected);
+        return parent::values($values, $columns);
 	}
 
     /**
