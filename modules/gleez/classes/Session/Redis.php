@@ -162,7 +162,7 @@ class Session_Redis extends Session {
 		try
 		{
 			// Execute the query
-			$this->_redis->delete($this->_prefix . $this->_session_id);
+            $this->_redis->del($this->_prefix . $this->_session_id);
 
 			// Delete the cookie
 			Cookie::delete($this->_name);
