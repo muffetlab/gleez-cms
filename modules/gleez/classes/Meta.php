@@ -29,8 +29,7 @@ class Meta {
      *
      * @param string $handle The link URL [Optional]
      * @param array $attrs An associative array of link settings [Optional]
-     * @return  array   Setting returns asset array
-     * @return  string  Getting returns asset content
+     * @return array|string Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @uses    URL::site
      * @uses    URL::is_absolute
@@ -58,9 +57,7 @@ class Meta {
 	 * Get a single Meta Link
 	 *
 	 * @param   string  $handle  Asset name
-	 *
-	 * @return  string
-	 *
+     * @return string|null Asset HTML or null when not found
 	 * @uses    Arr::get
 	 * @uses    HTML::attributes
 	 */
@@ -68,7 +65,7 @@ class Meta {
 	{
 		if ( ! isset(self::$links[$handle]))
 		{
-			return FALSE;
+            return null;
 		}
 
 		$asset       = self::$links[$handle];
@@ -99,13 +96,12 @@ class Meta {
 	 * Get all Meta Links
 	 *
 	 * @return  string   Asset HTML
-	 * @return  boolean  FALSE when Meta::$links is empty
 	 */
 	public static function all_links()
 	{
 		if (empty(self::$links))
 		{
-			return FALSE;
+            return '';
 		}
 
 		$assets = array();
@@ -115,7 +111,9 @@ class Meta {
 			$assets[] = self::get_link($handle);
 		}
 
-		return implode(PHP_EOL, $assets).PHP_EOL;
+        $assets = array_filter($assets);
+
+        return empty($assets) ? '' : implode(PHP_EOL, $assets) . PHP_EOL;
 	}
 
 	/**
@@ -126,9 +124,7 @@ class Meta {
 	 * @param   string  $handle  The meta tag name [Optional]
 	 * @param   string  $value	 The meta tag value [Optional]
 	 * @param   array   $attrs   An associative array of tag settings [Optional]
-	 *
-	 * @return  array   Setting returns asset array
-	 * @return  string  Getting returns asset content
+     * @return array|string Setting returns asset array, getting returns asset HTML
 	 */
 	public static function tags($handle = NULL, $value = NULL, $attrs = array())
 	{
@@ -159,17 +155,14 @@ class Meta {
 	 * Get a single Meta tag
 	 *
 	 * @param   string   $handle  Asset name
-	 *
-	 * @return  string   Asset HTML
-	 * @return  boolean  When $handle not exists
-	 *
+     * @return string|null Asset HTML or null when not found
 	 * @uses    HTML::attributes
 	 */
 	public static function get_tag($handle)
 	{
 		if ( ! isset(self::$tags[$handle]))
 		{
-			return FALSE;
+            return null;
 		}
 
 		$asset       = self::$tags[$handle];
@@ -204,13 +197,12 @@ class Meta {
 	 * Get all Meta Tags
 	 *
 	 * @return  string   Asset HTML
-	 * @return  boolean  FALSE when Meta::$tags is empty
 	 */
 	public static function all_tags()
 	{
 		if (empty(self::$tags))
 		{
-			return FALSE;
+            return '';
 		}
 
 		$assets = array();
@@ -220,7 +212,9 @@ class Meta {
 			$assets[] = self::get_tag($handle);
 		}
 
-		return implode(PHP_EOL, $assets).PHP_EOL;
+        $assets = array_filter($assets);
+
+        return empty($assets) ? '' : implode(PHP_EOL, $assets) . PHP_EOL;
 	}
 
 	/**
