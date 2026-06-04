@@ -149,7 +149,7 @@ class Assets {
 	 *
 	 * @param   string  $handle  Asset name
 	 * @param   string  $format  Format that be returned [Optional]
-	 * @return  string  Asset HTML
+     * @return string|null Asset HTML or null if not found
 	 * @throws  Exception
 	 * @uses    HTML::style
 	 */
@@ -157,7 +157,7 @@ class Assets {
 	{
 		if ( ! isset(self::$css[$handle]))
 		{
-			return FALSE;
+            return null;
 		}
 
 		$asset = self::$css[$handle];
@@ -178,14 +178,14 @@ class Assets {
 	 * Get all CSS assets, sorted by dependencies
 	 *
 	 * @param   string  $format  Format that be returned [Optional]
-	 * @return  string  Asset HTML
+     * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
 	 */
 	public static function all_css($format = self::FORMAT_TAG)
 	{
 		if (empty(self::$css))
 		{
-			return FALSE;
+            return $format === self::FORMAT_AJAX ? [] : '';
 		}
 
 		$assets = array();
@@ -195,10 +195,12 @@ class Assets {
 			$assets[] = self::get_css($handle, $format);
 		}
 
+        $assets = array_filter($assets);
+
 		switch ($format)
 		{
 			case self::FORMAT_TAG:
-				return implode(PHP_EOL, $assets).PHP_EOL;
+                return empty($assets) ? '' : implode(PHP_EOL, $assets) . PHP_EOL;
             case self::FORMAT_FILENAME:
 				return self::compile($assets, $format, 'css');
             case self::FORMAT_AJAX:
@@ -264,7 +266,7 @@ class Assets {
 	 *
 	 * @param   string  $handle  Asset name
 	 * @param   string  $format  Format that be returned [Optional]
-	 * @return  string  Asset HTML
+     * @return string|null Asset HTML or null if not found
 	 * @throws  Exception
 	 * @uses    HTML::script
 	 */
@@ -272,7 +274,7 @@ class Assets {
 	{
 		if ( ! isset(self::$js[$handle]))
 		{
-			return FALSE;
+            return null;
 		}
 
 		$asset = self::$js[$handle];
@@ -294,14 +296,14 @@ class Assets {
 	 *
 	 * @param   boolean  $footer  FALSE for head, TRUE for footer
 	 * @param   string   $format  Format that be returned [Optional]
-	 * @return  string   Asset HTML
+     * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
 	 */
 	public static function all_js($footer = FALSE, $format = self::FORMAT_TAG)
 	{
 		if (empty(self::$js))
 		{
-			return FALSE;
+            return $format === self::FORMAT_AJAX ? [] : '';
 		}
 
 		self::_init_js();
@@ -312,7 +314,7 @@ class Assets {
 
 		if (empty($assets))
 		{
-			return FALSE;
+            return $format === self::FORMAT_AJAX ? [] : '';
 		}
 
         $sorted = [];
@@ -322,10 +324,12 @@ class Assets {
 			$sorted[] = self::get_js($handle, $format);
 		}
 
+        $sorted = array_filter($sorted);
+
 		switch ($format)
 		{
 			case self::FORMAT_TAG:
-				return implode(PHP_EOL, $sorted).PHP_EOL;
+                return empty($sorted) ? '' : implode(PHP_EOL, $sorted) . PHP_EOL;
             case self::FORMAT_FILENAME:
 				return self::compile($sorted);
             case self::FORMAT_AJAX:
@@ -382,14 +386,14 @@ class Assets {
 	 *
 	 * @param   string  $handle  Asset name
 	 * @param   string  $nonce  CSP nonce [Optional]
-	 * @return  string  Asset HTML
+     * @return string|null Asset HTML or null if not found
 	 * @uses    HTML::attributes
 	 */
 	public static function get_codes($handle, $nonce = NULL)
 	{
 		if ( ! isset(self::$codes[$handle]))
 		{
-			return FALSE;
+            return null;
 		}
 
 		$asset = self::$codes[$handle];
@@ -410,7 +414,7 @@ class Assets {
 	{
 		if (empty(self::$codes))
 		{
-			return FALSE;
+            return '';
 		}
 
 		self::_init_js();
@@ -421,7 +425,7 @@ class Assets {
 
 		if (empty($assets))
 		{
-			return FALSE;
+            return '';
 		}
 
         $sorted = [];
@@ -431,7 +435,9 @@ class Assets {
 			$sorted[] = self::get_codes($handle, $nonce);
 		}
 
-		return implode(PHP_EOL, $sorted).PHP_EOL;
+        $sorted = array_filter($sorted);
+
+        return empty($sorted) ? '' : implode(PHP_EOL, $sorted) . PHP_EOL;
 	}
 
 	/**
@@ -491,13 +497,13 @@ class Assets {
 	 *
 	 * @param   string  $group   Group name
 	 * @param   string  $handle  Asset name
-	 * @return  string  Asset content
+	 * @return string|null Asset content or null if not found
 	 */
 	public static function get_group($group, $handle)
 	{
 		if ( ! isset(self::$groups[$group]) OR ! isset(self::$groups[$group][$handle]))
 		{
-			return FALSE;
+			return null;
 		}
 
 		return self::$groups[$group][$handle]['content'];
@@ -513,7 +519,7 @@ class Assets {
 	{
 		if ( ! isset(self::$groups[$group]))
 		{
-			return FALSE;
+			return '';
 		}
 
 		$assets = array();
@@ -523,7 +529,9 @@ class Assets {
 			$assets[] = self::get_group($group, $handle);
 		}
 
-		return implode(PHP_EOL, $assets);
+		$assets = array_filter($assets);
+
+		return empty($assets) ? '' : implode(PHP_EOL, $assets) . PHP_EOL;
 	}
 
 	/**
