@@ -363,8 +363,7 @@ class System {
 	public static function faGetArray($path, $class_prefix = 'fa-')
 	{
 		if(!file_exists($path)) {
-			//if path is incorrect or file does not exist, stop.
-			return false;
+            return [];
 		}
 
 		$css = file_get_contents($path);
@@ -400,7 +399,7 @@ class System {
 	{
 		if( ! is_array($array) )
 		{
-			return false;//Do not proceed if is not array
+            return [];
 		}
 
 		$temp = array();
