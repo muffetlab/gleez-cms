@@ -295,7 +295,7 @@ class Model_Comment extends Gleez_Model
      *
      * @param boolean|string $action The action view|edit|delete default view [Optional]
      * @param Model_User|null $user The user object to check permission, defaults to logged in user [Optional]
-     * @return  Post
+     * @return Model_Comment
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception

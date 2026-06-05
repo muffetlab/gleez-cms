@@ -216,7 +216,7 @@ class Request extends Kohana_Request
 	 * Set or get the response for this request
 	 *
 	 * @param   Response  $response  Response to apply to this request
-	 * @return  Response
+     * @return Request|Response
 	 * @return  void
 	 */
 	public function response(Response $response = NULL)

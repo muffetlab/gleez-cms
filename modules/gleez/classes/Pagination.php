@@ -367,9 +367,7 @@ class Pagination {
 	 * [!!] Note: This doesn't change the initial Route
 	 *
 	 * @param	Request  $request  Request [Optional]
-	 *
-	 * @return  Request     Route if used as getter
-	 * @return  Pagination  Chainable as setter
+     * @return Request|Pagination Route if used as getter, chainable as setter
 	 */
 	public function request(Request $request = NULL)
 	{
@@ -387,8 +385,7 @@ class Pagination {
      * Route setter/getter
      *
      * @param mixed $route String route name/ Route object [Optional]
-     * @return  Route       Route if used as getter
-     * @return  Pagination  Chainable as setter
+     * @return Route|Pagination Route if used as getter, chainable as setter
      * @throws Kohana_Exception
      * @uses    Route::get
      */
@@ -415,9 +412,7 @@ class Pagination {
 	 * Route parameters setter/getter
 	 *
 	 * @param   array  $route_params  Route parameters to set [Optional]
-	 *
-	 * @return  array       Route parameters if used as getter
-	 * @return  Pagination  Chainable as setter
+     * @return array|Pagination Route parameters if used as getter, chainable as setter
 	 */
 	public function route_params(array $route_params = NULL)
 	{
@@ -435,9 +430,7 @@ class Pagination {
 	 * HMVC URI setter/getter
 	 *
 	 * @param   string  $uri  Route uri to set [Optional]
-	 *
-	 * @return  string      Route uri if used as getter
-	 * @return  Pagination  Chainable as setter
+     * @return string|Pagination Route uri if used as getter, chainable as setter
 	 */
 	public function uri($uri = NULL)
 	{

@@ -604,9 +604,7 @@ class ORM_MPTT extends Gleez_Model
 	 * Returns the root node of the current object instance.
 	 *
 	 * @param   integer $scope  scope [Optional]
-	 *
-	 * @return  ORM_MPTT|boolean
-	 *
+     * @return  Model|ORM
 	 * @throws  Kohana_Exception
 	 */
 	public function root($scope = NULL)
@@ -626,7 +624,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns all root node's
      *
-     * @return  ORM_MPTT
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
 	public function roots()
@@ -638,9 +636,9 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Returns the parent node of the current node
-	 * 
-	 * @return  ORM_MPTT
-	 */
+     *
+     * @return Model|ORM|null
+     */
 	public function parent()
 	{
 		if ($this->is_root())
@@ -656,7 +654,7 @@ class ORM_MPTT extends Gleez_Model
      * @param boolean $with_self include current node [optional
      * @param string $direction direction to order the left column by [optional
      * @param boolean $direct_parent_only retrieve the direct parent only [Optional]
-     * @return  ORM_MPTT
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
 	public function parents($root = TRUE, $with_self = FALSE, $direction = 'ASC', $direct_parent_only = FALSE)
@@ -690,7 +688,7 @@ class ORM_MPTT extends Gleez_Model
      * @param boolean $self include the current node [Optional]
      * @param string $direction direction to order the left column by [Optional]
      * @param integer|boolean $limit number of children to get [Optional]
-     * @return  ORM_MPTT
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
 	public function children($self = FALSE, $direction = 'ASC', $limit = FALSE)
@@ -727,7 +725,7 @@ class ORM_MPTT extends Gleez_Model
      *
      * @param boolean $self include the current node [Optional]
      * @param string $direction direction to order the left column by [Optional]
-     * @return  ORM_MPTT
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
 	public function siblings($self = FALSE, $direction = 'ASC')
@@ -752,7 +750,7 @@ class ORM_MPTT extends Gleez_Model
      *
      * @param boolean $self include the current node [Optional]
      * @param string $direction direction to order the left column by [Optional]
-     * @return  ORM_MPTT
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
 	public function leaves($self = FALSE, $direction = 'ASC')
@@ -768,7 +766,7 @@ class ORM_MPTT extends Gleez_Model
      * @param boolean $direct_children_only include direct children only [Optional]
      * @param boolean $leaves_only include leaves only [Optional]
      * @param integer|boolean $limit number of results to get [Optional]
-     * @return  ORM_MPTT
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
 	public function descendants($self = FALSE, $direction = 'ASC', $direct_children_only = FALSE, $leaves_only = FALSE, $limit = FALSE)

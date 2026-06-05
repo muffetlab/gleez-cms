@@ -110,8 +110,7 @@ class ACL {
 	 *
 	 * @param   string  $name          Permission name
 	 * @param   array   $access_names  Access keys
-	 *
-	 * @return  ACL
+     * @return  array
 	 */
 	public static function set($name, array $access_names)
 	{

@@ -248,7 +248,7 @@ class Datatables {
 	 * Set or get columns
 	 *
 	 * @param	array  $columns  Columns for setting [Optional]
-	 * @return  $this
+     * @return array|Datatables
 	 */
 	public function columns(array $columns = NULL)
 	{

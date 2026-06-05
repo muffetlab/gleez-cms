@@ -80,8 +80,8 @@ class Format {
 	 * Prepare formats
 	 *
 	 * @param   array  $formats  Available formats
-	 * @return  Gleez_Format
-	 * @uses    HTML::chars
+     * @return  Format
+     * @uses    HTML::chars
 	 */
 	protected function _prepare(array $config)
 	{

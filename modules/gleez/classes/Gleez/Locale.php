@@ -48,20 +48,20 @@ class Gleez_Locale {
 	protected $_locale;
 
 	/**
-	 * Browser detected locale
-	 * @var string
+     * Browser detected locales
+     * @var array
 	 */
 	protected static $_client_locales;
 
 	/**
-	 * Environment detected locale
-	 * @var string
+     * Environment detected locales
+     * @var array
 	 */
 	protected static $_environment_locales;
 
 	/**
-	 * Automatic detected locale
-	 * @var string
+     * Automatic detected locales
+     * @var array
 	 */
 	protected static $_detected;
 

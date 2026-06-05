@@ -42,9 +42,8 @@ class Filter {
 	 *
 	 * @param   string  $name       Filter name
 	 * @param   array   $callbacks  Filter callbacks
-	 *
-	 * @return  Route
-	 */
+     * @return  Filter
+     */
 	public static function set($name, $callbacks = array())
 	{
 		return Filter::$_filters[$name] = new Filter($name, $callbacks);
@@ -397,8 +396,7 @@ class Filter {
 	 * If no parameter is passed, this method will act as a getter.
 	 *
 	 * @param   string  $title  Title
-	 *
-	 * @return  array|Filter
+     * @return Filter|string
 	 */
 	public function title($title = NULL)
 	{
