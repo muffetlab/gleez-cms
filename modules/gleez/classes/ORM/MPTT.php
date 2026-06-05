@@ -192,7 +192,7 @@ class ORM_MPTT extends Gleez_Model
      * Overloaded save method.
      *
      * @param Validation|null $validation Validation object
-     * @return  mixed
+     * @return Kohana_ORM
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
@@ -203,20 +203,16 @@ class ORM_MPTT extends Gleez_Model
 		{
 			return $this->make_root($validation);
 		}
-		elseif ($this->loaded() === TRUE)
-		{
-			return parent::save($validation);
-		}
 
-		return FALSE;
-	}
+        return parent::save($validation);
+    }
 
     /**
      * Creates a new node as root, or moves a node to root
      *
      * @param Validation $validation Validation object
      * @param integer $scope The new scope [Optional]
-     * @return  ORM_MPTT|boolean
+     * @return ORM_MPTT
      * @throws Kohana_Exception|ReflectionException
      */
 	public function make_root(Validation $validation = NULL, $scope = NULL)
@@ -238,7 +234,7 @@ class ORM_MPTT extends Gleez_Model
 		}
 		elseif ( ! $this->scope_available($scope))
 		{
-			return FALSE;
+            throw new Kohana_Exception('Scope :scope is not available', [':scope' => $scope]);
 		}
 
 		$this->{$this->scope_column} = $scope;
@@ -365,8 +361,9 @@ class ORM_MPTT extends Gleez_Model
 	protected function insert($target, $copy_left_from, $left_offset, $level_offset)
 	{
 		// Insert should only work on new nodes.. if its already it the tree it needs to be moved!
-		if ($this->loaded())
-			return FALSE;
+        if ($this->loaded()) {
+            throw new Kohana_Exception('Cannot insert node because it is already loaded');
+        }
 		 
 		 
 		if ( ! $target instanceof $this)
@@ -375,7 +372,7 @@ class ORM_MPTT extends Gleez_Model
 		 
 			if ( ! $target->loaded())
 			{
-				return FALSE;
+                throw new Kohana_Exception('Target node not found');
 			}
 		}
 		else
@@ -496,8 +493,9 @@ class ORM_MPTT extends Gleez_Model
      */
     protected function move($target, $left_column, $left_offset, $level_offset, $allow_root_target)
 	{
-		if ( ! $this->loaded())
-			return FALSE;
+        if (!$this->loaded()) {
+            throw new Kohana_Exception('Cannot move node because it is not loaded');
+        }
 	  
 		// store the changed parent id before reload
 		$parent_id = $this->{$this->parent_column};
@@ -516,7 +514,7 @@ class ORM_MPTT extends Gleez_Model
 				if ( ! $target->loaded())
 				{
 					$this->_db->rollback();
-					return FALSE;
+                    throw new Kohana_Exception('Target node not found');
 				}
 			}
 			else
@@ -530,7 +528,7 @@ class ORM_MPTT extends Gleez_Model
 				OR ($allow_root_target === FALSE AND $target->is_root()))
 			{
 				$this->_db->rollback();
-				return FALSE;
+                throw new Kohana_Exception('Invalid target for node move');
 			}
 
 			if ($level_offset > 0)
@@ -989,7 +987,7 @@ class ORM_MPTT extends Gleez_Model
 		// check if using target or self as root and load if not loaded
 		if (is_null($target) AND ! $this->loaded())
 		{
-			return FALSE;
+            throw new Kohana_Exception('Cannot rebuild tree: node is not loaded');
 		}
 		elseif (is_null($target))
 		{
