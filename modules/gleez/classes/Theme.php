@@ -112,7 +112,7 @@ class Theme {
 	 * Gets info about theme
 	 *
 	 * @param   boolean|string  $name  Theme name [Optional]
-     * @return object An object containing information about theme
+     * @return object|null An object containing information about theme
 	 */
 	public static function getTheme($name = false)
 	{
@@ -125,7 +125,7 @@ class Theme {
 			return self::$themes[$name];
 		}
 
-		return false;
+        return null;
 	}
 
 	/**
