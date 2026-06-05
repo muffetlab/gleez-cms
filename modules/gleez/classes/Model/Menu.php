@@ -135,10 +135,10 @@ class Model_Menu extends ORM_MPTT {
 	/**
 	 * Creates unique slug for menu
 	 *
-	 * @param   string  $str
+     * @param string $str
 	 * @return  string
 	 */
-	private function _unique_slug($str)
+    private function _unique_slug(string $str)
 	{
 		$i = 1;
 		$original = $str;
@@ -199,7 +199,7 @@ class Model_Menu extends ORM_MPTT {
      * @throws  Kohana_Exception
      * @throws ReflectionException
      */
-	public function move_to($target, $action = 'after')
+    public function move_to(int $target, string $action = 'after')
 	{
 		// Find the target
         $target = ORM::factory('Menu', (int) $target);

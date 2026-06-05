@@ -77,14 +77,14 @@ class System {
 	 * To create the nested structure, the `$recursive` parameter
 	 * to mkdir() must be specified.
 	 *
-	 * @param   string  $path       The directory path
-	 * @param   integer $mode       Set permission mode (as in chmod) [Optional]
-	 * @param   boolean $recursive  Create directories recursively if necessary [Optional]
+     * @param string $path The directory path
+     * @param integer $mode Set permission mode (as in chmod) [Optional]
+     * @param boolean $recursive Create directories recursively if necessary [Optional]
 	 * @return  boolean             Returns TRUE on success or FALSE on failure
 	 *
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
-	public static function mkdir($path, $mode = 0777, $recursive = TRUE)
+    public static function mkdir(string $path, int $mode = 0777, bool $recursive = TRUE)
 	{
 		$out = FALSE;
 		$oldumask = umask(0);
@@ -226,13 +226,11 @@ class System {
 	 * 	$id = System::sanitize_id($id);
 	 * ~~~
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   string  $id  ID to sanitize
-	 *
 	 * @return  string
+     * @since   1.2.0
 	 */
-	public static function sanitize_id($id)
+    public static function sanitize_id(string $id)
 	{
 		// Change slashes and spaces to underscores
 		return str_replace(array(
@@ -295,12 +293,11 @@ class System {
 	/**
 	 * Get PHP version
 	 *
-	 * @since   1.6.0
-	 *
 	 * @param  boolean $idOnly Return PHP version as an integer? [Optional]
 	 * @return string
+     * @since   1.6.0
 	 */
-	public static function getPhpVersion($idOnly = false)
+    public static function getPhpVersion(bool $idOnly = false)
 	{
 		return $idOnly ? PHP_VERSION_ID : PHP_VERSION;
 	}
@@ -339,14 +336,12 @@ class System {
 	 *
 	 * Prevents cryptographic side-channel attacks (timing attacks, specifically).
 	 *
-	 * @since  1.4.0  Introduced
-	 *
 	 * @param  string $a cryptographic hash
-	 * @param  string $b cryptographic hash
-	 *
+     * @param string $b cryptographic hash
 	 * @return bool
+     * @since  1.4.0  Introduced
 	 */
-	public static function equalsHashes($a, $b)
+    public static function equalsHashes(string $a, string $b)
 	{
 		return self::hashEquals($a, $b);
 	}
@@ -354,13 +349,13 @@ class System {
 	/**
 	* Font Awesome icons as array
 	*
-	* @param    string   $path font awesome css file path
-	* @param    string   $class_prefix change this if the class names does not start with `fa-`
+     * @param string $path font awesome css file path
+     * @param string $class_prefix change this if the class names does not start with `fa-`
 	* @return   array
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
 	* @license  MIT
 	*/
-	public static function faGetArray($path, $class_prefix = 'fa-')
+    public static function faGetArray(string $path, string $class_prefix = 'fa-')
 	{
 		if(!file_exists($path)) {
             return [];
@@ -389,13 +384,13 @@ class System {
 	/**
 	* Readable class name for fontawesome. Ex: fa-video-camera => Video Camera
 	*
-	* @param    array    $array font awesome array. Create it using `getArray` method
-	* @param    string   $class_prefix change this if the class names does not start with `fa-`
+     * @param array $array font awesome array. Create it using `getArray` method
+     * @param string $class_prefix change this if the class names does not start with `fa-`
 	* @return   array
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
 	* @license  MIT
 	*/
-	public static function faReadableName($array, $class_prefix = 'fa-')
+    public static function faReadableName(array $array, string $class_prefix = 'fa-')
 	{
 		if( ! is_array($array) )
 		{

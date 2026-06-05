@@ -130,7 +130,7 @@ class HTMLFilter {
      * @used   Profiler::start
      * @throws Kohana_Exception
      */
-    public function __construct($text, array $filter = NULL)
+    public function __construct(string $text, array $filter = NULL)
 	{
 		// Be sure to only profile if it's enabled
 		if (Gleez::$profiling)
@@ -203,7 +203,7 @@ class HTMLFilter {
      * @return  HTMLFilter
      * @throws Kohana_Exception
      */
-    public static function factory($text, array $filter = NULL)
+    public static function factory(string $text, array $filter = NULL)
 	{
         return new HTMLFilter($text, $filter);
 	}
@@ -222,13 +222,11 @@ class HTMLFilter {
 	 * Based on [kses](http://sourceforge.net/projects/kses) by Ulf Harnhammar.
 	 * For examples of various XSS attacks, see: http://ha.ckers.org/xss.html.
 	 *
-	 * @param   string  $string  Input string
-	 *
+     * @param string $string Input string
 	 * @return  string
-	 *
 	 * @uses    Valid::utf8
 	 */
-	public function filter_xss( $string )
+    public function filter_xss(string $string)
 	{
 		// Only operate on valid UTF-8 strings. This is necessary to prevent cross
 		// site scripting issues on Internet Explorer 6.
@@ -337,11 +335,10 @@ class HTMLFilter {
 	 * Double-escaped entities will only be decoded once ("&amp;lt;" becomes "&lt;",
 	 * not "<").
 	 *
-	 * @param   string $text  The text to decode entities in.
-	 *
+     * @param string $text The text to decode entities in.
 	 * @return  string
 	 */
-	private function decode_entities($text)
+    private function decode_entities(string $text)
 	{
 		return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 	}
@@ -351,11 +348,10 @@ class HTMLFilter {
 	 *
 	 * Returns cleaned up version of the HTML attributes
 	 *
-	 * @param   string  $attr  The html attribute to process
-	 *
+     * @param string $attr The html attribute to process
 	 * @return  array
 	 */
-	private function xss_attributes($attr)
+    private function xss_attributes(string $attr)
 	{
 		$attrarr  = array();
 		$mode     = 0;
@@ -484,10 +480,10 @@ class HTMLFilter {
 	 *
 	 * Returns cleaned up and HTML-escaped version of `$string`
 	 *
-	 * @param   string   $string  The string with the attribute value
+     * @param string $string The string with the attribute value
      * @return  string
 	 */
-    private function xss_bad_protocol($string)
+    private function xss_bad_protocol(string $string)
     {
         // Get the plain text representation of the attribute value (i.e. its meaning).
         $string = $this->decode_entities($string);
@@ -503,11 +499,10 @@ class HTMLFilter {
 	 * This function must be called for all URIs within user-entered input prior
 	 * to being output to an HTML attribute value.
 	 *
-	 * @param   string  $uri  A plain-text URI that might contain dangerous protocols
-	 *
+     * @param string $uri A plain-text URI that might contain dangerous protocols
 	 * @return  string
 	 */
-	private function strip_dangerous_protocols($uri)
+    private function strip_dangerous_protocols(string $uri)
 	{
 		static $allowed_protocols;
 

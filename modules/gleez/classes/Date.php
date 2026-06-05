@@ -211,7 +211,7 @@ class Date extends Kohana_Date
 	 *
 	 * @todo   Need add i18n ability
 	 */
-	public static function date_time_formats($timestamp = FALSE)
+    public static function date_time_formats(bool $timestamp = FALSE)
 	{
 		$date_time_format = array(
 			'l, F j, Y - H:i',
@@ -268,12 +268,12 @@ class Date extends Kohana_Date
 	/**
 	 * Return available date formats
 	 *
-	 * @param  boolean $timestamp Unix timestamp [Optional]
+     * @param boolean $timestamp Unix timestamp [Optional]
 	 * @return array
 	 *
 	 * @todo   Need add i18n ability
 	 */
-	public static function date_formats($timestamp = FALSE)
+    public static function date_formats(bool $timestamp = FALSE)
 	{
 		$date_format = array(
 			'l, F j, Y',
@@ -319,12 +319,12 @@ class Date extends Kohana_Date
 	/**
 	 * Return available time formats
 	 *
-	 * @param  boolean $timestamp Unix timestamp [Optional]
+     * @param boolean $timestamp Unix timestamp [Optional]
 	 * @return array
 	 *
 	 * @todo   Need add i18n ability
 	 */
-	public static function time_formats($timestamp = FALSE)
+    public static function time_formats(bool $timestamp = FALSE)
 	{
 		$time_format = array(
 			'g:i:s a',
@@ -353,12 +353,12 @@ class Date extends Kohana_Date
      * Return a unix timestamp in a user specified format including date and time
      *
      * @param integer $timestamp Unix timestamp
-     * @param string $format Timestamp format [Optional]
+     * @param string|null $format Timestamp format [Optional]
      * @return string
      * @throws Exception
      * @uses   Config::get
      */
-	public static function date_time($timestamp, $format = NULL)
+    public static function date_time(int $timestamp, string $format = NULL)
 	{
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site')->get('date_time_format') : $format);
 	}
@@ -367,12 +367,12 @@ class Date extends Kohana_Date
      * Return a unix timestamp in a user specified format that's just the date
      *
      * @param integer $timestamp Unix timestamp
-     * @param string $format Timestamp format [Optional]
+     * @param string|null $format Timestamp format [Optional]
      * @return string
      * @throws Exception
      * @uses   Config::get
      */
-	public static function date_format($timestamp, $format = NULL)
+    public static function date_format(int $timestamp, string $format = NULL)
 	{
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.date_format') : $format);
 	}
@@ -386,7 +386,7 @@ class Date extends Kohana_Date
      * @throws Exception
      * @uses   Config::get
      */
-	public static function time($timestamp, $format = NULL)
+    public static function time(int $timestamp, $format = NULL)
 	{
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.time_format') : $format);
 	}

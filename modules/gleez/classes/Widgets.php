@@ -63,7 +63,7 @@ class Widgets {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-	public static function instance($region = 'right', $format = 'html')
+    public static function instance(string $region = 'right', string $format = 'html')
 	{
 		if ( ! isset(Widgets::$instance))
 		{
@@ -99,13 +99,13 @@ class Widgets {
 	/**
 	 * Add's a new widget to the widgets
 	 *
-	 * @param   string  $region  Widget region
-	 * @param   string  $name    Unique widget name
-	 * @param   string  $widget  Widget object
+     * @param string $region Widget region
+     * @param string $name Unique widget name
+     * @param string $widget Widget object
      * @return  Widgets
      * @throws  Kohana_Exception
      */
-	public function add($region, $name, $widget)
+    public function add(string $region, string $name, string $widget)
 	{
 		if ( ! is_object($widget))
 		{
@@ -137,10 +137,10 @@ class Widgets {
 	 * $widget = $region->get('login');
 	 * ~~~
 	 *
-	 * @param   string  $name  Widget name
+     * @param string $name Widget name
      * @return  object|null
 	 */
-	public function get($name)
+    public function get(string $name)
 	{
 		if ( ! isset($this->_widgets[$name]))
 		{
@@ -162,10 +162,10 @@ class Widgets {
 	 * $widget = $region->remove(FALSE, 'login');
 	 * ~~~
 	 *
-	 * @param   string  $region  Region name [Optional]
-	 * @param   string  $widget  Widget name [Optional]
+     * @param string|null $region Region name [Optional]
+     * @param string|null $widget Widget name [Optional]
 	 */
-	public function remove($region = NULL, $widget = NULL)
+    public function remove(string $region = NULL, string $widget = NULL)
 	{
 		if ( ! is_null($region))
 		{
@@ -193,10 +193,10 @@ class Widgets {
 	 * $widget = $region->region('right');
 	 * ~~~
 	 *
-	 * @param   string  $region  Region name [Optional]
+     * @param string|null $region Region name [Optional]
 	 * @return  $this|string
 	 */
-	public function region($region = NULL)
+    public function region(string $region = NULL)
 	{
 		if (is_null($region))
 		{
@@ -217,10 +217,10 @@ class Widgets {
 	 * $widget = $region->format('html');
 	 * ~~~
 	 *
-	 * @param   string  $format  Format name [Optional]
+     * @param string|null $format Format name [Optional]
 	 * @return  $this|string
 	 */
-	public function format($format = NULL)
+    public function format(string $format = NULL)
 	{
 		if (is_null($format))
 		{
@@ -252,12 +252,12 @@ class Widgets {
     /**
      * Renders the HTML output for the widgets
      *
-     * @param string $region Theme region [Optional]
-     * @param string $format Widget format [Optional]
+     * @param string|null $region Theme region [Optional]
+     * @param string|null $format Widget format [Optional]
      * @return  string  HTML widgets
      * @throws Kohana_Exception
      */
-	public function render($region = NULL, $format = NULL)
+    public function render(string $region = NULL, string $format = NULL)
 	{
 		//set region, respect $this->region();
 		if ( ! is_null($region))
@@ -295,7 +295,7 @@ class Widgets {
      * @return  object|string|null Widget object, HTML string, or null
      * @throws Kohana_Exception
      */
-    public function get_widget($name, $visible = FALSE, $format = FALSE)
+    public function get_widget(string $name, bool $visible = FALSE, bool $format = FALSE)
 	{
 		if ( ! $widget = $this->get($name))
 		{
@@ -346,9 +346,9 @@ class Widgets {
 	 * Defaults to inactive widget
 	 *
 	 * @param  array   $widget  A widget array unique name and title are required
-	 * @param  string  $module  The name of the module for this widget
+     * @param string $module The name of the module for this widget
 	 */
-	public static function install(array $widget, $module)
+    public static function install(array $widget, string $module)
 	{
 		if (isset($widget['name']) AND isset($widget['title']))
 		{
@@ -374,9 +374,9 @@ class Widgets {
 	/**
 	 * Remove the widget from database during module uninstall
 	 *
-	 * @param  string  $module  The name of the module for this widget
+     * @param string $module The name of the module for this widget
 	 */
-	public static function uninstall($module)
+    public static function uninstall(string $module)
 	{
 		try
 		{

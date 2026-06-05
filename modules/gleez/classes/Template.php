@@ -598,9 +598,9 @@ abstract class Template extends Controller {
 	/**
 	 * Set the server headers
 	 *
-	 * @param  array $headers  An associative array of server headers
+     * @param array $headers An associative array of server headers
 	 */
-	protected function _set_server_headers($headers)
+    protected function _set_server_headers(array $headers)
 	{
 		if (is_array($headers) AND ! empty($headers))
 		{
@@ -779,7 +779,7 @@ abstract class Template extends Controller {
      * @uses    CSRF::valid
      * @uses    Captcha::valid
      */
-	public function valid_post($submit = NULL)
+    public function valid_post(string $submit = NULL)
 	{
 		if ( ! $this->request->is_post())
 		{
@@ -952,10 +952,10 @@ abstract class Template extends Controller {
 	 * If JSON is going to be sent to the client, this method allows you to add
 	 * extra values to the JSON array.
 	 *
-	 * @param  string  $Key    The name of the array key to add.
-	 * @param  string  $Value  The value to be added. If empty, nothing will be added [Optional]
+     * @param string $Key The name of the array key to add.
+     * @param string $Value The value to be added. If empty, nothing will be added [Optional]
 	 */
-	public function SetJson($Key, $Value = '')
+    public function SetJson(string $Key, string $Value = '')
 	{
 		$this->_json[$Key] = $Value;
 	}
@@ -965,7 +965,7 @@ abstract class Template extends Controller {
 	 *
 	 * @param bool $Saved Whether form data was successfully saved.
 	 */
-	public function SetFormSaved($Saved = TRUE)
+    public function SetFormSaved(bool $Saved = TRUE)
 	{
 		if ($Saved === '')
 		{

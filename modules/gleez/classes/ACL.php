@@ -80,11 +80,11 @@ class ACL {
 	/**
 	 * Returns a specific permission
 	 *
-	 * @param   string  $name The name of the permission.
+     * @param string $name The name of the permission.
 	 * @return  ACL
 	 * @throws  Kohana_Exception
 	 */
-	public static function get($name)
+    public static function get(string $name)
 	{
 		if ( ! isset(self::$_all_perms[$name]))
 		{
@@ -108,11 +108,11 @@ class ACL {
 	 * );
 	 * ~~~
 	 *
-	 * @param   string  $name          Permission name
+     * @param string $name Permission name
 	 * @param   array   $access_names  Access keys
      * @return  array
 	 */
-	public static function set($name, array $access_names)
+    public static function set(string $name, array $access_names)
 	{
 		// Adds the action to the action array and returns it.
 		return self::$_all_perms[$name] = $access_names;
@@ -157,7 +157,7 @@ class ACL {
      * @uses    Cache::get
      * @uses    Arr::merge
      */
-	public static function cache($save = FALSE, $append = FALSE)
+    public static function cache(bool $save = FALSE, bool $append = FALSE)
 	{
 		$cache = Cache::instance();
 
@@ -211,16 +211,15 @@ class ACL {
 	 *   ACL::required('administer site');
 	 * ~~~
 	 *
-	 * @since     2.0
-	 *
 	 * @param     string      $perm_name  Permission name
 	 * @param     Model_User  $user       User object [Optional]
-	 * @param     callable    $callback   A callable function that execute if it is defined [Optional]
+     * @param callable|null $callback A callable function that execute if it is defined [Optional]
 	 * @param     array       $args       The callback arguments
 	 * @throws    HTTP_Exception_403 If the user doesn't have permission
 	 * @throws    Exception          if the `$callback` is a not valid callback
+     * @since     2.0
 	 */
-	public static function required($perm_name, Model_User $user = NULL, $callback = NULL, array $args = array())
+    public static function required(string $perm_name, Model_User $user = NULL, callable $callback = NULL, array $args = array())
 	{
 		if ( ! self::check($perm_name, $user))
 		{
@@ -257,7 +256,7 @@ class ACL {
      * @uses   Request::redirect()
      * @uses   Route::get()
      */
-	public static function redirect($perm_name, $route = NULL, array $uri = array())
+    public static function redirect(string $perm_name, $route = NULL, array $uri = array())
 	{
 		if ( ! self::check($perm_name))
 		{
@@ -286,7 +285,7 @@ class ACL {
      * @throws Kohana_Exception
      * @uses    User::active_user
      */
-	public static function check($perm_name, Model_User $user = NULL)
+    public static function check(string $perm_name, Model_User $user = NULL)
 	{
 		// If we weren't given an auth object
 		if (is_null($user))
@@ -326,7 +325,7 @@ class ACL {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-	public static function is_role($role)
+    public static function is_role(string $role)
 	{
 		$roles = self::site_roles();
 		return isset($roles[$role]);
@@ -445,7 +444,7 @@ class ACL {
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function post($action, $post, Model_User $user = NULL)
+    public static function post(string $action, ORM $post, Model_User $user = NULL)
 	{
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
@@ -547,7 +546,7 @@ class ACL {
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function comment($action, ORM $comment, Model_User $user = NULL)
+    public static function comment(string $action, ORM $comment, Model_User $user = NULL)
 	{
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{

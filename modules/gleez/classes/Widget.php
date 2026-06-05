@@ -33,11 +33,11 @@ abstract class Widget {
 	 * $widget = Widget::factory($name, $widget);
 	 * ~~~
 	 *
-	 * @param   string  $name    Widget name
-	 * @param   Widget  $widget  Widget object
+     * @param string $name Widget name
+     * @param Widget $widget Widget object
 	 * @return  Widget
 	 */
-	public static function factory($name, $widget)
+    public static function factory(string $name, Widget $widget)
 	{
 		// get class name if it has slash for multiple widgets, ex menu/management or static/donate
 		$split_name = explode('/', $name);

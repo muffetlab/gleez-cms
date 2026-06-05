@@ -314,10 +314,10 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	 * Private function to generate the tree with parent
 	 * for bulk update child relationship
 	 *
-	 * @param   array $tree Menu tree
+     * @param array $tree Menu tree
 	 * @return  array Generated tree
 	 */
-	private function generate_tree($tree)
+    private function generate_tree(array $tree)
 	{
 		$menu = array();
 		$ref  = array();
@@ -347,11 +347,11 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	 * Private function to calculate and generate the new ordered left,
 	 * right and level values for bulk update.
 	 *
-	 * @param   array   $tree
-	 * @param   integer  $parent
-	 * @param   integer  $level
+     * @param array $tree
+     * @param integer $parent
+     * @param integer $level
 	 */
-	private function calculate_mptt($tree, $parent = 0, $level = 2)
+    private function calculate_mptt(array $tree, int $parent = 0, int $level = 2)
 	{
 		foreach ($tree as $id => $val)
 		{

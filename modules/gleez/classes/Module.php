@@ -41,7 +41,7 @@ class Module
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public static function set_version($name, $version)
+    public static function set_version(string $name, float $version)
 	{
 		$module = self::get($name);
 
@@ -67,7 +67,7 @@ class Module
      * @return  ORM
      * @throws Kohana_Exception
      */
-	public static function get($name)
+    public static function get(string $name)
 	{
 		if (empty(self::$modules[$name]) || !(self::$modules[$name] instanceof ORM)) {
             return ORM::factory('Module')->where('name', '=', $name)->find();
@@ -83,7 +83,7 @@ class Module
      * @return ArrayObject|null An ArrayObject containing the module information from the module.info file, or null if not found
      * @throws Kohana_Exception
      */
-	public static function info($name)
+    public static function info(string $name)
 	{
 		$module_list = self::available();
 
@@ -93,10 +93,10 @@ class Module
 	/**
 	 * Check to see if a module is installed
 	 *
-	 * @param   string  $name  Module name
+     * @param string $name Module name
 	 * @return  boolean
 	 */
-	public static function is_installed($name)
+    public static function is_installed(string $name)
 	{
 		return array_key_exists($name, self::$modules);
 	}
@@ -104,10 +104,10 @@ class Module
 	/**
 	 * Check to see if a module is active
 	 *
-	 * @param   string  $name  Module name
+     * @param string $name Module name
 	 * @return  boolean
 	 */
-	public static function is_active($name)
+    public static function is_active(string $name)
 	{
 		return array_key_exists($name, self::$active);
 	}
@@ -197,7 +197,7 @@ class Module
      * @return array An array of warning or error messages to be displayed
      * @throws Kohana_Exception
      */
-	public static function can_activate($module_name)
+    public static function can_activate(string $module_name)
 	{
 		self::_add_to_path($module_name);
 		$messages = array();
@@ -220,7 +220,7 @@ class Module
 	 * @param string $module_name
 	 * @return array an array of warning or error messages to be displayed
 	 */
-	public static function can_deactivate($module_name)
+    public static function can_deactivate(string $module_name)
 	{
 		$data = (object) array("module" => $module_name, "messages" => array());
 		self::event("pre_deactivate", $data);
@@ -236,7 +236,7 @@ class Module
      * @param string $module_name
      * @throws Kohana_Exception|ReflectionException
      */
-	public static function install($module_name)
+    public static function install(string $module_name)
 	{
 		self::_add_to_path($module_name);
 
@@ -329,7 +329,7 @@ class Module
 	 * @throws Cache_Exception
 	 * @throws Exception
 	 */
-	public static function upgrade($module_name)
+    public static function upgrade(string $module_name)
 	{
 		//Its safe to call here, migrations wont run twice. It runs only if not already run
         self::migrate($module_name);
@@ -382,7 +382,7 @@ class Module
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	static function activate($module_name)
+    static function activate(string $module_name)
 	{
 		$module = self::_add_to_path($module_name);
 
@@ -433,7 +433,7 @@ class Module
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	static function deactivate($module_name)
+    static function deactivate(string $module_name)
 	{
 		$installer_class = ucfirst($module_name).'_Installer';
 		if (is_callable( array($installer_class, "deactivate"))) {
@@ -464,7 +464,7 @@ class Module
      * @param string $module_name
      * @throws Kohana_Exception
      */
-	public static function uninstall($module_name)
+    public static function uninstall(string $module_name)
 	{
 		//Call DB migrations for this module
 		self::migrate($module_name, 'down');
@@ -502,7 +502,7 @@ class Module
      * @uses   Log::add
      * @uses   Arr::merge
      */
-	public static function load_modules($reset = true)
+    public static function load_modules(bool $reset = true)
 	{
 		self::$modules = array();
 		self::$active  = array();
@@ -562,11 +562,10 @@ class Module
 	/**
 	 * Check to see if a module installed and active
 	 *
-	 * @param  string  $module_name  Module name
-	 *
+     * @param string $module_name Module name
 	 * @return boolean
 	 */
-	public static function exists($module_name)
+    public static function exists(string $module_name)
 	{
 		return self::is_active($module_name);
 	}
@@ -577,7 +576,7 @@ class Module
      * @param string $name The event name
      * @param mixed ...$args Data to pass to each event handler
 	 */
-    public static function event($name, ...$args)
+    public static function event(string $name, ...$args)
 	{
 		$function = str_replace(".", "_", $name);
 
@@ -622,7 +621,7 @@ class Module
      * @param mixed $return The initial return value
      * @param mixed ...$filterargs Additional arguments to pass to the action handler
 	 */
-    public static function action($action, $return, ...$filterargs)
+    public static function action(string $action, $return, ...$filterargs)
 	{
 		$function = str_replace(".", "_", $action);
 
@@ -649,7 +648,7 @@ class Module
      * @return  float   Module version
      * @throws Kohana_Exception
      */
-	public static function get_version($name)
+    public static function get_version(string $name)
 	{
 		return self::get($name)->version;
 	}
@@ -657,11 +656,11 @@ class Module
 	/**
 	 * Migrate the db of the this module
 	 *
-	 * @param   string  $module_name  Module name
-	 * @param   string  $dir          Migration direction up/down
+     * @param string $module_name Module name
+     * @param string $dir Migration direction up/down
 	 * @return  void
 	 */
-	private static function migrate($module_name, $dir = 'up')
+    private static function migrate(string $module_name, string $dir = 'up')
 	{
 		try {
 			$task = ($dir == 'down') ? 'db:migrate:down' : 'db:migrate:up';

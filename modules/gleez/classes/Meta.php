@@ -27,14 +27,14 @@ class Meta {
      *
      * Gets or sets Meta Links
      *
-     * @param string $handle The link URL [Optional]
+     * @param string|null $handle The link URL [Optional]
      * @param array $attrs An associative array of link settings [Optional]
      * @return array|string Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @uses    URL::site
      * @uses    URL::is_absolute
      */
-	public static function links($handle = NULL, array $attrs = array())
+    public static function links(string $handle = NULL, array $attrs = array())
 	{
 		// Return all meta links
 		if (is_null($handle))
@@ -56,12 +56,12 @@ class Meta {
 	/**
 	 * Get a single Meta Link
 	 *
-	 * @param   string  $handle  Asset name
+     * @param string $handle Asset name
      * @return string|null Asset HTML or null when not found
 	 * @uses    Arr::get
 	 * @uses    HTML::attributes
 	 */
-	public static function get_link($handle)
+    public static function get_link(string $handle)
 	{
 		if ( ! isset(self::$links[$handle]))
 		{
@@ -121,12 +121,12 @@ class Meta {
 	 *
 	 * Gets or sets Meta Tags
 	 *
-	 * @param   string  $handle  The meta tag name [Optional]
-	 * @param   string  $value	 The meta tag value [Optional]
-	 * @param   array   $attrs   An associative array of tag settings [Optional]
+     * @param string|null $handle The meta tag name [Optional]
+     * @param string|null $value The meta tag value [Optional]
+     * @param array $attrs An associative array of tag settings [Optional]
      * @return array|string Setting returns asset array, getting returns asset HTML
 	 */
-	public static function tags($handle = NULL, $value = NULL, $attrs = array())
+    public static function tags(string $handle = NULL, string $value = NULL, array $attrs = array())
 	{
 		// Return all meta links
 		if (is_null($handle))
@@ -154,11 +154,11 @@ class Meta {
 	/**
 	 * Get a single Meta tag
 	 *
-	 * @param   string   $handle  Asset name
+     * @param string $handle Asset name
      * @return string|null Asset HTML or null when not found
 	 * @uses    HTML::attributes
 	 */
-	public static function get_tag($handle)
+    public static function get_tag(string $handle)
 	{
 		if ( ! isset(self::$tags[$handle]))
 		{
@@ -220,11 +220,10 @@ class Meta {
 	/**
 	 * Sorts assets based on dependencies
 	 *
-	 * @param   array  $assets  Array of assets
-	 *
+     * @param array $assets Array of assets
 	 * @return  array  Sorted array of assets
 	 */
-	protected static function _sort($assets)
+    protected static function _sort(array $assets)
 	{
         return System::sortDependencies($assets);
 	}

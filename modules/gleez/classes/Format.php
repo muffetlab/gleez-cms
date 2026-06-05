@@ -139,12 +139,12 @@ class Format {
 	 *   $formats = Format::instance()->get(1);
 	 * </code>
 	 *
-	 * @param   integer  $id      Format ID
+     * @param integer $id Format ID
 	 * @param   mixed    $default Default value
 	 * @return  mixed
 	 * @uses    Arr::get
 	 */
-	public function get($id, $default = NULL)
+    public function get(int $id, $default = NULL)
 	{
 		return Arr::get(Format::$formats, $id, $default);
 	}

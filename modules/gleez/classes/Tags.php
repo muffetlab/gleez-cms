@@ -26,7 +26,7 @@ class Tags {
      * @return Tags
      * @throws Kohana_Exception
      */
-	public static function factory($config = array())
+    public static function factory(array $config = array())
 	{
 		if ( ! isset(self::$_instance))
 		{
@@ -81,7 +81,7 @@ class Tags {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-	public function tagging($tags, Model $object, $user_id = FALSE, $skip_updates = TRUE)
+    public function tagging(string $tags, Model $object, $user_id = FALSE, bool $skip_updates = TRUE)
 	{
 		if ( ! $user_id)  return FALSE;
 
@@ -132,7 +132,7 @@ class Tags {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    private function _tag_object_array($user_id, Model $object, $tags): void
+    private function _tag_object_array(int $user_id, Model $object, array $tags): void
     {
 		foreach($tags as $tag)
 		{
@@ -159,7 +159,7 @@ class Tags {
      * @throws Kohana_Exception|ReflectionException
      * @uses    Inflector::singular
      */
-    public function safe_tag($user_id, Model $object, $tag = '')
+    public function safe_tag(int $user_id, Model $object, string $tag = '')
 	{
 		$object_id = $object->id;
 
@@ -242,13 +242,11 @@ class Tags {
 	 *
 	 * The default for normalized_valid_chars is a-zA-Z0-9, or english alphanumeric.
 	 *
-	 * @param  string  $tag An individual tag in raw form that should be normalized.
-	 *
+     * @param string $tag An individual tag in raw form that should be normalized.
 	 * @return string
-	 *
 	 * @uses   URL::title
 	 */
-	public function normalize_tag($tag)
+    public function normalize_tag(string $tag)
 	{
 		if ($this->config['normalize_tags'] )
 		{
@@ -273,11 +271,10 @@ class Tags {
 	/**
 	 * Explode a string of given tags into an array
 	 *
-	 * @param  string  $tags
-	 *
+     * @param string $tags
 	 * @return array
 	 */
-	public static function explode($tags)
+    public static function explode(string $tags)
 	{
         // Use str_getcsv to handle comma-separated tags, including those with quotes.
         // This handles cases like: this, "some-company, llc", "and ""this"" w,o.rks", foo bar

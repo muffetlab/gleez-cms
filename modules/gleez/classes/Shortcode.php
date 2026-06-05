@@ -42,18 +42,15 @@ class Shortcode {
 	 * override yours or yours will override theirs depending on which order
 	 * the plugins are included and/or ran.
 	 *
-	 * @param   string          $tag       Shortcode tag to be searched in post content.
-	 * @param   callable        $callback  Hook to run when shortcode is found.
+     * @param string $tag Shortcode tag to be searched in post content.
+     * @param callable $callback Hook to run when shortcode is found.
 	 * @param   string|boolean  $asset     CSS or JS or both to be added. css|js|both [Optional]
-	 *
 	 * @return  array
-	 *
 	 * @throws  Kohana_Exception
-	 *
 	 * @uses    Assets::css
 	 * @uses    Assets::js
 	 */
-	public static function set($tag, $callback, $asset = FALSE)
+    public static function set(string $tag, callable $callback, $asset = FALSE)
 	{
 		if ( ! is_callable($callback) )
 		{
@@ -71,10 +68,10 @@ class Shortcode {
 	/**
 	 * Removes hook for shortcode
 	 *
-	 * @param   string  $tag  Shortcode tag to remove hook for.
+     * @param string $tag Shortcode tag to remove hook for.
 	 * @return  array
 	 */
-	public static function remove($tag)
+    public static function remove(string $tag)
 	{
 		if( isset(self::$_tags[$tag]) ) unset(self::$_tags[$tag]);
 
@@ -135,7 +132,7 @@ class Shortcode {
      * @throws Kohana_Exception
      * @uses    Kohana::cache
      */
-	public static function cache($save = FALSE, $append = FALSE)
+    public static function cache(bool $save = FALSE, bool $append = FALSE)
 	{
 		$cache = Cache::instance();
 
@@ -177,10 +174,10 @@ class Shortcode {
 	 * without any filtering. This might cause issues when plugins are disabled but
 	 * the shortcode will still show up in the post or content.
 	 *
-	 * @param       string          $content Content to search for shortcodes
+     * @param string $content Content to search for shortcodes
 	 * @return      string          Content with shortcodes filtered out.
 	 */
-	public static function process($content)
+    public static function process(string $content)
 	{
 		if (empty(self::$_tags) OR !is_array(self::$_tags))
 			return $content;
@@ -191,12 +188,11 @@ class Shortcode {
 
 	/**
 	 * Regular Expression callable for do_shortcode() for calling shortcode hook.
-	 * @see get_shortcode_regex for details of the match array contents.
-	 *
 	 * @param array $m Regular expression match array
 	 * @return mixed False on failure.
+     * @see get_shortcode_regex for details of the match array contents.
 	 */
-	protected static function execute( $m )
+    protected static function execute(array $m)
 	{
 		// allow [[foo]] syntax for escaping a tag
 		if ( $m[1] == '[' && $m[6] == ']' )
@@ -283,7 +279,8 @@ class Shortcode {
 	 * @param string $text
 	 * @return array List of attributes and their value.
 	 */
-	public static function parse_atts($text) {
+    public static function parse_atts(string $text)
+    {
 		$atts = array();
 		$pattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
 		$text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
@@ -326,7 +323,7 @@ class Shortcode {
 	 * @param array $atts User defined attributes in shortcode tag.
 	 * @return array Combined and filtered attribute list.
 	 */
-	public static function attributes($pairs, $atts)
+    public static function attributes(array $pairs, array $atts)
 	{
 		$atts = (array)$atts;
 		$out = array();
@@ -352,7 +349,7 @@ class Shortcode {
 	 * @param string $content Content to remove shortcode tags.
 	 * @return string Content without shortcode tags.
 	 */
-	protected static function strip( $content )
+    protected static function strip(string $content)
 	{
 		if (empty(self::$_tags) OR !is_array(self::$_tags))
 			return $content;

@@ -15,13 +15,13 @@ class URL extends Kohana_URL
      *
      * @param mixed $url The request object or string URL
      * @param object $pagination The pagination object [Optional]
-     * @param array $qstring The query string parameters [Optional]
+     * @param array|null $qstring The query string parameters [Optional]
      * @param mixed $protocol The route protocol [Optional]
      * @return  string
      * @throws Kohana_Exception
      * @uses    Request::uri
      */
-	public static function canonical($url, $pagination = NULL, $qstring = NULL, $protocol = TRUE)
+    public static function canonical($url, $pagination = NULL, array $qstring = NULL, $protocol = TRUE)
 	{
 		if ($url instanceof Request)
 		{
@@ -39,10 +39,10 @@ class URL extends Kohana_URL
 	/**
 	 * Test whether a URL is absolute
 	 *
-	 * @param   string  $url  The URL to test
+     * @param string $url The URL to test
 	 * @return  boolean
 	 */
-	public static function is_absolute($url)
+    public static function is_absolute(string $url)
 	{
 		return (strpos($url, '://') === FALSE);
 	}
@@ -56,7 +56,7 @@ class URL extends Kohana_URL
      * @since   1.0.1  Better handling
      * @since   1.0.0  Initial functional
      */
-	public static function is_remote($url)
+    public static function is_remote(string $url)
 	{
 		if((strpos($url, '://') !== FALSE))
 		{
@@ -77,10 +77,10 @@ class URL extends Kohana_URL
 	 * In addition it adds 'query_params' key which contains array of
 	 * url-decoded key-value pairs
 	 *
-	 * @param   string  $url An URL
+     * @param string $url An URL
 	 * @return  array
 	 */
-	public static function explode($url)
+    public static function explode(string $url)
 	{
 		$url = parse_url($url);
 		$url['query_params'] = array();
@@ -114,7 +114,7 @@ class URL extends Kohana_URL
      * @return  string
      * @throws Kohana_Exception
      */
-	public static function current($protocol = NULL, $index = FALSE, $with_query_params = TRUE)
+    public static function current($protocol = NULL, bool $index = FALSE, bool $with_query_params = TRUE)
 	{
 		static $uri;
 		$query = null;
@@ -138,7 +138,7 @@ class URL extends Kohana_URL
      * @return  boolean
      * @throws Kohana_Exception
      */
-	public static function is_active($url)
+    public static function is_active(string $url)
 	{
 		if (preg_match('#^[A-Z][A-Z0-9+.\-]+://#i', $url))
 		{

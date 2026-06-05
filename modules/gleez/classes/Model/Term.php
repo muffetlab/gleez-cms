@@ -128,7 +128,7 @@ class Model_Term extends ORM_MPTT {
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-	public function delete($soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
         if (is_array($this->_deleted_column) && $soft)
 		{
@@ -230,7 +230,7 @@ class Model_Term extends ORM_MPTT {
      * @uses    Validation::error
      * @uses    DB::select
      */
-	public function term_available(Validation $validation, $field)
+    public function term_available(Validation $validation, string $field)
 	{
 		$query = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 				->from($this->_table_name)
@@ -296,7 +296,7 @@ class Model_Term extends ORM_MPTT {
      * @return  NULL|string   NULL when filed, otherwise file path
      * @throws Kohana_Exception
      */
-	public function uploadImage($file)
+    public function uploadImage(array $file)
 	{
 		if (isset($file['tmp_name']) AND ! empty($file['tmp_name']))
 		{

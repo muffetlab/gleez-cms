@@ -210,14 +210,13 @@ class Post extends ORM_Versioned {
 	/**
 	 * Validation callback
 	 *
-	 * @param   string      $name        Validation name
+     * @param string $name Validation name
 	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
-	 *
+     * @param string $field Field name
 	 * @uses    Valid::numeric
 	 * @uses    Config::get
 	 */
-	public function is_valid($name, Validation $validation, $field)
+    public function is_valid(string $name, Validation $validation, string $field)
 	{
 		// Make sure we have a valid term id set
 		if ($name == 'category')
@@ -283,12 +282,11 @@ class Post extends ORM_Versioned {
 	/**
 	 * Make sure that the state is legal
 	 *
-	 * @param   string  $value  Status name
+     * @param string $value Status name
 	 * @return  boolean
-	 *
 	 * @uses    Post::status
 	 */
-	public static function valid_state($value)
+    public static function valid_state(string $value)
 	{
 		return in_array($value, array_keys(Post::status()));
 	}
@@ -399,11 +397,11 @@ class Post extends ORM_Versioned {
 	/**
 	 * Get teaser from the body either by delimiter or size
 	 *
-	 * @param   integer  $size  Defaults to 105 words [Optional]
+     * @param integer $size Defaults to 105 words [Optional]
 	 * @return  string   Teaser
 	 * @uses    Text::limit_words
 	 */
-	protected function _teaser($size = 105)
+    protected function _teaser(int $size = 105)
 	{
 		// Find where the delimiter is in the body
 		$delimiter = strpos($this->rawbody, self::TEASER_TAG);
@@ -501,14 +499,14 @@ class Post extends ORM_Versioned {
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships
 	 *
-	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
+     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
 	 * @return  Post
 	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Cache::delete
 	 * @uses    Path::delete
 	 */
-    public function delete($soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
         if (is_array($this->_deleted_column) && $soft)
 		{
@@ -645,15 +643,14 @@ class Post extends ORM_Versioned {
 	/**
 	 * Bulk actions
 	 *
-	 * @param   boolean  $list  TRUE for dropdown for bulk actions [Optional]
-	 * @param   string   $type  Type of post [Optional]
+     * @param boolean $list TRUE for dropdown for bulk actions [Optional]
+     * @param string $type Type of post [Optional]
 	 * @return  mixed    States
-	 *
 	 * @uses    Post::bulk_update
 	 * @uses    Post::bulk_convert
 	 * @uses    Module::action
 	 */
-	public static function bulk_actions($list = FALSE, $type = 'post')
+    public static function bulk_actions(bool $list = FALSE, string $type = 'post')
 	{
 		$states = array(
 			'publish'    => array(
@@ -738,7 +735,7 @@ class Post extends ORM_Versioned {
      * @param string $type Type of post [Optional]
      * @throws Kohana_Exception
      */
-	public static function bulk_update(array $ids, array $actions, $type = 'post')
+    public static function bulk_update(array $ids, array $actions, string $type = 'post')
 	{
         $posts = ORM::factory(ucfirst($type))
 			->where('id', 'IN', $ids)
@@ -766,7 +763,7 @@ class Post extends ORM_Versioned {
      * @param string $type Type of post [Optional]
      * @throws Kohana_Exception
      */
-	public static function bulk_delete(array $ids, $type = 'post')
+    public static function bulk_delete(array $ids, string $type = 'post')
 	{
         $posts = ORM::factory(ucfirst($type))
 			->where('id', 'IN', $ids)
@@ -792,7 +789,7 @@ class Post extends ORM_Versioned {
      * @uses    Path::delete
      * @throws Kohana_Exception
      */
-	public static function bulk_convert(array $ids, array $actions, $type)
+    public static function bulk_convert(array $ids, array $actions, string $type)
 	{
 		$new_type = (string) $actions[0];
 
@@ -840,7 +837,7 @@ class Post extends ORM_Versioned {
      * @throws Kohana_Exception
      * @uses    Widgets::render
      */
-	public static function widgets($content, $region = 'post_inline')
+    public static function widgets(string $content, string $region = 'post_inline')
 	{
 		// Save some cpu cycles, when the content is empty
 		if ($content == NULL or empty($content))
@@ -896,7 +893,7 @@ class Post extends ORM_Versioned {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-	public static function dcache($id, $type, $config)
+    public static function dcache(int $id, string $type, $config)
 	{
         $cache = Cache::instance();
 		$use_cache = (bool) $config->get('use_cache', FALSE);

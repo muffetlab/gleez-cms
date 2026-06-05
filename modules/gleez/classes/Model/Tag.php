@@ -86,12 +86,12 @@ class Model_Tag extends Gleez_Model
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships.
 	 *
-	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
+     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
 	 * @return  ORM
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-	public function delete($soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
         if (is_array($this->_deleted_column) && $soft)
 		{
@@ -188,7 +188,7 @@ class Model_Tag extends Gleez_Model
      * @uses    Validation::error
      * @uses    DB::select
      */
-	public function tag_available(Validation $validation, $field)
+    public function tag_available(Validation $validation, string $field)
 	{
 		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 				->from($this->_table_name)

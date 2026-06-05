@@ -245,13 +245,12 @@ class Gleez {
 	 * This function searches for the file that first matches the specified file
 	 * name and returns its path.
 	 *
-	 * @param   string  $file The file name
+     * @param string $file The file name
 	 * @return  string  The file path
 	 * @throws  Kohana_Exception Indicates that the file does not exist
-	 *
 	 * @uses    Kohana::modules
 	 */
-	protected static function find_file_custom($file)
+    protected static function find_file_custom(string $file)
 	{
 		if (file_exists($file))
 		{
@@ -294,11 +293,11 @@ class Gleez {
 	/**
 	 * Gets current Gleez version
 	 *
-	 * @param   boolean  $with_v  If set, return the version number with the prefix `v` [Optional]
-	 * @param   boolean  $full    If set, return the full version with `Gleez CMS` prefix [Optional]
+     * @param boolean $with_v If set, return the version number with the prefix `v` [Optional]
+     * @param boolean $full If set, return the full version with `Gleez CMS` prefix [Optional]
 	 * @return  string   The version of Gleez
 	 */
-	public static function getVersion($with_v = TRUE, $full = FALSE)
+    public static function getVersion(bool $with_v = TRUE, bool $full = FALSE)
 	{
 		$version = $with_v ? 'v' . Gleez::VERSION : Gleez::VERSION;
 

@@ -130,7 +130,7 @@ class Request extends Kohana_Request
      * @uses    Request::send_headers
      * @uses    URL::site
      */
-	public function redirect($url = '', $code = 302)
+    public function redirect(string $url = '', int $code = 302)
 	{
 		$referrer = $this->uri();
 
@@ -244,11 +244,11 @@ class Request extends Kohana_Request
 	 * $response = $request->create_response();
 	 * ~~~
 	 *
-	 * @param   boolean  $bind  Bind to this request
+     * @param boolean $bind Bind to this request
 	 * @return  Response
 	 * @since   3.1.0
 	 */
-	public function create_response($bind = TRUE)
+    public function create_response(bool $bind = TRUE)
 	{
 		$response = new Response(array('_protocol' => $this->protocol()));
 

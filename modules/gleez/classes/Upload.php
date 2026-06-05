@@ -41,7 +41,7 @@ class Upload extends Kohana_Upload
      * Picture validation for image upload
      *
      * @param array $file $_FILES item
-     * @param string $upload_dir Relative upload dir [Optional]
+     * @param string|null $upload_dir Relative upload dir [Optional]
      *
      * Example:
      * ~~~
@@ -59,7 +59,7 @@ class Upload extends Kohana_Upload
      * @uses    Config::get
      * @uses    File::getUnique
      */
-    public static function uploadImage($file, $upload_dir = NULL)
+    public static function uploadImage(array $file, string $upload_dir = NULL)
     {
     	if (is_null($upload_dir))
     	{

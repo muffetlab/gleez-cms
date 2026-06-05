@@ -93,10 +93,10 @@ class Text extends Kohana_Text
 	 *
 	 * @param  DOMDocument  $dom_document   The DOMDocument containing the $dom_element
 	 * @param  DOMElement   $dom_element    The element potentially containing a CDATA node
-	 * @param  string       $comment_start  String to use as a comment start marker to escape the CDATA declaration [Optional]
-	 * @param  string       $comment_end    String to use as a comment end marker to escape the CDATA declaration [Optional]
+     * @param string $comment_start String to use as a comment start marker to escape the CDATA declaration [Optional]
+     * @param string $comment_end String to use as a comment end marker to escape the CDATA declaration [Optional]
 	*/
-	private static function escape_cdata_element(DOMDocument $dom_document, DOMElement $dom_element, $comment_start = '//', $comment_end = '')
+    private static function escape_cdata_element(DOMDocument $dom_document, DOMElement $dom_element, string $comment_start = '//', string $comment_end = '')
 	{
 		foreach ($dom_element->childNodes as $node)
 		{
@@ -130,8 +130,8 @@ class Text extends Kohana_Text
      * of content in a disallowed format.
      *
      * @param string $text The text to be filtered
-     * @param integer $format_id The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
-     * @param string $langcode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
+     * @param integer|null $format_id The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
+     * @param string|null $langcode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
      * @param boolean $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to FALSE when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
      * @return  mixed
      * @throws Kohana_Exception
@@ -143,7 +143,7 @@ class Text extends Kohana_Text
      * @uses    Filter::process
      * @todo    Make @params description shorter
      */
-	public static function markup($text, $format_id = NULL, $langcode = NULL, $cache = FALSE)
+    public static function markup(string $text, int $format_id = NULL, string $langcode = NULL, bool $cache = FALSE)
 	{
 		// Save some cpu cycles if text is empty or null
 		if(empty($text))
@@ -236,13 +236,11 @@ class Text extends Kohana_Text
 	/**
 	 * Adds &lt;span class="initial"&gt; tag around the initial letter of each paragraph
 	 *
-	 * @param   string  $text  String to be processed
-	 *
+     * @param string $text String to be processed
 	 * @return  string
-	 *
 	 * @link    http://drupal.org/project/more_filters
 	 */
-	public static function initialcaps($text)
+    public static function initialcaps(string $text)
 	{
 		// Adds <span class="initial"> tag around the initial letter of each paragraph.
 		// Only add after an opening <p> tag, ignoring any leading spaces. First letter must be a letter or number (no symbols).

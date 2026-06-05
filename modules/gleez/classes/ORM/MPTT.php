@@ -211,11 +211,11 @@ class ORM_MPTT extends Gleez_Model
      * Creates a new node as root, or moves a node to root
      *
      * @param Validation $validation Validation object
-     * @param integer $scope The new scope [Optional]
+     * @param integer|null $scope The new scope [Optional]
      * @return ORM_MPTT
      * @throws Kohana_Exception|ReflectionException
      */
-	public function make_root(Validation $validation = NULL, $scope = NULL)
+    public function make_root(Validation $validation = NULL, int $scope = NULL)
 	{
 		// If node already exists, and already root, exit
 		if ($this->loaded() AND $this->is_root())
@@ -260,10 +260,10 @@ class ORM_MPTT extends Gleez_Model
 	 * Sets the parent_column value to the given targets column value. Returns the target ORM_MPTT object.
 	 * 
 	 * @param   ORM_MPTT|integer  $target  primary key value or ORM_MPTT object of target node
-	 * @param   string            $column  name of the targets nodes column to use [Optional]
+     * @param string|null $column name of the targets nodes column to use [Optional]
 	 * @return  ORM_MPTT
 	 */
-	protected function parent_from($target, $column = NULL)
+    protected function parent_from($target, string $column = NULL)
 	{
 		if ( ! $target instanceof $this)
 		{
@@ -358,7 +358,7 @@ class ORM_MPTT extends Gleez_Model
      * @throws  ORM_Validation_Exception
      * @throws Kohana_Exception|ReflectionException
      */
-	protected function insert($target, $copy_left_from, $left_offset, $level_offset)
+    protected function insert($target, string $copy_left_from, int $left_offset, int $level_offset)
 	{
 		// Insert should only work on new nodes.. if its already it the tree it needs to be moved!
         if ($this->loaded()) {
@@ -412,10 +412,10 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Deletes the current node and all descendants.
 	 *
-	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
+     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
 	 * @throws  Kohana_Exception
 	 */
-	public function delete($soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
 		// Start the transaction
 		$this->_db->begin();
@@ -603,11 +603,11 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Returns the root node of the current object instance.
 	 *
-	 * @param   integer $scope  scope [Optional]
+     * @param integer|null $scope scope [Optional]
      * @return  Model|ORM
 	 * @throws  Kohana_Exception
 	 */
-	public function root($scope = NULL)
+    public function root(int $scope = NULL)
 	{
 		if (is_null($scope) AND $this->loaded())
 		{
@@ -657,7 +657,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-	public function parents($root = TRUE, $with_self = FALSE, $direction = 'ASC', $direct_parent_only = FALSE)
+    public function parents(bool $root = TRUE, bool $with_self = FALSE, string $direction = 'ASC', bool $direct_parent_only = FALSE)
 	{
 		$suffix = $with_self ? '=' : '';
 
@@ -691,7 +691,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-	public function children($self = FALSE, $direction = 'ASC', $limit = FALSE)
+    public function children(bool $self = FALSE, string $direction = 'ASC', $limit = FALSE)
 	{
 		return $this->descendants($self, $direction, TRUE, FALSE, $limit);
 	}
@@ -699,11 +699,11 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns a full hierarchical tree, with or without scope checking.
      *
-     * @param boolean $scope only retrieve nodes with specified scope [Optional]
+     * @param boolean|null $scope only retrieve nodes with specified scope [Optional]
      * @return  object
      * @throws Kohana_Exception
      */
-	public function fulltree($scope = NULL)
+    public function fulltree(bool $scope = NULL)
 	{
 		$result = self::factory($this->object_name());
 
@@ -728,7 +728,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-	public function siblings($self = FALSE, $direction = 'ASC')
+    public function siblings(bool $self = FALSE, string $direction = 'ASC')
 	{
 		$query = self::factory($this->object_name())
 			->where($this->left_column, '>', $this->parent->left())
@@ -753,7 +753,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-	public function leaves($self = FALSE, $direction = 'ASC')
+    public function leaves(bool $self = FALSE, string $direction = 'ASC')
 	{
 		return $this->descendants($self, $direction, TRUE, TRUE);
 	}
@@ -769,7 +769,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-	public function descendants($self = FALSE, $direction = 'ASC', $direct_children_only = FALSE, $leaves_only = FALSE, $limit = FALSE)
+    public function descendants(bool $self = FALSE, string $direction = 'ASC', bool $direct_children_only = FALSE, bool $leaves_only = FALSE, $limit = FALSE)
 	{
 		$left_operator = $self ? '>=' : '>';
 		$right_operator = $self ? '<=' : '<';
@@ -812,11 +812,11 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Get all possible level values
      *
-     * @param integer $scope restrict to the given scope [Optional]
+     * @param integer|null $scope restrict to the given scope [Optional]
      * @return    Database_Result
      * @throws Kohana_Exception
      */
-	public function get_levels($scope = NULL)
+    public function get_levels(int $scope = NULL)
 	{
 		$result = DB::select($this->level_column)
 			->distinct(TRUE)
@@ -837,7 +837,7 @@ class ORM_MPTT extends Gleez_Model
      * @param integer $size size of the gap to add [Optional]
      * @throws Kohana_Exception
      */
-	protected function create_space($start, $size = 2)
+    protected function create_space(int $start, int $size = 2)
 	{
 		DB::update($this->_table_name)
 			->set(array($this->left_column => DB::expr($this->left_column.' + '.$size)))
@@ -859,7 +859,7 @@ class ORM_MPTT extends Gleez_Model
      * @param integer $size size of the gap to remove [Optional]
      * @throws Kohana_Exception
      */
-	protected function delete_space($start, $size = 2)
+    protected function delete_space(int $start, int $size = 2)
 	{
 		DB::update($this->_table_name)
 			->set(array($this->left_column => DB::expr($this->left_column.' - '.$size)))
@@ -960,7 +960,7 @@ class ORM_MPTT extends Gleez_Model
      * @return  boolean
      * @throws Kohana_Exception
      */
-	protected function scope_available($scope)
+    protected function scope_available(int $scope)
 	{
         return !self::factory($this->_object_name)
 			->where($this->scope_column, '=', $scope)
@@ -980,7 +980,7 @@ class ORM_MPTT extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function rebuild_tree($left = 1, $target = NULL)
+    public function rebuild_tree(int $left = 1, $target = NULL)
 	{
 		// check if using target or self as root and load if not loaded
 		if (is_null($target) AND ! $this->loaded())
@@ -1063,13 +1063,13 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Overloads the select_list method to support indenting
      *
-     * @param string $key first table column [Optional]
-     * @param string $value second table column [Optional]
-     * @param string $indent character used for indenting [Optional]
+     * @param string|null $key first table column [Optional]
+     * @param string|null $value second table column [Optional]
+     * @param string|null $indent character used for indenting [Optional]
      * @return  array
      * @throws Kohana_Exception
      */
-	public function select_list($key = NULL, $value = NULL, $indent = NULL)
+    public function select_list(string $key = NULL, string $value = NULL, string $indent = NULL)
 	{
 		if ($key === NULL)
 		{

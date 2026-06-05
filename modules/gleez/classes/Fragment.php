@@ -51,14 +51,14 @@ class Fragment {
 	 * $key = Fragment::_cache_key('footer', TRUE);
 	 * ~~~
 	 *
-	 * @param   string   $name  Fragment name
-	 * @param   boolean  $i18n  Multilingual fragment support [Optional]
+     * @param string $name Fragment name
+     * @param boolean|null $i18n Multilingual fragment support [Optional]
 	 *
 	 * @return  string
 	 *
 	 * @uses    I18n::lang
 	 */
-	protected static function _cache_key($name, $i18n = NULL)
+    protected static function _cache_key(string $name, bool $i18n = NULL)
 	{
 		if (is_null($i18n))
 		{
@@ -95,7 +95,7 @@ class Fragment {
      * @throws Kohana_Exception
      * @uses    Cache::get
      */
-	public static function getCache($name, $i18n = NULL)
+    public static function getCache(string $name, $i18n = NULL)
 	{
 		$cache = Cache::instance();
 
@@ -169,7 +169,7 @@ class Fragment {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-	public static function delete($name, $i18n = NULL)
+    public static function delete(string $name, $i18n = NULL)
 	{
 		Cache::instance()->delete(Fragment::_cache_key($name, $i18n));
 	}

@@ -214,14 +214,12 @@ class Cache_Redis extends Cache {
 	 * Useful for shared counters and other persistent integer based
 	 * tracking.
 	 *
-	 * @param   string   $id    ID of cache entry to increment
-	 * @param   integer  $step  Step value to increment by [Optional]
-	 *
+     * @param string $id ID of cache entry to increment
+     * @param integer $step Step value to increment by [Optional]
 	 * @return  integer|boolean
-	 *
 	 * @uses    System::sanitize_id
 	 */
-	public function increment($id, $step = 1)
+    public function increment(string $id, int $step = 1)
 	{
 		return $this->_redis->incrBy(System::sanitize_id($this->config('prefix').$id), $step);
 	}
@@ -232,14 +230,12 @@ class Cache_Redis extends Cache {
 	 * Useful for shared counters and other persistent integer based
 	 * tracking.
 	 *
-	 * @param   string   $id    ID of cache entry to decrement
-	 * @param   integer  $step  Step value to decrement by [Optional]
-	 *
+     * @param string $id ID of cache entry to decrement
+     * @param integer $step Step value to decrement by [Optional]
 	 * @return  integer|boolean
-	 *
 	 * @uses    System::sanitize_id
 	 */
-	public function decrement($id, $step = 1)
+    public function decrement(string $id, int $step = 1)
 	{
 		return $this->_redis->decrBy(System::sanitize_id($this->config('prefix').$id), $step);
 	}
@@ -247,15 +243,12 @@ class Cache_Redis extends Cache {
 	/**
 	 * Tests whether an id exists or not
 	 *
-	 * @param   string  $id  ID of cache entry
-	 *
+     * @param string $id ID of cache entry
 	 * @return  boolean
-	 *
 	 * @throws  Cache_Exception
-	 *
 	 * @uses    System::sanitize_id
 	 */
-	protected function exists($id)
+    protected function exists(string $id)
 	{
 		try
 		{

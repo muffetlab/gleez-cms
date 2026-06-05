@@ -87,7 +87,7 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    URL::base
      */
-	public static function resize($file, array $attributes = NULL, $protocol = NULL, $index = FALSE)
+    public static function resize(string $file, array $attributes = NULL, $protocol = NULL, bool $index = FALSE)
 	{
 		if (strlen($file) <= 1)
 		{
@@ -143,7 +143,7 @@ class HTML extends Kohana_HTML
      * @return  string
      * @throws Kohana_Exception
      */
-	public static function links($links, $attributes = array('class' => 'links'))
+    public static function links(array $links, array $attributes = array('class' => 'links'))
 	{
 		$output = '';
 
@@ -207,7 +207,7 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    HTML::chars
      */
-	public static function tabs($tabs, $attributes = array('class' => 'tabs'))
+    public static function tabs(array $tabs, array $attributes = array('class' => 'tabs'))
 	{
 		$output = '';
 
@@ -266,7 +266,7 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    URL::is_active
      */
-	public static function is_active($uri)
+    public static function is_active(string $uri)
 	{
 		return URL::is_active($uri);
 	}
@@ -286,7 +286,7 @@ class HTML extends Kohana_HTML
      * @return  string
      * @throws Kohana_Exception
      */
-	public static function icon($url, $icon, array $attrs = array())
+    public static function icon(string $url, string $icon, array $attrs = array())
 	{
         return self::anchor($url, '<i class="' . $icon . '"></i>', $attrs);
 	}
@@ -299,12 +299,12 @@ class HTML extends Kohana_HTML
 	 * echo HTML::label(__('Publish'), 'info');
 	 * ~~~
 	 *
-	 * @param   string  $text   Text
-	 * @param   string  $label  Bootstrap label class [Optional]
+     * @param string $text Text
+     * @param string $label Bootstrap label class [Optional]
 	 *
 	 * @return  string
 	 */
-	public static function label($text, $label = 'default')
+    public static function label(string $text, string $label = 'default')
 	{
 		switch (strtolower($label))
 		{

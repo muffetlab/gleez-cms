@@ -470,11 +470,10 @@ class Gleez_Locale {
 	 *
 	 * Static alias for [Gleez_Locale::get_language]
 	 *
-	 * @param   string  $locale  Locale (eg. en_US, ru_RU, ar_JO, ...)
-	 *
+     * @param string $locale Locale (eg. en_US, ru_RU, ar_JO, ...)
 	 * @return  string
 	 */
-	public static function get_language_by_locale($locale)
+    public static function get_language_by_locale(string $locale)
 	{
 		$locale = explode('_', $locale);
 
@@ -486,10 +485,10 @@ class Gleez_Locale {
 	 *
 	 * Static alias for [Gleez_Locale::get_region]
 	 *
-	 * @param   string  $locale  Locale (eg. en_US, ru_RU, ar_JO, ...)
+     * @param string $locale Locale (eg. en_US, ru_RU, ar_JO, ...)
 	 * @return  boolean|string
 	 */
-	public static function get_region_by_locale($locale)
+    public static function get_region_by_locale(string $locale)
 	{
 		$locale = explode('_', $locale);
 
@@ -595,12 +594,12 @@ class Gleez_Locale {
 	 * ~~~
 	 *
 	 * @param   string|Gleez_Locale  $locale   Locale to set
-	 * @param   integer              $quality  The quality to set from 0 to 1 [Optional]
+     * @param integer $quality The quality to set from 0 to 1 [Optional]
 	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Locale_Data::locale_data
 	 */
-	public static function set_default($locale, $quality = 1)
+    public static function set_default($locale, int $quality = 1)
 	{
 		if (in_array($locale, array('detected', 'root', 'framework', 'environment', 'client')))
 		{

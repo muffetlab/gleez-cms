@@ -25,7 +25,7 @@ class CSRF {
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function token($id, $action, $time = 0)
+    public static function token(string $id, string $action, int $time = 0)
 	{
 		// Get id string for token, could be uid or ip etc
 		if (empty($id)) $id =  sha1(Request::$user_agent);
@@ -39,13 +39,13 @@ class CSRF {
     /**
      * Validate CSRF token
      *
-     * @param string $token Token [Optional]
+     * @param string|null $token Token [Optional]
      * @param string $action Optional action [Optional]
      * @param string $id Custom token id, e.g. uid [Optional]
      * @return  boolean
      * @throws Kohana_Exception
      */
-	public static function valid($token = NULL, $action = '', $id = '')
+    public static function valid(string $token = NULL, string $action = '', string $id = '')
 	{
 		// get token and action from Form POST
 		if (empty($token))  $token  = Arr::get($_REQUEST, '_token');

@@ -161,7 +161,7 @@ class ORM_Versioned extends Gleez_Model
      * @return  ORM
      * @throws Kohana_Exception
      */
-	public function delete($soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
 		// Use primary key value
 		$id = $this->pk();

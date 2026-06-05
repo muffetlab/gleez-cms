@@ -46,10 +46,11 @@ class Session_Redis extends Session {
      * Class constructor
      *
      * @param array $config Configuration [Optional]
-     * @param string $id Session id [Optional]
+     * @param string|null $id Session id [Optional]
      * @throws Kohana_Exception
      */
-	public function __construct(array $config = NULL, $id = NULL) {
+    public function __construct(array $config = NULL, string $id = NULL)
+    {
 
 		// Check that the PhpRedis extension is loaded.
 		if (!extension_loaded('redis')) {

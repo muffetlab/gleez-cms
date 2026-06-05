@@ -205,7 +205,7 @@ class Model_Comment extends Gleez_Model
      * @uses    Validation::error
      * @uses    User::lookup_by_name
      */
-	public function valid_author(Validation $validation, $field)
+    public function valid_author(Validation $validation, string $field)
 	{
 		if ( ! empty($this->author_name) AND ! ($account = User::lookup_by_name($this->author_name)))
 		{
@@ -247,11 +247,11 @@ class Model_Comment extends Gleez_Model
 	 * Make sure that the email address is legal
 	 *
 	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
+     * @param string $field Field name
 	 *
 	 * @uses    Valid::email
 	 */
-	public function valid_email(Validation $validation, $field)
+    public function valid_email(Validation $validation, string $field)
 	{
 		if ($this->author == 1)
 		{
@@ -276,7 +276,7 @@ class Model_Comment extends Gleez_Model
      * @throws Kohana_Exception
      * @uses    DB::select
      */
-	public function valid_post(Validation $validation, $field)
+    public function valid_post(Validation $validation, string $field)
 	{
 		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 				->from('posts')

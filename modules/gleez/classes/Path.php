@@ -195,10 +195,10 @@ class Path {
 	/**
 	 * Fetch a specific URL alias from the database
 	 *
-	 * @param   string  $source  A string representing the source.
+     * @param string $source A string representing the source.
 	 * @return  string  If alias exists alias or source
 	 */
-	public static function alias($source)
+    public static function alias(string $source)
 	{
 		try
 		{
@@ -229,10 +229,10 @@ class Path {
 	 * - Convert to lower-case
 	 * - Shorten to a desired length and logical position based on word boundaries
 	 *
-	 * @param   string  $string  A string to clean
+     * @param string $string A string to clean
 	 * @return  string  The cleaned string
 	 */
-	public static function clean($string)
+    public static function clean(string $string)
 	{
 		$separator = '-';
 
@@ -266,7 +266,7 @@ class Path {
      * @return  boolean  TRUE if the path matches a pattern, FALSE otherwise
      * @throws Kohana_Exception
      */
-	public static function match_path($path, $patterns)
+    public static function match_path(string $path, string $patterns)
 	{
 		// Convert path settings to a regular expression.
 		// Therefore replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.

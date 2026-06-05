@@ -226,12 +226,12 @@ class Controller_Admin_Comment extends Controller_Admin {
 	 *
 	 * Executes the bulk operation
 	 *
-	 * @param  array $post  Array of comments
+     * @param array $post Array of comments
 	 * @uses   Comment::bulk_actions
 	 * @uses   Arr::callback
 	 * @uses   Arr::merge
 	 */
-	private function _bulk_update($post)
+    private function _bulk_update(array $post)
 	{
 		// Filter out unchecked comments
 		$comments   = array_filter($post['comments']);

@@ -108,7 +108,7 @@ class Model_Page extends Post {
      * @return  Post
      * @throws Kohana_Exception
      */
-    public function delete($soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 

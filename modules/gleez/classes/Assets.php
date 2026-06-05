@@ -92,16 +92,16 @@ class Assets {
      *
      * Gets or sets CSS assets
      *
-     * @param string $handle Asset name [Optional]
-     * @param string $src Asset source [Optional]
+     * @param string|null $handle Asset name [Optional]
+     * @param string|null $src Asset source [Optional]
      * @param mixed $deps Dependencies [Optional]
-     * @param array $attrs An array of attributes for the <link> element [Optional]
+     * @param array|null $attrs An array of attributes for the <link> element [Optional]
      * @param string $format Format that be returned [Optional]
      * @return  mixed   Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @throws Exception
      */
-	public static function css($handle = NULL, $src = NULL, $deps = NULL, $attrs = NULL, $format = self::FORMAT_TAG)
+    public static function css(string $handle = NULL, string $src = NULL, $deps = NULL, array $attrs = NULL, string $format = self::FORMAT_TAG)
 	{
 		$config = Kohana::$config->load('media');
 
@@ -147,13 +147,13 @@ class Assets {
 	/**
 	 * Get a single CSS asset
 	 *
-	 * @param   string  $handle  Asset name
-	 * @param   string  $format  Format that be returned [Optional]
+     * @param string $handle Asset name
+     * @param string $format Format that be returned [Optional]
      * @return string|null Asset HTML or null if not found
 	 * @throws  Exception
 	 * @uses    HTML::style
 	 */
-	public static function get_css($handle, $format = self::FORMAT_TAG)
+    public static function get_css(string $handle, string $format = self::FORMAT_TAG)
 	{
 		if ( ! isset(self::$css[$handle]))
 		{
@@ -177,11 +177,11 @@ class Assets {
 	/**
 	 * Get all CSS assets, sorted by dependencies
 	 *
-	 * @param   string  $format  Format that be returned [Optional]
+     * @param string $format Format that be returned [Optional]
      * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
 	 */
-	public static function all_css($format = self::FORMAT_TAG)
+    public static function all_css(string $format = self::FORMAT_TAG)
 	{
 		if (empty(self::$css))
 		{
@@ -216,16 +216,16 @@ class Assets {
      * Gets or sets javascript assets
      *
      * @param mixed $handle Asset name if `string`, sets `$footer` if boolean
-     * @param string $src Asset source [Optional]
+     * @param string|null $src Asset source [Optional]
      * @param mixed $deps Dependencies [Optional]
      * @param boolean $footer Whether to show in header or footer [Optional]
-     * @param array $attrs An array of attributes for the <script> element [Optional]
+     * @param array|null $attrs An array of attributes for the <script> element [Optional]
      * @param string $format Format that be returned [Optional]
      * @return  mixed   Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @throws Exception
      */
-	public static function js($handle, $src = NULL, $deps = NULL, $footer = FALSE, $attrs = NULL, $format = Assets::FORMAT_TAG)
+    public static function js($handle, string $src = NULL, $deps = NULL, bool $footer = FALSE, array $attrs = NULL, string $format = Assets::FORMAT_TAG)
 	{
 		$config = Kohana::$config->load('media');
 
@@ -264,13 +264,13 @@ class Assets {
 	/**
 	 * Get a single javascript asset
 	 *
-	 * @param   string  $handle  Asset name
-	 * @param   string  $format  Format that be returned [Optional]
+     * @param string $handle Asset name
+     * @param string $format Format that be returned [Optional]
      * @return string|null Asset HTML or null if not found
 	 * @throws  Exception
 	 * @uses    HTML::script
 	 */
-	public static function get_js($handle, $format = self::FORMAT_TAG)
+    public static function get_js(string $handle, string $format = self::FORMAT_TAG)
 	{
 		if ( ! isset(self::$js[$handle]))
 		{
@@ -294,12 +294,12 @@ class Assets {
 	/**
 	 * Get all javascript assets of section (header or footer)
 	 *
-	 * @param   boolean  $footer  FALSE for head, TRUE for footer
-	 * @param   string   $format  Format that be returned [Optional]
+     * @param boolean $footer FALSE for head, TRUE for footer
+     * @param string $format Format that be returned [Optional]
      * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
 	 */
-	public static function all_js($footer = FALSE, $format = self::FORMAT_TAG)
+    public static function all_js(bool $footer = FALSE, string $format = self::FORMAT_TAG)
 	{
 		if (empty(self::$js))
 		{
@@ -345,14 +345,14 @@ class Assets {
      * Gets or sets javascript code
      *
      * @param mixed $handle Asset name if string, sets $footer if boolean
-     * @param string $code Asset code/CSP nonce [Optional]
+     * @param string|null $code Asset code/CSP nonce [Optional]
      * @param mixed $deps Dependencies [Optional]
      * @param boolean $footer Whether to show in header or footer [Optional]
-     * @param array $attrs An array of attributes for the <script> element [Optional]
+     * @param array|null $attrs An array of attributes for the <script> element [Optional]
      * @return  mixed   Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      */
-	public static function codes($handle, $code = NULL, $deps = NULL, $footer = FALSE, $attrs = NULL)
+    public static function codes($handle, string $code = NULL, $deps = NULL, bool $footer = FALSE, array $attrs = NULL)
 	{
 		if ($handle === TRUE OR $handle === FALSE )
 		{
@@ -384,12 +384,12 @@ class Assets {
 	/**
 	 * Get a single javascript code
 	 *
-	 * @param   string  $handle  Asset name
-	 * @param   string  $nonce  CSP nonce [Optional]
+     * @param string $handle Asset name
+     * @param string|null $nonce CSP nonce [Optional]
      * @return string|null Asset HTML or null if not found
 	 * @uses    HTML::attributes
 	 */
-	public static function get_codes($handle, $nonce = NULL)
+    public static function get_codes(string $handle, string $nonce = NULL)
 	{
 		if ( ! isset(self::$codes[$handle]))
 		{
@@ -406,11 +406,11 @@ class Assets {
      * Get all javascript codes of section (header or footer)
      *
      * @param boolean $footer FALSE for head, TRUE for footer [Optional]
-     * @param string $nonce CSP nonce [Optional]
+     * @param string|null $nonce CSP nonce [Optional]
      * @return  string   Asset HTML
      * @throws Kohana_Exception
      */
-	public static function all_codes($footer = FALSE, $nonce = NULL)
+    public static function all_codes(bool $footer = FALSE, string $nonce = NULL)
 	{
 		if (empty(self::$codes))
 		{
@@ -446,10 +446,10 @@ class Assets {
 	 * Gets or sets javascript code
 	 *
 	 * @param   mixed   $handle  Asset name if `string`, sets `$footer` if boolean
-	 * @param   string  $code    Asset code [Optional]
+     * @param string|null $code Asset code [Optional]
 	 * @return  mixed    Setting returns asset array, getting returns asset HTML
 	 */
-	public static function settings($handle, $code = NULL)
+    public static function settings($handle, string $code = NULL)
 	{
 		return self::$settings[$handle] = $code;
 	}
@@ -457,14 +457,14 @@ class Assets {
 	/**
 	 * Group wrapper
 	 *
-	 * @param   string  $group    Group name
-	 * @param   string  $handle   Asset name [Optional]
-	 * @param   string  $content  Asset content [Optional]
+     * @param string $group Group name
+     * @param string|null $handle Asset name [Optional]
+     * @param string|null $content Asset content [Optional]
 	 * @param   mixed   $deps     Dependencies [Optional]
-	 * @param   array   $attrs    An array of attributes [Optional]
+     * @param array|null $attrs An array of attributes [Optional]
 	 * @return  mixed   Setting returns asset array, getting returns asset content
 	 */
-	public static function group($group, $handle = NULL, $content = NULL, $deps = NULL, $attrs = NULL)
+    public static function group(string $group, string $handle = NULL, string $content = NULL, $deps = NULL, array $attrs = NULL)
 	{
 		if (is_null($handle))
 		{
@@ -495,11 +495,11 @@ class Assets {
 	/**
 	 * Get a single group asset
 	 *
-	 * @param   string  $group   Group name
-	 * @param   string  $handle  Asset name
+     * @param string $group Group name
+     * @param string $handle Asset name
 	 * @return string|null Asset content or null if not found
 	 */
-	public static function get_group($group, $handle)
+    public static function get_group(string $group, string $handle)
 	{
 		if ( ! isset(self::$groups[$group]) OR ! isset(self::$groups[$group][$handle]))
 		{
@@ -512,10 +512,10 @@ class Assets {
 	/**
 	 * Get all of a groups assets, sorted by dependencies
 	 *
-	 * @param  string  $group  Group name
+     * @param string $group Group name
 	 * @return string  Assets content
 	 */
-	public static function all_groups($group)
+    public static function all_groups(string $group)
 	{
 		if ( ! isset(self::$groups[$group]))
 		{
@@ -537,10 +537,10 @@ class Assets {
 	/**
 	 * Sorts assets based on dependencies
 	 *
-	 * @param   array  $assets  Array of assets
+     * @param array $assets Array of assets
 	 * @return  array  Sorted array of assets
 	 */
-	protected static function _sort($assets)
+    protected static function _sort(array $assets)
 	{
         $sorted = System::sortDependencies($assets);
 
@@ -553,11 +553,11 @@ class Assets {
 	/**
 	 * Custom sorting method for assets based on 'weight' key
 	 *
-	 * @param   array    $a
-	 * @param   array    $b
+     * @param array $a
+     * @param array $b
      * @return  integer  The sorted order for assets
 	 */
-	protected static function sort_assets($a, $b)
+    protected static function sort_assets(array $a, array $b)
 	{
 		$a_weight = (is_array($a) AND isset($a['weight'])) ? $a['weight'] : 0;
 		$b_weight = (is_array($b) AND isset($b['weight'])) ? $b['weight'] : 0;
@@ -611,7 +611,7 @@ class Assets {
      * @param string $lang Language  [Optional]
      * @throws Kohana_Exception
      */
-    public static function editor($name = '.textarea', $lang = 'en-us')
+    public static function editor(string $name = '.textarea', string $lang = 'en-us')
 	{
         $language = preg_replace_callback('/-([a-z]+)/', function ($matches) {
             return '_' . strtoupper($matches[1]);
@@ -649,7 +649,7 @@ class Assets {
      * @todo   DON'T WORK
      * @link   https://www.google.com/analytics/
      */
-	public static function google_stats($ua, $site)
+    public static function google_stats(string $ua, string $site)
 	{
 		self::codes('google-stats',
 			"\t"."(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){".PHP_EOL.
@@ -739,15 +739,15 @@ class Assets {
 	/**
 	 * Compiles multiple files into one
 	 *
-	 * @param  array   $files  The files to compile [Optional]
-	 * @param  string  $format The format to return the compiled files in [Optional]
-	 * @param  string  $type   The type js or css [Optional]
+     * @param array $files The files to compile [Optional]
+     * @param string $format The format to return the compiled files in [Optional]
+     * @param string $type The type js or css [Optional]
 	 * @return string
 	 * @throws Exception
 	 * @uses   HTML::style
 	 * @uses   HTML::script
 	 */
-	public static function compile($files = array(), $format = self::FORMAT_TAG, $type = 'js')
+    public static function compile(array $files = array(), string $format = self::FORMAT_TAG, string $type = 'js')
 	{
 		// Compiled contents of file
 		$compiled = "";
@@ -818,12 +818,12 @@ class Assets {
 	/**
 	 * Get file path
 	 *
-	 * @param   string  $file  File name
-	 * @param   string  $type  File type [Optional]
+     * @param string $file File name
+     * @param string $type File type [Optional]
 	 * @return  array
 	 * @uses    Kohana::find_file
 	 */
-    protected static function _get_file_path($file, $type = '.php')
+    protected static function _get_file_path(string $file, string $type = '.php')
 	{
 		// @todo need to overwrite the assets set and get to fix this
 		$file = str_replace(array('media/', '.'.$type), '', $file);
@@ -834,13 +834,13 @@ class Assets {
 	/**
 	 * Gets the filename that will be used to save these files
 	 *
-	 * @param  array   $files The files to be compiled
-	 * @param  string  $path  The path to save the compiled file to
-	 * @param  string  $type  The mime type css or js to save the compiled file to
+     * @param array $files The files to be compiled
+     * @param string $path The path to save the compiled file to
+     * @param string $type The mime type css or js to save the compiled file to
 	 *
 	 * @return string
 	 */
-	private static function get_filename($files, $path, $type)
+    private static function get_filename(array $files, string $path, string $type)
 	{
 		// Most recently modified file
 		$last_modified = 0;

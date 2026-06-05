@@ -105,10 +105,10 @@ class Datatables {
 	/**
 	 * Apply limit
 	 *
-	 * @param	integer  $start   Offset
-	 * @param	integer  $length  Length
+     * @param integer $start Offset
+     * @param integer $length Length
 	 */
-	protected function _limit($start, $length)
+    protected function _limit(int $start, int $length)
 	{
 		$this->_object->offset($start)->limit($length);
 	}
@@ -116,10 +116,10 @@ class Datatables {
 	/**
 	 * Apply sort
 	 *
-	 * @param  string  $column     Column for sorting
-	 * @param  string  $direction  Direction
+     * @param string $column Column for sorting
+     * @param string $direction Direction
 	 */
-	protected function _sort($column, $direction)
+    protected function _sort(string $column, string $direction)
 	{
         $this->_object->order_by($this->_object_name . '.' . $column, HTML::chars($direction));
 	}
@@ -127,9 +127,9 @@ class Datatables {
 	/**
 	 * Apply search query
 	 *
-	 * @param  string  $query  Search query
+     * @param string $query Search query
 	 */
-	protected function _search($query)
+    protected function _search(string $query)
 	{
 		// Use search columns if specified; otherwise, search across all columns
 		$columns = ( ! empty($this->_search_columns)) ? $this->_search_columns : $this->_columns;
@@ -190,11 +190,11 @@ class Datatables {
 	/**
 	 * Set limit
 	 *
-	 * @param	integer  $start   Offset
-	 * @param	integer  $length  Length
+     * @param integer $start Offset
+     * @param integer $length Length
 	 * @return	$this
 	 */
-	public function limit($start, $length)
+    public function limit(int $start, int $length)
 	{
 		$this->_limit($start, $length);
 
@@ -209,7 +209,7 @@ class Datatables {
      * @return    $this
      * @throws Kohana_Exception
      */
-	public function sort($column, $direction = self::SORT_ASC)
+    public function sort(string $column, string $direction = self::SORT_ASC)
 	{
 		if ( ! in_array($direction, array(self::SORT_ASC, self::SORT_DESC)))
 		{
@@ -224,10 +224,10 @@ class Datatables {
 	/**
 	 * Search query
 	 *
-	 * @param   string  $query  Search query
+     * @param string $query Search query
 	 * @return	$this
 	 */
-	public function search($query)
+    public function search(string $query)
 	{
 		$this->_search($query);
 

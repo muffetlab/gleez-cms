@@ -27,11 +27,10 @@ class Valid extends Kohana_Valid
 	 * @since   1.1.0   First time this method was introduced
 	 * @since   1.1.1   Replaced by a faster algorithm
 	 *
-	 * @param   string  $string  The text to check
-	 *
+     * @param string $string The text to check
 	 * @return  boolean
 	 */
-	public static function utf8($string)
+    public static function utf8(string $string)
 	{
 		return $string === '' || preg_match('/^./su', $string) === 1;
 	}

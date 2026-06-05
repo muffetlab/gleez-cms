@@ -13,19 +13,16 @@ class File extends Kohana_File
 	/**
 	 * Generate a unique filename to avoid conflicts
 	 *
-	 * @since   1.0.1
-	 *
-	 * @param   string   $name           Filename [Optional]
-	 * @param   integer  $length         Length of filename to return [Optional]
-	 * @param   boolean  $remove_spaces  Remove spaces from file name [Optional]
-	 * @param   string   $replacement    Replacement for spaces [Optional]
-	 *
+     * @param string|null $name Filename [Optional]
+     * @param integer $length Length of filename to return [Optional]
+     * @param boolean $remove_spaces Remove spaces from file name [Optional]
+     * @param string $replacement Replacement for spaces [Optional]
 	 * @return  string
-	 *
+     * @since   1.0.1
 	 * @uses    Text::random
 	 * @uses    UTF8::strtolower
 	 */
-	public static function getUnique($name = NULL, $length = 20, $remove_spaces = TRUE, $replacement = '_')
+    public static function getUnique(string $name = NULL, int $length = 20, bool $remove_spaces = TRUE, string $replacement = '_')
 	{
 		if (is_null($name))
 		{
@@ -49,13 +46,11 @@ class File extends Kohana_File
 	/**
 	 * Get file extension from it name
 	 *
-	 * @since   1.1.0
-	 *
 	 * @param   string  $file  Filename
-	 *
-	 * @return  string
+     * @return  string
+     * @since   1.1.0
 	 */
-	public static function getExt($file)
+    public static function getExt(string $file)
 	{
 		return pathinfo($file, PATHINFO_EXTENSION);
 	}

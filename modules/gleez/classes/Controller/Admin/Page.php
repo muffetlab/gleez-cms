@@ -264,12 +264,11 @@ class Controller_Admin_Page extends Controller_Admin {
 	/**
 	 * Bulk updates
 	 *
-	 * @param  array  $post
-	 *
+     * @param array $post
 	 * @uses   Post::bulk_actions
 	 * @uses   Arr::callback
 	 */
-	private function _bulk_update($post)
+    private function _bulk_update(array $post)
 	{
         $operations = Post::bulk_actions();
 		$operation  = $operations[$post['operation']];

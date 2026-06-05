@@ -83,7 +83,7 @@ class Model_Path extends Gleez_Model
      * @throws Request_Exception
      * @uses    Module::event
      */
-	public function process_alias(Validation $validation, $field)
+    public function process_alias(Validation $validation, string $field)
 	{
 		// always set unique alias if its set
 		$alias  = $this->_unique_slug(trim($this->alias));
@@ -154,7 +154,7 @@ class Model_Path extends Gleez_Model
      * @throws Request_Exception
      * @uses    Route::all
      */
-	private function _process_uri($uri)
+    private function _process_uri(string $uri)
 	{
 		// Load routes
 		$routes = Route::all();

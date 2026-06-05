@@ -43,7 +43,7 @@ class Message {
      * @return  void
      * @throws Kohana_Exception
      */
-	public static function set($type, $message, array $options = NULL)
+    public static function set(string $type, string $message, array $options = NULL)
 	{
 		// Load existing messages
 		$messages = (array) self::get();
@@ -194,7 +194,7 @@ class Message {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-	public static function render($type = NULL, $delete = TRUE, $view = NULL)
+    public static function render($type = NULL, bool $delete = TRUE, $view = NULL)
 	{
 		return self::display($type, $delete, $view);
 	}
@@ -222,7 +222,7 @@ class Message {
      * @return    mixed    array or NULL
      * @throws Kohana_Exception
      */
-	public static function get($type = NULL, $default = NULL, $delete = FALSE)
+    public static function get($type = NULL, $default = NULL, bool $delete = FALSE)
 	{
 		// Get the messages
 		$messages = Session::instance()->get(self::$session_key, array());
@@ -317,7 +317,7 @@ class Message {
      * @return   string   Message to string
      * @throws View_Exception|Kohana_Exception
      */
-	public static function display($type = NULL, $delete = TRUE, $view = NULL)
+    public static function display($type = NULL, bool $delete = TRUE, $view = NULL)
 	{
 		$messages = self::get($type, NULL, $delete);
 

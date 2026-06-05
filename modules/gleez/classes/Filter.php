@@ -40,11 +40,11 @@ class Filter {
 	 *          ));
 	 * ~~~
 	 *
-	 * @param   string  $name       Filter name
-	 * @param   array   $callbacks  Filter callbacks
+     * @param string $name Filter name
+     * @param array $callbacks Filter callbacks
      * @return  Filter
      */
-	public static function set($name, $callbacks = array())
+    public static function set(string $name, array $callbacks = array())
 	{
 		return Filter::$_filters[$name] = new Filter($name, $callbacks);
 	}
@@ -133,7 +133,7 @@ class Filter {
      * @uses    Cache::get
      * @uses    Cache::set
      */
-	public static function cache($save = FALSE, $append = FALSE)
+    public static function cache(bool $save = FALSE, bool $append = FALSE)
 	{
 		$cache = Cache::instance();
 
@@ -217,12 +217,12 @@ class Filter {
 	 * Execute a filter on the given text
 	 *
 	 * @param  mixed   $callback   The callback to be executed.
-	 * @param  string  $text       The text to be filtered.
+     * @param string $text The text to be filtered.
 	 * @param  object  $filter     The filter object.
 	 *
 	 * @return string  $text       The filtered text
 	 */
-    public static function execute($callback, $text, $filter)
+    public static function execute($callback, string $text, $filter)
 	{
 		$args = func_get_args();
 		array_shift($args);
@@ -283,10 +283,10 @@ class Filter {
 	/**
 	 * Class constructor
 	 *
-	 * @param  string  $title      Filter title
-	 * @param  array   $callbacks  Filter callbacks
+     * @param string $title Filter title
+     * @param array $callbacks Filter callbacks
 	 */
-	public function __construct($title, $callbacks = array())
+    public function __construct(string $title, array $callbacks = array())
 	{
 		$this->_title = $title;
 		$this->_callbacks = $callbacks;
@@ -395,10 +395,10 @@ class Filter {
 	 *
 	 * If no parameter is passed, this method will act as a getter.
 	 *
-	 * @param   string  $title  Title
+     * @param string|null $title Title
      * @return Filter|string
 	 */
-	public function title($title = NULL)
+    public function title(string $title = NULL)
 	{
 		if ($title === NULL)
 		{
@@ -420,11 +420,10 @@ class Filter {
 	 *
 	 * If no parameter is passed, this method will act as a getter.
 	 *
-	 * @param   string  $description  Description
-	 *
+     * @param string|null $description Description
 	 * @return  string|Filter
 	 */
-	public function description($description = NULL)
+    public function description(string $description = NULL)
 	{
 		if ($description === NULL)
 		{

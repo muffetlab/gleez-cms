@@ -169,7 +169,7 @@ class Pagination {
      * @throws Kohana_Exception
      * @uses    Config::load
      */
-	public function config_group($group = 'default')
+    public function config_group(string $group = 'default')
 	{
 		// Load the pagination config file
 		$config_file = Kohana::$config->load('pagination');
@@ -273,7 +273,7 @@ class Pagination {
      * @throws Kohana_Exception
      * @uses    URL::site
      */
-	public function url($page = 1)
+    public function url(int $page = 1)
 	{
 		// Clean the page number
 		$page = max(1, (int) $page);
@@ -312,13 +312,11 @@ class Pagination {
 	/**
 	 * Checks whether the given page number exists.
 	 *
-	 * @param   integer  $page  Page number
-	 *
+     * @param integer $page Page number
 	 * @return  boolean
-	 *
 	 * @uses    Valid::digit
 	 */
-	public function valid_page($page)
+    public function valid_page(int $page)
 	{
 		// Page number has to be a clean integer
 		if ( ! Valid::digit($page))
@@ -429,10 +427,10 @@ class Pagination {
 	/**
 	 * HMVC URI setter/getter
 	 *
-	 * @param   string  $uri  Route uri to set [Optional]
+     * @param string|null $uri Route uri to set [Optional]
      * @return string|Pagination Route uri if used as getter, chainable as setter
 	 */
-	public function uri($uri = NULL)
+    public function uri(string $uri = NULL)
 	{
 		if (is_null($uri))
 		{
@@ -519,11 +517,10 @@ class Pagination {
 	/**
 	 * Returns a Pagination property
 	 *
-	 * @param   string  $key  Property name
-	 *
+     * @param string $key Property name
 	 * @return  mixed   Pagination property; NULL if not found
 	 */
-	public function __get($key)
+    public function __get(string $key)
 	{
         return $this->$key ?? NULL;
 	}

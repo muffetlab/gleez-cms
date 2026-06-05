@@ -213,7 +213,7 @@ class Form extends Kohana_Form
      * @throws Kohana_Exception
      * @uses    Form::select
      */
-	public static function weight($name, $selected = 0, array $attrs = NULL, $delta = 15)
+    public static function weight(string $name, int $selected = 0, array $attrs = NULL, int $delta = 15)
 	{
 		$options = array();
 
@@ -235,7 +235,7 @@ class Form extends Kohana_Form
      * @throws Kohana_Exception
      * @uses    Arr::get
      */
-	public static function filter($column, array $vals, array $attrs = array())
+    public static function filter(string $column, array $vals, array $attrs = array())
 	{
 		if ( ! isset($attrs['style']))
 		{
@@ -252,14 +252,14 @@ class Form extends Kohana_Form
      *     echo Form::date('author_date', $created);
      *
      * @param string $name input name
-     * @param string $value input value
+     * @param string|null $value input value
      * @param array $attributes html attributes
      * @return  string
      * @throws Exception
      * @link    https://getdatepicker.com/4/
      * @uses    Form::input
      */
-	public static function date($name, $value = NULL, array $attrs = NULL)
+    public static function date(string $name, string $value = NULL, array $attrs = NULL)
 	{
 		$out = '';
 
@@ -336,11 +336,10 @@ class Form extends Kohana_Form
 	/**
 	 * Generates a valid HTML ID based the name.
 	 *
-	 * @param  string  $name   Element name
-	 *
+     * @param string $name Element name
 	 * @return string
 	 */
-	protected static function _get_id_by_name($name)
+    protected static function _get_id_by_name(string $name)
 	{
 		return 'form-'.str_replace(array('[]', '][', '[', ']', '\\'), array('', '_', '_', '', '_'), $name);
 	}

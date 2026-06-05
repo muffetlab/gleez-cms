@@ -131,10 +131,10 @@ class Theme {
 	/**
 	 * Gets info about theme
 	 *
-	 * @param   string       $file   Theme info file
+     * @param string $file Theme info file
      * @return object An object containing information about theme
 	 */
-	public static function get_info($file)
+    public static function get_info(string $file)
 	{
 		$theme              = (object) parse_ini_file($file, true);
 		$theme->name        = basename(dirname($file));
@@ -161,7 +161,7 @@ class Theme {
      * @return  array  Available themes array
      * @throws Kohana_Exception
      */
-	public static function available($title = true): array
+    public static function available(bool $title = true): array
 	{
 		$paths 	= (array) Kohana::$config->load('site')->get('theme_paths', [THEMEPATH]);
 
