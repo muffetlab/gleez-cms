@@ -14,31 +14,31 @@ class Widgets {
 
 	/**
 	 * Widgets instance
-	 * @var array
+     * @var Widgets
 	 */
 	protected static $instance;
 
 	/**
 	 * Associative array of widgets
-	 * @var string
+     * @var array
 	 */
 	protected $_widgets = array();
 
 	/**
 	 * Associative array of widget regions that will be loaded
-	 * @var string
+     * @var array
 	 */
 	protected $_regions = array();
 
 	/**
 	 * Count of widgets inside a region
-	 * @var string
+     * @var array
 	 */
 	protected $_widget_count = array();
 
 	/**
 	 * Status of Widgets, if it's already loaded from the database
-	 * @var string
+     * @var bool
 	 */
 	protected $_loaded = FALSE;
 
@@ -102,9 +102,9 @@ class Widgets {
 	 * @param   string  $region  Widget region
 	 * @param   string  $name    Unique widget name
 	 * @param   string  $widget  Widget object
-	 * @throws  Kohana_Exception
-	 * @return  Widget
-	 */
+     * @return  Widgets
+     * @throws  Kohana_Exception
+     */
 	public function add($region, $name, $widget)
 	{
 		if ( ! is_object($widget))
@@ -138,13 +138,13 @@ class Widgets {
 	 * ~~~
 	 *
 	 * @param   string  $name  Widget name
-	 * @return  Widget
+     * @return  object|null
 	 */
 	public function get($name)
 	{
 		if ( ! isset($this->_widgets[$name]))
 		{
-			return FALSE;
+            return null;
 		}
 
 		return $this->_widgets[$name];
@@ -255,7 +255,6 @@ class Widgets {
      * @param string $region Theme region [Optional]
      * @param string $format Widget format [Optional]
      * @return  string  HTML widgets
-     * @return  boolean If widget not exists
      * @throws Kohana_Exception
      */
 	public function render($region = NULL, $format = NULL)
@@ -274,7 +273,7 @@ class Widgets {
 
 		if ( ! isset($this->_regions[$this->_region]) OR is_null($this->_regions[$this->_region]))
 		{
-			return FALSE;
+            return '';
 		}
 
 		$response = array();
