@@ -556,9 +556,9 @@ class Post extends ORM_Versioned {
             case 'tags_form':
                 return $this->tags->find_all()->as_array('id', 'rawname');
             case 'taxonomy':
-				return HTML::links($this->terms->find_all(), array('class' => 'nav nav-pills pull-right'));
+                return HTML::links($this->terms->find_all()->as_array(), array('class' => 'nav nav-pills pull-right'));
             case 'tagcloud':
-				return HTML::links($this->tags->find_all(), array('class' => 'nav nav-pills'));
+                return HTML::links($this->tags->find_all()->as_array(), array('class' => 'nav nav-pills'));
             case 'links':
 				return HTML::links($this->links(), array('class' => 'links inline'));
             case 'rawtitle':
