@@ -36,12 +36,12 @@ class Module
      * Set the version of the corresponding Module_Model
      *
      * @param string $name Module name
-     * @param float $version Module version
+     * @param string $version Module version
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-    public static function set_version(string $name, float $version)
+    public static function set_version(string $name, string $version)
 	{
 		$module = self::get($name);
 
@@ -143,7 +143,7 @@ class Module
 					$m =& $modules->$name;
 					$m->active       = self::is_active($name);
 					$m->title 		 = isset($m->title) ? (string) $m->title : $name;
-					$m->code_version = $m->version;
+                    $m->code_version = (string) $m->version;
                     $m->version = self::get_version($name) ?: $m->code_version;
 					$m->locked       = false;
                     $m->visible = !isset($m->visible) || $m->visible;
@@ -645,12 +645,12 @@ class Module
      * Return the version of the installed module
      *
      * @param string $name Module name
-     * @return  float   Module version
+     * @return string Module version
      * @throws Kohana_Exception
      */
-    public static function get_version(string $name): float
+    public static function get_version(string $name): string
     {
-		return self::get($name)->version;
+        return (string) self::get($name)->version;
 	}
 
 	/**
