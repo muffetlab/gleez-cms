@@ -101,11 +101,11 @@ class Widgets {
 	 *
      * @param string $region Widget region
      * @param string $name Unique widget name
-     * @param string $widget Widget object
+     * @param object $widget Widget object
      * @return  Widgets
      * @throws  Kohana_Exception
      */
-    public function add(string $region, string $name, string $widget)
+    public function add(string $region, string $name, $widget)
 	{
 		if ( ! is_object($widget))
 		{
@@ -291,11 +291,11 @@ class Widgets {
      *
      * @param string $name Name of the widget
      * @param boolean $visible Visibility permission from widget or FALSE to skip
-     * @param boolean $format The format of the output ex:xhtml, html or FALSE for object
+     * @param mixed $format The format of the output ex:xhtml, html or FALSE for object
      * @return  object|string|null Widget object, HTML string, or null
      * @throws Kohana_Exception
      */
-    public function get_widget(string $name, bool $visible = FALSE, bool $format = FALSE)
+    public function get_widget(string $name, bool $visible = FALSE, $format = FALSE)
 	{
 		if ( ! $widget = $this->get($name))
 		{
