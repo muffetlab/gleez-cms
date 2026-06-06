@@ -208,8 +208,8 @@ class Theme {
     /**
      * @throws Kohana_Exception
      */
-    public static function route_list()
-	{
+    public static function route_list(): string
+    {
 		return implode("|", array_keys( self::available()) );
 	}
 

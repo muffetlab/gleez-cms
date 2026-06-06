@@ -58,8 +58,8 @@ class Fragment {
 	 *
 	 * @uses    I18n::lang
 	 */
-    protected static function _cache_key(string $name, bool $i18n = NULL)
-	{
+    protected static function _cache_key(string $name, bool $i18n = NULL): string
+    {
 		if (is_null($i18n))
 		{
 			// Use the default setting
@@ -95,8 +95,8 @@ class Fragment {
      * @throws Kohana_Exception
      * @uses    Cache::get
      */
-    public static function getCache(string $name, $i18n = NULL)
-	{
+    public static function getCache(string $name, $i18n = NULL): bool
+    {
 		$cache = Cache::instance();
 
 		// Get the cache key name

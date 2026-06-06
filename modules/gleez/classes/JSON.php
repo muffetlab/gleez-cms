@@ -27,8 +27,8 @@ class JSON {
      * @param integer $depth PHP 5.5 or higher [Optional]
 	 * @return  string
 	 */
-    public static function encode($value, int $options = 0, int $depth = 512)
-	{
+    public static function encode($value, int $options = 0, int $depth = 512): string
+    {
 		if (version_compare(PHP_VERSION, '5.5.0', '>='))
 		{
 			$raw = json_encode($value, $options, $depth);

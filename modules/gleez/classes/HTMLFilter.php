@@ -187,8 +187,8 @@ class HTMLFilter {
 	 * Magic method __toString() only works on echo/print so we need this
 	 * @return  string
 	 */
-	public function render()
-	{
+    public function render(): string
+    {
         return $this->filter_xss($this->_text);
 	}
 
@@ -203,8 +203,8 @@ class HTMLFilter {
      * @return  HTMLFilter
      * @throws Kohana_Exception
      */
-    public static function factory(string $text, array $filter = NULL)
-	{
+    public static function factory(string $text, array $filter = NULL): HTMLFilter
+    {
         return new HTMLFilter($text, $filter);
 	}
 
@@ -226,8 +226,8 @@ class HTMLFilter {
 	 * @return  string
 	 * @uses    Valid::utf8
 	 */
-    public function filter_xss(string $string)
-	{
+    public function filter_xss(string $string): string
+    {
 		// Only operate on valid UTF-8 strings. This is necessary to prevent cross
 		// site scripting issues on Internet Explorer 6.
 		if ( ! Valid::utf8($string))
@@ -262,8 +262,8 @@ class HTMLFilter {
 		)%x', array($this, 'xss_split'), $string);
 	}
 
-	protected function xss_split($m)
-	{
+    protected function xss_split($m): string
+    {
 		$allowed_html = array_flip($this->allowed_tags);
 
 		$string = $m[1];
@@ -338,8 +338,8 @@ class HTMLFilter {
      * @param string $text The text to decode entities in.
 	 * @return  string
 	 */
-    private function decode_entities(string $text)
-	{
+    private function decode_entities(string $text): string
+    {
 		return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 	}
 
@@ -351,8 +351,8 @@ class HTMLFilter {
      * @param string $attr The html attribute to process
 	 * @return  array
 	 */
-    private function xss_attributes(string $attr)
-	{
+    private function xss_attributes(string $attr): array
+    {
 		$attrarr  = array();
 		$mode     = 0;
 		$attrname = '';
@@ -483,7 +483,7 @@ class HTMLFilter {
      * @param string $string The string with the attribute value
      * @return  string
 	 */
-    private function xss_bad_protocol(string $string)
+    private function xss_bad_protocol(string $string): string
     {
         // Get the plain text representation of the attribute value (i.e. its meaning).
         $string = $this->decode_entities($string);
@@ -502,8 +502,8 @@ class HTMLFilter {
      * @param string $uri A plain-text URI that might contain dangerous protocols
 	 * @return  string
 	 */
-    private function strip_dangerous_protocols(string $uri)
-	{
+    private function strip_dangerous_protocols(string $uri): string
+    {
 		static $allowed_protocols;
 
 		if ( ! isset($allowed_protocols))

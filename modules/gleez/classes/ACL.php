@@ -59,8 +59,8 @@ class ACL {
 	 * @param   Model_User  $user  User object
 	 * @return  array  All roles for user
 	 */
-	private static function get_user_roles(Model_User $user)
-	{
+    private static function get_user_roles(Model_User $user): array
+    {
 		$roles = array();
 
 		// User #1 is guest
@@ -84,8 +84,8 @@ class ACL {
 	 * @return  ACL
 	 * @throws  Kohana_Exception
 	 */
-    public static function get(string $name)
-	{
+    public static function get(string $name): ACL
+    {
 		if ( ! isset(self::$_all_perms[$name]))
 		{
 			throw new Kohana_Exception('The requested Permission does not exist: :permission',
@@ -112,8 +112,8 @@ class ACL {
 	 * @param   array   $access_names  Access keys
      * @return  array
 	 */
-    public static function set(string $name, array $access_names)
-	{
+    public static function set(string $name, array $access_names): array
+    {
 		// Adds the action to the action array and returns it.
 		return self::$_all_perms[$name] = $access_names;
 	}
@@ -128,8 +128,8 @@ class ACL {
 	 *
 	 * @return  array  Perms by name
 	 */
-	public static function all()
-	{
+    public static function all(): array
+    {
 		return self::$_all_perms;
 	}
 
@@ -157,8 +157,8 @@ class ACL {
      * @uses    Cache::get
      * @uses    Arr::merge
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE)
-	{
+    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    {
 		$cache = Cache::instance();
 
 		if ($save)
@@ -285,8 +285,8 @@ class ACL {
      * @throws Kohana_Exception
      * @uses    User::active_user
      */
-    public static function check(string $perm_name, Model_User $user = NULL)
-	{
+    public static function check(string $perm_name, Model_User $user = NULL): bool
+    {
 		// If we weren't given an auth object
 		if (is_null($user))
 		{
@@ -325,8 +325,8 @@ class ACL {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-    public static function is_role(string $role)
-	{
+    public static function is_role(string $role): bool
+    {
 		$roles = self::site_roles();
 		return isset($roles[$role]);
 	}
@@ -341,8 +341,8 @@ class ACL {
      * @throws Kohana_Exception
      * @since   2.0
      */
-	public static function site_roles()
-	{
+    public static function site_roles(): array
+    {
         $cache = Cache::instance();
 
         if (!$roles = $cache->get('roles:site_roles')) {
@@ -364,8 +364,8 @@ class ACL {
      * @throws Kohana_Exception
      * @since   2.0
      */
-	public static function site_perms()
-	{
+    public static function site_perms(): bool
+    {
         $cache = Cache::instance();
 
         if (!$perms = $cache->get('roles:site_perms')) {
@@ -444,8 +444,8 @@ class ACL {
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function post(string $action, ORM $post, Model_User $user = NULL)
-	{
+    public static function post(string $action, ORM $post, Model_User $user = NULL): bool
+    {
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
@@ -546,8 +546,8 @@ class ACL {
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function comment(string $action, ORM $comment, Model_User $user = NULL)
-	{
+    public static function comment(string $action, ORM $comment, Model_User $user = NULL): bool
+    {
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.

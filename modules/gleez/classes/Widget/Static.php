@@ -18,8 +18,8 @@ class Widget_Static extends Widget {
      * @throws View_Exception
      * @throws Kohana_Exception
      */
-    public function render()
-	{
+    public function render(): string
+    {
 		return View::factory('widgets/static')
 			->set(array(
                 'title' => HTML::chars($this->widget->title),

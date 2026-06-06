@@ -21,8 +21,8 @@ class URL extends Kohana_URL
      * @throws Kohana_Exception
      * @uses    Request::uri
      */
-    public static function canonical($url, $pagination = NULL, array $qstring = NULL, $protocol = TRUE)
-	{
+    public static function canonical($url, $pagination = NULL, array $qstring = NULL, $protocol = TRUE): string
+    {
 		if ($url instanceof Request)
 		{
 			return self::site($url->uri(), $protocol);
@@ -42,8 +42,8 @@ class URL extends Kohana_URL
      * @param string $url The URL to test
 	 * @return  boolean
 	 */
-    public static function is_absolute(string $url)
-	{
+    public static function is_absolute(string $url): bool
+    {
 		return (strpos($url, '://') === FALSE);
 	}
 
@@ -56,8 +56,8 @@ class URL extends Kohana_URL
      * @since   1.0.1  Better handling
      * @since   1.0.0  Initial functional
      */
-    public static function is_remote(string $url)
-	{
+    public static function is_remote(string $url): bool
+    {
 		if((strpos($url, '://') !== FALSE))
 		{
 			$base = URL::base(TRUE);
@@ -80,8 +80,8 @@ class URL extends Kohana_URL
      * @param string $url An URL
 	 * @return  array
 	 */
-    public static function explode(string $url)
-	{
+    public static function explode(string $url): array
+    {
 		$url = parse_url($url);
 		$url['query_params'] = array();
 
@@ -114,8 +114,8 @@ class URL extends Kohana_URL
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function current($protocol = NULL, bool $index = FALSE, bool $with_query_params = TRUE)
-	{
+    public static function current($protocol = NULL, bool $index = FALSE, bool $with_query_params = TRUE): string
+    {
 		static $uri;
 		$query = null;
 		if (!$with_query_params)
@@ -138,8 +138,8 @@ class URL extends Kohana_URL
      * @return  boolean
      * @throws Kohana_Exception
      */
-    public static function is_active(string $url)
-	{
+    public static function is_active(string $url): bool
+    {
 		if (preg_match('#^[A-Z][A-Z0-9+.\-]+://#i', $url))
 		{
 			// Don't check URIs with a scheme ... not really a URI is it?

@@ -87,8 +87,8 @@ class ORM_Versioned extends Gleez_Model
      * @return  ORM
      * @throws Kohana_Exception|ReflectionException
      */
-	public function restore($version)
-	{
+    public function restore($version): ORM
+    {
 		if ( ! $this->loaded())
 			return $this;
 
@@ -134,8 +134,8 @@ class ORM_Versioned extends Gleez_Model
      * @return  ORM
      * @throws Kohana_Exception
      */
-	public function version( $version = FALSE )
-	{
+    public function version($version = FALSE): ORM
+    {
 		if ( ! $this->loaded())
 			return $this;
 
@@ -202,8 +202,8 @@ class ORM_Versioned extends Gleez_Model
      * @return  string
      * @throws Kohana_Exception
      */
-	public function foreign_key()
-	{
+    public function foreign_key(): string
+    {
 		return Inflector::singular($this->_table_name).$this->_foreign_key_suffix;
 	}
 
@@ -212,8 +212,8 @@ class ORM_Versioned extends Gleez_Model
 	 *
 	 * @return  string
 	 */
-	public function version_table()
-	{
+    public function version_table(): string
+    {
 		return $this->_table_name.'_versions';
 	}
  

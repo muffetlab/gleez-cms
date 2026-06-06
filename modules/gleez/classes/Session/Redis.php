@@ -102,7 +102,7 @@ class Session_Redis extends Session {
      * @return  string
      * @throws Kohana_Exception
      */
-    protected function _read(string $id = null)
+    protected function _read(string $id = null): ?string
     {
 		if ($id OR $id = Cookie::get($this->_name)) {
 			$result = $this->_redis->get($this->_prefix . $id);

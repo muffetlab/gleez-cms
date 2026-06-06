@@ -122,8 +122,8 @@ class Path {
 	 * @param   mixed  $criteria  A number representing the pid or an array of criteria
 	 * @return  boolean
 	 */
-	public static function delete($criteria)
-	{
+    public static function delete($criteria): bool
+    {
 		try
 		{
 			$query = DB::delete('paths');
@@ -198,8 +198,8 @@ class Path {
      * @param string $source A string representing the source.
 	 * @return  string  If alias exists alias or source
 	 */
-    public static function alias(string $source)
-	{
+    public static function alias(string $source): string
+    {
 		try
 		{
 			return DB::select('alias')->from('paths')
@@ -232,8 +232,8 @@ class Path {
      * @param string $string A string to clean
 	 * @return  string  The cleaned string
 	 */
-    public static function clean(string $string)
-	{
+    public static function clean(string $string): string
+    {
 		$separator = '-';
 
         // Empty strings do not need any processing.
@@ -266,8 +266,8 @@ class Path {
      * @return  boolean  TRUE if the path matches a pattern, FALSE otherwise
      * @throws Kohana_Exception
      */
-    public static function match_path(string $path, string $patterns)
-	{
+    public static function match_path(string $path, string $patterns): bool
+    {
 		// Convert path settings to a regular expression.
 		// Therefore replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.
 		$to_replace = array(

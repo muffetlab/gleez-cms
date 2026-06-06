@@ -286,8 +286,8 @@ class Post extends ORM_Versioned {
 	 * @return  boolean
 	 * @uses    Post::status
 	 */
-    public static function valid_state(string $value)
-	{
+    public static function valid_state(string $value): bool
+    {
 		return in_array($value, array_keys(Post::status()));
 	}
 
@@ -401,8 +401,8 @@ class Post extends ORM_Versioned {
 	 * @return  string   Teaser
 	 * @uses    Text::limit_words
 	 */
-    protected function _teaser(int $size = 105)
-	{
+    protected function _teaser(int $size = 105): string
+    {
 		// Find where the delimiter is in the body
 		$delimiter = strpos($this->rawbody, self::TEASER_TAG);
 
@@ -602,8 +602,8 @@ class Post extends ORM_Versioned {
 	 * @return  array  Statuses
 	 * @uses    Module::action
 	 */
-	public static function status()
-	{
+    public static function status(): array
+    {
 		$states = array(
 			'archive' => __('Archive'),
 			'draft'   => __('Draft'),
@@ -623,8 +623,8 @@ class Post extends ORM_Versioned {
 	 * @uses    Request::current
 	 * @uses    Request::uri
 	 */
-	public function links()
-	{
+    public function links(): array
+    {
 		$links = array(
 			'more'   => array('link' => $this->url,        'name' => __('Read More')),
 			'edit'   => array('link' => $this->edit_url,   'name' => __('Edit')),
@@ -837,8 +837,8 @@ class Post extends ORM_Versioned {
      * @throws Kohana_Exception
      * @uses    Widgets::render
      */
-    public static function widgets(string $content, string $region = 'post_inline')
-	{
+    public static function widgets(string $content, string $region = 'post_inline'): string
+    {
 		// Save some cpu cycles, when the content is empty
 		if ($content == NULL or empty($content))
 		{
@@ -994,8 +994,8 @@ class Post extends ORM_Versioned {
 	 *
 	 * @return Post
 	 */
-	protected function _delete_image()
-	{
+    protected function _delete_image(): Post
+    {
 		if ($this->rawimage AND file_exists($this->_image_path.$this->rawimage))
 		{
 			@unlink($this->_image_path.$this->rawimage);

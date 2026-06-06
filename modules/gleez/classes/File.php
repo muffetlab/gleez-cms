@@ -22,8 +22,8 @@ class File extends Kohana_File
 	 * @uses    Text::random
 	 * @uses    UTF8::strtolower
 	 */
-    public static function getUnique(string $name = NULL, int $length = 20, bool $remove_spaces = TRUE, string $replacement = '_')
-	{
+    public static function getUnique(string $name = NULL, int $length = 20, bool $remove_spaces = TRUE, string $replacement = '_'): string
+    {
 		if (is_null($name))
 		{
 			return UTF8::strtolower(uniqid().Text::random('alnum', (int)$length));
@@ -50,8 +50,8 @@ class File extends Kohana_File
      * @return  string
      * @since   1.1.0
 	 */
-    public static function getExt(string $file)
-	{
+    public static function getExt(string $file): string
+    {
 		return pathinfo($file, PATHINFO_EXTENSION);
 	}
 }

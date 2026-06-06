@@ -344,8 +344,8 @@ class Controller_Install_Install extends Controller_Template {
     /**
      * @throws Exception
      */
-    public function check_database($username, $password, $hostname, $database)
-	{
+    public function check_database($username, $password, $hostname, $database): bool
+    {
 
 		if ( ! $link = mysqli_connect($hostname, $username, $password))
 		{
@@ -392,8 +392,8 @@ class Controller_Install_Install extends Controller_Template {
     /**
      * @throws View_Exception
      */
-    public function create_database_config($username, $password, $hostname, $database, $table_prefix)
-	{
+    public function create_database_config($username, $password, $hostname, $database, $table_prefix): bool
+    {
 		$config = new View('install/config');
 
 		$config->type	  = 'MySQLi';
@@ -451,8 +451,8 @@ class Controller_Install_Install extends Controller_Template {
     /**
      * @throws Kohana_Exception
      */
-    private function add_user()
-	{
+    private function add_user(): string
+    {
 		$config = $this->_session->get('database_data');
 		$link   = mysqli_connect($config["hostname"], $config["user"], $config["pass"]);
 

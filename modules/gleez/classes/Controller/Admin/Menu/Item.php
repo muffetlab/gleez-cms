@@ -317,8 +317,8 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
      * @param array $tree Menu tree
 	 * @return  array Generated tree
 	 */
-    private function generate_tree(array $tree)
-	{
+    private function generate_tree(array $tree): array
+    {
 		$menu = array();
 		$ref  = array();
 

@@ -248,8 +248,8 @@ class Cache_Redis extends Cache {
 	 * @throws  Cache_Exception
 	 * @uses    System::sanitize_id
 	 */
-    protected function exists(string $id)
-	{
+    protected function exists(string $id): bool
+    {
 		try
 		{
 			return $this->_redis->exists(System::sanitize_id($this->config('prefix').$id));

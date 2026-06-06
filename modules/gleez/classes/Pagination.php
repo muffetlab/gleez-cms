@@ -118,8 +118,8 @@ class Pagination {
      * @return  Pagination
      * @throws Kohana_Exception
      */
-	public static function factory(array $config = array(), Request $request = NULL)
-	{
+    public static function factory(array $config = array(), Request $request = NULL): Pagination
+    {
 		return new self($config, $request);
 	}
 
@@ -169,8 +169,8 @@ class Pagination {
      * @throws Kohana_Exception
      * @uses    Config::load
      */
-    public function config_group(string $group = 'default')
-	{
+    public function config_group(string $group = 'default'): array
+    {
 		// Load the pagination config file
 		$config_file = Kohana::$config->load('pagination');
 
@@ -273,8 +273,8 @@ class Pagination {
      * @throws Kohana_Exception
      * @uses    URL::site
      */
-    public function url(int $page = 1)
-	{
+    public function url(int $page = 1): string
+    {
 		// Clean the page number
 		$page = max(1, (int) $page);
 
@@ -316,8 +316,8 @@ class Pagination {
 	 * @return  boolean
 	 * @uses    Valid::digit
 	 */
-    public function valid_page(int $page)
-	{
+    public function valid_page(int $page): bool
+    {
 		// Page number has to be a clean integer
 		if ( ! Valid::digit($page))
 		{
@@ -334,8 +334,8 @@ class Pagination {
      * @return  string  pagination output (HTML)
      * @throws View_Exception
      */
-	public function render($view = NULL)
-	{
+    public function render($view = NULL): string
+    {
 		// Automatically hide pagination whenever it is superfluous
 		if ($this->config['auto_hide'] === TRUE AND $this->total_pages <= 1)
 		{
@@ -449,8 +449,8 @@ class Pagination {
 	 *
 	 * @return  string
 	 */
-	public function query(array $params = NULL)
-	{
+    public function query(array $params = NULL): string
+    {
 		if (is_null($params))
 		{
 			// Use only the current parameters

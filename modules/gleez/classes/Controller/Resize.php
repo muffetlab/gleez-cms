@@ -99,8 +99,8 @@ class Controller_Resize extends Controller {
     /**
      * @throws Kohana_Exception
      */
-    private function is_valid($image_path)
-	{
+    private function is_valid($image_path): bool
+    {
 		try
 		{
 			// get the size and MIME type of the requested image
@@ -123,8 +123,8 @@ class Controller_Resize extends Controller {
 		return true;
 	}
 
-	private function is_remote()
-	{
+    private function is_remote(): bool
+    {
 		return strpos( strtolower($this->image_src), 'http://') !== false ;
 	}
 

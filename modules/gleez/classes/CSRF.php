@@ -25,8 +25,8 @@ class CSRF {
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function token(string $id, string $action, int $time = 0)
-	{
+    public static function token(string $id, string $action, int $time = 0): string
+    {
 		// Get id string for token, could be uid or ip etc
 		if (empty($id)) $id =  sha1(Request::$user_agent);
 
@@ -45,8 +45,8 @@ class CSRF {
      * @return  boolean
      * @throws Kohana_Exception
      */
-    public static function valid(string $token = NULL, string $action = '', string $id = '')
-	{
+    public static function valid(string $token = NULL, string $action = '', string $id = ''): bool
+    {
 		// get token and action from Form POST
 		if (empty($token))  $token  = Arr::get($_REQUEST, '_token');
 		if (empty($action)) $action = Arr::get($_REQUEST, '_action');
@@ -65,8 +65,8 @@ class CSRF {
      * @return string  The user specific private key.
      * @throws Kohana_Exception
      */
-	public static function key()
-	{
+    public static function key(): string
+    {
 		$token  = Session::instance()->id();
 		$secret = self::_private_key();
 		return sha1($secret . $token);
@@ -79,8 +79,8 @@ class CSRF {
      * @throws Kohana_Exception
      * @uses    Config::load
      */
-	private static function _private_key()
-	{
+    private static function _private_key(): string
+    {
 		$config = Kohana::$config->load('site');
 
 		if ( !($key = $config->get('gleez_private_key')) )

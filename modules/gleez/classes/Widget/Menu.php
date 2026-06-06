@@ -17,8 +17,8 @@ class Widget_Menu extends Widget {
     /**
      * @throws Kohana_Exception
      */
-    public function render()
-	{
+    public function render(): ?string
+    {
         return Menu::links($this->name, array('class' => 'menus', 'widget' => TRUE));
 	}
 

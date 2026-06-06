@@ -26,8 +26,8 @@ class Tags {
      * @return Tags
      * @throws Kohana_Exception
      */
-    public static function factory(array $config = array())
-	{
+    public static function factory(array $config = array()): Tags
+    {
 		if ( ! isset(self::$_instance))
 		{
 			// Create a new session instance
@@ -81,8 +81,8 @@ class Tags {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function tagging(string $tags, Model $object, $user_id = FALSE, bool $skip_updates = TRUE)
-	{
+    public function tagging(string $tags, Model $object, $user_id = FALSE, bool $skip_updates = TRUE): bool
+    {
 		if ( ! $user_id)  return FALSE;
 
 		$tags = self::explode($tags);
@@ -159,8 +159,8 @@ class Tags {
      * @throws Kohana_Exception|ReflectionException
      * @uses    Inflector::singular
      */
-    public function safe_tag(int $user_id, Model $object, string $tag = '')
-	{
+    public function safe_tag(int $user_id, Model $object, string $tag = ''): bool
+    {
 		$object_id = $object->id;
 
 		if ( ! $user_id = intval($user_id) or ! $object_id = intval($object_id) or empty($tag))
@@ -246,8 +246,8 @@ class Tags {
 	 * @return string
 	 * @uses   URL::title
 	 */
-    public function normalize_tag(string $tag)
-	{
+    public function normalize_tag(string $tag): string
+    {
 		if ($this->config['normalize_tags'] )
 		{
 			if ($this->config['use_gleez_normalization'])
@@ -274,8 +274,8 @@ class Tags {
      * @param string $tags
 	 * @return array
 	 */
-    public static function explode(string $tags)
-	{
+    public static function explode(string $tags): array
+    {
         // Use str_getcsv to handle comma-separated tags, including those with quotes.
         // This handles cases like: this, "some-company, llc", "and ""this"" w,o.rks", foo bar
         $typed_tags = array_unique(str_getcsv($tags));
@@ -300,8 +300,8 @@ class Tags {
 	 *
 	 * @return string
 	 */
-	public static function implode(array $tags)
-	{
+    public static function implode(array $tags): string
+    {
 		$encoded_tags = array();
 		foreach ($tags as $tag)
 		{

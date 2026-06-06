@@ -138,8 +138,8 @@ class Model_Menu extends ORM_MPTT {
      * @param string $str
 	 * @return  string
 	 */
-    private function _unique_slug(string $str)
-	{
+    private function _unique_slug(string $str): string
+    {
 		$i = 1;
 		$original = $str;
 
@@ -164,8 +164,8 @@ class Model_Menu extends ORM_MPTT {
      * @throws  Kohana_Exception
      * @throws ReflectionException
      */
-	public function create_at($parent, $location = 'last')
-	{
+    public function create_at($parent, $location = 'last'): Model_Menu
+    {
 		// Create the term as first child, last child, or as next sibling based on location
 		if ($location == 'first')
 		{

@@ -44,8 +44,8 @@ class Date extends Kohana_Date
 	 *
 	 * @return  array
 	 */
-	public static function amounts_min()
-	{
+    public static function amounts_min(): array
+    {
         return array(
             1 => __('Minute'),
             30 => __('Half an hour'),
@@ -62,8 +62,8 @@ class Date extends Kohana_Date
 	 *
 	 * @return array
 	 */
-    public static function weekdays()
-	{
+    public static function weekdays(): array
+    {
 		return array(
 			0 => __('Sunday'),
 			1 => __('Monday'),
@@ -80,8 +80,8 @@ class Date extends Kohana_Date
 	 *
 	 * @return array
 	 */
-	public static function timezones()
-	{
+    public static function timezones(): array
+    {
 		$continents = array(
 			'Africa',
 			'America',
@@ -211,8 +211,8 @@ class Date extends Kohana_Date
 	 *
 	 * @todo   Need add i18n ability
 	 */
-    public static function date_time_formats(bool $timestamp = FALSE)
-	{
+    public static function date_time_formats(bool $timestamp = FALSE): array
+    {
 		$date_time_format = array(
 			'l, F j, Y - H:i',
 			'l, j F, Y - H:i',
@@ -273,8 +273,8 @@ class Date extends Kohana_Date
 	 *
 	 * @todo   Need add i18n ability
 	 */
-    public static function date_formats(bool $timestamp = FALSE)
-	{
+    public static function date_formats(bool $timestamp = FALSE): array
+    {
 		$date_format = array(
 			'l, F j, Y',
 			'l, j F, Y',
@@ -324,8 +324,8 @@ class Date extends Kohana_Date
 	 *
 	 * @todo   Need add i18n ability
 	 */
-    public static function time_formats(bool $timestamp = FALSE)
-	{
+    public static function time_formats(bool $timestamp = FALSE): array
+    {
 		$time_format = array(
 			'g:i:s a',
 			'g:i:s A',
@@ -358,8 +358,8 @@ class Date extends Kohana_Date
      * @throws Exception
      * @uses   Config::get
      */
-    public static function date_time(int $timestamp, string $format = NULL)
-	{
+    public static function date_time(int $timestamp, string $format = NULL): string
+    {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site')->get('date_time_format') : $format);
 	}
 
@@ -372,8 +372,8 @@ class Date extends Kohana_Date
      * @throws Exception
      * @uses   Config::get
      */
-    public static function date_format(int $timestamp, string $format = NULL)
-	{
+    public static function date_format(int $timestamp, string $format = NULL): string
+    {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.date_format') : $format);
 	}
 
@@ -386,8 +386,8 @@ class Date extends Kohana_Date
      * @throws Exception
      * @uses   Config::get
      */
-    public static function time(int $timestamp, $format = NULL)
-	{
+    public static function time(int $timestamp, $format = NULL): string
+    {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.time_format') : $format);
 	}
 

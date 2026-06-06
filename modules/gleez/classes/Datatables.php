@@ -24,8 +24,8 @@ class Datatables {
 	 * @return	Datatables
 	 * @throws      Gleez_Exception
 	 */
-	public static function factory(ORM $object = NULL)
-	{
+    public static function factory(ORM $object = NULL): Datatables
+    {
 		return new Datatables($object);
 	}
 
@@ -162,8 +162,8 @@ class Datatables {
 	 *
 	 * @return  integer
 	 */
-	protected function _count()
-	{
+    protected function _count(): int
+    {
 		return count($this->_result);
 	}
 
@@ -172,8 +172,8 @@ class Datatables {
 	 *
 	 * @return  integer
 	 */
-	protected function _count_total()
-	{
+    protected function _count_total(): int
+    {
 		return $this->_object->reset(FALSE)->count_all();
 	}
 
@@ -194,8 +194,8 @@ class Datatables {
      * @param integer $length Length
 	 * @return	$this
 	 */
-    public function limit(int $start, int $length)
-	{
+    public function limit(int $start, int $length): Datatables
+    {
 		$this->_limit($start, $length);
 
 		return $this;
@@ -209,8 +209,8 @@ class Datatables {
      * @return    $this
      * @throws Kohana_Exception
      */
-    public function sort(string $column, string $direction = self::SORT_ASC)
-	{
+    public function sort(string $column, string $direction = self::SORT_ASC): Datatables
+    {
 		if ( ! in_array($direction, array(self::SORT_ASC, self::SORT_DESC)))
 		{
 			throw new Kohana_Exception('Invalid sort order of `' . $direction . '`.');
@@ -227,8 +227,8 @@ class Datatables {
      * @param string $query Search query
 	 * @return	$this
 	 */
-    public function search(string $query)
-	{
+    public function search(string $query): Datatables
+    {
 		$this->_search($query);
 
 		return $this;
@@ -239,8 +239,8 @@ class Datatables {
 	 *
 	 * @return  integer
 	 */
-	public function count()
-	{
+    public function count(): int
+    {
         return $this->_count;
 	}
 
@@ -278,8 +278,8 @@ class Datatables {
 	 * @return $this
 	 * @throws Kohana_Exception
 	 */
-	public function execute()
-	{
+    public function execute(): Datatables
+    {
 		$request = $this->request();
 
 		if (!$request instanceof Request)
@@ -415,8 +415,8 @@ class Datatables {
 	 * @param   array  $row  Row
 	 * @return  $this
 	 */
-	public function add_row(array $row)
-	{
+    public function add_row(array $row): Datatables
+    {
 		$this->_rows[] = $row;
 
 		return $this;
@@ -439,8 +439,8 @@ class Datatables {
      * @return    string
      * @throws View_Exception
      */
-	public function render()
-	{
+    public function render(): string
+    {
 		if ($this->_render === NULL)
 		{
 			if ($this->_view)

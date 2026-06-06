@@ -61,8 +61,8 @@ class Meta {
 	 * @uses    Arr::get
 	 * @uses    HTML::attributes
 	 */
-    public static function get_link(string $handle)
-	{
+    public static function get_link(string $handle): ?string
+    {
 		if ( ! isset(self::$links[$handle]))
 		{
             return null;
@@ -97,8 +97,8 @@ class Meta {
 	 *
 	 * @return  string   Asset HTML
 	 */
-	public static function all_links()
-	{
+    public static function all_links(): string
+    {
 		if (empty(self::$links))
 		{
             return '';
@@ -158,8 +158,8 @@ class Meta {
      * @return string|null Asset HTML or null when not found
 	 * @uses    HTML::attributes
 	 */
-    public static function get_tag(string $handle)
-	{
+    public static function get_tag(string $handle): ?string
+    {
 		if ( ! isset(self::$tags[$handle]))
 		{
             return null;
@@ -198,8 +198,8 @@ class Meta {
 	 *
 	 * @return  string   Asset HTML
 	 */
-	public static function all_tags()
-	{
+    public static function all_tags(): string
+    {
 		if (empty(self::$tags))
 		{
             return '';
@@ -223,8 +223,8 @@ class Meta {
      * @param array $assets Array of assets
 	 * @return  array  Sorted array of assets
 	 */
-    protected static function _sort(array $assets)
-	{
+    protected static function _sort(array $assets): array
+    {
         return System::sortDependencies($assets);
 	}
 

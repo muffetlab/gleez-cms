@@ -36,8 +36,8 @@ class System {
 	 * @return  string
 	 * @link    http://php.net/manual/en/function.sys-getloadavg.php sys-getloadavg()
 	 */
-	public static function get_avg()
-	{
+    public static function get_avg(): string
+    {
 		// Default return
 		$not_available = __('Not available');
 
@@ -84,8 +84,8 @@ class System {
 	 *
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
-    public static function mkdir(string $path, int $mode = 0777, bool $recursive = TRUE)
-	{
+    public static function mkdir(string $path, int $mode = 0777, bool $recursive = TRUE): bool
+    {
 		$out = FALSE;
 		$oldumask = umask(0);
 		if (! is_dir($path))
@@ -105,8 +105,8 @@ class System {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-	public static function icons()
-	{
+    public static function icons(): array
+    {
         if (!$icons = Cache::instance()->get('icons:fa-icons')) {
             $allPath = Kohana::find_file('media/fontawesome/css', 'all.min', 'css');
             $brandsPath = Kohana::find_file('media/fontawesome/css', 'brands.min', 'css');
@@ -173,8 +173,8 @@ class System {
 	 * @return  string
 	 * @todo    add more OS
 	 */
-	public static function os()
-	{
+    public static function os(): string
+    {
 		if (Gleez::$isWindows) {
 			return System::WIN;
 		}
@@ -194,8 +194,8 @@ class System {
 	 * @param   array         $defaults  Array that serves as the defaults [Optional]
 	 * @return  array                    Merged user defined values with defaults
 	 */
-	public static function parse_args($args, array $defaults = array())
-	{
+    public static function parse_args($args, array $defaults = array()): array
+    {
 		if (is_object($args))
 		{
 			$result = get_object_vars($args);
@@ -230,8 +230,8 @@ class System {
 	 * @return  string
      * @since   1.2.0
 	 */
-    public static function sanitize_id(string $id)
-	{
+    public static function sanitize_id(string $id): string
+    {
 		// Change slashes and spaces to underscores
 		return str_replace(array(
 			'/',
@@ -297,8 +297,8 @@ class System {
 	 * @return string
      * @since   1.6.0
 	 */
-    public static function getPhpVersion(bool $idOnly = false)
-	{
+    public static function getPhpVersion(bool $idOnly = false): string
+    {
 		return $idOnly ? PHP_VERSION_ID : PHP_VERSION;
 	}
 
@@ -314,8 +314,8 @@ class System {
 	 *
 	 * @return  bool
 	 */
-	public static function hashEquals($known_string, $user_string)
-	{
+    public static function hashEquals($known_string, $user_string): bool
+    {
 		// Available only in php >= 5.6.0
 		if ( function_exists('hash_equals') )
 		{
@@ -341,8 +341,8 @@ class System {
 	 * @return bool
      * @since  1.4.0  Introduced
 	 */
-    public static function equalsHashes(string $a, string $b)
-	{
+    public static function equalsHashes(string $a, string $b): bool
+    {
 		return self::hashEquals($a, $b);
 	}
 
@@ -355,8 +355,8 @@ class System {
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
 	* @license  MIT
 	*/
-    public static function faGetArray(string $path, string $class_prefix = 'fa-')
-	{
+    public static function faGetArray(string $path, string $class_prefix = 'fa-'): array
+    {
 		if(!file_exists($path)) {
             return [];
 		}
@@ -390,8 +390,8 @@ class System {
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
 	* @license  MIT
 	*/
-    public static function faReadableName(array $array, string $class_prefix = 'fa-')
-	{
+    public static function faReadableName(array $array, string $class_prefix = 'fa-'): array
+    {
 		if( ! is_array($array) )
 		{
             return [];

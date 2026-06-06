@@ -87,8 +87,8 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    URL::base
      */
-    public static function resize(string $file, array $attributes = NULL, $protocol = NULL, bool $index = FALSE)
-	{
+    public static function resize(string $file, array $attributes = NULL, $protocol = NULL, bool $index = FALSE): string
+    {
 		if (strlen($file) <= 1)
 		{
 			return '';
@@ -143,8 +143,8 @@ class HTML extends Kohana_HTML
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function links(array $links, array $attributes = array('class' => 'links'))
-	{
+    public static function links(array $links, array $attributes = array('class' => 'links')): string
+    {
 		$output = '';
 
 		if (count($links) > 0)
@@ -207,8 +207,8 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    HTML::chars
      */
-    public static function tabs(array $tabs, array $attributes = array('class' => 'tabs'))
-	{
+    public static function tabs(array $tabs, array $attributes = array('class' => 'tabs')): string
+    {
 		$output = '';
 
 		if (count($tabs) > 0)
@@ -266,8 +266,8 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    URL::is_active
      */
-    public static function is_active(string $uri)
-	{
+    public static function is_active(string $uri): bool
+    {
 		return URL::is_active($uri);
 	}
 
@@ -286,8 +286,8 @@ class HTML extends Kohana_HTML
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function icon(string $url, string $icon, array $attrs = array())
-	{
+    public static function icon(string $url, string $icon, array $attrs = array()): string
+    {
         return self::anchor($url, '<i class="' . $icon . '"></i>', $attrs);
 	}
 
@@ -304,8 +304,8 @@ class HTML extends Kohana_HTML
 	 *
 	 * @return  string
 	 */
-    public static function label(string $text, string $label = 'default')
-	{
+    public static function label(string $text, string $label = 'default'): string
+    {
 		switch (strtolower($label))
 		{
 			case 'publish':
@@ -342,8 +342,8 @@ class HTML extends Kohana_HTML
 	 *
 	 * @return array
 	 */
-	public static function per_page()
-	{
+    public static function per_page(): array
+    {
 		return array(
 			5 => 5,
 			10 => 10,

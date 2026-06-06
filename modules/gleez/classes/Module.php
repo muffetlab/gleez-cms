@@ -67,8 +67,8 @@ class Module
      * @return  ORM
      * @throws Kohana_Exception
      */
-    public static function get(string $name)
-	{
+    public static function get(string $name): ORM
+    {
 		if (empty(self::$modules[$name]) || !(self::$modules[$name] instanceof ORM)) {
             return ORM::factory('Module')->where('name', '=', $name)->find();
 		}
@@ -83,8 +83,8 @@ class Module
      * @return ArrayObject|null An ArrayObject containing the module information from the module.info file, or null if not found
      * @throws Kohana_Exception
      */
-    public static function info(string $name)
-	{
+    public static function info(string $name): ?ArrayObject
+    {
 		$module_list = self::available();
 
         return $module_list->$name ?? null;
@@ -96,8 +96,8 @@ class Module
      * @param string $name Module name
 	 * @return  boolean
 	 */
-    public static function is_installed(string $name)
-	{
+    public static function is_installed(string $name): bool
+    {
 		return array_key_exists($name, self::$modules);
 	}
 
@@ -107,8 +107,8 @@ class Module
      * @param string $name Module name
 	 * @return  boolean
 	 */
-    public static function is_active(string $name)
-	{
+    public static function is_active(string $name): bool
+    {
 		return array_key_exists($name, self::$active);
 	}
 
@@ -185,8 +185,8 @@ class Module
 	 *
 	 * @return array
 	 */
-	public static function active()
-	{
+    public static function active(): array
+    {
 		return self::$active;
 	}
 
@@ -197,8 +197,8 @@ class Module
      * @return array An array of warning or error messages to be displayed
      * @throws Kohana_Exception
      */
-    public static function can_activate(string $module_name)
-	{
+    public static function can_activate(string $module_name): array
+    {
 		self::_add_to_path($module_name);
 		$messages = array();
 
@@ -220,8 +220,8 @@ class Module
 	 * @param string $module_name
 	 * @return array an array of warning or error messages to be displayed
 	 */
-    public static function can_deactivate(string $module_name)
-	{
+    public static function can_deactivate(string $module_name): array
+    {
 		$data = (object) array("module" => $module_name, "messages" => array());
 		self::event("pre_deactivate", $data);
 
@@ -565,8 +565,8 @@ class Module
      * @param string $module_name Module name
 	 * @return boolean
 	 */
-    public static function exists(string $module_name)
-	{
+    public static function exists(string $module_name): bool
+    {
 		return self::is_active($module_name);
 	}
 
@@ -648,8 +648,8 @@ class Module
      * @return  float   Module version
      * @throws Kohana_Exception
      */
-    public static function get_version(string $name)
-	{
+    public static function get_version(string $name): float
+    {
 		return self::get($name)->version;
 	}
 

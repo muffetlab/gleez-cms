@@ -97,8 +97,8 @@ class Comment {
 	/**
 	 * Make sure that the state is legal.
 	 */
-	public static function valid_state($value)
-	{
+    public static function valid_state($value): bool
+    {
 		return in_array( $value, array_keys( Comment::status() ) );
 	}
 
@@ -107,8 +107,8 @@ class Comment {
 	 *
      * @return array statuses
      */
-	public static function status()
-	{
+    public static function status(): array
+    {
 		$states = array(
 			'publish'   => __('Publish'),
 			'draft'     => __('Unpublish'),
@@ -125,8 +125,8 @@ class Comment {
      * @param boolean $list TRUE for dropdown for bult actions
 	 * @return  array
 	 */
-    public static function bulk_actions(bool $list = FALSE)
-	{
+    public static function bulk_actions(bool $list = FALSE): array
+    {
 		$states = array(
 			'publish' => array(
 				'label' => __('Publish the selected comments'),

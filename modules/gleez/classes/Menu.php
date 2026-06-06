@@ -32,8 +32,8 @@ class Menu {
 	 * @param   array  $items  Array of list items (instead of using add() method) [Optional]
 	 * @return  Menu
 	 */
-	public static function factory(array $items = NULL)
-	{
+    public static function factory(array $items = NULL): Menu
+    {
 		return new static($items);
 	}
 
@@ -60,8 +60,8 @@ class Menu {
 	 * @param   Menu    $children   Instance of class that contain children [Optional]
 	 * @return  Menu
 	 */
-    public function add(string $id, string $title, string $url, string $descp = '', array $params = NULL, string $image = NULL, string $parent_id = NULL, Menu $children = NULL)
-	{
+    public function add(string $id, string $title, string $url, string $descp = '', array $params = NULL, string $image = NULL, string $parent_id = NULL, Menu $children = NULL): Menu
+    {
 		if( $parent_id )
 		{
 			$this->items = static::add_child($parent_id, $this->items, $id, $title, $url, $descp, $params, $image, $children);
@@ -90,8 +90,8 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
-    public function remove(string $target_id, bool $parent_id = FALSE)
-	{
+    public function remove(string $target_id, bool $parent_id = FALSE): Menu
+    {
 		if ($parent_id)
 		{
 			$this->items = static::remove_child($target_id, $this->items);
@@ -112,8 +112,8 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
-    public function set_title(string $target_id, string $title, bool $parent_id = FALSE)
-	{
+    public function set_title(string $target_id, string $title, bool $parent_id = FALSE): Menu
+    {
 		if ( $parent_id )
 		{
 			$this->items = static::change_title_url($target_id, $this->items, $title);
@@ -134,8 +134,8 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  MENU
 	 */
-    public function set_url(string $target_id, string $url, bool $parent_id = FALSE)
-	{
+    public function set_url(string $target_id, string $url, bool $parent_id = FALSE): Menu
+    {
 		if ( $parent_id )
 		{
 			$this->items = static::change_title_url($target_id, $this->items, $url, 'url');
@@ -156,8 +156,8 @@ class Menu {
      * @return  string  HTML unordered list
      * @throws Kohana_Exception
      */
-	public function render(array $attributes = NULL, array $items = NULL)
-	{
+    public function render(array $attributes = NULL, array $items = NULL): string
+    {
 		static $i;
 
 		$items = empty($items) ? $this->items : $items;
@@ -285,8 +285,8 @@ class Menu {
 	 *
 	 * @return   string
 	 */
-	public function debug()
-	{
+    public function debug(): string
+    {
 		return Debug::vars($this->items);
 	}
 
@@ -295,8 +295,8 @@ class Menu {
 	 *
 	 * @return array
 	 */
-	public function get_items()
-	{
+    public function get_items(): ?array
+    {
 		return $this->items;
 	}
 
@@ -308,8 +308,8 @@ class Menu {
      * @return string
      * @throws Kohana_Exception
      */
-    public static function links(string $name, array $attr = array('class' => 'menus'))
-	{
+    public static function links(string $name, array $attr = array('class' => 'menus')): ?string
+    {
         $menu = static::buildMenu($name);
 
         if (!$menu) {
@@ -419,8 +419,8 @@ class Menu {
 	 *
 	 * @return  array
 	 */
-    private static function change_title_url(string $needle, array $array, string $string, string $op = 'title')
-	{
+    private static function change_title_url(string $needle, array $array, string $string, string $op = 'title'): array
+    {
 		foreach ($array as $key => $value)
 		{
 			# Check for val
@@ -456,8 +456,8 @@ class Menu {
 	 *
 	 * @return  array
 	 */
-    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = FALSE, array $params = NULL, string $image = NULL, Menu $children = NULL)
-	{
+    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = FALSE, array $params = NULL, string $image = NULL, Menu $children = NULL): array
+    {
 		foreach ($array as $key => $value)
 		{
 			if ($key == $needle)
@@ -492,8 +492,8 @@ class Menu {
 	 * @param   array    $array  The array of items
 	 * @return  array
 	 */
-    private static function remove_child(string $needle, array $array)
-	{
+    private static function remove_child(string $needle, array $array): array
+    {
 		foreach ($array as $key => $value)
 		{
 			if ($key == $needle)

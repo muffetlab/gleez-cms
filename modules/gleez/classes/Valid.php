@@ -30,8 +30,8 @@ class Valid extends Kohana_Valid
      * @param string $string The text to check
 	 * @return  boolean
 	 */
-    public static function utf8(string $string)
-	{
+    public static function utf8(string $string): bool
+    {
 		return $string === '' || preg_match('/^./su', $string) === 1;
 	}
 }

@@ -153,8 +153,8 @@ class Assets {
 	 * @throws  Exception
 	 * @uses    HTML::style
 	 */
-    public static function get_css(string $handle, string $format = self::FORMAT_TAG)
-	{
+    public static function get_css(string $handle, string $format = self::FORMAT_TAG): ?string
+    {
 		if ( ! isset(self::$css[$handle]))
 		{
             return null;
@@ -270,8 +270,8 @@ class Assets {
 	 * @throws  Exception
 	 * @uses    HTML::script
 	 */
-    public static function get_js(string $handle, string $format = self::FORMAT_TAG)
-	{
+    public static function get_js(string $handle, string $format = self::FORMAT_TAG): ?string
+    {
 		if ( ! isset(self::$js[$handle]))
 		{
             return null;
@@ -389,8 +389,8 @@ class Assets {
      * @return string|null Asset HTML or null if not found
 	 * @uses    HTML::attributes
 	 */
-    public static function get_codes(string $handle, string $nonce = NULL)
-	{
+    public static function get_codes(string $handle, string $nonce = NULL): ?string
+    {
 		if ( ! isset(self::$codes[$handle]))
 		{
             return null;
@@ -410,8 +410,8 @@ class Assets {
      * @return  string   Asset HTML
      * @throws Kohana_Exception
      */
-    public static function all_codes(bool $footer = FALSE, string $nonce = NULL)
-	{
+    public static function all_codes(bool $footer = FALSE, string $nonce = NULL): string
+    {
 		if (empty(self::$codes))
 		{
             return '';
@@ -499,8 +499,8 @@ class Assets {
      * @param string $handle Asset name
 	 * @return string|null Asset content or null if not found
 	 */
-    public static function get_group(string $group, string $handle)
-	{
+    public static function get_group(string $group, string $handle): ?string
+    {
 		if ( ! isset(self::$groups[$group]) OR ! isset(self::$groups[$group][$handle]))
 		{
 			return null;
@@ -515,8 +515,8 @@ class Assets {
      * @param string $group Group name
 	 * @return string  Assets content
 	 */
-    public static function all_groups(string $group)
-	{
+    public static function all_groups(string $group): string
+    {
 		if ( ! isset(self::$groups[$group]))
 		{
 			return '';
@@ -540,8 +540,8 @@ class Assets {
      * @param array $assets Array of assets
 	 * @return  array  Sorted array of assets
 	 */
-    protected static function _sort(array $assets)
-	{
+    protected static function _sort(array $assets): array
+    {
         $sorted = System::sortDependencies($assets);
 
         // Sort the Assets so that it appears in the correct order.
@@ -557,8 +557,8 @@ class Assets {
      * @param array $b
      * @return  integer  The sorted order for assets
 	 */
-    protected static function sort_assets(array $a, array $b)
-	{
+    protected static function sort_assets(array $a, array $b): int
+    {
 		$a_weight = (is_array($a) AND isset($a['weight'])) ? $a['weight'] : 0;
 		$b_weight = (is_array($b) AND isset($b['weight'])) ? $b['weight'] : 0;
 
@@ -747,8 +747,8 @@ class Assets {
 	 * @uses   HTML::style
 	 * @uses   HTML::script
 	 */
-    public static function compile(array $files = array(), string $format = self::FORMAT_TAG, string $type = 'js')
-	{
+    public static function compile(array $files = array(), string $format = self::FORMAT_TAG, string $type = 'js'): string
+    {
 		// Compiled contents of file
 		$compiled = "";
 
@@ -823,8 +823,8 @@ class Assets {
 	 * @return  array
 	 * @uses    Kohana::find_file
 	 */
-    protected static function _get_file_path(string $file, string $type = '.php')
-	{
+    protected static function _get_file_path(string $file, string $type = '.php'): array
+    {
 		// @todo need to overwrite the assets set and get to fix this
 		$file = str_replace(array('media/', '.'.$type), '', $file);
 
@@ -840,8 +840,8 @@ class Assets {
 	 *
 	 * @return string
 	 */
-    private static function get_filename(array $files, string $path, string $type)
-	{
+    private static function get_filename(array $files, string $path, string $type): string
+    {
 		// Most recently modified file
 		$last_modified = 0;
 

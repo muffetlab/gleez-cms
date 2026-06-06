@@ -423,13 +423,13 @@ class Locale_Data {
 	 *
 	 * @return array
 	 */
-	public static function getLocaleData()
-	{
+    public static function getLocaleData(): array
+    {
 		return self::$_locale_data;
 	}
 
-	public static function getTerritoryData()
-	{
+    public static function getTerritoryData(): array
+    {
 		return self::$_territory_data;
 	}
 }

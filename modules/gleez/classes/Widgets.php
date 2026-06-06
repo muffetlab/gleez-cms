@@ -63,8 +63,8 @@ class Widgets {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-    public static function instance(string $region = 'right', string $format = 'html')
-	{
+    public static function instance(string $region = 'right', string $format = 'html'): Widgets
+    {
 		if ( ! isset(Widgets::$instance))
 		{
 			new Widgets($region, $format);
@@ -105,8 +105,8 @@ class Widgets {
      * @return  Widgets
      * @throws  Kohana_Exception
      */
-    public function add(string $region, string $name, $widget)
-	{
+    public function add(string $region, string $name, $widget): Widgets
+    {
 		if ( ! is_object($widget))
 		{
 			throw new Kohana_Exception('Not a valid widget object: :widget', array(':widget' => $name));
@@ -257,8 +257,8 @@ class Widgets {
      * @return  string  HTML widgets
      * @throws Kohana_Exception
      */
-    public function render(string $region = NULL, string $format = NULL)
-	{
+    public function render(string $region = NULL, string $format = NULL): string
+    {
 		//set region, respect $this->region();
 		if ( ! is_null($region))
 		{
@@ -335,8 +335,8 @@ class Widgets {
 	 *
 	 * @return   string
 	 */
-	public function debug()
-	{
+    public function debug(): string
+    {
 		return Debug::vars($this->_widgets);
 	}
 
@@ -470,8 +470,8 @@ class Widgets {
     /**
      * @throws View_Exception
      */
-    private function _html($widget, $region, $format)
-	{
+    private function _html($widget, $region, $format): string
+    {
 		$zebra = $id = FALSE;
 
 		// Remove empty strings if content is string instead of view object

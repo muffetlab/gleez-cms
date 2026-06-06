@@ -213,8 +213,8 @@ class Form extends Kohana_Form
      * @throws Kohana_Exception
      * @uses    Form::select
      */
-    public static function weight(string $name, int $selected = 0, array $attrs = NULL, int $delta = 15)
-	{
+    public static function weight(string $name, int $selected = 0, array $attrs = NULL, int $delta = 15): string
+    {
 		$options = array();
 
 		for ($n = (-1 * $delta); $n <= $delta; $n++)
@@ -235,8 +235,8 @@ class Form extends Kohana_Form
      * @throws Kohana_Exception
      * @uses    Arr::get
      */
-    public static function filter(string $column, array $vals, array $attrs = array())
-	{
+    public static function filter(string $column, array $vals, array $attrs = array()): string
+    {
 		if ( ! isset($attrs['style']))
 		{
 			// Default type is text
@@ -259,8 +259,8 @@ class Form extends Kohana_Form
      * @link    https://getdatepicker.com/4/
      * @uses    Form::input
      */
-    public static function date(string $name, string $value = NULL, array $attrs = NULL)
-	{
+    public static function date(string $name, string $value = NULL, array $attrs = NULL): string
+    {
 		$out = '';
 
 		// Assign the datepicker assets
@@ -339,8 +339,8 @@ class Form extends Kohana_Form
      * @param string $name Element name
 	 * @return string
 	 */
-    protected static function _get_id_by_name(string $name)
-	{
+    protected static function _get_id_by_name(string $name): string
+    {
 		return 'form-'.str_replace(array('[]', '][', '[', ']', '\\'), array('', '_', '_', '', '_'), $name);
 	}
 }

@@ -296,8 +296,8 @@ class Model_Term extends ORM_MPTT {
      * @return  NULL|string   NULL when filed, otherwise file path
      * @throws Kohana_Exception
      */
-    public function uploadImage(array $file)
-	{
+    public function uploadImage(array $file): ?string
+    {
 		if (isset($file['tmp_name']) AND ! empty($file['tmp_name']))
 		{
 			return Upload::uploadImage($file);

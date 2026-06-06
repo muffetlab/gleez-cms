@@ -59,7 +59,7 @@ class Upload extends Kohana_Upload
      * @uses    Config::get
      * @uses    File::getUnique
      */
-    public static function uploadImage(array $file, string $upload_dir = NULL)
+    public static function uploadImage(array $file, string $upload_dir = NULL): ?string
     {
     	if (is_null($upload_dir))
     	{

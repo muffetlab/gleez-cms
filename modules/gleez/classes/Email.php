@@ -33,8 +33,8 @@ class Email {
      * @throws Kohana_Exception
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public static function factory(bool $exceptions = TRUE)
-	{
+    public static function factory(bool $exceptions = TRUE): Email
+    {
 		return new Email($exceptions);
 	}
 
@@ -64,8 +64,8 @@ class Email {
      * @param string $subject New subject
 	 * @return  Email
 	 */
-    public function subject(string $subject)
-	{
+    public function subject(string $subject): Email
+    {
 		// Change the subject
 		$this->_mail->Subject = $subject;
 
@@ -83,8 +83,8 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function message(string $body, string $type = NULL)
-	{
+    public function message(string $body, string $type = NULL): Email
+    {
 		if ( ! $type OR $type === 'text/plain')
 		{
 			// Set the main text/plain body
@@ -113,8 +113,8 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function to(string $email, string $name = NULL)
-	{
+    public function to(string $email, string $name = NULL): Email
+    {
 		$this->_mail->addAddress($email, $name);
 
 		return $this;
@@ -128,8 +128,8 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function cc(string $email, string $name = NULL)
-	{
+    public function cc(string $email, string $name = NULL): Email
+    {
 		$this->_mail->addCC($email, $name);
 
 		return $this;
@@ -143,8 +143,8 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function bcc(string $email, string $name = NULL)
-	{
+    public function bcc(string $email, string $name = NULL): Email
+    {
 		$this->_mail->addBCC($email, $name);
 
 		return $this;
@@ -158,8 +158,8 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function from(string $email, string $name = NULL)
-	{
+    public function from(string $email, string $name = NULL): Email
+    {
 		$this->_mail->setFrom($email, $name);
 
 		return $this;
@@ -173,8 +173,8 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function reply_to(string $email, string $name = NULL)
-	{
+    public function reply_to(string $email, string $name = NULL): Email
+    {
 		$this->_mail->addReplyTo($email, $name);
 
 		return $this;
@@ -186,8 +186,8 @@ class Email {
      * @param string $email Email address
 	 * @return  Email
 	 */
-    public function return_path(string $email)
-	{
+    public function return_path(string $email): Email
+    {
 		$this->_mail->Sender = $email;
 
 		return $this;
@@ -201,8 +201,8 @@ class Email {
      * @param array|null $params Additional params for unique
 	 * @return  Email
 	 */
-    public function queue(int $timestamp = NULL, bool $unique = FALSE, array $params = NULL)
-	{
+    public function queue(int $timestamp = NULL, bool $unique = FALSE, array $params = NULL): Email
+    {
 		try
 		{
 			//@todo insert into mailqueue table
@@ -221,8 +221,8 @@ class Email {
 	 *
 	 * @return  boolean
 	 */
-	public function send()
-	{
+    public function send(): bool
+    {
 		try
 		{
 			// Send mail if its not queued
@@ -245,8 +245,8 @@ class Email {
 	 *
 	 * @return  PHPMailer
 	 */
-	public function mail()
-	{
+    public function mail(): PHPMailer
+    {
 		return $this->_mail;
 	}
 

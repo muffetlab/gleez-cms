@@ -54,7 +54,7 @@ class Inflector
      * @return  boolean
      * @throws Kohana_Exception
      */
-    public static function uncountable(string $str)
+    public static function uncountable(string $str): bool
     {
         if (null === static::$uncountable) {
             // Cache uncountables
@@ -91,7 +91,7 @@ class Inflector
      * @throws Kohana_Exception
      * @uses    Inflector::uncountable
      */
-    public static function singular(string $str, int $count = null)
+    public static function singular(string $str, int $count = null): string
     {
         // $count should always be a float
         $count = (null === $count) ? 1.0 : (float) $count;
@@ -162,7 +162,7 @@ class Inflector
      * @throws Kohana_Exception
      * @uses    static::uncountable
      */
-    public static function plural(string $str, int $count = null)
+    public static function plural(string $str, int $count = null): string
     {
         // $count should always be a float
         $count = (null === $count) ? 0.0 : (float) $count;
@@ -227,7 +227,7 @@ class Inflector
      * @param string $str phrase to camelize
      * @return  string
      */
-    public static function camelize(string $str)
+    public static function camelize(string $str): string
     {
         $str = 'x'.strtolower(trim($str));
         $str = ucwords(preg_replace('/[\s_]+/', ' ', $str));
@@ -247,7 +247,7 @@ class Inflector
      * @param string $sep word separator
      * @return  string
      */
-    public static function decamelize(string $str, string $sep = ' ')
+    public static function decamelize(string $str, string $sep = ' '): string
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1'.$sep.'$2', trim($str)));
     }
@@ -262,7 +262,7 @@ class Inflector
      * @param string $str phrase to underscore
      * @return  string
      */
-    public static function underscore(string $str)
+    public static function underscore(string $str): string
     {
         return preg_replace('/\s+/', '_', trim($str));
     }
@@ -278,7 +278,7 @@ class Inflector
      * @param string $str phrase to make human-readable
      * @return  string
      */
-    public static function humanize(string $str)
+    public static function humanize(string $str): string
     {
         return preg_replace('/[_-]+/', ' ', trim($str));
     }

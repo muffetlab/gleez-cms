@@ -18,8 +18,8 @@ class Widget_Admin extends Widget {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public function render()
-	{
+    public function render(): string
+    {
 		switch($this->name)
 		{
 			case 'donate':
@@ -39,8 +39,8 @@ class Widget_Admin extends Widget {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public function shortcut()
-	{
+    public function shortcut(): string
+    {
 		$menus = Menu::items('management')->get_items();
 		unset($menus['administer']);
 		return View::factory('widgets/shortcuts')
@@ -51,8 +51,8 @@ class Widget_Admin extends Widget {
     /**
      * @throws View_Exception
      */
-    public function donate()
-	{
+    public function donate(): string
+    {
 		return View::factory('widgets/static')->set(array(
 			'title' => __('Donate'),
 			'content' => __('If you use Gleez, we ask that you donate to ensure future development is possible.')
@@ -62,8 +62,8 @@ class Widget_Admin extends Widget {
     /**
      * @throws View_Exception
      */
-    public function welcome()
-	{
+    public function welcome(): string
+    {
 		return View::factory('widgets/welcome')->set(array(
 			'title' => __('Welcome'),
 		))->render();
@@ -73,8 +73,8 @@ class Widget_Admin extends Widget {
      * @throws View_Exception
      * @throws Kohana_Exception
      */
-    public function system_info()
-	{
+    public function system_info(): string
+    {
         $dbVersion = DB::query(Database::SELECT, 'SHOW VARIABLES WHERE variable_name = "version"')
             ->execute()
             ->get('Value');

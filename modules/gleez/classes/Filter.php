@@ -44,8 +44,8 @@ class Filter {
      * @param array $callbacks Filter callbacks
      * @return  Filter
      */
-    public static function set(string $name, array $callbacks = array())
-	{
+    public static function set(string $name, array $callbacks = array()): Filter
+    {
 		return Filter::$_filters[$name] = new Filter($name, $callbacks);
 	}
 
@@ -63,8 +63,8 @@ class Filter {
 	 *
 	 * @throws  Kohana_Exception
 	 */
-	public static function get($name)
-	{
+    public static function get($name): Filter
+    {
 		if ( ! isset(Filter::$_filters[$name]))
 		{
 			throw new Kohana_Exception('The requested filter does not exist: :filter',
@@ -84,8 +84,8 @@ class Filter {
 	 *
 	 * @return  array
 	 */
-	public static function all()
-	{
+    public static function all(): array
+    {
 		return Filter::$_filters;
 	}
 
@@ -101,8 +101,8 @@ class Filter {
      * @throws Kohana_Exception
      * @uses    Config::load
      */
-	public static function formats()
-	{
+    public static function formats(): array
+    {
 		$config = Kohana::$config->load('inputfilter');
 
         return array_map(function ($format) {
@@ -133,8 +133,8 @@ class Filter {
      * @uses    Cache::get
      * @uses    Cache::set
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE)
-	{
+    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    {
 		$cache = Cache::instance();
 
 		if ($save)
@@ -175,8 +175,8 @@ class Filter {
      * @return string  $text       The filtered text
      * @throws Kohana_Exception
      */
-	public static function process($text)
-	{
+    public static function process($text): string
+    {
 		$config = Kohana::$config->load('inputfilter');
 		if(!array_key_exists($text->format, $config->get('formats') ) OR !isset($text->format))
 		{
@@ -222,8 +222,8 @@ class Filter {
 	 *
 	 * @return string  $text       The filtered text
 	 */
-    public static function execute($callback, string $text, $filter)
-	{
+    public static function execute($callback, string $text, $filter): string
+    {
 		$args = func_get_args();
 		array_shift($args);
 

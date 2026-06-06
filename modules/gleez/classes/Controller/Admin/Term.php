@@ -344,8 +344,8 @@ class Controller_Admin_Term extends Controller_Admin {
 	 *
 	 * @todo Move to Model
 	 */
-	private function generate_tree($tree)
-	{
+    private function generate_tree($tree): array
+    {
 		$menu = array();
 		$ref = array();
 

@@ -54,8 +54,8 @@ class Gleez_I18n extends I18n
      *
      * @throws Kohana_Exception
      */
-	public static function initialize()
-	{
+    public static function initialize(): string
+    {
 		// Installed Locales
 		self::$_languages = Kohana::$config->load('site')->get('installed_locales', array());
 
@@ -107,8 +107,8 @@ class Gleez_I18n extends I18n
 	 * @param type  string $lang
 	 * @return bool returns TRUE if $lang is available, otherwise FALSE
 	 */
-	public static function isAvailable($lang)
-	{
+    public static function isAvailable($lang): bool
+    {
         return array_key_exists($lang, self::$_languages);
 	}
 
@@ -311,8 +311,8 @@ class Gleez_I18n extends I18n
 	 * along with this program; if not, write to the Free Software
 	 * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
 	 */
-	private static function get_plural_key($lang, $count)
-	{
+    private static function get_plural_key($lang, $count): string
+    {
 
 		// Data from CLDR 1.6 (http://unicode.org/cldr/data/common/supplemental/plurals.xml).
 		// Docs: http://www.unicode.org/cldr/data/charts/supplemental/language_plural_rules.html
@@ -550,8 +550,8 @@ if ( ! function_exists('__'))
 	 * @uses    Gleez_I18n::get
 	 * @uses    HTML::chars
 	 */
-    function __(string $string, array $values = NULL, string $lang = 'en-us')
-	{
+    function __(string $string, array $values = NULL, string $lang = 'en-us'): string
+    {
 		if ($lang !== Gleez_I18n::$lang)
 		{
 			// The message and target languages are different
@@ -610,7 +610,7 @@ function _e(string $string, array $values = NULL, string $lang = 'en-us')
 	echo __($string, $values, $lang);
 }
 
-function __n($count, $singular, $plural, array $values = array(), $lang = 'en-us')
+function __n($count, $singular, $plural, array $values = array(), $lang = 'en-us'): string
 {
 	if ($lang !== Gleez_I18n::$lang)
 	{

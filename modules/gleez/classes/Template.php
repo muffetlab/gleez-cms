@@ -678,8 +678,8 @@ abstract class Template extends Controller {
 	 *
 	 * This method is chainable.
 	 */
-	protected function _set_sidebars()
-	{
+    protected function _set_sidebars(): Template
+    {
 		if ($this->_sidebars !== FALSE)
 		{
 			$this->template->sidebar_left  = $this->_widgets->render('left');
@@ -694,8 +694,8 @@ abstract class Template extends Controller {
 	 *
 	 * This method is chainable.
 	 */
-	protected function _set_column_class()
-	{
+    protected function _set_column_class(): Template
+    {
 		$sidebar_left  = $this->template->sidebar_left;
 		$sidebar_right = $this->template->sidebar_right;
 
@@ -779,8 +779,8 @@ abstract class Template extends Controller {
      * @uses    CSRF::valid
      * @uses    Captcha::valid
      */
-    public function valid_post(string $submit = NULL)
-	{
+    public function valid_post(string $submit = NULL): bool
+    {
 		if ( ! $this->request->is_post())
 		{
 			return FALSE;
@@ -883,8 +883,8 @@ abstract class Template extends Controller {
 	 *
 	 * @uses  Request::uri
 	 */
-	public function is_frontpage()
-	{
+    public function is_frontpage(): bool
+    {
 		$uri = preg_replace("#(/p\d+)+$#uD", '', rtrim($this->request->uri(), '/'));
 
 		return (empty($uri) OR ($uri === $this->_config->front_page));
@@ -984,8 +984,8 @@ abstract class Template extends Controller {
 	 *
 	 * @return string
 	 */
-	public function GetNonce()
-	{
+    public function GetNonce(): ?string
+    {
 		return $this->nonce;
 	}
 

@@ -39,8 +39,8 @@ class Request extends Kohana_Request
 	 *
 	 * @todo use Request::$user_agent but it is null
 	 */
-	public static function is_mobile()
-	{
+    public static function is_mobile(): bool
+    {
 		$devices = 'android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos';
 
 		if (isset($_SERVER['HTTP_USER_AGENT']))
@@ -58,8 +58,8 @@ class Request extends Kohana_Request
 	 * @return  boolean
 	 * @uses    Request::current
 	 */
-	public static function is_datatables(Request $request = NULL)
-	{
+    public static function is_datatables(Request $request = NULL): bool
+    {
         $request = $request ?: Request::current();
 
 		return (bool) $request->query('draw');
@@ -70,7 +70,8 @@ class Request extends Kohana_Request
 	*
 	* @return Bool
 	*/
-	public static function isHHVM() {
+    public static function isHHVM(): bool
+    {
 		return defined('HHVM_VERSION');	
 	}
 
@@ -85,8 +86,8 @@ class Request extends Kohana_Request
      * @uses    Request::DEFAULT_POST_MAX_SIZE
      * @throws Kohana_Exception
      */
-	public static function get_post_max_size()
-	{
+    public static function get_post_max_size(): float
+    {
         $max_size = Kohana::$config->load('media')->get('post_max_size');
 
 		// Set post_max_size default value if it not exists
@@ -248,8 +249,8 @@ class Request extends Kohana_Request
 	 * @return  Response
 	 * @since   3.1.0
 	 */
-    public function create_response(bool $bind = TRUE)
-	{
+    public function create_response(bool $bind = TRUE): Response
+    {
 		$response = new Response(array('_protocol' => $this->protocol()));
 
 		if ($bind)
@@ -271,8 +272,8 @@ class Request extends Kohana_Request
 	 *
 	 * @return  boolean  Whether the request is a POST request or not
 	 */
-	public function is_post()
-	{
+    public function is_post(): bool
+    {
 		return (self::POST === $this->_method);
 	}
 }

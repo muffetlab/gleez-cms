@@ -9,8 +9,8 @@
  */
 class Gleez_AclTest extends Unittest_TestCase
 {
-	public function providerPerms()
-	{
+    public function providerPerms(): array
+    {
 		return array(
 			array('administer site', 2),
 			array('view page', 1),

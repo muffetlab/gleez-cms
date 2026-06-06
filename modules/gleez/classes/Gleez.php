@@ -182,8 +182,8 @@ class Gleez {
 	 * @return  array  types
 	 * @uses    Module::action
 	 */
-	public static function types()
-	{
+    public static function types(): array
+    {
 		$states = array(
 			'blog'  => __('Blog'),
 			'page'  => __('Page'),
@@ -250,8 +250,8 @@ class Gleez {
 	 * @throws  Kohana_Exception Indicates that the file does not exist
 	 * @uses    Kohana::modules
 	 */
-    protected static function find_file_custom(string $file)
-	{
+    protected static function find_file_custom(string $file): string
+    {
 		if (file_exists($file))
 		{
 			return $file;
@@ -297,8 +297,8 @@ class Gleez {
      * @param boolean $full If set, return the full version with `Gleez CMS` prefix [Optional]
 	 * @return  string   The version of Gleez
 	 */
-    public static function getVersion(bool $with_v = TRUE, bool $full = FALSE)
-	{
+    public static function getVersion(bool $with_v = TRUE, bool $full = FALSE): string
+    {
 		$version = $with_v ? 'v' . Gleez::VERSION : Gleez::VERSION;
 
         return $full ? 'Gleez CMS ' . $version : $version;

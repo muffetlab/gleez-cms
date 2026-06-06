@@ -50,8 +50,8 @@ class Shortcode {
 	 * @uses    Assets::css
 	 * @uses    Assets::js
 	 */
-    public static function set(string $tag, callable $callback, $asset = FALSE)
-	{
+    public static function set(string $tag, callable $callback, $asset = FALSE): array
+    {
 		if ( ! is_callable($callback) )
 		{
 			throw new Kohana_Exception('Invalid Shortcode::callback specified');
@@ -71,8 +71,8 @@ class Shortcode {
      * @param string $tag Shortcode tag to remove hook for.
 	 * @return  array
 	 */
-    public static function remove(string $tag)
-	{
+    public static function remove(string $tag): array
+    {
 		if( isset(self::$_tags[$tag]) ) unset(self::$_tags[$tag]);
 
 		return self::$_tags;
@@ -87,8 +87,8 @@ class Shortcode {
 	 *
 	 * @return  array
 	 */
-	public static function remove_all()
-	{
+    public static function remove_all(): array
+    {
 		self::$_tags = array();
 
 		return self::$_tags;
@@ -104,8 +104,8 @@ class Shortcode {
 	 *
 	 * @return  array  Shortcodes by name
 	 */
-	public static function all()
-	{
+    public static function all(): array
+    {
 		return self::$_tags;
 	}
 
@@ -132,8 +132,8 @@ class Shortcode {
      * @throws Kohana_Exception
      * @uses    Kohana::cache
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE)
-	{
+    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    {
 		$cache = Cache::instance();
 
 		if ($save === TRUE)
@@ -177,8 +177,8 @@ class Shortcode {
      * @param string $content Content to search for shortcodes
 	 * @return      string          Content with shortcodes filtered out.
 	 */
-    public static function process(string $content)
-	{
+    public static function process(string $content): string
+    {
 		if (empty(self::$_tags) OR !is_array(self::$_tags))
 			return $content;
 
@@ -232,8 +232,8 @@ class Shortcode {
 	 *
 	 * @return string The shortcode search regular expression
 	 */
-	protected static function get_regex()
-	{
+    protected static function get_regex(): string
+    {
 		$tagnames = array_keys(self::$_tags);
 		$tagregexp = join( '|', array_map('preg_quote', $tagnames) );
 
@@ -279,7 +279,7 @@ class Shortcode {
 	 * @param string $text
 	 * @return array List of attributes and their value.
 	 */
-    public static function parse_atts(string $text)
+    public static function parse_atts(string $text): array
     {
 		$atts = array();
 		$pattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
@@ -323,8 +323,8 @@ class Shortcode {
 	 * @param array $atts User defined attributes in shortcode tag.
 	 * @return array Combined and filtered attribute list.
 	 */
-    public static function attributes(array $pairs, array $atts)
-	{
+    public static function attributes(array $pairs, array $atts): array
+    {
 		$atts = (array)$atts;
 		$out = array();
 
@@ -349,8 +349,8 @@ class Shortcode {
 	 * @param string $content Content to remove shortcode tags.
 	 * @return string Content without shortcode tags.
 	 */
-    protected static function strip(string $content)
-	{
+    protected static function strip(string $content): string
+    {
 		if (empty(self::$_tags) OR !is_array(self::$_tags))
 			return $content;
 

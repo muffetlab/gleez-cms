@@ -194,8 +194,8 @@ class Message {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public static function render($type = NULL, bool $delete = TRUE, $view = NULL)
-	{
+    public static function render($type = NULL, bool $delete = TRUE, $view = NULL): string
+    {
 		return self::display($type, $delete, $view);
 	}
 
@@ -317,8 +317,8 @@ class Message {
      * @return   string   Message to string
      * @throws View_Exception|Kohana_Exception
      */
-    public static function display($type = NULL, bool $delete = TRUE, $view = NULL)
-	{
+    public static function display($type = NULL, bool $delete = TRUE, $view = NULL): string
+    {
 		$messages = self::get($type, NULL, $delete);
 
 		if (empty($messages))

@@ -37,8 +37,8 @@ abstract class Widget {
      * @param object $widget Widget object
 	 * @return  Widget
 	 */
-    public static function factory(string $name, $widget)
-	{
+    public static function factory(string $name, $widget): Widget
+    {
 		// get class name if it has slash for multiple widgets, ex menu/management or static/donate
 		$split_name = explode('/', $name);
 		$name = array_shift($split_name);

@@ -37,8 +37,8 @@ class Format {
      * @return  Format  Format instance
      * @throws Kohana_Exception
      */
-	public static function instance(array $config = array())
-	{
+    public static function instance(array $config = array()): ?Format
+    {
 		if ( ! is_null(Format::$instance))
 		{
 			// Return the current instance if initiated already
@@ -83,8 +83,8 @@ class Format {
      * @return  Format
      * @uses    HTML::chars
 	 */
-	protected function _prepare(array $config)
-	{
+    protected function _prepare(array $config): Format
+    {
 		if (isset(Format::$formats))
 		{
 			// Return the current format set if initiated already
@@ -123,8 +123,8 @@ class Format {
 	 *
 	 * @return  array
 	 */
-	public function get_all()
-	{
+    public function get_all(): ?array
+    {
 		return Format::$formats;
 	}
 
@@ -159,8 +159,8 @@ class Format {
 	 *
 	 * @return  integer
 	 */
-	public function count_all()
-	{
+    public function count_all(): int
+    {
 		return count(Format::$formats);
 	}
 

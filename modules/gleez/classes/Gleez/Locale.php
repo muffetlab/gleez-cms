@@ -90,8 +90,8 @@ class Gleez_Locale {
      * @return  Gleez_Locale
      * @throws Kohana_Exception
      */
-	public static function instance($locale = NULL)
-	{
+    public static function instance($locale = NULL): Gleez_Locale
+    {
 		if ( ! isset(Gleez_Locale::$_instance))
 		{
 			// Create a new locale instance
@@ -165,8 +165,8 @@ class Gleez_Locale {
 	 *
 	 * @return  string
 	 */
-	public function toString()
-	{
+    public function toString(): string
+    {
         return $this->_locale;
 	}
 
@@ -175,8 +175,8 @@ class Gleez_Locale {
 	 *
 	 * @return  string
 	 */
-	public function serialize()
-	{
+    public function serialize(): string
+    {
 		return serialize($this);
 	}
 
@@ -191,8 +191,8 @@ class Gleez_Locale {
 	 * @uses    Locale_Data::getLocaleData
 	 * @uses    Locale_Data::getTerritoryData
 	 */
-    private static function _prepare_locale($locale)
-	{
+    private static function _prepare_locale($locale): string
+    {
 		if ($locale instanceof Gleez_Locale)
 		{
 			$locale = $locale->toString();
@@ -295,8 +295,8 @@ class Gleez_Locale {
 	 *
 	 * @link    http://php.net/manual/en/function.getenv.php getenv()
 	 */
-	public static function get_client_locales()
-	{
+    public static function get_client_locales(): array
+    {
 		if ( ! is_null(self::$_client_locales))
 		{
 			return self::$_client_locales;
@@ -372,8 +372,8 @@ class Gleez_Locale {
 	 *
 	 * @link    http://php.net/setlocale setlocale()
 	 */
-	public static function get_environment_locales()
-	{
+    public static function get_environment_locales(): array
+    {
 		// Return cache
 		if ( ! is_null(self::$_environment_locales))
 		{
@@ -442,8 +442,8 @@ class Gleez_Locale {
 	 *
 	 * @return  array
 	 */
-	public static function get_framework_locales()
-	{
+    public static function get_framework_locales(): array
+    {
 		return self::$_framework;
 	}
 
@@ -457,8 +457,8 @@ class Gleez_Locale {
 	 *
 	 * @uses    Gleez_Locale_Data::getLocaleData
 	 */
-	public static function get_locale_list()
-	{
+    public static function get_locale_list(): array
+    {
 		$list = Locale_Data::getLocaleData();
 		unset($list['root']);
 
@@ -473,8 +473,8 @@ class Gleez_Locale {
      * @param string $locale Locale (eg. en_US, ru_RU, ar_JO, ...)
 	 * @return  string
 	 */
-    public static function get_language_by_locale(string $locale)
-	{
+    public static function get_language_by_locale(string $locale): string
+    {
 		$locale = explode('_', $locale);
 
 		return $locale[0];
@@ -510,8 +510,8 @@ class Gleez_Locale {
 	 *
 	 * @return string
 	 */
-	public function get_language()
-	{
+    public function get_language(): string
+    {
 		$locale = explode('_', $this->_locale);
 
 		return $locale[0];
@@ -658,8 +658,8 @@ class Gleez_Locale {
 	 * @param   Gleez_Locale  $locale  Locale to check for equality
 	 * @return  boolean
 	 */
-	public function equals(Gleez_Locale $locale)
-	{
+    public function equals(Gleez_Locale $locale): bool
+    {
 		return ($locale->toString() === $this->toString());
 	}
 }

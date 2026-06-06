@@ -39,8 +39,8 @@ class Text extends Kohana_Text
 	 *
 	 * @return  DOMDocument
 	 */
-	public static function dom_load($text)
-	{
+    public static function dom_load($text): DOMDocument
+    {
 		$dom = new DOMDocument;
 
 		// Ignore warnings during HTML soup loading.
@@ -62,8 +62,8 @@ class Text extends Kohana_Text
 	 *
 	 * @return  string
 	 */
-	private static function dom_serialize(DOMDocument $dom_document)
-	{
+    private static function dom_serialize(DOMDocument $dom_document): string
+    {
 		$body_node    = $dom_document->getElementsByTagName('body')->item(0);
 		$body_content = '';
 
@@ -195,8 +195,8 @@ class Text extends Kohana_Text
      * @return string
      * @throws Kohana_Exception
      */
-    public static function html($text, $filter)
-	{
+    public static function html($text, $filter): string
+    {
         $text = HTMLFilter::factory($text, $filter)->render();
 
 		if ($filter['settings']['html_nofollow'])
@@ -240,8 +240,8 @@ class Text extends Kohana_Text
 	 * @return  string
 	 * @link    http://drupal.org/project/more_filters
 	 */
-    public static function initialcaps(string $text)
-	{
+    public static function initialcaps(string $text): string
+    {
 		// Adds <span class="initial"> tag around the initial letter of each paragraph.
 		// Only add after an opening <p> tag, ignoring any leading spaces. First letter must be a letter or number (no symbols).
 		// Works with contractions.

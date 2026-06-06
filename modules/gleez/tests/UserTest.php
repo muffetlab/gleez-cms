@@ -9,8 +9,8 @@
  */
 class Gleez_UserTest extends Unittest_TestCase
 {
-	public function providerUsers()
-	{
+    public function providerUsers(): array
+    {
 		return array(
 			array(array("name" => "admin", "password" => "gleez1co")),
 			array(array("name" => "sundar", "password" => "gleez1co"))

@@ -302,8 +302,8 @@ class Model_Comment extends Gleez_Model
      * @uses    ACL::check
      * @uses    Module::event
      */
-    public function access($action = FALSE, Model_User $user = NULL)
-	{
+    public function access($action = FALSE, Model_User $user = NULL): Model_Comment
+    {
 		if ( ! $action)
 		{
 			$action = 'view';
