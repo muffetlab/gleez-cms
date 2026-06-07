@@ -83,11 +83,11 @@ class ORM_Versioned extends Gleez_Model
     /**
      * Restores the object with data from stored version
      *
-     * @param integer  version number you want to restore
+     * @param int $version Version number you want to restore
      * @return  ORM
      * @throws Kohana_Exception|ReflectionException
      */
-    public function restore($version): ORM
+    public function restore(int $version): ORM
     {
 		if ( ! $this->loaded())
 			return $this;
@@ -131,10 +131,11 @@ class ORM_Versioned extends Gleez_Model
      * Loads a version from current object
      *
      * @chainable
+     * @param int $version
      * @return  ORM
      * @throws Kohana_Exception
      */
-    public function version($version = FALSE): ORM
+    public function version(int $version = 0): ORM
     {
 		if ( ! $this->loaded())
 			return $this;
