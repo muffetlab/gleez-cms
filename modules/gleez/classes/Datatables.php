@@ -22,7 +22,6 @@ class Datatables {
 	 * @param	mixed	string|object
 	 * @param	mixed	NULL|string
 	 * @return	Datatables
-	 * @throws      Gleez_Exception
 	 */
     public static function factory(ORM $object = NULL): Datatables
     {
