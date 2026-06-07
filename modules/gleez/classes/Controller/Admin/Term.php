@@ -12,6 +12,24 @@
 class Controller_Admin_Term extends Controller_Admin {
 
     /**
+     * Tree used for bulk update (MPTT)
+     * @var array
+     */
+    protected $tree = [];
+
+    /**
+     * Counter for calculating left/right values
+     * @var int
+     */
+    protected $counter = 0;
+
+    /**
+     * Level zero indicator for tree validation
+     * @var int
+     */
+    protected $level_zero = 0;
+
+    /**
      * The before() method is called before controller action
      *
      * @throws HTTP_Exception
