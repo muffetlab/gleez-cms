@@ -340,14 +340,17 @@ class Widgets {
 		return Debug::vars($this->_widgets);
 	}
 
-	/**
-	 * Install the widget into database during module install
-	 *
-	 * Defaults to inactive widget
-	 *
-	 * @param  array   $widget  A widget array unique name and title are required
+    /**
+     * Install the widget into database during module install
+     *
+     * Defaults to inactive widget
+     *
+     * @param array $widget A widget array unique name and title are required
      * @param string $module The name of the module for this widget
-	 */
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
     public static function install(array $widget, string $module)
 	{
 		if (isset($widget['name']) AND isset($widget['title']))
@@ -371,11 +374,13 @@ class Widgets {
 		}
 	}
 
-	/**
-	 * Remove the widget from database during module uninstall
-	 *
+    /**
+     * Remove the widget from database during module uninstall
+     *
      * @param string $module The name of the module for this widget
-	 */
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
     public static function uninstall(string $module)
 	{
 		try
