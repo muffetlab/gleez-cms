@@ -815,15 +815,15 @@ class Assets {
 		return $result;
 	}
 
-	/**
-	 * Get file path
-	 *
+    /**
+     * Get file path
+     *
      * @param string $file File name
      * @param string $type File type [Optional]
-	 * @return  array
-	 * @uses    Kohana::find_file
-	 */
-    protected static function _get_file_path(string $file, string $type = '.php'): array
+     * @return string
+     * @uses Kohana::find_file
+     */
+    protected static function _get_file_path(string $file, string $type = '.php'): string
     {
 		// @todo need to overwrite the assets set and get to fix this
 		$file = str_replace(array('media/', '.'.$type), '', $file);

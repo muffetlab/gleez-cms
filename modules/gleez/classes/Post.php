@@ -887,13 +887,13 @@ class Post extends ORM_Versioned {
      * @param integer $id The post id
      * @param string $type The post type
      * @param object $config The post type config object
-     * @return  object   $post    The post object
+     * @return ORM $post The post object
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public static function dcache(int $id, string $type, $config)
+    public static function dcache(int $id, string $type, $config): ORM
 	{
         $cache = Cache::instance();
 		$use_cache = (bool) $config->get('use_cache', FALSE);

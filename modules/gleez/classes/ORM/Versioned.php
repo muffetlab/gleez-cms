@@ -147,7 +147,7 @@ class ORM_Versioned extends Gleez_Model
 
 		if (count($query))
 		{
-			$this->values($query->current());
+            $this->_load_values($query->current());
 		}
 
 		return $this;

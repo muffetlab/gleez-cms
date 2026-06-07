@@ -258,8 +258,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Sets the parent_column value to the given targets column value. Returns the target ORM_MPTT object.
-	 * 
-	 * @param   ORM_MPTT|integer  $target  primary key value or ORM_MPTT object of target node
+     *
+     * @param ORM|int $target primary key value or ORM_MPTT object of target node
      * @param string|null $column name of the targets nodes column to use [Optional]
 	 * @return  ORM_MPTT
 	 */
@@ -290,7 +290,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Inserts a new node as the first child of the target node.
      *
-     * @param ORM_MPTT|integer $target primary key value or ORM_MPTT object of target node
+     * @param ORM|int $target primary key value or ORM_MPTT object of target node
      * @return  ORM_MPTT
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
@@ -305,7 +305,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Inserts a new node as the last child of the target node.
      *
-     * @param ORM_MPTT|integer $target primary key value or ORM_MPTT object of target node
+     * @param ORM|int $target primary key value or ORM_MPTT object of target node
      * @return  ORM_MPTT
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
@@ -320,7 +320,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Inserts a new node as a previous sibling of the target node.
      *
-     * @param ORM_MPTT|integer $target primary key value or ORM_MPTT object of target node
+     * @param ORM|int $target primary key value or ORM_MPTT object of target node
      * @return  ORM_MPTT
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
@@ -335,7 +335,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Inserts a new node as the next sibling of the target node.
      *
-     * @param ORM_MPTT|integer $target primary key value or ORM_MPTT object of target node
+     * @param ORM|int $target primary key value or ORM_MPTT object of target node
      * @return  ORM_MPTT
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
@@ -350,7 +350,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Insert the object
      *
-     * @param ORM_MPTT|integer $target primary  key value or ORM_MPTT object of target node.
+     * @param ORM|int $target primary key value or ORM_MPTT object of target node.
      * @param string $copy_left_from target object property to take new left value from
      * @param integer $left_offset offset for left value
      * @param integer $level_offset offset for level value
@@ -882,7 +882,7 @@ class ORM_MPTT extends Gleez_Model
      */
 	protected function lock()
 	{
-		$this->_db->query(NULL, 'LOCK TABLE '.$this->_db->quote_table($this->_table_name).' WRITE', TRUE);
+        $this->_db->query(Database::UPDATE, 'LOCK TABLE ' . $this->_db->quote_table($this->_table_name) . ' WRITE', TRUE);
 	}
 
 	/**
@@ -890,7 +890,7 @@ class ORM_MPTT extends Gleez_Model
 	 */
 	protected function unlock()
 	{
-		$this->_db->query(NULL, 'UNLOCK TABLES', TRUE);
+        $this->_db->query(Database::UPDATE, 'UNLOCK TABLES', TRUE);
 	}
 
 	/**

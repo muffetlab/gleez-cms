@@ -63,9 +63,9 @@ class Datatables {
 
 	/**
 	 * Result
-	 * @var NULL
+     * @var array|Countable
 	 */
-	protected $_result;
+    protected $_result = [];
 
 	/**
 	 * Rows
@@ -291,7 +291,7 @@ class Datatables {
 		$this->_count_total = $this->_count_total();
 
 		$requestOrder   = $request->query('order');
-		$requestColumns = $request->query('columns');
+        $requestColumns = (array) $request->query('columns');
 		$requestStart   = (int) $request->query('start');
 		$requestSearch  = $request->query('search');
 		$requestLength  = $request->query('length');

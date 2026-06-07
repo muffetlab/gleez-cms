@@ -333,7 +333,7 @@ abstract class Template extends Controller {
 			// Throw exception if none of the accept-types are supported
             if (empty($accept_types))
 			{
-				throw new Http_Exception_415('Unsupported accept-type', 415);
+                throw new Http_Exception_415('Unsupported accept-type');
 			}
 
 			// Initiate a Format instance
@@ -928,7 +928,7 @@ abstract class Template extends Controller {
 			if ($this->request->query('draw') !== NULL) return;
 
 			$scripts = Assets::js(FALSE, NULL, NULL, FALSE, NULL, Assets::FORMAT_AJAX);
-			$styles  = Assets::css(FALSE, NULL, NULL, FALSE, Assets::FORMAT_AJAX);
+            $styles = Assets::css(null, NULL, NULL, null, Assets::FORMAT_AJAX);
 
 			$this->SetJson('FormSaved',  $this->_formsaved);
 			$this->SetJson('messages',   Message::get(NULL, NULL, TRUE));
@@ -953,9 +953,9 @@ abstract class Template extends Controller {
 	 * extra values to the JSON array.
 	 *
      * @param string $Key The name of the array key to add.
-     * @param string $Value The value to be added. If empty, nothing will be added [Optional]
+     * @param mixed $Value The value to be added. If empty, nothing will be added [Optional]
 	 */
-    public function SetJson(string $Key, string $Value = '')
+    public function SetJson(string $Key, $Value = '')
 	{
 		$this->_json[$Key] = $Value;
 	}
