@@ -1,4 +1,7 @@
 <?php
+
+use Michelf\Markdown;
+
 /**
  * Text Class Helper
  *
@@ -228,9 +231,7 @@ class Text extends Kohana_Text
 	 */
     public static function markdown($text)
 	{
-		include_once Kohana::find_file('vendor/Markdown', 'markdown');
-
-		return Markdown($text);
+        return Markdown::defaultTransform($text);
 	}
 
 	/**
