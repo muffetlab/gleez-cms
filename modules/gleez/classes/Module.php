@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is the API for handling modules
  *
@@ -10,8 +11,6 @@
  *
  * @todo      [!!] This class does not do any permission checking
  */
-use Gleez\Database\Database;
-
 class Module
 {
 	/**
