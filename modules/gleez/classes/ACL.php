@@ -192,33 +192,34 @@ class ACL {
 		}
 	}
 
-	/**
-	 * Check permission for user
-	 *
-	 * If the user doesn't have this permission,
-	 * failed with an HTTP_Exception_403 or execute `$callback` if it is defined
-	 *
-	 * Example:
-	 * ~~~
-	 * // Example with a callable function
-	 * ACL::required(
-	 *    'administer site',
-	 *    NULL,
-	 *    $this->request->redirect(Route::get('user')->uri(array('action' => 'login')))
-	 * );
-	 *
-	 * // Simple check
-	 *   ACL::required('administer site');
-	 * ~~~
-	 *
-	 * @param     string      $perm_name  Permission name
-	 * @param     Model_User  $user       User object [Optional]
+    /**
+     * Check permission for user
+     *
+     * If the user doesn't have this permission,
+     * failed with an HTTP_Exception_403 or execute `$callback` if it is defined
+     *
+     * Example:
+     * ~~~
+     * // Example with a callable function
+     * ACL::required(
+     *    'administer site',
+     *    NULL,
+     *    $this->request->redirect(Route::get('user')->uri(array('action' => 'login')))
+     * );
+     *
+     * // Simple check
+     *   ACL::required('administer site');
+     * ~~~
+     *
+     * @param string $perm_name Permission name
+     * @param Model_User|null $user User object [Optional]
      * @param callable|null $callback A callable function that execute if it is defined [Optional]
-	 * @param     array       $args       The callback arguments
-	 * @throws    HTTP_Exception_403 If the user doesn't have permission
-	 * @throws    Exception          if the `$callback` is a not valid callback
+     * @param array $args The callback arguments
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
      * @since     2.0
-	 */
+     */
     public static function required(string $perm_name, Model_User $user = NULL, callable $callback = NULL, array $args = array())
 	{
 		if ( ! self::check($perm_name, $user))

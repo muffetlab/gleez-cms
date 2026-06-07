@@ -211,13 +211,12 @@ class Request extends Kohana_Request
         return $response;
 	}
 
-	/**
-	 * Set or get the response for this request
-	 *
-	 * @param   Response  $response  Response to apply to this request
+    /**
+     * Set or get the response for this request
+     *
+     * @param Response|null $response Response to apply to this request
      * @return Request|Response
-	 * @return  void
-	 */
+     */
 	public function response(Response $response = NULL)
 	{
 		if ($response === NULL)

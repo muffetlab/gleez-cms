@@ -210,10 +210,11 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Creates a new node as root, or moves a node to root
      *
-     * @param Validation $validation Validation object
+     * @param Validation|null $validation Validation object
      * @param integer|null $scope The new scope [Optional]
      * @return ORM_MPTT
-     * @throws Kohana_Exception|ReflectionException
+     * @throws Kohana_Exception
+     * @throws ReflectionException
      */
     public function make_root(Validation $validation = NULL, int $scope = NULL): ORM_MPTT
     {

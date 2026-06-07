@@ -79,7 +79,7 @@ class Format {
 	/**
 	 * Prepare formats
 	 *
-	 * @param   array  $formats  Available formats
+     * @param array $config Available formats configuration
      * @return  Format
      * @uses    HTML::chars
 	 */

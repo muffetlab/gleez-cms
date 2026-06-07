@@ -45,9 +45,10 @@ class Session_Redis extends Session {
     /**
      * Class constructor
      *
-     * @param array $config Configuration [Optional]
+     * @param array|null $config Configuration [Optional]
      * @param string|null $id Session id [Optional]
      * @throws Kohana_Exception
+     * @throws Session_Exception
      */
     public function __construct(array $config = NULL, string $id = NULL)
     {

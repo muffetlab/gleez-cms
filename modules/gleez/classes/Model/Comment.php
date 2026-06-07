@@ -105,9 +105,12 @@ class Model_Comment extends Gleez_Model
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation $validation Validation object
+     * @param Validation|null $validation Validation object
      * @return  ORM
-     * @throws Kohana_Exception|ReflectionException
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
      * @uses    ACL::check
      * @uses    Text::limit_words
      * @uses    Text::markup

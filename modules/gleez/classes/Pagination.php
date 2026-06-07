@@ -114,7 +114,7 @@ class Pagination {
      * Creates a new Pagination object
      *
      * @param array $config Configuration [Optional]
-     * @param Request $request Request [Optional]
+     * @param Request|null $request Request [Optional]
      * @return  Pagination
      * @throws Kohana_Exception
      */
@@ -127,7 +127,7 @@ class Pagination {
      * Class constructor
      *
      * @param array $config Configuration [Optional]
-     * @param Request $request Request [Optional]
+     * @param Request|null $request Request [Optional]
      * @throws Kohana_Exception
      */
 	public function __construct(array $config = array(), Request $request = NULL)
@@ -359,14 +359,14 @@ class Pagination {
 	}
 
 
-	/**
-	 * Route setter/getter
-	 *
-	 * [!!] Note: This doesn't change the initial Route
-	 *
-	 * @param	Request  $request  Request [Optional]
+    /**
+     * Route setter/getter
+     *
+     * [!!] Note: This doesn't change the initial Route
+     *
+     * @param Request|null $request Request [Optional]
      * @return Request|Pagination Route if used as getter, chainable as setter
-	 */
+     */
 	public function request(Request $request = NULL)
 	{
 		if (is_null($request))
@@ -406,12 +406,12 @@ class Pagination {
 		return $this;
 	}
 
-	/**
-	 * Route parameters setter/getter
-	 *
-	 * @param   array  $route_params  Route parameters to set [Optional]
+    /**
+     * Route parameters setter/getter
+     *
+     * @param array|null $route_params Route parameters to set [Optional]
      * @return array|Pagination Route parameters if used as getter, chainable as setter
-	 */
+     */
 	public function route_params(array $route_params = NULL)
 	{
 		if (is_null($route_params))
@@ -442,13 +442,12 @@ class Pagination {
 		return $this;
 	}
 
-	/**
-	 * URL::query() replacement for Pagination use only
-	 *
-	 * @param   array  $params  Parameters to override [Optional]
-	 *
-	 * @return  string
-	 */
+    /**
+     * URL::query() replacement for Pagination use only
+     *
+     * @param array|null $params Parameters to override [Optional]
+     * @return string
+     */
     public function query(array $params = NULL): string
     {
 		if (is_null($params))

@@ -39,7 +39,7 @@ class Message {
      *
      * @param string $type Message type (e.g. Message::SUCCESS)
      * @param string $message Array/String for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @return  void
      * @throws Kohana_Exception
      */
@@ -77,7 +77,7 @@ class Message {
      * Sets an error message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function error($message, array $options = NULL)
@@ -89,7 +89,7 @@ class Message {
      * Sets a ALERT message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function alert($message, array $options = NULL)
@@ -101,7 +101,7 @@ class Message {
      * Sets a CRITICAL message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function critical($message, array $options = NULL)
@@ -113,7 +113,7 @@ class Message {
      * Sets a notice.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function notice($message, array $options = NULL)
@@ -125,7 +125,7 @@ class Message {
      * Sets a success message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function success($message, array $options = NULL)
@@ -137,7 +137,7 @@ class Message {
      * Sets a warning message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function warn($message, array $options = NULL)
@@ -149,7 +149,7 @@ class Message {
      * Sets a info message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function info($message, array $options = NULL)
@@ -161,7 +161,7 @@ class Message {
      * Sets a ACCESS message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function access($message, array $options = NULL)
@@ -173,7 +173,7 @@ class Message {
      * Sets a debug message, not in production stage.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
 	public static function debug($message, array $options = NULL)

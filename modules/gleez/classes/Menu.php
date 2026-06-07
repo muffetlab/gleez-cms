@@ -26,40 +26,40 @@ class Menu {
 	 */
 	protected $attributes = array();
 
-	/**
-	 * Creates and returns a new menu object
-	 *
-	 * @param   array  $items  Array of list items (instead of using add() method) [Optional]
-	 * @return  Menu
-	 */
+    /**
+     * Creates and returns a new menu object
+     *
+     * @param array|null $items Array of list items (instead of using add() method) [Optional]
+     * @return Menu
+     */
     public static function factory(array $items = NULL): Menu
     {
 		return new static($items);
 	}
 
-	/**
-	 * Constructor, globally sets $items array
-	 *
-	 * @param   array  $items  Array of list items (instead of using add() method) [Optional]
-	 */
+    /**
+     * Constructor, globally sets $items array
+     *
+     * @param array|null $items Array of list items (instead of using add() method) [Optional]
+     */
 	public function __construct(array $items = NULL)
 	{
 		$this->items   = $items;
 	}
 
-	/**
-	 * Add's a new list item to the menu. if parent_id is passed will add as child
-	 *
+    /**
+     * Add's a new list item to the menu. if parent_id is passed will add as child
+     *
      * @param string $id Unique id
      * @param string $title Title of link
      * @param string $url URL (address) of link
      * @param string $descp Additional text of link [Optional]
-	 * @param   array   $params     Params of the item to handle logic [Optional]
+     * @param array|null $params Params of the item to handle logic [Optional]
      * @param string|null $image Menu icon [Optional]
      * @param string|null $parent_id Parent Id of the link [Optional]
-	 * @param   Menu    $children   Instance of class that contain children [Optional]
-	 * @return  Menu
-	 */
+     * @param Menu|null $children Instance of class that contain children [Optional]
+     * @return Menu
+     */
     public function add(string $id, string $title, string $url, string $descp = '', array $params = NULL, string $image = NULL, string $parent_id = NULL, Menu $children = NULL): Menu
     {
 		if( $parent_id )
@@ -151,8 +151,8 @@ class Menu {
     /**
      * Renders the HTML output for the menu
      *
-     * @param array $attributes Associative array of html attributes [Optional]
-     * @param array $items The parent item's array, only used internally [Optional]
+     * @param array|null $attributes Associative array of html attributes [Optional]
+     * @param array|null $items The parent item's array, only used internally [Optional]
      * @return  string  HTML unordered list
      * @throws Kohana_Exception
      */
@@ -441,21 +441,20 @@ class Menu {
 		return $array;
 	}
 
-	/**
-	 * Private method to add menu based on its parent's unique name
-	 *
+    /**
+     * Private method to add menu based on its parent's unique name
+     *
      * @param string $needle The parent unique name of the menu
-	 * @param   array          $array    The array of items
+     * @param array $array The array of items
      * @param string $id The new id of menu
      * @param string $title The new title
      * @param string $url The new url
-	 * @param   string|boolean $descp    The additional text of url [Optional]
-	 * @param   array          $params   The new params [Optional]
+     * @param string|boolean $descp The additional text of url [Optional]
+     * @param array|null $params The new params [Optional]
      * @param string|null $image The image or icon of url [Optional]
-	 * @param   Menu           $children The new children [Optional]
-	 *
-	 * @return  array
-	 */
+     * @param Menu|null $children The new children [Optional]
+     * @return array
+     */
     private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = FALSE, array $params = NULL, string $image = NULL, Menu $children = NULL): array
     {
 		foreach ($array as $key => $value)

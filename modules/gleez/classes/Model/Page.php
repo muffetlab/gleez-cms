@@ -24,9 +24,10 @@ class Model_Page extends Post {
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object [Optional]
      * @return  Post
-     * @throws Kohana_Exception|ReflectionException
+     * @throws Kohana_Exception
+     * @throws ReflectionException
      */
     public function save(Validation $validation = NULL): Kohana_ORM
     {

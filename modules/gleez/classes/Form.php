@@ -207,7 +207,7 @@ class Form extends Kohana_Form
      *
      * @param string $name Input name
      * @param integer $selected Selected option int [Optional]
-     * @param array $attrs HTML attributes [Optional]
+     * @param array|null $attrs HTML attributes [Optional]
      * @param integer $delta Delta [Optional]
      * @return  string
      * @throws Kohana_Exception
@@ -253,9 +253,9 @@ class Form extends Kohana_Form
      *
      * @param string $name input name
      * @param string|null $value input value
-     * @param array $attributes html attributes
+     * @param array|null $attrs html attributes
      * @return  string
-     * @throws Exception
+     * @throws Kohana_Exception
      * @link    https://getdatepicker.com/4/
      * @uses    Form::input
      */

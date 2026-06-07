@@ -327,23 +327,22 @@ class Filter {
 		}
 	}
 
-	/**
-	 * Set or get callbacks for filter
-	 *
-	 * Example:
-	 * ~~~
-	 * $filter->callbacks(array(
-	 *     'prepare callback'  => FALSE,
-	 *     'process callback'  => 'Text::html'
-	 * ));
-	 * ~~~
-	 *
-	 * If no parameter is passed, this method will act as a getter.
-	 *
-	 * @param   array  $callbacks  key values
-	 *
-	 * @return  array|Filter
-	 */
+    /**
+     * Set or get callbacks for filter
+     *
+     * Example:
+     * ~~~
+     * $filter->callbacks(array(
+     *     'prepare callback'  => FALSE,
+     *     'process callback'  => 'Text::html'
+     * ));
+     * ~~~
+     *
+     * If no parameter is passed, this method will act as a getter.
+     *
+     * @param array|null $callbacks key values
+     * @return array|Filter
+     */
 	public function callbacks(array $callbacks = NULL)
 	{
 		if ($callbacks === NULL)
@@ -356,23 +355,22 @@ class Filter {
 		return $this;
 	}
 
-	/**
-	 * Set or get settings for filter
-	 *
-	 * Example:
-	 * ~~~
-	 * $filter->settings(array(
-	 *     'html_nofollow' => true,
-	 *     'allowed_html'  => '<a> <em> <strong> <cite> <blockquote>'
-	 * ));
-	 * ~~~
-	 *
-	 * If no parameter is passed, this method will act as a getter.
-	 *
-	 * @param   array  $settings  key values
-	 *
-	 * @return  array|Filter
-	 */
+    /**
+     * Set or get settings for filter
+     *
+     * Example:
+     * ~~~
+     * $filter->settings(array(
+     *     'html_nofollow' => true,
+     *     'allowed_html'  => '<a> <em> <strong> <cite> <blockquote>'
+     * ));
+     * ~~~
+     *
+     * If no parameter is passed, this method will act as a getter.
+     *
+     * @param array|null $settings key values
+     * @return array|Filter
+     */
 	public function settings(array $settings = NULL)
 	{
 		if ($settings === NULL)

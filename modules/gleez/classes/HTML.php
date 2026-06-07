@@ -80,7 +80,7 @@ class HTML extends Kohana_HTML
      * ~~~
      *
      * @param string $file File name
-     * @param array $attributes Default attributes + type = crop|ratio [Optional]
+     * @param array|null $attributes Default attributes + type = crop|ratio [Optional]
      * @param mixed $protocol Protocol to pass to `URL::base()` [Optional]
      * @param boolean $index Include the index page [Optional]
      * @return  string

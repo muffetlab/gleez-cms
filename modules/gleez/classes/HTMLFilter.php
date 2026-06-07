@@ -124,11 +124,11 @@ class HTMLFilter {
      * Create new Core object and initialize our own settings
      *
      * @param string $text Text string to filter html
-     * @param array $filter Array of allowed tags [Optional]
+     * @param array|null $filter Array of allowed tags [Optional]
+     * @throws Kohana_Exception
      * @used   Config::load
      * @used   Config::get
      * @used   Profiler::start
-     * @throws Kohana_Exception
      */
     public function __construct(string $text, array $filter = NULL)
 	{
@@ -199,7 +199,7 @@ class HTMLFilter {
      * string if `$string` is not valid UTF-8.
      *
      * @param string $text Text string to filter html
-     * @param array $filter Array of allowed tags [Optional]
+     * @param array|null $filter Array of allowed tags [Optional]
      * @return  HTMLFilter
      * @throws Kohana_Exception
      */
