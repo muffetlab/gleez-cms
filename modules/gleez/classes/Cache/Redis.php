@@ -245,8 +245,7 @@ class Cache_Redis extends Cache {
 	 *
      * @param string $id ID of cache entry
 	 * @return  boolean
-	 * @throws  Cache_Exception
-	 * @uses    System::sanitize_id
+     * @uses    System::sanitize_id
 	 */
     protected function exists(string $id): bool
     {
