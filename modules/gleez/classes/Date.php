@@ -258,8 +258,7 @@ class Date extends Kohana_Date
 				$date_choices[$f] = date($f, time());
 			}
 
-			/** @var $date_choices array */
-			return $date_choices;
+            return $date_choices;
 		}
 
 		return $date_time_format;
@@ -309,8 +308,7 @@ class Date extends Kohana_Date
 				$date_choices[$f] = date($f, time());
 			}
 
-			/** @var $date_choices array */
-			return $date_choices;
+            return $date_choices;
 		}
 
 		return $date_format;
@@ -342,8 +340,7 @@ class Date extends Kohana_Date
 				$time_choices[$f] = date($f, time());
 			}
 
-			/** @var $time_choices array */
-			return $time_choices;
+            return $time_choices;
 		}
 
 		return $time_format;
