@@ -168,7 +168,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 		{
 			$comments = array_filter($post['items']);
 
-            ORM::factory('Comment')->where('id', 'IN', $comments)->delete_all();
+            DB::delete('comments')->where('id', 'IN', $comments)->execute();
 			Module::event('comment_bulk_delete', $comments);
 
 			Message::success(__('The delete has been performed!'));

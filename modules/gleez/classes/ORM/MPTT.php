@@ -992,9 +992,14 @@ class ORM_MPTT extends Gleez_Model
 			$target = $this;
 		}
 
+        // Ensure $target is an ORM_MPTT instance and loaded.
+        if (!$target instanceof $this) {
+            $target = self::factory($this->object_name(), $target);
+        }
+
 		if ( ! $target->loaded())
 		{
-			$target->_load();
+            throw new Kohana_Exception('Cannot rebuild tree: node is not loaded');
 		}
 
 		// Use the current node left value for entire tree

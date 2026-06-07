@@ -943,7 +943,6 @@ class Post extends ORM_Versioned {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @since   1.1.0
-     * @uses    Arr::unpack_string
      * @uses    Post::status
      * @uses    System::parse_args
      * @uses    Cache::get
@@ -957,7 +956,7 @@ class Post extends ORM_Versioned {
 			'type'      => 'post',
 			'orderby'   => 'created',
 			'order'     => 'DESC',
-			'status'    => Arr::unpack_string(array_keys(Post::status()), FALSE, ','),
+            'status' => implode(',', array_keys(Post::status())),
 			'use_cache' => TRUE,
 			'as_array'  => TRUE,
 		);

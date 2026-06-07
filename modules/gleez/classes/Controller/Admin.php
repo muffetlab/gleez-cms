@@ -13,7 +13,7 @@ class Controller_Admin extends Template {
 
 	/**
 	 * Page template
-	 * @var string
+     * @var string|View
 	 */
 	public $template = 'layouts/admin';
 

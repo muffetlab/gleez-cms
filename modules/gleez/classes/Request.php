@@ -80,8 +80,6 @@ class Request extends Kohana_Request
      *
      * @link    http://php.net/post-max-size
      * @return  float
-     * @uses    Config::get
-     * @uses    Config::set
      * @uses    Num::bytes
      * @uses    Request::DEFAULT_POST_MAX_SIZE
      * @throws Kohana_Exception
@@ -93,7 +91,7 @@ class Request extends Kohana_Request
 		// Set post_max_size default value if it not exists
 		if (is_null($max_size))
 		{
-			Config::set('media', 'post_max_size', $max_size = static::DEFAULT_POST_MAX_SIZE);
+            Kohana::$config->load('media')->set('post_max_size', $max_size = static::DEFAULT_POST_MAX_SIZE);
 		}
 
 		if(static::isHHVM())

@@ -98,7 +98,7 @@ abstract class Template extends Controller {
 
 	/**
 	 * The configuration settings
-	 * @var Config
+     * @var Config_Group
 	 */
 	protected $_config;
 
