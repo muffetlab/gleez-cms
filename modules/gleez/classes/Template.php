@@ -220,7 +220,7 @@ abstract class Template extends Controller {
 	 * Allows overriding 'FormSaved' property to send with JSON.
 	 * @var boolean
 	 */
-	protected $_formsaved = FALSE;
+    protected $formSaved = FALSE;
 
 	/** @var String|null */
 	protected $nonce;
@@ -930,7 +930,7 @@ abstract class Template extends Controller {
 			$scripts = Assets::js(FALSE, NULL, NULL, FALSE, NULL, Assets::FORMAT_AJAX);
             $styles = Assets::css(null, NULL, NULL, null, Assets::FORMAT_AJAX);
 
-			$this->SetJson('FormSaved',  $this->_formsaved);
+            $this->SetJson('formSaved', $this->formSaved);
 			$this->SetJson('messages',   Message::get(NULL, NULL, TRUE));
 			$this->SetJson('errors',     $this->_errors);
 			$this->SetJson('redirect',   Request::$redirect_url);
@@ -961,22 +961,13 @@ abstract class Template extends Controller {
 	}
 
 	/**
-	 * Set $this->_FormSaved for JSON Renders.
+     * Set $this->formSaved for JSON Renders.
 	 *
 	 * @param bool $Saved Whether form data was successfully saved.
 	 */
     public function SetFormSaved(bool $Saved = TRUE)
 	{
-		if ($Saved === '')
-		{
-			// Allow reset
-			$this->_formsaved = NULL;
-		}
-		else
-		{
-			// Force true/false
-            $this->_formsaved = (bool) $Saved;
-		}
+        $this->formSaved = $Saved;
 	}
 
 	/**

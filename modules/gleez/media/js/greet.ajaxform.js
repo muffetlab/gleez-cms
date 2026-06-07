@@ -76,9 +76,9 @@
 
 	Ajaxform.prototype.showResponse = function(data, status, xhr, form) {
         let text;
-        if (data.FormSaved === false && data.errors) {
+        if (data.formSaved === false && data.errors) {
 			Ajaxform.prototype.validationErrors(data, form);
-        } else if (data.FormSaved === true) {
+        } else if (data.formSaved === true) {
             const popup = $(form).data('popup') || false,
                 dataTable = $(form).data('datatable') || false;
 
