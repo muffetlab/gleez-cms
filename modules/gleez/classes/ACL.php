@@ -229,7 +229,7 @@ class ACL {
 				// Check if the $callback is a valid callback
 				if ( ! is_callable($callback))
 				{
-					throw new Exception('An invalid callback was added to the ACL::required().');
+                    throw new Kohana_Exception('An invalid callback was added to the ACL::required().');
 				}
 				call_user_func($callback, $args);
 

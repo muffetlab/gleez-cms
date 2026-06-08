@@ -256,6 +256,7 @@ class Form extends Kohana_Form
      * @param array|null $attrs html attributes
      * @return  string
      * @throws Kohana_Exception
+     * @throws Exception
      * @link    https://getdatepicker.com/4/
      * @uses    Form::input
      */
