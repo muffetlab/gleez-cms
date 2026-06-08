@@ -582,7 +582,7 @@ abstract class Template extends Controller {
 		$headers = $this->_config->get('headers', array());
 		$headers['X-Gleez-Version'] = Gleez::getVersion(TRUE, TRUE) . ' ('.Gleez::CODENAME.')';
 
-		$xmlrpc = $this->_config->get('xmlrpc', NULL);
+        $xmlrpc = $this->_config->get('xmlrpc');
 
 		if ( ! is_null($xmlrpc))
 		{
@@ -751,7 +751,7 @@ abstract class Template extends Controller {
 		// Google js only in production and not in admin section
 		if (Kohana::PRODUCTION === Kohana::$environment AND Theme::$is_admin === FALSE)
 		{
-			$ua = $this->_config->get('google_ua', NULL);
+            $ua = $this->_config->get('google_ua');
 
 			if ( ! empty($ua) )
 			{
