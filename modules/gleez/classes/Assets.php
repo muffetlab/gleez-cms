@@ -559,8 +559,8 @@ class Assets {
 	 */
     protected static function sort_assets(array $a, array $b): int
     {
-		$a_weight = (is_array($a) AND isset($a['weight'])) ? $a['weight'] : 0;
-		$b_weight = (is_array($b) AND isset($b['weight'])) ? $b['weight'] : 0;
+        $a_weight = $a['weight'] ?? 0;
+        $b_weight = $b['weight'] ?? 0;
 
 		if ($a_weight == $b_weight)
 		{

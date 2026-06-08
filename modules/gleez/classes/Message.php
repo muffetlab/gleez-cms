@@ -38,12 +38,12 @@ class Message {
      * Adds a new message.
      *
      * @param string $type Message type (e.g. Message::SUCCESS)
-     * @param string $message Array/String for the message(s)
+     * @param array|string $message Array/String for the message(s)
      * @param array|null $options Any options for the message [Optional]
      * @return  void
      * @throws Kohana_Exception
      */
-    public static function set(string $type, string $message, array $options = NULL)
+    public static function set(string $type, $message, ?array $options = NULL)
 	{
 		// Load existing messages
 		$messages = (array) self::get();

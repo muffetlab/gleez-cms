@@ -215,7 +215,7 @@ class Gleez {
         $message = empty($message) ? Gleez::MAINTENANCE_MESSAGE : $message;
 		$request          = Request::initial();
 
-		if ($maintenance_mode AND ($request instanceof Request) AND ($request->controller() != 'user' AND $request->action() != 'login') AND !ACL::check('administer site') AND $request->controller() != 'media')
+        if ($maintenance_mode && $request->controller() != 'user' && $request->action() != 'login' && !ACL::check('administer site') && $request->controller() != 'media')
 		{
 			throw HTTP_Exception::factory(503, __($message));
 		}

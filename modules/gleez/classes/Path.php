@@ -237,7 +237,7 @@ class Path {
 		$separator = '-';
 
         // Empty strings do not need any processing.
-		if ($string === '' || $string === NULL)
+        if ($string === '')
 		{
 			return '';
 		}

@@ -392,12 +392,7 @@ class System {
 	*/
     public static function faReadableName(array $array, string $class_prefix = 'fa-'): array
     {
-		if( ! is_array($array) )
-		{
-            return [];
-		}
-
-		$temp = array();
+        $temp = array();
 		foreach ($array as $class => $unicode) {
 			$temp[$class] = ucfirst( str_ireplace(array($class_prefix, '-'), array('', ' '), $class) );
 		}

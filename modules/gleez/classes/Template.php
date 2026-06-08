@@ -602,7 +602,7 @@ abstract class Template extends Controller {
 	 */
     protected function _set_server_headers(array $headers)
 	{
-		if (is_array($headers) AND ! empty($headers))
+        if (!empty($headers))
 		{
 			$this->response->headers($headers);
 		}

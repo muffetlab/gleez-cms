@@ -456,7 +456,7 @@ class ACL {
 			return FALSE;
 		}
 
-		if ($post instanceof ORM AND ! $post->loaded())
+        if (!$post->loaded())
 		{
 			// If the post was not loaded, we return access denied.
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent post.');
