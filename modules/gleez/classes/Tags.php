@@ -163,7 +163,7 @@ class Tags {
     {
 		$object_id = $object->id;
 
-		if ( ! $user_id = intval($user_id) or ! $object_id = intval($object_id) or empty($tag))
+        if (!$user_id or !$object_id = intval($object_id) or empty($tag))
 		{
 			return FALSE;
 		}

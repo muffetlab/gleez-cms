@@ -120,7 +120,7 @@ class Menu {
 		}
 		else if ( isset( $this->items[$target_id] ) )
 		{
-			$this->items[$target_id]['title'] = (string)$title;
+            $this->items[$target_id]['title'] = $title;
 		}
 
 		return $this;
@@ -142,7 +142,7 @@ class Menu {
 		}
 		else if ( isset( $this->items[$target_id] ) )
 		{
-			$this->items[$target_id]['url'] = (string)$url;
+            $this->items[$target_id]['url'] = $url;
 		}
 
 		return $this;
@@ -426,8 +426,8 @@ class Menu {
 			# Check for val
 			if ($key == $needle)
 			{
-				if($op == 'title') $array[$key]['title'] = (string)$string;
-				if($op == 'url')   $array[$key]['url']   = (string)$string;
+                if ($op == 'title') $array[$key]['title'] = $string;
+                if ($op == 'url') $array[$key]['url'] = $string;
 
 				return $array;
 			}

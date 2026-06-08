@@ -462,11 +462,6 @@ class ACL {
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent post.');
 		}
 
-		if ( ! $post instanceof ORM)
-		{
-			$post = (object) $post;
-		}
-
 		// If no user object is supplied, the access check is for the current user.
 		if (is_null($user))
 		{

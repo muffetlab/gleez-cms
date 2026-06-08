@@ -170,8 +170,8 @@ class Text extends Kohana_Text
 		$textObj = new ArrayObject(array(
 				'text' 	   => (string) $text,
 				'format'   => (int)    $format_id,
-				'langcode' => (string) $langcode,
-				'cache'    => (bool)   $cache,
+            'langcode' => $langcode,
+            'cache' => $cache,
             'cache_id' => $cache_id
 		), ArrayObject::ARRAY_AS_PROPS);
 

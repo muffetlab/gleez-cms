@@ -202,7 +202,7 @@ class Model_Menu extends ORM_MPTT {
     public function move_to(int $target, string $action = 'after')
 	{
 		// Find the target
-        $target = ORM::factory('Menu', (int) $target);
+        $target = ORM::factory('Menu', $target);
 
 		// Make sure it exists
 		if ( ! $target->loaded())

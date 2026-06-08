@@ -175,7 +175,7 @@ class Pagination {
 		$config_file = Kohana::$config->load('pagination');
 
 		// Initialize the $config array
-		$config['group'] = (string) $group;
+        $config['group'] = $group;
 
 		// Recursively load requested config groups
 		while (isset($config['group']) AND $config_file->offsetExists($config['group']))
@@ -276,7 +276,7 @@ class Pagination {
     public function url(int $page = 1): string
     {
 		// Clean the page number
-		$page = max(1, (int) $page);
+        $page = max(1, $page);
 
 		// gleez cms pagination
 		$pager = '/p'. $page;
@@ -437,7 +437,7 @@ class Pagination {
 			return $this->_uri;
 		}
 
-		$this->_uri = (string)$uri;
+        $this->_uri = $uri;
 
 		return $this;
 	}

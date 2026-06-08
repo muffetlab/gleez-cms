@@ -156,7 +156,7 @@ class HTMLFilter {
 			$this->allowed_tags = preg_split('/\s+|<|>/', $filter['settings']['allowed_html'], -1, PREG_SPLIT_NO_EMPTY);
 		}
 
-		$this->_text   = (string)$text;
+        $this->_text = $text;
 		$this->_config = $config;
 
 		if (Kohana::PRODUCTION !== Kohana::$environment)

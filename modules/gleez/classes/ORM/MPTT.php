@@ -825,7 +825,7 @@ class ORM_MPTT extends Gleez_Model
 		
 		if ( ! empty($scope))
 		{
-			$result->where($this->scope_column, '=', (int) $scope);
+            $result->where($this->scope_column, '=', $scope);
 		}
 			
 		return $result->execute($this->_db);

@@ -358,7 +358,7 @@ class Widgets {
 			// name must be unique
 			$values['name']   = @strtolower($widget['name']);
 			$values['title']  = (string) $widget['title'];
-			$values['module'] = (string) $module;
+            $values['module'] = $module;
 			$values['status'] = 0;
 			$values['region'] = '-1';
 

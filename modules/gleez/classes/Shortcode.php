@@ -325,7 +325,6 @@ class Shortcode {
 	 */
     public static function attributes(array $pairs, array $atts): array
     {
-		$atts = (array)$atts;
 		$out = array();
 
 		foreach($pairs as $name => $default)

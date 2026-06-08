@@ -26,7 +26,7 @@ class File extends Kohana_File
     {
 		if (is_null($name))
 		{
-			return UTF8::strtolower(uniqid().Text::random('alnum', (int)$length));
+            return UTF8::strtolower(uniqid() . Text::random('alnum', $length));
 		}
 		else
 		{
@@ -37,7 +37,7 @@ class File extends Kohana_File
 			$name   = substr($name, 0, -(strlen($ext) + 1));
 
 			$retval = uniqid().($remove_spaces ? preg_replace('/\s+/u', $replacement, $name) : $name);
-			$retval = is_null($length) ? $retval : substr($retval, 0, (int)$length);
+            $retval = is_null($length) ? $retval : substr($retval, 0, $length);
 
             return $retval . '.' . $ext;
 		}
