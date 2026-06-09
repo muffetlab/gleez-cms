@@ -442,7 +442,7 @@ class Post extends ORM_Versioned {
 			// Remove the previous terms relationship
 			$this->remove('terms');
 
-			foreach ($this->categories as $id => $term)
+            foreach ($this->categories as $term)
 			{
 				// Add the term relationship
 				if ( isset($term) AND !empty($term) AND $term != 'last')
