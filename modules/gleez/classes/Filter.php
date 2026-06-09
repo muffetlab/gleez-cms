@@ -57,10 +57,8 @@ class Filter {
 	 * $filter = Filter::get('html');
 	 * ~~~
 	 *
-	 * @param   string  filter name
-	 *
+     * @param string $name Filter name
 	 * @return  Filter
-	 *
 	 * @throws  Kohana_Exception
 	 */
     public static function get($name): Filter

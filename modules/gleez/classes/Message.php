@@ -291,7 +291,7 @@ class Message {
      * Message::clear(array(Message::ERROR, Message::ALERT));
      * ~~~
      *
-     * @param mixed  message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
+     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
      * @throws Kohana_Exception
      */
 	public static function clear($type = NULL)

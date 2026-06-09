@@ -20,10 +20,10 @@ class Text extends Kohana_Text
 	/**
 	 * Scan input and make sure that all HTML tags are properly closed and nested.
 	 *
-	 * @param   string   Text string to filter html
+     * @param string $text Text string to filter html
      * @return string
      */
-    public static function htmlcorrector($text): string
+    public static function htmlcorrector(string $text): string
     {
 		return static::dom_serialize(static::dom_load($text));
 	}
@@ -37,11 +37,10 @@ class Text extends Kohana_Text
 	 * You can use [Text::dom_serialize] to serialize this DOMDocument
 	 * back to a HTML snippet.
 	 *
-	 * @param   string       Text string to filter html
-	 *
+     * @param string $text Text string to filter html
 	 * @return  DOMDocument
 	 */
-    public static function dom_load($text): DOMDocument
+    public static function dom_load(string $text): DOMDocument
     {
 		$dom = new DOMDocument;
 

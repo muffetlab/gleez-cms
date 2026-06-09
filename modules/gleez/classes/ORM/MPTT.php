@@ -93,7 +93,7 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Is the current node a descendant of the supplied node.
 	 *
-	 * @param   ORM_MPTT|integer  ORM_MPTT object or primary key value of target node
+     * @param ORM_MPTT|int $target ORM_MPTT object or primary key value of target node
 	 * @return  bool
 	 */
     public function is_descendant($target): bool
@@ -112,8 +112,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Checks if the current node is a direct child of the supplied node.
-	 * 
-	 * @param   ORM_MPTT|integer  ORM_MPTT object or primary key value of target node
+     *
+     * @param ORM_MPTT|int $target ORM_MPTT object or primary key value of target node
 	 * @return  boolean
 	 */
     public function is_child($target): bool
@@ -128,8 +128,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Checks if the current node is a direct parent of a specific node.
-	 * 
-	 * @param   ORM_MPTT|integer  ORM_MPTT object or primary key value of child node
+     *
+     * @param ORM_MPTT|int $target ORM_MPTT object or primary key value of child node
 	 * @return  boolean
 	 */
     public function is_parent($target): bool
@@ -145,8 +145,8 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Checks if the current node is a sibling of a supplied node.
 	 * (Both have the same direct parent)
-	 * 
-	 * @param   ORM_MPTT|integer  ORM_MPTT object or primary key value of target node
+     *
+     * @param ORM_MPTT|int $target ORM_MPTT object or primary key value of target node
 	 * @return  boolean
 	 */
     public function is_sibling($target): bool
@@ -174,8 +174,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Checks if the current node is one of the parents of a specific node.
-	 * 
-	 * @param   integer|object  ID or object of parent node
+     *
+     * @param int|ORM_MPTT $target ID or object of parent node
 	 * @return  boolean
 	 */
     public function is_in_parents($target): bool

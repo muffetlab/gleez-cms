@@ -16,13 +16,12 @@ class Datatables {
 	/** Sort Descending */
 	const SORT_DESC = 'DESC';
 
-	/**
-	 * Factory pattern
-	 *
-	 * @param	mixed	string|object
-	 * @param	mixed	NULL|string
-	 * @return	Datatables
-	 */
+    /**
+     * Factory pattern
+     *
+     * @param ORM|null $object
+     * @return Datatables
+     */
     public static function factory(ORM $object = NULL): Datatables
     {
 		return new Datatables($object);
@@ -369,10 +368,10 @@ class Datatables {
 	/**
 	 * Set or get View file path
 	 *
-	 * @param	mixed	NULL|string
+     * @param string|null $path
      * @return Datatables|string
 	 */
-	public function view($path = NULL)
+    public function view(string $path = NULL)
 	{
 		if ($path === NULL)
 		{
@@ -384,13 +383,13 @@ class Datatables {
 		return $this;
 	}
 
-	/**
-	 * Set or get Request
-	 *
-	 * @access	public
-	 * @param	mixed	NULL|Request
+    /**
+     * Set or get Request
+     *
+     * @access public
+     * @param Request|null $request
      * @return Datatables|Request
-	 */
+     */
 	public function request(Request $request = NULL)
 	{
 		if ($request === NULL)

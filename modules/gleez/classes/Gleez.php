@@ -317,10 +317,10 @@ class Gleez {
      */
 	protected static function _set_cookie()
 	{
-		/** @var Cookie::$salt string */
-		Cookie::$salt = Kohana::$config->load('cookie')->get('salt');
+        // Set Cookie::$salt
+        Cookie::$salt = (string) Kohana::$config->load('cookie')->get('salt');
 
-		/** @var Cookie::$expiration string */
-		Cookie::$expiration = Kohana::$config->load('cookie')->get('lifetime');
+        // Set Cookie::$expiration
+        Cookie::$expiration = (int) Kohana::$config->load('cookie')->get('lifetime');
 	}
 }

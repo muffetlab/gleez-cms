@@ -307,14 +307,12 @@ class System {
 	 *
 	 * Prevents cryptographic side-channel attacks (timing attacks, specifically).
 	 *
-	 * @since  1.7.0  Introduced
-	 *
-	 * @param   string  known_string
-	 * @param   string  user_string
-	 *
-	 * @return  bool
+     * @param string $known_string
+     * @param string $user_string
+     * @return bool
+     * @since 1.7.0 Introduced
 	 */
-    public static function hashEquals($known_string, $user_string): bool
+    public static function hashEquals(string $known_string, string $user_string): bool
     {
 		// Available only in php >= 5.6.0
 		if ( function_exists('hash_equals') )

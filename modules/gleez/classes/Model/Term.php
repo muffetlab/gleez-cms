@@ -253,8 +253,8 @@ class Model_Term extends ORM_MPTT {
      * if `$location` is "first" or "last" the term will be the first or last child
      * if `$location` is an int, the term will be the next sibling of term with id `$location`
      *
-     * @param ORM_MPTT|integer  Primary key value or ORM_MPTT object of parent term
-     * @param string|integer    The location [Optional]
+     * @param ORM_MPTT|int $parent Primary key value or ORM_MPTT object of parent term
+     * @param string|int $location The location
      * @throws  Kohana_Exception
      * @throws ReflectionException
      */

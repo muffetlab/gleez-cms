@@ -389,7 +389,7 @@ class ACL {
     /**
      * Sets the permissions; both role based and user based
      *
-     * @param Model_User User object
+     * @param Model_User $user User object
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
