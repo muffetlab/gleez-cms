@@ -2,171 +2,88 @@
 
 return array(
 
-	/**
-	 * Site name
-	 * @var string
-	 */
+    // Site name
 	'site_name' => 'Gleez CMS',
 
-	/**
-	 * Site slogan
-	 * @var string
-	 */
+    // Site slogan
 	'site_slogan' => 'Light, Simple, Flexible Content Management System',
 
-	/**
-	 * Site logo
-	 * @var string
-	 */
+    // Site logo
 	'site_logo' => '/media/images/logo.png',
 
-	/**
-	 * Site favicon
-	 * @var string
-	 */
+    // Site favicon
 	'site_favicon' => '/media/icons/favicon.ico',
 
-	/**
-	 * Site email
-	 * @var string
-	 */
+    // Site email
 	'site_email' => 'webmaster@gleezcms.org',
 
-	/**
-	 * Site url used for background tasks
-	 * @var string
-	 */
+    // Site url used for background tasks
 	'site_url' => 'www.gleezcms.org',
 
-	/**
-	 * Site mission
-	 * @var string
-	 */
+    // Site mission
 	'site_mission' => '',
 
-	/**
-	 * Keywords for search engines
-	 * @var string
-	 */
+    // Keywords for search engines
 	'keywords' => 'cms, cmf, gleez, kohana, php framework, site building',
 
-	/**
-	 * Description for search engines
-	 * @var string
-	 */
+    // Description for search engines
 	'description' => 'Light, Simple, Flexible Content Management System',
 
-	/**
-	 * Site title separator
-	 * @var string
-	 */
+    // Site title separator
 	'title_separator' => ' :: ',
 
-	/**
-	 * Default active site theme
-	 * @var string
-	 */
+    // Default active site theme
 	'theme' => 'cerber',
 
-	/**
-	 * Default active admin theme
-	 * @var string
-	 */
+    // Default active admin theme
 	'admin_theme' => 'cerber',
 
-	/**
-	 * Mobile Theme or false
-	 * @var mixed
-	 */
+    // Mobile Theme or false
 	'mobile_theme' => FALSE,
 
-	/**
-	 * Maintenance Mode
-	 * @var boolean
-	 */
+    // Maintenance Mode
 	'maintenance_mode' => FALSE,
 
-	/**
-	 * The module search paths. They are searched in the order given.
-	 *
-	 * @var array
-	 */
+    // The module search paths. They are searched in the order given.
 	'module_paths' => array(MODPATH),
 
-	/**
-	 * The theme search paths. They are searched in the order given.
-	 *
-	 * @var array
-	 */
+    // The theme search paths. They are searched in the order given.
 	'theme_paths' => array(THEMEPATH),
 
-	/**
-	 * Offline message in Maintenance Mode
-	 * @var string
-	 */
+    // Offline message in Maintenance Mode
 	'offline_message' => '',
 
-	/**
-	 * Date Time Format
-	 * @var string
-	 */
+    // Date Time Format
 	'date_time_format' => 'Y-M-d H:i:s',
 
-	/**
-	 * Date Format
-	 * @var string
-	 */
+    // Date Format
 	'date_format' => 'Y-M-d',
 
-	/**
-	 * Time Format
-	 * @var string
-	 */
+    // Time Format
 	'time_format' => 'H:i:s',
 
-	/**
-	 * Filter Default Format
-	 * @var string
-	 */
+    // Filter Default Format
 	'filter_default_format' => '1',
 
-	/**
-	 * Default controller
-	 * @var string
-	 */
+    // Default controller
 	'front_page' => 'welcome',
 
-	/**
-	 * Default headers
-	 * @var array
-	 */
+    // Default headers
 	'headers' => array(
 		'X-Powered-By'              => 'Gleez CMS (https://gleezcms.org)',
 	//	'Content-Security-Policy'   => "script-src 'self' '{NONCE}' metrics.gleez.com; frame-ancestors 'self';"
 	),
 
-	/**
-	 * XMLRPC
-	 * @var string
-	 */
+    // XMLRPC
 	'xmlrpc' => 'xmlrpc',
 
-	/**
-	 * Number of minutes, which indicates how long the channel can be cached without updating
-	 * @var integer
-	 */
+    // Number of minutes, which indicates how long the channel can be cached without updating
 	'feed_ttl' => 60,
 
-	/**
-	 * Use Gravatar service?
-	 * @var boolean
-	 */
+    // Use Gravatar service?
 	'use_gravatars' => FALSE,
 
-	/**
-	 * Meta defaults
-	 * @var array
-	 */
+    // Meta defaults
 	'meta' => array(
 		'links' => array(
 			URL::site('media/icons/favicon.ico', TRUE) => array(
@@ -196,21 +113,18 @@ return array(
 	/**
 	 * Default locale.
 	 * Default to 'en_US'
-	 * @var string
 	 */
 	'locale' =>  'en',
 
 	/**
 	 * Allow locale override.
 	 * Change the default locale, accepted values: FALSE|ALL|USER|CLIENT|URL|DOMAIN
-	 * @var string|boolean
 	 */
 	'locale_override' =>  FALSE,
 
 	/**
 	 * Locale cookie key.
 	 * Default to 'lang'
-	 * @var string
 	 */
 	'locale_cookie' => 'lang',
 
@@ -260,61 +174,39 @@ return array(
 		),
 	),
 
-	/**
-	 * Default timezone
-	 * @var string
-	 */
+    // Default timezone
 	'timezone' => 'Asia/Kolkata',
 
-	/**
-	 * Allow timezone override.
-	 * Change the default timezone, accepted values: TRUE|FALSE
-	 * @var boolean
-	 */
+    // Allow timezone override.
 	'timezone_override' => FALSE,
 
 	/**
 	 * Blocked ips.
      * Comma separated ip-addresses to block
-	 * @var string
 	 */
     'blocked_ips' => '',
 
-	/**
-	 * Default date first day
-	 * @var integer
-	 */
+    // Default date first day
 	'date_first_day' => 1,
 
 	/**
 	 * Site Private Key
 	 * Default to null, generate a random key on installation
-	 * @var string
 	 */
 	'gleez_private_key' => NULL,
 
-	/**
-	 * Number of seconds before password reset confirmation links expire
-	 * @var string
-	 */
+    // Number of seconds before password reset confirmation links expire
 	'reset_password_expiration' => 86400,
 
-	/**
-	 * Default session type
-	 * @var string
-	 */
+    // Default session type
     'session_type' => 'database',
 
-	/**
-	 * Define Google Analytics ID
-	 * @var string
-	 */
+    // Define Google Analytics ID
 	'google_ua' => NULL,
 
 	/**
 	 * Allow pjax requests.
 	 * Change the default false, accepted values: TRUE|FALSE
-	 * @var boolean
 	 */
 	'allow_pjax' => FALSE,
 );

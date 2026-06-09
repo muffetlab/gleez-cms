@@ -22,9 +22,9 @@ return array(
 	 * Encryption can be one of 'ssl' or 'tls' (both require non-default PHP extensions
 	 *
 	 * Driver options:
-	 * @param   null    native: no options
-	 * @param   string  sendmail: executable path, with -bs or equivalent attached
-	 * @param   array   smtp: hostname, (username), (password), (port), (encryption)
+     * - native: no options
+     * - sendmail: executable path, with -bs or equivalent attached
+     * - smtp: hostname, (username), (password), (port), (encryption)
 	 */
 	'options' => NULL
 );
