@@ -107,7 +107,7 @@ class Gleez_I18n extends I18n
      * @param string $lang
 	 * @return bool returns TRUE if $lang is available, otherwise FALSE
 	 */
-    public static function isAvailable($lang): bool
+    public static function isAvailable(string $lang): bool
     {
         return array_key_exists($lang, self::$_languages);
 	}
@@ -537,12 +537,12 @@ if ( ! function_exists('__'))
      *     An associative array of replacements to make after translation.
      *     Incidences of any key in this array are replaced with the corresponding value.
      *     Based on the first character of the key, the value is escaped and/or themed:
-     *         - !variable: inserted as is
-     *         - :variable: inserted as is
-     *         - @variable: escape plain text to HTML (HTML::chars)
-     *         - %variable: escape text and theme as a placeholder for user-submitted
-     *         - ^variable: escape text and uppercase the first character of each word in a string
-     *         - ~variable: escape text and make a string's first character uppercase
+     *     - !variable: inserted as is
+     *     - :variable: inserted as is
+     *     - @variable: escape plain text to HTML (HTML::chars)
+     *     - %variable: escape text and theme as a placeholder for user-submitted
+     *     - ^variable: escape text and uppercase the first character of each word in a string
+     *     - ~variable: escape text and make a string's first character uppercase
      * @param string $lang Source language [Optional]
      * @return string
      * @uses Gleez_I18n::get
