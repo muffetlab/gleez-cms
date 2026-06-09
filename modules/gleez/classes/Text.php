@@ -227,8 +227,8 @@ class Text extends Kohana_Text
 	 * @link http://michelf.ca/projects/php-markdown/
 	 * @link http://littoral.michelf.ca/code/php-markdown/php-markdown-extra-1.2.6.zip
 	 */
-    public static function markdown($text)
-	{
+    public static function markdown($text): string
+    {
         return Markdown::defaultTransform($text);
 	}
 
