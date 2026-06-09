@@ -277,14 +277,14 @@ class System {
      * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or FALSE
      *      returns [System::MIN_MEMORY_LIMIT]
      *
-     * @return  int|string
+     * @return string
      * @throws Kohana_Exception
      * @uses    Num::bytes
      * @uses    Text::bytes
      * @since   1.4.0
      */
-	public static function get_memory_limit()
-	{
+    public static function get_memory_limit(): string
+    {
 		$memory_limit = Num::bytes(ini_get('memory_limit'));
 
 		return Text::bytes((int)$memory_limit <= 0 ? self::MIN_MEMORY_LIMIT : $memory_limit, 'MiB');

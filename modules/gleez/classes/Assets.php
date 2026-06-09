@@ -97,7 +97,7 @@ class Assets {
      * @param mixed $deps Dependencies [Optional]
      * @param array|null $attrs An array of attributes for the <link> element [Optional]
      * @param string $format Format that be returned [Optional]
-     * @return  mixed   Setting returns asset array, getting returns asset HTML
+     * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @throws Exception
      */
@@ -221,7 +221,7 @@ class Assets {
      * @param boolean $footer Whether to show in header or footer [Optional]
      * @param array|null $attrs An array of attributes for the <script> element [Optional]
      * @param string $format Format that be returned [Optional]
-     * @return  mixed   Setting returns asset array, getting returns asset HTML
+     * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @throws Exception
      */
@@ -349,7 +349,7 @@ class Assets {
      * @param mixed $deps Dependencies [Optional]
      * @param boolean $footer Whether to show in header or footer [Optional]
      * @param array|null $attrs An array of attributes for the <script> element [Optional]
-     * @return  mixed   Setting returns asset array, getting returns asset HTML
+     * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      */
     public static function codes($handle, string $code = NULL, $deps = NULL, bool $footer = FALSE, array $attrs = NULL)
@@ -447,10 +447,10 @@ class Assets {
 	 *
 	 * @param   mixed   $handle  Asset name if `string`, sets `$footer` if boolean
      * @param string|null $code Asset code [Optional]
-	 * @return  mixed    Setting returns asset array, getting returns asset HTML
+     * @return string|null Setting returns asset array, getting returns asset HTML
 	 */
-    public static function settings($handle, string $code = NULL)
-	{
+    public static function settings($handle, string $code = NULL): ?string
+    {
 		return self::$settings[$handle] = $code;
 	}
 
@@ -462,7 +462,7 @@ class Assets {
      * @param string|null $content Asset content [Optional]
 	 * @param   mixed   $deps     Dependencies [Optional]
      * @param array|null $attrs An array of attributes [Optional]
-	 * @return  mixed   Setting returns asset array, getting returns asset content
+     * @return array|string|null Setting returns asset array, getting returns asset content
 	 */
     public static function group(string $group, string $handle = NULL, string $content = NULL, $deps = NULL, array $attrs = NULL)
 	{

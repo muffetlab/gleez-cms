@@ -21,11 +21,11 @@ class Path {
      *
      * @param Route $route Current route object
      * @param array $params Matched params
-     * @return array|false
+     * @return array
      * @throws Kohana_Exception
      */
-    public static function lookup(Route $route, array $params)
-	{
+    public static function lookup(Route $route, array $params): array
+    {
 		$regex 	= "#(/p(?P<page>\d+))+$#uD";  // preg_match()
 		$reg_ex = "#(/p\d+)+$#uD";            // preg_replace()
 		$page 	= NULL;                       // default pager id is null
@@ -85,8 +85,8 @@ class Path {
 	 * ~~~
 	 *
 	 * @param   array  $values  Array of aliases
-	 * @return  string
-	 */
+     * @return false|Model|ORM
+     */
 	public static function save(array $values)
 	{
 		try

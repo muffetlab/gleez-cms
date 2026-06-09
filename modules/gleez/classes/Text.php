@@ -21,11 +21,10 @@ class Text extends Kohana_Text
 	 * Scan input and make sure that all HTML tags are properly closed and nested.
 	 *
 	 * @param   string   Text string to filter html
-	 *
-	 * @return  mixed
-	 */
-	public static function htmlcorrector($text)
-	{
+     * @return string
+     */
+    public static function htmlcorrector($text): string
+    {
 		return static::dom_serialize(static::dom_load($text));
 	}
 

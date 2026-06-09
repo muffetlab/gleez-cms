@@ -399,7 +399,7 @@ class Widgets {
     /**
      * Load the widgets from database
      *
-     * @return $this|array|string
+     * @return $this|array
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */

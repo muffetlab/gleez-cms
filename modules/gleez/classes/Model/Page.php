@@ -79,7 +79,7 @@ class Model_Page extends Post {
     /**
      * Finds multiple database rows and returns an iterator of the rows found
      *
-     * @return  Database_Result|ORM
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
     public function find_all()

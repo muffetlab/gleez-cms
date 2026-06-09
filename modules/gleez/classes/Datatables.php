@@ -264,8 +264,8 @@ class Datatables {
 	/**
 	 * Get result
 	 *
-	 * @return	mixed
-	 */
+     * @return array|Countable
+     */
 	public function result()
 	{
 		return $this->_result;
@@ -370,7 +370,7 @@ class Datatables {
 	 * Set or get View file path
 	 *
 	 * @param	mixed	NULL|string
-	 * @return	mixed	$this|string
+     * @return Datatables|string
 	 */
 	public function view($path = NULL)
 	{
@@ -389,7 +389,7 @@ class Datatables {
 	 *
 	 * @access	public
 	 * @param	mixed	NULL|Request
-	 * @return	mixed	$this|Request|NULL
+     * @return Datatables|Request
 	 */
 	public function request(Request $request = NULL)
 	{

@@ -189,11 +189,11 @@ class Shortcode {
 	/**
 	 * Regular Expression callable for do_shortcode() for calling shortcode hook.
 	 * @param array $m Regular expression match array
-	 * @return mixed False on failure.
+     * @return string String with shortcode processed
      * @see get_shortcode_regex for details of the match array contents.
 	 */
-    protected static function execute(array $m)
-	{
+    protected static function execute(array $m): string
+    {
 		// allow [[foo]] syntax for escaping a tag
 		if ( $m[1] == '[' && $m[6] == ']' )
 		{
