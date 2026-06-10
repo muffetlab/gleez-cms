@@ -225,7 +225,7 @@ class Controller_Message extends Template {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -412,7 +412,7 @@ class Controller_Message extends Template {
 	 */
 	private function _bulk_update($post)
 	{
-		$operations = PM::bulk_actions(FALSE);
+        $operations = PM::bulk_actions();
 		$operation  = $operations[$post['operation']];
 		$messages   = array_filter($post['messages']); // Filter out unchecked pages
 

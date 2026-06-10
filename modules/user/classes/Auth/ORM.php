@@ -84,7 +84,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 	 */
 	public function get_provider()
 	{
-		return $this->_session->get($this->_config['session_key'] . '_provider', NULL);
+        return $this->_session->get($this->_config['session_key'] . '_provider');
 	}
 
     /**

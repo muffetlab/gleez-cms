@@ -131,7 +131,7 @@ class Controller_Admin_User extends Controller_Admin {
 					}
 
 					// Make sure to add an empty if none of the roles checked to avoid errors
-					if (empty($_POST['roles']) OR is_null(Arr::get($_POST['roles'], 'login', NULL)))
+                    if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login')))
 					{
 						$_POST['roles'] = Arr::merge($_POST['roles'], array('login' => ''));
 					}
@@ -148,12 +148,12 @@ class Controller_Admin_User extends Controller_Admin {
 				}
 				catch (ORM_Validation_Exception $e)
 				{
-					$this->_errors = $e->errors('models', TRUE);
+                    $this->_errors = $e->errors('models');
 				}
 			}
 			else
 			{
-				$this->_errors = $data->errors('models', TRUE);
+                $this->_errors = $data->errors('models');
 			}
 		}
 
@@ -229,7 +229,7 @@ class Controller_Admin_User extends Controller_Admin {
 					}
 
 					// Make sure to add an empty if none of the roles checked to avoid errors
-					if (empty($_POST['roles']) OR is_null(Arr::get($_POST['roles'], 'login', NULL)))
+                    if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login')))
 					{
 						$_POST['roles'] = Arr::merge($_POST['roles'], array('login' => ''));
 					}
@@ -251,12 +251,12 @@ class Controller_Admin_User extends Controller_Admin {
 				}
 				catch (ORM_Validation_Exception $e)
 				{
-					$this->_errors = $e->errors('models', TRUE);
+                    $this->_errors = $e->errors('models');
 				}
 			}
 			else
 			{
-				$this->_errors = $data->errors('models', TRUE);
+                $this->_errors = $data->errors('models');
 			}
 		}
 

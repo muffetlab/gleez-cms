@@ -37,7 +37,7 @@ class Controller_User extends Template {
             $this->_user = ORM::factory('User');
 		}
 
-		if (strpos($this->request->uri(), 'user/reset/', 0) !== FALSE)
+        if (strpos($this->request->uri(), 'user/reset/') !== FALSE)
 		{
 			$this->request->action('reset_'.$this->request->action());
 		}
@@ -123,7 +123,7 @@ class Controller_User extends Template {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -184,7 +184,7 @@ class Controller_User extends Template {
 			}
 			catch (Validation_Exception $e)
 			{
-				$this->_errors = $e->array->errors('login', TRUE);
+                $this->_errors = $e->array->errors('login');
 			}
 		}
 
@@ -358,7 +358,7 @@ class Controller_User extends Template {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -408,7 +408,7 @@ class Controller_User extends Template {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -454,7 +454,7 @@ class Controller_User extends Template {
 			}
 			catch(ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -532,7 +532,7 @@ class Controller_User extends Template {
 			}
 			catch (Validation_Exception $e)
 			{
-				$this->_errors = $e->array->errors('models/mail', TRUE);
+                $this->_errors = $e->array->errors('models/mail');
 			}
 		}
 
@@ -597,7 +597,7 @@ class Controller_User extends Template {
 			}
 			catch (Validation_Exception $e)
 			{
-				$this->_errors = $e->array->errors('models/user', TRUE);
+                $this->_errors = $e->array->errors('models/user');
 			}
 		}
 
