@@ -14,17 +14,14 @@ class Widget_User extends Widget {
 	public function save(array $post){}
 	public function delete(array $post){}
 
-	public function render()
-	{
-		switch($this->name)
-		{
-			case 'login':
-				return $this->login();
-			break;
-			default:
-				return;
-		}
-	}
+    public function render(): ?string
+    {
+        if ($this->name === 'login') {
+            return $this->login();
+        }
+
+        return null;
+    }
 
 	public function login()
 	{
