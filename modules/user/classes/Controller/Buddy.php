@@ -128,7 +128,6 @@ class Controller_Buddy extends Template {
 	{
 		$id 	  = (int) $this->request->param('id');
         $user = ORM::factory('User', $id);
-		$is_owner = FALSE;
 		$account  = FALSE;
 		
 		if ( ! $user->loaded())
@@ -142,11 +141,7 @@ class Controller_Buddy extends Template {
 		{
 			$account = Auth_ORM::instance()->get_user();
 		}
-		if ($account AND ($user->id === $account->id))
-		{
-			$is_owner = TRUE;
-		}
-		else
+        if (!$account || $user->id !== $account->id)
 		{
 			throw HTTP_Exception::factory(403, 'Attempt to access without required privileges.');
 		}
@@ -168,7 +163,6 @@ class Controller_Buddy extends Template {
 					->set('total',$total)
 					->set('id',$id)
 					->set('pendings',$pending)
-					->set('is_owner',$is_owner)
 					->set('pagination',$pagination);
 		
 		$this->title = __('Pending Requests');

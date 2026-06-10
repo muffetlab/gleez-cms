@@ -652,7 +652,7 @@ class Model_User extends Gleez_Model
 			//send welcome mail
 			$this->welcome_mail();
 		}
-		elseif ($this->_loaded)
+		else
 		{
 			// If user is found, but provider id is missing add it to details.
 			// We can do this merge, because this means user is found by email address,
@@ -1052,11 +1052,8 @@ class Model_User extends Gleez_Model
 				return $data['roles'];
 			}
 
-			if (empty($data['roles']))
-			{
-				return $this->_set_roles();
-			}
-		}
+            return $this->_set_roles();
+        }
 
 		return $this->roles->find_all()->as_array('id', 'name');
 	}
