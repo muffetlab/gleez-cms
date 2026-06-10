@@ -11,23 +11,21 @@ class Model_Buddy extends Model
 {
 	public function isFriend($user_id, $friend_id)
 	{
-		$total = DB::select(array(DB::expr('COUNT("id")'), 'total'))
-			->from('buddies')
-			->where_open()
-				->where_open()
-					->where('request_from', '=', $friend_id)
-					->where('request_to', '=',$user_id)
-				->where_close()
-				->or_where_open()
-					->where('request_from', '=', $user_id)
-					->where('request_to', '=',$friend_id)
-				->where_close()
-			->where_close()
-			->where('accepted','=','1')
-			->execute()
-			->get('total', false);
-
-		return $total;
+        return DB::select(array(DB::expr('COUNT("id")'), 'total'))
+            ->from('buddies')
+            ->where_open()
+            ->where_open()
+            ->where('request_from', '=', $friend_id)
+            ->where('request_to', '=', $user_id)
+            ->where_close()
+            ->or_where_open()
+            ->where('request_from', '=', $user_id)
+            ->where('request_to', '=', $friend_id)
+            ->where_close()
+            ->where_close()
+            ->where('accepted', '=', '1')
+            ->execute()
+            ->get('total', false);
 	}
 
 	public function friends($user_id, $limit = 15, $offset = FALSE)
