@@ -168,28 +168,22 @@ class Model_User extends Gleez_Model
 			case 'name':
 			case 'mail':
                 return HTML::chars($this->get($column) ?? '');
-				break;
-			case 'nick':
+            case 'nick':
 				// Return the best version of the user's name.
 				// Either their specified nick name, or fall back to the user name.
 				return empty($nick) ? HTML::chars($this->name) : HTML::chars($nick);
-				break;
-			case 'rawurl':
+            case 'rawurl':
 				return Route::get('user')->uri(array('id' => $this->id));
-				break;
-			case 'url':
+            case 'url':
 				// Model specific links; view, edit, delete url's.
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
-				break;
-			case 'edit_url':
+            case 'edit_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('user')->uri(array('id' => $this->id, 'action' => 'edit'));
-				break;
-			case 'delete_url':
+            case 'delete_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/user')->uri(array('id' => $this->id, 'action' => 'delete'));
-				break;
-		}
+        }
 
         return $this->get($column);
 	}

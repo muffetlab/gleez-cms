@@ -107,15 +107,12 @@ class Model_Role extends Gleez_Model
 			case 'edit_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/role')->uri(array('action' => 'edit', 'id' => $this->id));
-				break;
-			case 'delete_url':
+            case 'delete_url':
 				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/role')->uri(array('action' => 'delete', 'id' => $this->id));
-				break;
-			case 'perm_url':
+            case 'perm_url':
 				return Route::get('admin/permission')->uri(array('action' => 'role', 'id' => $this->id));
-				break;
-		}
+        }
 
         return $this->get($column);
 	}
