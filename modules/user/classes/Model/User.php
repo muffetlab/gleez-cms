@@ -492,11 +492,11 @@ class Model_User extends Gleez_Model
     /**
      * Upload photo and return file path
      *
-     * @param string $file Uploaded file
+     * @param array $file Uploaded file
      * @return NULL|string NULL when filed, otherwise file path
      * @throws Kohana_Exception
      */
-	public function uploadPhoto($file)
+    public function uploadPhoto(array $file)
 	{
 		if (isset($file['tmp_name']) AND ! empty($file['tmp_name']))
 		{
