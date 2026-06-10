@@ -208,7 +208,7 @@ class Model_User extends Gleez_Model
 
 		$data = unserialize($this->data);
 
-		return isset($data['permissions']) ? $data['permissions'] : array();
+        return $data['permissions'] ?? array();
 	}
 
 	/**

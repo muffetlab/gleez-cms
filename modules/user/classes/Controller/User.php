@@ -155,7 +155,7 @@ class Controller_User extends Template {
 		$this->_sidebars = FALSE;
 
 		// Create form action
-		$destination = isset($_GET['destination']) ? $_GET['destination'] : Request::initial()->uri();
+        $destination = $_GET['destination'] ?? Request::initial()->uri();
 		$params      = array('action' => 'login');
 		$action      = Route::get('user')->uri($params).URL::query(array('destination' => $destination));
 
@@ -179,7 +179,7 @@ class Controller_User extends Template {
 				Kohana::$log->add(Log::INFO, 'User :name logged in.', array(':name' => $user->name));
 
 				// redirect to the user account
-				$this->request->redirect(isset($_GET['destination']) ? $_GET['destination'] :'', 200);
+                $this->request->redirect($_GET['destination'] ?? '', 200);
 
 			}
 			catch (Validation_Exception $e)

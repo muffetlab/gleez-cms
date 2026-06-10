@@ -41,7 +41,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 				$providers[$name] = array(
 					'name' => $name,
 					'url'  => Route::get('oauth2/provider')->uri(array('provider' => $name, 'action' => 'login')),
-					'icon' => isset($provider['icon']) ? $provider['icon'] : 'facebook',
+                    'icon' => $provider['icon'] ?? 'facebook',
 				);
 			}
 		}
