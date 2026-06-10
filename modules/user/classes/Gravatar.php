@@ -169,7 +169,7 @@ class Gravatar {
 	 */
 	public function __toString()
 	{
-		return (string) $this->buildURL();
+        return $this->buildURL();
 	}
 
 	/**

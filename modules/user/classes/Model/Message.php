@@ -319,6 +319,6 @@ class Model_Message extends Gleez_Model
 				->and_where('name', '!=', 'guest')
 				->find();
 
-		return (bool) $result->loaded();
+        return $result->loaded();
 	}
 }

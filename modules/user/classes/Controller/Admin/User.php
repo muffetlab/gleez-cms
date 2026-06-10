@@ -178,7 +178,7 @@ class Controller_Admin_User extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-        $post = ORM::factory('User', (int) $id);
+        $post = ORM::factory('User', $id);
 
 		if ( ! $post->loaded() OR $id === 1)
 		{
