@@ -82,9 +82,9 @@ class Model_Role extends Gleez_Model
 	/**
 	 * Override the delete method to clear cache
 	 */
-	public function delete($soft = FALSE): Kohana_ORM
+    public function delete(): Kohana_ORM
     {
-		parent::delete($soft);
+        parent::delete();
 
 		//cleanup the cache
         Cache::instance()->delete_all();

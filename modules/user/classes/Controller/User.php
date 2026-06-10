@@ -251,7 +251,7 @@ class Controller_User extends Template {
 		$request  = FALSE;
 		$isFriend = FALSE;
 		$friends  = array();
-		$enable_buddy = (bool) Kohana::$config->load('auth.enable_buddy', FALSE);
+        $enable_buddy = (bool) Kohana::$config->load('auth')->get('enable_buddy', FALSE);
 
 		// Add Schema.org support
 		$this->schemaType = 'ProfilePage';

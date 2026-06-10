@@ -315,11 +315,11 @@ class Model_User extends Gleez_Model
 	 *
 	 * @see  Gleez_ORM_Core::find_all
 	 */
-	public function find_all($id = NULL)
+    public function find_all()
 	{
 		$this->where($this->_object_name.'.id', '!=', User::GUEST_ID);
 
-		return parent::find_all($id);
+        return parent::find_all();
 	}
 
 	/**

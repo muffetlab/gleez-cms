@@ -194,7 +194,7 @@ class Gravatar {
 			$url = self::HTTPS_URL;
 		}
 
-		$url .= $this->getEmailHash($this->_email);
+        $url .= $this->getEmailHash();
 
 		$query = array(
 			's' => $this->getSize(),
