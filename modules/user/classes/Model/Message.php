@@ -292,7 +292,7 @@ class Model_Message extends Gleez_Model
 	 *
 	 * @param   Validation  $validation An validation object
 	 * @param   string      $field      Field name
-	 * @return  boolean
+     * @return void
 	 */
 	public function toExists(Validation $validation, $field)
 	{

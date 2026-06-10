@@ -31,7 +31,7 @@ class Widget_User extends Widget {
 		// If user already signed-in / don't show the widget on user controller.
 		if ($auth->logged_in() OR $request->controller() === 'user')
 		{
-			return;
+            return null;
 		}
 
 		Assets::css('user', 'media/css/user.css', array('weight' => 2));

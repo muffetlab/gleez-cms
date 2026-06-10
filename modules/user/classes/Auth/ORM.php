@@ -172,7 +172,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 		Cookie::set('authautologin', $token->token, $this->_config['lifetime']);
 
 		// Run the standard completion
-		$this->complete_login($user);
+        return $this->complete_login($user);
 	}
 
 	/**

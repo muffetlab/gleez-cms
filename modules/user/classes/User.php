@@ -346,6 +346,8 @@ class User {
 			$providers = array_filter(Auth_ORM::providers());
 			return View::factory('oauth/providers')->set('providers', $providers);
 		}
+
+        return '';
 	}
 
 	/**
