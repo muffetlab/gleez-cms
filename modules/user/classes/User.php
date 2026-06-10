@@ -70,7 +70,7 @@ class User {
 	 */
 	public static function is_guest()
 	{
-		return ( ! Auth_ORM::instance()->get_user() ? TRUE : FALSE );
+        return !Auth_ORM::instance()->get_user();
 	}
 
 	/**

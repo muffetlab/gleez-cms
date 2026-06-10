@@ -86,8 +86,8 @@ class Controller_User extends Template {
 
 		$action = Route::get('user')->uri(array('action' => $this->request->action()));
 
-		$male   = (isset($post->gender) AND $post->gender == 1) ? TRUE : FALSE;
-		$female = (isset($post->gender) AND $post->gender == 2) ? TRUE : FALSE;
+        $male = isset($post->gender) && $post->gender == 1;
+        $female = isset($post->gender) && $post->gender == 2;
 
 		// Load the view
 		$view = View::factory('user/register')
@@ -324,8 +324,8 @@ class Controller_User extends Template {
 		$user = $this->_auth->get_user();
 		$this->title = __('Edit Account');
 
-		$male   = (isset($user->gender) AND $user->gender == 1) ? TRUE : FALSE;
-		$female = (isset($user->gender) AND $user->gender == 2) ? TRUE : FALSE;
+        $male = isset($user->gender) && $user->gender == 1;
+        $female = isset($user->gender) && $user->gender == 2;
 		$action = Route::get('user')->uri(array('action' => $this->request->action(), 'id' => $user->id));
 
 		$view = View::factory('user/edit')

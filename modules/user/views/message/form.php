@@ -36,7 +36,7 @@
 		<div class="col-sm-12">
 			<div class="form-group <?php echo isset($errors['draft']) ? 'has-error': ''; ?>">
 				<?php
-					$draft  = (isset($message->status) AND $message->status == PM::STATUS_DRAFT) ? TRUE : FALSE;
+                $draft = isset($message->status) && $message->status == PM::STATUS_DRAFT;
 					echo Form::hidden('draft', 0);
 				?>
 				<div class="controls checkbox">
