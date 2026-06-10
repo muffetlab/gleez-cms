@@ -94,17 +94,18 @@ class PM {
 		return $values;
 	}
 
-	/**
-	 * Bulk update messages
-	 *
-	 * Usage:
-	 * ~~~
-	 * PM::bulk_update(array(1, 2, 3, ...), array('status' => 'read'));
-	 * ~~~
-	 *
-	 * @param  array  $ids      Array of mesage ids
-	 * @param  array  $actions  Array of message actions
-	 */
+    /**
+     * Bulk update messages
+     *
+     * Usage:
+     * ~~~
+     * PM::bulk_update(array(1, 2, 3, ...), array('status' => 'read'));
+     * ~~~
+     *
+     * @param array $ids Array of mesage ids
+     * @param array $actions Array of message actions
+     * @throws Kohana_Exception
+     */
 	public static function bulk_update(array $ids, array $actions)
 	{
         $messages = ORM::factory('Message')
@@ -125,16 +126,17 @@ class PM {
 		}
 	}
 
-	/**
-	 * Bulk delete messages
-	 *
-	 * Example:
-	 * ~~~
-	 * PM::bulk_delete(array(1, 2, 3, ...));
-	 * ~~~
-	 *
-	 * @param  array  $ids  Array of post id's
-	 */
+    /**
+     * Bulk delete messages
+     *
+     * Example:
+     * ~~~
+     * PM::bulk_delete(array(1, 2, 3, ...));
+     * ~~~
+     *
+     * @param array $ids Array of post id's
+     * @throws Kohana_Exception
+     */
 	public static function bulk_delete(array $ids)
 	{
         $messages = ORM::factory('Message')

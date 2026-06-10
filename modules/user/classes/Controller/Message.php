@@ -10,14 +10,14 @@
  */
 class Controller_Message extends Template {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @throws  HTTP_Exception
-	 *
-	 * @uses    Assets::css
-	 * @uses    User::is_guest
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @uses Assets::css
+     * @uses User::is_guest
+     */
 	public function before()
 	{
 		if (User::is_guest())
@@ -41,14 +41,15 @@ class Controller_Message extends Template {
 		parent::before();
 	}
 
-	/**
-	 * The after() method is called after controller action
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Request::action
-	 * @uses  Assets::editor
-	 */
+    /**
+     * The after() method is called after controller action
+     *
+     * @throws Kohana_Exception
+     * @uses Route::uri
+     * @uses Request::action
+     * @uses Assets::editor
+     * @uses Route::get
+     */
 	public function after()
 	{
 		if ($this->request->action() == 'compose' OR $this->request->action() == 'edit')
@@ -73,20 +74,22 @@ class Controller_Message extends Template {
 		parent::after();
 	}
 
-	/**
-	 * Display a list of incoming messages
-	 *
-	 * @uses  Assets::popup
-	 * @uses  Route::url
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Request::is_datatables
-	 * @uses  Form::checkbox
-	 * @uses  HTML::anchor
-	 * @uses  Date::formatted_time
-	 * @uses  HTML::icon
-	 * @uses  Text::limit_chars
-	 */
+    /**
+     * Display a list of incoming messages
+     *
+     * @throws Kohana_Exception
+     * @throws Exception
+     * @uses Assets::popup
+     * @uses Route::url
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Request::is_datatables
+     * @uses Form::checkbox
+     * @uses HTML::anchor
+     * @uses Date::formatted_time
+     * @uses HTML::icon
+     * @uses Text::limit_chars
+     */
 	public function action_inbox()
 	{
 		Assets::popup();
@@ -132,7 +135,10 @@ class Controller_Message extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_outbox()
+    /**
+     * @throws View_Exception
+     */
+    public function action_outbox()
 	{
 		$this->title = __('Sent Messages');
 
@@ -141,7 +147,10 @@ class Controller_Message extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_drafts()
+    /**
+     * @throws View_Exception
+     */
+    public function action_drafts()
 	{
 		$this->title = __('Drafts');
 
@@ -150,7 +159,10 @@ class Controller_Message extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_list()
+    /**
+     * @throws View_Exception
+     */
+    public function action_list()
 	{
 		$this->title = __('All Messages');
 
@@ -159,7 +171,10 @@ class Controller_Message extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_view()
+    /**
+     * @throws View_Exception
+     */
+    public function action_view()
 	{
 		$this->title = __('View Message');
 
@@ -168,7 +183,10 @@ class Controller_Message extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_edit()
+    /**
+     * @throws View_Exception
+     */
+    public function action_edit()
 	{
 		$this->title = __('Edit Message');
 
@@ -177,9 +195,11 @@ class Controller_Message extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Compose message
-	 */
+    /**
+     * Compose message
+     *
+     * @throws Kohana_Exception|ReflectionException
+     */
 	public function action_compose()
 	{
 		$this->title = __('New Message');
@@ -232,19 +252,20 @@ class Controller_Message extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete message
-	 *
-	 * @uses  Request::query
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  URL::query
-	 * @uses  PM::delete
-	 * @uses  Message::success
-	 * @uses  Message::error
-	 * @uses  Log::add
-	 */
+    /**
+     * Delete message
+     *
+     * @throws Kohana_Exception
+     * @uses Request::query
+     * @uses Request::redirect
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses URL::query
+     * @uses PM::delete
+     * @uses Message::success
+     * @uses Message::error
+     * @uses Log::add
+     */
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -298,18 +319,19 @@ class Controller_Message extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Perform bulk actions
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Request::post
-	 * @uses  Request::redirect
-	 * @uses  PM::bulk_delete
-	 * @uses  Message::success
-	 * @uses  Message::error
-	 * @uses  DB::select
-	 */
+    /**
+     * Perform bulk actions
+     *
+     * @throws Kohana_Exception
+     * @uses Route::uri
+     * @uses Request::post
+     * @uses Request::redirect
+     * @uses PM::bulk_delete
+     * @uses Message::success
+     * @uses Message::error
+     * @uses DB::select
+     * @uses Route::get
+     */
 	public function action_bulk()
 	{
 		$id = (int) $this->request->param('id', 0);

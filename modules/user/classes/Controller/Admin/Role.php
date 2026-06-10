@@ -10,11 +10,16 @@
  */
 class Controller_Admin_Role extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer users');
@@ -22,12 +27,13 @@ class Controller_Admin_Role extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * List user roles
-	 *
-	 * @uses  Request::is_datatables
-	 * @uses  ORM::dataTables
-	 */
+    /**
+     * List user roles
+     *
+     * @throws Kohana_Exception
+     * @uses ORM::dataTables
+     * @uses Request::is_datatables
+     */
 	public function action_list()
 	{
 		$is_datatables = Request::is_datatables();
@@ -71,14 +77,15 @@ class Controller_Admin_Role extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Add new role
-	 *
-	 * @uses  Message::success
-	 * @uses  Log:add
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Add new role
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses Log:add
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Message::success
+     */
 	public function action_add()
 	{
 		$action = Route::get('admin/role')->uri(array('action' => 'add'));
@@ -110,15 +117,16 @@ class Controller_Admin_Role extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Add new role
-	 *
-	 * @uses  Message::success
-	 * @uses  Message::error
-	 * @uses  Log:add
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Add new role
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses Message::error
+     * @uses Log:add
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Message::success
+     */
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -162,7 +170,11 @@ class Controller_Admin_Role extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	public function action_delete()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
 

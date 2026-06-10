@@ -9,7 +9,10 @@
  */
 class Model_Buddy extends Model
 {
-	public function isFriend($user_id, $friend_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function isFriend($user_id, $friend_id)
 	{
         return DB::select(array(DB::expr('COUNT("id")'), 'total'))
             ->from('buddies')
@@ -28,7 +31,10 @@ class Model_Buddy extends Model
             ->get('total', false);
 	}
 
-	public function friends($user_id, $limit = 15, $offset = FALSE)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function friends($user_id, $limit = 15, $offset = FALSE)
 	{
 		$sql = DB::select('request_from', 'request_to')
 						->from('buddies')
@@ -62,7 +68,10 @@ class Model_Buddy extends Model
 		return $friends;
 	}
 
-	public function countFriends($user_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function countFriends($user_id)
 	{
 		return DB::select(array(DB::expr('COUNT(*)'), 'total'))
 						->from('buddies')
@@ -75,7 +84,10 @@ class Model_Buddy extends Model
 						->get('total', FALSE);
 	}
 
-	public function isRequest($user_id, $friend_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function isRequest($user_id, $friend_id)
 	{
 		$result = DB::select()->from('buddies')
 					->where_open()
@@ -96,14 +108,20 @@ class Model_Buddy extends Model
         return $result ? $result->request_from : FALSE;
 	}
 
-	public function addFriend($user_id, $friend_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function addFriend($user_id, $friend_id)
 	{
 		return DB::insert('buddies',array('request_from', 'request_to', 'date_requested'))
 					->values(array($user_id, $friend_id ,time()))
 					->execute();
 	}
 
-	public function accept($id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function accept($id)
 	{
 		return DB::update('buddies')
 					->set(array('accepted' => '1' , 'date_accepted' => time()))
@@ -111,7 +129,10 @@ class Model_Buddy extends Model
 					->execute();
 	}
 
-	public function reject($friend_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function reject($friend_id)
 	{
 		return DB::delete('buddies')
 					->where('request_from', '=', $friend_id)
@@ -119,7 +140,10 @@ class Model_Buddy extends Model
 					->execute();
 	}
 
-	public function delete($friend_id,$user_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function delete($friend_id, $user_id)
 	{
 		return DB::delete('buddies')
 					->where_open()
@@ -136,7 +160,10 @@ class Model_Buddy extends Model
 					->execute();
 	}
 
-	public function sents($user_id, $limit = 15, $offset = FALSE)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function sents($user_id, $limit = 15, $offset = FALSE)
 	{
 		$query = DB::select()
 					->from('buddies')->where('request_from', '=', $user_id)
@@ -150,8 +177,11 @@ class Model_Buddy extends Model
 
 		return $query->execute();
 	}
-	
-	public function pending($user_id, $limit = 15, $offset = FALSE)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function pending($user_id, $limit = 15, $offset = FALSE)
 	{
 		$query = DB::select()
 					->from('buddies')->where('request_to', '=', $user_id)
@@ -166,7 +196,10 @@ class Model_Buddy extends Model
 		return $query->execute();
 	}
 
-	public function countPending($user_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function countPending($user_id)
 	{
 		return DB::select(array(DB::expr('COUNT(*)'), 'total'))
 						->from('buddies')
@@ -176,7 +209,10 @@ class Model_Buddy extends Model
 						->get('total', FALSE);
 	}
 
-	public function countSent($user_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function countSent($user_id)
 	{
 		return DB::select(array(DB::expr('COUNT(*)'), 'total'))
 						->from('buddies')

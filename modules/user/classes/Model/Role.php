@@ -68,7 +68,9 @@ class Model_Role extends Gleez_Model
 
 	/**
 	 * Override the save method to clear cache
-	 */
+     *
+     * @throws Kohana_Exception|ReflectionException
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		parent::save( $validation );
@@ -79,9 +81,11 @@ class Model_Role extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Override the delete method to clear cache
-	 */
+    /**
+     * Override the delete method to clear cache
+     *
+     * @throws Kohana_Exception
+     */
     public function delete(): Kohana_ORM
     {
         parent::delete();

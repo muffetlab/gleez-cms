@@ -16,14 +16,15 @@ class Controller_User extends Template {
 	 */
 	protected $_user;
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  Assets::css
-	 * @uses  Auth_ORM::get_user
-	 * @uses  Request::uri
-	 * @uses  Request::action
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Kohana_Exception
+     * @uses Auth_ORM::get_user
+     * @uses Request::uri
+     * @uses Request::action
+     * @uses Assets::css
+     */
 	public function before()
 	{
 		Assets::css('user', 'media/css/user.css', array('theme'), array('weight' => 60));
@@ -46,21 +47,25 @@ class Controller_User extends Template {
 		$this->_sidebars = FALSE;
 	}
 
-	/**
-	 * Register a new user
-	 *
-	 * @throws  HTTP_Exception_403
-	 * @uses    Auth_ORM::logged_in
-	 * @uses    Auth_ORM::instance
-	 * @uses    Auth_ORM::login
-	 * @uses    Request::redirect
-	 * @uses    Request::action
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 * @uses    Config::get
-	 * @uses    Captcha::instance
-	 * @uses    Message::success
-	 */
+    /**
+     * Register a new user
+     *
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @throws \PHPMailer\PHPMailer\Exception
+     * @uses Auth_ORM::logged_in
+     * @uses Auth_ORM::instance
+     * @uses Auth_ORM::login
+     * @uses Request::redirect
+     * @uses Request::action
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Config::get
+     * @uses Captcha::instance
+     * @uses Message::success
+     */
 	public function action_register()
 	{
 		// set the template title (see Template for implementation)
@@ -130,15 +135,16 @@ class Controller_User extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Sign In
-	 *
-	 * @uses  Request::redirect
-	 * @uses  Request::post
-	 * @uses  Route::get
-	 * @uses  Message::success
-	 * @uses  Log::add
-	 */
+    /**
+     * Sign In
+     *
+     * @throws Kohana_Exception
+     * @uses Request::post
+     * @uses Route::get
+     * @uses Message::success
+     * @uses Log::add
+     * @uses Request::redirect
+     */
 	public function action_login()
 	{
 		// If user already signed-in
@@ -191,13 +197,14 @@ class Controller_User extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Log Out
-	 *
-	 * @uses  Auth_ORM::logout
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 */
+    /**
+     * Log Out
+     *
+     * @throws Kohana_Exception
+     * @uses Request::redirect
+     * @uses Route::get
+     * @uses Auth_ORM::logout
+     */
 	public function action_logout()
 	{
 		// Disable template on logout
@@ -210,12 +217,13 @@ class Controller_User extends Template {
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
 	}
 
-	/**
-	 * View user account information
-	 *
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 */
+    /**
+     * View user account information
+     *
+     * @throws Kohana_Exception
+     * @uses Route::get
+     * @uses Request::redirect
+     */
 	public function action_profile()
 	{
 		if ( ! $this->_auth->logged_in())
@@ -229,16 +237,16 @@ class Controller_User extends Template {
 		}
 	}
 
-	/**
-	 * View user account information
-	 *
-	 * @throws  HTTP_Exception_403
-	 *
-	 * @uses    Auth_ORM::get_user
-	 * @uses    ACL::check
-	 * @uses    Text::ucfirst
-	 * @uses    Assets::popup
-	 */
+    /**
+     * View user account information
+     *
+     * @throws HTTP_Exception_403
+     * @throws Kohana_Exception
+     * @uses Auth_ORM::get_user
+     * @uses ACL::check
+     * @uses Text::ucfirst
+     * @uses Assets::popup
+     */
 	public function action_view()
 	{
         if (!$this->_auth->logged_in()) {
@@ -302,17 +310,18 @@ class Controller_User extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * User profile and account editor
-	 *
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Auth_ORM::get_user
-	 * @uses  Message::success
-	 * @uses  Arr::merge
-	 * @uses  Arr::get
-	 */
+    /**
+     * User profile and account editor
+     *
+     * @throws Kohana_Exception
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Auth_ORM::get_user
+     * @uses Message::success
+     * @uses Arr::merge
+     * @uses Arr::get
+     * @uses Request::redirect
+     */
 	public function action_edit()
 	{
 		// The user is not logged in
@@ -365,14 +374,15 @@ class Controller_User extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Change password
-	 *
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Auth_ORM::get_user
-	 * @uses  Message::success
-	 */
+    /**
+     * Change password
+     *
+     * @throws Kohana_Exception
+     * @uses Route::get
+     * @uses Auth_ORM::get_user
+     * @uses Message::success
+     * @uses Request::redirect
+     */
 	public function action_password()
 	{
 		// The user is not logged in
@@ -415,12 +425,13 @@ class Controller_User extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Upload photo
-	 *
-	 * @uses  Arr::merge
-	 * @uses  Message::success
-	 */
+    /**
+     * Upload photo
+     *
+     * @throws Kohana_Exception
+     * @uses Message::success
+     * @uses Arr::merge
+     */
 	public function action_photo()
 	{
 		// The user is not logged in
@@ -461,9 +472,13 @@ class Controller_User extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Confirm signup by email link validation
-	 */
+    /**
+     * Confirm signup by email link validation
+     *
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
 	public function action_confirm()
 	{
 		// Grab the user id and token from the confirmation link.
@@ -488,14 +503,18 @@ class Controller_User extends Template {
 		$this->request->redirect('user/profile');
 	}
 
-	/**
-	 * Reset user password
-	 *
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Message::success
-	 */
+    /**
+     * Reset user password
+     *
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @throws \PHPMailer\PHPMailer\Exception
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Message::success
+     * @uses Request::redirect
+     */
 	public function action_reset_password()
 	{
 		// The user is logged in, yet it is possible that he lost his password anyway
@@ -539,21 +558,22 @@ class Controller_User extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Reset confirm password
-	 *
-	 * Validates the confirmation link for a password reset and shows 'New password' form
-	 *
-	 * @uses  Request::redirect
-	 * @uses  Request::current
-	 * @uses  Request::post
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  URL::query
-	 * @uses  Model_User::confirm_reset_password_link
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 */
+    /**
+     * Reset confirm password
+     *
+     * Validates the confirmation link for a password reset and shows 'New password' form
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses Request::redirect
+     * @uses Request::current
+     * @uses Request::post
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses URL::query
+     * @uses Model_User::confirm_reset_password_link
+     * @uses Message::error
+     * @uses Message::success
+     */
 	public function action_reset_confirm_password()
 	{
 		if ($this->_auth->logged_in())

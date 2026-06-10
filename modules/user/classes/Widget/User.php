@@ -14,6 +14,10 @@ class Widget_User extends Widget {
 	public function save(array $post){}
 	public function delete(array $post){}
 
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
     public function render(): ?string
     {
         if ($this->name === 'login') {
@@ -23,7 +27,11 @@ class Widget_User extends Widget {
         return null;
     }
 
-	public function login()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function login()
 	{
 		$auth    = Auth_ORM::instance();
 		$request = Request::current();

@@ -30,7 +30,11 @@ class Controller_Buddy extends Template {
 		$this->user = $this->_auth->get_user();
 	}
 
-	public function action_index()
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function action_index()
 	{
 		$account  = Auth_ORM::instance()->get_user();
 		$id 	  = (int) $this->request->param('id', $account->id);
@@ -74,7 +78,12 @@ class Controller_Buddy extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_sent()
+    /**
+     * @throws HTTP_Exception
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_sent()
 	{
 		$id       = (int) $this->request->param('id');
         $user = ORM::factory('User', $id);
@@ -123,8 +132,13 @@ class Controller_Buddy extends Template {
 		$this->title = __('Sent Requests');
 		$this->response->body($view);
 	}
-	
-	public function action_pending()
+
+    /**
+     * @throws HTTP_Exception
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_pending()
 	{
 		$id 	  = (int) $this->request->param('id');
         $user = ORM::factory('User', $id);
@@ -169,7 +183,10 @@ class Controller_Buddy extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_add()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_add()
 	{
 		$id      = (int) $this->request->param('id');
         $invitee = ORM::factory('User', $id);
@@ -188,7 +205,10 @@ class Controller_Buddy extends Template {
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $id)));
 	}
 
-	public function action_accept()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_accept()
 	{
 		$id     = (int) $this->request->param('id');
         $friend = ORM::factory('User', $id);
@@ -217,7 +237,10 @@ class Controller_Buddy extends Template {
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'view', 'id' => $id)));
 	}
 
-	public function action_reject()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_reject()
 	{
 		$id 	= (int) $this->request->param('id');
         $friend = ORM::factory('User', $id);
@@ -246,7 +269,10 @@ class Controller_Buddy extends Template {
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $id)));
 	}
 
-	public function action_delete()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_delete()
 	{
 		$id      = (int) $this->request->param('id');
         $friend = ORM::factory('User', $id);

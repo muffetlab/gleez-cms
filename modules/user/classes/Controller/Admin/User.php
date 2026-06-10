@@ -13,6 +13,7 @@ class Controller_Admin_User extends Controller_Admin {
 	/**
 	 * The before() method is called before controller action
 	 *
+     * @throws Kohana_Exception
 	 * @uses  ACL::required
 	 */
 	public function before()
@@ -22,21 +23,23 @@ class Controller_Admin_User extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * Displays a list of all users
-	 *
-	 * @uses  Request::is_datatables
-	 * @uses  ORM::dataTables
-     * @uses  HTML::chars
-	 * @uses  Text::auto_link
-	 * @uses  User::roles
-	 * @uses  HTML::anchor
-	 * @uses  HTML::icon
-	 * @uses  Route::get
-	 * @uses  Route::url
-	 * @uses  Date::formatted_time
-	 * @uses  Assets::popup
-	 */
+    /**
+     * Displays a list of all users
+     *
+     * @throws Kohana_Exception
+     * @throws Exception
+     * @uses Request::is_datatables
+     * @uses ORM::dataTables
+     * @uses HTML::chars
+     * @uses Text::auto_link
+     * @uses User::roles
+     * @uses HTML::anchor
+     * @uses HTML::icon
+     * @uses Route::get
+     * @uses Route::url
+     * @uses Date::formatted_time
+     * @uses Assets::popup
+     */
 	public function action_list()
 	{
 		$is_datatables = Request::is_datatables();
@@ -79,18 +82,21 @@ class Controller_Admin_User extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Add new user
-	 *
-	 * @uses  Message::success
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Arr::merge
-	 * @uses  Arr::get
-	 * @uses  Config::get
-	 * @uses  Validation::rule
-	 * @uses  Validation::label
-	 */
+    /**
+     * Add new user
+     *
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Arr::merge
+     * @uses Arr::get
+     * @uses Config::get
+     * @uses Validation::rule
+     * @uses Validation::label
+     * @uses Message::success
+     */
 	public function action_add()
 	{
 		$this->title = __('Add User');
@@ -160,20 +166,22 @@ class Controller_Admin_User extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit user
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Log::ERROR
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Arr::merge
-	 * @uses  Arr::get
-	 * @uses  Config::get
-	 * @uses  Validation::rule
-	 * @uses  Validation::label
-	 */
+    /**
+     * Edit user
+     *
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @uses Message::error
+     * @uses Message::success
+     * @uses Log::ERROR
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Arr::merge
+     * @uses Arr::get
+     * @uses Config::get
+     * @uses Validation::rule
+     * @uses Validation::label
+     */
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -263,9 +271,11 @@ class Controller_Admin_User extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete user
-	 */
+    /**
+     * Delete user
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);

@@ -131,37 +131,36 @@ class Model_Message extends Gleez_Model
 		}
 	}
 
-	/**
-	 * Load messages list
-	 *
-	 * Example:
-	 * ~~~
-	 * // Get all messages from inbox. Sorting mode is ascending
+    /**
+     * Load messages list
+     *
+     * Example:
+     * ~~~
+     * // Get all messages from inbox. Sorting mode is ascending
      * ORM::factory('Message')->load(PM::INBOX, 'asc');
-	 *
-	 * // Get all messages from outbox. Sorting mode is descending
+     *
+     * // Get all messages from outbox. Sorting mode is descending
      * ORM::factory('Message')->load(PM::OUTBOX);
-	 *
-	 * // Get all draft messages. Sorting mode is descending
+     *
+     * // Get all draft messages. Sorting mode is descending
      * ORM::factory('Message')->load(PM::DRAFTS);
-	 *
-	 * // Get all messages from inbox, outbox and drafts
-	 * // Sorting mode is descending
+     *
+     * // Get all messages from inbox, outbox and drafts
+     * // Sorting mode is descending
      * ORM::factory('Message')->load();
-	 * ~~~
-	 *
-	 * [!!] Note: The $direction may be 'asc' for ascending sort mode,
-	 *            or 'desc' for descending sort mode.
-	 *
-	 * For message type constants see [PM] class
-	 *
-	 * @param    integer $type       Message type, eg. PM::INBOX, PM::OUTBOX, PM::DRAFTS [Optional]
-	 * @param    string  $direction  Sort mode of messages [Optional]
-	 *
-	 * @return  Model_Message
-	 *
-	 * @todo    Cache
-	 */
+     * ~~~
+     *
+     * [!!] Note: The $direction may be 'asc' for ascending sort mode,
+     *            or 'desc' for descending sort mode.
+     *
+     * For message type constants see [PM] class
+     *
+     * @param integer $type Message type, eg. PM::INBOX, PM::OUTBOX, PM::DRAFTS [Optional]
+     * @param string $direction Sort mode of messages [Optional]
+     * @return Model_Message
+     * @throws Kohana_Exception
+     * @todo Cache
+     */
 	public function load($type = 0, $direction = self::DESC)
 	{
 		if ( ! $this->loaded())
@@ -201,61 +200,61 @@ class Model_Message extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Load inbox messages
-	 *
-	 * Example:
-	 * ~~~
+    /**
+     * Load inbox messages
+     *
+     * Example:
+     * ~~~
      * ORM::factory('Message')->loadInbox();
-	 * ~~~
-	 *
-	 * [!!] Note: The $direction may be 'asc' for ascending sort mode,
-	 *            or 'desc' for descending sort mode.
-	 *
-	 * @param    string  $direction  Sort mode of messages [Optional]
-	 *
-	 * @return  Model_Message
-	 */
+     * ~~~
+     *
+     * [!!] Note: The $direction may be 'asc' for ascending sort mode,
+     *            or 'desc' for descending sort mode.
+     *
+     * @param string $direction Sort mode of messages [Optional]
+     * @return Model_Message
+     * @throws Kohana_Exception
+     */
 	public function loadInbox($direction = self::DESC)
 	{
 		return $this->load(PM::INBOX, $direction);
 	}
 
-	/**
-	 * Load outbox messages
-	 *
-	 * Example:
-	 * ~~~
+    /**
+     * Load outbox messages
+     *
+     * Example:
+     * ~~~
      * ORM::factory('Message')->loadInbox();
-	 * ~~~
-	 *
-	 * [!!] Note: The $direction may be 'asc' for ascending sort mode,
-	 *            or 'desc' for descending sort mode.
-	 *
-	 * @param    string  $direction  Sort mode of messages [Optional]
-	 *
-	 * @return  Model_Message
-	 */
+     * ~~~
+     *
+     * [!!] Note: The $direction may be 'asc' for ascending sort mode,
+     *            or 'desc' for descending sort mode.
+     *
+     * @param string $direction Sort mode of messages [Optional]
+     * @return Model_Message
+     * @throws Kohana_Exception
+     */
 	public function loadOutbox($direction = self::DESC)
 	{
 		return $this->load(PM::OUTBOX, $direction);
 	}
 
-	/**
-	 * Load draft messages
-	 *
-	 * Example:
-	 * ~~~
+    /**
+     * Load draft messages
+     *
+     * Example:
+     * ~~~
      * ORM::factory('Message')->loadDrafts();
-	 * ~~~
-	 *
-	 * [!!] Note: The $direction may be 'asc' for ascending sort mode,
-	 *            or 'desc' for descending sort mode.
-	 *
-	 * @param    string  $direction  Sort mode of messages [Optional]
-	 *
-	 * @return  Model_Message
-	 */
+     * ~~~
+     *
+     * [!!] Note: The $direction may be 'asc' for ascending sort mode,
+     *            or 'desc' for descending sort mode.
+     *
+     * @param string $direction Sort mode of messages [Optional]
+     * @return Model_Message
+     * @throws Kohana_Exception
+     */
 	public function loadDrafts($direction = self::DESC)
 	{
 		return $this->load(PM::DRAFTS, $direction);
@@ -285,15 +284,16 @@ class Model_Message extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Checks whether recipient user exists with the specified name
-	 *
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation An validation object
-	 * @param   string      $field      Field name
+    /**
+     * Checks whether recipient user exists with the specified name
+     *
+     * Validation callback.
+     *
+     * @param Validation $validation An validation object
+     * @param string $field Field name
      * @return void
-	 */
+     * @throws Kohana_Exception
+     */
 	public function toExists(Validation $validation, $field)
 	{
 		if ( $this->status != PM::STATUS_DRAFT AND empty($validation[$field]))
@@ -306,12 +306,13 @@ class Model_Message extends Gleez_Model
 		}
 	}
 
-	/**
-	 * Checks whether user exists with the specified name
-	 *
-	 * @param  string $recipient User name
-	 * @return bool
-	 */
+    /**
+     * Checks whether user exists with the specified name
+     *
+     * @param string $recipient User name
+     * @return bool
+     * @throws Kohana_Exception
+     */
 	public function exists($recipient)
 	{
         $result = ORM::factory('User')

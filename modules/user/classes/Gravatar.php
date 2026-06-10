@@ -115,16 +115,15 @@ class Gravatar {
 	 */
 	protected $_store_location;
 
-	/**
-	 * Get a singleton Gravatar instance
-	 *
-	 * @param   string  $email   User email
-	 * @param   array   $config  Gravatar config [Optional]
-	 *
-	 * @return  Gravatar
-	 *
-	 * @uses    Config::get
-	 */
+    /**
+     * Get a singleton Gravatar instance
+     *
+     * @param string $email User email
+     * @param array $config Gravatar config [Optional]
+     * @return Gravatar
+     * @throws Kohana_Exception
+     * @uses Config::get
+     */
 	public static function instance($email, $config = NULL)
 	{
 		if ( ! isset(self::$_instances[$email]))
@@ -142,14 +141,15 @@ class Gravatar {
 		return self::$_instances[$email];
 	}
 
-	/**
-	 * Gravatar class constructor
-	 *
-	 * [!!] This method cannot be accessed directly, you must use [Gravatar::instance].
-	 *
-	 * @param   string              $email   User email
-	 * @param   array|Config_Group  $config  Gravatar config
-	 */
+    /**
+     * Gravatar class constructor
+     *
+     * [!!] This method cannot be accessed directly, you must use [Gravatar::instance].
+     *
+     * @param string $email User email
+     * @param array|Config_Group $config Gravatar config
+     * @throws Kohana_Exception
+     */
 	protected function __construct($email, $config)
 	{
 		// Set the email address
@@ -281,25 +281,23 @@ class Gravatar {
 		return $this->_default_image;
 	}
 
-	/**
-	 * Creates a image link
-	 *
-	 * Example:
-	 * ~~~
-	 * echo Gravatar::instance('username@site.com')->getImage();
-	 * ~~~
-	 *
-	 * @since   1.3.0
-	 *
-	 * @param   array    $attrs     Default attributes [Optional]
-	 * @param   mixed    $protocol  Protocol string, [Request], or boolean [Optional]
-	 * @param   boolean  $index     Add index file to URL? [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    Arr::merge
-	 * @uses    HTML::resize
-	 */
+    /**
+     * Creates a image link
+     *
+     * Example:
+     * ~~~
+     * echo Gravatar::instance('username@site.com')->getImage();
+     * ~~~
+     *
+     * @param array $attrs Default attributes [Optional]
+     * @param mixed $protocol Protocol string, [Request], or boolean [Optional]
+     * @param boolean $index Add index file to URL? [Optional]
+     * @return string
+     * @throws Kohana_Exception
+     * @uses Arr::merge
+     * @uses HTML::resize
+     * @since 1.3.0
+     */
 	public function getImage(array $attrs = NULL, $protocol = NULL, $index = FALSE)
 	{
 		// Set auto attributes
@@ -328,15 +326,14 @@ class Gravatar {
 		return $this->_valid_formats;
 	}
 
-	/**
-	 * Get list of valid picture mime types for downloading
-	 *
-	 * @since   1.4.0
-	 *
-	 * @return  array
-	 *
-	 * @uses    Config::get
-	 */
+    /**
+     * Get list of valid picture mime types for downloading
+     *
+     * @return array
+     * @throws Kohana_Exception
+     * @uses Config::get
+     * @since 1.4.0
+     */
 	public function getValidTypes()
 	{
 		$valid_formats = array();
@@ -596,15 +593,15 @@ class Gravatar {
 		return $this;
 	}
 
-	/**
-	 * Prepare Gravatar config
-	 *
-	 * [!!] This is called automatically by [Gravatar::__construct].
-	 *
-	 * @param   array|Config_Group  $config  Gravatar config
-	 *
-	 * @return  array
-	 */
+    /**
+     * Prepare Gravatar config
+     *
+     * [!!] This is called automatically by [Gravatar::__construct].
+     *
+     * @param array|Config_Group $config Gravatar config
+     * @return array
+     * @throws Kohana_Exception
+     */
 	protected function _prepareConfig($config)
 	{
 		if (isset($config['secure_url']) AND $config['secure_url'])
