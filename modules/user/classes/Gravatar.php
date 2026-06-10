@@ -727,21 +727,7 @@ class Gravatar {
 	 */
 	public function download()
 	{
-		try
-		{
-			$headers = get_headers($this, 1);
-		}
-		catch (ErrorException $e)
-		{
-			if ($e->getCode() === 2)
-			{
-				throw new Kohana_Exception('URL does not seem to exist', array(), 403);
-			}
-			else
-			{
-				throw new Kohana_Exception($e->getMessage(), array(), $e->getCode());
-			}
-		}
+        $headers = get_headers($this, 1);
 
 		// Make sure content type exists
 		if ( ! isset($headers['Content-Type']))
@@ -759,14 +745,7 @@ class Gravatar {
 		$filename = $this->getEmailHash() . '.' . File::ext_by_mime($headers['Content-Type']);
 
 		// Try to download
-		try
-		{
-			file_put_contents($this->getStoreLocation($filename), file_get_contents($this));
-		}
-		catch (ErrorException $e)
-		{
-			throw new Kohana_Exception('File could not been downloaded: :msg', array(':msg' => $e->getMessage()), 400);
-		}
+        file_put_contents($this->getStoreLocation($filename), file_get_contents($this));
 
 		$result = new stdClass;
 
