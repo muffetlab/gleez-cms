@@ -737,7 +737,7 @@ class Model_User extends Gleez_Model
 		$email = Email::factory()
 			->subject(__(':site - Validate account details for :name', array(
 				':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'),
-				':name' => ($this->nick ? $this->nick : $this->name)
+                ':name' => ($this->nick ?: $this->name)
 			)))
 			->to($this->mail, $this->nick)
 			->message($body);
@@ -821,7 +821,7 @@ class Model_User extends Gleez_Model
 			$email = Email::factory()
 				->subject(__(':site - Account details for :name (approved)', array(
 					':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'),
-					':name' => ($this->nick ? $this->nick : $this->name)
+                    ':name' => ($this->nick ?: $this->name)
 				)))
 				->to($this->mail, $this->nick)
 				->message($body);
