@@ -8,4 +8,3 @@
 		__('Best Regards') . PHP_EOL .
 		$config->site_name  . PHP_EOL .
 		$config->site_slogan;
-?>
