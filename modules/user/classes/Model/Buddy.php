@@ -95,7 +95,7 @@ class Model_Buddy extends Model
 					->execute()
 					->current();
 
-		return ($result != FALSE) ? $result->request_from : FALSE ;
+        return $result ? $result->request_from : FALSE;
 	}
 
 	public function addFriend($user_id, $friend_id)

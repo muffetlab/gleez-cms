@@ -15,13 +15,13 @@ class Controller_Buddy extends Template {
 	{
 		parent::before();
 
-		if ( $this->_auth->logged_in() == false )
+        if (!$this->_auth->logged_in())
 		{
 			// No user is currently logged in
 			$this->request->redirect('user/login');
 		}
 
-        if (Kohana::$config->load('auth')->get('enable_buddy', FALSE) == FALSE)
+        if (!Kohana::$config->load('auth')->get('enable_buddy', FALSE))
 		{
 			// If user buddy disabled, we return not ofund.
 			throw HTTP_Exception::factory(404, __('Buddy not allowed'));
