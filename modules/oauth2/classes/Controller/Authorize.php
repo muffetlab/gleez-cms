@@ -136,9 +136,7 @@ class Controller_Authorize extends Template {
 			{
 				// check the form data to see if the user authorized the request
 				$authorized = (bool) $this->request->post('authorize');
-			}
-			elseif( ! $authorized = (bool) $this->showAuthorizeForm($params)) 
-			{
+            } elseif (!$authorized = $this->showAuthorizeForm($params)) {
 				//return to show consent approval form
 				return;
 			}
@@ -220,7 +218,7 @@ class Controller_Authorize extends Template {
 		 */ 
 		if ( $consent === FALSE || $autoApprove === FALSE )
 		{
-			$view   = View::factory('oauth2/authorize')->set('client', (object) $this->client)->set('action', $url);
+            $view = View::factory('oauth2/authorize')->set('client', $this->client)->set('action', $url);
 
 			$this->title = __('Welcome to the OAuth2.0 Server!');
 			$this->response->body($view);
