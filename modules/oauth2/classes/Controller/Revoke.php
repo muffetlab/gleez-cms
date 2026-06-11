@@ -81,16 +81,12 @@ class Controller_Revoke extends Template {
 		if (!$token = $this->request->query("token")) {
 			// We don't have a good URI to use
 			throw Oauth2_Exception::factory(400, 'invalid_request', "No Token supplied");
-
-			return false;
 		}
 		
 		$this->token = $token;
 		
 		if (!$result = Model::factory('oauth')->isValidRevoke($token)) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', "Token invalid");
-
-			return false;
 		}
 		
 		$this->token_info = $result[0];

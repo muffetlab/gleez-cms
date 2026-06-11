@@ -32,20 +32,14 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 
 		if (!$request->post("password") || !$request->post("username")) {
 			throw Oauth2_Exception::factory(400, 'invalid_request', 'Missing parameters: "username" and "password" required');
-
-			return NULL;
 		}
 
 		if (! $userInfo = $this->checkUserCredentials($request->post("username"), $request->post("password"))) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Invalid username and password combination');
-
-			return NULL;
 		}
 
 		if (empty($userInfo)) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Unable to retrieve user information');
-
-			return NULL;
 		}
 
 		if (!isset($userInfo['id'])) {

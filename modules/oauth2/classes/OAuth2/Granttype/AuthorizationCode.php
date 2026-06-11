@@ -32,16 +32,12 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 
 		if (!$request->post('code')) {
 			throw Oauth2_Exception::factory(400, 'invalid_request', 'Missing parameter: "code" is required');
-
-			return false;
 		}
 
 		$code = $request->post('code');
 
 		if (!$authCode = $this->getAuthorizationCode($code)) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Authorization code doesn\'t exist or is invalid for the client');
-
-			return false;
 		}
 
 		/*
@@ -51,16 +47,12 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 		if (isset($authCode['redirect_uri']) && $authCode['redirect_uri']) {
 			if (!$request->post('redirect_uri') || urldecode($request->post('redirect_uri')) != $authCode['redirect_uri']) {
 				throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', "The redirect URI is missing or do not match");
-
-				return false;
 			}
 		}
 
 		if ($authCode["expires"] < time()) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', "The authorization code has expired");
 			//throw new Oauth2_Exception(400, 'invalid_grant', "The authorization code has expired");
-
-			return false;
 		}
 
 		if (!isset($authCode['code'])) {

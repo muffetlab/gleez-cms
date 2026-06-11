@@ -32,22 +32,16 @@ class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
 
 		if (!$request->post('refresh_token')) {
 			throw Oauth2_Exception::factory(400, 'invalid_request', 'Missing parameter: "refresh_token" is required');
-
-			return false;
 		}
 
 		$token = $request->post('refresh_token');
 
 		if (!$refreshToken = $this->getRefreshToken($token)) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Invalid refresh token');
-
-			return false;
 		}
 
 		if ($refreshToken["refresh_expires"] < time()) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Refresh token has expired');
-
-		    return false;
 		}
 
 		// store the refresh token locally so we can delete it when a new refresh token is generated

@@ -253,15 +253,11 @@ class Controller_Authorize extends Template {
 		if (!$client_id = $this->request->query("client_id")) {
 		    // We don't have a good URI to use
 		   	throw Oauth2_Exception::factory(400, 'invalid_client', "No client id supplied");
-
-		    return false;
 		}
 
 		// Get client details
 		if (!$clientData = $this->getClientDetails($client_id)) {
 		    throw Oauth2_Exception::factory(400, 'invalid_client', 'The client id supplied is invalid');
-
-		    return false;
 		}
 
 		$this->client 			 = $clientData;
@@ -276,15 +272,11 @@ class Controller_Authorize extends Template {
 			$parts = parse_url($supplied_redirect_uri);
 			if (isset($parts['fragment']) && $parts['fragment']) {
 			    throw Oauth2_Exception::factory(400, 'invalid_uri', 'The redirect URI must not contain a fragment');
-
-			    return false;
 			}
 
 			// validate against the registered redirect uri(s) if available
 			if ($registered_redirect_uri && !$this->validateRedirectUri($supplied_redirect_uri, $registered_redirect_uri)) {
 			    throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', 'The redirect URI provided is missing or does not match');
-
-			    return false;
 			}
 
 			$redirect_uri = $supplied_redirect_uri;
@@ -292,14 +284,10 @@ class Controller_Authorize extends Template {
 			// use the registered redirect_uri if none has been supplied, if possible
 			if (!$registered_redirect_uri) {
 			    throw Oauth2_Exception::factory(400, 'invalid_uri', 'No redirect URI was supplied or stored');
-
-			    return false;
 			}
 
 			if (count(explode(' ', $registered_redirect_uri)) > 1) {
 			    throw Oauth2_Exception::factory(400, 'invalid_uri', 'A redirect URI must be supplied when multiple redirect URIs are registered');
-
-			    return false;
 			}
 
 			$redirect_uri = $registered_redirect_uri;
@@ -332,8 +320,6 @@ class Controller_Authorize extends Template {
 		    }
             if ($this->config['enforce_redirect']) {
 		        throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', 'The redirect URI is mandatory and was not supplied');
-
-		        return false;
 		    }
 		}
 

@@ -48,15 +48,11 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 
 		if (!$clientData = $this->getClientCredentials()) {
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'Client credentials are required');
-
-			return FALSE;
 		}
 
 		if (!isset($clientData['client_id'])) 
 		{
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'Missing parameter: "client_id" is required');
-
-			return FALSE;
 		}
 
         if (empty($clientData['client_secret']))
@@ -64,28 +60,20 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 			if (!$this->config['allow_public_clients']) 
 			{
 				throw Oauth2_Exception::factory(400, 'invalid_client', 'Client credentials are required');
-
-				return FALSE;
 			}
 
 			// Is this a public client?
 			if ( ! $this->getClientDetails($clientData['client_id']))
 			{
 				throw Oauth2_Exception::factory(400, 'invalid_client', 'This client is invalid or must authenticate using a client secret');
-
-				return FALSE;
 			}
 		}
 		elseif ($this->checkClientCredentials($clientData['client_id'], $clientData['client_secret']) === false) {
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'The client credentials are invalid');
-
-			return false;
 		}
 
 		if (! $this->checkRestrictedGrantType($clientData['client_id'], $this->request->post('grant_type'))) {
 			throw Oauth2_Exception::factory(400, 'unauthorized_client', 'The grant type is unauthorized for this client_id');
-
-			return false;
 		}
 
 		$this->clientData = $this->getClientDetails($clientData['client_id']);

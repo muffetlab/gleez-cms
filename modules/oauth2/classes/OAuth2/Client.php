@@ -252,7 +252,6 @@ abstract class OAuth2_Client {
                 throw new OAuth2_Client_Exception('Unknown client auth type ":client_auth_type".', array(
                     ':client_auth_type' => $this->_client_auth_type
                 ), OAuth2_Client_Exception::E_UNKNOWN_AUTH_TYPE);
-                break;
         }
 
         return $this->_execute_request($this->get_access_token_endpoint(), $parameters, self::HTTP_METHOD_POST, $http_headers, self::HTTP_FORM_CONTENT_TYPE_APPLICATION);
@@ -384,7 +383,6 @@ abstract class OAuth2_Client {
                     throw new OAuth2_Client_Exception('Unknown access token type: ":access_token_type".', array(
                         ':access_token_type' => $this->_access_token_type
                     ), OAuth2_Client_Exception::E_UNKNOWN_ACCESS_TOKEN_TYPE);
-                    break;
             }
         }
 
