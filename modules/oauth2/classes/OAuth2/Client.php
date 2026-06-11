@@ -449,11 +449,11 @@ abstract class OAuth2_Client {
      * @param string $url
      * @param mixed $parameters
      * @param string $http_method
-     * @param array $http_headers
+     * @param array|null $http_headers
      * @param int $form_content_type
      * @return  array
-     * @throws  OAuth2_Client_Exception
      * @throws Kohana_Exception
+     * @throws OAuth2_Client_Exception
      */
     protected function _execute_request($url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = NULL, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {

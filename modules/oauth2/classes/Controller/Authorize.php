@@ -247,10 +247,7 @@ class Controller_Authorize extends Template {
      * The draft specifies that the parameters should be retrieved from GET, override the Response
      * object to change this
      *
-     * @return
-     * The authorization parameters so the authorization server can prompt
-     * the user for approval if valid.
-     *
+     * @return bool True if the authorization request is valid, false otherwise
      * @throws Oauth2_Exception|Kohana_Exception
      * @see http://tools.ietf.org/html/rfc6749#section-10.12
      * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
@@ -476,19 +473,14 @@ class Controller_Authorize extends Template {
 		return empty($oatoken) ? FALSE : TRUE;
 	}
 
-	/**
-	 * Build the absolute URI based on supplied URI and parameters.
-	 *
-	 * @param $uri
-	 * An absolute URI.
-	 * @param $params
-	 * Parameters to be append as GET.
-	 *
-	 * @return
-	 * An absolute URI with supplied parameters.
-	 *
-	 * @ingroup oauth2_section_4
-	 */
+    /**
+     * Build the absolute URI based on supplied URI and parameters.
+     *
+     * @param string $uri An absolute URI
+     * @param array $params Parameters to be append as GET
+     * @return string An absolute URI with supplied parameters
+     * @ingroup oauth2_section_4
+     */
 	private function buildUri($uri, $params)
 	{
 		$parse_url = parse_url($uri);

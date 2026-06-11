@@ -119,26 +119,23 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		}
 	}
 
-	/**
-	 * Internal function used to get the client credentials from HTTP basic
-	 * auth or POST data.
-	 *
-	 * According to the spec (draft 20), the client_id can be provided in
-	 * the Basic Authorization header (recommended) or via GET/POST.
-	 *
-	 * @return
-	 * A list containing the client identifier and password, for example
-	 * @code
-	 * return array(
-	 *     "client_id"     => CLIENT_ID,        // REQUIRED the client id
-	 *     "client_secret" => CLIENT_SECRET,    // OPTIONAL the client secret (may be omitted for public clients)
-	 * );
-	 * @endcode
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-2.3.1
-	 *
-	 * @ingroup oauth2_section_2
-	 */
+    /**
+     * Internal function used to get the client credentials from HTTP basic
+     * auth or POST data.
+     *
+     * According to the spec (draft 20), the client_id can be provided in
+     * the Basic Authorization header (recommended) or via GET/POST.
+     *
+     * @return array|false A list containing the client identifier and password, for example
+     * @code
+     * return array(
+     *     "client_id"     => CLIENT_ID,        // REQUIRED the client id
+     *     "client_secret" => CLIENT_SECRET,    // OPTIONAL the client secret (may be omitted for public clients)
+     * );
+     * @endcode
+     * @see http://tools.ietf.org/html/rfc6749#section-2.3.1
+     * @ingroup oauth2_section_2
+     */
 	protected function getClientCredentials()
 	{
 		if (isset($_SERVER['PHP_AUTH_USER']) && ! is_null($clientId = $_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && ! is_null($clientSecret = $_SERVER['PHP_AUTH_PW'])) 

@@ -45,39 +45,40 @@ class Oauth2_Exception extends Exception
 	 */
 	public $error_uri;
 
-	/**
-	 * Creates a new translated OAuth2 error
-	 *
-	 * Usage:
-	 * ~~~
-	 * throw new Oauth2_Exception(400, 'invalid_client', 'The client id (:id) supplied is invalid', array(':id' => $client_id));
-	 * ~~~
-	 *
-	 * @param  integer    $code       The status code
-	 * @param  string     $error      The oauth2 error
-	 * @param  string     $message    Error message [Optional]
-	 * @param  array      $variables  Translation variables [Optional]
-	 * @param  string     $error_uri  The Error URL [Optional]
-	 */
+    /**
+     * Creates a new translated OAuth2 error
+     *
+     * Usage:
+     * ~~~
+     * throw new Oauth2_Exception(400, 'invalid_client', 'The client id (:id) supplied is invalid', array(':id' => $client_id));
+     * ~~~
+     *
+     * @param integer $code The status code
+     * @param string $error The oauth2 error
+     * @param null $message Error message [Optional]
+     * @param array|null $variables Translation variables [Optional]
+     * @param null $error_uri The Error URL [Optional]
+     * @return Oauth2_Exception
+     */
 	public static function factory($code, $error, $message = NULL, array $variables = NULL, $error_uri = NULL)
 	{
 		return new self($code, $error, $message, $variables, $error_uri);
 	}
 
-	/**
-	 * Creates a new translated OAuth2 error
-	 *
-	 * Usage:
-	 * ~~~
-	 * throw new Oauth2_Exception(400, 'invalid_client', 'The client id (:id) supplied is invalid', array(':id' => $client_id));
-	 * ~~~
-	 *
-	 * @param  integer    $code       The status code
-	 * @param  string     $error      The oauth2 error
-	 * @param  string     $message    Error message [Optional]
-	 * @param  array      $variables  Translation variables [Optional]
-	 * @param  string     $error_uri  The Error URL [Optional]
-	 */
+    /**
+     * Creates a new translated OAuth2 error
+     *
+     * Usage:
+     * ~~~
+     * throw new Oauth2_Exception(400, 'invalid_client', 'The client id (:id) supplied is invalid', array(':id' => $client_id));
+     * ~~~
+     *
+     * @param integer $code The status code
+     * @param string $error The oauth2 error
+     * @param null $message Error message [Optional]
+     * @param array|null $variables Translation variables [Optional]
+     * @param null $error_uri The Error URL [Optional]
+     */
 	public function __construct($code, $error, $message = NULL, array $variables = NULL, $error_uri = NULL)
 	{
 		// Set the message
