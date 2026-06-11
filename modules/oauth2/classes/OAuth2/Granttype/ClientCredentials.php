@@ -117,8 +117,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 			 *
 			 * @see http://tools.ietf.org/html/rfc6749#section-4.4.3
 			 */
-			$includeRefreshToken = false;
-			return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope, $includeRefreshToken);
+            return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope);
 		}
 		catch (Exception $e)
 		{

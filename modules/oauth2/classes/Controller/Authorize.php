@@ -330,7 +330,7 @@ class Controller_Authorize extends Template {
 
 		        return false;
 		    }
-		    if ($this->config['enforce_redirect'] && !$redirect_uri) {
+            if ($this->config['enforce_redirect']) {
 		        throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', 'The redirect URI is mandatory and was not supplied');
 
 		        return false;

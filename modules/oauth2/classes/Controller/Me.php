@@ -4,8 +4,6 @@ class Controller_Me extends Controller
 {
 	public function action_index()
 	{
-		$headersOnly = false;
-		
 		if ($header = Request::current()->headers('Authorization')) 
 		{
 			// Check for special case, because cURL sometimes does an
@@ -25,9 +23,7 @@ class Controller_Me extends Controller
 			}
 
 			$accessToken = ($accessToken === 'Bearer') ? '' : $accessToken;
-		} 
-		elseif ($headersOnly === false)
-		{
+        } else {
 			$method = (Request::current()->method() == 'GET') ? 'query' : 'post';
 			$accessToken = Request::current()->query('access_token');
 		}
