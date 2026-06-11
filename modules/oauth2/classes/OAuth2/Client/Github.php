@@ -38,11 +38,12 @@ class OAuth2_Client_Github extends OAuth2_Client {
 		return 'https://api.github.com/user';
 	}
 
-	/**
-	 * Get user data
-	 *
-	 * @return  array
-	 */
+    /**
+     * Get user data
+     *
+     * @return array
+     * @throws OAuth2_Client_Exception|Kohana_Exception
+     */
 	public function get_user_data()
 	{
 		$url = $this->get_user_profile_service_url();
@@ -67,11 +68,12 @@ class OAuth2_Client_Github extends OAuth2_Client {
 		return $data;
 	}
 
-	/**
-	 * Get user emails
-	 *
-	 * @return  array
-	 */
+    /**
+     * Get user emails
+     *
+     * @return array
+     * @throws OAuth2_Client_Exception|Kohana_Exception
+     */
 	public function get_user_emails()
 	{
 		$url = $this->get_user_profile_service_url().'/emails';

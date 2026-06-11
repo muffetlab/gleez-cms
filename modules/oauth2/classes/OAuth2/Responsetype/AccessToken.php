@@ -19,7 +19,10 @@ class Oauth2_ResponseType_AccessToken
 		$this->config = $config;
 	}
 
-	public function getAuthorizeResponse($params, $user_id = null)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function getAuthorizeResponse($params, $user_id = null)
 	{
 		// build the URL to redirect to
 		$result = array('query' => array());
@@ -36,22 +39,17 @@ class Oauth2_ResponseType_AccessToken
 		return array($params['redirect_uri'], $result);
 	}
 
-	/**
-	 * Handle the creation of access token, also issue refresh token if supported / desirable.
-	 *
-	 * @param $client_id
-	 * Client identifier related to the authorization code
-	 * @param $user_id
-	 * User ID associated with the authorization code
-	 * @param $redirect_uri
-	 * An absolute URI to which the authorization server will redirect the
-	 * user-agent to when the end-user authorization step is completed.
-	 * @param $scope
-	 * (optional) Scopes to be stored in space-separated string.
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-5
-	 * @ingroup oauth2_section_5
-	 */
+    /**
+     * Handle the creation of access token, also issue refresh token if supported / desirable.
+     *
+     * @param $client_id Client identifier related to the authorization code
+     * @param $user_id User ID associated with the authorization code
+     * @param $redirect_uri An absolute URI to which the authorization server will redirect the user-agent to when the end-user authorization step is completed.
+     * @param $scope (optional) Scopes to be stored in space-separated string.
+     * @throws Oauth2_Exception
+     * @see http://tools.ietf.org/html/rfc6749#section-5
+     * @ingroup oauth2_section_5
+     */
 	protected function createAccessToken($client_id, $user_id, $redirect_uri, $scope = NULL)
 	{
 		try

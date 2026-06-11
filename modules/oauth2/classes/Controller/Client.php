@@ -2,7 +2,13 @@
 
 class Controller_Client extends Template {
 
-	public function action_list()
+    /**
+     * @throws HTTP_Exception_404
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     * @throws Cache_Exception
+     */
+    public function action_list()
 	{ 
 		if ( Request::is_datatables() )
 		{
@@ -45,8 +51,15 @@ class Controller_Client extends Template {
 		
 		$this->response->body($view);
 	}
-	    
-	public function action_Register()
+
+    /**
+     * @throws View_Exception
+     * @throws HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws Cache_Exception
+     */
+    public function action_Register()
 	{
 		if ( ! ACL::check('administer oauth2'))
 		{
@@ -99,7 +112,14 @@ class Controller_Client extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_edit()
+    /**
+     * @throws View_Exception
+     * @throws HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws Cache_Exception
+     */
+    public function action_edit()
 	{
 		if ( ! ACL::check('edit oaclient2'))
 		{
@@ -166,7 +186,13 @@ class Controller_Client extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_view()
+    /**
+     * @throws Kohana_Exception
+     * @throws HTTP_Exception_404
+     * @throws View_Exception
+     * @throws Cache_Exception
+     */
+    public function action_view()
 	{
 		if ( ! ACL::check('access oaclient2'))
 		{
@@ -188,7 +214,13 @@ class Controller_Client extends Template {
 		$this->response->body(View::factory('client/view')->set('oaclient', $oaclient));
 	}
 
-	public function action_delete()
+    /**
+     * @throws HTTP_Exception_404
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     * @throws Cache_Exception
+     */
+    public function action_delete()
 	{
 		if ( ! ACL::check('delete oaclient2'))
 		{

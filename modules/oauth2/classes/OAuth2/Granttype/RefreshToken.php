@@ -25,7 +25,10 @@ class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
 		return 'refresh_token';
 	}
 
-	public function validateRequest(Request $request, Response $response)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function validateRequest(Request $request, Response $response)
 	{
 		$this->request  = $request;
 		$this->response = $response;
@@ -65,7 +68,10 @@ class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
         return $this->refreshToken['scope'] ?? NULL;
 	}
 
-	public function createAccessToken($client_id, $user_id, $scope = NULL)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL)
 	{
 		try
 		{

@@ -38,12 +38,12 @@ class OAuth2_Client_Live extends OAuth2_Client {
 		return "https://apis.live.net/v5.0/me";
 	}
 
-	/**
-	 * Get user data
-	 *
-	 * @return  array
-	 * @throws  OAuth2_Exception
-	 */
+    /**
+     * Get user data
+     *
+     * @return array
+     * @throws OAuth2_Client_Exception|Kohana_Exception
+     */
 	public function get_user_data()
 	{
 		$url = $this->get_user_profile_service_url();

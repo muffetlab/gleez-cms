@@ -21,9 +21,11 @@ class Controller_Token extends Controller
 	private $client_id;
 	private $clientData;
 
-	/**
-	 * The before() method is called before controller action
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Kohana_Exception
+     */
 	public function before()
 	{
 		parent::before();
@@ -42,7 +44,11 @@ class Controller_Token extends Controller
 		);
 	}
 
-	public function action_index()
+    /**
+     * @throws Kohana_Exception
+     * @throws HTTP_Exception
+     */
+    public function action_index()
 	{
 		try
 		{
@@ -87,17 +93,17 @@ class Controller_Token extends Controller
 		}
 	}
 
-	/**
-	 * Grant or deny a requested access token.
-	 * This would be called from the "/token" endpoint as defined in the spec.
-	 * You can call your endpoint whatever you want.
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-4
-	 * @see http://tools.ietf.org/html/rfc6749#section-10.6
-	 * @see http://tools.ietf.org/html/rfc6749#section-4.1.3
-	 *
-	 * @ingroup oauth2_section_4
-	 */
+    /**
+     * Grant or deny a requested access token.
+     * This would be called from the "/token" endpoint as defined in the spec.
+     * You can call your endpoint whatever you want.
+     *
+     * @see http://tools.ietf.org/html/rfc6749#section-4
+     * @see http://tools.ietf.org/html/rfc6749#section-10.6
+     * @see http://tools.ietf.org/html/rfc6749#section-4.1.3
+     * @ingroup oauth2_section_4
+     * @throws Oauth2_Exception
+     */
 	protected function grantAccessToken()
 	{
 		if (strtolower($this->request->method()) != 'post')

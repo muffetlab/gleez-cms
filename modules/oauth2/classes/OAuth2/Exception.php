@@ -132,7 +132,10 @@ class Oauth2_Exception extends Exception
 		));
 	}
 
-	public function render()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function render()
 	{
 		try
 		{

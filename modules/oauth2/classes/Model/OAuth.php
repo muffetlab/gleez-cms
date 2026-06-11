@@ -9,8 +9,10 @@
  * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Model_OAuth extends Model_Database {
-
-	public function checkConsent($client_id, $user_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkConsent($client_id, $user_id)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -24,14 +26,20 @@ class Model_OAuth extends Model_Database {
 		return empty($oatoken) ? FALSE : TRUE;
 	}
 
-	public function checkClientCredentials($client_id, $client_secret = NULL)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkClientCredentials($client_id, $client_secret = NULL)
 	{
 		$client = $this->getClientDetails($client_id);
 
 		return ($client && $client['client_secret'] == $client_secret) ? TRUE : FALSE;
 	}
 
-	public function getClientDetails($client_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function getClientDetails($client_id)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.client_table');
 
@@ -45,7 +53,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? $result[0] : FALSE;
 	}
 
-	public function checkRestrictedGrantType($client_id, $grant_type)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkRestrictedGrantType($client_id, $grant_type)
 	{
 		$details = $this->getClientDetails($client_id);
 
@@ -59,7 +70,10 @@ class Model_OAuth extends Model_Database {
 		return TRUE;
 	}
 
-	public function getAccessToken($token)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function getAccessToken($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -73,7 +87,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? $result[0] : FALSE;
 	}
 
-	public function setAccessToken($access_token, $client_id, $user_id, $expires, $scope = NULL)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function setAccessToken($access_token, $client_id, $user_id, $expires, $scope = NULL)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -98,7 +115,10 @@ class Model_OAuth extends Model_Database {
 		return $result;
 	}
 
-	public function getAuthorizationCode($code)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function getAuthorizationCode($code)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
@@ -112,7 +132,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? $result[0] : FALSE;
 	}
 
-	public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = NULL)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = NULL)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
@@ -138,7 +161,10 @@ class Model_OAuth extends Model_Database {
 		return $result;
 	}
 
-	public function expireAuthorizationCode($code)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function expireAuthorizationCode($code)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
@@ -151,7 +177,10 @@ class Model_OAuth extends Model_Database {
 		return $result;
 	}
 
-	public function createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope = null)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope = null)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
@@ -198,8 +227,11 @@ class Model_OAuth extends Model_Database {
 
 		return $code;
 	}
-	
-	public function checkUserCredentials($username, $password)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkUserCredentials($username, $password)
 	{
 		$table  = Kohana::$config->load('oauth2')->get('storage.user_table');
 		$pass   = Auth::instance()->hash($password);
@@ -217,7 +249,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? array('user_id' => $result[0]['name'], 'id' => $result[0]['id']) : FALSE;
 	}
 
-	public function getRefreshToken($token)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function getRefreshToken($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -232,7 +267,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? $result[0] : FALSE;
 	}
 
-	public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = NULL)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = NULL)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -260,12 +298,18 @@ class Model_OAuth extends Model_Database {
 		return $result;
 	}
 
-	public function unsetRefreshToken($refresh_token)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function unsetRefreshToken($refresh_token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 	}
-	
-	public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = FALSE)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = FALSE)
 	{
 		$refresh_token   = FALSE;
 		
@@ -376,8 +420,11 @@ class Model_OAuth extends Model_Database {
 
 		return $token;
 	}
-	
-	public function isValidRevoke($token)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function isValidRevoke($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -390,8 +437,11 @@ class Model_OAuth extends Model_Database {
 
 		return $result ? $result : FALSE;
 	}
-	
-	public function revoke_access($token)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function revoke_access($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -406,8 +456,11 @@ class Model_OAuth extends Model_Database {
 				))->execute();
 		return $result;
 	}
-	
-	public function revoke_refresh($token)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function revoke_refresh($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -422,8 +475,11 @@ class Model_OAuth extends Model_Database {
 				))->execute();
 		return $result;
 	}
-	
-	public function revoke_access_refresh($token)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function revoke_access_refresh($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		

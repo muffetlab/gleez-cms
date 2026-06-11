@@ -25,7 +25,10 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 		return 'authorization_code';
 	}
 
-	public function validateRequest(Request $request, Response $response)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function validateRequest(Request $request, Response $response)
 	{
 		$this->request  = $request;
 		$this->response = $response;
@@ -79,7 +82,10 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
         return $this->authCode['scope'] ?? NULL;
 	}
 
-	public function createAccessToken($client_id, $user_id, $scope = NULL)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL)
 	{
 		try
 		{

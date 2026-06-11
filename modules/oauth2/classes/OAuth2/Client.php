@@ -212,7 +212,7 @@ abstract class OAuth2_Client {
      * @param   int     $grant_type         Grant Type ('authorization_code', 'password', 'client_credentials', 'refresh_token', or a custom code (@see GrantType Classes)
      * @param   array   $parameters         Array sent to the server (depend on which grant type you're using)
      * @return  array                       The server response
-     * @throws  OAuth2_Client_Exception
+     * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
     public function request_access_token($grant_type, array $parameters)
     {
@@ -260,11 +260,12 @@ abstract class OAuth2_Client {
     /**
      * Get the access token
      *
-     * @param   string  $grant_type
-     * @param   array   $parameters
-     * @param   string  $response
+     * @param string $grant_type
+     * @param array $parameters
+     * @param string $response
      * @return  string
      * @throws  OAuth2_Client_Exception
+     * @throws Kohana_Exception
      */
     public function get_access_token($grant_type, $parameters, $response = NULL)
     {
@@ -351,8 +352,8 @@ abstract class OAuth2_Client {
      * @param   int     $form_content_type
      * @param   bool    $check_http_status
      * @param   int     $expected_http_status
-     * @throws  OAuth2_Client_Exception
      * @return  array
+     * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
     public function fetch($protected_resource_url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = array(), $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART, $check_http_status = TRUE, $expected_http_status = 200)
     {
@@ -445,13 +446,14 @@ abstract class OAuth2_Client {
     /**
      * Execute a request with cURL
      *
-     * @param   string  $url
-     * @param   mixed   $parameters
-     * @param   string  $http_method
-     * @param   array   $http_headers
-     * @param   int     $form_content_type
+     * @param string $url
+     * @param mixed $parameters
+     * @param string $http_method
+     * @param array $http_headers
+     * @param int $form_content_type
      * @return  array
      * @throws  OAuth2_Client_Exception
+     * @throws Kohana_Exception
      */
     protected function _execute_request($url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = NULL, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {

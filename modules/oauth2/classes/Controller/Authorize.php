@@ -36,9 +36,13 @@ class Controller_Authorize extends Template {
 	protected $responseTypes;
 	protected $config;
 
-	/**
-	 * The before() method is called before controller action
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
 	public function before()
 	{
 		parent::before();
@@ -81,34 +85,31 @@ class Controller_Authorize extends Template {
 		$this->_sidebars = FALSE;
 	}
 
-	/**
-	 * Redirect the user appropriately after approval.
-	 *
-	 * After the user has approved or denied the resource request the
-	 * authorization server should call this function to redirect the user
-	 * appropriately.
-	 *
-	 * $request
-	 * The request should have the follow parameters set in the querystring:
-	 * - response_type: The requested response: an access token, an
-	 * authorization code, or both.
-	 * - client_id: The client identifier as described in Section 2.
-	 * - redirect_uri: An absolute URI to which the authorization server
-	 * will redirect the user-agent to when the end-user authorization
-	 * step is completed.
-	 * - scope: (optional) The scope of the resource request expressed as a
-	 * list of space-delimited strings.
-	 * - state: (optional) An opaque value used by the client to maintain
-	 * state between the request and callback.
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-4
-	 *
-	 * The "authorization_code" mechanism
-	 * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
-	 *
-	 * The "implicit" mechanism
-	 * @see http://tools.ietf.org/html/rfc6749#section-4.2.1
-	 */
+    /**
+     * Redirect the user appropriately after approval.
+     *
+     * After the user has approved or denied the resource request the
+     * authorization server should call this function to redirect the user
+     * appropriately.
+     *
+     * $request
+     * The request should have the follow parameters set in the querystring:
+     * - response_type: The requested response: an access token, an
+     * authorization code, or both.
+     * - client_id: The client identifier as described in Section 2.
+     * - redirect_uri: An absolute URI to which the authorization server
+     * will redirect the user-agent to when the end-user authorization
+     * step is completed.
+     * - scope: (optional) The scope of the resource request expressed as a
+     * list of space-delimited strings.
+     * - state: (optional) An opaque value used by the client to maintain
+     * state between the request and callback.
+     *
+     * @see http://tools.ietf.org/html/rfc6749#section-4
+     * @see http://tools.ietf.org/html/rfc6749#section-4.1.1 The "authorization_code" mechanism
+     * @see http://tools.ietf.org/html/rfc6749#section-4.2.1 The "implicit" mechanism
+     * @throws Kohana_Exception
+     */
 	public function action_index()
 	{
 		try
@@ -174,7 +175,10 @@ class Controller_Authorize extends Template {
 		}
 	}
 
-	protected function authorizeFinish($params, $registered_redirect_uri)
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function authorizeFinish($params, $registered_redirect_uri)
 	{
 		// Complete the authorization and return the code
 		$user_id 	= Auth::instance()->get_user()->id;
@@ -192,7 +196,11 @@ class Controller_Authorize extends Template {
 		$this->setRedirect($this->config['redirect_status_code'], $uri);
 	}
 
-	protected function showAuthorizeForm($params)
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    protected function showAuthorizeForm($params)
 	{
 		$url = Route::get('oauth2/auth')->uri().URL::query($params);
 
@@ -229,24 +237,24 @@ class Controller_Authorize extends Template {
 		return TRUE;
 	}
 
-	/**
-	 * Pull the authorization request data out of the HTTP request.
-	 * - The redirect_uri is OPTIONAL as per draft 20. But your implementation can enforce it
-	 * by setting $config['enforce_redirect'] to true.
-	 * - The state is OPTIONAL but recommended to enforce CSRF. Draft 21 states, however, that
-	 * CSRF protection is MANDATORY. You can enforce this by setting the $config['enforce_state'] to true.
-	 *
-	 * The draft specifies that the parameters should be retrieved from GET, override the Response
-	 * object to change this
-	 *
-	 * @return
-	 * The authorization parameters so the authorization server can prompt
-	 * the user for approval if valid.
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
-	 * @see http://tools.ietf.org/html/rfc6749#section-10.12
-	 *
-	 */
+    /**
+     * Pull the authorization request data out of the HTTP request.
+     * - The redirect_uri is OPTIONAL as per draft 20. But your implementation can enforce it
+     * by setting $config['enforce_redirect'] to true.
+     * - The state is OPTIONAL but recommended to enforce CSRF. Draft 21 states, however, that
+     * CSRF protection is MANDATORY. You can enforce this by setting the $config['enforce_state'] to true.
+     *
+     * The draft specifies that the parameters should be retrieved from GET, override the Response
+     * object to change this
+     *
+     * @return
+     * The authorization parameters so the authorization server can prompt
+     * the user for approval if valid.
+     *
+     * @throws Oauth2_Exception|Kohana_Exception
+     * @see http://tools.ietf.org/html/rfc6749#section-10.12
+     * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
+     */
 	protected function validateAuthorizeRequest()
 	{
 		// Make sure a valid client id was supplied (we can not redirect because we were unable to verify the URI)
@@ -403,7 +411,10 @@ class Controller_Authorize extends Template {
 	    return false;
 	}
 
-	protected function setRedirect($statusCode = 302, $url, $state = null, $error = null, $errorDescription = null)
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function setRedirect($statusCode = 302, $url, $state = null, $error = null, $errorDescription = null)
 	{
 		$parameters = array();
 
@@ -428,7 +439,10 @@ class Controller_Authorize extends Template {
 		$this->request->redirect($url, $statusCode);
 	}
 
-	protected function getClientDetails($id)
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function getClientDetails($id)
 	{
         $client = ORM::factory('OAClient')->where('client_id', '=', $id)->find();
 
@@ -437,7 +451,10 @@ class Controller_Authorize extends Template {
 		return FALSE;
 	}
 
-	public function checkRestrictedGrantType($client_id, $grant_type)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkRestrictedGrantType($client_id, $grant_type)
 	{
 		$details = $this->getClientDetails($client_id);
 

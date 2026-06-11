@@ -38,12 +38,12 @@ class OAuth2_Client_Google extends OAuth2_Client {
 		return 'https://www.googleapis.com/oauth2/v1/userinfo';
 	}
 
-	/**
-	 * Get user data
-	 *
-	 * @return  array
-	 * @throws  OAuth2_Exception
-	 */
+    /**
+     * Get user data
+     *
+     * @return array
+     * @throws OAuth2_Client_Exception|Kohana_Exception
+     */
 	public function get_user_data()
 	{
 		$url = $this->get_user_profile_service_url();

@@ -2,7 +2,10 @@
 
 class Controller_Me extends Controller
 {
-	public function action_index()
+    /**
+     * @throws Exception
+     */
+    public function action_index()
 	{
 		if ($header = Request::current()->headers('Authorization')) 
 		{

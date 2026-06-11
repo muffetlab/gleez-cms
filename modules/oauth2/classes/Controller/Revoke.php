@@ -12,10 +12,12 @@ class Controller_Revoke extends Template {
 	
 	protected $token_info;
 	protected $token;
-	
-	/**
-	 * The before() method is called before controller action
-	 */
+
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Kohana_Exception
+     */
 	public function before()
 	{
 		parent::before();
@@ -25,8 +27,12 @@ class Controller_Revoke extends Template {
 		// Load the oauth2 config
 		$this->config = Kohana::$config->load('oauth2')->as_array();
 	}
-	
-	public function action_index()
+
+    /**
+     * @throws Kohana_Exception
+     * @throws HTTP_Exception
+     */
+    public function action_index()
 	{
 		try
 		{
@@ -75,8 +81,11 @@ class Controller_Revoke extends Template {
 			throw HTTP_Exception::factory(500, $e->getMessage());
 		}
 	}
-	
-	protected function validateRevokeRequest()
+
+    /**
+     * @throws Oauth2_Exception
+     */
+    protected function validateRevokeRequest()
 	{
 		if (!$token = $this->request->query("token")) {
 			// We don't have a good URI to use

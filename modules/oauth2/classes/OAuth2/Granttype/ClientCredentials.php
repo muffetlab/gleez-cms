@@ -41,7 +41,10 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		return 'client_credentials';
 	}
 
-	public function validateRequest(Request $request, Response $response)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function validateRequest(Request $request, Response $response)
 	{
 		$this->request  = $request;
 		$this->response = $response;
@@ -96,7 +99,10 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
         return $this->clientData['scope'] ?? NULL;
 	}
 
-	public function createAccessToken($client_id, $user_id, $scope = NULL)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL)
 	{
 		try
 		{
