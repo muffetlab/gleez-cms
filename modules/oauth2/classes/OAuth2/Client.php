@@ -290,7 +290,7 @@ abstract class OAuth2_Client {
     /**
      * Set the access token
      *
-     * @param   string
+     * @param string $token
      */
     public function set_access_token($token)
     {
