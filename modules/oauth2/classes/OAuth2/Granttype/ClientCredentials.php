@@ -59,7 +59,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 			return FALSE;
 		}
 
-		if (!isset($clientData['client_secret']) || empty($clientData['client_secret'])) 
+        if (empty($clientData['client_secret']))
 		{
 			if (!$this->config['allow_public_clients']) 
 			{

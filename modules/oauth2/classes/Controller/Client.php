@@ -70,7 +70,7 @@ class Controller_Client extends Template {
 		    
 		    try
 		    {
-			    if (isset($_POST['grant_types']) && ! empty($_POST['grant_types']))
+                if (!empty($_POST['grant_types']))
 			    {
 					$grant_types_selected = implode(" ", $_POST['grant_types']);
 					$oaclient->grant_types = $grant_types_selected;
@@ -129,7 +129,7 @@ class Controller_Client extends Template {
 		    try
 		    {
 			    //$grant_types_selected = 'authorization_code';
-			    if (isset($_POST['grant_types']) && ! empty($_POST['grant_types']))
+                if (!empty($_POST['grant_types']))
 			    {
 				$grant_types_selected = implode(" ", $_POST['grant_types']);
 				$oaclient->grant_types = $grant_types_selected;
