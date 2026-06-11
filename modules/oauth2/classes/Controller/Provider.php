@@ -172,9 +172,7 @@ class Controller_Provider extends Template {
 		{
 			Message::error(__("Couldn't login. Contact administer for error!"));
 			Kohana::$log->add(Log::ERROR,  (string) $e);
-		}
-		catch (\Gleez\Database\DatabaseException $e)
-		{
+		} catch (Database_Exception $e) {
 			// Skiping duplicate record entry exception.
 			Kohana::$log->add(Log::ERROR,  (string) $e);
 		}
