@@ -63,12 +63,12 @@ class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
 
 	public function getUserId()
 	{
-		return isset($this->refreshToken['user_id']) ? $this->refreshToken['user_id'] : NULL;
+        return $this->refreshToken['user_id'] ?? NULL;
 	}
 
 	public function getScope()
 	{
-		return isset($this->refreshToken['scope']) ? $this->refreshToken['scope'] : NULL;
+        return $this->refreshToken['scope'] ?? NULL;
 	}
 
 	public function createAccessToken($client_id, $user_id, $scope = NULL)

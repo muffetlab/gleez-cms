@@ -267,7 +267,7 @@ class Controller_Authorize extends Template {
 		}
 
 		$this->client 			 = $clientData;
-		$registered_redirect_uri = isset($clientData['redirect_uri']) ? $clientData['redirect_uri'] : '';
+        $registered_redirect_uri = $clientData['redirect_uri'] ?? '';
 
 		// Make sure a valid redirect_uri was supplied. If specified, it must match the clientData URI.
 		// @see http://tools.ietf.org/html/rfc6749#section-3.1.2

@@ -79,12 +79,12 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 
 	public function getUserId()
 	{
-		return isset($this->authCode['user_id']) ? $this->authCode['user_id'] : NULL;
+        return $this->authCode['user_id'] ?? NULL;
 	}
 
 	public function getScope()
 	{
-		return isset($this->authCode['scope']) ? $this->authCode['scope'] : NULL;
+        return $this->authCode['scope'] ?? NULL;
 	}
 
 	public function createAccessToken($client_id, $user_id, $scope = NULL)
