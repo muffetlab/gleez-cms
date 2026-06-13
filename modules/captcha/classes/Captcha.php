@@ -288,7 +288,7 @@ abstract class Captcha {
 	 */
 	public function __toString()
 	{
-		return $this->render(TRUE);
+        return $this->render();
 	}
 
 	/**
