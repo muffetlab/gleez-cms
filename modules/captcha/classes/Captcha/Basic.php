@@ -16,8 +16,8 @@ class Captcha_Basic extends Captcha
 	 *
 	 * @return string The challenge answer
 	 */
-	public function generate_challenge()
-	{
+    public function generate_challenge(): string
+    {
 		// Complexity setting is used as character count
         return text::random('distinct', max(1, Captcha::$config['complexity']));
 	}

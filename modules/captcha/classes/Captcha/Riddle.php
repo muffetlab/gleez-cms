@@ -21,8 +21,8 @@ class Captcha_Riddle extends Captcha
 	 *
 	 * @return string The challenge answer
 	 */
-	public function generate_challenge()
-	{
+    public function generate_challenge(): string
+    {
 		// Load riddles from the current language
 		$riddles = Kohana::config('captcha.riddles');
 
@@ -43,8 +43,8 @@ class Captcha_Riddle extends Captcha
      * @param string|null $type Image type override
      * @return string
      */
-    public function render(bool $html = TRUE, string $type = null)
-	{
+    public function render(bool $html = TRUE, string $type = null): string
+    {
 		return $this->riddle;
 	}
 

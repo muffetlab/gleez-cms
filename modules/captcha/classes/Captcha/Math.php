@@ -21,8 +21,8 @@ class Captcha_Math extends Captcha
 	 *
 	 * @return float|int The challenge answer
 	 */
-	public function generate_challenge()
-	{
+    public function generate_challenge(): string
+    {
 		// Easy
 		if (Captcha::$config['complexity'] < 4)
 		{
@@ -57,8 +57,8 @@ class Captcha_Math extends Captcha
      * @param string|null $type
      * @return string
      */
-    public function render(bool $html = true, string $type = null)
-	{
+    public function render(bool $html = true, string $type = null): string
+    {
 		return $this->math_exercise;
 	}
 

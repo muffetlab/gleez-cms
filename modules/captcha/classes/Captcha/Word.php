@@ -16,8 +16,8 @@ class Captcha_Word extends Captcha_Basic
 	 *
 	 * @return string The challenge answer
 	 */
-	public function generate_challenge()
-	{
+    public function generate_challenge(): string
+    {
 		// Load words from the current language and randomize them
 		$words = Kohana::config('captcha.words');
 		shuffle($words);

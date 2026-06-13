@@ -172,8 +172,8 @@ abstract class Captcha {
      * @return boolean
      * @throws Kohana_Exception
      */
-    public static function valid(string $response)
-	{
+    public static function valid(string $response): bool
+    {
 		// Maximum one count per page load
 		static $counted;
 
@@ -212,8 +212,8 @@ abstract class Captcha {
      * @return integer Counter value
      * @throws Kohana_Exception
      */
-    public function valid_count(int $new_count = NULL, bool $invalid = FALSE)
-	{
+    public function valid_count(int $new_count = NULL, bool $invalid = FALSE): int
+    {
 		// Pick the right session to use
 		$session = ($invalid === TRUE) ? 'captcha_invalid_count' : 'captcha_valid_count';
 
@@ -248,8 +248,8 @@ abstract class Captcha {
      * @return integer Counter value
      * @throws Kohana_Exception
      */
-    public function invalid_count(int $new_count = NULL)
-	{
+    public function invalid_count(int $new_count = NULL): int
+    {
 		return $this->valid_count($new_count, TRUE);
 	}
 
@@ -272,8 +272,8 @@ abstract class Captcha {
      * @return boolean
      * @throws Kohana_Exception
      */
-    public function promoted(int $threshold = NULL)
-	{
+    public function promoted(int $threshold = NULL): bool
+    {
 		// Promotion has been disabled
 		if (Captcha::$config['promote'] === FALSE)
 			return FALSE;
@@ -462,7 +462,7 @@ abstract class Captcha {
 	 *
 	 * @return string The challenge answer
 	 */
-	abstract public function generate_challenge();
+    abstract public function generate_challenge(): string;
 
 	/**
 	 * Output the Captcha challenge.
