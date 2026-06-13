@@ -179,7 +179,7 @@ abstract class Captcha {
 			return TRUE;
 
 		// Challenge result
-		$result = (bool) (sha1(strtoupper($response)) === Session::instance()->get('captcha_response'));
+        $result = sha1(strtoupper($response)) === Session::instance()->get('captcha_response');
 
 		// Increment response counter
 		if ($counted !== TRUE)
