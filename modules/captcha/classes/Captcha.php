@@ -80,7 +80,7 @@ abstract class Captcha {
 	 * Constructs a new Captcha object.
 	 *
 	 * @throws Kohana_Exception
-	 * @param string Config group name
+	 * @param string $group Config group name
 	 * @return void
 	 */
 	public function __construct($group = NULL)
