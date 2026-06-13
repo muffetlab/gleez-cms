@@ -49,12 +49,13 @@ abstract class Captcha {
 	 */
 	protected $image_type = 'png';
 
-	/**
-	 * Singleton instance of Captcha.
-	 *
-	 * @param string $group Config group name
-	 * @return object
-	 */
+    /**
+     * Singleton instance of Captcha.
+     *
+     * @param string $group Config group name
+     * @return object
+     * @throws Kohana_Exception
+     */
 	public static function instance($group = 'default')
 	{
 		if ( ! isset(Captcha::$instance))
@@ -151,24 +152,26 @@ abstract class Captcha {
 		Kohana::$log->add(Log::DEBUG, 'Captcha Library initialized');
 	}
 
-	/**
-	 * Update captcha response session variable.
-	 *
-	 * @return void
-	 */
+    /**
+     * Update captcha response session variable.
+     *
+     * @return void
+     * @throws Kohana_Exception
+     */
 	public function update_response_session()
 	{
 		// Store the correct Captcha response in a session
 		Session::instance()->set('captcha_response', sha1(strtoupper($this->response)));
 	}
 
-	/**
-	 * Validates user's Captcha response and updates response counter.
-	 *
-	 * @staticvar integer $counted Captcha attempts counter
-	 * @param string $response User's captcha response
-	 * @return boolean
-	 */
+    /**
+     * Validates user's Captcha response and updates response counter.
+     *
+     * @staticvar integer $counted Captcha attempts counter
+     * @param string $response User's captcha response
+     * @return boolean
+     * @throws Kohana_Exception
+     */
 	public static function valid($response)
 	{
 		// Maximum one count per page load
@@ -201,13 +204,14 @@ abstract class Captcha {
 		return $result;
 	}
 
-	/**
-	 * Gets or sets the number of valid Captcha responses for this session.
-	 *
-	 * @param integer $new_count New counter value
-	 * @param boolean $invalid Trigger invalid counter (for internal use only)
-	 * @return integer Counter value
-	 */
+    /**
+     * Gets or sets the number of valid Captcha responses for this session.
+     *
+     * @param integer $new_count New counter value
+     * @param boolean $invalid Trigger invalid counter (for internal use only)
+     * @return integer Counter value
+     * @throws Kohana_Exception
+     */
 	public function valid_count($new_count = NULL, $invalid = FALSE)
 	{
 		// Pick the right session to use
@@ -237,34 +241,37 @@ abstract class Captcha {
 		return (int) Session::instance()->get($session);
 	}
 
-	/**
-	 * Gets or sets the number of invalid Captcha responses for this session.
-	 *
-	 * @param integer $new_count New counter value
-	 * @return integer Counter value
-	 */
+    /**
+     * Gets or sets the number of invalid Captcha responses for this session.
+     *
+     * @param integer $new_count New counter value
+     * @return integer Counter value
+     * @throws Kohana_Exception
+     */
 	public function invalid_count($new_count = NULL)
 	{
 		return $this->valid_count($new_count, TRUE);
 	}
 
-	/**
-	 * Resets the Captcha response counters and removes the count sessions.
-	 *
-	 * @return void
-	 */
+    /**
+     * Resets the Captcha response counters and removes the count sessions.
+     *
+     * @return void
+     * @throws Kohana_Exception
+     */
 	public function reset_count()
 	{
 		$this->valid_count(0);
 		$this->valid_count(0, TRUE);
 	}
 
-	/**
-	 * Checks whether user has been promoted after having given enough valid responses.
-	 *
-	 * @param integer $threshold Valid response count threshold
-	 * @return boolean
-	 */
+    /**
+     * Checks whether user has been promoted after having given enough valid responses.
+     *
+     * @param integer $threshold Valid response count threshold
+     * @return boolean
+     * @throws Kohana_Exception
+     */
 	public function promoted($threshold = NULL)
 	{
 		// Promotion has been disabled
@@ -422,13 +429,14 @@ abstract class Captcha {
 		}
 	}
 
-	/**
-	 * Returns the img html element or outputs the image to the browser.
-	 *
-	 * @param boolean $html Output as HTML
+    /**
+     * Returns the img html element or outputs the image to the browser.
+     *
+     * @param boolean $html Output as HTML
      * @param string|null $type Image type override
-	 * @return mixed HTML, string or void
-	 */
+     * @return mixed HTML, string or void
+     * @throws Kohana_Exception
+     */
 	public function image_render($html, string $type = null)
 	{
 		// Output html element

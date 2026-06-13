@@ -22,13 +22,14 @@ class Captcha_Black extends Captcha
         return text::random('distinct', max(1, ceil(Captcha::$config['complexity'] / 1.5)));
 	}
 
-	/**
-	 * Outputs the Captcha image.
-	 *
+    /**
+     * Outputs the Captcha image.
+     *
      * @param bool $html HTML output
      * @param string|null $type Image type override
      * @return mixed
-	 */
+     * @throws Kohana_Exception
+     */
 	public function render($html = TRUE, string $type = null)
 	{
 		// Creates a black image to start from

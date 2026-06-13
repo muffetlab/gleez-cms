@@ -24,12 +24,13 @@ class Controller_Captcha extends Controller {
 	{
 		$this->group = $this->request->param('group', 'default');
 	}
-	
-	/**
-	 * Output the captcha challenge
-	 *
-	 * @param string $group Config group name
-	 */
+
+    /**
+     * Output the captcha challenge
+     *
+     * @param string $group Config group name
+     * @throws Kohana_Exception
+     */
 	public function action_index()
 	{
         // Send the correct HTTP header
@@ -45,7 +46,10 @@ class Controller_Captcha extends Controller {
 		Captcha::instance($this->group)->render(FALSE);
 	}
 
-	public function after()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function after()
 	{
 		Captcha::instance($this->group)->update_response_session();
 	}
