@@ -28,7 +28,6 @@ class Controller_Captcha extends Controller {
     /**
      * Output the captcha challenge
      *
-     * @param string $group Config group name
      * @throws Kohana_Exception
      */
 	public function action_index()
