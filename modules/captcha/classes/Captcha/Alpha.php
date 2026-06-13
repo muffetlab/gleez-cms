@@ -27,11 +27,11 @@ class Captcha_Alpha extends Captcha
      *
      * @param bool $html HTML output
      * @param string|null $type Image type override
-     * @return mixed
+     * @return string|null
      * @throws Kohana_Exception
      */
-    public function render(bool $html = TRUE, string $type = null)
-	{
+    public function render(bool $html = TRUE, string $type = null): ?string
+    {
 		// Creates $this->image
 		$this->image_create(Captcha::$config['background']);
 
