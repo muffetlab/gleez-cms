@@ -19,7 +19,7 @@ class Captcha_Math extends Captcha
 	/**
 	 * Generates a new Captcha challenge.
 	 *
-	 * @return string The challenge answer
+	 * @return float|int The challenge answer
 	 */
 	public function generate_challenge()
 	{
@@ -55,8 +55,8 @@ class Captcha_Math extends Captcha
 	 *
      * @param true $html
      * @param string|null $type
-     * @return mixed
-	 */
+     * @return string
+     */
     public function render($html = true, string $type = null)
 	{
 		return $this->math_exercise;

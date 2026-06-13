@@ -434,7 +434,7 @@ abstract class Captcha {
      *
      * @param boolean $html Output as HTML
      * @param string|null $type Image type override
-     * @return mixed HTML, string or void
+     * @return string|void HTML, string or void
      * @throws Kohana_Exception
      */
 	public function image_render($html, string $type = null)

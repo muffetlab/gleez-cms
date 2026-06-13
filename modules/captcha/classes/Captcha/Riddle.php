@@ -41,8 +41,8 @@ class Captcha_Riddle extends Captcha
 	 *
      * @param bool $html HTML output
      * @param string|null $type Image type override
-     * @return mixed
-	 */
+     * @return string
+     */
 	public function render($html = TRUE, string $type = null)
 	{
 		return $this->riddle;
