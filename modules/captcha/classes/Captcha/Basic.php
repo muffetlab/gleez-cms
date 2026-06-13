@@ -30,7 +30,7 @@ class Captcha_Basic extends Captcha
      * @return mixed
      * @throws Kohana_Exception
      */
-	public function render($html = TRUE, string $type = null)
+    public function render(bool $html = TRUE, string $type = null)
 	{
 		// Creates $this->image
 		$this->image_create(Captcha::$config['background']);

@@ -30,7 +30,7 @@ class Captcha_Black extends Captcha
      * @return mixed
      * @throws Kohana_Exception
      */
-	public function render($html = TRUE, string $type = null)
+    public function render(bool $html = TRUE, string $type = null)
 	{
 		// Creates a black image to start from
 		$this->image_create(Captcha::$config['background']);
