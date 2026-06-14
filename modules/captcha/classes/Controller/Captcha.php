@@ -20,7 +20,12 @@ class Controller_Captcha extends Controller {
 	 **/
 	public $auto_render = FALSE;
 
-	public function before()
+    /**
+     * @var array|mixed
+     */
+    private $group;
+
+    public function before()
 	{
 		$this->group = $this->request->param('group', 'default');
 	}
