@@ -344,22 +344,22 @@ abstract class Captcha {
 		{
 			// Create the image using the right function for the filetype
 			$function = 'imagecreatefrom'.$this->image_type($background);
-			$this->background_image = $function($background);
+            $backgroundImage = $function($background);
 
 			// Resize the image if needed
-			if (imagesx($this->background_image) !== Captcha::$config['width']
-			    or imagesy($this->background_image) !== Captcha::$config['height'])
+            if (imagesx($backgroundImage) !== Captcha::$config['width']
+                or imagesy($backgroundImage) !== Captcha::$config['height'])
 			{
 				imagecopyresampled
 				(
-					$this->image, $this->background_image, 0, 0, 0, 0,
+                    $this->image, $backgroundImage, 0, 0, 0, 0,
 					Captcha::$config['width'], Captcha::$config['height'],
-					imagesx($this->background_image), imagesy($this->background_image)
+                    imagesx($backgroundImage), imagesy($backgroundImage)
 				);
 			}
 
 			// Free up resources
-			imagedestroy($this->background_image);
+            imagedestroy($backgroundImage);
 		}
 	}
 
