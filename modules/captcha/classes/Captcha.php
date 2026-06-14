@@ -220,8 +220,6 @@ abstract class Captcha {
 		// Update counter
 		if ($new_count !== NULL)
 		{
-			$new_count = (int) $new_count;
-
 			// Reset counter = delete session
 			if ($new_count < 1)
 			{
@@ -230,11 +228,11 @@ abstract class Captcha {
 			// Set counter to new value
 			else
 			{
-				Session::instance()->set($session, (int) $new_count);
+                Session::instance()->set($session, $new_count);
 			}
 
 			// Return new count
-			return (int) $new_count;
+            return $new_count;
 		}
 
 		// Return current count
