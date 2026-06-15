@@ -494,7 +494,7 @@ class Controller_Authorize extends Template {
 			}
 		}
 
-		// Put humpty dumpty back together
+        // Put Humpty Dumpty back together
 		return
 			((isset($parse_url["scheme"])) ? $parse_url["scheme"] . "://" : "")
 			. ((isset($parse_url["user"])) ? $parse_url["user"]

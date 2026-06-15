@@ -117,7 +117,7 @@ class Controller_Provider extends Template {
 
 	public function action_index()
 	{
-		//$this->response->body("we r in provider controller");
+        // $this->response->body("We're in provider controller");
 	}
 
 	public function action_login()

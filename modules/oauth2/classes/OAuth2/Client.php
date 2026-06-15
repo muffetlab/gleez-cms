@@ -542,7 +542,7 @@ abstract class OAuth2_Client {
             curl_setopt_array($ch, $this->curl_options);
         }
 
-        //Github checks for useragent header
+        // GitHub checks for useragent header
         curl_setopt($ch, CURLOPT_USERAGENT, Template::getSiteName());
 
         $result       = curl_exec($ch);
