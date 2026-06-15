@@ -114,8 +114,8 @@ class Controller_Authorize extends Template {
 	{
 		try
 		{
-			// We repeat this, because we need to re-validate. The request could be POSTed
-			// by a 3rd-party (because we are not internally enforcing NONCEs, etc)
+            // We repeat this, because we need to re-validate. The request could be POSTed by a 3rd-party (because we
+            // are not internally enforcing NONCEs, etc.)
 			$this->validateAuthorizeRequest();
 
 			// If no redirect_uri is passed in the request, use client's registered one
