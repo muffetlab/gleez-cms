@@ -27,8 +27,7 @@ class Controller_Me extends Controller
 
 			$accessToken = ($accessToken === 'Bearer') ? '' : $accessToken;
         } else {
-			$method = (Request::current()->method() == 'GET') ? 'query' : 'post';
-			$accessToken = Request::current()->query('access_token');
+            $accessToken = Request::current()->query('access_token');
 		}
 
 		if (empty($accessToken)) 

@@ -197,8 +197,8 @@ class Model_OAuth extends Model_Database {
 	
 		if ($code_exists)
 		{
-			$result = DB::query(Database::UPDATE, "UPDATE $table SET code = :code, redirect_uri = :redirect_uri, expires = :expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id;");
-			$result = $result->parameters(array(
+            DB::query(Database::UPDATE, "UPDATE $table SET code = :code, redirect_uri = :redirect_uri, expires = :expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id;")
+                ->parameters(array(
 					':client_id' => $client_id,
 					':user_id' => $user_id,
 					':redirect_uri' => $redirect_uri,
@@ -211,8 +211,8 @@ class Model_OAuth extends Model_Database {
 		else
 		{
 			$created = time();
-			$result = DB::query(Database::INSERT, "INSERT INTO $table(code, client_id, user_id, redirect_uri, expires, scope, created) VALUES(:code, :client_id, :user_id, :redirect_uri, :expires, :scope, :created);");
-			$result = $result->parameters(array(
+            DB::query(Database::INSERT, "INSERT INTO $table(code, client_id, user_id, redirect_uri, expires, scope, created) VALUES(:code, :client_id, :user_id, :redirect_uri, :expires, :scope, :created);")
+                ->parameters(array(
 					':client_id' => $client_id,
 					':user_id' => $user_id,
 					':redirect_uri' => $redirect_uri,
@@ -343,28 +343,30 @@ class Model_OAuth extends Model_Database {
 			{
 				$refresh_token    = Auth::instance()->hash( uniqid($client_id . mt_rand() . microtime() . $user_id, TRUE));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
-				
-				$result = DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, refresh_token = :refresh_token, refresh_expires = :refresh_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id");
-				$result = $result->parameters(array(
-							':client_id'       => $client_id,
-							':user_id'         => $user_id,
-							':access_token'    => $access_token,
-							':access_expires'  => $access_expires,
-							':refresh_token'   => $refresh_token,
-							':refresh_expires' => $refresh_expires,
-							':scope'           => $scope,
-				))->execute();
+
+                DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, refresh_token = :refresh_token, refresh_expires = :refresh_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id")
+                    ->parameters(array(
+                        ':client_id' => $client_id,
+                        ':user_id' => $user_id,
+                        ':access_token' => $access_token,
+                        ':access_expires' => $access_expires,
+                        ':refresh_token' => $refresh_token,
+                        ':refresh_expires' => $refresh_expires,
+                        ':scope' => $scope,
+                    ))
+                    ->execute();
 			}
 			else
 			{
-				$result = DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id");
-				$result = $result->parameters(array(
-							':client_id'      => $client_id,
-							':user_id'        => $user_id,
-							':access_token'   => $access_token,
-							':access_expires' => $access_expires,
-							':scope'          => $scope,
-				))->execute();
+                DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id")
+                    ->parameters(array(
+                        ':client_id' => $client_id,
+                        ':user_id' => $user_id,
+                        ':access_token' => $access_token,
+                        ':access_expires' => $access_expires,
+                        ':scope' => $scope,
+                    ))
+                    ->execute();
 			}
 		}
 		else
@@ -376,30 +378,32 @@ class Model_OAuth extends Model_Database {
 			{
 				$refresh_token    = Auth::instance()->hash( uniqid($client_id . mt_rand() . microtime() . $user_id, TRUE));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
-				
-				$result = DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, refresh_token, refresh_expires, scope, created) VALUES(:access_token, :client_id, :access_expires, :user_id, :refresh_token, :refresh_expires, :scope, :created);");
-				$result = $result->parameters(array(
-							':client_id'    => $client_id,
-							':user_id'      => $user_id,
-							':access_token'   => $access_token,
-							':access_expires' => $access_expires,
-							':refresh_token'   => $refresh_token,
-							':refresh_expires' => $refresh_expires,
-							':scope'           => $scope,
-							':created'         => $created,
-				))->execute();
+
+                DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, refresh_token, refresh_expires, scope, created) VALUES(:access_token, :client_id, :access_expires, :user_id, :refresh_token, :refresh_expires, :scope, :created);")
+                    ->parameters(array(
+                        ':client_id' => $client_id,
+                        ':user_id' => $user_id,
+                        ':access_token' => $access_token,
+                        ':access_expires' => $access_expires,
+                        ':refresh_token' => $refresh_token,
+                        ':refresh_expires' => $refresh_expires,
+                        ':scope' => $scope,
+                        ':created' => $created,
+                    ))
+                    ->execute();
 			}
 			else
 			{
-				$result = DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, scope) VALUES(:access_token, :client_id, :access_expires, :user_id, :scope);");
-				$result = $result->parameters(array(
-							':client_id'    => $client_id,
-							':user_id'      => $user_id,
-							':access_token'   => $access_token,
-							':access_expires' => $access_expires,
-							':scope' 	  => $scope,
-							':created'        => $created,
-				))->execute();
+                DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, scope) VALUES(:access_token, :client_id, :access_expires, :user_id, :scope);")
+                    ->parameters(array(
+                        ':client_id' => $client_id,
+                        ':user_id' => $user_id,
+                        ':access_token' => $access_token,
+                        ':access_expires' => $access_expires,
+                        ':scope' => $scope,
+                        ':created' => $created,
+                    ))
+                    ->execute();
 			}
 		}
 		

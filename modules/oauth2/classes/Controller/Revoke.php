@@ -41,15 +41,15 @@ class Controller_Revoke extends Template {
 			
 			if ($this->token_info['access_token'] == $this->token && ! empty($this->token_info['refresh_token']))
 			{
-				$result = Model::factory('oauth')->revoke_access_refresh($this->token);
+                Model::factory('oauth')->revoke_access_refresh($this->token);
 			}
 			elseif ($this->token_info['access_token'] == $this->token && empty($this->token_info['refresh_token']))
 			{
-				$result = Model::factory('oauth')->revoke_access($this->token);
+                Model::factory('oauth')->revoke_access($this->token);
 			}
 			elseif ($this->token_info['refresh_token'] == $this->token)
 			{
-				$result = Model::factory('oauth')->revoke_refresh($this->token);
+                Model::factory('oauth')->revoke_refresh($this->token);
 			}
 
 			$this->response->body( json_encode(array('Response' => "Status Code: 200")) );

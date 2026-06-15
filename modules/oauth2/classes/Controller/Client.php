@@ -92,8 +92,8 @@ class Controller_Client extends Template {
 			    if (isset($_FILES) AND isset($_FILES['logo']))
 			    {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
-			    
-				    if( $file = Upload::save($_FILES['logo'], $filename, APPPATH.'/media/logos') )
+
+                    if (Upload::save($_FILES['logo'], $filename, APPPATH . '/media/logos'))
 				    {
 					    $oaclient->logo = $filename;
 				    }
@@ -158,8 +158,8 @@ class Controller_Client extends Template {
 			    if (isset($_FILES) AND isset($_FILES['logo']))
 			    {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
-			    
-				    if( $file = Upload::save($_FILES['logo'], $filename, APPPATH.'/media/logos') )
+
+                    if (Upload::save($_FILES['logo'], $filename, APPPATH . '/media/logos'))
 				    {
 					    $oaclient->logo = $filename;
 				    }
