@@ -29,7 +29,7 @@ abstract class Captcha {
 		'height'     	=> 50,
 		'complexity' 	=> 4,
 		'background' 	=> '',
-		'fontpath'   	=> '',
+        'fontPath' => '',
 		'fonts'      	=> array(),
 		'promote'    	=> FALSE,
 	);
@@ -136,13 +136,13 @@ abstract class Captcha {
 		// If using any fonts, check if they exist
 		if ( ! empty($config['fonts']))
 		{
-			Captcha::$config['fontpath'] = str_replace('\\', '/', realpath($config['fontpath'])).'/';
+            Captcha::$config['fontPath'] = str_replace('\\', '/', realpath($config['fontPath'])) . '/';
 
 			foreach ($config['fonts'] as $font)
 			{
-				if ( ! is_file(Captcha::$config['fontpath'].$font))
+                if (!is_file(Captcha::$config['fontPath'] . $font))
 					throw new Kohana_Exception('The specified file, :file, was not found.',
-						array(':file' => Captcha::$config['fontpath'].$font));
+                        array(':file' => Captcha::$config['fontPath'] . $font));
 			}
 		}
 

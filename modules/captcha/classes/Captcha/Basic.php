@@ -58,7 +58,7 @@ class Captcha_Basic extends Captcha
 		for ($i = 0, $strlen = strlen($this->response); $i < $strlen; $i++)
 		{
 			// Use different fonts if available
-			$font = Captcha::$config['fontpath'].Captcha::$config['fonts'][array_rand(Captcha::$config['fonts'])];
+            $font = Captcha::$config['fontPath'] . Captcha::$config['fonts'][array_rand(Captcha::$config['fonts'])];
 
 			// Allocate random color, size and rotation attributes to text
 			$color = imagecolorallocate($this->image, mt_rand(0, 150), mt_rand(0, 150), mt_rand(0, 150));
