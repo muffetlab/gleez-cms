@@ -101,9 +101,7 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 
 	protected function getAuthorizationCode($code)
 	{
-		$result = Model::factory('oauth')->getAuthorizationCode($code);
-
-		return $result;
+        return Model::factory('oauth')->getAuthorizationCode($code);
 	}
 
 }
