@@ -67,7 +67,7 @@ abstract class Captcha {
 			$class = 'Captcha_'.ucfirst($config['style']);
 
 			// Create a new captcha instance
-			Captcha::$instance = $captcha = new $class($group);
+            Captcha::$instance = new $class($group);
 
 			// Save captcha response at shutdown
 			//register_shutdown_function(array($captcha, 'update_response_session'));
