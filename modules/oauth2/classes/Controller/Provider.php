@@ -257,9 +257,7 @@ class Controller_Provider extends Template {
 
 				return true;
 			}
-		}
-		else if($user == FALSE AND Auth::instance()->logged_in())
-		{
+        } elseif (!$user && Auth::instance()->logged_in()) {
 			// Associate their new oAuth with their current account.
 			$account = Auth::instance()->get_user();
 
@@ -269,9 +267,7 @@ class Controller_Provider extends Template {
 			Message::success(__('Attached identity :nick (:provider) to your account.',
 					array(':nick' => $account->nick, ':provider' => $this->provider))
 				);
-		}
-		else if($user == FALSE AND !Auth::instance()->logged_in())
-		{
+        } elseif (!$user && !Auth::instance()->logged_in()) {
             $account = ORM::factory('User')->where('mail', '=', $data['email'])->find();
 
 			if(!$account->loaded()) $creation = TRUE;

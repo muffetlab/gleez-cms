@@ -22,7 +22,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		/** We use the same class for validating request for other grants
 		 *	make sure this is true only if the request grant_type is 'client_credentials'
 		 */
-		if($is_grant == TRUE)
+        if ($is_grant)
 		{
 			/**
 			 * The client credentials grant type MUST only be used by confidential clients
