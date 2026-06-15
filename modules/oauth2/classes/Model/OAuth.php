@@ -419,7 +419,7 @@ class Model_OAuth extends Model_Database {
 		 */
 		if ($includeRefreshToken)
 		{
-			$token['refresh_token'] = $refresh_token ? $refresh_token : $token_exists[0]['refresh_token'];
+            $token['refresh_token'] = $refresh_token ?: $token_exists[0]['refresh_token'];
 		}
 
 		return $token;
@@ -439,7 +439,7 @@ class Model_OAuth extends Model_Database {
 				->execute()
 				->as_array();
 
-		return $result ? $result : FALSE;
+        return $result ?: FALSE;
 	}
 
     /**
