@@ -44,7 +44,7 @@ class Controller_Captcha extends Controller {
             ->headers('Pragma', 'no-cache')
             ->headers('Connection', 'close');
 
-		// Output the Captcha challenge resource (no html)
+        // Output the Captcha challenge resource (no HTML)
 		// Pull the config group name from the URL
 		//$group = $this->request->param('group', 'default');
 		Captcha::instance($this->group)->render(FALSE);
