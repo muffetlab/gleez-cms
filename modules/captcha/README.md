@@ -10,7 +10,7 @@ Instantiate a captcha:
 
 Instantiate using your own config group (other than 'default'):
 
-> $captcha = Captcha::instance('myconfig');
+> $captcha = Captcha::instance('my_config');
 
 Render a captcha:
 
