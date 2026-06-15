@@ -1,6 +1,6 @@
 <?php if (isset($items)): ?>
 	<div class="recent-announce-blogs">
-		<div class="recent-announce-wrapper" itemscope itemtype="http://schema.org/CreativeWork">
+        <div class="recent-announce-wrapper" itemscope itemtype="https://schema.org/CreativeWork">
 			<?php foreach($items as $item) : ?>
 				<div class="announce-blog">
 					<div class="image"><?php echo $item['image']; ?></div>
