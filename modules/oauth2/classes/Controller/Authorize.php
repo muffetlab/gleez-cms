@@ -218,7 +218,7 @@ class Controller_Authorize extends Template {
 
 		// Check if the client should be automatically approved
 		//$autoApprove = ($params['auto_approve'] === '1') ? TRUE : FALSE;
-		$autoApprove = ($params['approval_prompt'] === 'force') ? FALSE : TRUE;
+        $autoApprove = $params['approval_prompt'] !== 'force';
 
 		/*
 		 * Dispaly the "do you want to authorize?" form if previously not approved,
@@ -470,7 +470,7 @@ class Controller_Authorize extends Template {
 	{
 		$oatoken = Model::factory('oauth')->checkConsent($client_id, $user_id);
 
-		return empty($oatoken) ? FALSE : TRUE;
+        return !empty($oatoken);
 	}
 
     /**

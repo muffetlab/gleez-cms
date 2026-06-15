@@ -23,7 +23,7 @@ class Model_OAuth extends Model_Database {
 				))
 				->execute()->as_array();
 
-		return empty($oatoken) ? FALSE : TRUE;
+        return !empty($oatoken);
 	}
 
     /**
@@ -33,7 +33,7 @@ class Model_OAuth extends Model_Database {
 	{
 		$client = $this->getClientDetails($client_id);
 
-		return ($client && $client['client_secret'] == $client_secret) ? TRUE : FALSE;
+        return $client && $client['client_secret'] == $client_secret;
 	}
 
     /**
