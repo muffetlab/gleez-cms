@@ -131,7 +131,7 @@ class Controller_Client extends Template {
 		
 		if( ! $oaclient->loaded() )
 		{
-			Message::error( __('Client: doesn\'t exists!') );
+            Message::error(__("Client: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to edit non-existent client');
 				
 			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
@@ -204,7 +204,7 @@ class Controller_Client extends Template {
 		
 		if( ! $oaclient->loaded() )
 		{
-			Message::error( __('Client: doesn\'t exists!') );
+            Message::error(__("Client: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to edit non-existent client');
 				
 			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
@@ -233,7 +233,7 @@ class Controller_Client extends Template {
 		
 		if ( ! $oaclient->loaded() )
 		{
-			Message::error( __('oaclient: doesn\'t exists!') );
+            Message::error(__("oaclient: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to delete non-existent oaclient');
 				
 			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));

@@ -40,7 +40,7 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 		$code = $request->post('code');
 
 		if (!$authCode = $this->getAuthorizationCode($code)) {
-			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Authorization code doesn\'t exist or is invalid for the client');
+            throw Oauth2_Exception::factory(400, 'invalid_grant', "Authorization code doesn't exist or is invalid for the client");
 		}
 
 		/*

@@ -160,7 +160,7 @@ class Controller_Token extends Controller
 		{
 			// validate the Client ID (if applicable)
 			if (!is_null($storedClientId = $grantType->getClientId()) && $storedClientId != $clientId) {
-				throw Oauth2_Exception::factory(400, 'invalid_grant', sprintf('%s doesn\'t exist or is invalid for the client', $grantTypeIdentifier));
+                throw Oauth2_Exception::factory(400, 'invalid_grant', sprintf("%s doesn't exist or is invalid for the client", $grantTypeIdentifier));
 			}
 		}
 
