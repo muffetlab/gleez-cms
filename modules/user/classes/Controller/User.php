@@ -213,7 +213,7 @@ class Controller_User extends Template {
 		// Sign out the user
 		Auth_ORM::instance()->logout();
 
-		// Redirect to the user account and then the signin page if logout worked as expected
+        // Redirect to the user account and then the sign-in page if logout worked as expected
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
 	}
 

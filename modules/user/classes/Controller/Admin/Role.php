@@ -182,7 +182,7 @@ class Controller_Admin_Role extends Controller_Admin {
 
 		if ( ! $role->loaded())
 		{
-			Message::error(__('Role: doesn\'t exists!'));
+            Message::error(__("Role: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent role.');
 			$this->request->redirect(Route::get('admin/role')->uri());
 		}
@@ -211,10 +211,10 @@ class Controller_Admin_Role extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occured deleting role id: :id, :message',
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting role id: :id, :message',
 					array(':id' => $role->id, ':message' => $e->getMessage())
 				);
-				Message::error('An error occured deleting blog, :post.',array(':post' => $post->title));
+                Message::error('An error occurred deleting role, :post.', array(':post' => $post->title));
 
 				$this->request->redirect(Route::get('admin/role')->uri());
 			}

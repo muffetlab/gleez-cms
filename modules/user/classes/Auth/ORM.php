@@ -21,7 +21,7 @@ class Auth_ORM extends Kohana_Auth_ORM
     public static $lastErrorKey = null;
 
     /**
-     * Get enabled oAuth2 providers
+     * Get enabled OAuth2 providers
      *
      * @return array
      * @throws Kohana_Exception

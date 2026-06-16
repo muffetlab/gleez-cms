@@ -23,7 +23,7 @@ class Controller_Buddy extends Template {
 
         if (!Kohana::$config->load('auth')->get('enable_buddy', FALSE))
 		{
-			// If user buddy disabled, we return not ofund.
+            // If user buddy disabled, we return not found.
 			throw HTTP_Exception::factory(404, __('Buddy not allowed'));
 		}
 
