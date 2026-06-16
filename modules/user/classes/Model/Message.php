@@ -117,10 +117,10 @@ class Model_Message extends Gleez_Model
 			case 'body':
 				return Text::markup($this->rawbody, $this->format);
 			case 'rawsubject':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
                 return $this->get('subject');
 			case 'rawbody':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
                 return $this->get('body') ?? '';
 			case 'url':
 				return Route::get('user/message')->uri(array( 'id' => $this->id, 'action' => 'view'));

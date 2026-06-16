@@ -2,9 +2,8 @@
 /**
  * [Gleez Gravatar](gleez/gravatar)
  *
- * [Gravatar's](http://en.gravatar.com) are universal avatars available
- * to all web sites and services. Users must register their email addresses
- * with Gravatar before their avatars will be usable in Gleez.
+ * [Gravatar's](http://en.gravatar.com) are universal avatars available to all websites and services. Users must
+ * register their email addresses with Gravatar before their avatars will be usable in Gleez.
  *
  * Users with gravatars can have a default image of your selection.
  *

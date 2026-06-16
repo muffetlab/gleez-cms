@@ -171,7 +171,7 @@ class Model_User extends Gleez_Model
                 return HTML::chars($this->get($column) ?? '');
             case 'nick':
 				// Return the best version of the user's name.
-				// Either their specified nick name, or fall back to the user name.
+                // Either their specified nick name, or fall back to the username.
 				return empty($nick) ? HTML::chars($this->name) : HTML::chars($nick);
             case 'rawurl':
 				return Route::get('user')->uri(array('id' => $this->id));
