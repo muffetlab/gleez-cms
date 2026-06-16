@@ -52,13 +52,15 @@ class ACL {
 	 */
 	protected static $_perm = array();
 
-	/**
-	 * Get all roles for user
-	 *
-	 * @since   2.0
-	 * @param   Model_User  $user  User object
-	 * @return  array  All roles for user
-	 */
+    /**
+     * Get all roles for user.
+     *
+     * @param Model_User $user User object
+     * @return array All roles for user
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @since 2.0
+     */
     private static function get_user_roles(Model_User $user): array
     {
 		$roles = array();
