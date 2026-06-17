@@ -199,10 +199,10 @@ class Model_Term extends ORM_MPTT {
             case 'image':
 				return is_null(parent::__get('image')) ? 'media/images/camera.png' : parent::__get('image');
             case 'rawname':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('name');
             case 'rawurl':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
 				return Route::get($this->type)->uri(array('action' => 'term', 'id' => $this->id));
             case 'url':
 			case 'link':

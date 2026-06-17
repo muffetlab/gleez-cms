@@ -1267,7 +1267,7 @@
     	}
 
 		// The weight option allows elements to be sorted. 
-		// Pass a "falsy" value to fieldClass to deactivate (false, null, undefined, etc).
+        // Pass a "falsy" value to fieldClass to deactivate (false, null, undefined, etc.).
 		, weight: {
 			// The class of the <select> list. Weights will be deduced by the <option>s in this list. <option> values should be integers.
 			fieldClass: 'row-weight',

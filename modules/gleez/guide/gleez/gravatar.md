@@ -2,7 +2,7 @@
 
 ## Introduction
 
-[Gravatar's](http://gravatar.com) are universal avatars available to all web sites and services. Users must register their email addresses with Gravatar before their avatars will be usable in Gleez.
+[Gravatar's](http://gravatar.com) are universal avatars available to all websites and services. Users must register their email addresses with Gravatar before their avatars will be usable in Gleez.
 
 The __Gleez Gravatar__ component provides an easy way to retrieve a user's profile image from [Gravatar](https://gravatar.com) based on a given email address.
 If the email address cannot be matched with a Gravatar account, an alternative will be returned based on the `default_image` setting.
@@ -131,7 +131,7 @@ $avatar->setDefaultImage("https://example.com/your-default-image.png");
 
 There are a few conditions which must be met for default image URL:
 
-+ __MUST__ be publicly available (e.g. cannot be on an intranet, on a local development machine, behind HTTP Auth or some other firewall etc). Default images are passed through a security scan to avoid malicious content
++ __MUST__ be publicly available (e.g. cannot be on an intranet, on a local development machine, behind HTTP Auth or some other firewall etc.). Default images are passed through a security scan to avoid malicious content
 + __MUST__ be accessible via HTTP or HTTPS on the standard ports, 80 and 443, respectively
 + __MUST__ have a recognizable image extension (jpg, jpeg, gif, png)
 + __MUST NOT__ include a query string (if it does, it will be ignored)

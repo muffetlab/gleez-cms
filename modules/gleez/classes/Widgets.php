@@ -2,7 +2,7 @@
 /**
  * Widgets Core Class
  *
- * This class for handling widget(s) in template regions (sidebar left/right etc).
+ * This class for handling widget(s) in template regions (sidebar left/right etc.).
  *
  * @package    Gleez\Widget
  * @author     Gleez Team

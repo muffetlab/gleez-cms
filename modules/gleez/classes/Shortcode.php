@@ -81,7 +81,7 @@ class Shortcode {
 	/**
 	 * Clear all shortcodes
 	 *
-	 * This function is simple, it clears all of the shortcode tags by
+     * This function is simple, it clears all the shortcode tags by
 	 * replacing the shortcodes global by a empty array. This is actually
 	 * a very efficient method for removing all shortcodes.
 	 *
@@ -312,7 +312,7 @@ class Shortcode {
 	/**
 	 * Combine user attributes with known attributes and fill in defaults when needed.
 	 *
-	 * The pairs should be considered to be all of the attributes which are
+     * The pairs should be considered to be all the attributes which are
 	 * supported by the caller and given as a list. The returned attributes will
 	 * only contain the attributes in the $pairs list.
 	 *

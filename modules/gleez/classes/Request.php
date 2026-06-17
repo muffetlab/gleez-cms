@@ -52,7 +52,7 @@ class Request extends Kohana_Request
 	}
 
 	/**
-	 * Whether or not current request is DataTables
+     * Whether current request is DataTables.
 	 *
      * @param mixed $request Request
 	 * @return  boolean

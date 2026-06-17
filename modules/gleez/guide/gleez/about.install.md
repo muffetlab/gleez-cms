@@ -117,11 +117,11 @@ There are a few things you'll want to do with your application before moving int
 
 ## Setting up your site
 
- 1. Log into Admin and go to **Admin -> Settings**
+ 1. Log into Admin and go to **Admin → Settings**
  2. Change the settings as appropriate.
  3. Download modules from the Module Downloads, unzip and upload them to
     the `/modules/` directory.
- 4. Go to **Admin -> Modules** and install the modules.
+ 4. Go to **Admin → Modules** and install the modules.
  5. Edit settings for each widget listed in the sidebar under widgets.
  6. Click the site title to view your changes.
 

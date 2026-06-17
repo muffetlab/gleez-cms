@@ -159,7 +159,7 @@ class Model_Tag extends Gleez_Model
 			case 'name':
                 return HTML::chars($this->get('name') ?? '');
             case 'rawname':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('name');
             case 'rawurl':
 				return Route::get($this->type)->uri(array('action' => 'tag', 'id' => $this->id));

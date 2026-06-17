@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    // Default Page Status (eg: draft, review, publish, etc)
+    // Default Page Status (eg: draft, review, publish, etc.)
 	'default_status' => 'draft',
 
     // Pages per page (eg: 5, 10, 15, etc)

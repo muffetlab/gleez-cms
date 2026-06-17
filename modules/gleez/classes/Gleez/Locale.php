@@ -361,8 +361,7 @@ class Gleez_Locale {
 	/**
 	 * Expects the Systems standard locale
 	 *
-	 * For Windows `LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C`
-	 * would be recognised as `de_AT`
+     * For Windows `LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C` would be recognized as `de_AT`.
 	 *
 	 * @return  array
 	 *

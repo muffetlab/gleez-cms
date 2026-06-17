@@ -2,10 +2,10 @@
 
 return array(
 
-    // Default blog status (eg: draft, review, publish, etc)
+    // Default blog status (eg: draft, review, publish, etc.)
 	'default_status' => 'draft',
 
-    // Pages per page (ex: 5, 10, 15, etc)
+    // Pages per page (ex: 5, 10, 15, etc.)
 	'items_per_page' => 15,
 
     // Enable captcha?

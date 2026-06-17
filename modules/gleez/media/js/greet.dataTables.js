@@ -19,7 +19,7 @@
         const $table = $(table),
             columns = [];
 
-        // Don't init if it's already initialised
+        // Don't init if it's already initialized
         if ($.fn.dataTable.isDataTable(table)) return
 
         // Exit if no url

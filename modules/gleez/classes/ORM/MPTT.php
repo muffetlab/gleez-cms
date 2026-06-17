@@ -649,7 +649,7 @@ class ORM_MPTT extends Gleez_Model
 	}
 
     /**
-     * Returns all of the current nodes parents.
+     * Returns all the current nodes parents.
      *
      * @param boolean $root include root node [optional
      * @param boolean $with_self include current node [optional
@@ -971,7 +971,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Rebuilds the tree using the parent_column. Order of the tree is not guaranteed
      * to be consistent with structure prior to reconstruction. This method will reduce the
-     * tree structure to eliminating any holes. If you have a child node that is outside of
+     * tree structure to eliminating any holes. If you have a child node that is outside
      * the left/right constraints it will not be moved under the root.
      *
      * @param integer $left Starting value for left branch [Optional]

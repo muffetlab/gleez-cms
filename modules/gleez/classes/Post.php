@@ -565,18 +565,18 @@ class Post extends ORM_Versioned {
             case 'links':
 				return HTML::links($this->links(), array('class' => 'links inline'));
             case 'rawtitle':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('title');
             case 'rawteaser':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
                 return parent::__get('teaser') ?: '';
             case 'rawbody':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
                 return parent::__get('body') ?: '';
             case 'rawurl':
 				return Route::get($this->type)->uri(array( 'id' => $this->id, 'action' => 'view'));
             case 'rawimage':
-				// Raw fields without path. Usage: during edit or etc!
+                // Raw fields without path. Usage: during edit or etc.!
 				return parent::__get('image');
             case 'url':
 				// Model specific links; view, edit, delete url's

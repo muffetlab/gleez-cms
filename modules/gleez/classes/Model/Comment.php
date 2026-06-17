@@ -177,10 +177,10 @@ class Model_Comment extends Gleez_Model
             case 'body':
 				return Text::markup(parent::__get('body'), $this->format);
             case 'rawtitle':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('title');
             case 'rawbody':
-				// Raw fields without markup. Usage: during edit or etc!
+                // Raw fields without markup. Usage: during edit or etc.!
                 return $this->get('body') ?? '';
             case 'url':
 				// Model specific links; view, edit, delete url's.
