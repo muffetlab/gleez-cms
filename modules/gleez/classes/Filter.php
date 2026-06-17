@@ -61,7 +61,7 @@ class Filter {
 	 * @return  Filter
 	 * @throws  Kohana_Exception
 	 */
-    public static function get($name): Filter
+    public static function get(string $name): Filter
     {
 		if ( ! isset(Filter::$_filters[$name]))
 		{
