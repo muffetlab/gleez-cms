@@ -330,7 +330,7 @@ class Pagination {
     /**
      * Renders the pagination links.
      *
-     * @param mixed   string of the view to use, or a Kohana_View object
+     * @param mixed $view String of the view to use, or a Kohana_View object
      * @return  string  pagination output (HTML)
      * @throws View_Exception
      */
@@ -527,8 +527,8 @@ class Pagination {
     /**
      * Updates a single config setting, and recalculates pagination if needed
      *
-     * @param string  config key
-     * @param mixed   config value
+     * @param string $key Config key
+     * @param mixed $value Config value
      * @return  void
      * @throws Kohana_Exception
      */
