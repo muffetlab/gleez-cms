@@ -18,7 +18,7 @@
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
 				<td>
-                    <?php echo __('Gleez CMS requires a MySQL database, but PHP doesn\'t have the :mysqli extension.', array(':mysql' => HTML::anchor('http://php.net/mysql', 'MySQL'), ':mysqli' => HTML::anchor('http://php.net/mysqli', 'MySQLi'))); ?>
+                    <?php echo __('Gleez CMS requires a MySQL database, but PHP doesn\'t have the :mysqli extension.', array(':mysql' => HTML::anchor('https://www.php.net/manual/en/mysql.php', 'MySQL'), ':mysqli' => HTML::anchor('https://www.php.net/mysqli', 'MySQLi'))); ?>
 				</td>
 			<?php endif ?>
 		</tr>
@@ -75,9 +75,9 @@
 		<tr class="<?php echo $cache_writable ? 'success' : 'danger' ?>">
 			<td><?php echo __('PCRE UTF-8'); ?></td>
 			<?php if ( ! $pcre_utf8): ?>
-				<td><?php echo __(':pcre has not been compiled with UTF-8 support.', array(':pcre' => '<a href="http://php.net/pcre">PCRE</a>')) ?></td>
+                <td><?php echo __(':pcre has not been compiled with UTF-8 support.', array(':pcre' => '<a href="https://www.php.net/pcre">PCRE</a>')) ?></td>
 			<?php elseif ( ! $pcre_unicode ): ?>
-				<td><?php echo __(':pcre has not been compiled with Unicode property support.', array(':pcre' => HTML::anchor('http://php.net/pcre', 'PCRE') )); ?></td>
+                <td><?php echo __(':pcre has not been compiled with Unicode property support.', array(':pcre' => HTML::anchor('https://www.php.net/pcre', 'PCRE'))); ?></td>
 			<?php else: ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php endif ?>
@@ -88,7 +88,7 @@
 			<?php if ($reflection_enabled): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('PHP :reflection is either not loaded or not compiled in.', array(':reflection' => HTML::anchor('http://www.php.net/reflection', 'Reflection') )); ?></td>
+                <td><?php echo __('PHP :reflection is either not loaded or not compiled in.', array(':reflection' => HTML::anchor('https://www.php.net/reflection', 'Reflection'))); ?></td>
 			<?php endif ?>
 		</tr>
 
@@ -97,7 +97,7 @@
 			<?php if ($spl_autoload_register): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('The :spl extension is either not loaded or not compiled in.', array(':spl' => HTML::anchor('http://php.net/spl', 'Standard PHP Library (SPL)') )); ?></td>
+                <td><?php echo __('The :spl extension is either not loaded or not compiled in.', array(':spl' => HTML::anchor('https://www.php.net/spl', 'Standard PHP Library (SPL)'))); ?></td>
 			<?php endif ?>
 		</tr>
 
@@ -106,7 +106,7 @@
 			<?php if ($filters_enabled): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('The :filer extension is either not loaded or not compiled in.', array(':filter' => HTML::anchor('http://www.php.net/filter', 'filter') )); ?></td>
+                <td><?php echo __('The :filer extension is either not loaded or not compiled in.', array(':filter' => HTML::anchor('https://www.php.net/filter', 'filter'))); ?></td>
 			<?php endif ?>
 		</tr>
 
@@ -115,7 +115,7 @@
 			<?php if ($iconv_loaded): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('The :iconv extension is not loaded.', array(':iconv' => HTML::anchor('http://php.net/iconv', 'iconv') )); ?></td>
+                <td><?php echo __('The :iconv extension is not loaded.', array(':iconv' => HTML::anchor('https://www.php.net/iconv', 'iconv'))); ?></td>
 			<?php endif ?>
 		</tr>
 
@@ -124,7 +124,7 @@
 			<?php if ($simplexml): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('The :simlexml extension is not loaded.', array(':simplexml' => HTML::anchor('http://php.net/simplexml', 'SimpleXML') )); ?></td>
+                <td><?php echo __('The :simlexml extension is not loaded.', array(':simplexml' => HTML::anchor('https://www.php.net/simplexml', 'SimpleXML'))); ?></td>
 			<?php endif ?>
 		</tr>
 
@@ -133,7 +133,7 @@
 			<?php if ($json_encode): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('The :json extension is not loaded.', array(':json' => HTML::anchor('http://php.net/manual/en/book.json.php', 'JavaScript Object Notation (JSON)') )); ?></td>
+                <td><?php echo __('The :json extension is not loaded.', array(':json' => HTML::anchor('https://www.php.net/manual/en/book.json.php', 'JavaScript Object Notation (JSON)'))); ?></td>
 			<?php endif ?>
 		</tr>
 
@@ -142,7 +142,7 @@
 			<?php if ($mbstring): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('The :mbstring extension is overloading PHP\'s native string functions.', array(':mbstring' => HTML::anchor('http://php.net/mbstring', 'mbstring') )); ?></td>
+                <td><?php echo __('The :mbstring extension is overloading PHP\'s native string functions.', array(':mbstring' => HTML::anchor('https://www.php.net/mbstring', 'mbstring'))); ?></td>
 			<?php endif ?>
 		</tr>
 
@@ -151,7 +151,7 @@
 			<?php if ($ctype_digit): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('The :ctype extension is not enabled.', array(':ctype' => HTML::anchor('http://php.net/ctype', 'ctype') )); ?></td>
+                <td><?php echo __('The :ctype extension is not enabled.', array(':ctype' => HTML::anchor('https://www.php.net/ctype', 'ctype'))); ?></td>
 			<?php endif ?>
 		</tr>
 
@@ -171,7 +171,7 @@
 			<?php if ($gd_info): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-				<td><?php echo __('Gleez requires :gd v2 for the Image class.', array(':gd' => HTML::anchor('http://php.net/gd', 'GD') )); ?></td>
+                <td><?php echo __('Gleez requires :gd v2 for the Image class.', array(':gd' => HTML::anchor('https://www.php.net/manual/en/book.image.php', 'GD'))); ?></td>
 			<?php endif ?>
 		</tr>
 

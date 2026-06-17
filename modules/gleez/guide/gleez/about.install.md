@@ -76,11 +76,11 @@ and
 
 In `application/bootstrap.php`
 
-~~~
+```
     'base_url'   => '/',
     -- change to --
-    'base_url'   => 'http://example.com/subfolder/',
-~~~
+    'base_url' => 'https://example.com/subfolder/',
+```
 
 Please use full absolute url in base_url when running in subfolder is mandatory.
 

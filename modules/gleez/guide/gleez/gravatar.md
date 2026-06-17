@@ -17,11 +17,12 @@ $avatar = Gravatar::instance('username@site.com');
 ~~~
 
 If at this time directly print this variable you will get the most basic image request URL:
-~~~
+
+```
 echo $avatar;
 // this will return  an URL of image
-// http://www.gravatar.com/avatar/b6b1f9e2e403e0907d9a64aaca64fb1c?s=250&r=G
-~~~
+// https://www.gravatar.com/avatar/b6b1f9e2e403e0907d9a64aaca64fb1c?s=250&r=G
+```
 
 Display a Gravatar (using default settings):
 
@@ -122,10 +123,11 @@ Possible values:
 + Your image URL
 
 Example:
-~~~
+
+```
 $avatar->setDefaultImage('identicon');
-$avatar->setDefaultImage("http://example.com/your-default-image.png");
-~~~
+$avatar->setDefaultImage("https://example.com/your-default-image.png");
+```
 
 There are a few conditions which must be met for default image URL:
 
