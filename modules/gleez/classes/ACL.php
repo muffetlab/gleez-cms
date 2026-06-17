@@ -393,7 +393,7 @@ class ACL {
      *
      * @param Model_User $user User object
      * @throws Cache_Exception
-     * @throws Kohana_Exception
+     * @throws Kohana_Exception|ReflectionException
      */
 	protected static function _set_permissions(Model_User $user)
 	{
