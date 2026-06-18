@@ -46,7 +46,7 @@ class Email {
      */
     public function __construct(bool $exceptions = TRUE)
 	{
-		// Create phpmailer object
+        // Create PHPMailer object
 		$this->_mail = new PHPMailer($exceptions);
 
 		// Set some defaults

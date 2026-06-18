@@ -81,7 +81,7 @@ class Controller_Admin_Format extends Controller_Admin {
 		if (is_null($format))
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent format id :id', array(':id' => $id));
-			Message::error(__('Text Format doesn\'t exists!'));
+            Message::error(__("Text Format doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/format')->uri(), 404);
 		}

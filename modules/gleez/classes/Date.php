@@ -347,7 +347,7 @@ class Date extends Kohana_Date
 	}
 
     /**
-     * Return a unix timestamp in a user specified format including date and time
+     * Return a Unix timestamp in a user specified format including date and time.
      *
      * @param integer $timestamp Unix timestamp
      * @param string|null $format Timestamp format [Optional]
@@ -361,7 +361,7 @@ class Date extends Kohana_Date
 	}
 
     /**
-     * Return a unix timestamp in a user specified format that's just the date
+     * Return a Unix timestamp in a user specified format that's just the date.
      *
      * @param integer $timestamp Unix timestamp
      * @param string|null $format Timestamp format [Optional]
@@ -375,7 +375,7 @@ class Date extends Kohana_Date
 	}
 
     /**
-     * Return a unix timestamp in a user specified format that's just the time
+     * Return a Unix timestamp in a user specified format that's just the time.
      *
      * @param integer $timestamp Unix timestamp
      * @param string|null $format

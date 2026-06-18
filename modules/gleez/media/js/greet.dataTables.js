@@ -155,7 +155,7 @@
         }
 	}
 
-	// GREET DATATABLEs PLUGIN DEFINITION
+    // GREET DATATABLE PLUGIN DEFINITION
 	// =======================
 
     const old = $.fn.gdatatable;

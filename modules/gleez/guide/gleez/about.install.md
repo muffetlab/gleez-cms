@@ -23,7 +23,7 @@ To install Gleez, follow these instructions:
 5. Go to `http://your_site_name/` and follow the Gleez Installer steps
 6. When finished, change the admin password
 
-[!!] Note: Depending on your platform, the installation's subdirs may have lost their permissions thanks to zip extraction. Chmod them all to 755 by running `find . -type d -exec chmod 0755 {} \;` from the root of your gleez installation.
+[!!] Note: Depending on your platform, the installation's subdirectories may have lost their permissions thanks to zip extraction. Chmod them all to 755 by running `find . -type d -exec chmod 0755 {} \;` from the root of your gleez installation.
 
 ### Git Clone Installation
 
@@ -127,8 +127,8 @@ There are a few things you'll want to do with your application before moving int
 
 ## Friendly URLs
 
-If you want to use friendly urls and Apache HTTP Server, use `.htaccess` file, and
-edit it according to the instructions within the `.htaccess` file if any.
+If you want to use friendly URLs and Apache HTTP Server, use `.htaccess` file, and edit it according to the instructions
+within the `.htaccess` file if any.
 
 ## Troubleshooting
 

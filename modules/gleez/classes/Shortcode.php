@@ -1,6 +1,6 @@
 <?php
 /**
- * Class for creating bbcode like tags "shortcodes."
+ * Class for creating BBCode-like tags (shortcodes).
  * The tag and attribute parsing or regular expression code is
  * based on the Textpattern tag parser.
  *

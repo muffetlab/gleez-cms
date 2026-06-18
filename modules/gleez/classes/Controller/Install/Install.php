@@ -322,7 +322,7 @@ class Controller_Install_Install extends Controller_Template {
 		{
 			if( ! $this->create_database_config($data['user'], $data['pass'], $data['hostname'], $data['database'], $data['table_prefix']))
 			{
-				$this->template->error = __('Couldn\'t create application/config/database.php');
+                $this->template->error = __("Couldn't create application/config/database.php");
 			}
 
 			$password = $this->add_user();

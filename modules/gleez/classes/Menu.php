@@ -224,7 +224,7 @@ class Menu {
 				$class = 'dropdown-menu';
 			}
 
-			//Twitter bootstrap use collapse for widget menu chlidren
+            // Twitter bootstrap use collapse for widget menu children.
 			if($has_children && $is_widget)
 			{
 				$attributes['data-toggle'] = 'collapse';

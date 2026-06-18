@@ -83,7 +83,7 @@ class Fragment {
      * ~~~
      * if ( ! Fragment::getCache('footer'))
      * {
-     *     // Anything that is echo'ed here will be saved
+     *     // Anything that is echoed here will be saved
      *     Fragment::setCache();
      * }
      * ~~~

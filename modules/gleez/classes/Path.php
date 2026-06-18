@@ -11,7 +11,7 @@
 class Path {
 
 	/**
-	 * Default alias for frontpage
+     * Default alias for the front page
 	 * @type string
 	 */
 	const FRONT_ALIAS = '<front>';
@@ -60,7 +60,7 @@ class Path {
             return $params;
 		}
 
-		// reset the self::FRONT_ALIAS tag to '' orelse request fails
+        // Reset the self::FRONT_ALIAS tag to '', or else the request fails.
         if ($alias === self::FRONT_ALIAS)
 		{
 			$result['alias'] = '';

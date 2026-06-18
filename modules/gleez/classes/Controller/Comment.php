@@ -43,7 +43,7 @@ class Controller_Comment extends Template {
 		if ( ! $comment->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent comment.');
-			Message::error(__('Comment doesn\'t exists!'));
+            Message::error(__("Comment doesn't exists!"));
 
 			$this->request->redirect($route, 404);
 		}

@@ -1,5 +1,5 @@
 /**
- * Move a widget in the widgetss table from one region to another via select list.
+ * Move a widget in the widgets table from one region to another via select list.
  *
  * This behavior is dependent on the tableDrag behavior, since it uses the
  * objects initialized in that behavior to update the row.
@@ -123,7 +123,7 @@
 			// Modify empty regions with added or removed fields.
 			checkEmptyRegions(table, row)
 
-			// Remove focus from selectbox.
+            // Remove focus from the select box.
 			select.get(0).blur()
 		})
 	})

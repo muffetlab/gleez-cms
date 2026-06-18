@@ -178,7 +178,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		if ( ! $widget->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
-			Message::error(__('Widget doesn\'t exists!'));
+            Message::error(__("Widget doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/widget')->uri());
 		}
@@ -240,7 +240,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		if ( ! $widget->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
-			Message::error(__('Widget doesn\'t exists!'));
+            Message::error(__("Widget doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/widget')->uri());
 		}

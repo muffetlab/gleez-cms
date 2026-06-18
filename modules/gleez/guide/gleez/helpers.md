@@ -26,7 +26,7 @@ You can make your own helpers by simply making a class and putting it in the `cl
  
  - **[Inflector]** - Change a word into plural or singular form, camelize or humanize a phrase, etc.
 
- - **[Num]** - Provides locale aware formatting and english ordinals (th, st, nd, etc.).
+ - **[Num]** - Provides locale aware formatting and English ordinals (th, st, nd, etc.).
  
  - **[Profiler]** - Covered in more detail on the Profiling page.
 

@@ -240,7 +240,7 @@ class Tags {
 	 * After the filter is applied, the function also lowercases the characters using strtolower
 	 * in the current locale.
 	 *
-	 * The default for normalized_valid_chars is a-zA-Z0-9, or english alphanumeric.
+     * The default for normalized_valid_chars is a-zA-Z0-9, or English alphanumeric.
 	 *
      * @param string $tag An individual tag in raw form that should be normalized.
 	 * @return string

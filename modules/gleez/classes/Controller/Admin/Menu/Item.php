@@ -59,7 +59,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		if ( ! $menu->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu id: :id', array(':id' => $id));
-			Message::error(__('Menu: doesn\'t exists!'));
+            Message::error(__("Menu: doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/menu')->uri());
 		}

@@ -351,8 +351,7 @@ class Module
 			}
 		}
 
-		// Now the module is upgraded so deactivate it, but we can'it deactivate gleez or user
-
+        // Now the module is upgraded so deactivate it, but we can't deactivate gleez or user.
 		if (!in_array($module_name, array('gleez', 'user'))) {
 			self::deactivate($module_name);
 		}

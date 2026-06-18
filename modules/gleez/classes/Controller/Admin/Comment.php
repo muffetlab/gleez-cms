@@ -86,7 +86,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 		if( ! $comment->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent comment.');
-			Message::error( __('Comment doesn\'t exists!') );
+            Message::error(__("Comment doesn't exists!"));
 
 			// Redirect to listing
 			$this->request->redirect(Route::get('admin/comment')->uri());

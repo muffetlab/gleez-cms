@@ -18,7 +18,7 @@
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
 				<td>
-                    <?php echo __('Gleez CMS requires a MySQL database, but PHP doesn\'t have the :mysqli extension.', array(':mysql' => HTML::anchor('https://www.php.net/manual/en/mysql.php', 'MySQL'), ':mysqli' => HTML::anchor('https://www.php.net/mysqli', 'MySQLi'))); ?>
+                    <?php echo __("Gleez CMS requires a MySQL database, but PHP doesn't have the :mysqli extension.", array(':mysql' => HTML::anchor('https://www.php.net/manual/en/mysql.php', 'MySQL'), ':mysqli' => HTML::anchor('https://www.php.net/mysqli', 'MySQLi'))); ?>
 				</td>
 			<?php endif ?>
 		</tr>

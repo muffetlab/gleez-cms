@@ -532,7 +532,7 @@
 		inputname    : 'files',
 		multiple     : '',
 		size         : 0, // Max individual file size
-		filetypes    : {}, // Allowed file extentions ex: 'image/png', 'image/jpeg'
+        filetypes: {}, // Allowed file extensions. Example: 'image/png', 'image/jpeg'
 		data         : {},
 		headers      : {},
 		maxfiles     : 15, // Ignored if queuefiles is set > 0

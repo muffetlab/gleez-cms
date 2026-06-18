@@ -35,7 +35,7 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 * Themes and Layouts
 * Input formats like Markdown, HTML etc
 * Shortcodes
-* oAuth2 login via Google/Facebook/Windows/Github
+* OAuth2 login via Google/Facebook/Windows/GitHub
 * Resize images on fly with caching
 * DataTables, Popups, autocomplete etc
 * ORM, MongoDB, Redis support

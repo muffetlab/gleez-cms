@@ -645,10 +645,10 @@ class Gleez_Locale {
 	 * Example:
 	 * ~~~
 	 * $locale = new Gleez_Locale();
-	 * $mylocale = new Gleez_Locale('en_US');
+     * $myLocale = new Gleez_Locale('en_US');
 	 *
 	 * // Check if locales are equal
-	 * if ($locale->equals($mylocale))
+     * if ($locale->equals($myLocale))
 	 * {
 	 *     // ...
 	 * }
