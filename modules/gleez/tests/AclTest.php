@@ -46,7 +46,7 @@ class Gleez_AclTest extends Unittest_TestCase
      */
 	public function test_cache_stores_route_objects()
 	{
-		$acls = ACL::all();
+        $aclList = ACL::all();
 
 		// First we create the cache
 		ACL::cache(TRUE);
@@ -67,7 +67,7 @@ class Gleez_AclTest extends Unittest_TestCase
 		$this->assertTrue(ACL::$cache);
 
 		// And if all went ok the nonsensical route should be gone...
-		$this->assertEquals($acls, ACL::all());
+        $this->assertEquals($aclList, ACL::all());
 	}
 }
 
