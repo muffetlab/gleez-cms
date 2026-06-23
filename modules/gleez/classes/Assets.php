@@ -573,7 +573,7 @@ class Assets {
     /**
      * @throws Kohana_Exception
      */
-	public static function tabledrag()
+    public static function tableDrag()
 	{
         self::js('jquery_once', 'media/js/jquery.once.min.js', array('jquery'), FALSE, array('weight' => -10));
 		self::js('tabledrag', 'media/js/greet.tableDrag.js');

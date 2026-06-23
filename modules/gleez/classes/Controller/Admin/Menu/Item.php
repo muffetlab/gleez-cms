@@ -85,7 +85,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 
 		$this->response->body($view);
 
-		Assets::tabledrag();
+        Assets::tableDrag();
 	}
 
     /**

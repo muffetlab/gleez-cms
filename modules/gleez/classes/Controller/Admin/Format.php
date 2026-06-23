@@ -31,7 +31,7 @@ class Controller_Admin_Format extends Controller_Admin {
      *
      * @throws View_Exception|Kohana_Exception
      * @uses  Format::get_all
-     * @uses  Assets::tabledrag
+     * @uses  Assets::tableDrag
      * @uses  View::factory
      */
 	public function action_list()
@@ -57,7 +57,7 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		if ( ! $this->_internal)
 		{
-            Assets::tabledrag();
+            Assets::tableDrag();
 		}
 	}
 
@@ -65,7 +65,7 @@ class Controller_Admin_Format extends Controller_Admin {
      * Formats setting
      *
      * @throws Kohana_Exception
-     * @uses  Assets::tabledrag
+     * @uses  Assets::tableDrag
      * @uses  Config::load
      * @uses  Message::error
      * @uses  Filter::all
@@ -112,6 +112,6 @@ class Controller_Admin_Format extends Controller_Admin {
 		}
 
 		$this->response->body($view);
-		Assets::tabledrag();
+        Assets::tableDrag();
 	}
 }

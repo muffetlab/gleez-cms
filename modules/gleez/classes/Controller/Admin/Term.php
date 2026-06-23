@@ -94,7 +94,7 @@ class Controller_Admin_Term extends Controller_Admin {
 		}
 
 		$this->response->body($view);
-		Assets::tabledrag();
+        Assets::tableDrag();
 	}
 
     /**

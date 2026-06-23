@@ -106,7 +106,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 		$this->response->body($view);
 
-		Assets::tabledrag();
+        Assets::tableDrag();
 		Assets::js('widgets', 'media/js/widgets.js', array('jquery'), FALSE, array('weight' => 5));
 	}
 
