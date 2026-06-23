@@ -26,7 +26,7 @@ return array(
 		'png',
 	),
 
-    // Maximum size of POST data that PHP will accept (eg. '200K', '5MiB', '1M', '500B')
+    // Maximum size of POST data that PHP will accept (e.g., '200K', '5MiB', '1M', '500B')
 	'post_max_size' => '8M',
 
     // Image quality

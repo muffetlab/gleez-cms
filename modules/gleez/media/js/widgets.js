@@ -36,7 +36,7 @@
         })
     };
 
-	// tableDrag is required and we should be on the widgets admin page.
+    // tableDrag is required, and we should be on the widgets admin page.
 	if (typeof $.fn.tabledrag == 'undefined') {
 		return null
 	}

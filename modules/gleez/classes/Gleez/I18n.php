@@ -4,8 +4,8 @@
  *
  * Provides language loading and translation methods without dependencies on [gettext](http://php.net/gettext).
  *
- * Typically this class would never be used directly, but used via the __()
- * function, which loads the message and replaces parameters:
+ * Typically, this class would never be used directly, but used via the __() function, which loads the message and
+ * replaces parameters:
  *
  *     // Display a translated message
  *     echo __('Hello, world');
@@ -83,7 +83,7 @@ class Gleez_I18n extends I18n
 			$locale = Gleez_I18n::urlLocale();
 		}
 
-		// 5. Check the sub-domain preference and get the language form subdomain
+        // 5. Check the subdomain preference and get the language form subdomain
 		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'DOMAIN'))
 		{
 			$locale = Gleez_I18n::domainLocale();

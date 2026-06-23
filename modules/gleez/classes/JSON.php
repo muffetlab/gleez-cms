@@ -14,8 +14,8 @@ class JSON {
 	/**
 	 * Encodes the given value into a JSON string
 	 *
-	 * Converts a PHP variable into its Javascript equivalent  We use HTML-safe strings,
-	 * i.e. with <, > and & escaped. For more details For more details please refer to
+     * Converts a PHP variable into its JavaScript equivalent. We use HTML-safe strings, i.e. with <, > and & escaped.
+     * For more details For more details please refer to
 	 * [[http://www.php.net/manual/en/function.json-encode.php]]
 	 *
 	 * [!!] This function only works with UTF-8 encoded data

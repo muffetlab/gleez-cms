@@ -269,7 +269,7 @@ class Path {
     public static function match_path(string $path, string $patterns): bool
     {
 		// Convert path settings to a regular expression.
-		// Therefore replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.
+        // Therefore, replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.
 		$to_replace = array(
 			'/(\r\n?|\n)/', // newlines
 			'/\\\\\*/',     // asterisks

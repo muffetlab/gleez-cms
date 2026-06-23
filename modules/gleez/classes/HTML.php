@@ -122,7 +122,7 @@ class HTML extends Kohana_HTML
                 $file = "media/imagecache/$type/{$width}x$height/$file";
 			}
 
-			// Auto detect index file
+            // Auto-detect index file
             $index = (!$index and !empty(Kohana::$index_file)) ? TRUE : $index;
 
 			// Add the base URL
@@ -272,7 +272,7 @@ class HTML extends Kohana_HTML
 	}
 
     /**
-     * Create a iconic button
+     * Create an iconic button.
      *
      * Example:
      * ~~~

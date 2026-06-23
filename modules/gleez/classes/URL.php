@@ -72,7 +72,7 @@ class URL extends Kohana_URL
 	}
 
 	/**
-	 * Splits url into array of it's pieces as follows:
+     * Splits URL into an array of its pieces as follows:
 	 * [scheme]://[user]:[pass]@[host]/[path]?[query]#[fragment]
 	 * In addition it adds 'query_params' key which contains array of
 	 * url-decoded key-value pairs

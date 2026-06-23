@@ -51,7 +51,7 @@ class Gleez_AclTest extends Unittest_TestCase
 		// First we create the cache
 		ACL::cache(TRUE);
 
-		// Now lets modify the "current" routes
+        // Now let's modify the "current" routes
 		ACL::set('contact', array(
 			'sending mail' => array(
 				'title' => __('Sending Mails'),

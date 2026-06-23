@@ -164,7 +164,7 @@ Example:
 $avatar->setRating('PG');
 ~~~
 
-[!!] __Note__: The `rating` options is not case sensitive
+[!!] __Note__: The `rating` options is not case-sensitive
 
 
 ### force_default

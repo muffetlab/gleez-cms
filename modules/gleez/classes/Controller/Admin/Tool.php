@@ -26,7 +26,7 @@ class Controller_Admin_Tool extends Controller_Admin {
 		$phpinfo = ob_get_contents();
 		ob_end_clean();
 
-		//strip the body html
+        // Strip the body HTML
 		$phpinfo = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $phpinfo);
 
 		//format the data

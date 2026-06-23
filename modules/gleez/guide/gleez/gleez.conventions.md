@@ -69,7 +69,7 @@ Gleez just provides an interface that wraps around your Kohana 3 Module.
 
 3. **Declaring Widgets**
 
-   Unlike other CMS's, Gleez's Widgets aren't necessarily separate from your app. Widgets are simply HMVC calls. Thus, widgets can reside in the same controller as the app. It can also be a stand alone widget.
+   Unlike other CMS's, Gleez's Widgets aren't necessarily separate from your app. Widgets are simply HMVC calls. Thus, widgets can reside in the same controller as the app. It can also be a stand-alone widget.
 
    You don't need a route to make your widgets accessible, all you have to do is declare them in your extension's init.php, where you also declare your app's routes.
 
@@ -82,9 +82,9 @@ Gleez just provides an interface that wraps around your Kohana 3 Module.
 4. **Declaring Permissions**
 
    Gleez has 3 main kinds of users and nothing more: Guests, Members and Administrators. You can create unlimited groups of users under Members and also unlimited groups of users under Administrators.
-   Each Group can have fine grained permissions management similar to Drupal.
+   Each Group can have fine-grained permissions management similar to Drupal.
 
-   You can't create a user group under Guests. Members can login to the Site Frontend only. Admins can login to both Site and Admin.
+   You can't create a user group under Guests. Members can log in to the Site Frontend only. Admins can log in to both Site and Admin.
 
    For instance, you declare permissions like this on the init.php of your app:
 
@@ -115,7 +115,7 @@ Gleez just provides an interface that wraps around your Kohana 3 Module.
    ));
    ~~~
 
-   Each permission is an array indexed by permission, Human readable title and description. If you specify restrict access true, admin permission settings page shows an warning that assigning this permission implies security implication, assign to only trusted roles.
+   Each permission is an array indexed by permission, Human readable title and description. If you specify restrict access true, admin permission settings page shows a warning that assigning this permission implies security implication, assign to only trusted roles.
 
    This is just a basic declaration of permissions. More details will be discussed in another chapter. But as a preview, you can specify the controllers and actions related to the permission. This will allow Gleez to automatically check for the user's permissions when certain controllers are accessed.
 

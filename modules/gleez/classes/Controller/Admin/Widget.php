@@ -60,9 +60,8 @@ class Controller_Admin_Widget extends Controller_Admin {
 						->order_by('weight')
 						->find_all();
 
-		// Weights range from -delta to +delta, so delta should be at least half
-		// of the amount of blocks present. This makes sure all blocks in the same
-		// region get an unique weight.
+        // Weights range from -delta to +delta, so delta should be at least half of the amount of blocks present. This
+        // makes sure all blocks in the same region get a unique weight.
 		$weight_delta = round(count($widgets) / 2);
 
 		foreach ($widget_regions as $key => $value)
@@ -248,7 +247,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$split_name = explode('/', $widget->name);
         $static = $split_name && $split_name[0] == 'static';
 
-		// we can only delete if its a custom widget
+        // We can only delete if it's a custom widget
 		if( ! $static)
 		{
 			$this->request->redirect(Route::get('admin/widget')->uri());

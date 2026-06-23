@@ -146,7 +146,7 @@ class Message {
 	}
 
     /**
-     * Sets a info message.
+     * Sets an info message.
      *
      * @param mixed $message String/Array for the message(s)
      * @param array|null $options Any options for the message [Optional]

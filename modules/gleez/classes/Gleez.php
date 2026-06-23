@@ -75,7 +75,7 @@ class Gleez {
 	public static $charset = 'utf-8';
 
 	/**
-	 * True if Kohana is running on windows
+     * True if Kohana is running on Windows
 	 * @var boolean
 	 */
 	public static $isWindows= false;
@@ -308,7 +308,7 @@ class Gleez {
      * Set default cookie [salt](gleez/cookie/config#salt)
      * and [lifetime](gleez/cookie/config#expiration)
      *
-     * Also you can define a salt for the `Cookie` class in bootstrap.php:
+     * Also, you can define a salt for the `Cookie` class in bootstrap.php:
      * ~~~
      * Cookie::$salt = [really-long-cookie-salt-here]
      * ~~~

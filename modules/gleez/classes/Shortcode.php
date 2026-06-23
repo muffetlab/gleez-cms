@@ -4,7 +4,7 @@
  * The tag and attribute parsing or regular expression code is
  * based on the Textpattern tag parser.
  *
- * Taken from wordpress:
+ * Taken from WordPress:
  * @link        http://codex.wordpress.org/Shortcode
  *
  * A few examples are below:
@@ -81,9 +81,8 @@ class Shortcode {
 	/**
 	 * Clear all shortcodes
 	 *
-     * This function is simple, it clears all the shortcode tags by
-	 * replacing the shortcodes global by a empty array. This is actually
-	 * a very efficient method for removing all shortcodes.
+     * This function is simple, it clears all the shortcode tags by replacing the shortcodes global by an empty array.
+     * This is actually a very efficient method for removing all shortcodes.
 	 *
 	 * @return  array
 	 */
@@ -226,7 +225,7 @@ class Shortcode {
 	 * 1 - An extra [ to allow for escaping shortcodes with double [[]]
 	 * 2 - The shortcode name
 	 * 3 - The shortcode argument list
-	 * 4 - The self closing /
+     * 4 - The self-closing /
 	 * 5 - The content of a shortcode when it wraps some content.
 	 * 6 - An extra ] to allow for escaping shortcodes with double [[]]
 	 *

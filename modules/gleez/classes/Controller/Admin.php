@@ -30,7 +30,7 @@ class Controller_Admin extends Template {
 	protected $_form_action;
 
 	/**
-	 * Currently logged in user
+     * Currently logged-in user
 	 * @var
 	 */
 	protected $_current_user;

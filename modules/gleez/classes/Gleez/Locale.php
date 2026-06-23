@@ -106,8 +106,7 @@ class Gleez_Locale {
 	 *
 	 * ### Overview
 	 *
-	 * If no locale is given a automatic search is done.
-	 * Then the most probable locale will be automatically set.
+     * If no locale is given, the system automatically detects and sets the most probable one.
 	 *
 	 * __Search order is__:
 	 *

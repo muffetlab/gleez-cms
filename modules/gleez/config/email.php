@@ -18,8 +18,8 @@ return array(
 	 * 
 	 * PopB4Smtp is not supported in this module as I had no way to test it but 
 	 * SwiftMailer 4 does have a PopBeforeSMTP plugin so it shouldn't be hard to implement
-	 * 
-	 * Encryption can be one of 'ssl' or 'tls' (both require non-default PHP extensions
+     *
+     * Encryption can be one of 'ssl' or 'tls' (both require non-default PHP extensions).
 	 *
 	 * Driver options:
      * - native: no options

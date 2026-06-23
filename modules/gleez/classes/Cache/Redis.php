@@ -95,7 +95,7 @@ class Cache_Redis extends Cache {
 	 * // Retrieve cache entry from redis group
 	 * $data = Cache::instance('redis')->get('foo');
 	 *
-	 * // Retrieve cache entry from redis group and return 'bar' if miss
+     * // Retrieve cache entry from redis group and return 'bar' if missing
 	 * $data = Cache::instance('redis')->get('foo', 'bar');
 	 * ~~~
 	 *

@@ -241,7 +241,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 		// If deletion is confirmed
 		if (isset($_POST['yes']) AND $this->valid_post())
 		{
-			// If it is an internal request (eg. popup dialog) and id < 3
+            // If it is an internal request (e.g., popup dialog) and id < 3
 			if ($menu->id == 2)
 			{
 				Kohana::$log->add(Log::ERROR, 'Attempt to delete system menu.');

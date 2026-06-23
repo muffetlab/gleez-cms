@@ -64,7 +64,7 @@ class Post extends ORM_Versioned {
 	);
 
 	/**
-	 * Auto fill updated column
+     * Autofill updated column
 	 * @var array
 	 */
 	protected $_updated_column = array(
@@ -232,7 +232,7 @@ class Post extends ORM_Versioned {
 				}
 			}
 		}
-		// Make sure we have an valid date is set, or current time
+        // Make sure we have a valid date is set, or current time
 		elseif ($name == 'created')
 		{
 			if ( ! empty($this->author_date) AND ! ($date = strtotime($this->author_date)))
@@ -247,7 +247,7 @@ class Post extends ORM_Versioned {
 				}
 			}
 		}
-		// Make sure we have an valid author id set, or a guest id
+        // Make sure we have a valid author id set, or a guest id
 		elseif ($name == 'author')
 		{
 			if ( ! empty($this->author_name) AND ! ($account = User::lookup_by_name($this->author_name)))
@@ -262,7 +262,7 @@ class Post extends ORM_Versioned {
 				}
 			}
 		}
-		// Make sure we have an valid date is set, or current time
+        // Make sure we have a valid date is set, or current time
 		elseif ($name == 'pubdate')
 		{
 			if ( ! empty($this->author_pubdate) AND ! ($date = strtotime($this->author_pubdate)))
@@ -325,7 +325,7 @@ class Post extends ORM_Versioned {
 			// create directory if not
 			System::mkdir($this->_image_path);
 
-			// delete previous image if exists, to cleanup stale images
+            // Delete previous image if exists, to clean up stale images
 			$this->_delete_image();
 
 			// generate a unique filename to avoid conflicts
@@ -517,7 +517,7 @@ class Post extends ORM_Versioned {
 		}
 		else
 		{
-			//delete image if exists, to cleanup stale images
+            // Delete image if exists, to clean up stale images
 			$this->_delete_image();
 
 			$source = $this->rawurl;

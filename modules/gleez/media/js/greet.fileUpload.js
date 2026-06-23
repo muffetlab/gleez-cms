@@ -221,7 +221,7 @@
 			// Add the loading spinner
 			this.loading(file)
 
-			// IE less than 10 dose not support file.size.
+            // IE less than 10 does not support file.size.
 			if(this.isHTML5 && this.options.chunked) {
 				// Chunked upload
 				this.chunkUpload(xhr, file)

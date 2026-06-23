@@ -4,8 +4,8 @@
  *
  * ### Overview
  *
- * Gleez Assets Manager allows to include throughout the application different
- * assets (CSS, Javascript, etc.) with dependencies support and use then later.
+ * Gleez Assets Manager allows to include throughout the application different assets (CSS, JavaScript, etc.) with
+ * dependencies support and use then later.
  *
  * Gleez Assets Manager makes sure all assets will be included in the correct order,
  * no matter what order they are defined in.
@@ -262,7 +262,7 @@ class Assets {
 	}
 
 	/**
-	 * Get a single javascript asset
+     * Get a single JavaScript asset.
 	 *
      * @param string $handle Asset name
      * @param string $format Format that be returned [Optional]
@@ -292,7 +292,7 @@ class Assets {
 	}
 
 	/**
-	 * Get all javascript assets of section (header or footer)
+     * Get all JavaScript assets of section (header or footer).
 	 *
      * @param boolean $footer FALSE for head, TRUE for footer
      * @param string $format Format that be returned [Optional]
@@ -340,9 +340,9 @@ class Assets {
 	}
 
     /**
-     * Javascript code wrapper
+     * JavaScript code wrapper.
      *
-     * Gets or sets javascript code
+     * Gets or sets JavaScript code.
      *
      * @param mixed $handle Asset name if string, sets $footer if boolean
      * @param string|null $code Asset code/CSP nonce [Optional]
@@ -382,7 +382,7 @@ class Assets {
 	}
 
 	/**
-	 * Get a single javascript code
+     * Get a single JavaScript code.
 	 *
      * @param string $handle Asset name
      * @param string|null $nonce CSP nonce [Optional]
@@ -403,7 +403,7 @@ class Assets {
 	}
 
     /**
-     * Get all javascript codes of section (header or footer)
+     * Get all JavaScript codes of section (header or footer).
      *
      * @param boolean $footer FALSE for head, TRUE for footer [Optional]
      * @param string|null $nonce CSP nonce [Optional]
@@ -441,9 +441,9 @@ class Assets {
 	}
 
 	/**
-	 * Javascript code settings wrapper
+     * JavaScript code settings wrapper.
 	 *
-	 * Gets or sets javascript code
+     * Gets or sets JavaScript code.
 	 *
 	 * @param   mixed   $handle  Asset name if `string`, sets `$footer` if boolean
      * @param string|null $code Asset code [Optional]

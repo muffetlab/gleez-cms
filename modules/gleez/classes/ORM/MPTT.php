@@ -361,7 +361,7 @@ class ORM_MPTT extends Gleez_Model
      */
     protected function insert($target, string $copy_left_from, int $left_offset, int $level_offset): ORM_MPTT
     {
-		// Insert should only work on new nodes.. if its already it the tree it needs to be moved!
+        // Insert should only work on new nodes. If it's already in the tree, it needs to be moved!
         if ($this->loaded()) {
             throw new Kohana_Exception('Cannot insert node because it is already loaded');
         }

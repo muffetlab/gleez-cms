@@ -73,7 +73,7 @@
         // Initialize the specified columns (for example, weight or parent columns)
         // to show or hide according to user preference. This aids accessibility
         // so that, e.g., screen reader users can choose to enter weight values and
-        // manipulate form elements directly, rather than using drag-and-drop..
+        // manipulate form elements directly, rather than using drag-and-drop.
         self.initColumns()
 
         // Add mouse bindings to the document. The self variable is passed along
@@ -909,8 +909,7 @@
 	}
 
 	TableDrag.prototype.restripeTable = function () {
-		// :even and :odd are reversed because jQuery counts from 0 and
-		// we count from 1, so we're out of sync.
+        // :even and :odd are reversed because jQuery counts from 0, and we count from 1, so we're out of sync.
 		// Match immediate children of the parent element to allow nesting.
 		$('> tbody > tr.draggable:visible, > tr.draggable:visible', this.table)
 			.removeClass('odd even')
@@ -1269,7 +1268,7 @@
 		// The weight option allows elements to be sorted. 
         // Pass a "falsy" value to fieldClass to deactivate (false, null, undefined, etc.).
 		, weight: {
-			// The class of the <select> list. Weights will be deduced by the <option>s in this list. <option> values should be integers.
+            // The class of the <select> list. Weights will be deduced by the <option> elements in this list. <option> values should be integers.
 			fieldClass: 'row-weight',
 
 			// Hides the <select>s parent <td> for better usability.

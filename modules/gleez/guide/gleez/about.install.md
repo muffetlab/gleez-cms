@@ -16,7 +16,7 @@ To install Gleez, follow these instructions:
    * Set `/application/config` and its sub-folders to 777
    * Set `/media` and its sub-folders to 777
 
-   For example you can execute immediately after Gleez installation this commands:
+   For example, you can execute immediately after Gleez installation this commands:
    * `cd path_to_the_your_installed_gleez_dir\application`
    * `find -type d -exec chmod -R a=rwx {} \;`
    * `cd .. && chmod a=rwx media`
@@ -27,7 +27,7 @@ To install Gleez, follow these instructions:
 
 ### Git Clone Installation
 
-The [source code](https://github.com/gleez/cms) for Gleez is hosted with [GitHub](http://github.com). To install Gleez using the github source code first you need to install [git](http://git-scm.com/).  Visit [http://help.github.com](http://help.github.com) for details on how to install git on your platform.
+The [source code](https://github.com/gleez/cms) for Gleez is hosted with [GitHub](http://github.com). To install Gleez using the GitHub source code first you need to install [git](http://git-scm.com/). Visit [http://help.github.com](http://help.github.com) for details on how to install git on your platform.
 
 ~~~
   git clone https://github.com/gleez/cms.git gleezcms
@@ -46,7 +46,7 @@ yaourt -S gleez
 
 Follow from step 3 of the above instructions
 
-Also you can search Gleez & Gleez Modules for ArchLinux by following command:
+Also, you can search Gleez & Gleez Modules for ArchLinux by following command:
 
 ~~~
 yaourt gleez
@@ -56,7 +56,8 @@ yaourt -Ss gleez
 
 ### Putting Gleez in a subfolder
 
-If Gleez is not in the root of the server we need to change some files. Lets say we are putting gleez in a subfolder called "subfolder"
+If Gleez is not in the root of the server we need to change some files. Let's say we are putting Gleez in a subfolder
+called "subfolder".
 
 In `.htaccess`
 
@@ -132,7 +133,7 @@ within the `.htaccess` file if any.
 
 ## Troubleshooting
 
-If you're having trouble installing Gleez, please post your questions with as
-much detail as possible in the issues Thanks.
+If you're having trouble installing Gleez, please post your questions with as much detail as possible in the issues.
+Thanks.
 
 Make sure the `application/cache` and `application/logs` directories are writable by the web server.

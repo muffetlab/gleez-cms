@@ -452,7 +452,7 @@ class HTMLFilter {
 
 			if ($working == 0)
 			{
-				// not well formed, remove and try again
+                // Not well-formed, remove and try again
 				$attr = preg_replace('/
 					^(
 					"[^"]*("|$)       # - a string that starts with a double quote, up until the next double quote or the end of the string

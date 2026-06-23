@@ -86,11 +86,11 @@
 			$(form).remove()
 
 			if(dataTable){
-				//redraw dataTables if its a dataTable popup or form add/edit/delete
+                // Redraw dataTables if it's a dataTable popup or form add/edit/delete
                 $(dataTable).DataTable().draw();
 			}
-		
-			//Lets check if the form is in popup window
+
+            // Let's check if the form is in popup window
 			if(popup && typeof data.messages !== undefined && data.messages.length > 0){
                 text = '<div class="alert alert-success alert-block"><i class="fas fa-info"></i>&nbsp' + data.messages[0].text + '</div>';
                 $(popup).find('.popup-title').html(data.messages[0].type)
@@ -129,8 +129,8 @@
 		})
 
 		tmpl += '</ul></div>'
-	
-		// If the target block doesn't exist..
+
+        // If the target block doesn't exist
 		if (!$('.error-message-container').length){
 			$(form).prepend('<div class="error-message-container" style="display:none"></div>')
 		}
@@ -145,7 +145,7 @@
         const $el = $(target);
 
         if (!($el.is("[type=submit],[type=image]"))) {
-			// is this a child element of the submit el?  (ex: a span within a button)
+            // Is this a child element of the submit element? (e.g., a span within a button)
             const t = $el.closest('[type=submit]');
             if (t.length === 0) {
 				return

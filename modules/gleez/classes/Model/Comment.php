@@ -196,7 +196,7 @@ class Model_Comment extends Gleez_Model
 	}
 
     /**
-     * Make sure we have an valid author id set, or a guest id
+     * Make sure we have a valid author id set, or a guest id.
      *
      * Validation callback.
      *

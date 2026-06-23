@@ -43,7 +43,7 @@ abstract class Template extends Controller {
 	public $title = NULL;
 
 	/**
-	 * The page sub title
+     * The page subtitle
 	 * @var string
 	 */
 	public $subtitle = FALSE;
@@ -115,7 +115,7 @@ abstract class Template extends Controller {
 	protected $_widgets;
 
 	/**
-	 * An Format instance
+     * A Format instance
 	 * @var Format
 	 */
 	protected $_format;
@@ -192,7 +192,7 @@ abstract class Template extends Controller {
 
 	/**
 	 * Enable sidebars for this request?
-	 * For example: add or edit page don't requires sidebars
+     * For example, adding or editing pages don't require sidebars.
 	 * @var boolean
 	 */
 	protected $_sidebars = TRUE;

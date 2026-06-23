@@ -287,7 +287,7 @@ class Module
 			array_unshift($modules, $module->path);
 			Kohana::modules($modules);
 
-			// Rebuild the include path so the module installer can benefit from auto loading
+            // Rebuild the include path so the module installer can benefit from autoloading
             Kohana::include_paths();
 
 			return $module;
@@ -330,7 +330,7 @@ class Module
 	 */
     public static function upgrade(string $module_name)
 	{
-		//Its safe to call here, migrations wont run twice. It runs only if not already run
+        // It's safe to call here, migrations won't run twice. It runs only if not already run.
         self::migrate($module_name);
 
 		$version_before  = self::get_version($module_name);
@@ -385,7 +385,7 @@ class Module
 		$module = self::_add_to_path($module_name);
 
 		if($module) {
-			//Its safe to call here, migrations wont run twice. It runs only if not already run
+            // It's safe to call here, migrations won't run twice. It runs only if not already run.
             self::migrate($module_name);
 
 			$installer_class = ucfirst($module_name).'_Installer';
@@ -592,7 +592,8 @@ class Module
 				case 3:
 					Gleez_Event::$function($args[0], $args[1], $args[2]);
 					break;
-				case 4: // Context menu events have 4 arguments so lets optimize them
+                // Context menu events have 4 arguments; optimize for them here.
+                case 4:
 					Gleez_Event::$function($args[0], $args[1], $args[2], $args[3]);
 					break;
 				default:
@@ -652,7 +653,7 @@ class Module
 	}
 
 	/**
-	 * Migrate the db of the this module
+     * Migrate the database of the module.
 	 *
      * @param string $module_name Module name
      * @param string $dir Migration direction up/down

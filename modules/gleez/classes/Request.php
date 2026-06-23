@@ -232,9 +232,8 @@ class Request extends Kohana_Request
 	}
 
 	/**
-	 * Creates a response based on the type of request, i.e. an
-	 * Request_HTTP will produce a Response_HTTP, and the same applies
-	 * to CLI.
+     * Creates a response based on the type of request, i.e. a Request_HTTP will produce a Response_HTTP, and the same
+     * applies to CLI.
 	 *
 	 * Example:
 	 * ~~~

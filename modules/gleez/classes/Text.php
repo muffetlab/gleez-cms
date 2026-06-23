@@ -34,8 +34,7 @@ class Text extends Kohana_Text
 	 * This function loads the body part of a partial HTML document and returns
 	 * a full DOMDocument object that represents this document.
 	 *
-	 * You can use [Text::dom_serialize] to serialize this DOMDocument
-	 * back to a HTML snippet.
+     * You can use [Text::dom_serialize] to serialize this DOMDocument back to an HTML snippet.
 	 *
      * @param string $text Text string to filter html
 	 * @return  DOMDocument
