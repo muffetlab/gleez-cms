@@ -576,8 +576,8 @@ class Assets {
     public static function tableDrag()
 	{
         self::js('jquery_once', 'media/js/jquery.once.min.js', array('jquery'), FALSE, array('weight' => -10));
-		self::js('tabledrag', 'media/js/greet.tableDrag.js');
-		self::css('tabledrag', 'media/css/greet.tableDrag.css');
+        self::js('table-drag', 'media/js/greet.tableDrag.js');
+        self::css('table-drag', 'media/css/greet.tableDrag.css');
 	}
 
     /**
