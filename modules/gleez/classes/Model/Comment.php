@@ -183,10 +183,8 @@ class Model_Comment extends Gleez_Model
                 // Raw fields without markup. Usage: during edit or etc.!
                 return $this->get('body') ?? '';
             case 'url':
-				// Model specific links; view, edit, delete url's.
 				return Route::get('comment')->uri( array('id' => $this->id, 'action' => 'view'));
             case 'edit_url':
-				// Model specific links; view, edit, delete url's.
 				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'edit'));
             case 'delete_url':
 				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'delete'));

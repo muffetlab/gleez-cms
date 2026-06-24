@@ -164,10 +164,8 @@ class Model_Tag extends Gleez_Model
             case 'rawurl':
 				return Route::get($this->type)->uri(array('action' => 'tag', 'id' => $this->id));
             case 'edit_url':
-				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/tag')->uri(array('id' => $this->id, 'action' => 'edit'));
             case 'delete_url':
-				// Model specific links; view, edit, delete url's.
 				return Route::get('admin/tag')->uri(array('id' => $this->id, 'action' => 'delete'));
             case 'url':
 			case 'link':

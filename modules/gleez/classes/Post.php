@@ -579,7 +579,6 @@ class Post extends ORM_Versioned {
                 // Raw fields without path. Usage: during edit or etc.!
 				return parent::__get('image');
             case 'url':
-				// Model specific links; view, edit, delete url's
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
             case 'edit_url':
 				return Route::get($this->type)->uri(array('id' => $this->id, 'action' => 'edit'));
