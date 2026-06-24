@@ -617,7 +617,7 @@ class Assets {
             return '_' . strtoupper($matches[1]);
         }, $lang === 'en-us' ? 'en' : $lang);
 
-        self::js('tinymce', 'media/tinymce/tinymce.min.js', ['jquery'], false, ['weight' => 2]);
+        self::js('tiny-mce', 'media/tinymce/tinymce.min.js', ['jquery'], false, ['weight' => 2]);
 
         self::codes('editor', 'tinymce.init({
             selector: \'' . $name . '\',
