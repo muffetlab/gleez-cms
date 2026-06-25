@@ -15,13 +15,13 @@ class URL extends Kohana_URL
      *
      * @param mixed $url The request object or string URL
      * @param object $pagination The pagination object [Optional]
-     * @param array|null $qstring The query string parameters [Optional]
+     * @param array|null $query The query string parameters [Optional]
      * @param mixed $protocol The route protocol [Optional]
      * @return  string
      * @throws Kohana_Exception
      * @uses    Request::uri
      */
-    public static function canonical($url, $pagination = NULL, array $qstring = NULL, $protocol = TRUE): string
+    public static function canonical($url, $pagination = NULL, array $query = NULL, $protocol = TRUE): string
     {
 		if ($url instanceof Request)
 		{
@@ -33,7 +33,7 @@ class URL extends Kohana_URL
 			$url .= '/p' . $pagination->current_page;
 		}
 
-		return self::site($url, $protocol).self::query($qstring);
+        return self::site($url, $protocol) . self::query($query);
 	}
 
 	/**
