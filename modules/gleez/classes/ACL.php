@@ -362,16 +362,19 @@ class ACL {
      *
      * Added cache support for performance.
      *
-     * @return  boolean  FALSE If the role(s) doesn't have any permission
+     * @return array Permissions indexed by role ID, empty array if none
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @since   2.0
      */
-    public static function site_perms(): bool
+    public static function site_perms(): array
     {
         $cache = Cache::instance();
 
-        if (!$perms = $cache->get('roles:site_perms')) {
+        $perms = $cache->get('roles:site_perms');
+
+        if ($perms === null) {
+            $perms = [];
 			$result = DB::select('rid', 'permission')
 						->from('permissions')
                 ->as_object()
