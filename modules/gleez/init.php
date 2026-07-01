@@ -444,7 +444,7 @@ if ( ! ACL::cache())
  * @uses  Filter::cache
  * @uses  Filter::set
  * @uses  Text::html
- * @uses  Text::htmlcorrector
+ * @uses  Text::htmlCorrector
  * @uses  Text::auto_p
  * @uses  HTML::chars
  * @uses  Text::autolink
@@ -464,9 +464,9 @@ if ( ! Filter::cache())
 			'allowed_html'  => '<a> <em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd>'
 		));
 
-		Filter::set('htmlcorrector',  array(
+    Filter::set('html_corrector', array(
 			'prepare callback' => FALSE,
-			'process callback' => 'Text::htmlcorrector'
+        'process callback' => 'Text::htmlCorrector'
 		))
 		->title(__('Correct faulty and chopped off HTML'));
 

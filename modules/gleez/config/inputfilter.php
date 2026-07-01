@@ -22,8 +22,8 @@ return array
 						'url_length'    => 72,
 					)
 				),
-				'htmlcorrector'	=> array(
-					'name'        => 'htmlcorrector',
+                'html_corrector' => array(
+                    'name' => 'html_corrector',
 					'weight'      => 3,
 					'status'      => TRUE,
 					'settings'    => array()
@@ -64,8 +64,8 @@ return array
 			'name'    => __('Full HTML'),
 			'weight'  => 1,
 			'filters' => array(
-				'htmlcorrector'	=> array(
-					'name'         =>'htmlcorrector',
+                'html_corrector' => array(
+                    'name' => 'html_corrector',
 					'weight'       => 0,
 					'status'       => TRUE,
 					'settings'     => array()

@@ -23,7 +23,7 @@ class Text extends Kohana_Text
      * @param string $text Text string to filter html
      * @return string
      */
-    public static function htmlcorrector(string $text): string
+    public static function htmlCorrector(string $text): string
     {
 		return static::dom_serialize(static::dom_load($text));
 	}
