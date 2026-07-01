@@ -34,6 +34,7 @@ The scope MUST be enclosed in parentheses and specify the name of the affected r
 - `auth`
 - `cache`
 - `captcha`
+- `codebench`
 - `database`
 - `gleez`
 - `image`
