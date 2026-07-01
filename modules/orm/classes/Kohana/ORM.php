@@ -919,6 +919,9 @@ class Kohana_ORM extends Model implements serializable
             }
         }
 
+        // Select all columns by default
+        $this->_db_builder->select($this->_object_name . '.*');
+
         if ($multiple === true) {
             // Return database iterator casting to this object type
             $result = $this->_db_builder->as_object(get_class($this))->execute($this->_db);
