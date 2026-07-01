@@ -551,6 +551,10 @@ ol.comments li{
 	list-style: none;
 }
 
+ul.comments-list {
+	list-style: none;
+}
+
 li.comment{
 	border-top: 1px solid #DDDDDD;
 	line-height: 20px;
