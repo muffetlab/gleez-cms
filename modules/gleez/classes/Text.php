@@ -131,7 +131,7 @@ class Text extends Kohana_Text
      *
      * @param string $text The text to be filtered
      * @param integer|null $format_id The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
-     * @param string|null $langcode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
+     * @param string|null $langCode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
      * @param boolean $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to FALSE when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
      * @return  mixed
      * @throws Kohana_Exception
@@ -143,7 +143,7 @@ class Text extends Kohana_Text
      * @uses    Filter::process
      * @todo    Make @params description shorter
      */
-    public static function markup(string $text, int $format_id = NULL, string $langcode = NULL, bool $cache = FALSE)
+    public static function markup(string $text, int $format_id = NULL, string $langCode = NULL, bool $cache = FALSE)
 	{
 		// Save some cpu cycles if text is empty or null
 		if(empty($text))
@@ -152,10 +152,10 @@ class Text extends Kohana_Text
 		}
 
 		$format_id = is_null($format_id) ? Kohana::$config->load('inputfilter')->get('default_format', 1) : $format_id;
-		$langcode  = is_null($langcode) ? I18n::$lang : $langcode;
+        $langCode = is_null($langCode) ? I18n::$lang : $langCode;
 
 		// Check for a cached version of this piece of text.
-		$cache_id = $format_id . ':' . $langcode . ':' . hash('sha256', $text);
+        $cache_id = $format_id . ':' . $langCode . ':' . hash('sha256', $text);
         if ($cache and $cached = Cache::instance()->get('cache_filter:' . $cache_id)) {
 			return $cached;
 		}
@@ -167,7 +167,7 @@ class Text extends Kohana_Text
 		$textObj = new ArrayObject(array(
 				'text' 	   => (string) $text,
 				'format'   => (int)    $format_id,
-            'langcode' => $langcode,
+            'langCode' => $langCode,
             'cache' => $cache,
             'cache_id' => $cache_id
 		), ArrayObject::ARRAY_AS_PROPS);
