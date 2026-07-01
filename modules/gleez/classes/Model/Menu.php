@@ -70,31 +70,28 @@ class Model_Menu extends ORM_MPTT {
 		);
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties
+     *
      * @param string $column
-	 * @return  mixed
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @uses    Route::get
+     * @uses    Route::uri
      * @since   1.1.0
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 */
+     */
     public function __get(string $column)
 	{
         switch ($column) {
 			case 'list_items_url':
 				return Route::get('admin/menu/item')->uri(array('id' => $this->id));
-			break;
-			case 'add_item_url':
+            case 'add_item_url':
 				return Route::get('admin/menu/item')->uri(array('id' => $this->id, 'action' => 'add'));
-			break;
-			case 'edit_url':
+            case 'edit_url':
 				return Route::get('admin/menu')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				return Route::get('admin/menu')->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}
@@ -119,12 +116,15 @@ class Model_Menu extends ORM_MPTT {
 		}
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation $validation Validation object
-	 * @return  ORM
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation|null $validation Validation object
+     * @return  ORM
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		$this->params = empty($this->params) ? NULL : serialize($this->params);
@@ -135,11 +135,11 @@ class Model_Menu extends ORM_MPTT {
 	/**
 	 * Creates unique slug for menu
 	 *
-	 * @param   string  $str
+     * @param string $str
 	 * @return  string
 	 */
-	private function _unique_slug($str)
-	{
+    private function _unique_slug(string $str): string
+    {
 		$i = 1;
 		$original = $str;
 
@@ -152,19 +152,20 @@ class Model_Menu extends ORM_MPTT {
 		return $str;
 	}
 
-	/**
-	 * Create a new term in the tree as a child of $parent
-	 *
-	 * - if `$location` is "first" or "last" the term will be the first or last child
-	 * - if `$location` is an int, the term will be the next sibling of term with id $location
-	 *    
-	 * @param   ORM_MPTT|integer  $parent    The parent
-	 * @param   string|integer    $location  The location [Optional]
-	 * @return  Model_Menu
-	 * @throws  Kohana_Exception
-	 */
-	public function create_at($parent, $location = 'last')
-	{
+    /**
+     * Create a new term in the tree as a child of $parent
+     *
+     * - if `$location` is "first" or "last" the term will be the first or last child
+     * - if `$location` is an int, the term will be the next sibling of term with id $location
+     *
+     * @param ORM_MPTT|integer $parent The parent
+     * @param string|integer $location The location [Optional]
+     * @return  Model_Menu
+     * @throws  Kohana_Exception
+     * @throws ReflectionException
+     */
+    public function create_at($parent, $location = 'last'): Model_Menu
+    {
 		// Create the term as first child, last child, or as next sibling based on location
 		if ($location == 'first')
 		{
@@ -190,17 +191,18 @@ class Model_Menu extends ORM_MPTT {
 		return $this;
 	}
 
-	/**
-	 * Move the item to $target based on action
-	 *
-	 * @param   $target  integer  The target term id
-	 * @param   $action  string   The action to perform (before/after/first/last) after
-	 * @throws  Kohana_Exception
-	 */
-	public function move_to($target, $action = 'after')
+    /**
+     * Move the item to $target based on action
+     *
+     * @param   $target  integer  The target term id
+     * @param   $action  string   The action to perform (before/after/first/last) after
+     * @throws  Kohana_Exception
+     * @throws ReflectionException
+     */
+    public function move_to(int $target, string $action = 'after')
 	{
 		// Find the target
-        $target = ORM::factory('Menu', (int) $target);
+        $target = ORM::factory('Menu', $target);
 
 		// Make sure it exists
 		if ( ! $target->loaded())

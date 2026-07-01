@@ -10,7 +10,12 @@
  */
 class Controller_Admin_Dashboard extends Controller_Admin {
 
-	public function action_index()
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws Cache_Exception
+     */
+    public function action_index()
 	{
 		$this->title = __('Administer');
 

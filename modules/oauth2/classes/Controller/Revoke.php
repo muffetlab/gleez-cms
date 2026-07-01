@@ -12,10 +12,12 @@ class Controller_Revoke extends Template {
 	
 	protected $token_info;
 	protected $token;
-	
-	/**
-	 * The before() method is called before controller action
-	 */
+
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Kohana_Exception
+     */
 	public function before()
 	{
 		parent::before();
@@ -25,8 +27,12 @@ class Controller_Revoke extends Template {
 		// Load the oauth2 config
 		$this->config = Kohana::$config->load('oauth2')->as_array();
 	}
-	
-	public function action_index()
+
+    /**
+     * @throws Kohana_Exception
+     * @throws HTTP_Exception
+     */
+    public function action_index()
 	{
 		try
 		{
@@ -35,15 +41,15 @@ class Controller_Revoke extends Template {
 			
 			if ($this->token_info['access_token'] == $this->token && ! empty($this->token_info['refresh_token']))
 			{
-				$result = Model::factory('oauth')->revoke_access_refresh($this->token);
+                Model::factory('oauth')->revoke_access_refresh($this->token);
 			}
 			elseif ($this->token_info['access_token'] == $this->token && empty($this->token_info['refresh_token']))
 			{
-				$result = Model::factory('oauth')->revoke_access($this->token);
+                Model::factory('oauth')->revoke_access($this->token);
 			}
 			elseif ($this->token_info['refresh_token'] == $this->token)
 			{
-				$result = Model::factory('oauth')->revoke_refresh($this->token);
+                Model::factory('oauth')->revoke_refresh($this->token);
 			}
 
 			$this->response->body( json_encode(array('Response' => "Status Code: 200")) );
@@ -75,22 +81,21 @@ class Controller_Revoke extends Template {
 			throw HTTP_Exception::factory(500, $e->getMessage());
 		}
 	}
-	
-	protected function validateRevokeRequest()
+
+    /**
+     * @throws Oauth2_Exception
+     */
+    protected function validateRevokeRequest()
 	{
 		if (!$token = $this->request->query("token")) {
 			// We don't have a good URI to use
 			throw Oauth2_Exception::factory(400, 'invalid_request', "No Token supplied");
-
-			return false;
 		}
 		
 		$this->token = $token;
 		
 		if (!$result = Model::factory('oauth')->isValidRevoke($token)) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', "Token invalid");
-
-			return false;
 		}
 		
 		$this->token_info = $result[0];

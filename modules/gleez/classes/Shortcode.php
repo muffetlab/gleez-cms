@@ -1,10 +1,10 @@
 <?php
 /**
- * Class for creating bbcode like tags "shortcodes."
+ * Class for creating BBCode-like tags (shortcodes).
  * The tag and attribute parsing or regular expression code is
  * based on the Textpattern tag parser.
  *
- * Taken from wordpress:
+ * Taken from WordPress:
  * @link        http://codex.wordpress.org/Shortcode
  *
  * A few examples are below:
@@ -42,19 +42,16 @@ class Shortcode {
 	 * override yours or yours will override theirs depending on which order
 	 * the plugins are included and/or ran.
 	 *
-	 * @param   string          $tag       Shortcode tag to be searched in post content.
-	 * @param   callable        $callback  Hook to run when shortcode is found.
+     * @param string $tag Shortcode tag to be searched in post content.
+     * @param callable $callback Hook to run when shortcode is found.
 	 * @param   string|boolean  $asset     CSS or JS or both to be added. css|js|both [Optional]
-	 *
 	 * @return  array
-	 *
 	 * @throws  Kohana_Exception
-	 *
 	 * @uses    Assets::css
 	 * @uses    Assets::js
 	 */
-	public static function set($tag, $callback, $asset = FALSE)
-	{
+    public static function set(string $tag, callable $callback, $asset = FALSE): array
+    {
 		if ( ! is_callable($callback) )
 		{
 			throw new Kohana_Exception('Invalid Shortcode::callback specified');
@@ -71,11 +68,11 @@ class Shortcode {
 	/**
 	 * Removes hook for shortcode
 	 *
-	 * @param   string  $tag  Shortcode tag to remove hook for.
+     * @param string $tag Shortcode tag to remove hook for.
 	 * @return  array
 	 */
-	public static function remove($tag)
-	{
+    public static function remove(string $tag): array
+    {
 		if( isset(self::$_tags[$tag]) ) unset(self::$_tags[$tag]);
 
 		return self::$_tags;
@@ -84,14 +81,13 @@ class Shortcode {
 	/**
 	 * Clear all shortcodes
 	 *
-	 * This function is simple, it clears all of the shortcode tags by
-	 * replacing the shortcodes global by a empty array. This is actually
-	 * a very efficient method for removing all shortcodes.
+     * This function is simple, it clears all the shortcode tags by replacing the shortcodes global by an empty array.
+     * This is actually a very efficient method for removing all shortcodes.
 	 *
 	 * @return  array
 	 */
-	public static function remove_all()
-	{
+    public static function remove_all(): array
+    {
 		self::$_tags = array();
 
 		return self::$_tags;
@@ -107,36 +103,36 @@ class Shortcode {
 	 *
 	 * @return  array  Shortcodes by name
 	 */
-	public static function all()
-	{
+    public static function all(): array
+    {
 		return self::$_tags;
 	}
 
-	/**
-	 * Saves or loads the Shortcode cache
-	 *
-	 * If your Shortcodes will remain the same for a long period of time,
-	 * use this to reload the Shortcodes from the cache rather than redefining
-	 * them on every page load.
-	 *
-	 * Example:
-	 * ~~~
-	 * if ( ! Shortcode::cache())
-	 * {
-	 *     // Set Shortcodes here
-	 *     Shortcode::cache(TRUE);
-	 * }
-	 * ~~~
-	 *
-	 * @param   boolean  $save    Cache the current Shortcodes [Optional]
-	 * @param   boolean  $append  Append, rather than replace, cached Shortcodes when loading [Optional]
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    Kohana::cache
-	 */
-	public static function cache($save = FALSE, $append = FALSE)
-	{
+    /**
+     * Saves or loads the Shortcode cache
+     *
+     * If your Shortcodes will remain the same for a long period of time,
+     * use this to reload the Shortcodes from the cache rather than redefining
+     * them on every page load.
+     *
+     * Example:
+     * ~~~
+     * if ( ! Shortcode::cache())
+     * {
+     *     // Set Shortcodes here
+     *     Shortcode::cache(TRUE);
+     * }
+     * ~~~
+     *
+     * @param boolean $save Cache the current Shortcodes [Optional]
+     * @param boolean $append Append, rather than replace, cached Shortcodes when loading [Optional]
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses    Kohana::cache
+     */
+    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    {
 		$cache = Cache::instance();
 
 		if ($save === TRUE)
@@ -177,11 +173,11 @@ class Shortcode {
 	 * without any filtering. This might cause issues when plugins are disabled but
 	 * the shortcode will still show up in the post or content.
 	 *
-	 * @param       string          $content Content to search for shortcodes
+     * @param string $content Content to search for shortcodes
 	 * @return      string          Content with shortcodes filtered out.
 	 */
-	public static function process($content)
-	{
+    public static function process(string $content): string
+    {
 		if (empty(self::$_tags) OR !is_array(self::$_tags))
 			return $content;
 
@@ -191,13 +187,12 @@ class Shortcode {
 
 	/**
 	 * Regular Expression callable for do_shortcode() for calling shortcode hook.
-	 * @see get_shortcode_regex for details of the match array contents.
-	 *
 	 * @param array $m Regular expression match array
-	 * @return mixed False on failure.
+     * @return string String with shortcode processed
+     * @see get_shortcode_regex for details of the match array contents.
 	 */
-	protected static function execute( $m )
-	{
+    protected static function execute(array $m): string
+    {
 		// allow [[foo]] syntax for escaping a tag
 		if ( $m[1] == '[' && $m[6] == ']' )
 		{
@@ -230,14 +225,14 @@ class Shortcode {
 	 * 1 - An extra [ to allow for escaping shortcodes with double [[]]
 	 * 2 - The shortcode name
 	 * 3 - The shortcode argument list
-	 * 4 - The self closing /
+     * 4 - The self-closing /
 	 * 5 - The content of a shortcode when it wraps some content.
 	 * 6 - An extra ] to allow for escaping shortcodes with double [[]]
 	 *
 	 * @return string The shortcode search regular expression
 	 */
-	protected static function get_regex()
-	{
+    protected static function get_regex(): string
+    {
 		$tagnames = array_keys(self::$_tags);
 		$tagregexp = join( '|', array_map('preg_quote', $tagnames) );
 
@@ -283,7 +278,8 @@ class Shortcode {
 	 * @param string $text
 	 * @return array List of attributes and their value.
 	 */
-	public static function parse_atts($text) {
+    public static function parse_atts(string $text): array
+    {
 		$atts = array();
 		$pattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
 		$text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
@@ -315,7 +311,7 @@ class Shortcode {
 	/**
 	 * Combine user attributes with known attributes and fill in defaults when needed.
 	 *
-	 * The pairs should be considered to be all of the attributes which are
+     * The pairs should be considered to be all the attributes which are
 	 * supported by the caller and given as a list. The returned attributes will
 	 * only contain the attributes in the $pairs list.
 	 *
@@ -326,9 +322,8 @@ class Shortcode {
 	 * @param array $atts User defined attributes in shortcode tag.
 	 * @return array Combined and filtered attribute list.
 	 */
-	public static function attributes($pairs, $atts)
-	{
-		$atts = (array)$atts;
+    public static function attributes(array $pairs, array $atts): array
+    {
 		$out = array();
 
 		foreach($pairs as $name => $default)
@@ -352,8 +347,8 @@ class Shortcode {
 	 * @param string $content Content to remove shortcode tags.
 	 * @return string Content without shortcode tags.
 	 */
-	protected static function strip( $content )
-	{
+    protected static function strip(string $content): string
+    {
 		if (empty(self::$_tags) OR !is_array(self::$_tags))
 			return $content;
 

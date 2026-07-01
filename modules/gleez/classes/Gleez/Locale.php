@@ -48,20 +48,20 @@ class Gleez_Locale {
 	protected $_locale;
 
 	/**
-	 * Browser detected locale
-	 * @var string
+     * Browser detected locales
+     * @var array
 	 */
 	protected static $_client_locales;
 
 	/**
-	 * Environment detected locale
-	 * @var string
+     * Environment detected locales
+     * @var array
 	 */
 	protected static $_environment_locales;
 
 	/**
-	 * Automatic detected locale
-	 * @var string
+     * Automatic detected locales
+     * @var array
 	 */
 	protected static $_detected;
 
@@ -83,14 +83,15 @@ class Gleez_Locale {
 	 */
 	public static $cookie = 'language';
 
-	/**
-	 * Singleton instance of Gleez_Locale
-	 *
-	 * @param   string|Gleez_Locale  $locale  Locale for parsing input [Optional]
-	 * @return  Gleez_Locale
-	 */
-	public static function instance($locale = NULL)
-	{
+    /**
+     * Singleton instance of Gleez_Locale
+     *
+     * @param string|Gleez_Locale $locale Locale for parsing input [Optional]
+     * @return  Gleez_Locale
+     * @throws Kohana_Exception
+     */
+    public static function instance($locale = NULL): Gleez_Locale
+    {
 		if ( ! isset(Gleez_Locale::$_instance))
 		{
 			// Create a new locale instance
@@ -105,8 +106,7 @@ class Gleez_Locale {
 	 *
 	 * ### Overview
 	 *
-	 * If no locale is given a automatic search is done.
-	 * Then the most probable locale will be automatically set.
+     * If no locale is given, the system automatically detects and sets the most probable one.
 	 *
 	 * __Search order is__:
 	 *
@@ -164,8 +164,8 @@ class Gleez_Locale {
 	 *
 	 * @return  string
 	 */
-	public function toString()
-	{
+    public function toString(): string
+    {
         return $this->_locale;
 	}
 
@@ -174,8 +174,8 @@ class Gleez_Locale {
 	 *
 	 * @return  string
 	 */
-	public function serialize()
-	{
+    public function serialize(): string
+    {
 		return serialize($this);
 	}
 
@@ -183,8 +183,6 @@ class Gleez_Locale {
 	 * Prepare and returns a single locale on detection
 	 *
 	 * @param   string|Gleez_Locale  $locale  Locale to work on
-	 * @param   boolean              $strict  Strict preparation [Optional]
-	 *
 	 * @return  string
 	 *
 	 * @throws  Kohana_Exception
@@ -192,8 +190,8 @@ class Gleez_Locale {
 	 * @uses    Locale_Data::getLocaleData
 	 * @uses    Locale_Data::getTerritoryData
 	 */
-	private static function _prepare_locale($locale, $strict = FALSE)
-	{
+    private static function _prepare_locale($locale): string
+    {
 		if ($locale instanceof Gleez_Locale)
 		{
 			$locale = $locale->toString();
@@ -211,33 +209,30 @@ class Gleez_Locale {
 			self::$_detected            = self::$_client_locales + self::$_environment_locales + self::$_framework;
 		}
 
-		if ( ! $strict)
-		{
-			if ($locale === 'client')
-			{
-				$locale = self::$_client_locales;
-			}
+        if ($locale === 'client')
+        {
+            $locale = self::$_client_locales;
+        }
 
-			if ($locale === 'environment')
-			{
-				$locale = self::$_environment_locales;
-			}
+        if ($locale === 'environment')
+        {
+            $locale = self::$_environment_locales;
+        }
 
-			if ($locale === 'framework')
-			{
-				$locale = self::$_framework;
-			}
+        if ($locale === 'framework')
+        {
+            $locale = self::$_framework;
+        }
 
-			if (($locale === 'detected') OR (is_null($locale)))
-			{
-				$locale = self::$_detected;
-			}
+        if (($locale === 'detected') OR (is_null($locale)))
+        {
+            $locale = self::$_detected;
+        }
 
-			if (is_array($locale))
-			{
-				$locale = key($locale);
-			}
-		}
+        if (is_array($locale))
+        {
+            $locale = key($locale);
+        }
 
 		// This can only happen when someone extends Gleez_Locale and erases the `$_framework`
 		if (is_null($locale))
@@ -299,8 +294,8 @@ class Gleez_Locale {
 	 *
 	 * @link    http://php.net/manual/en/function.getenv.php getenv()
 	 */
-	public static function get_client_locales()
-	{
+    public static function get_client_locales(): array
+    {
 		if ( ! is_null(self::$_client_locales))
 		{
 			return self::$_client_locales;
@@ -365,8 +360,7 @@ class Gleez_Locale {
 	/**
 	 * Expects the Systems standard locale
 	 *
-	 * For Windows `LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C`
-	 * would be recognised as `de_AT`
+     * For Windows `LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C` would be recognized as `de_AT`.
 	 *
 	 * @return  array
 	 *
@@ -376,8 +370,8 @@ class Gleez_Locale {
 	 *
 	 * @link    http://php.net/setlocale setlocale()
 	 */
-	public static function get_environment_locales()
-	{
+    public static function get_environment_locales(): array
+    {
 		// Return cache
 		if ( ! is_null(self::$_environment_locales))
 		{
@@ -446,8 +440,8 @@ class Gleez_Locale {
 	 *
 	 * @return  array
 	 */
-	public static function get_framework_locales()
-	{
+    public static function get_framework_locales(): array
+    {
 		return self::$_framework;
 	}
 
@@ -461,8 +455,8 @@ class Gleez_Locale {
 	 *
 	 * @uses    Gleez_Locale_Data::getLocaleData
 	 */
-	public static function get_locale_list()
-	{
+    public static function get_locale_list(): array
+    {
 		$list = Locale_Data::getLocaleData();
 		unset($list['root']);
 
@@ -474,12 +468,11 @@ class Gleez_Locale {
 	 *
 	 * Static alias for [Gleez_Locale::get_language]
 	 *
-	 * @param   string  $locale  Locale (eg. en_US, ru_RU, ar_JO, ...)
-	 *
+     * @param string $locale Locale (eg. en_US, ru_RU, ar_JO, ...)
 	 * @return  string
 	 */
-	public static function get_language_by_locale($locale)
-	{
+    public static function get_language_by_locale(string $locale): string
+    {
 		$locale = explode('_', $locale);
 
 		return $locale[0];
@@ -490,10 +483,10 @@ class Gleez_Locale {
 	 *
 	 * Static alias for [Gleez_Locale::get_region]
 	 *
-	 * @param   string  $locale  Locale (eg. en_US, ru_RU, ar_JO, ...)
+     * @param string $locale Locale (eg. en_US, ru_RU, ar_JO, ...)
 	 * @return  boolean|string
 	 */
-	public static function get_region_by_locale($locale)
+    public static function get_region_by_locale(string $locale)
 	{
 		$locale = explode('_', $locale);
 
@@ -515,8 +508,8 @@ class Gleez_Locale {
 	 *
 	 * @return string
 	 */
-	public function get_language()
-	{
+    public function get_language(): string
+    {
 		$locale = explode('_', $this->_locale);
 
 		return $locale[0];
@@ -547,13 +540,13 @@ class Gleez_Locale {
 		return FALSE;
 	}
 
-	/**
-	 * Sets a new locale
-	 *
-	 * @param  string|Gleez_Locale  $locale  New locale to set [Optional]
-	 *
-	 * @uses   Locale_Data::getLocaleData
-	 */
+    /**
+     * Sets a new locale
+     *
+     * @param string|Gleez_Locale $locale New locale to set [Optional]
+     * @throws Kohana_Exception
+     * @uses   Locale_Data::getLocaleData
+     */
 	public function set_locale($locale = NULL)
 	{
 		$locale      = self::_prepare_locale($locale);
@@ -599,12 +592,12 @@ class Gleez_Locale {
 	 * ~~~
 	 *
 	 * @param   string|Gleez_Locale  $locale   Locale to set
-	 * @param   integer              $quality  The quality to set from 0 to 1 [Optional]
+     * @param integer $quality The quality to set from 0 to 1 [Optional]
 	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Locale_Data::locale_data
 	 */
-	public static function set_default($locale, $quality = 1)
+    public static function set_default($locale, int $quality = 1)
 	{
 		if (in_array($locale, array('detected', 'root', 'framework', 'environment', 'client')))
 		{
@@ -651,10 +644,10 @@ class Gleez_Locale {
 	 * Example:
 	 * ~~~
 	 * $locale = new Gleez_Locale();
-	 * $mylocale = new Gleez_Locale('en_US');
+     * $myLocale = new Gleez_Locale('en_US');
 	 *
 	 * // Check if locales are equal
-	 * if ($locale->equals($mylocale))
+     * if ($locale->equals($myLocale))
 	 * {
 	 *     // ...
 	 * }
@@ -663,8 +656,8 @@ class Gleez_Locale {
 	 * @param   Gleez_Locale  $locale  Locale to check for equality
 	 * @return  boolean
 	 */
-	public function equals(Gleez_Locale $locale)
-	{
+    public function equals(Gleez_Locale $locale): bool
+    {
 		return ($locale->toString() === $this->toString());
 	}
 }

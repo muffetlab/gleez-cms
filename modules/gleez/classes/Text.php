@@ -1,4 +1,7 @@
 <?php
+
+use Michelf\Markdown;
+
 /**
  * Text Class Helper
  *
@@ -17,12 +20,11 @@ class Text extends Kohana_Text
 	/**
 	 * Scan input and make sure that all HTML tags are properly closed and nested.
 	 *
-	 * @param   string   Text string to filter html
-	 *
-	 * @return  mixed
-	 */
-	public static function htmlcorrector($text)
-	{
+     * @param string $text Text string to filter html
+     * @return string
+     */
+    public static function htmlcorrector(string $text): string
+    {
 		return static::dom_serialize(static::dom_load($text));
 	}
 
@@ -32,15 +34,13 @@ class Text extends Kohana_Text
 	 * This function loads the body part of a partial HTML document and returns
 	 * a full DOMDocument object that represents this document.
 	 *
-	 * You can use [Text::dom_serialize] to serialize this DOMDocument
-	 * back to a HTML snippet.
+     * You can use [Text::dom_serialize] to serialize this DOMDocument back to an HTML snippet.
 	 *
-	 * @param   string       Text string to filter html
-	 *
+     * @param string $text Text string to filter html
 	 * @return  DOMDocument
 	 */
-	public static function dom_load($text)
-	{
+    public static function dom_load(string $text): DOMDocument
+    {
 		$dom = new DOMDocument;
 
 		// Ignore warnings during HTML soup loading.
@@ -62,8 +62,8 @@ class Text extends Kohana_Text
 	 *
 	 * @return  string
 	 */
-	private static function dom_serialize(DOMDocument $dom_document)
-	{
+    private static function dom_serialize(DOMDocument $dom_document): string
+    {
 		$body_node    = $dom_document->getElementsByTagName('body')->item(0);
 		$body_content = '';
 
@@ -93,10 +93,10 @@ class Text extends Kohana_Text
 	 *
 	 * @param  DOMDocument  $dom_document   The DOMDocument containing the $dom_element
 	 * @param  DOMElement   $dom_element    The element potentially containing a CDATA node
-	 * @param  string       $comment_start  String to use as a comment start marker to escape the CDATA declaration [Optional]
-	 * @param  string       $comment_end    String to use as a comment end marker to escape the CDATA declaration [Optional]
+     * @param string $comment_start String to use as a comment start marker to escape the CDATA declaration [Optional]
+     * @param string $comment_end String to use as a comment end marker to escape the CDATA declaration [Optional]
 	*/
-	private static function escape_cdata_element(DOMDocument $dom_document, DOMElement $dom_element, $comment_start = '//', $comment_end = '')
+    private static function escape_cdata_element(DOMDocument $dom_document, DOMElement $dom_element, string $comment_start = '//', string $comment_end = '')
 	{
 		foreach ($dom_element->childNodes as $node)
 		{
@@ -120,32 +120,30 @@ class Text extends Kohana_Text
 		}
 	}
 
-	/**
-	 * Run all the enabled filters on a piece of text.
-	 *
-	 * Note: Because filters can inject JavaScript or execute PHP code, security is
-	 * vital here. When a user supplies a text format, you should validate it using
-	 * filter_access() before accepting/using it. This is normally done in the
-	 * validation stage of the Form API. You should for example never make a preview
-	 * of content in a disallowed format.
-	 *
-	 * @param   string   $text       The text to be filtered
-	 * @param   integer  $format_id  The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
-	 * @param   string   $langcode   The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
-	 * @param   boolean  $cache      Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to FALSE when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
-	 *
-	 * @return  mixed
-	 *
-	 * @uses    Config::load
-	 * @uses    Config_Group::get
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 * @uses    Module::event
-	 * @uses    Filter::process
-	 *
-	 * @todo    Make @params description shorter
-	 */
-	public static function markup($text, $format_id = NULL, $langcode = NULL, $cache = FALSE)
+    /**
+     * Run all the enabled filters on a piece of text.
+     *
+     * Note: Because filters can inject JavaScript or execute PHP code, security is
+     * vital here. When a user supplies a text format, you should validate it using
+     * filter_access() before accepting/using it. This is normally done in the
+     * validation stage of the Form API. You should for example never make a preview
+     * of content in a disallowed format.
+     *
+     * @param string $text The text to be filtered
+     * @param integer|null $format_id The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
+     * @param string|null $langcode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
+     * @param boolean $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to FALSE when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     * @uses    Config_Group::get
+     * @uses    Cache::get
+     * @uses    Cache::set
+     * @uses    Module::event
+     * @uses    Filter::process
+     * @todo    Make @params description shorter
+     */
+    public static function markup(string $text, int $format_id = NULL, string $langcode = NULL, bool $cache = FALSE)
 	{
 		// Save some cpu cycles if text is empty or null
 		if(empty($text))
@@ -169,8 +167,8 @@ class Text extends Kohana_Text
 		$textObj = new ArrayObject(array(
 				'text' 	   => (string) $text,
 				'format'   => (int)    $format_id,
-				'langcode' => (string) $langcode,
-				'cache'    => (bool)   $cache,
+            'langcode' => $langcode,
+            'cache' => $cache,
             'cache_id' => $cache_id
 		), ArrayObject::ARRAY_AS_PROPS);
 
@@ -181,23 +179,24 @@ class Text extends Kohana_Text
 		// Store in cache with a minimum expiration time of 1 day.
 		if ($cache)
 		{
-            Cache::instance()->set('cache_filter:' . $cache_id, $text, null, time() + Date::DAY);
+            Cache::instance()->set('cache_filter:' . $cache_id, $text, time() + Date::DAY);
 		}
 
 		return $text;
 	}
 
-	/**
-	 * HTML filter
-	 *
-	 * Provides filtering of input into accepted HTML.
-	 *
-	 * @param $text
-	 * @param $filter
-	 * @return string
-	 */
-    public static function html($text, $filter)
-	{
+    /**
+     * HTML filter
+     *
+     * Provides filtering of input into accepted HTML.
+     *
+     * @param $text
+     * @param $filter
+     * @return string
+     * @throws Kohana_Exception
+     */
+    public static function html($text, $filter): string
+    {
         $text = HTMLFilter::factory($text, $filter)->render();
 
 		if ($filter['settings']['html_nofollow'])
@@ -227,28 +226,23 @@ class Text extends Kohana_Text
 	 * @link http://michelf.ca/projects/php-markdown/
 	 * @link http://littoral.michelf.ca/code/php-markdown/php-markdown-extra-1.2.6.zip
 	 */
-    public static function markdown($text)
-	{
-		include_once Kohana::find_file('vendor/Markdown', 'markdown');
-
-		return Markdown($text);
+    public static function markdown($text): string
+    {
+        return Markdown::defaultTransform($text);
 	}
 
 	/**
 	 * Adds &lt;span class="initial"&gt; tag around the initial letter of each paragraph
 	 *
-	 * @param   string  $text  String to be processed
-	 *
+     * @param string $text String to be processed
 	 * @return  string
-	 *
 	 * @link    http://drupal.org/project/more_filters
 	 */
-	public static function initialcaps($text)
-	{
+    public static function initialcaps(string $text): string
+    {
 		// Adds <span class="initial"> tag around the initial letter of each paragraph.
 		// Only add after an opening <p> tag, ignoring any leading spaces. First letter must be a letter or number (no symbols).
 		// Works with contractions.
-		$processed_text = preg_replace('/(<p[^>]*>\s*)([A-Z0-9])([A-Z\'\s]{1})/i', '$1<span class="initial">$2</span>$3', $text);
-		return $processed_text;
+        return preg_replace('/(<p[^>]*>\s*)([A-Z0-9])([A-Z\'\s]{1})/i', '$1<span class="initial">$2</span>$3', $text);
 	}
 }

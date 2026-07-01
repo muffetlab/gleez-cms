@@ -1,7 +1,8 @@
+.cursor
 .idea
+.trae
 .DS_Store
 Thumbs.db
 /vendor
 composer.lock
 qodana.yaml
-/.trae

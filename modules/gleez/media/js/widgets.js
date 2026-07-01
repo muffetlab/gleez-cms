@@ -1,5 +1,5 @@
 /**
- * Move a widget in the widgetss table from one region to another via select list.
+ * Move a widget in the widgets table from one region to another via select list.
  *
  * This behavior is dependent on the tableDrag behavior, since it uses the
  * objects initialized in that behavior to update the row.
@@ -36,7 +36,7 @@
         })
     };
 
-	// tableDrag is required and we should be on the widgets admin page.
+    // tableDrag is required, and we should be on the widgets admin page.
 	if (typeof $.fn.tabledrag == 'undefined') {
 		return null
 	}
@@ -70,7 +70,7 @@
 
 			// Simulate that there was a selected element change, so the row is put
 			// back to from where the user tried to drag it.
-			regionField.change()
+            regionField.trigger('change')
 		}
 		else if ($(dragObject.rowObject.element).prev('tr').is('.region-message')) {
             const weightField = $('select.row-weight', dragObject.rowObject.element);
@@ -87,7 +87,7 @@
 
 	// Add the behavior to each region select list.
     $('select.widget-region-select', 'table#widgets').once('widget-region-select').each(function () {
-        $(this).change(function () {
+        $(this).on('change', function () {
 			// Make our new row and select field.
             const row = $(this).parents('tr:first'),
                 select = $(this),
@@ -123,7 +123,7 @@
 			// Modify empty regions with added or removed fields.
 			checkEmptyRegions(table, row)
 
-			// Remove focus from selectbox.
+            // Remove focus from the select box.
 			select.get(0).blur()
 		})
 	})

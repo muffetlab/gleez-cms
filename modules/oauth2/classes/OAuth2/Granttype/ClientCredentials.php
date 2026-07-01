@@ -22,7 +22,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		/** We use the same class for validating request for other grants
 		 *	make sure this is true only if the request grant_type is 'client_credentials'
 		 */
-		if($is_grant == TRUE)
+        if ($is_grant)
 		{
 			/**
 			 * The client credentials grant type MUST only be used by confidential clients
@@ -41,51 +41,42 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		return 'client_credentials';
 	}
 
-	public function validateRequest(Request $request, Response $response)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function validateRequest(Request $request, Response $response)
 	{
 		$this->request  = $request;
 		$this->response = $response;
 
 		if (!$clientData = $this->getClientCredentials()) {
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'Client credentials are required');
-
-			return FALSE;
 		}
 
 		if (!isset($clientData['client_id'])) 
 		{
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'Missing parameter: "client_id" is required');
-
-			return FALSE;
 		}
 
-		if (!isset($clientData['client_secret']) || empty($clientData['client_secret'])) 
+        if (empty($clientData['client_secret']))
 		{
 			if (!$this->config['allow_public_clients']) 
 			{
 				throw Oauth2_Exception::factory(400, 'invalid_client', 'Client credentials are required');
-
-				return FALSE;
 			}
 
 			// Is this a public client?
 			if ( ! $this->getClientDetails($clientData['client_id']))
 			{
 				throw Oauth2_Exception::factory(400, 'invalid_client', 'This client is invalid or must authenticate using a client secret');
-
-				return FALSE;
 			}
 		}
 		elseif ($this->checkClientCredentials($clientData['client_id'], $clientData['client_secret']) === false) {
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'The client credentials are invalid');
-
-			return false;
 		}
 
 		if (! $this->checkRestrictedGrantType($clientData['client_id'], $this->request->post('grant_type'))) {
 			throw Oauth2_Exception::factory(400, 'unauthorized_client', 'The grant type is unauthorized for this client_id');
-
-			return false;
 		}
 
 		$this->clientData = $this->getClientDetails($clientData['client_id']);
@@ -100,15 +91,18 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 
 	public function getUserId()
 	{
-		return isset($this->clientData['user_id']) ? $this->clientData['user_id'] : NULL;
+        return $this->clientData['user_id'] ?? NULL;
 	}
 
 	public function getScope()
 	{
-		return isset($this->clientData['scope']) ? $this->clientData['scope'] : NULL;
+        return $this->clientData['scope'] ?? NULL;
 	}
 
-	public function createAccessToken($client_id, $user_id, $scope = NULL)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL)
 	{
 		try
 		{
@@ -117,8 +111,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 			 *
 			 * @see http://tools.ietf.org/html/rfc6749#section-4.4.3
 			 */
-			$includeRefreshToken = false;
-			return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope, $includeRefreshToken);
+            return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope);
 		}
 		catch (Exception $e)
 		{
@@ -126,26 +119,23 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		}
 	}
 
-	/**
-	 * Internal function used to get the client credentials from HTTP basic
-	 * auth or POST data.
-	 *
-	 * According to the spec (draft 20), the client_id can be provided in
-	 * the Basic Authorization header (recommended) or via GET/POST.
-	 *
-	 * @return
-	 * A list containing the client identifier and password, for example
-	 * @code
-	 * return array(
-	 *     "client_id"     => CLIENT_ID,        // REQUIRED the client id
-	 *     "client_secret" => CLIENT_SECRET,    // OPTIONAL the client secret (may be omitted for public clients)
-	 * );
-	 * @endcode
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-2.3.1
-	 *
-	 * @ingroup oauth2_section_2
-	 */
+    /**
+     * Internal function used to get the client credentials from HTTP basic
+     * auth or POST data.
+     *
+     * According to the spec (draft 20), the client_id can be provided in
+     * the Basic Authorization header (recommended) or via GET/POST.
+     *
+     * @return array|false A list containing the client identifier and password, for example
+     * @code
+     * return array(
+     *     "client_id"     => CLIENT_ID,        // REQUIRED the client id
+     *     "client_secret" => CLIENT_SECRET,    // OPTIONAL the client secret (may be omitted for public clients)
+     * );
+     * @endcode
+     * @see http://tools.ietf.org/html/rfc6749#section-2.3.1
+     * @ingroup oauth2_section_2
+     */
 	protected function getClientCredentials()
 	{
 		if (isset($_SERVER['PHP_AUTH_USER']) && ! is_null($clientId = $_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && ! is_null($clientSecret = $_SERVER['PHP_AUTH_PW'])) 

@@ -1,4 +1,4 @@
-<?php echo __('Hello :name!', array(':name' => ($nick ? $nick : $name))) . PHP_EOL ?>
+<?php echo __('Hello :name!', array(':name' => ($nick ?: $name))) . PHP_EOL ?>
 <?php echo __('Thank you for registering at :site.', array(':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'))) . PHP_EOL ?>
 
 <?php echo __('IMPORTANT:') . PHP_EOL ?>

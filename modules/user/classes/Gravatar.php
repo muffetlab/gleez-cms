@@ -2,9 +2,8 @@
 /**
  * [Gleez Gravatar](gleez/gravatar)
  *
- * [Gravatar's](http://en.gravatar.com) are universal avatars available
- * to all web sites and services. Users must register their email addresses
- * with Gravatar before their avatars will be usable in Gleez.
+ * [Gravatar's](http://en.gravatar.com) are universal avatars available to all websites and services. Users must
+ * register their email addresses with Gravatar before their avatars will be usable in Gleez.
  *
  * Users with gravatars can have a default image of your selection.
  *
@@ -115,16 +114,15 @@ class Gravatar {
 	 */
 	protected $_store_location;
 
-	/**
-	 * Get a singleton Gravatar instance
-	 *
-	 * @param   string  $email   User email
-	 * @param   array   $config  Gravatar config [Optional]
-	 *
-	 * @return  Gravatar
-	 *
-	 * @uses    Config::get
-	 */
+    /**
+     * Get a singleton Gravatar instance
+     *
+     * @param string $email User email
+     * @param array $config Gravatar config [Optional]
+     * @return Gravatar
+     * @throws Kohana_Exception
+     * @uses Config::get
+     */
 	public static function instance($email, $config = NULL)
 	{
 		if ( ! isset(self::$_instances[$email]))
@@ -142,14 +140,15 @@ class Gravatar {
 		return self::$_instances[$email];
 	}
 
-	/**
-	 * Gravatar class constructor
-	 *
-	 * [!!] This method cannot be accessed directly, you must use [Gravatar::instance].
-	 *
-	 * @param   string              $email   User email
-	 * @param   array|Config_Group  $config  Gravatar config
-	 */
+    /**
+     * Gravatar class constructor
+     *
+     * [!!] This method cannot be accessed directly, you must use [Gravatar::instance].
+     *
+     * @param string $email User email
+     * @param array|Config_Group $config Gravatar config
+     * @throws Kohana_Exception
+     */
 	protected function __construct($email, $config)
 	{
 		// Set the email address
@@ -169,7 +168,7 @@ class Gravatar {
 	 */
 	public function __toString()
 	{
-		return (string) $this->buildURL();
+        return $this->buildURL();
 	}
 
 	/**
@@ -194,7 +193,7 @@ class Gravatar {
 			$url = self::HTTPS_URL;
 		}
 
-		$url .= $this->getEmailHash($this->_email);
+        $url .= $this->getEmailHash();
 
 		$query = array(
 			's' => $this->getSize(),
@@ -281,25 +280,23 @@ class Gravatar {
 		return $this->_default_image;
 	}
 
-	/**
-	 * Creates a image link
-	 *
-	 * Example:
-	 * ~~~
-	 * echo Gravatar::instance('username@site.com')->getImage();
-	 * ~~~
-	 *
-	 * @since   1.3.0
-	 *
-	 * @param   array    $attrs     Default attributes [Optional]
-	 * @param   mixed    $protocol  Protocol string, [Request], or boolean [Optional]
-	 * @param   boolean  $index     Add index file to URL? [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    Arr::merge
-	 * @uses    HTML::resize
-	 */
+    /**
+     * Creates a image link
+     *
+     * Example:
+     * ~~~
+     * echo Gravatar::instance('username@site.com')->getImage();
+     * ~~~
+     *
+     * @param array $attrs Default attributes [Optional]
+     * @param mixed $protocol Protocol string, [Request], or boolean [Optional]
+     * @param boolean $index Add index file to URL? [Optional]
+     * @return string
+     * @throws Kohana_Exception
+     * @uses Arr::merge
+     * @uses HTML::resize
+     * @since 1.3.0
+     */
 	public function getImage(array $attrs = NULL, $protocol = NULL, $index = FALSE)
 	{
 		// Set auto attributes
@@ -328,15 +325,14 @@ class Gravatar {
 		return $this->_valid_formats;
 	}
 
-	/**
-	 * Get list of valid picture mime types for downloading
-	 *
-	 * @since   1.4.0
-	 *
-	 * @return  array
-	 *
-	 * @uses    Config::get
-	 */
+    /**
+     * Get list of valid picture mime types for downloading
+     *
+     * @return array
+     * @throws Kohana_Exception
+     * @uses Config::get
+     * @since 1.4.0
+     */
 	public function getValidTypes()
 	{
 		$valid_formats = array();
@@ -596,15 +592,15 @@ class Gravatar {
 		return $this;
 	}
 
-	/**
-	 * Prepare Gravatar config
-	 *
-	 * [!!] This is called automatically by [Gravatar::__construct].
-	 *
-	 * @param   array|Config_Group  $config  Gravatar config
-	 *
-	 * @return  array
-	 */
+    /**
+     * Prepare Gravatar config
+     *
+     * [!!] This is called automatically by [Gravatar::__construct].
+     *
+     * @param array|Config_Group $config Gravatar config
+     * @return array
+     * @throws Kohana_Exception
+     */
 	protected function _prepareConfig($config)
 	{
 		if (isset($config['secure_url']) AND $config['secure_url'])
@@ -727,21 +723,7 @@ class Gravatar {
 	 */
 	public function download()
 	{
-		try
-		{
-			$headers = get_headers($this, 1);
-		}
-		catch (ErrorException $e)
-		{
-			if ($e->getCode() === 2)
-			{
-				throw new Kohana_Exception('URL does not seem to exist', array(), 403);
-			}
-			else
-			{
-				throw new Kohana_Exception($e->getMessage(), array(), $e->getCode());
-			}
-		}
+        $headers = get_headers($this, 1);
 
 		// Make sure content type exists
 		if ( ! isset($headers['Content-Type']))
@@ -759,14 +741,7 @@ class Gravatar {
 		$filename = $this->getEmailHash() . '.' . File::ext_by_mime($headers['Content-Type']);
 
 		// Try to download
-		try
-		{
-			file_put_contents($this->getStoreLocation($filename), file_get_contents($this));
-		}
-		catch (ErrorException $e)
-		{
-			throw new Kohana_Exception('File could not been downloaded: :msg', array(':msg' => $e->getMessage()), 400);
-		}
+        file_put_contents($this->getStoreLocation($filename), file_get_contents($this));
 
 		$result = new stdClass;
 

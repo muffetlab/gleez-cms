@@ -20,12 +20,15 @@ class ORM_Versioned extends Gleez_Model
 	 */
 	protected $_restore =  FALSE;
 
-	/**
-	 * Overload `ORM::update` to support versioned data
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @return  ORM
-	 */
+    /**
+     * Overload `ORM::update` to support versioned data
+     *
+     * @param Validation|null $validation Validation object
+     * @return  ORM
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function update(Validation $validation = NULL): Kohana_ORM
     {
         $object = null;
@@ -77,14 +80,15 @@ class ORM_Versioned extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Restores the object with data from stored version
-	 *
-	 * @param   integer  version number you want to restore
-	 * @return  ORM
-	 */
-	public function restore($version)
-	{
+    /**
+     * Restores the object with data from stored version
+     *
+     * @param int $version Version number you want to restore
+     * @return  ORM
+     * @throws Kohana_Exception|ReflectionException
+     */
+    public function restore(int $version): ORM
+    {
 		if ( ! $this->loaded())
 			return $this;
 
@@ -123,14 +127,16 @@ class ORM_Versioned extends Gleez_Model
 		return $this;
 	}
 
-	/**
-	 * Loads a version from current object
-	 *
-	 * @chainable
-	 * @return  ORM
-	 */
-	public function version( $version = FALSE )
-	{
+    /**
+     * Loads a version from current object
+     *
+     * @chainable
+     * @param int $version
+     * @return  ORM
+     * @throws Kohana_Exception
+     */
+    public function version(int $version = 0): ORM
+    {
 		if ( ! $this->loaded())
 			return $this;
 
@@ -142,27 +148,28 @@ class ORM_Versioned extends Gleez_Model
 
 		if (count($query))
 		{
-			$this->values($query->current());
+            $this->_load_values($query->current());
 		}
 
 		return $this;
 	}
 
-	/**
-	 * Overloads ORM::delete() to delete all versioned entries of current object
-	 * and the object itself
-	 *
-	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
-	 * @return  ORM
-	 */
-	public function delete($soft = FALSE): Kohana_ORM
+    /**
+     * Overloads ORM::delete() to delete all versioned entries of current object
+     * and the object itself
+     *
+     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @return  ORM
+     * @throws Kohana_Exception
+     */
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
 		// Use primary key value
 		$id = $this->pk();
 
-		if ($status = parent::delete($soft))
+        if ($status = parent::delete())
 		{
-			if (is_array($this->_deleted_column) && $soft == TRUE)
+            if (is_array($this->_deleted_column) && $soft)
 			{
 				$data = array();
 
@@ -190,13 +197,14 @@ class ORM_Versioned extends Gleez_Model
 		return $status;
 	}
 
-	/**
-	 * Determines the name of a foreign key for a specific table.
-	 *
-	 * @return  string
-	 */
-	public function foreign_key()
-	{
+    /**
+     * Determines the name of a foreign key for a specific table.
+     *
+     * @return  string
+     * @throws Kohana_Exception
+     */
+    public function foreign_key(): string
+    {
 		return Inflector::singular($this->_table_name).$this->_foreign_key_suffix;
 	}
 
@@ -205,8 +213,8 @@ class ORM_Versioned extends Gleez_Model
 	 *
 	 * @return  string
 	 */
-	public function version_table()
-	{
+    public function version_table(): string
+    {
 		return $this->_table_name.'_versions';
 	}
  

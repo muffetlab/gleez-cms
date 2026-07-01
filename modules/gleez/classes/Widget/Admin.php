@@ -14,29 +14,33 @@ class Widget_Admin extends Widget {
 	public function save(array $post) {}
 	public function delete(array $post) {}
 
-	public function render()
-	{
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function render(): string
+    {
 		switch($this->name)
 		{
 			case 'donate':
 				return $this->donate();
-			break;
-			case 'welcome':
+            case 'welcome':
 				return $this->welcome();
-			break;
-			case 'info':
+            case 'info':
 				return $this->system_info();
-			break;
-			case 'shortcut':
+            case 'shortcut':
 				return $this->shortcut();
-			break;
-			default:
+            default:
                 return '';
 			}
 	}
 
-	public function shortcut()
-	{
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function shortcut(): string
+    {
 		$menus = Menu::items('management')->get_items();
 		unset($menus['administer']);
 		return View::factory('widgets/shortcuts')
@@ -44,23 +48,33 @@ class Widget_Admin extends Widget {
 				->render();
 	}
 
-	public function donate()
-	{
+    /**
+     * @throws View_Exception
+     */
+    public function donate(): string
+    {
 		return View::factory('widgets/static')->set(array(
 			'title' => __('Donate'),
 			'content' => __('If you use Gleez, we ask that you donate to ensure future development is possible.')
 		))->render();
 	}
 
-	public function welcome()
-	{
+    /**
+     * @throws View_Exception
+     */
+    public function welcome(): string
+    {
 		return View::factory('widgets/welcome')->set(array(
 			'title' => __('Welcome'),
 		))->render();
 	}
 
-	public function system_info()
-	{
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function system_info(): string
+    {
         $dbVersion = DB::query(Database::SELECT, 'SHOW VARIABLES WHERE variable_name = "version"')
             ->execute()
             ->get('Value');

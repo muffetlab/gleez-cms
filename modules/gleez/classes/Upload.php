@@ -40,18 +40,17 @@ class Upload extends Kohana_Upload
     /**
      * Picture validation for image upload
      *
-     * @param   array   $file        $_FILES item
-     * @param   string  $upload_dir  Relative upload dir [Optional]
+     * @param array $file $_FILES item
+     * @param string|null $upload_dir Relative upload dir [Optional]
      *
      * Example:
      * ~~~
      * $filepath = Upload::uploadImage($_FILES);
      * ~~~
      *
-     * @since   1.2.0
-     *
      * @return  NULL|string          NULL when filed, otherwise file path
-     *
+     * @throws Kohana_Exception
+     * @since   1.2.0
      * @uses    System::mkdir
      * @uses    Message::error
      * @uses    Log::ERROR
@@ -60,7 +59,7 @@ class Upload extends Kohana_Upload
      * @uses    Config::get
      * @uses    File::getUnique
      */
-    public static function uploadImage($file, $upload_dir = NULL)
+    public static function uploadImage(array $file, string $upload_dir = NULL): ?string
     {
     	if (is_null($upload_dir))
     	{

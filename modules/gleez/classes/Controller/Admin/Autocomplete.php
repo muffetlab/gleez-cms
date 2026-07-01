@@ -13,10 +13,10 @@ class Controller_Admin_Autocomplete extends Controller {
 	/**
 	 * The before() method is called before controller action
 	 *
+     * @throws  HTTP_Exception_404|HTTP_Exception
+     * @uses    Request::uri
 	 * @uses    Request::is_ajax
-	 * @uses    Request::uri
-	 * @throws  HTTP_Exception_404
-	 */
+     */
 	public function before()
 	{
 		// Ajax request only!
@@ -46,14 +46,15 @@ class Controller_Admin_Autocomplete extends Controller {
 		parent::after();
 	}
 
-	/**
-	 * Retrieve a JSON object containing autocomplete suggestions for existing aliases
-	 *
-	 * @uses  ACL::required
-	 * @uses  DB::select
+    /**
+     * Retrieve a JSON object containing autocomplete suggestions for existing aliases
+     *
+     * @throws HTTP_Exception_403|Kohana_Exception
+     * @uses  DB::select
      * @uses  HTML::chars
-	 * @uses  JSON::encode
-	 */
+     * @uses  JSON::encode
+     * @uses  ACL::required
+     */
 	public function action_links()
 	{
 		ACL::required('administer menu');

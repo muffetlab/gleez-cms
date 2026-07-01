@@ -61,12 +61,15 @@ class Model_Tag extends Gleez_Model
 		);
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation  $validation  Validation object [Optional]
-	 * @return  ORM
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation|null $validation Validation object [Optional]
+     * @return  ORM
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		parent::save( $validation );
@@ -83,14 +86,14 @@ class Model_Tag extends Gleez_Model
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships.
 	 *
-	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
+     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
 	 * @return  ORM
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-	public function delete($soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
-		if (is_array($this->_deleted_column) && $soft == TRUE)
+        if (is_array($this->_deleted_column) && $soft)
 		{
 
 		}
@@ -98,7 +101,7 @@ class Model_Tag extends Gleez_Model
 		{
 			$source = $this->rawurl;
 
-			parent::delete($soft);
+            parent::delete();
 
 			// Delete the path aliases associated with this object
 			Path::delete( array('source' => $source) );
@@ -155,43 +158,35 @@ class Model_Tag extends Gleez_Model
         switch ($column) {
 			case 'name':
                 return HTML::chars($this->get('name') ?? '');
-			break;
-			case 'rawname':
-				// Raw fields without markup. Usage: during edit or etc!
+            case 'rawname':
+                // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('name');
-			break;
-			case 'rawurl':
+            case 'rawurl':
 				return Route::get($this->type)->uri(array('action' => 'tag', 'id' => $this->id));
-			break;
-			case 'edit_url':
-				// Model specific links; view, edit, delete url's.
+            case 'edit_url':
 				return Route::get('admin/tag')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
-				// Model specific links; view, edit, delete url's.
+            case 'delete_url':
 				return Route::get('admin/tag')->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-			case 'url':
+            case 'url':
 			case 'link':
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}
 
-	/**
-	 * Check by triggering error if name exists.
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation Validation object
-	 * @param   string      $field      Field name
-	 *
-	 * @uses    DB::select
-	 * @uses    DB::expr
-	 * @uses    Validation::error
-	 */
-	public function tag_available(Validation $validation, $field)
+    /**
+     * Check by triggering error if name exists.
+     * Validation callback.
+     *
+     * @param Validation $validation Validation object
+     * @param string $field Field name
+     * @throws Kohana_Exception
+     * @uses    DB::expr
+     * @uses    Validation::error
+     * @uses    DB::select
+     */
+    public function tag_available(Validation $validation, string $field)
 	{
 		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 				->from($this->_table_name)

@@ -9,7 +9,7 @@ return array
 			 * The following options are available for MySQLi:
 			 *
 			 * string   hostname     server hostname, or socket
-			 * string   database     database name
+             * string   database     Database name
 			 * string   username     database username
 			 * string   password     database password
 			 * boolean  persistent   use persistent connections?

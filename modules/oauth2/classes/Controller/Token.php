@@ -21,9 +21,11 @@ class Controller_Token extends Controller
 	private $client_id;
 	private $clientData;
 
-	/**
-	 * The before() method is called before controller action
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Kohana_Exception
+     */
 	public function before()
 	{
 		parent::before();
@@ -42,7 +44,11 @@ class Controller_Token extends Controller
 		);
 	}
 
-	public function action_index()
+    /**
+     * @throws Kohana_Exception
+     * @throws HTTP_Exception
+     */
+    public function action_index()
 	{
 		try
 		{
@@ -87,25 +93,23 @@ class Controller_Token extends Controller
 		}
 	}
 
-	/**
-	 * Grant or deny a requested access token.
-	 * This would be called from the "/token" endpoint as defined in the spec.
-	 * You can call your endpoint whatever you want.
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-4
-	 * @see http://tools.ietf.org/html/rfc6749#section-10.6
-	 * @see http://tools.ietf.org/html/rfc6749#section-4.1.3
-	 *
-	 * @ingroup oauth2_section_4
-	 */
+    /**
+     * Grant or deny a requested access token.
+     * This would be called from the "/token" endpoint as defined in the spec.
+     * You can call your endpoint whatever you want.
+     *
+     * @see http://tools.ietf.org/html/rfc6749#section-4
+     * @see http://tools.ietf.org/html/rfc6749#section-10.6
+     * @see http://tools.ietf.org/html/rfc6749#section-4.1.3
+     * @ingroup oauth2_section_4
+     * @throws Oauth2_Exception
+     */
 	protected function grantAccessToken()
 	{
 		if (strtolower($this->request->method()) != 'post')
 		{
 			$this->response->headers(array('Allow' => 'POST'));
 			throw Oauth2_Exception::factory(405, 'invalid_request', 'The request method must be POST when requesting an access token', NULL, '#section-3.2');
-
-			return FALSE;
 		}
 
 		/* Determine grant type from request
@@ -113,15 +117,11 @@ class Controller_Token extends Controller
 		 */
 		if (!$grantTypeIdentifier = $this->request->post('grant_type')) {
 			throw Oauth2_Exception::factory(400, 'invalid_request', 'The grant type was not specified in the request');
-
-			return FALSE;
 		}
 
 		if (!isset($this->grantTypes[$grantTypeIdentifier])) {
 			/* TODO: If this is an OAuth2 supported grant type that we have chosen not to implement, throw a 501 Not Implemented instead */
 			throw Oauth2_Exception::factory(400, 'unsupported_grant_type', sprintf('Grant type "%s" not supported', $grantTypeIdentifier));
-
-			return null;
 		}
 
 		$grantType = $this->grantTypes[$grantTypeIdentifier];
@@ -160,9 +160,7 @@ class Controller_Token extends Controller
 		{
 			// validate the Client ID (if applicable)
 			if (!is_null($storedClientId = $grantType->getClientId()) && $storedClientId != $clientId) {
-				throw Oauth2_Exception::factory(400, 'invalid_grant', sprintf('%s doesn\'t exist or is invalid for the client', $grantTypeIdentifier));
-
-				return null;
+                throw Oauth2_Exception::factory(400, 'invalid_grant', sprintf("%s doesn't exist or is invalid for the client", $grantTypeIdentifier));
 			}
 		}
 

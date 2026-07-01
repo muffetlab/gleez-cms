@@ -46,12 +46,15 @@ class Model_Widget extends ORM {
 		);
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation $validation Validation object [Optional]
-	 * @return  ORM
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation|null $validation Validation object [Optional]
+     * @return  ORM
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		if (is_array($this->roles) AND count($this->roles) > 0)
@@ -66,26 +69,24 @@ class Model_Widget extends ORM {
 		return parent::save($validation);
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties
+     *
      * @param string $column
-	 * @return  mixed
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  System::icons
-	 */
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     * @uses  System::icons
+     * @uses  Route::get
+     */
     public function __get(string $column)
 	{
         switch ($column) {
 			case 'edit_url':
 				return Route::get('admin/widget')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'icons':
+            case 'icons':
 				return System::icons();
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}

@@ -32,7 +32,7 @@ return array(
 	//Must be plural to properly handle joins.
 	'tagging_table'           => 'posts_tags',
 
-	// The foreign key name of the object being tagged (ie. blog_id, comment_id, etc.)
+    // The foreign key name of the object being tagged (i.e. blog_id, comment_id, etc.)
 	'object_foreign_key'      => 'post_id',
 
 );

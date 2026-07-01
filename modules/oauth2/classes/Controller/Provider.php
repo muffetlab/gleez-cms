@@ -57,17 +57,19 @@ class Controller_Provider extends Template {
 	 */
 	protected $session;
 
-	/**
-	 * The before() method is called before controller action.
-	 *
-	 * @throws Http_Exception_404 If the provider is disabled
-	 *
-	 * @uses  Auth::logged_in
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Config::load
-	 * @uses  Session::get
-	 */
+    /**
+     * The before() method is called before controller action.
+     *
+     * @throws Http_Exception_404 If the provider is disabled
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses Auth::logged_in
+     * @uses Route::get
+     * @uses Route::uri
+     * @uses Config::load
+     * @uses Session::get
+     */
 	public function before()
 	{
 		parent::before();
@@ -91,7 +93,7 @@ class Controller_Provider extends Template {
 		$this->route = $this->request->route();
 
 		// Load the client config
-		$this->provider_config = Kohana::$config->load("oauth2.providers.{$this->provider}");
+        $this->provider_config = Kohana::$config->load("oauth2.providers.$this->provider");
 		$this->client = OAuth2_Client::factory($this->provider, $this->provider_config['id'], $this->provider_config['secret']);
 
 		if ($token = $this->session->get($this->key('access')))
@@ -101,9 +103,11 @@ class Controller_Provider extends Template {
 		}
 	}
 
-	/**
-	 * The after() method is called after controller action
-	 */
+    /**
+     * The after() method is called after controller action
+     *
+     * @throws Kohana_Exception
+     */
 	public function after()
 	{
 		$this->response->body($this->content);
@@ -113,7 +117,7 @@ class Controller_Provider extends Template {
 
 	public function action_index()
 	{
-		//$this->response->body("we r in provider controller");
+        // $this->response->body("We're in provider controller");
 	}
 
 	public function action_login()
@@ -144,7 +148,10 @@ class Controller_Provider extends Template {
 		}
 	}
 
-	public function action_callback()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_callback()
 	{
 		try
 		{
@@ -172,9 +179,7 @@ class Controller_Provider extends Template {
 		{
 			Message::error(__("Couldn't login. Contact administer for error!"));
 			Kohana::$log->add(Log::ERROR,  (string) $e);
-		}
-		catch (\Gleez\Database\DatabaseException $e)
-		{
+		} catch (Database_Exception $e) {
 			// Skiping duplicate record entry exception.
 			Kohana::$log->add(Log::ERROR,  (string) $e);
 		}
@@ -196,7 +201,10 @@ class Controller_Provider extends Template {
 		$this->request->redirect( Session::instance()->get('destination', Route::get('user')->uri(array('action' => 'profile'))));
 	}
 
-	protected function oauthComplete()
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function oauthComplete()
 	{
 		// Login succesful
 		$response = $this->client->get_user_data();
@@ -217,9 +225,11 @@ class Controller_Provider extends Template {
 		return $response;
 	}
 
-	/**
-	* If not, store the new provider_id (as a new user) or attach to existing user
-	*/
+    /**
+     * If not, store the new provider_id (as a new user) or attach to existing user
+     *
+     * @throws Kohana_Exception
+     */
 	protected function sso_signup($data, $user = FALSE)
 	{
 		//vars for processing stuff
@@ -247,9 +257,7 @@ class Controller_Provider extends Template {
 
 				return true;
 			}
-		}
-		else if($user == FALSE AND Auth::instance()->logged_in())
-		{
+        } elseif (!$user && Auth::instance()->logged_in()) {
 			// Associate their new oAuth with their current account.
 			$account = Auth::instance()->get_user();
 
@@ -259,9 +267,7 @@ class Controller_Provider extends Template {
 			Message::success(__('Attached identity :nick (:provider) to your account.',
 					array(':nick' => $account->nick, ':provider' => $this->provider))
 				);
-		}
-		else if($user == FALSE AND !Auth::instance()->logged_in())
-		{
+        } elseif (!$user && !Auth::instance()->logged_in()) {
             $account = ORM::factory('User')->where('mail', '=', $data['email'])->find();
 
 			if(!$account->loaded()) $creation = TRUE;
@@ -291,7 +297,7 @@ class Controller_Provider extends Template {
 
 	public function key($name)
 	{
-		return "api_{$this->provider}_{$name}";
+        return "api_{$this->provider}_$name";
 	}
 
 }

@@ -15,7 +15,10 @@ class Controller_Admin_Tool extends Controller_Admin {
 		$this->title = __('Administer Tools');
 	}
 
-	public function action_php()
+    /**
+     * @throws View_Exception
+     */
+    public function action_php()
 	{
 		//getting the php info clean!
 		ob_start();
@@ -23,7 +26,7 @@ class Controller_Admin_Tool extends Controller_Admin {
 		$phpinfo = ob_get_contents();
 		ob_end_clean();
 
-		//strip the body html
+        // Strip the body HTML
 		$phpinfo = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $phpinfo);
 
 		//format the data
@@ -71,7 +74,10 @@ class Controller_Admin_Tool extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	public function action_environment()
+    /**
+     * @throws View_Exception
+     */
+    public function action_environment()
 	{
 		$gleezEnv = array();
 

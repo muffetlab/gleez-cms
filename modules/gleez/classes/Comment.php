@@ -24,6 +24,11 @@ class Comment {
 	const PINGBACK          = 1;
 	const TRACKBACK         = 2;
 
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     */
     public static function form($controller, $item, $captcha = FALSE)
 	{
 		// Set default comment form action
@@ -82,7 +87,7 @@ class Comment {
 			catch (ORM_Validation_Exception $e)
 			{
 				// @todo Add messages
-				$errors = $e->errors('models', TRUE);
+                $errors = $e->errors('models');
 			}
 		}
 
@@ -92,8 +97,8 @@ class Comment {
 	/**
 	 * Make sure that the state is legal.
 	 */
-	public static function valid_state($value)
-	{
+    public static function valid_state($value): bool
+    {
 		return in_array( $value, array_keys( Comment::status() ) );
 	}
 
@@ -102,8 +107,8 @@ class Comment {
 	 *
      * @return array statuses
      */
-	public static function status()
-	{
+    public static function status(): array
+    {
 		$states = array(
 			'publish'   => __('Publish'),
 			'draft'     => __('Unpublish'),
@@ -111,19 +116,17 @@ class Comment {
 			'delete'    => __('Delete'),
 		);
 
-		$values = Module::action('comment_status', $states);
-
-		return $values;
+        return Module::action('comment_status', $states);
 	}
 
 	/**
 	 * List of actions
 	 *
-	 * @param   boolean  $list  TRUE for dropdown for bult actions
+     * @param boolean $list TRUE for dropdown for bult actions
 	 * @return  array
 	 */
-	public static function bulk_actions( $list = FALSE )
-	{
+    public static function bulk_actions(bool $list = FALSE): array
+    {
 		$states = array(
 			'publish' => array(
 				'label' => __('Publish the selected comments'),
@@ -165,7 +168,10 @@ class Comment {
 		return $values;
 	}
 
-	public static function bulk_update(array $ids, array $actions)
+    /**
+     * @throws Kohana_Exception
+     */
+    public static function bulk_update(array $ids, array $actions)
 	{
         $posts = ORM::factory('Comment')->where('id', 'IN', $ids)->find_all();
 

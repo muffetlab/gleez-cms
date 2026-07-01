@@ -23,10 +23,13 @@
 					   <?php echo HTML::anchor("user/view/".$accept->id , User::getAvatar($accept, array('size' => 80)), array('class' => 'action-view','title'=> __('view profile'))) ?>
 					</div>
 					<div class="col-md-5">
-					    <?php echo HTML::anchor("user/view/".$accept->id , $accept->nick, array('class' => 'action-view', 'title'=> __('view profile'))) ?></br>
-					    <?php echo HTML::anchor("#", $accept->mail, array('title'=> __('mail'))) ?></br>
-						<?php echo ($accept->dob != 0)? $accept->dob : '__'; ?></br>
-						<?php echo HTML::anchor("$accept->homepage", $accept->homepage) ?></br>
+                        <?php echo HTML::anchor("user/view/" . $accept->id, $accept->nick, array('class' => 'action-view', 'title' => __('view profile'))) ?>
+                        <br>
+                        <?php echo HTML::anchor("#", $accept->mail, array('title' => __('mail'))) ?>
+                        <br>
+                        <?php echo ($accept->dob != 0) ? $accept->dob : '__'; ?>
+                        <br>
+                        <?php echo HTML::anchor("$accept->homepage", $accept->homepage) ?>
 					</div>
 				<?php endif; ?>
 

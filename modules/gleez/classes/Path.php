@@ -11,7 +11,7 @@
 class Path {
 
 	/**
-	 * Default alias for frontpage
+     * Default alias for the front page
 	 * @type string
 	 */
 	const FRONT_ALIAS = '<front>';
@@ -21,11 +21,11 @@ class Path {
      *
      * @param Route $route Current route object
      * @param array $params Matched params
-     * @return array|false
+     * @return array
      * @throws Kohana_Exception
      */
-    public static function lookup(Route $route, array $params)
-	{
+    public static function lookup(Route $route, array $params): array
+    {
 		$regex 	= "#(/p(?P<page>\d+))+$#uD";  // preg_match()
 		$reg_ex = "#(/p\d+)+$#uD";            // preg_replace()
 		$page 	= NULL;                       // default pager id is null
@@ -60,8 +60,8 @@ class Path {
             return $params;
 		}
 
-		// reset the self::FRONT_ALIAS tag to '' orelse request fails
-		if ($alias === self::FRONT_ALIAS AND $result)
+        // Reset the self::FRONT_ALIAS tag to '', or else the request fails.
+        if ($alias === self::FRONT_ALIAS)
 		{
 			$result['alias'] = '';
 		}
@@ -85,8 +85,8 @@ class Path {
 	 * ~~~
 	 *
 	 * @param   array  $values  Array of aliases
-	 * @return  string
-	 */
+     * @return false|Model|ORM
+     */
 	public static function save(array $values)
 	{
 		try
@@ -122,8 +122,8 @@ class Path {
 	 * @param   mixed  $criteria  A number representing the pid or an array of criteria
 	 * @return  boolean
 	 */
-	public static function delete($criteria)
-	{
+    public static function delete($criteria): bool
+    {
 		try
 		{
 			$query = DB::delete('paths');
@@ -195,11 +195,11 @@ class Path {
 	/**
 	 * Fetch a specific URL alias from the database
 	 *
-	 * @param   string  $source  A string representing the source.
+     * @param string $source A string representing the source.
 	 * @return  string  If alias exists alias or source
 	 */
-	public static function alias($source)
-	{
+    public static function alias(string $source): string
+    {
 		try
 		{
 			return DB::select('alias')->from('paths')
@@ -229,15 +229,15 @@ class Path {
 	 * - Convert to lower-case
 	 * - Shorten to a desired length and logical position based on word boundaries
 	 *
-	 * @param   string  $string  A string to clean
+     * @param string $string A string to clean
 	 * @return  string  The cleaned string
 	 */
-	public static function clean($string)
-	{
+    public static function clean(string $string): string
+    {
 		$separator = '-';
 
         // Empty strings do not need any processing.
-		if ($string === '' || $string === NULL)
+        if ($string === '')
 		{
 			return '';
 		}
@@ -258,18 +258,18 @@ class Path {
 		return trim($string, $separator);
 	}
 
-	/**
-	 * Check if a path matches any pattern in a set of patterns
-	 *
-	 * @param  string  $path  The path to match
-	 * @param  string  $patterns  String containing a set of patterns separated by \n, \r or \r\n.
-	 *
-	 * @return  boolean  TRUE if the path matches a pattern, FALSE otherwise
-	 */
-	public static function match_path($path, $patterns)
-	{
+    /**
+     * Check if a path matches any pattern in a set of patterns
+     *
+     * @param string $path The path to match
+     * @param string $patterns String containing a set of patterns separated by \n, \r or \r\n.
+     * @return  boolean  TRUE if the path matches a pattern, FALSE otherwise
+     * @throws Kohana_Exception
+     */
+    public static function match_path(string $path, string $patterns): bool
+    {
 		// Convert path settings to a regular expression.
-		// Therefore replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.
+        // Therefore, replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.
 		$to_replace = array(
 			'/(\r\n?|\n)/', // newlines
 			'/\\\\\*/',     // asterisks

@@ -2,7 +2,7 @@
 /**
  * Widgets Core Class
  *
- * This class for handling widget(s) in template regions (sidebar left/right etc).
+ * This class for handling widget(s) in template regions (sidebar left/right etc.).
  *
  * @package    Gleez\Widget
  * @author     Gleez Team
@@ -14,31 +14,31 @@ class Widgets {
 
 	/**
 	 * Widgets instance
-	 * @var array
+     * @var Widgets
 	 */
 	protected static $instance;
 
 	/**
 	 * Associative array of widgets
-	 * @var string
+     * @var array
 	 */
 	protected $_widgets = array();
 
 	/**
 	 * Associative array of widget regions that will be loaded
-	 * @var string
+     * @var array
 	 */
 	protected $_regions = array();
 
 	/**
 	 * Count of widgets inside a region
-	 * @var string
+     * @var array
 	 */
 	protected $_widget_count = array();
 
 	/**
 	 * Status of Widgets, if it's already loaded from the database
-	 * @var string
+     * @var bool
 	 */
 	protected $_loaded = FALSE;
 
@@ -54,15 +54,17 @@ class Widgets {
 	 */
 	protected $_format;
 
-	/**
-	 * Singleton pattern
-	 *
-	 * @param  string  $region  Region. By default `right`. [Optional]
-	 * @param  string  $format  Format. By default `html`. [Optional]
-	 * @return Widgets instance
-	 */
-	public static function instance($region = 'right', $format = 'html')
-	{
+    /**
+     * Singleton pattern
+     *
+     * @param string $region Region. By default `right`. [Optional]
+     * @param string $format Format. By default `html`. [Optional]
+     * @return Widgets instance
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
+    public static function instance(string $region = 'right', string $format = 'html'): Widgets
+    {
 		if ( ! isset(Widgets::$instance))
 		{
 			new Widgets($region, $format);
@@ -71,12 +73,14 @@ class Widgets {
 		return Widgets::$instance;
 	}
 
-	/**
-	 * Constructor, globally sets region and format
-	 *
-	 * @param $region
-	 * @param $format
-	 */
+    /**
+     * Constructor, globally sets region and format
+     *
+     * @param $region
+     * @param $format
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
 	public function __construct($region, $format)
 	{
 		// Store the region locally
@@ -95,14 +99,14 @@ class Widgets {
 	/**
 	 * Add's a new widget to the widgets
 	 *
-	 * @param   string  $region  Widget region
-	 * @param   string  $name    Unique widget name
-	 * @param   string  $widget  Widget object
-	 * @throws  Kohana_Exception
-	 * @return  Widget
-	 */
-	public function add($region, $name, $widget)
-	{
+     * @param string $region Widget region
+     * @param string $name Unique widget name
+     * @param object $widget Widget object
+     * @return  Widgets
+     * @throws  Kohana_Exception
+     */
+    public function add(string $region, string $name, $widget): Widgets
+    {
 		if ( ! is_object($widget))
 		{
 			throw new Kohana_Exception('Not a valid widget object: :widget', array(':widget' => $name));
@@ -133,14 +137,14 @@ class Widgets {
 	 * $widget = $region->get('login');
 	 * ~~~
 	 *
-	 * @param   string  $name  Widget name
-	 * @return  Widget
+     * @param string $name Widget name
+     * @return  object|null
 	 */
-	public function get($name)
+    public function get(string $name)
 	{
 		if ( ! isset($this->_widgets[$name]))
 		{
-			return FALSE;
+            return null;
 		}
 
 		return $this->_widgets[$name];
@@ -158,10 +162,10 @@ class Widgets {
 	 * $widget = $region->remove(FALSE, 'login');
 	 * ~~~
 	 *
-	 * @param   string  $region  Region name [Optional]
-	 * @param   string  $widget  Widget name [Optional]
+     * @param string|null $region Region name [Optional]
+     * @param string|null $widget Widget name [Optional]
 	 */
-	public function remove($region = NULL, $widget = NULL)
+    public function remove(string $region = NULL, string $widget = NULL)
 	{
 		if ( ! is_null($region))
 		{
@@ -189,10 +193,10 @@ class Widgets {
 	 * $widget = $region->region('right');
 	 * ~~~
 	 *
-	 * @param   string  $region  Region name [Optional]
+     * @param string|null $region Region name [Optional]
 	 * @return  $this|string
 	 */
-	public function region($region = NULL)
+    public function region(string $region = NULL)
 	{
 		if (is_null($region))
 		{
@@ -213,10 +217,10 @@ class Widgets {
 	 * $widget = $region->format('html');
 	 * ~~~
 	 *
-	 * @param   string  $format  Format name [Optional]
+     * @param string|null $format Format name [Optional]
 	 * @return  $this|string
 	 */
-	public function format($format = NULL)
+    public function format(string $format = NULL)
 	{
 		if (is_null($format))
 		{
@@ -245,16 +249,16 @@ class Widgets {
 		}
 	}
 
-	/**
-	 * Renders the HTML output for the widgets
-	 *
-	 * @param   string  $region  Theme region [Optional]
-	 * @param   string  $format  Widget format [Optional]
-	 * @return  string  HTML widgets
-	 * @return  boolean If widget not exists
-	 */
-	public function render($region = NULL, $format = NULL)
-	{
+    /**
+     * Renders the HTML output for the widgets
+     *
+     * @param string|null $region Theme region [Optional]
+     * @param string|null $format Widget format [Optional]
+     * @return  string  HTML widgets
+     * @throws Kohana_Exception
+     */
+    public function render(string $region = NULL, string $format = NULL): string
+    {
 		//set region, respect $this->region();
 		if ( ! is_null($region))
 		{
@@ -269,7 +273,7 @@ class Widgets {
 
 		if ( ! isset($this->_regions[$this->_region]) OR is_null($this->_regions[$this->_region]))
 		{
-			return FALSE;
+            return '';
 		}
 
 		$response = array();
@@ -282,26 +286,23 @@ class Widgets {
 		return trim(implode(PHP_EOL.PHP_EOL, $response));
 	}
 
-	/**
-	 * Returns the named widget
-	 *
-	 * @param   string   $name     Name of the widget
-	 * @param   boolean  $visible  Visibility permission from widget or FALSE to skip
-	 * @param   boolean  $format   The format of the output ex:xhtml, html or FALSE for object
-	 *
-	 * @return  object  Widget widget
-	 * @return  string  HTML widget
-	 */
-    public function get_widget($name, $visible = FALSE, $format = FALSE)
+    /**
+     * Returns the named widget
+     *
+     * @param string $name Name of the widget
+     * @param boolean $visible Visibility permission from widget or FALSE to skip
+     * @param mixed $format The format of the output ex:xhtml, html or FALSE for object
+     * @return  object|string|null Widget object, HTML string, or null
+     * @throws Kohana_Exception
+     */
+    public function get_widget(string $name, bool $visible = FALSE, $format = FALSE)
 	{
-		$response = FALSE;
-
 		if ( ! $widget = $this->get($name))
 		{
-			return $response;
+            return null;
 		}
 
-        if ($visible == TRUE) {
+        if ($visible) {
             $widget = $this->is_visible($widget);
         } else {
             $widget->visible = TRUE;
@@ -311,11 +312,13 @@ class Widgets {
 		Module::event('Widget', $widget);
 		Module::event('Widget_'.ucfirst($name), $widget);
 
+        $response = null;
+
 		if ($widget->status AND $widget->visible)
 		{
 			try
 			{
-				$widget->content = Widget::factory($name, $widget, $widget->config)->render();
+                $widget->content = Widget::factory($name, $widget)->render();
 				$response = ($format === FALSE) ? $widget : trim($this->_html($widget, $this->_region, $this->_format));
 			}
 			catch (Exception $e)
@@ -332,27 +335,30 @@ class Widgets {
 	 *
 	 * @return   string
 	 */
-	public function debug()
-	{
+    public function debug(): string
+    {
 		return Debug::vars($this->_widgets);
 	}
 
-	/**
-	 * Install the widget into database during module install
-	 *
-	 * Defaults to inactive widget
-	 *
-	 * @param  array   $widget  A widget array unique name and title are required
-	 * @param  string  $module  The name of the module for this widget
-	 */
-	public static function install(array $widget, $module)
+    /**
+     * Install the widget into database during module install
+     *
+     * Defaults to inactive widget
+     *
+     * @param array $widget A widget array unique name and title are required
+     * @param string $module The name of the module for this widget
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
+    public static function install(array $widget, string $module)
 	{
 		if (isset($widget['name']) AND isset($widget['title']))
 		{
 			// name must be unique
 			$values['name']   = @strtolower($widget['name']);
 			$values['title']  = (string) $widget['title'];
-			$values['module'] = (string) $module;
+            $values['module'] = $module;
 			$values['status'] = 0;
 			$values['region'] = '-1';
 
@@ -368,12 +374,14 @@ class Widgets {
 		}
 	}
 
-	/**
-	 * Remove the widget from database during module uninstall
-	 *
-	 * @param  string  $module  The name of the module for this widget
-	 */
-	public static function uninstall($module)
+    /**
+     * Remove the widget from database during module uninstall
+     *
+     * @param string $module The name of the module for this widget
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
+    public static function uninstall(string $module)
 	{
 		try
 		{
@@ -388,11 +396,13 @@ class Widgets {
 		}
 	}
 
-	/**
-	 * Load the widgets from database
-	 *
-	 * @return $this|array|string
-	 */
+    /**
+     * Load the widgets from database
+     *
+     * @return $this|array
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
 	protected function load()
 	{
 		// if the widgets have been loaded already, just return it.
@@ -431,7 +441,10 @@ class Widgets {
 		return $this;
 	}
 
-	protected function is_visible($widget)
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function is_visible($widget)
 	{
 		static $current_route;
 		$widget->visible = TRUE;
@@ -459,8 +472,11 @@ class Widgets {
 		return $widget;
 	}
 
-	private function _html($widget, $region = FALSE, $format )
-	{
+    /**
+     * @throws View_Exception
+     */
+    private function _html($widget, $region, $format): string
+    {
 		$zebra = $id = FALSE;
 
 		// Remove empty strings if content is string instead of view object

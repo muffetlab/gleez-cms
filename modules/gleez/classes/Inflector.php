@@ -50,10 +50,11 @@ class Inflector
      * been defined as uncountable in `config/inflector.php`. If this is the
      * case, please report [an issue](https://github.com/gleez/cms/issues).
      *
-     * @param   string  $str Word to check
+     * @param string $str Word to check
      * @return  boolean
+     * @throws Kohana_Exception
      */
-    public static function uncountable($str)
+    public static function uncountable(string $str): bool
     {
         if (null === static::$uncountable) {
             // Cache uncountables
@@ -84,12 +85,13 @@ class Inflector
      *
      * [!!] Special inflections are defined in `config/inflector.php`.
      *
-     * @param   string  $str    word to singularize
-     * @param   integer $count  count of thing
+     * @param string $str word to singularize
+     * @param integer|null $count count of thing
      * @return  string
+     * @throws Kohana_Exception
      * @uses    Inflector::uncountable
      */
-    public static function singular($str, $count = null)
+    public static function singular(string $str, int $count = null): string
     {
         // $count should always be a float
         $count = (null === $count) ? 1.0 : (float) $count;
@@ -154,12 +156,13 @@ class Inflector
      *
      * [!!] Special inflections are defined in `config/inflector.php`.
      *
-     * @param   string  $str    word to pluralize
-     * @param   integer $count  count of thing
+     * @param string $str word to pluralize
+     * @param integer|null $count count of thing
      * @return  string
+     * @throws Kohana_Exception
      * @uses    static::uncountable
      */
-    public static function plural($str, $count = null)
+    public static function plural(string $str, int $count = null): string
     {
         // $count should always be a float
         $count = (null === $count) ? 0.0 : (float) $count;
@@ -221,10 +224,10 @@ class Inflector
      * $str = Inflector::camelize('kittens in bed'); // "kittensInBed"
      * </code>
      *
-     * @param   string  $str    phrase to camelize
+     * @param string $str phrase to camelize
      * @return  string
      */
-    public static function camelize($str)
+    public static function camelize(string $str): string
     {
         $str = 'x'.strtolower(trim($str));
         $str = ucwords(preg_replace('/[\s_]+/', ' ', $str));
@@ -240,11 +243,11 @@ class Inflector
      * $str = Inflector::decamelize('kingAllyCat'); // "king ally cat"
      * </code>
      *
-     * @param   string  $str    phrase to camelize
-     * @param   string  $sep    word separator
+     * @param string $str phrase to camelize
+     * @param string $sep word separator
      * @return  string
      */
-    public static function decamelize($str, $sep = ' ')
+    public static function decamelize(string $str, string $sep = ' '): string
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1'.$sep.'$2', trim($str)));
     }
@@ -256,10 +259,10 @@ class Inflector
      * $str = Inflector::underscore('five cats'); // "five_cats";
      * </code>
      *
-     * @param   string  $str    phrase to underscore
+     * @param string $str phrase to underscore
      * @return  string
      */
-    public static function underscore($str)
+    public static function underscore(string $str): string
     {
         return preg_replace('/\s+/', '_', trim($str));
     }
@@ -272,10 +275,10 @@ class Inflector
      * $str = Inflector::humanize('dogs_as_well');     // "dogs as well"
      * </code>
      *
-     * @param   string  $str    phrase to make human-readable
+     * @param string $str phrase to make human-readable
      * @return  string
      */
-    public static function humanize($str)
+    public static function humanize(string $str): string
     {
         return preg_replace('/[_-]+/', ' ', trim($str));
     }

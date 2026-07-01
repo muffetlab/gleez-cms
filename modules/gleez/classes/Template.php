@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Abstract template class for automatic templating
  *
@@ -42,7 +43,7 @@ abstract class Template extends Controller {
 	public $title = NULL;
 
 	/**
-	 * The page sub title
+     * The page subtitle
 	 * @var string
 	 */
 	public $subtitle = FALSE;
@@ -97,7 +98,7 @@ abstract class Template extends Controller {
 
 	/**
 	 * The configuration settings
-	 * @var Config
+     * @var Config_Group
 	 */
 	protected $_config;
 
@@ -114,7 +115,7 @@ abstract class Template extends Controller {
 	protected $_widgets;
 
 	/**
-	 * An Format instance
+     * A Format instance
 	 * @var Format
 	 */
 	protected $_format;
@@ -191,7 +192,7 @@ abstract class Template extends Controller {
 
 	/**
 	 * Enable sidebars for this request?
-	 * For example: add or edit page don't requires sidebars
+     * For example, adding or editing pages don't require sidebars.
 	 * @var boolean
 	 */
 	protected $_sidebars = TRUE;
@@ -219,17 +220,20 @@ abstract class Template extends Controller {
 	 * Allows overriding 'FormSaved' property to send with JSON.
 	 * @var boolean
 	 */
-	protected $_formsaved = FALSE;
+    protected $formSaved = FALSE;
 
 	/** @var String|null */
 	protected $nonce;
 
-	/**
-	 * Loads the template View object, if it is direct request
-	 *
-	 * @return  void
-	 * @throws  Http_Exception_415  If none of the accept-types are supported
-	 */
+    /**
+     * Loads the template View object, if it is direct request
+     *
+     * @return  void
+     * @throws Http_Exception_415 If none of the accept-types are supported
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws Exception
+     */
 	public function before()
 	{
 		// Execute parent::before first
@@ -240,7 +244,7 @@ abstract class Template extends Controller {
 				$this->nonce = base64_encode(random_bytes(20));
 		}
 
-		if($this->bare == FALSE)
+        if (!$this->bare)
 		{
 			// Load the config
 			$this->_config = Kohana::$config->load('site');
@@ -324,12 +328,12 @@ abstract class Template extends Controller {
 			View::bind_global('site_url',  $url);
 		}
 
-		if ($this->auto_render && $this->bare == FALSE)
+        if ($this->auto_render && !$this->bare)
 		{
 			// Throw exception if none of the accept-types are supported
             if (empty($accept_types))
 			{
-				throw new Http_Exception_415('Unsupported accept-type', 415);
+                throw new Http_Exception_415('Unsupported accept-type');
 			}
 
 			// Initiate a Format instance
@@ -403,14 +407,15 @@ abstract class Template extends Controller {
 		}
 	}
 
-	/**
-	 * If debugging is enabled, append profiler stats for non-production environments.
-	 *
-	 * @return  void
-	 */
+    /**
+     * If debugging is enabled, append profiler stats for non-production environments.
+     *
+     * @return  void
+     * @throws Kohana_Exception
+     */
 	public function after()
 	{
-		if ($this->auto_render && $this->bare == FALSE)
+        if ($this->auto_render && !$this->bare)
 		{
 			// Controller name as the default page id if none set
 			empty($this->_page_id) AND $this->_page_id = $this->request->controller();
@@ -506,9 +511,7 @@ abstract class Template extends Controller {
 
 			// Assign the template as the request response and render it
 			$this->response->body($this->template);
-		}
-		elseif ($this->_ajax && $this->bare == FALSE)
-		{
+        } elseif ($this->_ajax && !$this->bare) {
 			$output = $this->response->body();
 			$this->process_ajax();
 
@@ -524,14 +527,12 @@ abstract class Template extends Controller {
 			}
 
 			$this->response->body($output);
-		}
-		elseif ($this->_internal && $this->bare == FALSE)
-		{
+        } elseif ($this->_internal && !$this->bare) {
 			$output = $this->response->body();
 			$this->response->body($output);
 		}
 
-		if($this->bare == FALSE)
+        if (!$this->bare)
 		{
 			if (isset($this->_benchmark))
 			{
@@ -571,15 +572,17 @@ abstract class Template extends Controller {
 		$this->template->head_title = implode($this->title_separator, $head_title);
 	}
 
-	/**
-	 * Set the default server headers
-	 */
+    /**
+     * Set the default server headers
+     *
+     * @throws Kohana_Exception
+     */
 	protected function _set_default_server_headers()
 	{
 		$headers = $this->_config->get('headers', array());
 		$headers['X-Gleez-Version'] = Gleez::getVersion(TRUE, TRUE) . ' ('.Gleez::CODENAME.')';
 
-		$xmlrpc = $this->_config->get('xmlrpc', NULL);
+        $xmlrpc = $this->_config->get('xmlrpc');
 
 		if ( ! is_null($xmlrpc))
 		{
@@ -595,24 +598,25 @@ abstract class Template extends Controller {
 	/**
 	 * Set the server headers
 	 *
-	 * @param  array $headers  An associative array of server headers
+     * @param array $headers An associative array of server headers
 	 */
-	protected function _set_server_headers($headers)
+    protected function _set_server_headers(array $headers)
 	{
-		if (is_array($headers) AND ! empty($headers))
+        if (!empty($headers))
 		{
 			$this->response->headers($headers);
 		}
 	}
 
-	/**
-	 * Set the default meta links
-	 *
-	 * Used configuration settings.
-	 *
-	 * @uses    Meta::links
-	 * @uses    Arr::get
-	 */
+    /**
+     * Set the default meta links
+     *
+     * Used configuration settings.
+     *
+     * @throws Kohana_Exception
+     * @uses    Arr::get
+     * @uses    Meta::links
+     */
 	protected function _set_default_meta_links()
 	{
 		$meta  = $this->_config->get('meta', array());
@@ -674,8 +678,8 @@ abstract class Template extends Controller {
 	 *
 	 * This method is chainable.
 	 */
-	protected function _set_sidebars()
-	{
+    protected function _set_sidebars(): Template
+    {
 		if ($this->_sidebars !== FALSE)
 		{
 			$this->template->sidebar_left  = $this->_widgets->render('left');
@@ -690,8 +694,8 @@ abstract class Template extends Controller {
 	 *
 	 * This method is chainable.
 	 */
-	protected function _set_column_class()
-	{
+    protected function _set_column_class(): Template
+    {
 		$sidebar_left  = $this->template->sidebar_left;
 		$sidebar_right = $this->template->sidebar_right;
 
@@ -717,11 +721,12 @@ abstract class Template extends Controller {
 		return $this;
 	}
 
-	/**
-	 * Set default CSS
-	 *
-	 * @uses  Assets::css
-	 */
+    /**
+     * Set default CSS
+     *
+     * @throws Kohana_Exception
+     * @uses  Assets::css
+     */
 	protected function _set_default_css()
 	{
 		Assets::css('bootstrap', 'media/css/bootstrap.min.css', NULL, array('weight' => -15));
@@ -733,11 +738,12 @@ abstract class Template extends Controller {
 		Assets::css('theme', "media/css/theme.css", array('default'), array('weight' => 50));
 	}
 
-	/**
-	 * Set default JavaScript
-	 *
-	 * @uses  Assets::js
-	 */
+    /**
+     * Set default JavaScript
+     *
+     * @throws Kohana_Exception
+     * @uses  Assets::js
+     */
 	protected function _set_default_js()
 	{
 		Assets::js('bootstrap', 'media/js/bootstrap.min.js', array('jquery'), FALSE, array('weight' => -8));
@@ -745,7 +751,7 @@ abstract class Template extends Controller {
 		// Google js only in production and not in admin section
 		if (Kohana::PRODUCTION === Kohana::$environment AND Theme::$is_admin === FALSE)
 		{
-			$ua = $this->_config->get('google_ua', NULL);
+            $ua = $this->_config->get('google_ua');
 
 			if ( ! empty($ua) )
 			{
@@ -754,27 +760,27 @@ abstract class Template extends Controller {
 		}
 	}
 
-	/**
-	 * Returns TRUE if the POST has a valid CSRF
-	 *
-	 * Usage:<br>
-	 * <code>
-	 * 	if ($this->valid_post('upload_photo')) { ... }
-	 * </code>
-	 *
-	 * @param   string|NULL  $submit Submit value [Optional]
-	 * @return  boolean  Return TRUE if it's valid $_POST
-	 *
-	 * @uses    Request::is_post
-	 * @uses    Request::post_max_size_exceeded
-	 * @uses    Request::get_post_max_size
-	 * @uses    Request::post
-	 * @uses    Message::error
-	 * @uses    CSRF::valid
-	 * @uses    Captcha::valid
-	 */
-	public function valid_post($submit = NULL)
-	{
+    /**
+     * Returns TRUE if the POST has a valid CSRF
+     *
+     * Usage:<br>
+     * <code>
+     *    if ($this->valid_post('upload_photo')) { ... }
+     * </code>
+     *
+     * @param string|NULL $submit Submit value [Optional]
+     * @return  boolean  Return TRUE if it's valid $_POST
+     * @throws Kohana_Exception
+     * @uses    Request::is_post
+     * @uses    Request::post_max_size_exceeded
+     * @uses    Request::get_post_max_size
+     * @uses    Request::post
+     * @uses    Message::error
+     * @uses    CSRF::valid
+     * @uses    Captcha::valid
+     */
+    public function valid_post(string $submit = NULL): bool
+    {
 		if ( ! $this->request->is_post())
 		{
 			return FALSE;
@@ -877,17 +883,19 @@ abstract class Template extends Controller {
 	 *
 	 * @uses  Request::uri
 	 */
-	public function is_frontpage()
-	{
+    public function is_frontpage(): bool
+    {
 		$uri = preg_replace("#(/p\d+)+$#uD", '', rtrim($this->request->uri(), '/'));
 
 		return (empty($uri) OR ($uri === $this->_config->front_page));
 	}
 
-	/**
-	 *  Process the response as JSON with some extra information about the
-	 *  (success status of the form) so that jQuery knows what to do with the result.
-	 */
+    /**
+     *  Process the response as JSON with some extra information about the
+     *  (success status of the form) so that jQuery knows what to do with the result.
+     *
+     * @throws Kohana_Exception
+     */
 	protected function process_ajax()
 	{
 		if ( $this->request->method() == HTTP_Request::POST )
@@ -895,7 +903,7 @@ abstract class Template extends Controller {
 			// Allow for override. Set the form saved true for ajax request, if no errors
 			if (empty($this->_errors))
 			{
-				$this->SetFormSaved(TRUE);
+                $this->SetFormSaved();
 			}
 			else
 			{
@@ -920,9 +928,9 @@ abstract class Template extends Controller {
 			if ($this->request->query('draw') !== NULL) return;
 
 			$scripts = Assets::js(FALSE, NULL, NULL, FALSE, NULL, Assets::FORMAT_AJAX);
-			$styles  = Assets::css(FALSE, NULL, NULL, FALSE, Assets::FORMAT_AJAX);
+            $styles = Assets::css(null, NULL, NULL, null, Assets::FORMAT_AJAX);
 
-			$this->SetJson('FormSaved',  $this->_formsaved);
+            $this->SetJson('formSaved', $this->formSaved);
 			$this->SetJson('messages',   Message::get(NULL, NULL, TRUE));
 			$this->SetJson('errors',     $this->_errors);
 			$this->SetJson('redirect',   Request::$redirect_url);
@@ -944,31 +952,22 @@ abstract class Template extends Controller {
 	 * If JSON is going to be sent to the client, this method allows you to add
 	 * extra values to the JSON array.
 	 *
-	 * @param  string  $Key    The name of the array key to add.
-	 * @param  string  $Value  The value to be added. If empty, nothing will be added [Optional]
+     * @param string $Key The name of the array key to add.
+     * @param mixed $Value The value to be added. If empty, nothing will be added [Optional]
 	 */
-	public function SetJson($Key, $Value = '')
+    public function SetJson(string $Key, $Value = '')
 	{
 		$this->_json[$Key] = $Value;
 	}
 
 	/**
-	 * Set $this->_FormSaved for JSON Renders.
+     * Set $this->formSaved for JSON Renders.
 	 *
 	 * @param bool $Saved Whether form data was successfully saved.
 	 */
-	public function SetFormSaved($Saved = TRUE)
+    public function SetFormSaved(bool $Saved = TRUE)
 	{
-		if ($Saved === '')
-		{
-			// Allow reset
-			$this->_formsaved = NULL;
-		}
-		else
-		{
-			// Force true/false
-			$this->_formsaved = ($Saved) ? TRUE : FALSE;
-		}
+        $this->formSaved = $Saved;
 	}
 
 	/**
@@ -976,22 +975,21 @@ abstract class Template extends Controller {
 	 *
 	 * @return string
 	 */
-	public function GetNonce()
-	{
+    public function GetNonce(): ?string
+    {
 		return $this->nonce;
 	}
 
-	/**
-	 * Get site name
-	 *
-	 * It is just helper, which gets site name
-	 *
-	 * @since   1.2.0
-	 *
-	 * @param   mixed  $default  The return value if the site name isn't found [Optional]
-	 *
-	 * @return  mixed
-	 */
+    /**
+     * Get site name
+     *
+     * It is just helper, which gets site name
+     *
+     * @param mixed $default The return value if the site name isn't found [Optional]
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @since   1.2.0
+     */
 	public static function getSiteName($default = 'Gleez CMS')
 	{
 		return Kohana::$config->load('site')->get('site_name', $default);

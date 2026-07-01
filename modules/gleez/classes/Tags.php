@@ -19,15 +19,15 @@ class Tags {
 	 */
 	protected static $_instance;
 
-	/**
-	 * Create an instance of Tags
-	 *
-	 * @param  array  $config  Config
-	 *
-	 * @return Tags
-	 */
-	public static function factory($config = array())
-	{
+    /**
+     * Create an instance of Tags
+     *
+     * @param array $config Config
+     * @return Tags
+     * @throws Kohana_Exception
+     */
+    public static function factory(array $config = array()): Tags
+    {
 		if ( ! isset(self::$_instance))
 		{
 			// Create a new session instance
@@ -37,13 +37,14 @@ class Tags {
 		return self::$_instance;
 	}
 
-	/**
-	 * Class constructor.
-	 *
-	 * Loads configuration options.
-	 *
-	 * @uses  Log::DEBUG
-	 */
+    /**
+     * Class constructor.
+     *
+     * Loads configuration options.
+     *
+     * @throws Kohana_Exception
+     * @uses  Log::DEBUG
+     */
 	public function __construct($config = array())
 	{
 		// Append default tags configuration
@@ -59,30 +60,30 @@ class Tags {
 		}
 	}
 
-	/**
-	 * Tag Object
-	 *
-	 * This function allows you to pass in a string directly from a form, which is then
-	 * parsed for quoted phrases and special characters, normalized and converted into tags.
-	 * The tag phrases are then individually sent through the safe_tag() method for processing
-	 * and the object referenced is set with that tag.
-	 *
-	 * This method has been refactored to automatically look for existing tags and run
-	 * adds/updates/deletes as appropriate.
-	 *
-	 * Returns TRUE if successful, FALSE otherwise.
-	 *
-	 * @param  string           $tags          The raw string form of the tag to delete. See above for notes.
-	 * @param  Model            $object        The Model Object
-	 * @param  boolean|integer  $user_id       The User id [Optional]
-	 * @param  boolean          $skip_updates  Whether to skip the update portion for objects that haven't been tagged [Optional]
-	 *
-	 * @return	boolean
-	 */
-	public function tagging($tags, Model $object, $user_id = FALSE, $skip_updates = TRUE)
-	{
+    /**
+     * Tag Object
+     *
+     * This function allows you to pass in a string directly from a form, which is then
+     * parsed for quoted phrases and special characters, normalized and converted into tags.
+     * The tag phrases are then individually sent through the safe_tag() method for processing
+     * and the object referenced is set with that tag.
+     *
+     * This method has been refactored to automatically look for existing tags and run
+     * adds/updates/deletes as appropriate.
+     *
+     * Returns TRUE if successful, FALSE otherwise.
+     *
+     * @param string $tags The raw string form of the tag to delete. See above for notes.
+     * @param Model $object The Model Object
+     * @param boolean|integer $user_id The User id [Optional]
+     * @param boolean $skip_updates Whether to skip the update portion for objects that haven't been tagged [Optional]
+     * @return    boolean
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     */
+    public function tagging(string $tags, Model $object, $user_id = FALSE, bool $skip_updates = TRUE): bool
+    {
 		if ( ! $user_id)  return FALSE;
-		if ( ! $object)   return FALSE;
 
 		$tags = self::explode($tags);
 		$old_tags = $object->tags->find_all();
@@ -119,19 +120,20 @@ class Tags {
 		return TRUE;
 	}
 
-	/**
-	 * Tag Object Array
-	 *
-	 * Private method to add tags to an object from an array.
-	 *
-	 * @param  integer  $user_id  The User id [Optional]
-	 * @param  Model    $object   The Model Object
-	 * @param  array    $tags     Array of tags to be add
-	 *
-	 * @return boolean
-	 */
-	private function _tag_object_array($user_id, Model $object, $tags)
-	{
+    /**
+     * Tag Object Array
+     *
+     * Private method to add tags to an object from an array.
+     *
+     * @param integer $user_id The User id [Optional]
+     * @param Model $object The Model Object
+     * @param array $tags Array of tags to be add
+     * @return void
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     */
+    private function _tag_object_array(int $user_id, Model $object, array $tags): void
+    {
 		foreach($tags as $tag)
 		{
 			$tag = trim($tag);
@@ -141,29 +143,27 @@ class Tags {
 				$this->safe_tag($user_id, $object, $tag);
 			}
 		}
+    }
 
-		return TRUE;
-	}
-
-	/**
-	 * Safe Tag
-	 *
-	 * Pass individual tag phrases along with object and object ID's in order to
-	 * set a tag on an object. If the tag in its raw form does not yet exist,
-	 * this function will create it.
-	 *
-	 * @param   integer  $user_id  The user_id unique ID of the person who tagged the object with this tag
-	 * @param   Model    $object   The Model Object
-	 * @param   string   $tag      A raw string from a web form containing tags
-	 * @return  boolean
-	 *
-	 * @uses    Inflector::singular
-	 */
-	public function safe_tag($user_id = 0, Model $object, $tag = '')
-	{
+    /**
+     * Safe Tag
+     *
+     * Pass individual tag phrases along with object and object ID's in order to
+     * set a tag on an object. If the tag in its raw form does not yet exist,
+     * this function will create it.
+     *
+     * @param integer $user_id The user_id unique ID of the person who tagged the object with this tag
+     * @param Model $object The Model Object
+     * @param string $tag A raw string from a web form containing tags
+     * @return  boolean
+     * @throws Kohana_Exception|ReflectionException
+     * @uses    Inflector::singular
+     */
+    public function safe_tag(int $user_id, Model $object, string $tag = ''): bool
+    {
 		$object_id = $object->id;
 
-		if ( ! $user_id = intval($user_id) or ! $object_id = intval($object_id) or empty($tag))
+        if (!$user_id or !$object_id = intval($object_id) or empty($tag))
 		{
 			return FALSE;
 		}
@@ -240,16 +240,14 @@ class Tags {
 	 * After the filter is applied, the function also lowercases the characters using strtolower
 	 * in the current locale.
 	 *
-	 * The default for normalized_valid_chars is a-zA-Z0-9, or english alphanumeric.
+     * The default for normalized_valid_chars is a-zA-Z0-9, or English alphanumeric.
 	 *
-	 * @param  string  $tag An individual tag in raw form that should be normalized.
-	 *
+     * @param string $tag An individual tag in raw form that should be normalized.
 	 * @return string
-	 *
 	 * @uses   URL::title
 	 */
-	public function normalize_tag($tag)
-	{
+    public function normalize_tag(string $tag): string
+    {
 		if ($this->config['normalize_tags'] )
 		{
 			if ($this->config['use_gleez_normalization'])
@@ -273,12 +271,11 @@ class Tags {
 	/**
 	 * Explode a string of given tags into an array
 	 *
-	 * @param  string  $tags
-	 *
+     * @param string $tags
 	 * @return array
 	 */
-	public static function explode($tags)
-	{
+    public static function explode(string $tags): array
+    {
         // Use str_getcsv to handle comma-separated tags, including those with quotes.
         // This handles cases like: this, "some-company, llc", "and ""this"" w,o.rks", foo bar
         $typed_tags = array_unique(str_getcsv($tags));
@@ -303,8 +300,8 @@ class Tags {
 	 *
 	 * @return string
 	 */
-	public static function implode(array $tags)
-	{
+    public static function implode(array $tags): string
+    {
 		$encoded_tags = array();
 		foreach ($tags as $tag)
 		{

@@ -11,15 +11,16 @@
  */
 class Captcha_Word extends Captcha_Basic
 {
-	/**
-	 * Generates a new Captcha challenge.
-	 *
-	 * @return string The challenge answer
-	 */
-	public function generate_challenge()
-	{
+    /**
+     * Generates a new Captcha challenge.
+     *
+     * @return string The challenge answer
+     * @throws Kohana_Exception
+     */
+    public function generate_challenge(): string
+    {
 		// Load words from the current language and randomize them
-		$words = Kohana::config('captcha.words');
+        $words = Kohana::$config->load('captcha')->get('words');
 		shuffle($words);
 
 		// Loop over each word...

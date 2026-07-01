@@ -16,32 +16,15 @@ class Datatables {
 	/** Sort Descending */
 	const SORT_DESC = 'DESC';
 
-	/**
-	 * Factory pattern
-	 *
-	 * @param	mixed	string|object
-	 * @param	mixed	NULL|string
-	 * @return	Datatables
-	 * @throws      Gleez_Exception
-	 */
-	public static function factory(ORM $object = NULL)
-	{
+    /**
+     * Factory pattern
+     *
+     * @param ORM|null $object
+     * @return Datatables
+     */
+    public static function factory(ORM $object = NULL): Datatables
+    {
 		return new Datatables($object);
-	}
-
-	/**
-	 * Whether or not current request is via DataTables
-	 *
-	 * @param   mixed  $request  Request [Optional]
-	 * @return  boolean
-	 *
-	 * @uses    Request::current
-	 */
-	public static function is_request(Request $request = NULL)
-	{
-		$request = ($request) ? $request : Request::current();
-
-		return (bool) $request->query('sEcho');
 	}
 
 	/**
@@ -78,9 +61,9 @@ class Datatables {
 
 	/**
 	 * Result
-	 * @var NULL
+     * @var array|Countable
 	 */
-	protected $_result;
+    protected $_result = [];
 
 	/**
 	 * Rows
@@ -120,10 +103,10 @@ class Datatables {
 	/**
 	 * Apply limit
 	 *
-	 * @param	integer  $start   Offset
-	 * @param	integer  $length  Length
+     * @param integer $start Offset
+     * @param integer $length Length
 	 */
-	protected function _limit($start, $length)
+    protected function _limit(int $start, int $length)
 	{
 		$this->_object->offset($start)->limit($length);
 	}
@@ -131,10 +114,10 @@ class Datatables {
 	/**
 	 * Apply sort
 	 *
-	 * @param  string  $column     Column for sorting
-	 * @param  string  $direction  Direction
+     * @param string $column Column for sorting
+     * @param string $direction Direction
 	 */
-	protected function _sort($column, $direction)
+    protected function _sort(string $column, string $direction)
 	{
         $this->_object->order_by($this->_object_name . '.' . $column, HTML::chars($direction));
 	}
@@ -142,9 +125,9 @@ class Datatables {
 	/**
 	 * Apply search query
 	 *
-	 * @param  string  $query  Search query
+     * @param string $query Search query
 	 */
-	protected function _search($query)
+    protected function _search(string $query)
 	{
 		// Use search columns if specified; otherwise, search across all columns
 		$columns = ( ! empty($this->_search_columns)) ? $this->_search_columns : $this->_columns;
@@ -177,8 +160,8 @@ class Datatables {
 	 *
 	 * @return  integer
 	 */
-	protected function _count()
-	{
+    protected function _count(): int
+    {
 		return count($this->_result);
 	}
 
@@ -187,8 +170,8 @@ class Datatables {
 	 *
 	 * @return  integer
 	 */
-	protected function _count_total()
-	{
+    protected function _count_total(): int
+    {
 		return $this->_object->reset(FALSE)->count_all();
 	}
 
@@ -205,27 +188,27 @@ class Datatables {
 	/**
 	 * Set limit
 	 *
-	 * @param	integer  $start   Offset
-	 * @param	integer  $length  Length
+     * @param integer $start Offset
+     * @param integer $length Length
 	 * @return	$this
 	 */
-	public function limit($start, $length)
-	{
+    public function limit(int $start, int $length): Datatables
+    {
 		$this->_limit($start, $length);
 
 		return $this;
 	}
 
-	/**
-	 * Set sort order
-	 *
-	 * @param	string  $column     Column for sorting
-	 * @param	string  $direction  Sort order eg. SORT_ASC|SORT_DESC
-	 * @return	$this
-	 * @throws      Gleez_Exception
-	 */
-	public function sort($column, $direction = self::SORT_ASC)
-	{
+    /**
+     * Set sort order
+     *
+     * @param string $column Column for sorting
+     * @param string $direction Sort order eg. SORT_ASC|SORT_DESC
+     * @return    $this
+     * @throws Kohana_Exception
+     */
+    public function sort(string $column, string $direction = self::SORT_ASC): Datatables
+    {
 		if ( ! in_array($direction, array(self::SORT_ASC, self::SORT_DESC)))
 		{
 			throw new Kohana_Exception('Invalid sort order of `' . $direction . '`.');
@@ -239,11 +222,11 @@ class Datatables {
 	/**
 	 * Search query
 	 *
-	 * @param   string  $query  Search query
+     * @param string $query Search query
 	 * @return	$this
 	 */
-	public function search($query)
-	{
+    public function search(string $query): Datatables
+    {
 		$this->_search($query);
 
 		return $this;
@@ -254,27 +237,17 @@ class Datatables {
 	 *
 	 * @return  integer
 	 */
-	public function count()
-	{
+    public function count(): int
+    {
         return $this->_count;
 	}
 
-	/**
-	 * Get total count prior to operations
-	 *
-	 * @return	integer
-	 */
-	public function count_total()
-	{
-        return $this->_count_total;
-	}
-
-	/**
-	 * Set or get columns
-	 *
-	 * @param	array  $columns  Columns for setting [Optional]
-	 * @return  $this
-	 */
+    /**
+     * Set or get columns
+     *
+     * @param array|null $columns Columns for setting [Optional]
+     * @return array|Datatables
+     */
 	public function columns(array $columns = NULL)
 	{
 		if ($columns === NULL)
@@ -288,28 +261,10 @@ class Datatables {
 	}
 
 	/**
-	 * Set or get search columns
-	 *
-	 * @param   array  $columns  Columns [Optional]
-	 * @return  $this
-	 */
-	public function search_columns(array $columns = NULL)
-	{
-		if ($columns === NULL)
-		{
-			return $this->_search_columns;
-		}
-
-		$this->_search_columns = $columns;
-
-		return $this;
-	}
-
-	/**
 	 * Get result
 	 *
-	 * @return	mixed
-	 */
+     * @return array|Countable
+     */
 	public function result()
 	{
 		return $this->_result;
@@ -321,8 +276,8 @@ class Datatables {
 	 * @return $this
 	 * @throws Kohana_Exception
 	 */
-	public function execute()
-	{
+    public function execute(): Datatables
+    {
 		$request = $this->request();
 
 		if (!$request instanceof Request)
@@ -334,7 +289,7 @@ class Datatables {
 		$this->_count_total = $this->_count_total();
 
 		$requestOrder   = $request->query('order');
-		$requestColumns = $request->query('columns');
+        $requestColumns = (array) $request->query('columns');
 		$requestStart   = (int) $request->query('start');
 		$requestSearch  = $request->query('search');
 		$requestLength  = $request->query('length');
@@ -413,10 +368,10 @@ class Datatables {
 	/**
 	 * Set or get View file path
 	 *
-	 * @param	mixed	NULL|string
-	 * @return	mixed	$this|string
+     * @param string|null $path
+     * @return Datatables|string
 	 */
-	public function view($path = NULL)
+    public function view(string $path = NULL)
 	{
 		if ($path === NULL)
 		{
@@ -428,13 +383,13 @@ class Datatables {
 		return $this;
 	}
 
-	/**
-	 * Set or get Request
-	 *
-	 * @access	public
-	 * @param	mixed	NULL|Request
-	 * @return	mixed	$this|Request|NULL
-	 */
+    /**
+     * Set or get Request
+     *
+     * @access public
+     * @param Request|null $request
+     * @return Datatables|Request
+     */
 	public function request(Request $request = NULL)
 	{
 		if ($request === NULL)
@@ -458,30 +413,32 @@ class Datatables {
 	 * @param   array  $row  Row
 	 * @return  $this
 	 */
-	public function add_row(array $row)
-	{
+    public function add_row(array $row): Datatables
+    {
 		$this->_rows[] = $row;
 
 		return $this;
 	}
 
-	/**
-	 * Render
-	 *
-	 * @return  string
-	 */
+    /**
+     * Render
+     *
+     * @return  string
+     * @throws View_Exception
+     */
 	public function __toString()
 	{
 		return $this->render();
 	}
 
-	/**
-	 * Render
-	 *
-	 * @return	string
-	 */
-	public function render()
-	{
+    /**
+     * Render
+     *
+     * @return    string
+     * @throws View_Exception
+     */
+    public function render(): string
+    {
 		if ($this->_render === NULL)
 		{
 			if ($this->_view)

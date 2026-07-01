@@ -4,8 +4,8 @@
  *
  * Provides language loading and translation methods without dependencies on [gettext](http://php.net/gettext).
  *
- * Typically this class would never be used directly, but used via the __()
- * function, which loads the message and replaces parameters:
+ * Typically, this class would never be used directly, but used via the __() function, which loads the message and
+ * replaces parameters:
  *
  *     // Display a translated message
  *     echo __('Hello, world');
@@ -46,14 +46,16 @@ class Gleez_I18n extends I18n
 	 */
 	public static $_cookie = 'lang';
 
-	/**
-	 * Main function to detect and set the default language.
-	 *
-	 *     // Set the language
-	 *     $lang = Gleez_I18n::initialize();
-	 */
-	public static function initialize()
-	{
+    /**
+     * Main function to detect and set the default language.
+     *
+     *     // Set the language
+     *     $lang = Gleez_I18n::initialize();
+     *
+     * @throws Kohana_Exception
+     */
+    public static function initialize(): string
+    {
 		// Installed Locales
 		self::$_languages = Kohana::$config->load('site')->get('installed_locales', array());
 
@@ -81,7 +83,7 @@ class Gleez_I18n extends I18n
 			$locale = Gleez_I18n::urlLocale();
 		}
 
-		// 5. Check the sub-domain preference and get the language form subdomain
+        // 5. Check the subdomain preference and get the language form subdomain
 		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'DOMAIN'))
 		{
 			$locale = Gleez_I18n::domainLocale();
@@ -100,13 +102,13 @@ class Gleez_I18n extends I18n
 	}
 
 	/**
-	 * Test if $lang exists in the list of available langs in config
+     * Test if $lang exists in the list of available languages in config.
 	 *
-	 * @param type  string $lang
+     * @param string $lang
 	 * @return bool returns TRUE if $lang is available, otherwise FALSE
 	 */
-	public static function isAvailable($lang)
-	{
+    public static function isAvailable(string $lang): bool
+    {
         return array_key_exists($lang, self::$_languages);
 	}
 
@@ -139,14 +141,15 @@ class Gleez_I18n extends I18n
 		return false;
 	}
 
-	/**
-	 * Detect language based on the user language settings.
-	 *
-	 *     // Get the language
-	 *     $lang = Gleez_I18n::userLocale();
-	 *
-	 * @return  string
-	 */
+    /**
+     * Detect language based on the user language settings.
+     *
+     *     // Get the language
+     *     $lang = Gleez_I18n::userLocale();
+     *
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function userLocale()
 	{
 		// Can't set guest users locale, default's to site locale
@@ -168,14 +171,15 @@ class Gleez_I18n extends I18n
 		return FALSE;
 	}
 
-	/**
-	 * Detect language based on the request cookie.
-	 *
-	 *     // Get the language
-	 *     $lang = Gleez_I18n::cookieLocale();
-	 *
-	 * @return  string
-	 */
+    /**
+     * Detect language based on the request cookie.
+     *
+     *     // Get the language
+     *     $lang = Gleez_I18n::cookieLocale();
+     *
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function cookieLocale()
 	{
 		$cookie_data = strtolower(Cookie::get(self::$_cookie));
@@ -194,14 +198,15 @@ class Gleez_I18n extends I18n
 		return FALSE;
 	}
 
-	/**
-	 * Detect language based on the url.
-	 *
-	 *     ex: example.com/fr/
-	 *     $lang = Gleez_I18n::urlLocale();
-	 *
-	 * @return  string
-	 */
+    /**
+     * Detect language based on the url.
+     *
+     *     ex: example.com/fr/
+     *     $lang = Gleez_I18n::urlLocale();
+     *
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function urlLocale()
 	{
 		$uri = Request::detect_uri();
@@ -306,8 +311,8 @@ class Gleez_I18n extends I18n
 	 * along with this program; if not, write to the Free Software
 	 * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
 	 */
-	private static function get_plural_key($lang, $count)
-	{
+    private static function get_plural_key($lang, $count): string
+    {
 
 		// Data from CLDR 1.6 (http://unicode.org/cldr/data/common/supplemental/plurals.xml).
 		// Docs: http://www.unicode.org/cldr/data/charts/supplemental/language_plural_rules.html
@@ -517,36 +522,34 @@ class Gleez_I18n extends I18n
 
 if ( ! function_exists('__'))
 {
-	/**
-	 * Translate strings to the page language or a given language
-	 *
-	 * The PHP function [strtr](http://php.net/strtr) is used for replacing parameters.
-	 * <code>
-	 *  __('Welcome back, :user', array(':user' => $username));
-	 * </code>
-	 *
-	 * [!!] The target language is defined by [Gleez_I18n::$lang].
-	 *
-	 * @param   string  $string Text to translate
-	 * @param   array   $values Values to replace in the translated text. [Optional]
-	 *                          An associative array of replacements to make after translation.
-	 *                          Incidences of any key in this array are replaced with the corresponding value.
-	 *                          Based on the first character of the key, the value is escaped and/or themed:
-	 *                          - !variable: inserted as is
-	 *                          - :variable: inserted as is
-	 *                          - @variable: escape plain text to HTML (HTML::chars)
-	 *                          - %variable: escape text and theme as a placeholder for user-submitted
-	 *                          - ^variable: escape text and uppercase the first character of each word in a string
-	 *                          - ~variable: escape text and make a string's first character uppercase
-	 *                          content (HTML::chars + theme_placeholder)
-	 * @param   string  $lang   Source language [Optional]
-	 * @return  string
-	 *
-	 * @uses    Gleez_I18n::get
-	 * @uses    HTML::chars
-	 */
-	function __($string, array $values = NULL, $lang = 'en-us')
-	{
+    /**
+     * Translate strings to the page language or a given language
+     *
+     * The PHP function [strtr](http://php.net/strtr) is used for replacing parameters.
+     * <code>
+     *  __('Welcome back, :user', array(':user' => $username));
+     * </code>
+     *
+     * [!!] The target language is defined by [Gleez_I18n::$lang].
+     *
+     * @param string $string Text to translate
+     * @param array|null $values Values to replace in the translated text. [Optional]
+     *     An associative array of replacements to make after translation.
+     *     Incidences of any key in this array are replaced with the corresponding value.
+     *     Based on the first character of the key, the value is escaped and/or themed:
+     *     - !variable: inserted as is
+     *     - :variable: inserted as is
+     *     - @variable: escape plain text to HTML (HTML::chars)
+     *     - %variable: escape text and theme as a placeholder for user-submitted
+     *     - ^variable: escape text and uppercase the first character of each word in a string
+     *     - ~variable: escape text and make a string's first character uppercase
+     * @param string $lang Source language [Optional]
+     * @return string
+     * @uses Gleez_I18n::get
+     * @uses HTML::chars
+     */
+    function __(string $string, array $values = NULL, string $lang = 'en-us'): string
+    {
 		if ($lang !== Gleez_I18n::$lang)
 		{
 			// The message and target languages are different
@@ -596,16 +599,16 @@ if ( ! function_exists('__'))
 /**
  * Displays the returned translated text from __()
  *
- * @param   string  $string Text to translate
- * @param   array   $values Values to replace in the translated text. [Optional]
- * @param   string  $lang   Source language [Optional]
+ * @param string $string Text to translate
+ * @param array|null $values Values to replace in the translated text. [Optional]
+ * @param string $lang Source language [Optional]
  */
-function _e($string, array $values = NULL, $lang = 'en-us')
+function _e(string $string, array $values = NULL, string $lang = 'en-us')
 {
 	echo __($string, $values, $lang);
 }
 
-function __n($count, $singular, $plural, array $values = array(), $lang = 'en-us')
+function __n($count, $singular, $plural, array $values = array(), $lang = 'en-us'): string
 {
 	if ($lang !== Gleez_I18n::$lang)
 	{

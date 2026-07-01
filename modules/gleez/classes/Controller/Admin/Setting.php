@@ -10,21 +10,22 @@
  */
 class Controller_Admin_Setting extends Controller_Admin {
 
-	/**
-	 * General Settings
-	 *
-	 * @uses  Config::load
-	 * @uses  Message::success
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Date::date_time_formats
-	 * @uses  Date::date_formats
-	 * @uses  Date::time_formats
+    /**
+     * General Settings
+     *
+     * @throws Kohana_Exception
+     * @uses  Config::load
+     * @uses  Message::success
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Date::date_time_formats
+     * @uses  Date::date_formats
+     * @uses  Date::time_formats
      * @uses  Date::weekdays
-	 * @uses  Date::timezones
-	 * @uses  Template::valid_post
-	 * @uses  Request::redirect
-	 */
+     * @uses  Date::timezones
+     * @uses  Template::valid_post
+     * @uses  Request::redirect
+     */
 	public function action_index()
 	{
 		$this->title = __('Settings');
@@ -72,14 +73,13 @@ class Controller_Admin_Setting extends Controller_Admin {
 	/**
 	 * Sets Front page route
 	 *
-	 * @param   string  $source  Path for alias
-	 * @return  ORM Model_Path
-	 *
+     * @param string $source Path for alias
+     * @return  void
 	 * @uses    Path::delete
 	 * @uses    Path::save
 	 */
-	private function _set_front_page($source)
-	{
+    private function _set_front_page(string $source): void
+    {
 		// Delete previous alias if any
 		Path::delete(array('alias' => Path::FRONT_ALIAS));
 
@@ -88,6 +88,6 @@ class Controller_Admin_Setting extends Controller_Admin {
 		$values['source'] = $source;
 		$values['alias']  = Path::FRONT_ALIAS;
 
-		return Path::save($values);
-	}
+        Path::save($values);
+    }
 }

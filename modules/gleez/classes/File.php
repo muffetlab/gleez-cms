@@ -13,23 +13,20 @@ class File extends Kohana_File
 	/**
 	 * Generate a unique filename to avoid conflicts
 	 *
-	 * @since   1.0.1
-	 *
-	 * @param   string   $name           Filename [Optional]
-	 * @param   integer  $length         Length of filename to return [Optional]
-	 * @param   boolean  $remove_spaces  Remove spaces from file name [Optional]
-	 * @param   string   $replacement    Replacement for spaces [Optional]
-	 *
+     * @param string|null $name Filename [Optional]
+     * @param integer $length Length of filename to return [Optional]
+     * @param boolean $remove_spaces Remove spaces from file name [Optional]
+     * @param string $replacement Replacement for spaces [Optional]
 	 * @return  string
-	 *
+     * @since   1.0.1
 	 * @uses    Text::random
 	 * @uses    UTF8::strtolower
 	 */
-	public static function getUnique($name = NULL, $length = 20, $remove_spaces = TRUE, $replacement = '_')
-	{
+    public static function getUnique(string $name = NULL, int $length = 20, bool $remove_spaces = TRUE, string $replacement = '_'): string
+    {
 		if (is_null($name))
 		{
-			return UTF8::strtolower(uniqid().Text::random('alnum', (int)$length));
+            return UTF8::strtolower(uniqid() . Text::random('alnum', $length));
 		}
 		else
 		{
@@ -40,25 +37,21 @@ class File extends Kohana_File
 			$name   = substr($name, 0, -(strlen($ext) + 1));
 
 			$retval = uniqid().($remove_spaces ? preg_replace('/\s+/u', $replacement, $name) : $name);
-			$retval = is_null($length) ? $retval : substr($retval, 0, (int)$length);
+            $retval = is_null($length) ? $retval : substr($retval, 0, $length);
 
-			$retval = $retval.'.'.$ext;
-
-			return $retval;
+            return $retval . '.' . $ext;
 		}
 	}
 
 	/**
 	 * Get file extension from it name
 	 *
-	 * @since   1.1.0
-	 *
 	 * @param   string  $file  Filename
-	 *
-	 * @return  string
+     * @return  string
+     * @since   1.1.0
 	 */
-	public static function getExt($file)
-	{
+    public static function getExt(string $file): string
+    {
 		return pathinfo($file, PATHINFO_EXTENSION);
 	}
 }

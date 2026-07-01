@@ -75,21 +75,22 @@ class Gleez {
 	public static $charset = 'utf-8';
 
 	/**
-	 * True if Kohana is running on windows
+     * True if Kohana is running on Windows
 	 * @var boolean
 	 */
 	public static $isWindows= false;
 
-	/**
-	 * Runs the Gleez environment
-	 *
-	 * @uses  Gleez::_set_cookie
-	 * @uses  Route::set
-	 * @uses  Route::defaults
-	 * @uses  Config::load
-	 * @uses  I18n::initialize
-	 * @uses  Module::load_modules
-	 */
+    /**
+     * Runs the Gleez environment
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::set
+     * @uses  Route::defaults
+     * @uses  Config::load
+     * @uses  I18n::initialize
+     * @uses  Module::load_modules
+     * @uses  Gleez::_set_cookie
+     */
 	public static function ready()
 	{
 		if (self::$_init)
@@ -181,59 +182,57 @@ class Gleez {
 	 * @return  array  types
 	 * @uses    Module::action
 	 */
-	public static function types()
-	{
+    public static function types(): array
+    {
 		$states = array(
 			'blog'  => __('Blog'),
 			'page'  => __('Page'),
 			'user'  => __('User')
 		);
 
-		$values = Module::action('gleez_types', $states);
-
-		return $values;
+        return Module::action('gleez_types', $states);
 	}
 
-	/**
-	 * Check for maintenance_mode
-	 *
-	 * If Gleez is in maintenance mode, then force all non-admins to get routed
-	 * to a "This site is down for maintenance" page.
-	 *
-	 * @throws  HTTP_Exception_503
-	 *
-	 * @uses    Request::initial
-	 * @uses    Config::load
-	 * @uses    Request::controller
-	 * @uses    Request::action
-	 * @uses    ACL::check
-	 * @uses    Config::get
-	 */
+    /**
+     * Check for maintenance_mode
+     *
+     * If Gleez is in maintenance mode, then force all non-admins to get routed
+     * to a "This site is down for maintenance" page.
+     *
+     * @throws  HTTP_Exception_503
+     * @throws Kohana_Exception
+     * @uses    Request::initial
+     * @uses    Config::load
+     * @uses    Request::controller
+     * @uses    Request::action
+     * @uses    ACL::check
+     * @uses    Config::get
+     */
 	public static function maintenance_mode()
 	{
 		$maintenance_mode = Kohana::$config->load('site')->get('maintenance_mode', FALSE);
 		$message          = Kohana::$config->load('site')->get('offline_message', FALSE);
-		$message          = (empty($message) OR ! $message) ? Gleez::MAINTENANCE_MESSAGE : $message;
+        $message = empty($message) ? Gleez::MAINTENANCE_MESSAGE : $message;
 		$request          = Request::initial();
 
-		if ($maintenance_mode AND ($request instanceof Request) AND ($request->controller() != 'user' AND $request->action() != 'login') AND !ACL::check('administer site') AND $request->controller() != 'media')
+        if ($maintenance_mode && $request->controller() != 'user' && $request->action() != 'login' && !ACL::check('administer site') && $request->controller() != 'media')
 		{
 			throw HTTP_Exception::factory(503, __($message));
 		}
 	}
 
-	/**
-	 * Check to see if an IP address has been blocked and deny access to blocked IP addresses
-	 *
-	 * @throws  HTTP_Exception_403
-	 *
-	 * @uses    Config::get
-	 * @uses    Log::add
-	 * @uses    Request::$client_ip
-	 */
+    /**
+     * Check to see if an IP address has been blocked and deny access to blocked IP addresses
+     *
+     * @throws  HTTP_Exception_403
+     * @throws Kohana_Exception
+     * @uses    Config::get
+     * @uses    Log::add
+     * @uses    Request::$client_ip
+     */
 	public static function block_ips()
 	{
-		$blocked_ips = Kohana::$config->load('site')->get('blocked_ips', NULL);
+        $blocked_ips = Kohana::$config->load('site')->get('blocked_ips');
 		$ip          = Request::$client_ip;
 
 		if ( ! empty($blocked_ips) AND in_array($ip, preg_split("/[\s,]+/",$blocked_ips)))
@@ -246,14 +245,13 @@ class Gleez {
 	 * This function searches for the file that first matches the specified file
 	 * name and returns its path.
 	 *
-	 * @param   string  $file The file name
+     * @param string $file The file name
 	 * @return  string  The file path
 	 * @throws  Kohana_Exception Indicates that the file does not exist
-	 *
 	 * @uses    Kohana::modules
 	 */
-	protected static function find_file_custom($file)
-	{
+    protected static function find_file_custom(string $file): string
+    {
 		if (file_exists($file))
 		{
 			return $file;
@@ -295,33 +293,34 @@ class Gleez {
 	/**
 	 * Gets current Gleez version
 	 *
-	 * @param   boolean  $with_v  If set, return the version number with the prefix `v` [Optional]
-	 * @param   boolean  $full    If set, return the full version with `Gleez CMS` prefix [Optional]
+     * @param boolean $with_v If set, return the version number with the prefix `v` [Optional]
+     * @param boolean $full If set, return the full version with `Gleez CMS` prefix [Optional]
 	 * @return  string   The version of Gleez
 	 */
-	public static function getVersion($with_v = TRUE, $full = FALSE)
-	{
+    public static function getVersion(bool $with_v = TRUE, bool $full = FALSE): string
+    {
 		$version = $with_v ? 'v' . Gleez::VERSION : Gleez::VERSION;
-		$version = $full ? 'Gleez CMS ' . $version : $version;
 
-		return $version;
+        return $full ? 'Gleez CMS ' . $version : $version;
 	}
 
-	/**
-	 * Set default cookie [salt](gleez/cookie/config#salt)
-	 * and [lifetime](gleez/cookie/config#expiration)
-	 *
-	 * Also you can define a salt for the `Cookie` class in bootstrap.php:
-	 * ~~~
-	 * Cookie::$salt = [really-long-cookie-salt-here]
-	 * ~~~
-	 */
+    /**
+     * Set default cookie [salt](gleez/cookie/config#salt)
+     * and [lifetime](gleez/cookie/config#expiration)
+     *
+     * Also, you can define a salt for the `Cookie` class in bootstrap.php:
+     * ~~~
+     * Cookie::$salt = [really-long-cookie-salt-here]
+     * ~~~
+     *
+     * @throws Kohana_Exception
+     */
 	protected static function _set_cookie()
 	{
-		/** @var Cookie::$salt string */
-		Cookie::$salt = Kohana::$config->load('cookie')->get('salt');
+        // Set Cookie::$salt
+        Cookie::$salt = (string) Kohana::$config->load('cookie')->get('salt');
 
-		/** @var Cookie::$expiration string */
-		Cookie::$expiration = Kohana::$config->load('cookie')->get('lifetime');
+        // Set Cookie::$expiration
+        Cookie::$expiration = (int) Kohana::$config->load('cookie')->get('lifetime');
 	}
 }

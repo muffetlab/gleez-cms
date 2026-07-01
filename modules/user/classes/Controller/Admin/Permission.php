@@ -10,10 +10,12 @@
  */
 class Controller_Admin_Permission extends Controller_Admin {
 
-	/**
-	 * Shows list of permissions
-	 * @todo remove this practically with large permissions breaks maximum input limit
-	 */
+    /**
+     * Shows list of permissions
+     *
+     * @throws View_Exception|Kohana_Exception
+     * @todo remove this practically with large permissions breaks maximum input limit
+     */
 	public function action_list()
 	{
 		$this->title = __('Permissions');
@@ -39,11 +41,13 @@ class Controller_Admin_Permission extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Shows list of permissions per role
-	 *
-	 * @throws HTTP_Exception_404
-	 */
+    /**
+     * Shows list of permissions per role
+     *
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
 	public function action_role()
 	{
 		$id = $this->request->param('id', 1);
@@ -96,7 +100,11 @@ class Controller_Admin_Permission extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	public function action_user()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_user()
 	{
 		$id   = (int) $this->request->param('id', 0);
         $post = ORM::factory('User', $id);
@@ -135,7 +143,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 			{
 				Message::error(__('Permissions save failed!'));
 
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 			catch(Exception $e)
 			{

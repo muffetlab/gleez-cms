@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Term Controller
  *
@@ -10,11 +11,34 @@
  */
 class Controller_Admin_Term extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * Tree used for bulk update (MPTT)
+     * @var array
+     */
+    protected $tree = [];
+
+    /**
+     * Counter for calculating left/right values
+     * @var int
+     */
+    protected $counter = 0;
+
+    /**
+     * Level zero indicator for tree validation
+     * @var int
+     */
+    protected $level_zero = 0;
+
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer terms');
@@ -22,16 +46,17 @@ class Controller_Admin_Term extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * List of terms for vocabulary
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::info
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  DB::select
-	 */
+    /**
+     * List of terms for vocabulary
+     *
+     * @throws Kohana_Exception
+     * @uses  Message::info
+     * @uses  Request::redirect
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  DB::select
+     * @uses  Message::error
+     */
 	public function action_list()
 	{
 		$id    = (int) $this->request->param('id', 0);
@@ -69,19 +94,20 @@ class Controller_Admin_Term extends Controller_Admin {
 		}
 
 		$this->response->body($view);
-		Assets::tabledrag();
+        Assets::tableDrag();
 	}
 
-	/**
-	 * Add Term for vocabulary
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::info
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Arr::get
-	 */
+    /**
+     * Add Term for vocabulary
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Message::info
+     * @uses  Request::redirect
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Arr::get
+     * @uses  Message::error
+     */
 	public function action_add()
 	{
 		$id    = (int) $this->request->param('id', 0);
@@ -128,23 +154,24 @@ class Controller_Admin_Term extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit Term for vocabulary
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Request::redirect
-	 * @uses  Request::uri
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Edit Term for vocabulary
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Message::success
+     * @uses  Request::redirect
+     * @uses  Request::uri
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Message::error
+     */
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
@@ -190,23 +217,24 @@ class Controller_Admin_Term extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
 		$this->response->body($view);
 	}
 
-	/**
-	 * Deleting terms
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Request::redirect
-	 * @uses  Request::uri
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Deleting terms
+     *
+     * @throws Kohana_Exception
+     * @uses  Message::success
+     * @uses  Request::redirect
+     * @uses  Request::uri
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Message::error
+     */
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
@@ -260,14 +288,15 @@ class Controller_Admin_Term extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Confirm form
-	 *
-	 * @todo Fix me!
-	 */
+    /**
+     * Confirm form
+     *
+     * @throws Kohana_Exception
+     * @todo Fix me!
+     */
 	public function action_confirm()
 	{
-		$id = $this->request->param('id', NULL);
+        $id = $this->request->param('id');
 
 		if ($this->valid_post('term-list') AND ! is_null($id))
 		{
@@ -333,8 +362,8 @@ class Controller_Admin_Term extends Controller_Admin {
 	 *
 	 * @todo Move to Model
 	 */
-	private function generate_tree($tree)
-	{
+    private function generate_tree($tree): array
+    {
 		$menu = array();
 		$ref = array();
 

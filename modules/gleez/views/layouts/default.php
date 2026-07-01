@@ -7,7 +7,8 @@
 	<?php echo Meta::links(); ?>
 	<?php echo Assets::css(); ?>
 </head>
-<body id="<?php echo $page_id; ?>" class="<?php echo $page_class; ?>" <?php echo $schemaType ? 'itemscope itemtype="http://schema.org/'.$schemaType.'"' : ''?>>
+<body id="<?php echo $page_id; ?>"
+      class="<?php echo $page_class; ?>" <?php echo $schemaType ? 'itemscope itemtype="https://schema.org/' . $schemaType . '"' : '' ?>>
 
 	<!-- ########## Navbar start ########## -->
 	<header class="navbar navbar-inverse navbar-fixed-top" role="banner">

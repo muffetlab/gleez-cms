@@ -14,19 +14,24 @@ class Widget_User extends Widget {
 	public function save(array $post){}
 	public function delete(array $post){}
 
-	public function render()
-	{
-		switch($this->name)
-		{
-			case 'login':
-				return $this->login();
-			break;
-			default:
-				return;
-		}
-	}
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function render(): ?string
+    {
+        if ($this->name === 'login') {
+            return $this->login();
+        }
 
-	public function login()
+        return null;
+    }
+
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function login()
 	{
 		$auth    = Auth_ORM::instance();
 		$request = Request::current();
@@ -34,13 +39,13 @@ class Widget_User extends Widget {
 		// If user already signed-in / don't show the widget on user controller.
 		if ($auth->logged_in() OR $request->controller() === 'user')
 		{
-			return;
+            return null;
 		}
 
 		Assets::css('user', 'media/css/user.css', array('weight' => 2));
 
 		// Create form action
-		$destination = isset($_GET['destination']) ? $_GET['destination'] : Request::initial()->uri();
+        $destination = $_GET['destination'] ?? Request::initial()->uri();
 		$params      = array('action' => 'login');
 		$action      = Route::get('user')->uri($params).URL::query(array('destination' => $destination));
 

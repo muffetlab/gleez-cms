@@ -71,18 +71,19 @@ class Model_Path extends Gleez_Model
 		);
 	}
 
-	/**
-	 * Check by triggering error if process
-	 *
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation  Object for validation
-	 * @param   string      $field       Field name
-	 * @return  void
-	 *
-	 * @uses    Module::event
-	 */
-	public function process_alias(Validation $validation, $field)
+    /**
+     * Check by triggering error if process
+     *
+     * Validation callback.
+     *
+     * @param Validation $validation Object for validation
+     * @param string $field Field name
+     * @return  void
+     * @throws Kohana_Exception
+     * @throws Request_Exception
+     * @uses    Module::event
+     */
+    public function process_alias(Validation $validation, string $field)
 	{
 		// always set unique alias if its set
 		$alias  = $this->_unique_slug(trim($this->alias));
@@ -122,9 +123,7 @@ class Model_Path extends Gleez_Model
 				$this->route_name  = $params['route'];
 			}
 			$this->alias = $alias;
-		}
-		elseif ( ! isset($params['controller']) OR ! isset($params) OR empty($params['controller']) OR empty($params))
-		{
+        } else {
 			$validation->error($field, 'invalid_source', array($validation[$field]));
 		}
 	}
@@ -146,14 +145,16 @@ class Model_Path extends Gleez_Model
 		return $str;
 	}
 
-	/**
-	 * Process URI
-	 *
-	 * @param   string  $uri  URI
-	 * @return  array|boolean
-	 * @uses    Route::all
-	 */
-	private function _process_uri($uri)
+    /**
+     * Process URI
+     *
+     * @param string $uri URI
+     * @return  array|boolean
+     * @throws Kohana_Exception
+     * @throws Request_Exception
+     * @uses    Route::all
+     */
+    private function _process_uri(string $uri)
 	{
 		// Load routes
 		$routes = Route::all();
@@ -171,25 +172,23 @@ class Model_Path extends Gleez_Model
 		return FALSE;
 	}
 
-	/**
-	 * Reading data from inaccessible properties
-	 *
+    /**
+     * Reading data from inaccessible properties
+     *
      * @param string $column
-	 * @return  mixed
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+     * @return  mixed
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     * @uses  Route::get
+     */
     public function __get(string $column)
 	{
         switch ($column) {
 			case 'edit_url':
 				return Route::get('admin/path')->uri(array('action' => 'edit', 'id' => $this->id));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				return Route::get('admin/path')->uri(array('action' => 'delete', 'id' => $this->id));
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}

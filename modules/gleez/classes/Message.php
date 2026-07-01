@@ -34,24 +34,19 @@ class Message {
 	 */
 	public static $default_view = 'message/basic';
 
-	/**
-	 * Adds a new message.
-	 *
-	 * @param   string  $type     Message type (e.g. Message::SUCCESS)
-	 * @param   string  $message  Array/String for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 * @return  void
-	 */
-	public static function set($type, $message, array $options = NULL)
+    /**
+     * Adds a new message.
+     *
+     * @param string $type Message type (e.g. Message::SUCCESS)
+     * @param array|string $message Array/String for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @return  void
+     * @throws Kohana_Exception
+     */
+    public static function set(string $type, $message, ?array $options = NULL)
 	{
 		// Load existing messages
 		$messages = (array) self::get();
-
-		// initialize if necessary
-		if ( ! is_array($messages))
-		{
-			$messages = array();
-		}
 
 		// Add new message
 		if (is_array($message))
@@ -78,100 +73,109 @@ class Message {
 		Session::instance()->set(self::$session_key, $messages);
 	}
 
-	/**
-	 * Sets an error message.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets an error message.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function error($message, array $options = NULL)
 	{
 		self::set(self::ERROR, $message, $options);
 	}
 
-	/**
-	 * Sets a ALERT message.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets a ALERT message.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function alert($message, array $options = NULL)
 	{
 		self::set(self::ALERT, $message, $options);
 	}
 
-	/**
-	 * Sets a CRITICAL message.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets a CRITICAL message.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function critical($message, array $options = NULL)
 	{
 		self::set(self::CRITICAL, $message, $options);
 	}
 
-	/**
-	 * Sets a notice.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets a notice.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function notice($message, array $options = NULL)
 	{
 		self::set(self::NOTICE, $message, $options);
 	}
 
-	/**
-	 * Sets a success message.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets a success message.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function success($message, array $options = NULL)
 	{
 		self::set(self::SUCCESS, $message, $options);
 	}
 
-	/**
-	 * Sets a warning message.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets a warning message.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function warn($message, array $options = NULL)
 	{
 		self::set(self::WARN, $message, $options);
 	}
 
-	/**
-	 * Sets a info message.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets an info message.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function info($message, array $options = NULL)
 	{
 		self::set(self::INFO, $message, $options);
 	}
 
-	/**
-	 * Sets a ACCESS message.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets a ACCESS message.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function access($message, array $options = NULL)
 	{
 		self::set(self::ACCESS, $message, $options);
 	}
 
-	/**
-	 * Sets a debug message, not in production stage.
-	 *
-	 * @param	mixed	$message  String/Array for the message(s)
-	 * @param   array   $options  Any options for the message [Optional]
-	 */
+    /**
+     * Sets a debug message, not in production stage.
+     *
+     * @param mixed $message String/Array for the message(s)
+     * @param array|null $options Any options for the message [Optional]
+     * @throws Kohana_Exception
+     */
 	public static function debug($message, array $options = NULL)
 	{
 		if (Kohana::$environment !== Kohana::PRODUCTION)
@@ -180,44 +184,45 @@ class Message {
 		}
 	}
 
-	/**
-	 * The same as display - used to mold to Kohana standards
-	 *
-	 * @param 	mixed 	$type     Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT)) [Optional]
-	 * @param 	bool 	$delete   Delete the messages? [Optional]
-	 * @param 	mixed 	$view     View filename or View object [Optional]
-	 *
-	 * @return	string	HTML for message
-	 */
-	public static function render($type = NULL, $delete = TRUE, $view = NULL)
-	{
+    /**
+     * The same as display - used to mold to Kohana standards
+     *
+     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT)) [Optional]
+     * @param bool $delete Delete the messages? [Optional]
+     * @param mixed $view View filename or View object [Optional]
+     * @return    string    HTML for message
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public static function render($type = NULL, bool $delete = TRUE, $view = NULL): string
+    {
 		return self::display($type, $delete, $view);
 	}
 
-	/**
-	 * Returns all messages.
-	 *
-	 * Example:
-	 * ~~~
-	 * $messages = Message::get();
-	 *
-	 * //Get error messages only
-	 * $error_messages = Message::get(Message::ERROR);
-	 *
-	 * // Get error and alert messages
-	 * $messages = Message::get(array(Message::ERROR, Message::ALERT));
-	 *
-	 * // Customize the default value
-	 * $error_messages = Message::get(Message::ERROR, 'No error messages found');
-	 * ~~~
-	 *
-	 * @param 	mixed 	$type     Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
-	 * @param 	mixed 	$default  Default value to return [Optional]
-	 * @param 	bool 	$delete   Delete the messages?
-	 *
-	 * @return 	mixed 	array or NULL
-	 */
-	public static function get($type = NULL, $default = NULL, $delete = FALSE)
+    /**
+     * Returns all messages.
+     *
+     * Example:
+     * ~~~
+     * $messages = Message::get();
+     *
+     * //Get error messages only
+     * $error_messages = Message::get(Message::ERROR);
+     *
+     * // Get error and alert messages
+     * $messages = Message::get(array(Message::ERROR, Message::ALERT));
+     *
+     * // Customize the default value
+     * $error_messages = Message::get(Message::ERROR, 'No error messages found');
+     * ~~~
+     *
+     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
+     * @param mixed $default Default value to return [Optional]
+     * @param bool $delete Delete the messages?
+     * @return    mixed    array or NULL
+     * @throws Kohana_Exception
+     */
+    public static function get($type = NULL, $default = NULL, bool $delete = FALSE)
 	{
 		// Get the messages
 		$messages = Session::instance()->get(self::$session_key, array());
@@ -272,22 +277,23 @@ class Message {
 		return $messages;
 	}
 
-	/**
-	 * Delete messages
-	 *
-	 * Example:
-	 * ~~~
-	 * Message::clear();
-	 *
-	 * // Delete error messages
-	 * Message::clear(Message::ERROR);
-	 *
-	 * // Delete error and alert messages
-	 * Message::clear(array(Message::ERROR, Message::ALERT));
-	 * ~~~
-	 *
-	 * @param   mixed  message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
-	 */
+    /**
+     * Delete messages
+     *
+     * Example:
+     * ~~~
+     * Message::clear();
+     *
+     * // Delete error messages
+     * Message::clear(Message::ERROR);
+     *
+     * // Delete error and alert messages
+     * Message::clear(array(Message::ERROR, Message::ALERT));
+     * ~~~
+     *
+     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
+     * @throws Kohana_Exception
+     */
 	public static function clear($type = NULL)
 	{
 		if ($type === NULL)
@@ -302,17 +308,17 @@ class Message {
 		}
 	}
 
-	/**
-	 * Displays the message
-	 *
-	 * @param 	mixed 	$type     Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT)) [Optional]
-	 * @param 	bool 	$delete   Delete the messages? [Optional]
-	 * @param 	mixed 	$view     View filename or View object [Optional]
-	 *
-	 * @return   string   Message to string
-	 */
-	public static function display($type = NULL, $delete = TRUE, $view = NULL)
-	{
+    /**
+     * Displays the message
+     *
+     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT)) [Optional]
+     * @param bool $delete Delete the messages? [Optional]
+     * @param mixed $view View filename or View object [Optional]
+     * @return   string   Message to string
+     * @throws View_Exception|Kohana_Exception
+     */
+    public static function display($type = NULL, bool $delete = TRUE, $view = NULL): string
+    {
 		$messages = self::get($type, NULL, $delete);
 
 		if (empty($messages))

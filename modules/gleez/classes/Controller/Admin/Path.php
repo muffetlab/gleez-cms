@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Path Controller
  *
@@ -10,11 +11,16 @@
  */
 class Controller_Admin_Path extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer paths');
@@ -22,16 +28,17 @@ class Controller_Admin_Path extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * List path aliases
-	 *
-	 * @uses  Request::is_datatables
-	 * @uses  ORM::dataTables
+    /**
+     * List path aliases
+     *
+     * @throws Kohana_Exception
+     * @uses  ORM::dataTables
      * @uses  HTML::chars
-	 * @uses  HTML::icon
-	 * @uses  Route::url
-	 * @uses  Assets::popup
-	 */
+     * @uses  HTML::icon
+     * @uses  Route::url
+     * @uses  Assets::popup
+     * @uses  Request::is_datatables
+     */
 	public function action_list()
 	{
 		Assets::popup();
@@ -69,14 +76,15 @@ class Controller_Admin_Path extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Add path alias
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  URL::site
-	 * @uses  Message::success
-	 */
+    /**
+     * Add path alias
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Route::uri
+     * @uses  URL::site
+     * @uses  Message::success
+     * @uses  Route::get
+     */
 	public function action_add()
 	{
 		$this->title = __('Creating an Alias');
@@ -103,22 +111,23 @@ class Controller_Admin_Path extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors =  $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit path alias
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  URL::site
-	 */
+    /**
+     * Edit path alias
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Route::uri
+     * @uses  Message::error
+     * @uses  Message::success
+     * @uses  URL::site
+     * @uses  Route::get
+     */
 	public function action_edit()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -128,7 +137,7 @@ class Controller_Admin_Path extends Controller_Admin {
 		if ( ! $post->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent alias.');
-			Message::error(__('Alias doesn\'t exists!'));
+            Message::error(__("Alias doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/path')->uri(array('action' => 'list')), 404);
 		}
@@ -156,20 +165,21 @@ class Controller_Admin_Path extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete path alias
-	 *
-	 * @uses  Message::error
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Delete path alias
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Message::error
+     */
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -179,7 +189,7 @@ class Controller_Admin_Path extends Controller_Admin {
 		if ( ! $path->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent alias.');
-			Message::error(__('Alias doesn\'t exists!'));
+            Message::error(__("Alias doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/path')->uri( array('action' => 'list')), 404);
 		}
@@ -208,7 +218,7 @@ class Controller_Admin_Path extends Controller_Admin {
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occured deleting alias id: :id, :msg',
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting alias id: :id, :msg',
 					array(':id' => $path->id, ':message' => $e->getMessage())
 				);
 				Message::error('An error occurred deleting alias %path',array(':path' => $path->alias));

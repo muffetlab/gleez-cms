@@ -69,27 +69,26 @@ class HTML extends Kohana_HTML
 		return parent::style($file, $attributes, $protocol, $index);
 	}
 
-	/**
-	 * Creates a resized image link to resize images on fly with caching
-	 *
-	 * Width, height and type attributes are required to resize the image.
-	 *
-	 * Example:
-	 * ~~~
-	 * echo HTML::resize('media/img/logo.png', array('alt' => 'My Company', 'width' => 50, 'height' => 50, 'type' => 'ratio'));
-	 * ~~~
-	 *
-	 * @param   string   $file        File name
-	 * @param   array    $attributes  Default attributes + type = crop|ratio [Optional]
-	 * @param   mixed    $protocol    Protocol to pass to `URL::base()` [Optional]
-	 * @param   boolean  $index       Include the index page [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::base
-	 */
-	public static function resize($file, array $attributes = NULL, $protocol = NULL, $index = FALSE)
-	{
+    /**
+     * Creates a resized image link to resize images on fly with caching
+     *
+     * Width, height and type attributes are required to resize the image.
+     *
+     * Example:
+     * ~~~
+     * echo HTML::resize('media/img/logo.png', array('alt' => 'My Company', 'width' => 50, 'height' => 50, 'type' => 'ratio'));
+     * ~~~
+     *
+     * @param string $file File name
+     * @param array|null $attributes Default attributes + type = crop|ratio [Optional]
+     * @param mixed $protocol Protocol to pass to `URL::base()` [Optional]
+     * @param boolean $index Include the index page [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    URL::base
+     */
+    public static function resize(string $file, array $attributes = NULL, $protocol = NULL, bool $index = FALSE): string
+    {
 		if (strlen($file) <= 1)
 		{
 			return '';
@@ -123,8 +122,8 @@ class HTML extends Kohana_HTML
                 $file = "media/imagecache/$type/{$width}x$height/$file";
 			}
 
-			// Auto detect index file
-			$index = ($index == FALSE AND ! empty(Kohana::$index_file)) ? TRUE : $index;
+            // Auto-detect index file
+            $index = (!$index and !empty(Kohana::$index_file)) ? TRUE : $index;
 
 			// Add the base URL
 			$file = URL::base($protocol, $index).$file;
@@ -136,16 +135,16 @@ class HTML extends Kohana_HTML
 		return '<img'.self::attributes($attributes).'>';
 	}
 
-	/**
-	 * Print out a themed set of links
-	 *
-	 * @param   array  $links       Links
-	 * @param   array  $attributes  Attributes, for example CSS class [Optional]
-	 *
-	 * @return  string
-	 */
-	public static function links($links, $attributes = array('class' => 'links'))
-	{
+    /**
+     * Print out a themed set of links
+     *
+     * @param array $links Links
+     * @param array $attributes Attributes, for example CSS class [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     */
+    public static function links(array $links, array $attributes = array('class' => 'links')): string
+    {
 		$output = '';
 
 		if (count($links) > 0)
@@ -199,18 +198,17 @@ class HTML extends Kohana_HTML
 		return $output;
 	}
 
-	/**
-	 * Print out a themed set of tabs
-	 *
-	 * @param   array  $tabs        Tabs
-	 * @param   array  $attributes  Attributes, for example CSS class [Optional]
-	 *
-	 * @return  string Prepared HTML
-	 *
+    /**
+     * Print out a themed set of tabs
+     *
+     * @param array $tabs Tabs
+     * @param array $attributes Attributes, for example CSS class [Optional]
+     * @return  string Prepared HTML
+     * @throws Kohana_Exception
      * @uses    HTML::chars
-	 */
-	public static function tabs($tabs, $attributes = array('class' => 'tabs'))
-	{
+     */
+    public static function tabs(array $tabs, array $attributes = array('class' => 'tabs')): string
+    {
 		$output = '';
 
 		if (count($tabs) > 0)
@@ -259,106 +257,37 @@ class HTML extends Kohana_HTML
 		return $output;
 	}
 
-	/**
-	 * Takes a URI and will return bool true if it matches or is contained (at
-	 * the start) of the current request URI.
-	 *
-	 * @param   string  $uri  URI
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    URL::is_active
-	 */
-	public static function is_active($uri)
-	{
+    /**
+     * Takes a URI and will return bool true if it matches or is contained (at
+     * the start) of the current request URI.
+     *
+     * @param string $uri URI
+     * @return  boolean
+     * @throws Kohana_Exception
+     * @uses    URL::is_active
+     */
+    public static function is_active(string $uri): bool
+    {
 		return URL::is_active($uri);
 	}
 
-	/**
-	 * JavaScript source code block
-	 *
-	 * @param   string  $source  Script source
-	 * @param   string  $type    Script type [Optional]
-	 *
-	 * @return  string
-	 */
-	public static function script_source($source, $type = 'text/javascript')
-	{
-		$compiled = '';
-
-		if (is_array($source))
-		{
-			foreach ($source as $script)
-			{
-				$compiled .= self::script_source($script);
-			}
-		}
-		else
-		{
-			$compiled = implode(PHP_EOL, array('<script type="'.$type.'">', trim($source), '</script>'));
-		}
-
-		return $compiled;
-	}
-
-	/**
-	 * Create a image tag for sprite images
-	 *
-	 * @param   mixed   $class  Image class name
-	 * @param   string  $title  Image title [Optional]
-	 *
-	 * @return  string  An HTML-prepared image
-	 *
-	 * @uses    Route::uri
-	 * @uses    Route::get
-	 */
-	public static function sprite_img($class, $title = NULL)
-	{
-		$attr           = array();
-		$attr['width']  = 16;
-		$attr['height'] = 16;
-		$image_class    = '';
-
-		if (is_array($class))
-		{
-			foreach ($class as $name)
-			{
-				$image_class .= $name;
-			}
-		}
-		elseif (is_string($class))
-		{
-			$image_class = $class;
-		}
-
-		$attr['class'] = 'icon ' . $image_class;
-
-		if ( ! is_null($title))
-		{
-			$attr['title'] = $title;
-		}
-
-		return self::image(Route::get('media')->uri(array('file' => 'images/spacer.gif')), $attr);
-	}
-
-	/**
-	 * Create a iconic button
-	 *
-	 * Example:
-	 * ~~~
+    /**
+     * Create an iconic button.
+     *
+     * Example:
+     * ~~~
      * echo HTML::icon('/paths/edit/1', 'far fa-edit', array('class'=>'action-edit', 'title'=> __('Edit Alias')));
-	 * ~~~
-	 *
-	 * @link    http://fontawesome.io/
-	 *
-	 * @param   string  $url    URL
-	 * @param   string  $icon   FontAwesome like icon  class
-	 * @param   array   $attrs  Attributes, for example CSS class or title [Optional]
-	 *
-	 * @return  string
-	 */
-	public static function icon($url, $icon, array $attrs = array())
-	{
+     * ~~~
+     *
+     * @link    http://fontawesome.io/
+     * @param string $url URL
+     * @param string $icon FontAwesome like icon  class
+     * @param array $attrs Attributes, for example CSS class or title [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     */
+    public static function icon(string $url, string $icon, array $attrs = array()): string
+    {
         return self::anchor($url, '<i class="' . $icon . '"></i>', $attrs);
 	}
 
@@ -370,13 +299,13 @@ class HTML extends Kohana_HTML
 	 * echo HTML::label(__('Publish'), 'info');
 	 * ~~~
 	 *
-	 * @param   string  $text   Text
-	 * @param   string  $label  Bootstrap label class [Optional]
+     * @param string $text Text
+     * @param string $label Bootstrap label class [Optional]
 	 *
 	 * @return  string
 	 */
-	public static function label($text, $label = 'default')
-	{
+    public static function label(string $text, string $label = 'default'): string
+    {
 		switch (strtolower($label))
 		{
 			case 'publish':
@@ -413,8 +342,8 @@ class HTML extends Kohana_HTML
 	 *
 	 * @return array
 	 */
-	public static function per_page()
-	{
+    public static function per_page(): array
+    {
 		return array(
 			5 => 5,
 			10 => 10,

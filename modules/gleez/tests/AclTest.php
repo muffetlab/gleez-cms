@@ -9,8 +9,8 @@
  */
 class Gleez_AclTest extends Unittest_TestCase
 {
-	public function providerPerms()
-	{
+    public function providerPerms(): array
+    {
 		return array(
 			array('administer site', 2),
 			array('view page', 1),
@@ -19,7 +19,8 @@ class Gleez_AclTest extends Unittest_TestCase
 	
 	/**
 	 * @dataProvider providerPerms
-	 */
+     * @throws Cache_Exception|Kohana_Exception
+     */
     public function test_acl_check($perm, $user_id)
 	{
         $user = ORM::factory('User', $user_id);
@@ -41,15 +42,16 @@ class Gleez_AclTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @covers Route::cache
-	 */
+     * @throws Cache_Exception|Kohana_Exception
+     */
 	public function test_cache_stores_route_objects()
 	{
-		$acls = ACL::all();
+        $aclList = ACL::all();
 
 		// First we create the cache
 		ACL::cache(TRUE);
 
-		// Now lets modify the "current" routes
+        // Now let's modify the "current" routes
 		ACL::set('contact', array(
 			'sending mail' => array(
 				'title' => __('Sending Mails'),
@@ -65,7 +67,7 @@ class Gleez_AclTest extends Unittest_TestCase
 		$this->assertTrue(ACL::$cache);
 
 		// And if all went ok the nonsensical route should be gone...
-		$this->assertEquals($acls, ACL::all());
+        $this->assertEquals($aclList, ACL::all());
 	}
 }
 

@@ -51,15 +51,15 @@ class Fragment {
 	 * $key = Fragment::_cache_key('footer', TRUE);
 	 * ~~~
 	 *
-	 * @param   string   $name  Fragment name
-	 * @param   boolean  $i18n  Multilingual fragment support [Optional]
+     * @param string $name Fragment name
+     * @param boolean|null $i18n Multilingual fragment support [Optional]
 	 *
 	 * @return  string
 	 *
 	 * @uses    I18n::lang
 	 */
-	protected static function _cache_key($name, $i18n = NULL)
-	{
+    protected static function _cache_key(string $name, bool $i18n = NULL): string
+    {
 		if (is_null($i18n))
 		{
 			// Use the default setting
@@ -74,29 +74,29 @@ class Fragment {
         return 'Fragment::cache(' . $i18n . $separator . $name . ')';
 	}
 
-	/**
-	 * Load a fragment from cache and display it
-	 *
-	 * Multiple fragments can be nested with different life times.
-	 *
-	 * Example:
-	 * ~~~
-	 * if ( ! Fragment::getCache('footer'))
-	 * {
-	 *     // Anything that is echo'ed here will be saved
-	 *     Fragment::setCache();
-	 * }
-	 * ~~~
-	 *
-	 * @param   string   $name  Fragment name
-	 * @param   boolean  $i18n  Multilingual fragment support [Optional]
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    Cache::get
-	 */
-	public static function getCache($name, $i18n = NULL)
-	{
+    /**
+     * Load a fragment from cache and display it
+     *
+     * Multiple fragments can be nested with different life times.
+     *
+     * Example:
+     * ~~~
+     * if ( ! Fragment::getCache('footer'))
+     * {
+     *     // Anything that is echoed here will be saved
+     *     Fragment::setCache();
+     * }
+     * ~~~
+     *
+     * @param string $name Fragment name
+     * @param null $i18n Multilingual fragment support [Optional]
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses    Cache::get
+     */
+    public static function getCache(string $name, $i18n = NULL): bool
+    {
 		$cache = Cache::instance();
 
 		// Get the cache key name
@@ -121,16 +121,18 @@ class Fragment {
 		}
 	}
 
-	/**
-	 * Saves the currently open fragment in the cache
-	 *
-	 * Example:
-	 * ~~~
-	 * Fragment::setCache();
-	 * ~~~
-	 *
-	 * @param   integer  $lifetime  Fragment cache lifetime [Optional]
-	 */
+    /**
+     * Saves the currently open fragment in the cache
+     *
+     * Example:
+     * ~~~
+     * Fragment::setCache();
+     * ~~~
+     *
+     * @param null $lifetime Fragment cache lifetime [Optional]
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
 	public static function setCache($lifetime = NULL)
 	{
 		$cache = Cache::instance();
@@ -154,18 +156,20 @@ class Fragment {
 		}
 	}
 
-	/**
-	 * Delete a cached fragment
-	 *
-	 * Example:
-	 * ~~~
-	 * Fragment::delete($key);
-	 * ~~~
-	 *
-	 * @param  string   $name  Fragment name
-	 * @param  boolean  $i18n  Multilingual fragment support [Optional]
-	 */
-	public static function delete($name, $i18n = NULL)
+    /**
+     * Delete a cached fragment
+     *
+     * Example:
+     * ~~~
+     * Fragment::delete($key);
+     * ~~~
+     *
+     * @param string $name Fragment name
+     * @param null $i18n Multilingual fragment support [Optional]
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
+    public static function delete(string $name, $i18n = NULL)
 	{
 		Cache::instance()->delete(Fragment::_cache_key($name, $i18n));
 	}

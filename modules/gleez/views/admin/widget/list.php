@@ -26,7 +26,7 @@
 					<tr id="widget-row-<?php echo $widget->id ?>" class="draggable">
 						<?php
 							$split_name = explode('/', $widget->name);
-							$static = ($split_name AND $split_name[0] == 'static') ? TRUE : FALSE;
+                        $static = $split_name && $split_name[0] == 'static';
 						?>
 						<td class="widget" id="widget-<?php echo $widget->id ?>">
                             <?php echo HTML::chars($widget->title) ?>

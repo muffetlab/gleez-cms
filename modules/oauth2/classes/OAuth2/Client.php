@@ -212,7 +212,7 @@ abstract class OAuth2_Client {
      * @param   int     $grant_type         Grant Type ('authorization_code', 'password', 'client_credentials', 'refresh_token', or a custom code (@see GrantType Classes)
      * @param   array   $parameters         Array sent to the server (depend on which grant type you're using)
      * @return  array                       The server response
-     * @throws  OAuth2_Client_Exception
+     * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
     public function request_access_token($grant_type, array $parameters)
     {
@@ -252,7 +252,6 @@ abstract class OAuth2_Client {
                 throw new OAuth2_Client_Exception('Unknown client auth type ":client_auth_type".', array(
                     ':client_auth_type' => $this->_client_auth_type
                 ), OAuth2_Client_Exception::E_UNKNOWN_AUTH_TYPE);
-                break;
         }
 
         return $this->_execute_request($this->get_access_token_endpoint(), $parameters, self::HTTP_METHOD_POST, $http_headers, self::HTTP_FORM_CONTENT_TYPE_APPLICATION);
@@ -261,11 +260,12 @@ abstract class OAuth2_Client {
     /**
      * Get the access token
      *
-     * @param   string  $grant_type
-     * @param   array   $parameters
-     * @param   string  $response
+     * @param string $grant_type
+     * @param array $parameters
+     * @param string $response
      * @return  string
      * @throws  OAuth2_Client_Exception
+     * @throws Kohana_Exception
      */
     public function get_access_token($grant_type, $parameters, $response = NULL)
     {
@@ -290,7 +290,7 @@ abstract class OAuth2_Client {
     /**
      * Set the access token
      *
-     * @param   string
+     * @param string $token
      */
     public function set_access_token($token)
     {
@@ -352,8 +352,8 @@ abstract class OAuth2_Client {
      * @param   int     $form_content_type
      * @param   bool    $check_http_status
      * @param   int     $expected_http_status
-     * @throws  OAuth2_Client_Exception
      * @return  array
+     * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
     public function fetch($protected_resource_url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = array(), $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART, $check_http_status = TRUE, $expected_http_status = 200)
     {
@@ -384,7 +384,6 @@ abstract class OAuth2_Client {
                     throw new OAuth2_Client_Exception('Unknown access token type: ":access_token_type".', array(
                         ':access_token_type' => $this->_access_token_type
                     ), OAuth2_Client_Exception::E_UNKNOWN_ACCESS_TOKEN_TYPE);
-                    break;
             }
         }
 
@@ -447,13 +446,14 @@ abstract class OAuth2_Client {
     /**
      * Execute a request with cURL
      *
-     * @param   string  $url
-     * @param   mixed   $parameters
-     * @param   string  $http_method
-     * @param   array   $http_headers
-     * @param   int     $form_content_type
+     * @param string $url
+     * @param mixed $parameters
+     * @param string $http_method
+     * @param array|null $http_headers
+     * @param int $form_content_type
      * @return  array
-     * @throws  OAuth2_Client_Exception
+     * @throws Kohana_Exception
+     * @throws OAuth2_Client_Exception
      */
     protected function _execute_request($url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = NULL, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {
@@ -542,7 +542,7 @@ abstract class OAuth2_Client {
             curl_setopt_array($ch, $this->curl_options);
         }
 
-        //Github checks for useragent header
+        // GitHub checks for useragent header
         curl_setopt($ch, CURLOPT_USERAGENT, Template::getSiteName());
 
         $result       = curl_exec($ch);

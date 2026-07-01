@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Base Controller
  *
@@ -12,7 +13,7 @@ class Controller_Admin extends Template {
 
 	/**
 	 * Page template
-	 * @var string
+     * @var string|View
 	 */
 	public $template = 'layouts/admin';
 
@@ -29,17 +30,21 @@ class Controller_Admin extends Template {
 	protected $_form_action;
 
 	/**
-	 * Currently logged in user
+     * Currently logged-in user
 	 * @var
 	 */
 	protected $_current_user;
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 * @uses  Theme::$is_admin
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses  ACL::required
+     * @uses  Theme::$is_admin
+     */
 	public function before()
 	{
 		// Inform tht we're in admin section for themers/developers
@@ -52,8 +57,12 @@ class Controller_Admin extends Template {
 
 		parent::before();
 	}
-	
-	public function action_login(){
+
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function action_login(){
 		
 		if ($this->_auth->logged_in())
 		{
@@ -99,7 +108,7 @@ class Controller_Admin extends Template {
 			}
 			catch (Validation_Exception $e)
 			{
-				$this->_errors = $e->array->errors('login', TRUE);
+                $this->_errors = $e->array->errors('login');
 			}
 		}
 

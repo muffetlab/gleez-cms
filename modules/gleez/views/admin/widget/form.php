@@ -3,7 +3,7 @@
 	{
 		$parms = array('id' => $widget->id, 'action' => 'edit');
 		$split_name = explode('/', $widget->name);
-		$static = ($split_name AND $split_name[0] == 'static') ? TRUE : FALSE;
+        $static = $split_name && $split_name[0] == 'static';
 	}
 	else
 	{
@@ -31,8 +31,8 @@
 			</div>
 
 			<div class="form-group <?php echo isset($errors['status']) ? 'has-error': ''; ?>">
-				<?php $enabled_off = (isset($widget->status) AND $widget->status == 0) ? TRUE : FALSE; ?>
-				<?php $enabled_on  = (isset($widget->status) AND $widget->status == 1) ? TRUE : FALSE; ?>
+                <?php $enabled_off = isset($widget->status) && $widget->status == 0; ?>
+                <?php $enabled_on = isset($widget->status) && $widget->status == 1; ?>
 
 				<?php echo Form::label('status', __('Status'), array('class' => 'control-label')) ?>
 				<div class="controls">
@@ -45,7 +45,7 @@
 				<?php echo Form::label('roles', __('Roles'), array('class' => 'control-label')) ?>
 				<?php foreach($roles as $role => $name): ?>
 					<div class="checkbox">
-						<?php echo Form::label('roles', Form::checkbox('roles['.$role.']', $role, in_array($role, explode(',', $widget->roles)) ? TRUE : FALSE).ucfirst($name)); ?>
+                        <?php echo Form::label('roles', Form::checkbox('roles[' . $role . ']', $role, in_array($role, explode(',', $widget->roles))) . ucfirst($name)); ?>
 					</div>
 				<?php endforeach ?>
 			</div>
@@ -62,8 +62,8 @@
 			</div>
 
 			<div class="form-group <?php echo isset($errors['show_title']) ? 'has-error': ''; ?>">
-				<?php $show_title_off = (isset($widget->show_title) AND $widget->show_title == 0) ? TRUE : FALSE; ?>
-				<?php $show_title_on = (isset($widget->show_title) AND $widget->show_title == 1) ? TRUE : FALSE; ?>
+                <?php $show_title_off = isset($widget->show_title) && $widget->show_title == 0; ?>
+                <?php $show_title_on = isset($widget->show_title) && $widget->show_title == 1; ?>
 
 				<?php echo Form::label('show_title', __('Show Title'), array('class' => 'control-label')); ?>
 				<div class="controls">
@@ -73,8 +73,8 @@
 			</div>
 
 			<div class="form-group <?php echo isset($errors['visibility']) ? 'has-error': ''; ?>">
-				<?php $visible_off = (isset($widget->status) AND $widget->visibility == 0) ? TRUE : FALSE; ?>
-				<?php $visible_on  = (isset($widget->status) AND $widget->visibility == 1) ? TRUE : FALSE; ?>
+                <?php $visible_off = isset($widget->status) && $widget->visibility == 0; ?>
+                <?php $visible_on = isset($widget->status) && $widget->visibility == 1; ?>
 
 				<?php echo Form::label('pages', __('Show widget on specific pages'), array('class' => 'control-label')) ?>
 				<div class="radio">

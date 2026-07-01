@@ -13,9 +13,12 @@ class Widget_Menu extends Widget {
 	public function form(){}
 	public function save(array $post){}
 	public function delete(array $post){}
-	
-	public function render()
-	{
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function render(): ?string
+    {
         return Menu::links($this->name, array('class' => 'menus', 'widget' => TRUE));
 	}
 

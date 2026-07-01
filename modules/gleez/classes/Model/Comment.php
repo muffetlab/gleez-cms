@@ -102,23 +102,26 @@ class Model_Comment extends Gleez_Model
 		);
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @return  ORM
-	 *
-	 * @uses    User::active_user
-	 * @uses    ACL::check
-	 * @uses    Text::limit_words
-	 * @uses    Text::markup
-	 * @uses    Request::$client_ip
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation|null $validation Validation object
+     * @return  ORM
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     * @uses    ACL::check
+     * @uses    Text::limit_words
+     * @uses    Text::markup
+     * @uses    Request::$client_ip
+     * @uses    User::active_user
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		// Set some defaults
 		$this->updated = time();
-		$this->format = empty($this->format) ? Kohana::$config->load('inputfilter.default_format', 1) : $this->format;
+        $this->format = empty($this->format) ? Kohana::$config->load('inputfilter.default_format') : $this->format;
 		$this->author = empty($this->author) ? User::active_user()->id : $this->author;
 
 		if ( ! $this->loaded())
@@ -171,48 +174,39 @@ class Model_Comment extends Gleez_Model
         switch ($column) {
 			case 'title':
                 return HTML::chars($this->get('title') ?? '');
-			break;
-			case 'body':
+            case 'body':
 				return Text::markup(parent::__get('body'), $this->format);
-			break;
-			case 'rawtitle':
-				// Raw fields without markup. Usage: during edit or etc!
+            case 'rawtitle':
+                // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('title');
-			break;
-			case 'rawbody':
-				// Raw fields without markup. Usage: during edit or etc!
+            case 'rawbody':
+                // Raw fields without markup. Usage: during edit or etc.!
                 return $this->get('body') ?? '';
-			break;
-			case 'url':
-				// Model specific links; view, edit, delete url's.
+            case 'url':
 				return Route::get('comment')->uri( array('id' => $this->id, 'action' => 'view'));
-			break;
-			case 'edit_url':
-				// Model specific links; view, edit, delete url's.
+            case 'edit_url':
 				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
+            case 'delete_url':
 				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}
 
-	/**
-	 * Make sure we have an valid author id set, or a guest id
-	 *
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
-	 *
-	 * @uses    User::lookup_by_name
-	 * @uses    DB::select
-	 * @uses    DB::expr
-	 * @uses    Validation::error
-	 */
-	public function valid_author(Validation $validation, $field)
+    /**
+     * Make sure we have a valid author id set, or a guest id.
+     *
+     * Validation callback.
+     *
+     * @param Validation $validation Validation object
+     * @param string $field Field name
+     * @throws Kohana_Exception
+     * @uses    DB::select
+     * @uses    DB::expr
+     * @uses    Validation::error
+     * @uses    User::lookup_by_name
+     */
+    public function valid_author(Validation $validation, string $field)
 	{
 		if ( ! empty($this->author_name) AND ! ($account = User::lookup_by_name($this->author_name)))
 		{
@@ -254,11 +248,11 @@ class Model_Comment extends Gleez_Model
 	 * Make sure that the email address is legal
 	 *
 	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
+     * @param string $field Field name
 	 *
 	 * @uses    Valid::email
 	 */
-	public function valid_email(Validation $validation, $field)
+    public function valid_email(Validation $validation, string $field)
 	{
 		if ($this->author == 1)
 		{
@@ -273,17 +267,17 @@ class Model_Comment extends Gleez_Model
 		}
 	}
 
-	/**
-	 * Check by triggering error if post exists
-	 *
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
-	 *
-	 * @uses    DB::select
-	 */
-	public function valid_post(Validation $validation, $field)
+    /**
+     * Check by triggering error if post exists
+     *
+     * Validation callback.
+     *
+     * @param Validation $validation Validation object
+     * @param string $field Field name
+     * @throws Kohana_Exception
+     * @uses    DB::select
+     */
+    public function valid_post(Validation $validation, string $field)
 	{
 		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 				->from('posts')
@@ -297,19 +291,20 @@ class Model_Comment extends Gleez_Model
 		}
 	}
 
-	/**
-	 * Make sure the user has permission to do the action on this object
-	 *
-	 * @param   boolean|string     $action The action view|edit|delete default view [Optional]
-	 * @param   Model_User|Object  $user   The user object to check permission, defaults to logged in user [Optional]
-	 * @return  Post
-	 * @throws  HTTP_Exception_403
-	 * @throws  HTTP_Exception_404
-	 * @uses    ACL::check
-	 * @uses    Module::event
-	 */
-    public function access($action = FALSE, Model_User $user = NULL)
-	{
+    /**
+     * Make sure the user has permission to do the action on this object
+     *
+     * @param boolean|string $action The action view|edit|delete default view [Optional]
+     * @param Model_User|null $user The user object to check permission, defaults to logged in user [Optional]
+     * @return Model_Comment
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @uses    ACL::check
+     * @uses    Module::event
+     */
+    public function access($action = FALSE, Model_User $user = NULL): Model_Comment
+    {
 		if ( ! $action)
 		{
 			$action = 'view';
@@ -400,20 +395,22 @@ class Model_Comment extends Gleez_Model
 	}
 
 
-	/**
-	 * Make sure the user has permission to do the action on this object
-	 *
-	 * Similar to Comment::access but this return True/False instead of exception
-	 *
-	 * @param   bool|string $action  The action view|edit|delete default view
-	 * @param   Model_User  $user    The user object to check permission, defaults to logged in user
-	 * @return  boolean|Model_Comment
-	 * @throws  HTTP_Exception_404
-	 * @uses    Log::add
-	 * @uses    User::active_user
-	 * @uses    ACL::check
-	 * @uses    Module::event
-	 */
+    /**
+     * Make sure the user has permission to do the action on this object
+     *
+     * Similar to Comment::access but this return True/False instead of exception
+     *
+     * @param bool|string $action The action view|edit|delete default view
+     * @param Model_User|null $user The user object to check permission, defaults to logged in user
+     * @return  boolean|Model_Comment
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @uses    Log::add
+     * @uses    User::active_user
+     * @uses    ACL::check
+     * @uses    Module::event
+     */
     public function user_can($action = FALSE, Model_User $user = NULL)
 	{
 		if( ! $action) $action = 'view';

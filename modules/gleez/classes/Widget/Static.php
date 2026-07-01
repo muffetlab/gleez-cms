@@ -13,9 +13,13 @@ class Widget_Static extends Widget {
 	public function form(){}
 	public function save(array $post){}
 	public function delete(array $post){}
-	
-	public function render()
-	{
+
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function render(): string
+    {
 		return View::factory('widgets/static')
 			->set(array(
                 'title' => HTML::chars($this->widget->title),

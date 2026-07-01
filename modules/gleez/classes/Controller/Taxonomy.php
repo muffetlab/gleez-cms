@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Taxonomy Controller
  *
@@ -10,7 +11,14 @@
  */
 class Controller_Taxonomy extends Template {
 
-	public function before()
+    /**
+     * @throws HTTP_Exception_403
+     * @throws Kohana_Exception
+     * @throws Http_Exception_415
+     * @throws HTTP_Exception
+     * @throws View_Exception
+     */
+    public function before()
 	{
 		// Internal request only!
 		if ($this->request->is_initial())
@@ -24,7 +32,12 @@ class Controller_Taxonomy extends Template {
 		parent::before();
 	}
 
-	public function action_term()
+    /**
+     * @throws Kohana_Exception
+     * @throws HTTP_Exception
+     * @throws View_Exception
+     */
+    public function action_term()
 	{
 		$id = (int) $this->request->param('id', 0);
         $term = ORM::factory('Term', $id);

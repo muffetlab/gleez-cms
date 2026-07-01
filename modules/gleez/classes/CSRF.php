@@ -16,17 +16,17 @@ class CSRF {
 	 */
 	public static $csrf_ttl = 1800;
 
-	/**
-	 * Get CSRF token
-	 *
-	 * @param   string   $id      Custom token id, e.g. uid [Optional]
-	 * @param   string   $action  Optional action
-	 * @param   integer  $time    Used only internally [Optional]
-	 *
-	 * @return  string
-	 */
-	public static function token($id = '', $action, $time = 0)
-	{
+    /**
+     * Get CSRF token
+     *
+     * @param string $id Custom token id, e.g. uid [Optional]
+     * @param string $action Optional action
+     * @param integer $time Used only internally [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     */
+    public static function token(string $id, string $action, int $time = 0): string
+    {
 		// Get id string for token, could be uid or ip etc
 		if (empty($id)) $id =  sha1(Request::$user_agent);
 
@@ -36,17 +36,17 @@ class CSRF {
 		return sha1($time . self::key() . $id . $action);
 	}
 
-	/**
-	 * Validate CSRF token
-	 *
-	 * @param   string   $token   Token [Optional]
-	 * @param   string   $action  Optional action [Optional]
-	 * @param   string   $id      Custom token id, e.g. uid [Optional]
-	 *
-	 * @return  boolean
-	 */
-	public static function valid($token = NULL, $action = '', $id = '')
-	{
+    /**
+     * Validate CSRF token
+     *
+     * @param string|null $token Token [Optional]
+     * @param string $action Optional action [Optional]
+     * @param string $id Custom token id, e.g. uid [Optional]
+     * @return  boolean
+     * @throws Kohana_Exception
+     */
+    public static function valid(string $token = NULL, string $action = '', string $id = ''): bool
+    {
 		// get token and action from Form POST
 		if (empty($token))  $token  = Arr::get($_REQUEST, '_token');
 		if (empty($action)) $action = Arr::get($_REQUEST, '_action');
@@ -59,27 +59,28 @@ class CSRF {
 		return System::hashEquals($token, self::token($id, $action, $time)) || System::hashEquals($token, self::token($id, $action, $time - 1));
 	}
 
-	/**
-	 * User specific key used to generate unique tokens.
-	 *
-	 * @return string  The user specific private key.
-	 */
-	public static function key()
-	{
+    /**
+     * User specific key used to generate unique tokens.
+     *
+     * @return string  The user specific private key.
+     * @throws Kohana_Exception
+     */
+    public static function key(): string
+    {
 		$token  = Session::instance()->id();
 		$secret = self::_private_key();
 		return sha1($secret . $token);
 	}
 
-	/**
-	 * Ensure the private key variable used to generate tokens is set.
-	 *
-	 * @return  string  The private key.
-	 *
-	 * @uses    Config::load
-	 */
-	private static function _private_key()
-	{
+    /**
+     * Ensure the private key variable used to generate tokens is set.
+     *
+     * @return  string  The private key.
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     */
+    private static function _private_key(): string
+    {
 		$config = Kohana::$config->load('site');
 
 		if ( !($key = $config->get('gleez_private_key')) )

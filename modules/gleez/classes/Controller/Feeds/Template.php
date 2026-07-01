@@ -88,18 +88,19 @@ class Controller_Feeds_Template extends Controller {
 	 */
 	protected $_type = 'page';
 
-	/**
-	 * Preparing feed
-	 *
-	 * @uses  Arr::get
-	 * @uses  Config::load
-	 * @uses  Config_Group::get
-	 * @uses  URL::site
-	 * @uses  Cache:get
-	 * @uses  Feed::generator
-	 * @uses  Request::current
-	 * @uses  Request::routes
-	 */
+    /**
+     * Preparing feed
+     *
+     * @throws Kohana_Exception
+     * @uses  Config::load
+     * @uses  Config_Group::get
+     * @uses  URL::site
+     * @uses  Cache:get
+     * @uses  Feed::generator
+     * @uses  Request::current
+     * @uses  Request::routes
+     * @uses  Arr::get
+     */
 	public function before()
 	{
 		// Start at which page?
@@ -143,11 +144,12 @@ class Controller_Feeds_Template extends Controller {
 		}
 	}
 
-	/**
-	 * Create feed
-	 *
-	 * @uses  Feed::create
-	 */
+    /**
+     * Create feed
+     *
+     * @throws Kohana_Exception
+     * @uses  Feed::create
+     */
 	public function after()
 	{
 		parent::after();

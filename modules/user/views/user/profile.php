@@ -1,5 +1,5 @@
 <div class="row vcard">
-	<div class="col-md-9 col-sm-8 col-xs-12" itemprop="about" itemscope itemtype="http://schema.org/Person">
+    <div class="col-md-9 col-sm-8 col-xs-12" itemprop="about" itemscope itemtype="https://schema.org/Person">
 		<div class="row">
 			<div class="col-md-3 col-sm-5 col-xs-12">
 				<div class="thumbnail vcard-avatar">

@@ -1,11 +1,11 @@
 # Introduction
 
-Gleez is the fusion of many good concepts from such popular most systems as: Joomla, Drupal Wordpress, Gallery3, Zend Framework and Ruby on Rails. With years of experience using these, we've gathered great ideas and in some cases, improved on them. But creating this CMS quickly would have been nearly impossible without its foundational framework - Kohana 3.
+Gleez is the fusion of many good concepts from such popular most systems as: Joomla, Drupal, WordPress, Gallery3, Zend Framework and Ruby on Rails. With years of experience using these, we've gathered great ideas and in some cases, improved on them. But creating this CMS quickly would have been nearly impossible without its foundational framework - Kohana 3.
 
 ## Some terms used in Gleez:
 
-+ **Modules** - code that extends the functionality of Gleez. Kohana just calls them "Modules", others call it "Plugins"(Wordpress) or "Modules"(Drupal), but it's a more general term. Everything you can use for Gleez is an Extension.
-+ **Widgets** - the mini content boxes of a page. Others call it "Modules"(Joomla), "Blocks"(Drupal), and also "Widgets"(Wordpress)
++ **Modules** - code that extends the functionality of Gleez. Kohana just calls them "Modules", others call it "Plugins"(WordPress) or "Modules"(Drupal), but it's a more general term. Everything you can use for Gleez is an Extension.
++ **Widgets** - the mini content boxes of a page. Others call it "Modules"(Joomla), "Blocks"(Drupal), and also "Widgets"(WordPress)
 + **Events** - functions or methods that execute on certain events during the runtime of Gleez. Others call it "Plugins"(Joomla), "Hooks"(Drupal)
 + **Vendors** - 3rd party libraries that can be instantiated to aid in programming
 + **Themes** - the look and layout of a Gleez site. Themes dictate the layout of contents in a Gleez page. It is very similar to Joomla's Template system.
@@ -35,7 +35,7 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 * Themes and Layouts
 * Input formats like Markdown, HTML etc
 * Shortcodes
-* oAuth2 login via Google/Facebook/Windows/Github
+* OAuth2 login via Google/Facebook/Windows/GitHub
 * Resize images on fly with caching
 * DataTables, Popups, autocomplete etc
 * ORM, MongoDB, Redis support
@@ -66,7 +66,7 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 * BoltCMS        [(https://github.com/bolt/bolt)](https://github.com/bolt/bolt)
 * s7nCMS         [(https://code.google.com/archive/p/s7ncms/)](https://code.google.com/archive/p/s7ncms/)
 * Kohanut        [(https://github.com/bluehawk/kohanut)](https://github.com/bluehawk/kohanut)
-* Wordpress      [(https://wordpress.org)](https://wordpress.org)
+* WordPress [(https://wordpress.org)](https://wordpress.org)
 * Zend Framework [(https://framework.zend.com)](https://framework.zend.com)
 
 We've lifted some codes from these applications and felt this is place for giving credit to them as demanded!

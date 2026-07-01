@@ -4,8 +4,6 @@
  * Usage: Call the Captcha controller from a view, e.g.
  *        <img src="<?php echo URL::site('captcha') ?>" />
  *
- * $Id: captcha.php 3769 2008-12-15 00:48:56Z zombor $
- *
  * @package		Captcha
  * @subpackage	Controller_Captcha
  * @author		Michael Lavers
@@ -20,16 +18,21 @@ class Controller_Captcha extends Controller {
 	 **/
 	public $auto_render = FALSE;
 
-	public function before()
+    /**
+     * @var array|mixed
+     */
+    private $group;
+
+    public function before()
 	{
 		$this->group = $this->request->param('group', 'default');
 	}
-	
-	/**
-	 * Output the captcha challenge
-	 *
-	 * @param string $group Config group name
-	 */
+
+    /**
+     * Output the captcha challenge
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_index()
 	{
         // Send the correct HTTP header
@@ -39,13 +42,16 @@ class Controller_Captcha extends Controller {
             ->headers('Pragma', 'no-cache')
             ->headers('Connection', 'close');
 
-		// Output the Captcha challenge resource (no html)
+        // Output the Captcha challenge resource (no HTML)
 		// Pull the config group name from the URL
 		//$group = $this->request->param('group', 'default');
 		Captcha::instance($this->group)->render(FALSE);
 	}
 
-	public function after()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function after()
 	{
 		Captcha::instance($this->group)->update_response_session();
 	}

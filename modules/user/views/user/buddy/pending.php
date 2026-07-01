@@ -23,17 +23,18 @@
 					    <?php echo HTML::anchor("user/view/".$accept->id , User::getAvatar($accept, array('size' => 80)), array('class' => 'action-view','title'=> __('view profile'))) ?>
 					</div>
 					<div class="col-md-5">
-					    <?php echo HTML::anchor("user/view/".$accept->id , $accept->nick, array('class' => 'action-view', 'title'=> __('view profile'))) ?></br>
-					    <?php echo HTML::anchor("#", $accept->mail, array('title'=> __('mail'))) ?></br>
-						<?php echo ($accept->dob != 0)? $accept->dob : '__'; ?></br>
-						<?php echo HTML::anchor("$accept->homepage", $accept->homepage) ?></br>
+                        <?php echo HTML::anchor("user/view/" . $accept->id, $accept->nick, array('class' => 'action-view', 'title' => __('view profile'))) ?>
+                        <br>
+                        <?php echo HTML::anchor("#", $accept->mail, array('title' => __('mail'))) ?>
+                        <br>
+                        <?php echo ($accept->dob != 0) ? $accept->dob : '__'; ?>
+                        <br>
+                        <?php echo HTML::anchor("$accept->homepage", $accept->homepage) ?>
 					</div>
-					<?php if($is_owner): ?>
 					<div class="col-md-4">
 						<?php echo HTML::anchor("buddy/accept/".$accept->id , __('Accept'), array('class' => 'btn btn-sm btn-success')) ?>
 						<?php echo HTML::anchor("buddy/reject/".$accept->id , __('Reject'), array('class' => 'btn btn-sm btn-danger')) ?>
 					</div>
-					<?php endif ;?>
 				<?php endif; ?>
 
 			</div>

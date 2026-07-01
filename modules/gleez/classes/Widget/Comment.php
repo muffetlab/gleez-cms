@@ -15,19 +15,28 @@ class Widget_Comment extends Widget {
 	public function save(array $post){}
 
 	public function delete(array $post){}
-	
-	public function render()
+
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws Cache_Exception
+     */
+    public function render()
 	{
 		switch($this->name)
 		{
 			case 'recent':
                 return $this->recent();
-			break;
-			default:
+            default:
                 return '';
 		}
 	}
 
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws Cache_Exception
+     */
     public function recent()
 	{
 		// Don't show the widget on edit or delete actions.

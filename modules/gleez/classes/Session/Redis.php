@@ -42,13 +42,16 @@ class Session_Redis extends Session {
 	 */
 	protected $_prefix = 'session/';
 
-	/**
-	 * Class constructor
-	 *
-	 * @param  array   $config  Configuration [Optional]
-	 * @param  string  $id      Session id [Optional]
-	 */
-	public function __construct(array $config = NULL, $id = NULL) {
+    /**
+     * Class constructor
+     *
+     * @param array|null $config Configuration [Optional]
+     * @param string|null $id Session id [Optional]
+     * @throws Kohana_Exception
+     * @throws Session_Exception
+     */
+    public function __construct(array $config = NULL, string $id = NULL)
+    {
 
 		// Check that the PhpRedis extension is loaded.
 		if (!extension_loaded('redis')) {
@@ -100,7 +103,7 @@ class Session_Redis extends Session {
      * @return  string
      * @throws Kohana_Exception
      */
-    protected function _read(string $id = null)
+    protected function _read(string $id = null): ?string
     {
 		if ($id OR $id = Cookie::get($this->_name)) {
 			$result = $this->_redis->get($this->_prefix . $id);
@@ -133,11 +136,12 @@ class Session_Redis extends Session {
 		return $this->_session_id = $id;
 	}
 
-	/**
-	 * Writes the current session.
-	 *
-	 * @return  boolean
-	 */
+    /**
+     * Writes the current session.
+     *
+     * @return  boolean
+     * @throws Kohana_Exception
+     */
 	protected function _write(): bool
     {
 		// Save to Redis
@@ -160,7 +164,7 @@ class Session_Redis extends Session {
 		try
 		{
 			// Execute the query
-			$this->_redis->delete($this->_prefix . $this->_session_id);
+            $this->_redis->del($this->_prefix . $this->_session_id);
 
 			// Delete the cookie
 			Cookie::delete($this->_name);

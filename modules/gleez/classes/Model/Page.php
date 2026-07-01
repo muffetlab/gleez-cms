@@ -21,12 +21,14 @@ class Model_Page extends Post {
 	 */
 	protected $_post_type = 'page';
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation $validation Validation object [Optional]
-	 * @return  Post
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation|null $validation Validation object [Optional]
+     * @return  Post
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     */
     public function save(Validation $validation = NULL): Kohana_ORM
     {
 		$config = Kohana::$config->load('page');
@@ -50,63 +52,64 @@ class Model_Page extends Post {
 	 *
 	 * This method should be used for loading in post data, etc.
 	 *
-	 * @param   array  $values    Array of `column => val`
-	 * @param   array  $expected  Array of keys to take from `$values` [Optional]
+     * @param array $values Array of column => value pairs
+     * @param array $columns Array of columns to be set
 	 * @return  ORM
 	 */
-    public function values(array $values, array $expected = NULL): Kohana_ORM
+    public function values(array $values, array $columns): Kohana_ORM
     {
 		$this->type = $this->_post_type;
 
-		return parent::values($values, $expected);
+        return parent::values($values, $columns);
 	}
 
-	/**
-	 * Finds and loads a single database row into the object
-	 *
-	 * @param   integer $id  Row ID. The search criteria [Optional]
-	 * @return  Database_Result|ORM
-	 */
-	public function find($id = NULL)
+    /**
+     * Finds and loads a single database row into the object
+     *
+     * @return  Database_Result|ORM
+     * @throws Kohana_Exception
+     */
+    public function find()
 	{
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 
-		return parent::find($id);
+        return parent::find();
 	}
 
-	/**
-	 * Finds multiple database rows and returns an iterator of the rows found
-	 *
-	 * @param   integer  $id  Row ID. The search criteria [Optional]
-	 * @return  Database_Result|ORM
-	 */
-	public function find_all($id = NULL)
+    /**
+     * Finds multiple database rows and returns an iterator of the rows found
+     *
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
+     * @throws Kohana_Exception
+     */
+    public function find_all()
 	{
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 
-		return parent::find_all($id);
+        return parent::find_all();
 	}
 
-	/**
-	 * Count the number of records in the table
-	 *
-	 * @param   integer  $id  Row ID. The search criteria [Optional]
-	 * @return  integer
-	 */
-	public function count_all($id = NULL): int
+    /**
+     * Count the number of records in the table
+     *
+     * @return  integer
+     * @throws Kohana_Exception
+     */
+    public function count_all(): int
     {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 
-		return parent::count_all($id);
+        return parent::count_all();
 	}
 
-	/**
-	 * Deletes a single record or multiple records, ignoring relationships
-	 *
-	 * @param  	boolean $soft    Make delete as soft or hard. Default hard [Optional]
-	 * @return  Post
-	 */
-    public function delete($soft = FALSE): Kohana_ORM
+    /**
+     * Deletes a single record or multiple records, ignoring relationships
+     *
+     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @return  Post
+     * @throws Kohana_Exception
+     */
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 

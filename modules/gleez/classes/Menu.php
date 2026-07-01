@@ -26,42 +26,42 @@ class Menu {
 	 */
 	protected $attributes = array();
 
-	/**
-	 * Creates and returns a new menu object
-	 *
-	 * @param   array  $items  Array of list items (instead of using add() method) [Optional]
-	 * @return  Menu
-	 */
-	public static function factory(array $items = NULL)
-	{
+    /**
+     * Creates and returns a new menu object
+     *
+     * @param array|null $items Array of list items (instead of using add() method) [Optional]
+     * @return Menu
+     */
+    public static function factory(array $items = NULL): Menu
+    {
 		return new static($items);
 	}
 
-	/**
-	 * Constructor, globally sets $items array
-	 *
-	 * @param   array  $items  Array of list items (instead of using add() method) [Optional]
-	 */
+    /**
+     * Constructor, globally sets $items array
+     *
+     * @param array|null $items Array of list items (instead of using add() method) [Optional]
+     */
 	public function __construct(array $items = NULL)
 	{
 		$this->items   = $items;
 	}
 
-	/**
-	 * Add's a new list item to the menu. if parent_id is passed will add as child
-	 *
-	 * @param   string  $id         Unique id
-	 * @param   string  $title      Title of link
-	 * @param   string  $url        URL (address) of link
-	 * @param   string  $descp      Additional text of link [Optional]
-	 * @param   array   $params     Params of the item to handle logic [Optional]
-	 * @param   string  $image      Menu icon [Optional]
-	 * @param   string  $parent_id  Parent Id of the link [Optional]
-	 * @param   Menu    $children   Instance of class that contain children [Optional]
-	 * @return  Menu
-	 */
-	public function add($id, $title, $url, $descp = '', array $params = NULL, $image = NULL, $parent_id = NULL, Menu $children = NULL)
-	{
+    /**
+     * Add's a new list item to the menu. if parent_id is passed will add as child
+     *
+     * @param string $id Unique id
+     * @param string $title Title of link
+     * @param string $url URL (address) of link
+     * @param string $descp Additional text of link [Optional]
+     * @param array|null $params Params of the item to handle logic [Optional]
+     * @param string|null $image Menu icon [Optional]
+     * @param string|null $parent_id Parent Id of the link [Optional]
+     * @param Menu|null $children Instance of class that contain children [Optional]
+     * @return Menu
+     */
+    public function add(string $id, string $title, string $url, string $descp = '', array $params = NULL, string $image = NULL, string $parent_id = NULL, Menu $children = NULL): Menu
+    {
 		if( $parent_id )
 		{
 			$this->items = static::add_child($parent_id, $this->items, $id, $title, $url, $descp, $params, $image, $children);
@@ -86,12 +86,12 @@ class Menu {
 	/**
 	 * Remove an item from the menu
 	 *
-	 * @param   string   $target_id  Id of link
-	 * @param   boolean  $parent_id  Parent Id of link [Optional]
+     * @param string $target_id Id of link
+     * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
-	public function remove($target_id, $parent_id = FALSE)
-	{
+    public function remove(string $target_id, bool $parent_id = FALSE): Menu
+    {
 		if ($parent_id)
 		{
 			$this->items = static::remove_child($target_id, $this->items);
@@ -107,20 +107,20 @@ class Menu {
 	/**
 	 * Change an item title of this menu
 	 *
-	 * @param   string   $target_id  Id of link item
-	 * @param   string   $title      New Title for the item
-	 * @param   boolean  $parent_id  Parent Id of link [Optional]
+     * @param string $target_id Id of link item
+     * @param string $title New Title for the item
+     * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
-	public function set_title($target_id, $title, $parent_id = FALSE)
-	{
+    public function set_title(string $target_id, string $title, bool $parent_id = FALSE): Menu
+    {
 		if ( $parent_id )
 		{
 			$this->items = static::change_title_url($target_id, $this->items, $title);
 		}
 		else if ( isset( $this->items[$target_id] ) )
 		{
-			$this->items[$target_id]['title'] = (string)$title;
+            $this->items[$target_id]['title'] = $title;
 		}
 
 		return $this;
@@ -129,35 +129,35 @@ class Menu {
 	/**
 	 * Change an item url of this menu
 	 *
-	 * @param   string   $target_id  Id of link
-	 * @param   string   $url      	 New url of the item
-	 * @param   boolean  $parent_id  Parent Id of link [Optional]
+     * @param string $target_id Id of link
+     * @param string $url New url of the item
+     * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  MENU
 	 */
-	public function set_url($target_id, $url, $parent_id = FALSE)
-	{
+    public function set_url(string $target_id, string $url, bool $parent_id = FALSE): Menu
+    {
 		if ( $parent_id )
 		{
 			$this->items = static::change_title_url($target_id, $this->items, $url, 'url');
 		}
 		else if ( isset( $this->items[$target_id] ) )
 		{
-			$this->items[$target_id]['url'] = (string)$url;
+            $this->items[$target_id]['url'] = $url;
 		}
 
 		return $this;
 	}
 
-	/**
-	 * Renders the HTML output for the menu
-	 *
-	 * @param   array   $attributes  Associative array of html attributes [Optional]
-	 * @param   array   $items       The parent item's array, only used internally [Optional]
-	 *
-	 * @return  string  HTML unordered list
-	 */
-	public function render(array $attributes = NULL, array $items = NULL)
-	{
+    /**
+     * Renders the HTML output for the menu
+     *
+     * @param array|null $attributes Associative array of html attributes [Optional]
+     * @param array|null $items The parent item's array, only used internally [Optional]
+     * @return  string  HTML unordered list
+     * @throws Kohana_Exception
+     */
+    public function render(array $attributes = NULL, array $items = NULL): string
+    {
 		static $i;
 
 		$items = empty($items) ? $this->items : $items;
@@ -224,7 +224,7 @@ class Menu {
 				$class = 'dropdown-menu';
 			}
 
-			//Twitter bootstrap use collapse for widget menu chlidren
+            // Twitter bootstrap use collapse for widget menu children.
 			if($has_children && $is_widget)
 			{
 				$attributes['data-toggle'] = 'collapse';
@@ -239,7 +239,7 @@ class Menu {
 			// localize item menu
             $title .= '<span>' . HTML::chars(__($item['title'])) . $caret . '</span>';
 
-			if($item['descp'] && !empty($item['descp']))
+            if (!empty($item['descp']))
 			{
 				// localize item desc
                 $title .= '<span class="menu-descp">' . HTML::chars(__($item['descp'])) . '</span>';
@@ -285,8 +285,8 @@ class Menu {
 	 *
 	 * @return   string
 	 */
-	public function debug()
-	{
+    public function debug(): string
+    {
 		return Debug::vars($this->items);
 	}
 
@@ -295,8 +295,8 @@ class Menu {
 	 *
 	 * @return array
 	 */
-	public function get_items()
-	{
+    public function get_items(): ?array
+    {
 		return $this->items;
 	}
 
@@ -308,8 +308,8 @@ class Menu {
      * @return string
      * @throws Kohana_Exception
      */
-	public static function links($name, $attr = array('class' =>'menus'))
-	{
+    public static function links(string $name, array $attr = array('class' => 'menus')): ?string
+    {
         $menu = static::buildMenu($name);
 
         if (!$menu) {
@@ -330,7 +330,7 @@ class Menu {
      * @return object Menu
      * @throws Kohana_Exception
      */
-	public static function items($name)
+    public static function items(string $name)
 	{
         $menu = static::buildMenu($name);
 
@@ -412,22 +412,22 @@ class Menu {
 	/**
 	 * Private method to change menu based on its unique name
 	 *
-	 * @param   string   $needle The name of the menu
+     * @param string $needle The name of the menu
 	 * @param   array    $array  The array of items
-	 * @param   string   $string The new value
-	 * @param   string   $op     The action title/url to change [Optional]
+     * @param string $string The new value
+     * @param string $op The action title/url to change [Optional]
 	 *
 	 * @return  array
 	 */
-	private static function change_title_url($needle, array $array, $string, $op = 'title')
-	{
+    private static function change_title_url(string $needle, array $array, string $string, string $op = 'title'): array
+    {
 		foreach ($array as $key => $value)
 		{
 			# Check for val
 			if ($key == $needle)
 			{
-				if($op == 'title') $array[$key]['title'] = (string)$string;
-				if($op == 'url')   $array[$key]['url']   = (string)$string;
+                if ($op == 'title') $array[$key]['title'] = $string;
+                if ($op == 'url') $array[$key]['url'] = $string;
 
 				return $array;
 			}
@@ -441,23 +441,22 @@ class Menu {
 		return $array;
 	}
 
-	/**
-	 * Private method to add menu based on its parent's unique name
-	 *
-	 * @param   string         $needle   The parent unique name of the menu
-	 * @param   array          $array    The array of items
-	 * @param   string         $id       The new id of menu
-	 * @param   string         $title    The new title
-	 * @param   string         $url      The new url
-	 * @param   string|boolean $descp    The additional text of url [Optional]
-	 * @param   array          $params   The new params [Optional]
-	 * @param   string         $image    The image or icon of url [Optional]
-	 * @param   Menu           $children The new children [Optional]
-	 *
-	 * @return  array
-	 */
-	private static function add_child($needle, array $array, $id, $title, $url, $descp = FALSE, array $params = NULL, $image = NULL, Menu $children = NULL)
-	{
+    /**
+     * Private method to add menu based on its parent's unique name
+     *
+     * @param string $needle The parent unique name of the menu
+     * @param array $array The array of items
+     * @param string $id The new id of menu
+     * @param string $title The new title
+     * @param string $url The new url
+     * @param string|boolean $descp The additional text of url [Optional]
+     * @param array|null $params The new params [Optional]
+     * @param string|null $image The image or icon of url [Optional]
+     * @param Menu|null $children The new children [Optional]
+     * @return array
+     */
+    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = FALSE, array $params = NULL, string $image = NULL, Menu $children = NULL): array
+    {
 		foreach ($array as $key => $value)
 		{
 			if ($key == $needle)
@@ -488,12 +487,12 @@ class Menu {
 	/**
 	 * private method to remove a child menu based on its unique name
 	 *
-	 * @param   string   $needle The name of the menu
+     * @param string $needle The name of the menu
 	 * @param   array    $array  The array of items
 	 * @return  array
 	 */
-	private static function remove_child($needle, array $array)
-	{
+    private static function remove_child(string $needle, array $array): array
+    {
 		foreach ($array as $key => $value)
 		{
 			if ($key == $needle)

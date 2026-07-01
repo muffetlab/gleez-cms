@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Menu Item Controller
  *
@@ -30,18 +31,26 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
      */
     private $level_zero;
 
-	/**
-	 * The before() method is called before controller action.
-	 */
+    /**
+     * The before() method is called before controller action.
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
 	public function before()
 	{
 		ACL::required('administer menu');
 		parent::before();
 	}
 
-	/**
-	 * Lists all menu items
-	 */
+    /**
+     * Lists all menu items
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_list()
 	{
 		$id    = (int) $this->request->param('id');
@@ -50,7 +59,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		if ( ! $menu->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu id: :id', array(':id' => $id));
-			Message::error(__('Menu: doesn\'t exists!'));
+            Message::error(__("Menu: doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/menu')->uri());
 		}
@@ -76,12 +85,14 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 
 		$this->response->body($view);
 
-		Assets::tabledrag();
+        Assets::tableDrag();
 	}
 
-	/**
-	 * Adds menu item
-	 */
+    /**
+     * Adds menu item
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_add()
 	{
 		$id   = (int) $this->request->param('id');
@@ -115,24 +126,25 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
 		$this->response->body($view);
 	}
 
-	/**
-	 * Edit menu item
-	 *
-	 * @uses  Message::error
-	 * @uses  Log::add
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  ORM::save
-	 * @uses  Cache::delete_all
-	 */
+    /**
+     * Edit menu item
+     *
+     * @throws Kohana_Exception|ReflectionException
+     * @uses  Log::add
+     * @uses  Request::redirect
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  ORM::save
+     * @uses  Cache::delete_all
+     * @uses  Message::error
+     */
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
@@ -167,26 +179,27 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete menu item
-	 *
-	 * @uses  Message::error
-	 * @uses  Message::success
-	 * @uses  Request::redirect
-	 * @uses  Request::uri
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Cache::delete_all
-	 * @uses  ORM::delete
-	 * @uses  Log::add
-	 */
+    /**
+     * Delete menu item
+     *
+     * @throws Kohana_Exception
+     * @uses  Message::error
+     * @uses  Message::success
+     * @uses  Request::redirect
+     * @uses  Request::uri
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Cache::delete_all
+     * @uses  ORM::delete
+     * @uses  Log::add
+     */
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
@@ -238,7 +251,11 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	public function action_confirm()
+    /**
+     * @throws Kohana_Exception
+     * @throws Cache_Exception
+     */
+    public function action_confirm()
 	{
 		$id = (int) $this->request->param('id', 0);
 
@@ -297,11 +314,11 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	 * Private function to generate the tree with parent
 	 * for bulk update child relationship
 	 *
-	 * @param   array $tree Menu tree
+     * @param array $tree Menu tree
 	 * @return  array Generated tree
 	 */
-	private function generate_tree($tree)
-	{
+    private function generate_tree(array $tree): array
+    {
 		$menu = array();
 		$ref  = array();
 
@@ -330,11 +347,11 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	 * Private function to calculate and generate the new ordered left,
 	 * right and level values for bulk update.
 	 *
-	 * @param   array   $tree
-	 * @param   integer  $parent
-	 * @param   integer  $level
+     * @param array $tree
+     * @param integer $parent
+     * @param integer $level
 	 */
-	private function calculate_mptt($tree, $parent = 0, $level = 2)
+    private function calculate_mptt(array $tree, int $parent = 0, int $level = 2)
 	{
 		foreach ($tree as $id => $val)
 		{

@@ -2,13 +2,13 @@
 
 ## About
 
-Allows assets (CSS, Javascript, etc.) to be included throughout the application, and then outputted later based on dependencies.
+Allows assets (CSS, JavaScript, etc.) to be included throughout the application, and then outputted later based on dependencies.
 This makes sure all assets will be included in the correct order, no matter what order they are defined in.
 
 ## Usage
 
 Basic usage would be to include assets throughout your application, in controllers most likely. Perhaps you have a base controller that the
-rest of your controllers extend where you include your base or default CSS and Javascript files. Then in other controllers you can add or remove
+rest of your controllers extend where you include your base or default CSS and JavaScript files. Then in other controllers you can add or remove
 assets according to what is needed for the respective action.
 
 **/application/controllers/base.php**
@@ -62,7 +62,7 @@ Then you would output the assets in your template somewhere
 		</body>
 	</html>
 
-You could even include the CSS and Javascript into a group if you want
+You could even include the CSS and JavaScript into a group if you want:
 
 	Assets::group('head', 'css', Assets::css());
 	Assets::group('head', 'js', Assets::js());
@@ -71,7 +71,7 @@ You could even include the CSS and Javascript into a group if you want
 
 To provide maximum flexibility over assets you don't necessarily have direct control over, you can define assets that other assets
 depend on to function correctly.
-For instance, jQuery UI is dependant on jQuery to work. If jQuery is included somewhere else in your application, you wouldn't want to include
+For instance, jQuery UI is dependent on jQuery to work. If jQuery is included somewhere else in your application, you wouldn't want to include
 jQuery UI and have it show up before jQuery in the source. So by providing dependencies, we can make sure that never happens.
 
 	Assets::js('jquery-ui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js', array('jquery'));

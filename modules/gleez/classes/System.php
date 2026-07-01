@@ -36,8 +36,8 @@ class System {
 	 * @return  string
 	 * @link    http://php.net/manual/en/function.sys-getloadavg.php sys-getloadavg()
 	 */
-	public static function get_avg()
-	{
+    public static function get_avg(): string
+    {
 		// Default return
 		$not_available = __('Not available');
 
@@ -77,15 +77,15 @@ class System {
 	 * To create the nested structure, the `$recursive` parameter
 	 * to mkdir() must be specified.
 	 *
-	 * @param   string  $path       The directory path
-	 * @param   integer $mode       Set permission mode (as in chmod) [Optional]
-	 * @param   boolean $recursive  Create directories recursively if necessary [Optional]
+     * @param string $path The directory path
+     * @param integer $mode Set permission mode (as in chmod) [Optional]
+     * @param boolean $recursive Create directories recursively if necessary [Optional]
 	 * @return  boolean             Returns TRUE on success or FALSE on failure
 	 *
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
-	public static function mkdir($path, $mode = 0777, $recursive = TRUE)
-	{
+    public static function mkdir(string $path, int $mode = 0777, bool $recursive = TRUE): bool
+    {
 		$out = FALSE;
 		$oldumask = umask(0);
 		if (! is_dir($path))
@@ -97,14 +97,16 @@ class System {
 		return $out;
 	}
 
-	/**
-	 * Dynamically generate icons list from font-awesome.css file and cached for performance
-	 *
-	 * @link   http://fontawesome.io/
-	 * @return array
-	 */
-	public static function icons()
-	{
+    /**
+     * Dynamically generate icons list from font-awesome.css file and cached for performance
+     *
+     * @link   http://fontawesome.io/
+     * @return array
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
+    public static function icons(): array
+    {
         if (!$icons = Cache::instance()->get('icons:fa-icons')) {
             $allPath = Kohana::find_file('media/fontawesome/css', 'all.min', 'css');
             $brandsPath = Kohana::find_file('media/fontawesome/css', 'brands.min', 'css');
@@ -162,8 +164,7 @@ class System {
             Cache::instance()->set('icons:fa-icons', $icons, Date::WEEK);
 		}
 
-		$icons = array("fa-none" => __('none')) + $icons;
-		return $icons;
+        return array("fa-none" => __('none')) + $icons;
 	}
 
 	/**
@@ -172,8 +173,8 @@ class System {
 	 * @return  string
 	 * @todo    add more OS
 	 */
-	public static function os()
-	{
+    public static function os(): string
+    {
 		if (Gleez::$isWindows) {
 			return System::WIN;
 		}
@@ -193,8 +194,8 @@ class System {
 	 * @param   array         $defaults  Array that serves as the defaults [Optional]
 	 * @return  array                    Merged user defined values with defaults
 	 */
-	public static function parse_args($args, array $defaults = array())
-	{
+    public static function parse_args($args, array $defaults = array()): array
+    {
 		if (is_object($args))
 		{
 			$result = get_object_vars($args);
@@ -225,14 +226,12 @@ class System {
 	 * 	$id = System::sanitize_id($id);
 	 * ~~~
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   string  $id  ID to sanitize
-	 *
 	 * @return  string
+     * @since   1.2.0
 	 */
-	public static function sanitize_id($id)
-	{
+    public static function sanitize_id(string $id): string
+    {
 		// Change slashes and spaces to underscores
 		return str_replace(array(
 			'/',
@@ -266,29 +265,26 @@ class System {
 		);
 
 		// Allow other modules to override or add
-		$criteria = Module::action('system_check', $criteria);
-
-		return $criteria;
+        return Module::action('system_check', $criteria);
 	}
 
-	/**
-	 * Get PHP memory_limit
-	 *
-	 * It can be used to obtain a human-readable form
-	 * of a PHP memory_limit.
-	 *
-	 * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or FALSE
-	 *      returns [System::MIN_MEMORY_LIMIT]
-	 *
-	 * @since   1.4.0
-	 *
-	 * @return  int|string
-	 *
-	 * @uses    Num::bytes
-	 * @uses    Text::bytes
-	 */
-	public static function get_memory_limit()
-	{
+    /**
+     * Get PHP memory_limit
+     *
+     * It can be used to obtain a human-readable form
+     * of a PHP memory_limit.
+     *
+     * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or FALSE
+     *      returns [System::MIN_MEMORY_LIMIT]
+     *
+     * @return string
+     * @throws Kohana_Exception
+     * @uses    Num::bytes
+     * @uses    Text::bytes
+     * @since   1.4.0
+     */
+    public static function get_memory_limit(): string
+    {
 		$memory_limit = Num::bytes(ini_get('memory_limit'));
 
 		return Text::bytes((int)$memory_limit <= 0 ? self::MIN_MEMORY_LIMIT : $memory_limit, 'MiB');
@@ -297,13 +293,12 @@ class System {
 	/**
 	 * Get PHP version
 	 *
-	 * @since   1.6.0
-	 *
 	 * @param  boolean $idOnly Return PHP version as an integer? [Optional]
 	 * @return string
+     * @since   1.6.0
 	 */
-	public static function getPhpVersion($idOnly = false)
-	{
+    public static function getPhpVersion(bool $idOnly = false): string
+    {
 		return $idOnly ? PHP_VERSION_ID : PHP_VERSION;
 	}
 
@@ -312,15 +307,13 @@ class System {
 	 *
 	 * Prevents cryptographic side-channel attacks (timing attacks, specifically).
 	 *
-	 * @since  1.7.0  Introduced
-	 *
-	 * @param   string  known_string
-	 * @param   string  user_string
-	 *
-	 * @return  bool
+     * @param string $known_string
+     * @param string $user_string
+     * @return bool
+     * @since 1.7.0 Introduced
 	 */
-	public static function hashEquals($known_string, $user_string)
-	{
+    public static function hashEquals(string $known_string, string $user_string): bool
+    {
 		// Available only in php >= 5.6.0
 		if ( function_exists('hash_equals') )
 		{
@@ -341,32 +334,29 @@ class System {
 	 *
 	 * Prevents cryptographic side-channel attacks (timing attacks, specifically).
 	 *
-	 * @since  1.4.0  Introduced
-	 *
 	 * @param  string $a cryptographic hash
-	 * @param  string $b cryptographic hash
-	 *
+     * @param string $b cryptographic hash
 	 * @return bool
+     * @since  1.4.0  Introduced
 	 */
-	public static function equalsHashes($a, $b)
-	{
+    public static function equalsHashes(string $a, string $b): bool
+    {
 		return self::hashEquals($a, $b);
 	}
 
 	/**
 	* Font Awesome icons as array
 	*
-	* @param    string   $path font awesome css file path
-	* @param    string   $class_prefix change this if the class names does not start with `fa-`
+     * @param string $path font awesome css file path
+     * @param string $class_prefix change this if the class names does not start with `fa-`
 	* @return   array
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
 	* @license  MIT
 	*/
-	public static function faGetArray($path, $class_prefix = 'fa-')
-	{
+    public static function faGetArray(string $path, string $class_prefix = 'fa-'): array
+    {
 		if(!file_exists($path)) {
-			//if path is incorrect or file does not exist, stop.
-			return false;
+            return [];
 		}
 
 		$css = file_get_contents($path);
@@ -392,20 +382,15 @@ class System {
 	/**
 	* Readable class name for fontawesome. Ex: fa-video-camera => Video Camera
 	*
-	* @param    array    $array font awesome array. Create it using `getArray` method
-	* @param    string   $class_prefix change this if the class names does not start with `fa-`
+     * @param array $array font awesome array. Create it using `getArray` method
+     * @param string $class_prefix change this if the class names does not start with `fa-`
 	* @return   array
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
 	* @license  MIT
 	*/
-	public static function faReadableName($array, $class_prefix = 'fa-')
-	{
-		if( ! is_array($array) )
-		{
-			return false;//Do not proceed if is not array
-		}
-
-		$temp = array();
+    public static function faReadableName(array $array, string $class_prefix = 'fa-'): array
+    {
+        $temp = array();
 		foreach ($array as $class => $unicode) {
 			$temp[$class] = ucfirst( str_ireplace(array($class_prefix, '-'), array('', ' '), $class) );
 		}

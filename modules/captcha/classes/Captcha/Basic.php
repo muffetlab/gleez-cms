@@ -16,23 +16,22 @@ class Captcha_Basic extends Captcha
 	 *
 	 * @return string The challenge answer
 	 */
-	public function generate_challenge()
-	{
+    public function generate_challenge(): string
+    {
 		// Complexity setting is used as character count
-		$text = text::random('distinct', max(1, Captcha::$config['complexity']));
-		
-		return $text;
+        return Text::random('distinct', max(1, Captcha::$config['complexity']));
 	}
 
-	/**
-	 * Outputs the Captcha image.
-	 *
+    /**
+     * Outputs the Captcha image.
+     *
      * @param bool $html HTML output
      * @param string|null $type Image type override
-     * @return mixed
-	 */
-	public function render($html = TRUE, string $type = null)
-	{
+     * @return string|null
+     * @throws Kohana_Exception
+     */
+    public function render(bool $html = TRUE, string $type = null): ?string
+    {
 		// Creates $this->image
 		$this->image_create(Captcha::$config['background']);
 
@@ -59,7 +58,7 @@ class Captcha_Basic extends Captcha
 		for ($i = 0, $strlen = strlen($this->response); $i < $strlen; $i++)
 		{
 			// Use different fonts if available
-			$font = Captcha::$config['fontpath'].Captcha::$config['fonts'][array_rand(Captcha::$config['fonts'])];
+            $font = Captcha::$config['fontPath'] . Captcha::$config['fonts'][array_rand(Captcha::$config['fonts'])];
 
 			// Allocate random color, size and rotation attributes to text
 			$color = imagecolorallocate($this->image, mt_rand(0, 150), mt_rand(0, 150), mt_rand(0, 150));

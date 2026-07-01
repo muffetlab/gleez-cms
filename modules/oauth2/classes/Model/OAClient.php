@@ -20,7 +20,7 @@ class Model_OAClient extends ORM {
 	);
 
 	/**
-	 * Auto fill create and update columns
+     * Autofill create and update columns
 	 */
 	protected $_created_column = array('column' => 'created', 'format' => TRUE);
 	protected $_updated_column = array('column' => 'updated', 'format' => TRUE);
@@ -29,8 +29,8 @@ class Model_OAClient extends ORM {
         'user' => array('model' => 'User', 'foreign_key' => 'user_id'),
 	);
 
-	public function rules()
-	{
+    public function rules(): array
+    {
 		return array(
 			'title' => array(
 				array('not_empty'),

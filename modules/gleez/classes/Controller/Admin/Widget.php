@@ -60,9 +60,8 @@ class Controller_Admin_Widget extends Controller_Admin {
 						->order_by('weight')
 						->find_all();
 
-		// Weights range from -delta to +delta, so delta should be at least half
-		// of the amount of blocks present. This makes sure all blocks in the same
-		// region get an unique weight.
+        // Weights range from -delta to +delta, so delta should be at least half of the amount of blocks present. This
+        // makes sure all blocks in the same region get a unique weight.
 		$weight_delta = round(count($widgets) / 2);
 
 		foreach ($widget_regions as $key => $value)
@@ -107,7 +106,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 		$this->response->body($view);
 
-		Assets::tabledrag();
+        Assets::tableDrag();
 		Assets::js('widgets', 'media/js/widgets.js', array('jquery'), FALSE, array('weight' => 5));
 	}
 
@@ -178,7 +177,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		if ( ! $widget->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
-			Message::error(__('Widget doesn\'t exists!'));
+            Message::error(__("Widget doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/widget')->uri());
 		}
@@ -227,9 +226,11 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Deleting Widgets
-	 */
+    /**
+     * Deleting Widgets
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
@@ -238,15 +239,15 @@ class Controller_Admin_Widget extends Controller_Admin {
 		if ( ! $widget->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
-			Message::error(__('Widget doesn\'t exists!'));
+            Message::error(__("Widget doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/widget')->uri());
 		}
 
 		$split_name = explode('/', $widget->name);
-		$static = ($split_name AND $split_name[0] == 'static') ? TRUE : FALSE;
+        $static = $split_name && $split_name[0] == 'static';
 
-		// we can only delete if its a custom widget
+        // We can only delete if it's a custom widget
 		if( ! $static)
 		{
 			$this->request->redirect(Route::get('admin/widget')->uri());

@@ -19,7 +19,7 @@
 				<?php echo Form::label('roles', __('Roles'), array('class' => 'control-label')) ?>
 				<?php foreach($roles as $role => $name): ?>
 					<div class="checkbox">
-						<?php echo Form::label('roles', Form::checkbox('roles['.$role.']', $role, FALSE).ucfirst($name)); ?>
+                        <?php echo Form::label('roles', Form::checkbox('roles[' . $role . ']', $role) . ucfirst($name)); ?>
 					</div>
 				<?php endforeach ?>
 			</div>
@@ -39,7 +39,7 @@
 							</td>
 							<td>
 								<?php
-									$n_status = (in_array($name, array_keys($enabled_filters)) ? TRUE : FALSE);
+                                $n_status = in_array($name, array_keys($enabled_filters));
 									echo Form::checkbox('filters['.$name.'][status]', $n_status, $n_status);
 								?>
 							</td>

@@ -1,103 +1,54 @@
 <?php
 
 return array(
-	/**
-	 * Default Page Status (eg: draft, review, publish, etc)
-	 * @var string
-	 */
+    // Default Page Status (eg: draft, review, publish, etc.)
 	'default_status' => 'draft',
 
-	/**
-	 * Pages per page (eg: 5, 10, 15, etc)
-	 * @var integer
-	 */
+    // Pages per page (eg: 5, 10, 15, etc)
 	'items_per_page' => 15,
 
-	/**
-	 * Enable captcha
-	 * @var boolean
-	 */
+    // Enable captcha
 	'use_captcha' => FALSE,
 
-	/**
-	 * Enable to set page author
-	 * @var boolean
-	 */
+    // Enable to set page author
 	'use_authors' => TRUE,
 
-	/**
-	 * Enable teaser
-	 * @var boolean
-	 */
+    // Enable teaser
 	'use_excerpt' => FALSE,
 
-	/**
-	 * Enable comments
-	 * @var boolean
-	 */
+    // Enable comments
 	'use_comment' => TRUE,
 
-	/**
-	 * View submitted info in views
-	 * @var boolean
-	 */
+    // View submitted info in views
 	'use_submitted' => TRUE,
 
-	/**
-	 * Enable taxonomy. Array of term id's for sets or FALSE to disable
-	 * @var mixed
-	 */
+    // Enable taxonomy. Array of term id's for sets or FALSE to disable
 	'use_category' => FALSE,
 
-
-	/** @var boolean Enable tags */
+    // Enable tags
 	'use_tags' => TRUE,
 
-	/**
-	 * Enable login buttons above comment form
-	 * @var boolean
-	 */
+    // Enable login buttons above comment form
 	'use_provider_buttons' => TRUE,
 
-	/**
-	 * Enable per page caching for performance
-	 * @var boolean
-	 */
+    // Enable per page caching for performance
 	'use_cache' => FALSE,
         
-	/**
-	 * Allow people to post Comment(s): 0 - disabled, 1 - read, 2 - read/write
-	 * @var integer
-	 */
+    // Allow people to post Comment(s): 0 - disabled, 1 - read, 2 - read/write
 	'comment' => 0,
 
-	/**
-	 * Comment display mode
-	 * @var integer
-	 */
+    // Comment display mode
 	'comment_default_mode' => 0,
 
-	/**
-	 * Allow anonymous commenting (with contact information)
-	 * @var boolean
-	 */
+    // Allow anonymous commenting (with contact information)
 	'comment_anonymous' => FALSE,
 
-	/**
-	 * Comments per page
-	 * @var integer
-	 */
+    // Comments per page
 	'comments_per_page' => 20,
 
-	/**
-	 * Comments displayed with the older/new comments ('asc' OR 'desc')
-	 * @var string
-	 */
+    // Comments displayed with the older/new comments ('asc' OR 'desc')
 	'comment_order' => 'asc',
 
-	/**
-	 * Use primary image?
-	 * @var boolean
-	 */
+    // Use primary image?
 	'primary_image' => TRUE,
 );

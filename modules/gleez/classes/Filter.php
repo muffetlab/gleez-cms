@@ -40,13 +40,12 @@ class Filter {
 	 *          ));
 	 * ~~~
 	 *
-	 * @param   string  $name       Filter name
-	 * @param   array   $callbacks  Filter callbacks
-	 *
-	 * @return  Route
-	 */
-	public static function set($name, $callbacks = array())
-	{
+     * @param string $name Filter name
+     * @param array $callbacks Filter callbacks
+     * @return  Filter
+     */
+    public static function set(string $name, array $callbacks = array()): Filter
+    {
 		return Filter::$_filters[$name] = new Filter($name, $callbacks);
 	}
 
@@ -58,14 +57,12 @@ class Filter {
 	 * $filter = Filter::get('html');
 	 * ~~~
 	 *
-	 * @param   string  filter name
-	 *
+     * @param string $name Filter name
 	 * @return  Filter
-	 *
 	 * @throws  Kohana_Exception
 	 */
-	public static function get($name)
-	{
+    public static function get(string $name): Filter
+    {
 		if ( ! isset(Filter::$_filters[$name]))
 		{
 			throw new Kohana_Exception('The requested filter does not exist: :filter',
@@ -85,25 +82,25 @@ class Filter {
 	 *
 	 * @return  array
 	 */
-	public static function all()
-	{
+    public static function all(): array
+    {
 		return Filter::$_filters;
 	}
 
-	/**
-	 * Retrieve(s) all available format by name formats from config
-	 *
-	 * Example:
-	 * ~~~
-	 * $formats = Filter::formats();
-	 * ~~~
-	 *
-	 * @return  array
-	 *
-	 * @uses    Config::load
-	 */
-	public static function formats()
-	{
+    /**
+     * Retrieve(s) all available format by name formats from config
+     *
+     * Example:
+     * ~~~
+     * $formats = Filter::formats();
+     * ~~~
+     *
+     * @return  array
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     */
+    public static function formats(): array
+    {
 		$config = Kohana::$config->load('inputfilter');
 
         return array_map(function ($format) {
@@ -111,31 +108,31 @@ class Filter {
         }, $config->formats);
 	}
 
-	/**
-	 * Setter/Getter for the filter cache
-	 *
-	 * If your filters will remain the same for a long period of time,
-	 * use this to reload the filters from the cache rather than redefining
-	 * them on every page load.
-	 *
-	 * Example:
-	 * ~~~
-	 * if ( ! Filter::cache())
-	 * {
-	 *     // Set filters here
-	 *     Filter::cache(TRUE);
-	 * }
-	 *
-	 * @param   boolean  $save    Cache the current filters [Optional]
-	 * @param   boolean  $append  Append, rather than replace, cached filters when loading [Optional]
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 */
-	public static function cache($save = FALSE, $append = FALSE)
-	{
+    /**
+     * Setter/Getter for the filter cache
+     *
+     * If your filters will remain the same for a long period of time,
+     * use this to reload the filters from the cache rather than redefining
+     * them on every page load.
+     *
+     * Example:
+     * ~~~
+     * if ( ! Filter::cache())
+     * {
+     *     // Set filters here
+     *     Filter::cache(TRUE);
+     * }
+     *
+     * @param boolean $save Cache the current filters [Optional]
+     * @param boolean $append Append, rather than replace, cached filters when loading [Optional]
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses    Cache::get
+     * @uses    Cache::set
+     */
+    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    {
 		$cache = Cache::instance();
 
 		if ($save)
@@ -169,14 +166,15 @@ class Filter {
 		}
 	}
 
-	/**
-	 * Method to run all enabled filters by the format id on given string
-	 *
-	 * @param  object  $text       The text object to be filtered.
-	 * @return string  $text       The filtered text
-	 */
-	public static function process($text)
-	{
+    /**
+     * Method to run all enabled filters by the format id on given string
+     *
+     * @param object $text The text object to be filtered.
+     * @return string  $text       The filtered text
+     * @throws Kohana_Exception
+     */
+    public static function process($text): string
+    {
 		$config = Kohana::$config->load('inputfilter');
 		if(!array_key_exists($text->format, $config->get('formats') ) OR !isset($text->format))
 		{
@@ -217,13 +215,13 @@ class Filter {
 	 * Execute a filter on the given text
 	 *
 	 * @param  mixed   $callback   The callback to be executed.
-	 * @param  string  $text       The text to be filtered.
+     * @param string $text The text to be filtered.
 	 * @param  object  $filter     The filter object.
 	 *
 	 * @return string  $text       The filtered text
 	 */
-    public static function execute($callback, $text, $filter)
-	{
+    public static function execute($callback, string $text, $filter): string
+    {
 		$args = func_get_args();
 		array_shift($args);
 
@@ -283,16 +281,19 @@ class Filter {
 	/**
 	 * Class constructor
 	 *
-	 * @param  string  $title      Filter title
-	 * @param  array   $callbacks  Filter callbacks
+     * @param string $title Filter title
+     * @param array $callbacks Filter callbacks
 	 */
-	public function __construct($title, $callbacks = array())
+    public function __construct(string $title, array $callbacks = array())
 	{
 		$this->_title = $title;
 		$this->_callbacks = $callbacks;
 	}
 
-	public function __get($key)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function __get($key)
 	{
 		if($key == 'title')
 		{
@@ -324,23 +325,22 @@ class Filter {
 		}
 	}
 
-	/**
-	 * Set or get callbacks for filter
-	 *
-	 * Example:
-	 * ~~~
-	 * $filter->callbacks(array(
-	 *     'prepare callback'  => FALSE,
-	 *     'process callback'  => 'Text::html'
-	 * ));
-	 * ~~~
-	 *
-	 * If no parameter is passed, this method will act as a getter.
-	 *
-	 * @param   array  $callbacks  key values
-	 *
-	 * @return  array|Filter
-	 */
+    /**
+     * Set or get callbacks for filter
+     *
+     * Example:
+     * ~~~
+     * $filter->callbacks(array(
+     *     'prepare callback'  => FALSE,
+     *     'process callback'  => 'Text::html'
+     * ));
+     * ~~~
+     *
+     * If no parameter is passed, this method will act as a getter.
+     *
+     * @param array|null $callbacks key values
+     * @return array|Filter
+     */
 	public function callbacks(array $callbacks = NULL)
 	{
 		if ($callbacks === NULL)
@@ -353,23 +353,22 @@ class Filter {
 		return $this;
 	}
 
-	/**
-	 * Set or get settings for filter
-	 *
-	 * Example:
-	 * ~~~
-	 * $filter->settings(array(
-	 *     'html_nofollow' => true,
-	 *     'allowed_html'  => '<a> <em> <strong> <cite> <blockquote>'
-	 * ));
-	 * ~~~
-	 *
-	 * If no parameter is passed, this method will act as a getter.
-	 *
-	 * @param   array  $settings  key values
-	 *
-	 * @return  array|Filter
-	 */
+    /**
+     * Set or get settings for filter
+     *
+     * Example:
+     * ~~~
+     * $filter->settings(array(
+     *     'html_nofollow' => true,
+     *     'allowed_html'  => '<a> <em> <strong> <cite> <blockquote>'
+     * ));
+     * ~~~
+     *
+     * If no parameter is passed, this method will act as a getter.
+     *
+     * @param array|null $settings key values
+     * @return array|Filter
+     */
 	public function settings(array $settings = NULL)
 	{
 		if ($settings === NULL)
@@ -392,11 +391,10 @@ class Filter {
 	 *
 	 * If no parameter is passed, this method will act as a getter.
 	 *
-	 * @param   string  $title  Title
-	 *
-	 * @return  array|Filter
+     * @param string|null $title Title
+     * @return Filter|string
 	 */
-	public function title($title = NULL)
+    public function title(string $title = NULL)
 	{
 		if ($title === NULL)
 		{
@@ -418,11 +416,10 @@ class Filter {
 	 *
 	 * If no parameter is passed, this method will act as a getter.
 	 *
-	 * @param   string  $description  Description
-	 *
+     * @param string|null $description Description
 	 * @return  string|Filter
 	 */
-	public function description($description = NULL)
+    public function description(string $description = NULL)
 	{
 		if ($description === NULL)
 		{

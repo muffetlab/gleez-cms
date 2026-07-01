@@ -26,11 +26,13 @@ class Model_Identity extends ORM {
 		'user' => array('foreign_key' => 'user_id')
 	);
 
-	/**
-	 * Validates that this identity is unique
-	 * @param string URL to validate
-	 * @return bool True if the URL is unique, false otherwise.
-	 */
+    /**
+     * Validates that this identity is unique
+     *
+     * @param string URL to validate
+     * @return bool True if the URL is unique, false otherwise.
+     * @throws Kohana_Exception
+     */
 	public static function unique_identity($identity)
 	{
 		return (bool) DB::select(array(DB::expr('COUNT(provider)'), 'total'))

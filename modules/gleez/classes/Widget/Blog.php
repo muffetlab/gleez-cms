@@ -15,31 +15,36 @@ class Widget_Blog extends Widget {
 	public function save(array $post){}
 	public function delete(array $post){}
 
-	public function render()
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @throws Cache_Exception
+     */
+    public function render()
 	{
 		switch($this->name)
 		{
 			case 'recent':
 				return $this->recent_blogs();
-			break;
-			case 'announce':
+            case 'announce':
 				return $this->recent_announce_blogs();
-			break;
-			default:
+            default:
                 return '';
 		}
 	}
 
-	/**
-	 * Get recent blogs
-	 *
-	 * @return  string
-	 *
-	 * @uses    Request::current
-	 * @uses    Request::action
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 */
+    /**
+     * Get recent blogs
+     *
+     * @return  string
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses    Request::current
+     * @uses    Request::action
+     * @uses    Cache::get
+     * @uses    Cache::set
+     */
 	public function recent_blogs()
 	{
 		$action = Request::current()->action();
@@ -64,7 +69,7 @@ class Widget_Blog extends Widget {
 				$items[$blog->id]['url']      = $blog->url;
 				$items[$blog->id]['user']     = $blog->user->name;
 				$items[$blog->id]['user_url'] = $blog->user->url;
-				$items[$blog->id]['date']     = $blog->updated ? $blog->updated : $blog->created;
+                $items[$blog->id]['date'] = $blog->updated ?: $blog->created;
 
 			}
 
@@ -75,16 +80,18 @@ class Widget_Blog extends Widget {
 		return $view->render();
 	}
 
-	/**
-	 * Receive the latest blog in the format Picture + Title
-	 *
-	 * @return  string
-	 *
-	 * @uses    Request::current
-	 * @uses    Request::action
-	 * @uses    Cache::get
-	 * @uses    Cache::set
-	 */
+    /**
+     * Receive the latest blog in the format Picture + Title
+     *
+     * @return  string
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses    Request::current
+     * @uses    Request::action
+     * @uses    Cache::get
+     * @uses    Cache::set
+     */
 	public function recent_announce_blogs()
 	{
 		$action = Request::current()->action();

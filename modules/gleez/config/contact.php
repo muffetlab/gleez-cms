@@ -1,28 +1,16 @@
 <?php
 
 return array(
-	/**
-	 * Subject length
-	 * @var integer
-	 */
+    // Subject length
 	'subject_length' => 80,
 
-	/**
-	 * Body length
-	 * @var integer
-	 */
+    // Body length
 	'body_length' => 400,
 
-	/**
-	 * Use captcha?
-	 * @var integer
-	 */
+    // Use captcha?
 	'use_captcha' => TRUE,
 
-	/**
-	 * Mail type
-	 * @var array
-	 */
+    // Mail type
 	'types' => array(
 		''          => __('Please Choose Category'),
 		'advertise' => __('Advertise'),

@@ -221,7 +221,7 @@
 			// Add the loading spinner
 			this.loading(file)
 
-			// IE less than 10 dose not support file.size.
+            // IE less than 10 does not support file.size.
 			if(this.isHTML5 && this.options.chunked) {
 				// Chunked upload
 				this.chunkUpload(xhr, file)
@@ -532,7 +532,7 @@
 		inputname    : 'files',
 		multiple     : '',
 		size         : 0, // Max individual file size
-		filetypes    : {}, // Allowed file extentions ex: 'image/png', 'image/jpeg'
+        filetypes: {}, // Allowed file extensions. Example: 'image/png', 'image/jpeg'
 		data         : {},
 		headers      : {},
 		maxfiles     : 15, // Ignored if queuefiles is set > 0

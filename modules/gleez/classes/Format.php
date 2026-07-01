@@ -25,19 +25,20 @@ class Format {
 	/** @var array Format configuration */
 	protected $_config = array();
 
-	/**
-	 * Creates a singleton of a Gleez_Format
-	 *
+    /**
+     * Creates a singleton of a Gleez_Format
+     *
      * Access to instance directly:<br>
-	 * <code>
-	 *   Format::$instance;
-	 * </code>
-	 *
-	 * @param   array   $config  Pass a configuration array to bypass the Kohana config [Optional]
-	 * @return  Format  Format instance
-	 */
-	public static function instance(array $config = array())
-	{
+     * <code>
+     *   Format::$instance;
+     * </code>
+     *
+     * @param array $config Pass a configuration array to bypass the Kohana config [Optional]
+     * @return  Format  Format instance
+     * @throws Kohana_Exception
+     */
+    public static function instance(array $config = array()): ?Format
+    {
 		if ( ! is_null(Format::$instance))
 		{
 			// Return the current instance if initiated already
@@ -78,12 +79,12 @@ class Format {
 	/**
 	 * Prepare formats
 	 *
-	 * @param   array  $formats  Available formats
-	 * @return  Gleez_Format
-	 * @uses    HTML::chars
+     * @param array $config Available formats configuration
+     * @return  Format
+     * @uses    HTML::chars
 	 */
-	protected function _prepare(array $config)
-	{
+    protected function _prepare(array $config): Format
+    {
 		if (isset(Format::$formats))
 		{
 			// Return the current format set if initiated already
@@ -122,8 +123,8 @@ class Format {
 	 *
 	 * @return  array
 	 */
-	public function get_all()
-	{
+    public function get_all(): ?array
+    {
 		return Format::$formats;
 	}
 
@@ -138,12 +139,12 @@ class Format {
 	 *   $formats = Format::instance()->get(1);
 	 * </code>
 	 *
-	 * @param   integer  $id      Format ID
+     * @param integer $id Format ID
 	 * @param   mixed    $default Default value
 	 * @return  mixed
 	 * @uses    Arr::get
 	 */
-	public function get($id, $default = NULL)
+    public function get(int $id, $default = NULL)
 	{
 		return Arr::get(Format::$formats, $id, $default);
 	}
@@ -158,8 +159,8 @@ class Format {
 	 *
 	 * @return  integer
 	 */
-	public function count_all()
-	{
+    public function count_all(): int
+    {
 		return count(Format::$formats);
 	}
 

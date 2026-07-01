@@ -2,7 +2,13 @@
 
 class Controller_Client extends Template {
 
-	public function action_list()
+    /**
+     * @throws HTTP_Exception_404
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     * @throws Cache_Exception
+     */
+    public function action_list()
 	{ 
 		if ( Request::is_datatables() )
 		{
@@ -45,8 +51,15 @@ class Controller_Client extends Template {
 		
 		$this->response->body($view);
 	}
-	    
-	public function action_Register()
+
+    /**
+     * @throws View_Exception
+     * @throws HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws Cache_Exception
+     */
+    public function action_Register()
 	{
 		if ( ! ACL::check('administer oauth2'))
 		{
@@ -70,7 +83,7 @@ class Controller_Client extends Template {
 		    
 		    try
 		    {
-			    if (isset($_POST['grant_types']) && ! empty($_POST['grant_types']))
+                if (!empty($_POST['grant_types']))
 			    {
 					$grant_types_selected = implode(" ", $_POST['grant_types']);
 					$oaclient->grant_types = $grant_types_selected;
@@ -79,8 +92,8 @@ class Controller_Client extends Template {
 			    if (isset($_FILES) AND isset($_FILES['logo']))
 			    {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
-			    
-				    if( $file = Upload::save($_FILES['logo'], $filename, APPPATH.'/media/logos') )
+
+                    if (Upload::save($_FILES['logo'], $filename, APPPATH . '/media/logos'))
 				    {
 					    $oaclient->logo = $filename;
 				    }
@@ -99,7 +112,14 @@ class Controller_Client extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_edit()
+    /**
+     * @throws View_Exception
+     * @throws HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws Cache_Exception
+     */
+    public function action_edit()
 	{
 		if ( ! ACL::check('edit oaclient2'))
 		{
@@ -111,7 +131,7 @@ class Controller_Client extends Template {
 		
 		if( ! $oaclient->loaded() )
 		{
-			Message::error( __('Client: doesn\'t exists!') );
+            Message::error(__("Client: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to edit non-existent client');
 				
 			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
@@ -129,7 +149,7 @@ class Controller_Client extends Template {
 		    try
 		    {
 			    //$grant_types_selected = 'authorization_code';
-			    if (isset($_POST['grant_types']) && ! empty($_POST['grant_types']))
+                if (!empty($_POST['grant_types']))
 			    {
 				$grant_types_selected = implode(" ", $_POST['grant_types']);
 				$oaclient->grant_types = $grant_types_selected;
@@ -138,8 +158,8 @@ class Controller_Client extends Template {
 			    if (isset($_FILES) AND isset($_FILES['logo']))
 			    {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
-			    
-				    if( $file = Upload::save($_FILES['logo'], $filename, APPPATH.'/media/logos') )
+
+                    if (Upload::save($_FILES['logo'], $filename, APPPATH . '/media/logos'))
 				    {
 					    $oaclient->logo = $filename;
 				    }
@@ -166,7 +186,13 @@ class Controller_Client extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_view()
+    /**
+     * @throws Kohana_Exception
+     * @throws HTTP_Exception_404
+     * @throws View_Exception
+     * @throws Cache_Exception
+     */
+    public function action_view()
 	{
 		if ( ! ACL::check('access oaclient2'))
 		{
@@ -178,7 +204,7 @@ class Controller_Client extends Template {
 		
 		if( ! $oaclient->loaded() )
 		{
-			Message::error( __('Client: doesn\'t exists!') );
+            Message::error(__("Client: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to edit non-existent client');
 				
 			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
@@ -188,7 +214,13 @@ class Controller_Client extends Template {
 		$this->response->body(View::factory('client/view')->set('oaclient', $oaclient));
 	}
 
-	public function action_delete()
+    /**
+     * @throws HTTP_Exception_404
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     * @throws Cache_Exception
+     */
+    public function action_delete()
 	{
 		if ( ! ACL::check('delete oaclient2'))
 		{
@@ -201,7 +233,7 @@ class Controller_Client extends Template {
 		
 		if ( ! $oaclient->loaded() )
 		{
-			Message::error( __('oaclient: doesn\'t exists!') );
+            Message::error(__("oaclient: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to delete non-existent oaclient');
 				
 			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));

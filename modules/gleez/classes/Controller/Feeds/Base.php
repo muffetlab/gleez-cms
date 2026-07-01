@@ -10,15 +10,16 @@
  */
 class Controller_Feeds_Base extends Controller_Feeds_Template {
 
-	/**
-	 * Get list of promoted posts
-	 *
-	 * @uses  DB::select
-	 * @uses  URL::site
-	 * @uses  Cache::set
-	 * @uses  Config::load
-	 * @uses  Config_Group::get
-	 */
+    /**
+     * Get list of promoted posts
+     *
+     * @throws Kohana_Exception
+     * @uses  URL::site
+     * @uses  Cache::set
+     * @uses  Config::load
+     * @uses  Config_Group::get
+     * @uses  DB::select
+     */
 	public function action_list()
 	{
 		if (empty($this->_items))
@@ -46,19 +47,18 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 		}
 	}
 
-	/**
-	 * Get a list of posts (pages|blogs|etc.) with a specific tag
-	 *
-	 * @since  1.1.0
-	 *
-	 * @throws  HTTP_Exception_404
-	 *
-	 * @uses    Config::load
-	 * @uses    Config_Group::get
-	 * @uses    Log::add
-	 * @uses    URL::site
-	 * @uses    Cache::set
-	 */
+    /**
+     * Get a list of posts (pages|blogs|etc.) with a specific tag
+     *
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @since  1.1.0
+     * @uses    Config::load
+     * @uses    Config_Group::get
+     * @uses    Log::add
+     * @uses    URL::site
+     * @uses    Cache::set
+     */
 	protected function _tag()
 	{
 		if (empty($this->_items))
@@ -125,19 +125,18 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
         return $items;
     }
 
-	/**
-	 * Get a list of posts (pages|blogs|etc.) with a specific term
-	 *
-	 * @since   1.1.0
-	 *
-	 * @throws  HTTP_Exception_404
-	 *
-	 * @uses    Config::load
-	 * @uses    Config_Group::get
-	 * @uses    Cache::set
-	 * @uses    Log::add
-	 * @uses    URL::site
-	 */
+    /**
+     * Get a list of posts (pages|blogs|etc.) with a specific term
+     *
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @since   1.1.0
+     * @uses    Config::load
+     * @uses    Config_Group::get
+     * @uses    Cache::set
+     * @uses    Log::add
+     * @uses    URL::site
+     */
 	protected function _term()
 	{
 		if (empty($this->_items))

@@ -52,15 +52,17 @@ class ACL {
 	 */
 	protected static $_perm = array();
 
-	/**
-	 * Get all roles for user
-	 *
-	 * @since   2.0
-	 * @param   Model_User  $user  User object
-	 * @return  array  All roles for user
-	 */
-	private static function get_user_roles(Model_User $user)
-	{
+    /**
+     * Get all roles for user.
+     *
+     * @param Model_User $user User object
+     * @return array All roles for user
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @since 2.0
+     */
+    private static function get_user_roles(Model_User $user): array
+    {
 		$roles = array();
 
 		// User #1 is guest
@@ -80,12 +82,12 @@ class ACL {
 	/**
 	 * Returns a specific permission
 	 *
-	 * @param   string  $name The name of the permission.
+     * @param string $name The name of the permission.
 	 * @return  ACL
 	 * @throws  Kohana_Exception
 	 */
-	public static function get($name)
-	{
+    public static function get(string $name): ACL
+    {
 		if ( ! isset(self::$_all_perms[$name]))
 		{
 			throw new Kohana_Exception('The requested Permission does not exist: :permission',
@@ -108,13 +110,12 @@ class ACL {
 	 * );
 	 * ~~~
 	 *
-	 * @param   string  $name          Permission name
+     * @param string $name Permission name
 	 * @param   array   $access_names  Access keys
-	 *
-	 * @return  ACL
+     * @return  array
 	 */
-	public static function set($name, array $access_names)
-	{
+    public static function set(string $name, array $access_names): array
+    {
 		// Adds the action to the action array and returns it.
 		return self::$_all_perms[$name] = $access_names;
 	}
@@ -129,37 +130,37 @@ class ACL {
 	 *
 	 * @return  array  Perms by name
 	 */
-	public static function all()
-	{
+    public static function all(): array
+    {
 		return self::$_all_perms;
 	}
 
-	/**
-	 * Setter/Getter for ACL cache
-	 *
-	 * If your perms will remain the same for a long period of time, use this
-	 * to reload the ACL from the cache rather than redefining them on every page load.
-	 *
-	 * Example:
-	 * ~~~
-	 *  if ( ! ACL::cache())
-	 *  {
-	 *    // Set perms here
-	 *    ACL::cache(TRUE);
-	 *  }
-	 * ~~~
-	 *
-	 * @param   boolean  $save    Cache the current perms [Optional]
-	 * @param   boolean  $append  Append, rather than replace, cached perms when loading [Optional]
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    Cache::set
-	 * @uses    Cache::get
-	 * @uses    Arr::merge
-	 */
-	public static function cache($save = FALSE, $append = FALSE)
-	{
+    /**
+     * Setter/Getter for ACL cache
+     *
+     * If your perms will remain the same for a long period of time, use this
+     * to reload the ACL from the cache rather than redefining them on every page load.
+     *
+     * Example:
+     * ~~~
+     *  if ( ! ACL::cache())
+     *  {
+     *    // Set perms here
+     *    ACL::cache(TRUE);
+     *  }
+     * ~~~
+     *
+     * @param boolean $save Cache the current perms [Optional]
+     * @param boolean $append Append, rather than replace, cached perms when loading [Optional]
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses    Cache::set
+     * @uses    Cache::get
+     * @uses    Arr::merge
+     */
+    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    {
 		$cache = Cache::instance();
 
 		if ($save)
@@ -193,35 +194,35 @@ class ACL {
 		}
 	}
 
-	/**
-	 * Check permission for user
-	 *
-	 * If the user doesn't have this permission,
-	 * failed with an HTTP_Exception_403 or execute `$callback` if it is defined
-	 *
-	 * Example:
-	 * ~~~
-	 * // Example with a callable function
-	 * ACL::required(
-	 *    'administer site',
-	 *    NULL,
-	 *    $this->request->redirect(Route::get('user')->uri(array('action' => 'login')))
-	 * );
-	 *
-	 * // Simple check
-	 *   ACL::required('administer site');
-	 * ~~~
-	 *
-	 * @since     2.0
-	 *
-	 * @param     string      $perm_name  Permission name
-	 * @param     Model_User  $user       User object [Optional]
-	 * @param     callable    $callback   A callable function that execute if it is defined [Optional]
-	 * @param     array       $args       The callback arguments
-	 * @throws    HTTP_Exception_403 If the user doesn't have permission
-	 * @throws    Exception          if the `$callback` is a not valid callback
-	 */
-	public static function required($perm_name, Model_User $user = NULL, $callback = NULL, array $args = array())
+    /**
+     * Check permission for user
+     *
+     * If the user doesn't have this permission,
+     * failed with an HTTP_Exception_403 or execute `$callback` if it is defined
+     *
+     * Example:
+     * ~~~
+     * // Example with a callable function
+     * ACL::required(
+     *    'administer site',
+     *    NULL,
+     *    $this->request->redirect(Route::get('user')->uri(array('action' => 'login')))
+     * );
+     *
+     * // Simple check
+     *   ACL::required('administer site');
+     * ~~~
+     *
+     * @param string $perm_name Permission name
+     * @param Model_User|null $user User object [Optional]
+     * @param callable|null $callback A callable function that execute if it is defined [Optional]
+     * @param array $args The callback arguments
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @since     2.0
+     */
+    public static function required(string $perm_name, Model_User $user = NULL, callable $callback = NULL, array $args = array())
 	{
 		if ( ! self::check($perm_name, $user))
 		{
@@ -230,7 +231,7 @@ class ACL {
 				// Check if the $callback is a valid callback
 				if ( ! is_callable($callback))
 				{
-					throw new Exception('An invalid callback was added to the ACL::required().');
+                    throw new Kohana_Exception('An invalid callback was added to the ACL::required().');
 				}
 				call_user_func($callback, $args);
 
@@ -243,23 +244,22 @@ class ACL {
 		}
 	}
 
-	/**
-	 * Check permission for current user
-	 *
-	 * Checks permission and redirects if is required to URL
-	 * defined in `$route`
-	 *
-	 * @since  2.0
-	 * @param  string  $perm_name  Permission name
-	 * @param  string  $route      Route name [Optional]
-	 * @param  array   $uri        Additional route params [Optional]
-	 *
-	 * @throws HTTP_Exception_403
-	 *
-	 * @uses   Request::redirect()
-	 * @uses   Route::get()
-	 */
-	public static function redirect($perm_name, $route = NULL, array $uri = array())
+    /**
+     * Check permission for current user
+     *
+     * Checks permission and redirects if is required to URL
+     * defined in `$route`
+     *
+     * @param string $perm_name Permission name
+     * @param null $route Route name [Optional]
+     * @param array $uri Additional route params [Optional]
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @since  2.0
+     * @uses   Request::redirect()
+     * @uses   Route::get()
+     */
+    public static function redirect(string $perm_name, $route = NULL, array $uri = array())
 	{
 		if ( ! self::check($perm_name))
 		{
@@ -275,21 +275,21 @@ class ACL {
 				array(':perm' => $perm_name));
 		}
 	}
-	
-	/**
-	 * Checks if the current user has permission to access the current request
-	 *
-	 * If the user is not given, used currently active user
-	 *
-	 * @param   string      $perm_name  Permission name
-	 * @param   Model_User  $user       User object [Optional]
-	 *
-	 * @return  boolean
-	 *
-	 * @uses    User::active_user
-	 */
-	public static function check($perm_name, Model_User $user = NULL)
-	{
+
+    /**
+     * Checks if the current user has permission to access the current request
+     *
+     * If the user is not given, used currently active user
+     *
+     * @param string $perm_name Permission name
+     * @param ORM|null $user User object [Optional]
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @uses    User::active_user
+     */
+    public static function check(string $perm_name, ORM $user = NULL): bool
+    {
 		// If we weren't given an auth object
 		if (is_null($user))
 		{
@@ -316,32 +316,36 @@ class ACL {
 
 		return isset(self::$_perm[$user->id][$perm_name]);
 	}
-	
-	/**
-	 * Whether role name is currently in the list of available roles.
-	 * 
-	 * If a role exists in user cache and not in roles table, will
-	 * be checked for only available roles.
-	 *
-	 * @param   string  $role  Role name to look up
-	 * @return  boolean
-	 */
-	public static function is_role($role)
-	{
+
+    /**
+     * Whether role name is currently in the list of available roles.
+     *
+     * If a role exists in user cache and not in roles table, will
+     * be checked for only available roles.
+     *
+     * @param string $role Role name to look up
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
+    public static function is_role(string $role): bool
+    {
 		$roles = self::site_roles();
 		return isset($roles[$role]);
 	}
 
-	/**
-	 * Get all the active roles
-	 *
-	 * Added cache support for performance.
-	 *
-	 * @since   2.0
-	 * @return  array    Role(s) all roles as array
-	 */
-	public static function site_roles()
-	{
+    /**
+     * Get all the active roles
+     *
+     * Added cache support for performance.
+     *
+     * @return  array    Role(s) all roles as array
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @since   2.0
+     */
+    public static function site_roles(): array
+    {
         $cache = Cache::instance();
 
         if (!$roles = $cache->get('roles:site_roles')) {
@@ -352,25 +356,28 @@ class ACL {
 
 		return $roles;
 	}
-	
-	/**
-	 * Get all the enabled permissions for all roles
-	 *
-	 * Added cache support for performance.
-	 *
-	 * @since   2.0
-	 *
-	 * @return  boolean  FALSE If the role(s) doesn't have any permission
-	 * @return  array    Role(s) with permission(s) as array
-	 */
-	public static function site_perms()
-	{
+
+    /**
+     * Get all the enabled permissions for all roles
+     *
+     * Added cache support for performance.
+     *
+     * @return array Permissions indexed by role ID, empty array if none
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     * @since   2.0
+     */
+    public static function site_perms(): array
+    {
         $cache = Cache::instance();
 
-        if (!$perms = $cache->get('roles:site_perms')) {
+        $perms = $cache->get('roles:site_perms');
+
+        if ($perms === null) {
+            $perms = [];
 			$result = DB::select('rid', 'permission')
 						->from('permissions')
-						->as_object(TRUE)
+                ->as_object()
 						->execute();
 
 			foreach ($result as $row)
@@ -384,11 +391,13 @@ class ACL {
 		return $perms;
 	}
 
-	/**
-	 * Sets the permissions; both role based and user based
-	 *
-	 * @param Model_User User object
-	 */
+    /**
+     * Sets the permissions; both role based and user based
+     *
+     * @param Model_User $user User object
+     * @throws Cache_Exception
+     * @throws Kohana_Exception|ReflectionException
+     */
 	protected static function _set_permissions(Model_User $user)
 	{
 		$user_perms = $user->perms();
@@ -425,22 +434,24 @@ class ACL {
 			}
 		}
 	}
-	
-	/**
-	 * Make sure the user has permission to do certain action on this object
-	 *
-	 * Similar to [Post::access] but this return TRUE/FALSE instead of exception
-	 *
-	 * @param   string     $action  The action `view|edit|delete` default `view`
-	 * @param   ORM        $post    The post object
-	 * @param   Model_User $user    The user object to check permission, defaults to loaded in user
-	 * @return  boolean
-	 * @throws  HTTP_Exception_404
-	 * @uses    User::active_user
-	 * @uses    Module::event
-	 */
-    public static function post($action = 'view', $post, Model_User $user = NULL)
-	{
+
+    /**
+     * Make sure the user has permission to do certain action on this object
+     *
+     * Similar to [Post::access] but this return TRUE/FALSE instead of exception
+     *
+     * @param string $action The action `view|edit|delete` default `view`
+     * @param ORM $post The post object
+     * @param Model_User|null $user The user object to check permission, defaults to loaded in user
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @uses    User::active_user
+     * @uses    Module::event
+     */
+    public static function post(string $action, ORM $post, Model_User $user = NULL): bool
+    {
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
@@ -450,15 +461,10 @@ class ACL {
 			return FALSE;
 		}
 
-		if ($post instanceof ORM AND ! $post->loaded())
+        if (!$post->loaded())
 		{
 			// If the post was not loaded, we return access denied.
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent post.');
-		}
-
-		if ( ! $post instanceof ORM)
-		{
-			$post = (object) $post;
 		}
 
 		// If no user object is supplied, the access check is for the current user.
@@ -526,21 +532,23 @@ class ACL {
 		return TRUE;
 	}
 
-	/**
-	 * Make sure the user has permission to do the action on this object
-	 *
-	 * Similar to [Comment::access] but this return TRUE/FALSE instead of exception
-	 *
-	 * @param   string     $action   The action `view|edit|delete` default `view`
-	 * @param   ORM        $comment  The comment object
-	 * @param   Model_User $user     The user object to check permission, defaults to loaded in user
-	 * @return  boolean
-	 * @throws  HTTP_Exception_404
-	 * @uses    User::active_user
-	 * @uses    Module::event
-	 */
-    public static function comment($action = 'view', ORM $comment, Model_User $user = NULL)
-	{
+    /**
+     * Make sure the user has permission to do the action on this object
+     *
+     * Similar to [Comment::access] but this return TRUE/FALSE instead of exception
+     *
+     * @param string $action The action `view|edit|delete` default `view`
+     * @param ORM $comment The comment object
+     * @param Model_User|null $user The user object to check permission, defaults to loaded in user
+     * @return  boolean
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @uses    User::active_user
+     * @uses    Module::event
+     */
+    public static function comment(string $action, ORM $comment, Model_User $user = NULL): bool
+    {
 		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.

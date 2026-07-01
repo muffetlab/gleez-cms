@@ -10,7 +10,7 @@ Instantiate a captcha:
 
 Instantiate using your own config group (other than 'default'):
 
-> $captcha = Captcha::instance('myconfig');
+> $captcha = Captcha::instance('my_config');
 
 Render a captcha:
 
@@ -24,7 +24,7 @@ Validate the captcha:
 
 > Captcha::valid($_POST['captcha']);
 
-By default image-based captchas are rendered with HTML, the HTML is a very simple <img> tag. If you want to handle your own rendering of the captcha simply set the first parameter for render() to FALSE:
+By default, image-based captchas are rendered with HTML, the HTML is a very simple <img> tag. If you want to handle your own rendering of the captcha simply set the first parameter for render() to FALSE:
 
 > $captcha->render(FALSE);
 

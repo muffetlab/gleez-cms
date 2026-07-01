@@ -12,7 +12,7 @@
  *  height		Height of the Captcha image
  *  complexity	Difficulty level (0-10), usage depends on chosen style
  *  background	Path to background image file
- *  fontpath	Path to font folder
+ *  fontPath	Path to font folder
  *  fonts		Font files
  *  promote		Valid response count threshold to promote user (FALSE to disable)
  */
@@ -24,7 +24,7 @@ return array(
 		'height'     	=> 50,
 		'complexity' 	=> 4,
 		'background' 	=> '',
-		'fontpath'   	=> MODPATH.'captcha/fonts/',
+        'fontPath' => MODPATH . 'captcha/fonts/',
 		'fonts'      	=> array('DejaVuSerif.ttf'),
 		'promote'    	=> FALSE,
 	),

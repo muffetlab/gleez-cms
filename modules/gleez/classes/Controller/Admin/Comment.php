@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Comment Controller
  *
@@ -10,11 +11,16 @@
  */
 class Controller_Admin_Comment extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer comment');
@@ -25,12 +31,13 @@ class Controller_Admin_Comment extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * The after() method is called after controller action
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * The after() method is called after controller action
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     * @uses  Route::get
+     */
 	public function after()
 	{
 		$this->_tabs =  array(
@@ -42,11 +49,12 @@ class Controller_Admin_Comment extends Controller_Admin {
 		parent::after();
 	}
 
-	/**
-	 * List comments
-	 *
-	 * @uses  Assets::popup
-	 */
+    /**
+     * List comments
+     *
+     * @throws View_Exception|Kohana_Exception
+     * @uses  Assets::popup
+     */
 	public function action_list()
 	{
 		Assets::popup();
@@ -65,9 +73,11 @@ class Controller_Admin_Comment extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * View comments
-	 */
+    /**
+     * View comments
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_view()
 	{
 		$id      = (int) $this->request->param('id', 0);
@@ -76,7 +86,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 		if( ! $comment->loaded())
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent comment.');
-			Message::error( __('Comment doesn\'t exists!') );
+            Message::error(__("Comment doesn't exists!"));
 
 			// Redirect to listing
 			$this->request->redirect(Route::get('admin/comment')->uri());
@@ -88,11 +98,12 @@ class Controller_Admin_Comment extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Pending comments
-	 *
-	 * @uses  Assets::popup
-	 */
+    /**
+     * Pending comments
+     *
+     * @throws View_Exception|Kohana_Exception
+     * @uses  Assets::popup
+     */
 	public function action_pending()
 	{
 		Assets::popup();
@@ -111,11 +122,12 @@ class Controller_Admin_Comment extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Spam Comments
-	 *
-	 * @uses  Assets::popup
-	 */
+    /**
+     * Spam Comments
+     *
+     * @throws View_Exception|Kohana_Exception
+     * @uses  Assets::popup
+     */
 	public function action_spam()
 	{
 		Assets::popup();
@@ -134,9 +146,11 @@ class Controller_Admin_Comment extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Process actions
-	 */
+    /**
+     * Process actions
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_process()
 	{
 		$route    = Route::get('admin/comment')->uri(array('action' => 'list'));
@@ -154,7 +168,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 		{
 			$comments = array_filter($post['items']);
 
-            ORM::factory('Comment')->where('id', 'IN', $comments)->delete_all();
+            DB::delete('comments')->where('id', 'IN', $comments)->execute();
 			Module::event('comment_bulk_delete', $comments);
 
 			Message::success(__('The delete has been performed!'));
@@ -212,16 +226,16 @@ class Controller_Admin_Comment extends Controller_Admin {
 	 *
 	 * Executes the bulk operation
 	 *
-	 * @param  array $post  Array of comments
+     * @param array $post Array of comments
 	 * @uses   Comment::bulk_actions
 	 * @uses   Arr::callback
 	 * @uses   Arr::merge
 	 */
-	private function _bulk_update($post)
+    private function _bulk_update(array $post)
 	{
 		// Filter out unchecked comments
 		$comments   = array_filter($post['comments']);
-		$operations = Comment::bulk_actions(FALSE);
+        $operations = Comment::bulk_actions();
 		$operation  = $operations[$post['operation']];
 
 		if ($operation['callback'])
@@ -241,24 +255,25 @@ class Controller_Admin_Comment extends Controller_Admin {
 		}
 	}
 
-	/**
-	 * Prepare DataTables list
-	 *
-	 * @param  ORM  $posts Posts
-	 *
-	 * @uses   Request::is_datatables
-	 * @uses   ORM::dataTables
-	 * @uses   Datatables::result
-	 * @uses   Datatables::add_row
-	 * @uses   HTML::anchor
-	 * @uses   Form::checkbox
-	 * @uses   Text::limit_words
-	 * @uses   Date::formatted_time
-	 * @uses   HTML::icon
-	 * @uses   I18n::__
-	 * @uses   Route::get
-	 * @uses   Route::uri
-	 */
+    /**
+     * Prepare DataTables list
+     *
+     * @param ORM $posts Posts
+     * @throws Kohana_Exception
+     * @throws Exception
+     * @uses   Request::is_datatables
+     * @uses   ORM::dataTables
+     * @uses   Datatables::result
+     * @uses   Datatables::add_row
+     * @uses   HTML::anchor
+     * @uses   Form::checkbox
+     * @uses   Text::limit_words
+     * @uses   Date::formatted_time
+     * @uses   HTML::icon
+     * @uses   I18n::__
+     * @uses   Route::get
+     * @uses   Route::uri
+     */
 	private function _prepare_list(ORM $posts)
 	{
 		if (Request::is_datatables())

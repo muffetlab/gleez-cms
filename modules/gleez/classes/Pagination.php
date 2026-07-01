@@ -110,25 +110,26 @@ class Pagination {
 	 */
 	protected $_uri = '';
 
-	/**
-	 * Creates a new Pagination object
-	 *
-	 * @param   array    $config   Configuration [Optional]
-	 * @param   Request  $request  Request [Optional]
-	 *
-	 * @return  Pagination
-	 */
-	public static function factory(array $config = array(), Request $request = NULL)
-	{
+    /**
+     * Creates a new Pagination object
+     *
+     * @param array $config Configuration [Optional]
+     * @param Request|null $request Request [Optional]
+     * @return  Pagination
+     * @throws Kohana_Exception
+     */
+    public static function factory(array $config = array(), Request $request = NULL): Pagination
+    {
 		return new self($config, $request);
 	}
 
-	/**
-	 * Class constructor
-	 *
-	 * @param   array    $config   Configuration [Optional]
-	 * @param   Request  $request  Request [Optional]
-	 */
+    /**
+     * Class constructor
+     *
+     * @param array $config Configuration [Optional]
+     * @param Request|null $request Request [Optional]
+     * @throws Kohana_Exception
+     */
 	public function __construct(array $config = array(), Request $request = NULL)
 	{
 		// Overwrite system defaults with application defaults
@@ -157,25 +158,24 @@ class Pagination {
 		$this->setup($config);
 	}
 
-	/**
-	 * Retrieves a pagination config group from the config file
-	 *
-	 * One config group can refer to another as its parent, which will be
-	 * recursively loaded.
-	 *
-	 * @param   string  $group  Pagination config group [Optional]
-	 *
-	 * @return  array
-	 *
-	 * @uses    Config::load
-	 */
-	public function config_group($group = 'default')
-	{
+    /**
+     * Retrieves a pagination config group from the config file
+     *
+     * One config group can refer to another as its parent, which will be
+     * recursively loaded.
+     *
+     * @param string $group Pagination config group [Optional]
+     * @return  array
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     */
+    public function config_group(string $group = 'default'): array
+    {
 		// Load the pagination config file
 		$config_file = Kohana::$config->load('pagination');
 
 		// Initialize the $config array
-		$config['group'] = (string) $group;
+        $config['group'] = $group;
 
 		// Recursively load requested config groups
 		while (isset($config['group']) AND $config_file->offsetExists($config['group']))
@@ -195,16 +195,17 @@ class Pagination {
 		return $config;
 	}
 
-	/**
-	 * Loads configuration settings into the object
-	 * and (re)calculates pagination if needed.
-	 *
-	 * Allows you to update config settings after a Pagination object
-	 * has been constructed.
-	 *
-	 * @param   array   $config  Configuration [Optional]
-	 * @return  object  Pagination
-	 */
+    /**
+     * Loads configuration settings into the object
+     * and (re)calculates pagination if needed.
+     *
+     * Allows you to update config settings after a Pagination object
+     * has been constructed.
+     *
+     * @param array $config Configuration [Optional]
+     * @return  object  Pagination
+     * @throws Kohana_Exception
+     */
 	public function setup(array $config = array())
 	{
 		if (isset($config['group']))
@@ -264,19 +265,18 @@ class Pagination {
 		return $this;
 	}
 
-	/**
-	 * Generates the full URL for a certain page
-	 *
-	 * @param   integer  $page  Page number [Optional
-	 *
-	 * @return  string
-	 *
-	 * @uses    URL::site
-	 */
-	public function url($page = 1)
-	{
+    /**
+     * Generates the full URL for a certain page
+     *
+     * @param integer $page Page number [Optional
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    URL::site
+     */
+    public function url(int $page = 1): string
+    {
 		// Clean the page number
-		$page = max(1, (int) $page);
+        $page = max(1, $page);
 
 		// gleez cms pagination
 		$pager = '/p'. $page;
@@ -312,14 +312,12 @@ class Pagination {
 	/**
 	 * Checks whether the given page number exists.
 	 *
-	 * @param   integer  $page  Page number
-	 *
+     * @param integer $page Page number
 	 * @return  boolean
-	 *
 	 * @uses    Valid::digit
 	 */
-	public function valid_page($page)
-	{
+    public function valid_page(int $page): bool
+    {
 		// Page number has to be a clean integer
 		if ( ! Valid::digit($page))
 		{
@@ -329,14 +327,15 @@ class Pagination {
 		return $page > 0 AND $page <= $this->total_pages;
 	}
 
-	/**
-	 * Renders the pagination links.
-	 *
-	 * @param   mixed   string of the view to use, or a Kohana_View object
-	 * @return  string  pagination output (HTML)
-	 */
-	public function render($view = NULL)
-	{
+    /**
+     * Renders the pagination links.
+     *
+     * @param mixed $view String of the view to use, or a Kohana_View object
+     * @return  string  pagination output (HTML)
+     * @throws View_Exception
+     */
+    public function render($view = NULL): string
+    {
 		// Automatically hide pagination whenever it is superfluous
 		if ($this->config['auto_hide'] === TRUE AND $this->total_pages <= 1)
 		{
@@ -360,16 +359,14 @@ class Pagination {
 	}
 
 
-	/**
-	 * Route setter/getter
-	 *
-	 * [!!] Note: This doesn't change the initial Route
-	 *
-	 * @param	Request  $request  Request [Optional]
-	 *
-	 * @return  Request     Route if used as getter
-	 * @return  Pagination  Chainable as setter
-	 */
+    /**
+     * Route setter/getter
+     *
+     * [!!] Note: This doesn't change the initial Route
+     *
+     * @param Request|null $request Request [Optional]
+     * @return Request|Pagination Route if used as getter, chainable as setter
+     */
 	public function request(Request $request = NULL)
 	{
 		if (is_null($request))
@@ -382,16 +379,14 @@ class Pagination {
 		return $this;
 	}
 
-	/**
-	 * Route setter/getter
-	 *
-	 * @param	mixed  $route  String route name/ Route object [Optional]
-	 *
-	 * @return  Route       Route if used as getter
-	 * @return  Pagination  Chainable as setter
-	 *
-	 * @uses    Route::get
-	 */
+    /**
+     * Route setter/getter
+     *
+     * @param mixed $route String route name/ Route object [Optional]
+     * @return Route|Pagination Route if used as getter, chainable as setter
+     * @throws Kohana_Exception
+     * @uses    Route::get
+     */
 	public function route($route = NULL)
 	{
 		if (is_null($route))
@@ -411,14 +406,12 @@ class Pagination {
 		return $this;
 	}
 
-	/**
-	 * Route parameters setter/getter
-	 *
-	 * @param   array  $route_params  Route parameters to set [Optional]
-	 *
-	 * @return  array       Route parameters if used as getter
-	 * @return  Pagination  Chainable as setter
-	 */
+    /**
+     * Route parameters setter/getter
+     *
+     * @param array|null $route_params Route parameters to set [Optional]
+     * @return array|Pagination Route parameters if used as getter, chainable as setter
+     */
 	public function route_params(array $route_params = NULL)
 	{
 		if (is_null($route_params))
@@ -434,32 +427,29 @@ class Pagination {
 	/**
 	 * HMVC URI setter/getter
 	 *
-	 * @param   string  $uri  Route uri to set [Optional]
-	 *
-	 * @return  string      Route uri if used as getter
-	 * @return  Pagination  Chainable as setter
+     * @param string|null $uri Route uri to set [Optional]
+     * @return string|Pagination Route uri if used as getter, chainable as setter
 	 */
-	public function uri($uri = NULL)
+    public function uri(string $uri = NULL)
 	{
 		if (is_null($uri))
 		{
 			return $this->_uri;
 		}
 
-		$this->_uri = (string)$uri;
+        $this->_uri = $uri;
 
 		return $this;
 	}
 
-	/**
-	 * URL::query() replacement for Pagination use only
-	 *
-	 * @param   array  $params  Parameters to override [Optional]
-	 *
-	 * @return  string
-	 */
-	public function query(array $params = NULL)
-	{
+    /**
+     * URL::query() replacement for Pagination use only
+     *
+     * @param array|null $params Parameters to override [Optional]
+     * @return string
+     */
+    public function query(array $params = NULL): string
+    {
 		if (is_null($params))
 		{
 			// Use only the current parameters
@@ -484,13 +474,13 @@ class Pagination {
 		return ($query === '') ? '' : ('?'.$query);
 	}
 
-	/**
-	 * Renders the pagination links
-	 *
-	 * @return  string  Pagination output (HTML)
-	 *
-	 * @uses    Kohana_Exception::handler
-	 */
+    /**
+     * Renders the pagination links
+     *
+     * @return  string  Pagination output (HTML)
+     * @throws Kohana_Exception
+     * @uses    Kohana_Exception::handler
+     */
 	public function __toString()
 	{
 		try
@@ -500,7 +490,6 @@ class Pagination {
 		catch(Exception $e)
 		{
 			Kohana_Exception::handler($e);
-			return '';
 		}
 	}
 
@@ -527,22 +516,22 @@ class Pagination {
 	/**
 	 * Returns a Pagination property
 	 *
-	 * @param   string  $key  Property name
-	 *
+     * @param string $key Property name
 	 * @return  mixed   Pagination property; NULL if not found
 	 */
-	public function __get($key)
+    public function __get(string $key)
 	{
         return $this->$key ?? NULL;
 	}
 
-	/**
-	 * Updates a single config setting, and recalculates pagination if needed
-	 *
-	 * @param   string  config key
-	 * @param   mixed   config value
-	 * @return  void
-	 */
+    /**
+     * Updates a single config setting, and recalculates pagination if needed
+     *
+     * @param string $key Config key
+     * @param mixed $value Config value
+     * @return  void
+     * @throws Kohana_Exception
+     */
 	public function __set($key, $value)
 	{
 		$this->setup(array($key => $value));

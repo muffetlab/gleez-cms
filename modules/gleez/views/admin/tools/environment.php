@@ -4,7 +4,7 @@
  * @todo Use Gleez::init here
  * @todo Use GitHub links here
  *
- * @var string $gleezEnv
+ * @var array $gleezEnv
  */
 ?>
 <table id="info-admin-view" class="table table-striped table-bordered">

@@ -97,12 +97,15 @@ class Model_Term extends ORM_MPTT {
 		);
 	}
 
-	/**
-	 * Updates or Creates the record depending on loaded()
-	 *
-	 * @param   Validation $validation Validation object [Optional]
-	 * @return  ORM
-	 */
+    /**
+     * Updates or Creates the record depending on loaded()
+     *
+     * @param Validation|null $validation Validation object [Optional]
+     * @return  ORM
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function save(Validation $validation = NULL): Kohana_ORM
     {
 		$this->type  = empty($this->type) ? 'post' : $this->type;
@@ -125,9 +128,9 @@ class Model_Term extends ORM_MPTT {
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-	public function delete($soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = FALSE): Kohana_ORM
     {
-		if (is_array($this->_deleted_column) && $soft == TRUE)
+        if (is_array($this->_deleted_column) && $soft)
 		{
 
 		}
@@ -193,48 +196,38 @@ class Model_Term extends ORM_MPTT {
         switch ($column) {
 			case 'name':
                 return HTML::chars($this->get('name') ?? '');
-			break;
-			case 'image':
+            case 'image':
 				return is_null(parent::__get('image')) ? 'media/images/camera.png' : parent::__get('image');
-			break;
-			case 'rawname':
-				// Raw fields without markup. Usage: during edit or etc!
+            case 'rawname':
+                // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('name');
-			break;
-			case 'rawurl':
-				// Raw fields without markup. Usage: during edit or etc!
+            case 'rawurl':
+                // Raw fields without markup. Usage: during edit or etc.!
 				return Route::get($this->type)->uri(array('action' => 'term', 'id' => $this->id));
-			break;
-			case 'url':
+            case 'url':
 			case 'link':
-				// Model specific links; view, edit, delete url's.
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
-			break;
-			case 'edit_url':
-				// Model specific links; view, edit, delete url's.
+            case 'edit_url':
 				return Route::get('admin/term')->uri(array('id' => $this->id, 'action' => 'edit'));
-			break;
-			case 'delete_url':
-				// Model specific links; view, edit, delete url's.
+            case 'delete_url':
 				return Route::get('admin/term')->uri(array('id' => $this->id, 'action' => 'delete'));
-			break;
-		}
+        }
 
         return parent::__get($column);
 	}
 
-	/**
-	 * Check by triggering error if name exists
-	 *
-	 * Validation callback.
-	 *
-	 * @param   Validation  $validation  Validation object
-	 * @param   string      $field       Field name
-	 *
-	 * @uses    DB::select
-	 * @uses    Validation::error
-	 */
-	public function term_available(Validation $validation, $field)
+    /**
+     * Check by triggering error if name exists
+     *
+     * Validation callback.
+     *
+     * @param Validation $validation Validation object
+     * @param string $field Field name
+     * @throws Kohana_Exception
+     * @uses    Validation::error
+     * @uses    DB::select
+     */
+    public function term_available(Validation $validation, string $field)
 	{
 		$query = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 				->from($this->_table_name)
@@ -251,16 +244,17 @@ class Model_Term extends ORM_MPTT {
 	}
 
 
-	/**
-	 * Create a new term in the tree as a child of `$parent`
-	 *
-	 * if `$location` is "first" or "last" the term will be the first or last child
-	 * if `$location` is an int, the term will be the next sibling of term with id `$location`
-	 *
-	 * @param   ORM_MPTT|integer  Primary key value or ORM_MPTT object of parent term
-	 * @param   string|integer    The location [Optional]
-	 * @throws  Kohana_Exception
-	 */
+    /**
+     * Create a new term in the tree as a child of `$parent`
+     *
+     * if `$location` is "first" or "last" the term will be the first or last child
+     * if `$location` is an int, the term will be the next sibling of term with id `$location`
+     *
+     * @param ORM_MPTT|int $parent Primary key value or ORM_MPTT object of parent term
+     * @param string|int $location The location
+     * @throws  Kohana_Exception
+     * @throws ReflectionException
+     */
 	public function create_at($parent, $location = 'last')
 	{
 		// Create the term as first child, last child, or as next sibling based on location
@@ -292,14 +286,15 @@ class Model_Term extends ORM_MPTT {
 		}
 	}
 
-	/**
+    /**
      * Upload image and return file path.
-	 *
-	 * @param   string  $file Uploaded file
-	 * @return  NULL|string   NULL when filed, otherwise file path
-	 */
-	public function uploadImage($file)
-	{
+     *
+     * @param array $file Uploaded file
+     * @return  NULL|string   NULL when filed, otherwise file path
+     * @throws Kohana_Exception
+     */
+    public function uploadImage(array $file): ?string
+    {
 		if (isset($file['tmp_name']) AND ! empty($file['tmp_name']))
 		{
 			return Upload::uploadImage($file);

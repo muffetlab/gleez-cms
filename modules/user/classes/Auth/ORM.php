@@ -20,12 +20,13 @@ class Auth_ORM extends Kohana_Auth_ORM
      */
     public static $lastErrorKey = null;
 
-	/**
-	 * Get enabled oAuth2 providers
-	 * @return array
-	 *
-	 * @uses   Module::is_active
-	 */
+    /**
+     * Get enabled OAuth2 providers
+     *
+     * @return array
+     * @throws Kohana_Exception
+     * @uses   Module::is_active
+     */
 	public static function providers()
 	{
 		if ( ! Module::is_active('oauth2'))
@@ -41,7 +42,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 				$providers[$name] = array(
 					'name' => $name,
 					'url'  => Route::get('oauth2/provider')->uri(array('provider' => $name, 'action' => 'login')),
-					'icon' => isset($provider['icon']) ? $provider['icon'] : 'facebook',
+                    'icon' => $provider['icon'] ?? 'facebook',
 				);
 			}
 		}
@@ -49,12 +50,15 @@ class Auth_ORM extends Kohana_Auth_ORM
 		return $providers;
 	}
 
-	/**
-	 * Checks if a user logged in via an OAuth provider.
-	 *
-	 * @param   string   $provider  Provider name (e.g. 'twitter', 'google', etc.) [Optional]
-	 * @return  boolean
-	 */
+    /**
+     * Checks if a user logged in via an OAuth provider.
+     *
+     * @param null $provider Provider name (e.g. 'twitter', 'google', etc.) [Optional]
+     * @return boolean
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function logged_in_oauth($provider = NULL)
 	{
 		// For starters, the user needs to be logged in
@@ -84,14 +88,15 @@ class Auth_ORM extends Kohana_Auth_ORM
 	 */
 	public function get_provider()
 	{
-		return $this->_session->get($this->_config['session_key'] . '_provider', NULL);
+        return $this->_session->get($this->_config['session_key'] . '_provider');
 	}
 
     /**
      * Perform a hmac hash, using the configured method.
      *
-     * @param string $str  String to hash
-     * @return  string
+     * @param string $str String to hash
+     * @return string
+     * @throws Kohana_Exception
      */
     public function hash(string $str): string
     {
@@ -101,12 +106,13 @@ class Auth_ORM extends Kohana_Auth_ORM
         return hash_hmac($algo, $str, $key);
     }
 
-	/**
-	 * Get the stored password for a username.
-	 *
-	 * @param   mixed   username string, or user ORM object
-	 * @return  string
-	 */
+    /**
+     * Get the stored password for a username.
+     *
+     * @param mixed username string, or user ORM object
+     * @return string
+     * @throws Kohana_Exception
+     */
 	public function password($user): string
     {
 		if ( ! is_object($user))
@@ -121,12 +127,15 @@ class Auth_ORM extends Kohana_Auth_ORM
 		return $user->pass;
 	}
 
-	/**
-	 * Compare password with original (hashed). Works for current (logged in) user
-	 *
-	 * @param   string  $password
-	 * @return  bool
-	 */
+    /**
+     * Compare password with original (hashed). Works for current (logged in) user
+     *
+     * @param string $password
+     * @return bool
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function check_password($password): bool
     {
 		$user_model = $this->get_user();
@@ -141,13 +150,16 @@ class Auth_ORM extends Kohana_Auth_ORM
 		return System::hashEquals($user['pass'], $this->hash($password));
 	}
 
-	/**
-	 * Forces a user to be logged in when using SSO, without specifying a password.
-	 *
-	 * @param   ORM      $user
-	 * @param   boolean  $mark_session_as_forced
-	 * @return  boolean
-	 */
+    /**
+     * Forces a user to be logged in when using SSO, without specifying a password.
+     *
+     * @param ORM $user
+     * @param boolean $mark_session_as_forced
+     * @return boolean
+     * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
+     * @throws ReflectionException
+     */
 	public function force_sso_login(ORM $user, $mark_session_as_forced = FALSE)
 	{
 		if ($mark_session_as_forced === TRUE)
@@ -172,17 +184,18 @@ class Auth_ORM extends Kohana_Auth_ORM
 		Cookie::set('authautologin', $token->token, $this->_config['lifetime']);
 
 		// Run the standard completion
-		$this->complete_login($user);
+        return $this->complete_login($user);
 	}
 
-	/**
-	 * Logs a user in.
-	 *
-	 * @param   string   username
-	 * @param   string   password
-	 * @param   boolean  enable autologin
-	 * @return  bool
-	 */
+    /**
+     * Logs a user in.
+     *
+     * @param string username
+     * @param string password
+     * @param boolean enable autologin
+     * @return bool
+     * @throws Kohana_Exception|ReflectionException
+     */
 	protected function _login($username, $password, $remember): bool
     {
         $config = Kohana::$config->load('auth')->get('auth');

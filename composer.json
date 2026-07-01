@@ -36,6 +36,7 @@
         "ext-dom": "*",
         "ext-json": "*",
         "ext-mysqli": "*",
+        "michelf/php-markdown": "^1.9",
         "phpmailer/phpmailer": "^7.0"
     },
     "require-dev": {

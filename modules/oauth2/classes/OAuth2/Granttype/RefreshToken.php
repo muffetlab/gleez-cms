@@ -25,29 +25,26 @@ class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
 		return 'refresh_token';
 	}
 
-	public function validateRequest(Request $request, Response $response)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function validateRequest(Request $request, Response $response)
 	{
 		$this->request  = $request;
 		$this->response = $response;
 
 		if (!$request->post('refresh_token')) {
 			throw Oauth2_Exception::factory(400, 'invalid_request', 'Missing parameter: "refresh_token" is required');
-
-			return false;
 		}
 
 		$token = $request->post('refresh_token');
 
 		if (!$refreshToken = $this->getRefreshToken($token)) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Invalid refresh token');
-
-			return false;
 		}
 
 		if ($refreshToken["refresh_expires"] < time()) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Refresh token has expired');
-
-		    return false;
 		}
 
 		// store the refresh token locally so we can delete it when a new refresh token is generated
@@ -63,15 +60,18 @@ class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
 
 	public function getUserId()
 	{
-		return isset($this->refreshToken['user_id']) ? $this->refreshToken['user_id'] : NULL;
+        return $this->refreshToken['user_id'] ?? NULL;
 	}
 
 	public function getScope()
 	{
-		return isset($this->refreshToken['scope']) ? $this->refreshToken['scope'] : NULL;
+        return $this->refreshToken['scope'] ?? NULL;
 	}
 
-	public function createAccessToken($client_id, $user_id, $scope = NULL)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL)
 	{
 		try
 		{

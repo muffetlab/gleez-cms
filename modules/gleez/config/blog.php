@@ -2,104 +2,54 @@
 
 return array(
 
-	/**
-	 * Default blog status (eg: draft, review, publish, etc)
-	 * @var string
-	 */
+    // Default blog status (eg: draft, review, publish, etc.)
 	'default_status' => 'draft',
 
-	/**
-	 * Pages per page (ex: 5, 10, 15, etc)
-	 * @var integer
-	 */
+    // Pages per page (ex: 5, 10, 15, etc.)
 	'items_per_page' => 15,
 
-	/**
-	 * Enable captcha?
-	 * @var boolean
-	 */
+    // Enable captcha?
 	'use_captcha' => FALSE,
 
-	/**
-	 * Enable to set page author?
-	 * @var boolean
-	 */
+    // Enable to set page author?
 	'use_authors' => TRUE,
 
-	/**
-	 * Enable teaser?
-	 * @var boolean
-	 */
+    // Enable teaser?
 	'use_excerpt' => FALSE,
 
-	/**
-	 * Enable comment?
-	 * @var boolean
-	 */
+    // Enable comment?
 	'use_comment' => TRUE,
 
-	/**
-	 * Enable tags?
-	 * @var boolean
-	 */
+    // Enable tags?
 	'use_tags' => FALSE,
 
-	/**
-	 * Show submitted info in views?
-	 * @var boolean
-	 */
+    // Show submitted info in views?
 	'use_submitted' => TRUE,
 
-	/**
-	 * Enable terms?
-	 * @var boolean
-	 */
+    // Enable terms?
 	'use_category' => FALSE,
 
-	/**
-	 * Enable login buttons above comment form?
-	 * @var boolean
-	 */
+    // Enable login buttons above comment form?
 	'use_provider_buttons' => TRUE,
 
-	/**
-	 * Enable per page caching for performance
-	 * @var boolean
-	 */
+    // Enable per page caching for performance
 	'use_cache' => FALSE,
 
-	/**
-	 * Allow people to post Comments (0: disabled, 1: read, 2: read/write)
-	 * @var integer
-	 */
+    // Allow people to post Comments (0: disabled, 1: read, 2: read/write)
 	'comment' => 1,
 
-	/**
-	 * Comment display mode
-	 * @var boolean
-	 */
+    // Comment display mode
 	'comment_default_mode' => FALSE,
 
-	/**
-	 * Allow anonymous commenting (with contact information)?
-	 */
+    // Allow anonymous commenting (with contact information)?
 	'comment_anonymous' => FALSE,
 
-	/**
-	 * Comments per page
-	 * @var integer
-	 */
+    // Comments per page
 	'comments_per_page' => 20,
 
-	/**
-	 * Comments displayed with the older/new comments (asc||desc)
-	 * @var string
-	 */
+    // Comments displayed with the older/new comments (asc||desc)
 	'comment_order' => 'asc',
 
-	/**
-	 * Use primary image?
-	 * @var boolean
-	 */
+    // Use primary image?
 	'primary_image' => TRUE,
 );

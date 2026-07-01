@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Blog Controller
  *
@@ -10,11 +11,16 @@
  */
 class Controller_Admin_Blog extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses  ACL::required
+     */
 	public function before()
 	{
 		ACL::required('administer blog');
@@ -22,11 +28,12 @@ class Controller_Admin_Blog extends Controller_Admin {
 		parent::before();
 	}
 
-	/**
-	 * The after() method is called after controller action.
-	 *
-	 * @uses  Route::url
-	 */
+    /**
+     * The after() method is called after controller action.
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::url
+     */
 	public function after()
 	{
 		$this->_tabs =  array(
@@ -38,9 +45,11 @@ class Controller_Admin_Blog extends Controller_Admin {
 		parent::after();
 	}
 
-	/**
-	 * Blog management dashboard, display Blog statistics
-	 */
+    /**
+     * Blog management dashboard, display Blog statistics
+     *
+     * @throws View_Exception|Kohana_Exception
+     */
 	public function action_index()
 	{
 		$this->title = __('Blog Statistics');
@@ -62,18 +71,19 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Blog settings
-	 *
-	 * @uses  Config::load
-	 * @uses  Config_Group::get
-	 * @uses  Config_Group::set
-	 * @uses  Template::valid_post
-	 * @uses  Arr::merge
-	 * @uses  Request::redirect
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * Blog settings
+     *
+     * @throws Kohana_Exception
+     * @uses  Config_Group::get
+     * @uses  Config_Group::set
+     * @uses  Template::valid_post
+     * @uses  Arr::merge
+     * @uses  Request::redirect
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Config::load
+     */
 	public function action_settings()
 	{
 		$this->title = __('Blog Settings');
@@ -119,20 +129,22 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Blog list
-	 *
-	 * @uses  Route::url
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Request::is_datatables
-	 * @uses  Form::checkbox
-	 * @uses  HTML::anchor
-	 * @uses  HTML::label
-	 * @uses  HTML::icon
-	 * @uses  Post::bulk_actions
-	 * @uses  Assets::popup
-	 */
+    /**
+     * Blog list
+     *
+     * @throws Kohana_Exception
+     * @throws Exception
+     * @uses  Route::url
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Request::is_datatables
+     * @uses  Form::checkbox
+     * @uses  HTML::anchor
+     * @uses  HTML::label
+     * @uses  HTML::icon
+     * @uses  Post::bulk_actions
+     * @uses  Assets::popup
+     */
 	public function action_list()
 	{
 		Assets::popup();
@@ -177,17 +189,18 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Perform bulk actions
-	 *
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Request::redirect
-	 * @uses  Message::success
-	 * @uses  Message::error
-	 * @uses  Post::bulk_delete
-	 * @uses  DB::select
-	 */
+    /**
+     * Perform bulk actions
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     * @uses  Request::redirect
+     * @uses  Message::success
+     * @uses  Message::error
+     * @uses  Post::bulk_delete
+     * @uses  DB::select
+     * @uses  Route::get
+     */
 	public function action_bulk()
 	{
 		$redirect = Route::get('admin/blog')->uri(array('action' => 'list'));
@@ -261,11 +274,11 @@ class Controller_Admin_Blog extends Controller_Admin {
 	/**
 	 * Bulk updates
 	 *
-	 * @param  array  $post
+     * @param array $post
 	 * @uses   Post::bulk_actions
 	 * @uses   Arr::callback
 	 */
-	private function _bulk_update($post)
+    private function _bulk_update(array $post)
 	{
 		$operations = Post::bulk_actions(FALSE, 'blog');
 		$operation  = $operations[$post['operation']];

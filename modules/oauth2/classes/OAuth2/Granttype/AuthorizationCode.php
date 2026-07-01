@@ -25,23 +25,22 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 		return 'authorization_code';
 	}
 
-	public function validateRequest(Request $request, Response $response)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function validateRequest(Request $request, Response $response)
 	{
 		$this->request  = $request;
 		$this->response = $response;
 
 		if (!$request->post('code')) {
 			throw Oauth2_Exception::factory(400, 'invalid_request', 'Missing parameter: "code" is required');
-
-			return false;
 		}
 
 		$code = $request->post('code');
 
 		if (!$authCode = $this->getAuthorizationCode($code)) {
-			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Authorization code doesn\'t exist or is invalid for the client');
-
-			return false;
+            throw Oauth2_Exception::factory(400, 'invalid_grant', "Authorization code doesn't exist or is invalid for the client");
 		}
 
 		/*
@@ -51,16 +50,12 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 		if (isset($authCode['redirect_uri']) && $authCode['redirect_uri']) {
 			if (!$request->post('redirect_uri') || urldecode($request->post('redirect_uri')) != $authCode['redirect_uri']) {
 				throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', "The redirect URI is missing or do not match");
-
-				return false;
 			}
 		}
 
 		if ($authCode["expires"] < time()) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', "The authorization code has expired");
 			//throw new Oauth2_Exception(400, 'invalid_grant', "The authorization code has expired");
-
-			return false;
 		}
 
 		if (!isset($authCode['code'])) {
@@ -79,15 +74,18 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 
 	public function getUserId()
 	{
-		return isset($this->authCode['user_id']) ? $this->authCode['user_id'] : NULL;
+        return $this->authCode['user_id'] ?? NULL;
 	}
 
 	public function getScope()
 	{
-		return isset($this->authCode['scope']) ? $this->authCode['scope'] : NULL;
+        return $this->authCode['scope'] ?? NULL;
 	}
 
-	public function createAccessToken($client_id, $user_id, $scope = NULL)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL)
 	{
 		try
 		{
@@ -103,9 +101,7 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 
 	protected function getAuthorizationCode($code)
 	{
-		$result = Model::factory('oauth')->getAuthorizationCode($code);
-
-		return $result;
+        return Model::factory('oauth')->getAuthorizationCode($code);
 	}
 
 }

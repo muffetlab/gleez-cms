@@ -44,19 +44,17 @@ class Date extends Kohana_Date
 	 *
 	 * @return  array
 	 */
-	public static function amounts_min()
-	{
-		$amounts = array(
-			1         => __('Minute'),
-			30        => __('Half an hour'),
-			60        => __('Hour'),
-			1440      => __('Day'),
-			10080     => __('Week'),
-			302400    => __('Month'),
-			107654400 => __('Year'),
-		);
-
-		return $amounts;
+    public static function amounts_min(): array
+    {
+        return array(
+            1 => __('Minute'),
+            30 => __('Half an hour'),
+            60 => __('Hour'),
+            1440 => __('Day'),
+            10080 => __('Week'),
+            302400 => __('Month'),
+            107654400 => __('Year'),
+        );
 	}
 
 	/**
@@ -64,8 +62,8 @@ class Date extends Kohana_Date
 	 *
 	 * @return array
 	 */
-    public static function weekdays()
-	{
+    public static function weekdays(): array
+    {
 		return array(
 			0 => __('Sunday'),
 			1 => __('Monday'),
@@ -82,8 +80,8 @@ class Date extends Kohana_Date
 	 *
 	 * @return array
 	 */
-	public static function timezones()
-	{
+    public static function timezones(): array
+    {
 		$continents = array(
 			'Africa',
 			'America',
@@ -213,8 +211,8 @@ class Date extends Kohana_Date
 	 *
 	 * @todo   Need add i18n ability
 	 */
-	public static function date_time_formats($timestamp = FALSE)
-	{
+    public static function date_time_formats(bool $timestamp = FALSE): array
+    {
 		$date_time_format = array(
 			'l, F j, Y - H:i',
 			'l, j F, Y - H:i',
@@ -260,8 +258,7 @@ class Date extends Kohana_Date
 				$date_choices[$f] = date($f, time());
 			}
 
-			/** @var $date_choices array */
-			return $date_choices;
+            return $date_choices;
 		}
 
 		return $date_time_format;
@@ -270,13 +267,13 @@ class Date extends Kohana_Date
 	/**
 	 * Return available date formats
 	 *
-	 * @param  boolean $timestamp Unix timestamp [Optional]
+     * @param boolean $timestamp Unix timestamp [Optional]
 	 * @return array
 	 *
 	 * @todo   Need add i18n ability
 	 */
-	public static function date_formats($timestamp = FALSE)
-	{
+    public static function date_formats(bool $timestamp = FALSE): array
+    {
 		$date_format = array(
 			'l, F j, Y',
 			'l, j F, Y',
@@ -311,8 +308,7 @@ class Date extends Kohana_Date
 				$date_choices[$f] = date($f, time());
 			}
 
-			/** @var $date_choices array */
-			return $date_choices;
+            return $date_choices;
 		}
 
 		return $date_format;
@@ -321,13 +317,13 @@ class Date extends Kohana_Date
 	/**
 	 * Return available time formats
 	 *
-	 * @param  boolean $timestamp Unix timestamp [Optional]
+     * @param boolean $timestamp Unix timestamp [Optional]
 	 * @return array
 	 *
 	 * @todo   Need add i18n ability
 	 */
-	public static function time_formats($timestamp = FALSE)
-	{
+    public static function time_formats(bool $timestamp = FALSE): array
+    {
 		$time_format = array(
 			'g:i:s a',
 			'g:i:s A',
@@ -344,55 +340,52 @@ class Date extends Kohana_Date
 				$time_choices[$f] = date($f, time());
 			}
 
-			/** @var $time_choices array */
-			return $time_choices;
+            return $time_choices;
 		}
 
 		return $time_format;
 	}
 
-	/**
-	 * Return a unix timestamp in a user specified format including date and time
-	 *
-	 * @param  integer $timestamp Unix timestamp
-	 * @param  string  $format    Timestamp format [Optional]
-	 *
-	 * @return string
-	 *
-	 * @uses   Config::get
-	 */
-	public static function date_time($timestamp, $format = NULL)
-	{
+    /**
+     * Return a Unix timestamp in a user specified format including date and time.
+     *
+     * @param integer $timestamp Unix timestamp
+     * @param string|null $format Timestamp format [Optional]
+     * @return string
+     * @throws Exception
+     * @uses   Config::get
+     */
+    public static function date_time(int $timestamp, string $format = NULL): string
+    {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site')->get('date_time_format') : $format);
 	}
 
-	/**
-	 * Return a unix timestamp in a user specified format that's just the date
-	 *
-	 * @param  integer $timestamp Unix timestamp
-	 * @param  string  $format    Timestamp format [Optional]
-	 *
-	 * @return string
-	 *
-	 * @uses   Config::get
-	 */
-	public static function date_format($timestamp, $format = NULL)
-	{
+    /**
+     * Return a Unix timestamp in a user specified format that's just the date.
+     *
+     * @param integer $timestamp Unix timestamp
+     * @param string|null $format Timestamp format [Optional]
+     * @return string
+     * @throws Exception
+     * @uses   Config::get
+     */
+    public static function date_format(int $timestamp, string $format = NULL): string
+    {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.date_format') : $format);
 	}
 
-	/**
-	 * Return a unix timestamp in a user specified format that's just the time
-	 *
-	 * @param  integer $timestamp Unix timestamp
-	 * @param  string  $format    Timestamp format [Optional]
-	 *
-	 * @return string
-	 *
-	 * @uses   Config::get
-	 */
-	public static function time($timestamp, $format = NULL)
-	{
+    /**
+     * Return a Unix timestamp in a user specified format that's just the time.
+     *
+     * @param integer $timestamp Unix timestamp
+     * @param string|null $format
+     * @return string
+     * @throws Kohana_Exception
+     * @throws Exception
+     * @uses   Config::get
+     */
+    public static function time(int $timestamp, ?string $format = NULL): string
+    {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.time_format') : $format);
 	}
 

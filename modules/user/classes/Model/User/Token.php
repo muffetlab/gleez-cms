@@ -23,11 +23,12 @@ class Model_User_Token extends ORM {
 	// Relationships
 	protected $_belongs_to = array('user' => array());
 
-	/**
-	 * Handles garbage collection and deleting of expired objects.
-	 *
-	 * @return  void
-	 */
+    /**
+     * Handles garbage collection and deleting of expired objects.
+     *
+     * @return void
+     * @throws Kohana_Exception
+     */
 	public function __construct($id = NULL)
 	{
 		parent::__construct($id);
@@ -45,11 +46,12 @@ class Model_User_Token extends ORM {
 		}
 	}
 
-	/**
-	 * Deletes all expired tokens.
-	 *
-	 * @return  ORM
-	 */
+    /**
+     * Deletes all expired tokens.
+     *
+     * @return ORM
+     * @throws Kohana_Exception
+     */
 	public function delete_expired()
 	{
 		// Delete all expired tokens

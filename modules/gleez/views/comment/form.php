@@ -49,7 +49,7 @@
 
 	<div id="comment-body" class="<?php echo ( ! ACL::check('administer comment') OR ! $is_edit) ? 'col-md-12' : 'col-md-9 col-md-pull-3'; ?>">
 
-		<?php if ($auth->logged_in() == FALSE OR ($is_edit AND $post->author == 1)): ?>
+        <?php if (!$auth->logged_in() or ($is_edit and $post->author == 1)): ?>
 			<div id="submitdiv" class="stuffbox">
 				<h3 class='hndle'><?php echo __('Author') ?></h3>
 

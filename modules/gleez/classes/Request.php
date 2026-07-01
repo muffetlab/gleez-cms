@@ -39,8 +39,8 @@ class Request extends Kohana_Request
 	 *
 	 * @todo use Request::$user_agent but it is null
 	 */
-	public static function is_mobile()
-	{
+    public static function is_mobile(): bool
+    {
 		$devices = 'android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos';
 
 		if (isset($_SERVER['HTTP_USER_AGENT']))
@@ -52,15 +52,15 @@ class Request extends Kohana_Request
 	}
 
 	/**
-	 * Whether or not current request is DataTables
+     * Whether current request is DataTables.
 	 *
-	 * @param   mixed  Request  Request [Optional]
+     * @param mixed $request Request
 	 * @return  boolean
 	 * @uses    Request::current
 	 */
-	public static function is_datatables(Request $request = NULL)
-	{
-		$request = ($request) ? $request : Request::current();
+    public static function is_datatables(Request $request = NULL): bool
+    {
+        $request = $request ?: Request::current();
 
 		return (bool) $request->query('draw');
 	}
@@ -70,30 +70,28 @@ class Request extends Kohana_Request
 	*
 	* @return Bool
 	*/
-	public static function isHHVM() {
+    public static function isHHVM(): bool
+    {
 		return defined('HHVM_VERSION');	
 	}
 
-	/**
-	 * Gets POST max size in bytes
-	 *
-	 * @link    http://php.net/post-max-size
-	 *
-	 * @return  float
-	 *
-	 * @uses    Config::get
-	 * @uses    Config::set
-	 * @uses    Num::bytes
-	 * @uses    Request::DEFAULT_POST_MAX_SIZE
-	 */
-	public static function get_post_max_size()
-	{
-		$max_size = Kohana::$config->load('media')->get('post_max_size', NULL);
+    /**
+     * Gets POST max size in bytes
+     *
+     * @link    http://php.net/post-max-size
+     * @return  float
+     * @uses    Num::bytes
+     * @uses    Request::DEFAULT_POST_MAX_SIZE
+     * @throws Kohana_Exception
+     */
+    public static function get_post_max_size(): float
+    {
+        $max_size = Kohana::$config->load('media')->get('post_max_size');
 
 		// Set post_max_size default value if it not exists
 		if (is_null($max_size))
 		{
-			Config::set('media', 'post_max_size', $max_size = static::DEFAULT_POST_MAX_SIZE);
+            Kohana::$config->load('media')->set('post_max_size', $max_size = static::DEFAULT_POST_MAX_SIZE);
 		}
 
 		if(static::isHHVM())
@@ -113,24 +111,25 @@ class Request extends Kohana_Request
 		return min($gleez_settings, $php_settings);
 	}
 
-	/**
-	 * Redirects as the request response. If the URL does not include a
-	 * protocol, it will be converted into a complete URL.
-	 *
-	 * Example:
-	 * ~~~
-	 * $request->redirect($url);
-	 * ~~~
-	 *
-	 * [!!] No further processing can be done after this method is called!
-	 *
-	 * @param   string   $url   Redirect location
-	 * @param   integer  $code  Status code: 301, 302, etc
-	 * @return  void
-	 * @uses    URL::site
-	 * @uses    Request::send_headers
-	 */
-	public function redirect($url = '', $code = 302)
+    /**
+     * Redirects as the request response. If the URL does not include a
+     * protocol, it will be converted into a complete URL.
+     *
+     * Example:
+     * ~~~
+     * $request->redirect($url);
+     * ~~~
+     *
+     * [!!] No further processing can be done after this method is called!
+     *
+     * @param string $url Redirect location
+     * @param integer $code Status code: 301, 302, etc
+     * @return  void
+     * @throws Kohana_Exception
+     * @uses    Request::send_headers
+     * @uses    URL::site
+     */
+    public function redirect(string $url = '', int $code = 302)
 	{
 		$referrer = $this->uri();
 
@@ -212,13 +211,12 @@ class Request extends Kohana_Request
         return $response;
 	}
 
-	/**
-	 * Set or get the response for this request
-	 *
-	 * @param   Response  $response  Response to apply to this request
-	 * @return  Response
-	 * @return  void
-	 */
+    /**
+     * Set or get the response for this request
+     *
+     * @param Response|null $response Response to apply to this request
+     * @return Request|Response
+     */
 	public function response(Response $response = NULL)
 	{
 		if ($response === NULL)
@@ -234,9 +232,8 @@ class Request extends Kohana_Request
 	}
 
 	/**
-	 * Creates a response based on the type of request, i.e. an
-	 * Request_HTTP will produce a Response_HTTP, and the same applies
-	 * to CLI.
+     * Creates a response based on the type of request, i.e. a Request_HTTP will produce a Response_HTTP, and the same
+     * applies to CLI.
 	 *
 	 * Example:
 	 * ~~~
@@ -244,12 +241,12 @@ class Request extends Kohana_Request
 	 * $response = $request->create_response();
 	 * ~~~
 	 *
-	 * @param   boolean  $bind  Bind to this request
+     * @param boolean $bind Bind to this request
 	 * @return  Response
 	 * @since   3.1.0
 	 */
-	public function create_response($bind = TRUE)
-	{
+    public function create_response(bool $bind = TRUE): Response
+    {
 		$response = new Response(array('_protocol' => $this->protocol()));
 
 		if ($bind)
@@ -271,8 +268,8 @@ class Request extends Kohana_Request
 	 *
 	 * @return  boolean  Whether the request is a POST request or not
 	 */
-	public function is_post()
-	{
+    public function is_post(): bool
+    {
 		return (self::POST === $this->_method);
 	}
 }

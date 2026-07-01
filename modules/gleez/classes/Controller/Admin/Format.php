@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Format Controller
  *
@@ -10,22 +11,29 @@
  */
 class Controller_Admin_Format extends Controller_Admin {
 
-	/**
-	 * The before() method is called before controller action.
-	 */
+    /**
+     * The before() method is called before controller action.
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
 	public function before()
 	{
 		ACL::required('administer formats');
 		parent::before();
 	}
 
-	/**
-	 * Formats list
-	 *
-	 * @uses  View::factory
-	 * @uses  Format::get_all
-	 * @uses  Assets::tabledrag
-	 */
+    /**
+     * Formats list
+     *
+     * @throws View_Exception|Kohana_Exception
+     * @uses  Format::get_all
+     * @uses  Assets::tableDrag
+     * @uses  View::factory
+     */
 	public function action_list()
 	{
 		$this->title = __('Text formats');
@@ -49,31 +57,31 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		if ( ! $this->_internal)
 		{
-			Assets::tabledrag('text-format-order', 'order', 'sibling', 'text-format-order-weight');
+            Assets::tableDrag();
 		}
 	}
 
-	/**
-	 * Formats setting
-	 *
-	 * @uses  InputFilter::filters
-	 * @uses  Assets::tabledrag
-	 * @uses  Config::load
-	 * @uses  Message::error
-	 * @uses  Filter::all
-	 */
+    /**
+     * Formats setting
+     *
+     * @throws Kohana_Exception
+     * @uses  Assets::tableDrag
+     * @uses  Config::load
+     * @uses  Message::error
+     * @uses  Filter::all
+     * @uses  InputFilter::filters
+     */
 	public function action_configure()
 	{
-		$id = $this->request->param('id', NULL);
+        $id = $this->request->param('id');
 
 		// Get required format
 		$format = $this->_format->get($id);
-		$config = Kohana::$config->load('inputfilter');
 
 		if (is_null($format))
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent format id :id', array(':id' => $id));
-			Message::error(__('Text Format doesn\'t exists!'));
+            Message::error(__("Text Format doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/format')->uri(), 404);
 		}
@@ -104,6 +112,6 @@ class Controller_Admin_Format extends Controller_Admin {
 		}
 
 		$this->response->body($view);
-		Assets::tabledrag();
+        Assets::tableDrag();
 	}
 }

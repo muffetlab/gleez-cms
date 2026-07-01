@@ -25,27 +25,25 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 		return 'password';
 	}
 
-	public function validateRequest(Request $request, Response $response)
+    /**
+     * @throws Oauth2_Exception
+     * @throws Kohana_Exception
+     */
+    public function validateRequest(Request $request, Response $response)
 	{
 		$this->request  = $request;
 		$this->response = $response;
 
 		if (!$request->post("password") || !$request->post("username")) {
 			throw Oauth2_Exception::factory(400, 'invalid_request', 'Missing parameters: "username" and "password" required');
-
-			return NULL;
 		}
 
 		if (! $userInfo = $this->checkUserCredentials($request->post("username"), $request->post("password"))) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Invalid username and password combination');
-
-			return NULL;
 		}
 
 		if (empty($userInfo)) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Unable to retrieve user information');
-
-			return NULL;
 		}
 
 		if (!isset($userInfo['id'])) {
@@ -66,15 +64,18 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 	public function getUserId()
 	{
 		//return isset($this->userInfo['user_id']) ? $this->userInfo['user_id'] : NULL;
-		return isset($this->userInfo['id']) ? $this->userInfo['id'] : NULL;
+        return $this->userInfo['id'] ?? NULL;
 	}
 
 	public function getScope()
 	{
-		return isset($this->userInfo['scope']) ? $this->userInfo['scope'] : NULL;
+        return $this->userInfo['scope'] ?? NULL;
 	}
 
-	public function createAccessToken($client_id, $user_id, $scope = NULL)
+    /**
+     * @throws Oauth2_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL)
 	{
 		try
 		{

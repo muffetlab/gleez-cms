@@ -19,10 +19,10 @@ class Captcha_Math extends Captcha
 	/**
 	 * Generates a new Captcha challenge.
 	 *
-	 * @return string The challenge answer
+	 * @return float|int The challenge answer
 	 */
-	public function generate_challenge()
-	{
+    public function generate_challenge(): string
+    {
 		// Easy
 		if (Captcha::$config['complexity'] < 4)
 		{
@@ -53,12 +53,12 @@ class Captcha_Math extends Captcha
 	/**
 	 * Outputs the Captcha riddle.
 	 *
-     * @param true $html
+     * @param bool $html
      * @param string|null $type
-     * @return mixed
-	 */
-    public function render($html = true, string $type = null)
-	{
+     * @return string
+     */
+    public function render(bool $html = true, string $type = null): string
+    {
 		return $this->math_exercise;
 	}
 

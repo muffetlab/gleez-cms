@@ -9,8 +9,10 @@
  * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Model_OAuth extends Model_Database {
-
-	public function checkConsent($client_id, $user_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkConsent($client_id, $user_id)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -21,17 +23,23 @@ class Model_OAuth extends Model_Database {
 				))
 				->execute()->as_array();
 
-		return empty($oatoken) ? FALSE : TRUE;
+        return !empty($oatoken);
 	}
 
-	public function checkClientCredentials($client_id, $client_secret = NULL)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkClientCredentials($client_id, $client_secret = NULL)
 	{
 		$client = $this->getClientDetails($client_id);
 
-		return ($client && $client['client_secret'] == $client_secret) ? TRUE : FALSE;
+        return $client && $client['client_secret'] == $client_secret;
 	}
 
-	public function getClientDetails($client_id)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function getClientDetails($client_id)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.client_table');
 
@@ -45,7 +53,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? $result[0] : FALSE;
 	}
 
-	public function checkRestrictedGrantType($client_id, $grant_type)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkRestrictedGrantType($client_id, $grant_type)
 	{
 		$details = $this->getClientDetails($client_id);
 
@@ -59,7 +70,10 @@ class Model_OAuth extends Model_Database {
 		return TRUE;
 	}
 
-	public function getAccessToken($token)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function getAccessToken($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -73,7 +87,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? $result[0] : FALSE;
 	}
 
-	public function setAccessToken($access_token, $client_id, $user_id, $expires, $scope = NULL)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function setAccessToken($access_token, $client_id, $user_id, $expires, $scope = NULL)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -86,19 +103,19 @@ class Model_OAuth extends Model_Database {
 			$result = DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, scope) VALUES(:access_token, :client_id, :expires, :user_id, :scope);");
 		}
 
-		$result = $result->parameters(array(
-					':client_id' => $client_id,
-					':expires' => $expires,
-					':user_id' => $user_id,
-					':scope' => $scope,
-					':access_token' => $access_token,
-		        ))
-		        ->execute();
-
-		return $result;
+        return $result->parameters(array(
+            ':client_id' => $client_id,
+            ':expires' => $expires,
+            ':user_id' => $user_id,
+            ':scope' => $scope,
+            ':access_token' => $access_token,
+        ))->execute();
 	}
 
-	public function getAuthorizationCode($code)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function getAuthorizationCode($code)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
@@ -112,7 +129,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? $result[0] : FALSE;
 	}
 
-	public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = NULL)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = NULL)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
@@ -125,33 +145,34 @@ class Model_OAuth extends Model_Database {
 			$result = DB::query(Database::INSERT, "INSERT INTO $table(code, client_id, user_id, redirect_uri, expires, scope) VALUES(:code, :client_id, :user_id, :redirect_uri, :expires, :scope);");
 		}
 
-		$result = $result->parameters(array(
-					':client_id' => $client_id,
-					':user_id' => $user_id,
-					':redirect_uri' => $redirect_uri,
-					':expires' => $expires,
-					':scope' => $scope,
-					':code' => $code,
-		        ))
-		        ->execute();
-
-		return $result;
+        return $result->parameters(array(
+            ':client_id' => $client_id,
+            ':user_id' => $user_id,
+            ':redirect_uri' => $redirect_uri,
+            ':expires' => $expires,
+            ':scope' => $scope,
+            ':code' => $code,
+        ))->execute();
 	}
 
-	public function expireAuthorizationCode($code)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function expireAuthorizationCode($code)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
-		$result = DB::query(Database::DELETE, "DELETE FROM $table WHERE code = :code;")
-					->parameters(array(
-						':code' => $code,
-					))
-					->execute();
-
-		return $result;
+        return DB::query(Database::DELETE, "DELETE FROM $table WHERE code = :code;")
+            ->parameters(array(
+                ':code' => $code,
+            ))
+            ->execute();
 	}
 
-	public function createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope = null)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope = null)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
@@ -168,8 +189,8 @@ class Model_OAuth extends Model_Database {
 	
 		if ($code_exists)
 		{
-			$result = DB::query(Database::UPDATE, "UPDATE $table SET code = :code, redirect_uri = :redirect_uri, expires = :expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id;");
-			$result = $result->parameters(array(
+            DB::query(Database::UPDATE, "UPDATE $table SET code = :code, redirect_uri = :redirect_uri, expires = :expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id;")
+                ->parameters(array(
 					':client_id' => $client_id,
 					':user_id' => $user_id,
 					':redirect_uri' => $redirect_uri,
@@ -182,8 +203,8 @@ class Model_OAuth extends Model_Database {
 		else
 		{
 			$created = time();
-			$result = DB::query(Database::INSERT, "INSERT INTO $table(code, client_id, user_id, redirect_uri, expires, scope, created) VALUES(:code, :client_id, :user_id, :redirect_uri, :expires, :scope, :created);");
-			$result = $result->parameters(array(
+            DB::query(Database::INSERT, "INSERT INTO $table(code, client_id, user_id, redirect_uri, expires, scope, created) VALUES(:code, :client_id, :user_id, :redirect_uri, :expires, :scope, :created);")
+                ->parameters(array(
 					':client_id' => $client_id,
 					':user_id' => $user_id,
 					':redirect_uri' => $redirect_uri,
@@ -198,8 +219,11 @@ class Model_OAuth extends Model_Database {
 
 		return $code;
 	}
-	
-	public function checkUserCredentials($username, $password)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkUserCredentials($username, $password)
 	{
 		$table  = Kohana::$config->load('oauth2')->get('storage.user_table');
 		$pass   = Auth::instance()->hash($password);
@@ -217,7 +241,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? array('user_id' => $result[0]['name'], 'id' => $result[0]['id']) : FALSE;
 	}
 
-	public function getRefreshToken($token)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function getRefreshToken($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -232,7 +259,10 @@ class Model_OAuth extends Model_Database {
 		return $result ? $result[0] : FALSE;
 	}
 
-	public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = NULL)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = NULL)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -255,17 +285,21 @@ class Model_OAuth extends Model_Database {
 		        ));
 		}
 
-		$result = $result->execute();
-
-		return $result;
+        return $result->execute();
 	}
 
-	public function unsetRefreshToken($refresh_token)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function unsetRefreshToken($refresh_token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 	}
-	
-	public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = FALSE)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = FALSE)
 	{
 		$refresh_token   = FALSE;
 		
@@ -299,28 +333,30 @@ class Model_OAuth extends Model_Database {
 			{
 				$refresh_token    = Auth::instance()->hash( uniqid($client_id . mt_rand() . microtime() . $user_id, TRUE));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
-				
-				$result = DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, refresh_token = :refresh_token, refresh_expires = :refresh_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id");
-				$result = $result->parameters(array(
-							':client_id'       => $client_id,
-							':user_id'         => $user_id,
-							':access_token'    => $access_token,
-							':access_expires'  => $access_expires,
-							':refresh_token'   => $refresh_token,
-							':refresh_expires' => $refresh_expires,
-							':scope'           => $scope,
-				))->execute();
+
+                DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, refresh_token = :refresh_token, refresh_expires = :refresh_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id")
+                    ->parameters(array(
+                        ':client_id' => $client_id,
+                        ':user_id' => $user_id,
+                        ':access_token' => $access_token,
+                        ':access_expires' => $access_expires,
+                        ':refresh_token' => $refresh_token,
+                        ':refresh_expires' => $refresh_expires,
+                        ':scope' => $scope,
+                    ))
+                    ->execute();
 			}
 			else
 			{
-				$result = DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id");
-				$result = $result->parameters(array(
-							':client_id'      => $client_id,
-							':user_id'        => $user_id,
-							':access_token'   => $access_token,
-							':access_expires' => $access_expires,
-							':scope'          => $scope,
-				))->execute();
+                DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id")
+                    ->parameters(array(
+                        ':client_id' => $client_id,
+                        ':user_id' => $user_id,
+                        ':access_token' => $access_token,
+                        ':access_expires' => $access_expires,
+                        ':scope' => $scope,
+                    ))
+                    ->execute();
 			}
 		}
 		else
@@ -332,30 +368,32 @@ class Model_OAuth extends Model_Database {
 			{
 				$refresh_token    = Auth::instance()->hash( uniqid($client_id . mt_rand() . microtime() . $user_id, TRUE));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
-				
-				$result = DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, refresh_token, refresh_expires, scope, created) VALUES(:access_token, :client_id, :access_expires, :user_id, :refresh_token, :refresh_expires, :scope, :created);");
-				$result = $result->parameters(array(
-							':client_id'    => $client_id,
-							':user_id'      => $user_id,
-							':access_token'   => $access_token,
-							':access_expires' => $access_expires,
-							':refresh_token'   => $refresh_token,
-							':refresh_expires' => $refresh_expires,
-							':scope'           => $scope,
-							':created'         => $created,
-				))->execute();
+
+                DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, refresh_token, refresh_expires, scope, created) VALUES(:access_token, :client_id, :access_expires, :user_id, :refresh_token, :refresh_expires, :scope, :created);")
+                    ->parameters(array(
+                        ':client_id' => $client_id,
+                        ':user_id' => $user_id,
+                        ':access_token' => $access_token,
+                        ':access_expires' => $access_expires,
+                        ':refresh_token' => $refresh_token,
+                        ':refresh_expires' => $refresh_expires,
+                        ':scope' => $scope,
+                        ':created' => $created,
+                    ))
+                    ->execute();
 			}
 			else
 			{
-				$result = DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, scope) VALUES(:access_token, :client_id, :access_expires, :user_id, :scope);");
-				$result = $result->parameters(array(
-							':client_id'    => $client_id,
-							':user_id'      => $user_id,
-							':access_token'   => $access_token,
-							':access_expires' => $access_expires,
-							':scope' 	  => $scope,
-							':created'        => $created,
-				))->execute();
+                DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, scope) VALUES(:access_token, :client_id, :access_expires, :user_id, :scope);")
+                    ->parameters(array(
+                        ':client_id' => $client_id,
+                        ':user_id' => $user_id,
+                        ':access_token' => $access_token,
+                        ':access_expires' => $access_expires,
+                        ':scope' => $scope,
+                        ':created' => $created,
+                    ))
+                    ->execute();
 			}
 		}
 		
@@ -371,13 +409,16 @@ class Model_OAuth extends Model_Database {
 		 */
 		if ($includeRefreshToken)
 		{
-			$token['refresh_token'] = $refresh_token ? $refresh_token : $token_exists[0]['refresh_token'];
+            $token['refresh_token'] = $refresh_token ?: $token_exists[0]['refresh_token'];
 		}
 
 		return $token;
 	}
-	
-	public function isValidRevoke($token)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function isValidRevoke($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -388,10 +429,13 @@ class Model_OAuth extends Model_Database {
 				->execute()
 				->as_array();
 
-		return $result ? $result : FALSE;
+        return $result ?: FALSE;
 	}
-	
-	public function revoke_access($token)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function revoke_access($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -399,15 +443,17 @@ class Model_OAuth extends Model_Database {
 		$access_expires  = time() + Kohana::$config->load('oauth2')->get('access_token_ttl', 3600);
 		
 		$result = DB::query(Database::UPDATE, "UPDATE $table SET access_expires = :access_expires WHERE access_token = :token;");
-				$result = $result->parameters(array(
-							':token'       => $token,
-							':access_expires'  => $access_expires,
 
-				))->execute();
-		return $result;
+        return $result->parameters(array(
+            ':token' => $token,
+            ':access_expires' => $access_expires,
+        ))->execute();
 	}
-	
-	public function revoke_refresh($token)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function revoke_refresh($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -415,15 +461,17 @@ class Model_OAuth extends Model_Database {
 		$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
 		
 		$result = DB::query(Database::UPDATE, "UPDATE $table SET refresh_expires = :refresh_expires WHERE refresh_token = :token;");
-				$result = $result->parameters(array(
-							':token'       => $token,
-							':refresh_expires'  => $refresh_expires,
 
-				))->execute();
-		return $result;
+        return $result->parameters(array(
+            ':token' => $token,
+            ':refresh_expires' => $refresh_expires,
+        ))->execute();
 	}
-	
-	public function revoke_access_refresh($token)
+
+    /**
+     * @throws Kohana_Exception
+     */
+    public function revoke_access_refresh($token)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -432,12 +480,11 @@ class Model_OAuth extends Model_Database {
 		$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
 		
 		$result = DB::query(Database::UPDATE, "UPDATE $table SET access_expires = :access_expires, refresh_expires = :refresh_expires WHERE access_token = :token;");
-				$result = $result->parameters(array(
-							':token'       => $token,
-							':access_expires'  => $access_expires,
-							':refresh_expires'  => $refresh_expires,
-				))->execute();
-		
-		return $result;
+
+        return $result->parameters(array(
+            ':token' => $token,
+            ':access_expires' => $access_expires,
+            ':refresh_expires' => $refresh_expires,
+        ))->execute();
 	}
 }

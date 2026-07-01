@@ -10,7 +10,12 @@
  */
 class Controller_Autocomplete extends Controller {
 
-	public function before()
+    /**
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     */
+    public function before()
 	{
 		// Ajax request only!
 		if ( ! $this->request->is_ajax())
@@ -23,9 +28,11 @@ class Controller_Autocomplete extends Controller {
 		parent::before();
 	}
 
-	/**
-	 * Retrieve a JSON object containing autocomplete suggestions for existing users.
-	 */
+    /**
+     * Retrieve a JSON object containing autocomplete suggestions for existing users.
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_user()
 	{
 		$string  = $this->request->param('string', FALSE);
@@ -48,9 +55,11 @@ class Controller_Autocomplete extends Controller {
 		$this->response->body( JSON::encode( $matches ) );
 	}
 
-	/**
-	 * Retrieve a JSON object containing autocomplete suggestions for existing users.
-	 */
+    /**
+     * Retrieve a JSON object containing autocomplete suggestions for existing users.
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_nick()
 	{
 		$string = $this->request->param('string', FALSE);
@@ -73,9 +82,11 @@ class Controller_Autocomplete extends Controller {
 		$this->response->body( JSON::encode( $matches ) );
 	}
 
-	/**
-	 * Retrieve a JSON object containing autocomplete suggestions for existing users.
-	 */
+    /**
+     * Retrieve a JSON object containing autocomplete suggestions for existing users.
+     *
+     * @throws Kohana_Exception
+     */
 	public function action_tag()
 	{
 		$string = $this->request->param('string', FALSE);

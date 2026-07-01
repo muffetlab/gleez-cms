@@ -159,6 +159,7 @@ class Form extends Kohana_Form
      * @param mixed $selected Selected option string, or an array of selected options
      * @param array|null $attributes HTML attributes
      * @return  string
+     * @throws Kohana_Exception
      * @uses    HTML::attributes
      */
     public static function select(string $name, array $options = null, $selected = null, array $attributes = null): string
@@ -201,20 +202,19 @@ class Form extends Kohana_Form
         return parent::button($name, $body, $attributes);
 	}
 
-	/**
-	 * Creates weight select field
-	 *
-	 * @param   string   $name      Input name
-	 * @param   integer  $selected  Selected option int [Optional]
-	 * @param   array    $attrs     HTML attributes [Optional]
-	 * @param   integer  $delta     Delta [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    Form::select
-	 */
-	public static function weight($name, $selected = 0, array $attrs = NULL, $delta = 15)
-	{
+    /**
+     * Creates weight select field
+     *
+     * @param string $name Input name
+     * @param integer $selected Selected option int [Optional]
+     * @param array|null $attrs HTML attributes [Optional]
+     * @param integer $delta Delta [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    Form::select
+     */
+    public static function weight(string $name, int $selected = 0, array $attrs = NULL, int $delta = 15): string
+    {
 		$options = array();
 
 		for ($n = (-1 * $delta); $n <= $delta; $n++)
@@ -225,19 +225,18 @@ class Form extends Kohana_Form
 		return self::select($name, $options, $selected, $attrs);
 	}
 
-	/**
-	 * Create a form field for filtering
-	 *
-	 * @param   string $column  Column
-	 * @param   array  $vals    Filter values
-	 * @param   array  $attrs   Filter attributes [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    Arr::get
-	 */
-	public static function filter($column, array $vals, array $attrs = array())
-	{
+    /**
+     * Create a form field for filtering
+     *
+     * @param string $column Column
+     * @param array $vals Filter values
+     * @param array $attrs Filter attributes [Optional]
+     * @return  string
+     * @throws Kohana_Exception
+     * @uses    Arr::get
+     */
+    public static function filter(string $column, array $vals, array $attrs = array()): string
+    {
 		if ( ! isset($attrs['style']))
 		{
 			// Default type is text
@@ -247,20 +246,22 @@ class Form extends Kohana_Form
 		return self::input("filter[$column]", Arr::get($vals, $column), $attrs);
 	}
 
-	/**
-	 * Creates a form input for date.
-	 *
-	 *     echo Form::date('author_date', $created);
-	 *
-	 * @param   string  $name       input name
-	 * @param   string  $value      input value
-	 * @param   array   $attributes html attributes
-	 * @return  string
-	 * @uses    Form::input
-	 * @link    https://getdatepicker.com/4/
-	 */
-	public static function date($name, $value = NULL, array $attrs = NULL)
-	{
+    /**
+     * Creates a form input for date.
+     *
+     *     echo Form::date('author_date', $created);
+     *
+     * @param string $name input name
+     * @param string|null $value input value
+     * @param array|null $attrs html attributes
+     * @return  string
+     * @throws Kohana_Exception
+     * @throws Exception
+     * @link    https://getdatepicker.com/4/
+     * @uses    Form::input
+     */
+    public static function date(string $name, string $value = NULL, array $attrs = NULL): string
+    {
 		$out = '';
 
 		// Assign the datepicker assets
@@ -314,12 +315,10 @@ class Form extends Kohana_Form
 		}
 
 		// Set the input value
-		if ($value == false)
+        if (!$value)
 		{
             $attrs['value'] = Date::formatted_time(time(), 'd-m-Y h:i:s');
-		}
-		elseif ($value != false && is_numeric($value))
-		{
+        } elseif (is_numeric($value)) {
             $attrs['value'] = Date::formatted_time($value, 'd-m-Y h:i:s');
 		}
 
@@ -338,12 +337,11 @@ class Form extends Kohana_Form
 	/**
 	 * Generates a valid HTML ID based the name.
 	 *
-	 * @param  string  $name   Element name
-	 *
+     * @param string $name Element name
 	 * @return string
 	 */
-	protected static function _get_id_by_name($name)
-	{
+    protected static function _get_id_by_name(string $name): string
+    {
 		return 'form-'.str_replace(array('[]', '][', '[', ']', '\\'), array('', '_', '_', '', '_'), $name);
 	}
 }

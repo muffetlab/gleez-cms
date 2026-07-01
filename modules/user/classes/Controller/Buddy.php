@@ -15,22 +15,26 @@ class Controller_Buddy extends Template {
 	{
 		parent::before();
 
-		if ( $this->_auth->logged_in() == false )
+        if (!$this->_auth->logged_in())
 		{
 			// No user is currently logged in
 			$this->request->redirect('user/login');
 		}
 
-		if ( Kohana::$config->load('auth.enable_buddy', FALSE) == FALSE)
+        if (!Kohana::$config->load('auth')->get('enable_buddy', FALSE))
 		{
-			// If user buddy disabled, we return not ofund.
+            // If user buddy disabled, we return not found.
 			throw HTTP_Exception::factory(404, __('Buddy not allowed'));
 		}
 
 		$this->user = $this->_auth->get_user();
 	}
 
-	public function action_index()
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    public function action_index()
 	{
 		$account  = Auth_ORM::instance()->get_user();
 		$id 	  = (int) $this->request->param('id', $account->id);
@@ -74,7 +78,12 @@ class Controller_Buddy extends Template {
 		$this->response->body($view);
 	}
 
-	public function action_sent()
+    /**
+     * @throws HTTP_Exception
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_sent()
 	{
 		$id       = (int) $this->request->param('id');
         $user = ORM::factory('User', $id);
@@ -123,12 +132,16 @@ class Controller_Buddy extends Template {
 		$this->title = __('Sent Requests');
 		$this->response->body($view);
 	}
-	
-	public function action_pending()
+
+    /**
+     * @throws HTTP_Exception
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_pending()
 	{
 		$id 	  = (int) $this->request->param('id');
         $user = ORM::factory('User', $id);
-		$is_owner = FALSE;
 		$account  = FALSE;
 		
 		if ( ! $user->loaded())
@@ -142,11 +155,7 @@ class Controller_Buddy extends Template {
 		{
 			$account = Auth_ORM::instance()->get_user();
 		}
-		if ($account AND ($user->id === $account->id))
-		{
-			$is_owner = TRUE;
-		}
-		else
+        if (!$account || $user->id !== $account->id)
 		{
 			throw HTTP_Exception::factory(403, 'Attempt to access without required privileges.');
 		}
@@ -168,14 +177,16 @@ class Controller_Buddy extends Template {
 					->set('total',$total)
 					->set('id',$id)
 					->set('pendings',$pending)
-					->set('is_owner',$is_owner)
 					->set('pagination',$pagination);
 		
 		$this->title = __('Pending Requests');
 		$this->response->body($view);
 	}
 
-	public function action_add()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_add()
 	{
 		$id      = (int) $this->request->param('id');
         $invitee = ORM::factory('User', $id);
@@ -194,7 +205,10 @@ class Controller_Buddy extends Template {
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $id)));
 	}
 
-	public function action_accept()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_accept()
 	{
 		$id     = (int) $this->request->param('id');
         $friend = ORM::factory('User', $id);
@@ -223,7 +237,10 @@ class Controller_Buddy extends Template {
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'view', 'id' => $id)));
 	}
 
-	public function action_reject()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_reject()
 	{
 		$id 	= (int) $this->request->param('id');
         $friend = ORM::factory('User', $id);
@@ -252,7 +269,10 @@ class Controller_Buddy extends Template {
 		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $id)));
 	}
 
-	public function action_delete()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_delete()
 	{
 		$id      = (int) $this->request->param('id');
         $friend = ORM::factory('User', $id);

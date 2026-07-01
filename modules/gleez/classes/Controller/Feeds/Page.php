@@ -11,11 +11,13 @@
  */
 class Controller_Feeds_Page extends Controller_Feeds_Base {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * Setting the type for tags, categories, etc.
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * Setting the type for tags, categories, etc.
+     *
+     * @throws Kohana_Exception
+     */
 	public function before()
 	{
 		parent::before();
@@ -63,9 +65,9 @@ class Controller_Feeds_Page extends Controller_Feeds_Base {
 	/**
 	 * Get a list of pages with a specific term
 	 *
-	 * @since  1.1.0
-	 *
-	 * @uses  Controller_Feed_Base::_term
+     * @throws HTTP_Exception|Kohana_Exception
+     * @since  1.1.0
+     * @uses  Controller_Feed_Base::_term
 	 */
 	public function action_term()
 	{
@@ -75,9 +77,9 @@ class Controller_Feeds_Page extends Controller_Feeds_Base {
 	/**
 	 * Get a list of posts with a specific tag
 	 *
-	 * @since  1.1.0
-	 *
-	 * @uses  Controller_Feed_Base::_tag
+     * @throws HTTP_Exception|Kohana_Exception
+     * @since  1.1.0
+     * @uses  Controller_Feed_Base::_tag
 	 */
 	public function action_tag()
 	{

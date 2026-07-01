@@ -4,7 +4,9 @@
 	</div>
 
 	<?php foreach($posts as $i => $post): ?>
-		<article id="post-<?php echo $post->id; ?>" class="col-md-12 post-list <?php echo ($post->sticky) ? ' sticky' : ' post-'.$post->status; ?>" itemscope itemtype="http://schema.org/Article">
+        <article id="post-<?php echo $post->id; ?>"
+                 class="col-md-12 post-list <?php echo ($post->sticky) ? ' sticky' : ' post-' . $post->status; ?>"
+                 itemscope itemtype="https://schema.org/Article">
 			<header>
 				<h2 class="post-title" itemprop="name">
 					<?php echo HTML::anchor($post->url, $post->title, array('itemprop' => 'url')); ?>

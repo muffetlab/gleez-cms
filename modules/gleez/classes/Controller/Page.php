@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Page Controller
  *
@@ -10,13 +11,17 @@
  */
 class Controller_Page extends Template {
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  Request::param
-	 * @uses  Request::action
-	 * @uses  ACL::required
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws HTTP_Exception_403
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses  Request::action
+     * @uses  ACL::required
+     * @uses  Request::param
+     */
 	public function before()
 	{
 		$id = $this->request->param('id', FALSE);
@@ -36,12 +41,13 @@ class Controller_Page extends Template {
 		parent::before();
 	}
 
-	/**
-	 * The after() method is called after controller action
-	 *
-	 * @uses  Request::action
-	 * @uses  Assets::editor
-	 */
+    /**
+     * The after() method is called after controller action
+     *
+     * @throws Kohana_Exception
+     * @uses  Assets::editor
+     * @uses  Request::action
+     */
 	public function after()
 	{
 		if ($this->request->action() == 'add' OR $this->request->action() == 'edit')
@@ -56,17 +62,18 @@ class Controller_Page extends Template {
 		parent::after();
 	}
 
-	/**
-	 * List of pages
-	 *
-	 * @uses  ACL::check
-	 * @uses  Config::load
-	 * @uses  Config_Group::get
-	 * @uses  URL::canonical
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  Meta::links
-	 */
+    /**
+     * List of pages
+     *
+     * @throws Kohana_Exception
+     * @uses  Config::load
+     * @uses  Config_Group::get
+     * @uses  URL::canonical
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  Meta::links
+     * @uses  ACL::check
+     */
 	public function action_list()
 	{
         $posts = ORM::factory('Page');
@@ -131,22 +138,22 @@ class Controller_Page extends Template {
 		}
 	}
 
-	/**
-	 * Page view
-	 *
-	 * @throws  HTTP_Exception_403
-	 *
-	 * @uses    ACL::post
-	 * @uses    ACL::check
-	 * @uses    Post::dcache
-	 * @uses    Auth::logged_in
-	 * @uses    Meta::links
-	 * @uses    URL::canonical
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 * @uses    User::providers
-	 * @uses    Comment::form
-	 */
+    /**
+     * Page view
+     *
+     * @throws  HTTP_Exception_403
+     * @throws Kohana_Exception|ReflectionException
+     * @uses    ACL::post
+     * @uses    ACL::check
+     * @uses    Post::dcache
+     * @uses    Auth::logged_in
+     * @uses    Meta::links
+     * @uses    URL::canonical
+     * @uses    Route::get
+     * @uses    Route::uri
+     * @uses    User::providers
+     * @uses    Comment::form
+     */
 	public function action_view()
 	{
 		$id     = (int) $this->request->param('id', 0);
@@ -215,20 +222,24 @@ class Controller_Page extends Template {
 		}
 	}
 
-	/**
-	 * Page creating
-	 *
-	 * @uses  ACL::required
-	 * @uses  Config::load
-	 * @uses  Config_Group::get
-	 * @uses  Request::query
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 * @uses  URL::query
-	 * @uses  ORM::select_list
-	 * @uses  Log::add
-	 * @uses  Message::success
-	 */
+    /**
+     * Page creating
+     *
+     * @throws HTTP_Exception_403
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @uses  ACL::required
+     * @uses  Config::load
+     * @uses  Config_Group::get
+     * @uses  Request::query
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  URL::query
+     * @uses  ORM::select_list
+     * @uses  Log::add
+     * @uses  Message::success
+     */
 	public function action_add()
 	{
 		ACL::required('create page');
@@ -283,30 +294,33 @@ class Controller_Page extends Template {
 			catch (ORM_Validation_Exception $e)
 			{
 				// @todo Add messages
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
 		$this->response->body($view);
 	}
 
-	/**
-	 * Page edit
-	 *
-	 * @throws HTTP_Exception_403
-	 *
-	 * @uses    ACL::post
-	 * @uses    Config::load
-	 * @uses    Request::query
-	 * @uses    Request::redirect
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 * @uses    URL::query
-	 * @uses    Tags::implode
-	 * @uses    Path::load
-	 * @uses    Message::success
-	 * @uses    Log::add
-	 */
+    /**
+     * Page edit
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @throws View_Exception
+     * @uses    ACL::post
+     * @uses    Config::load
+     * @uses    Request::query
+     * @uses    Request::redirect
+     * @uses    Route::get
+     * @uses    Route::uri
+     * @uses    URL::query
+     * @uses    Tags::implode
+     * @uses    Path::load
+     * @uses    Message::success
+     * @uses    Log::add
+     */
 	public function action_edit()
 	{
 		$id   = (int) $this->request->param('id', 0);
@@ -369,7 +383,7 @@ class Controller_Page extends Template {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_errors = $e->errors('models', TRUE);
+                $this->_errors = $e->errors('models');
 			}
 		}
 
@@ -386,22 +400,24 @@ class Controller_Page extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Delete page
-	 *
-	 * @throws  HTTP_Exception_403
-	 *
-	 * @uses    ACL::post
-	 * @uses    Request::query
-	 * @uses    Request::redirect
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 * @uses    URL::query
-	 * @uses    Post::delete
-	 * @uses    Message::success
-	 * @uses    Message::error
-	 * @uses    Log::add
-	 */
+    /**
+     * Delete page
+     *
+     * @throws HTTP_Exception
+     * @throws HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses    ACL::post
+     * @uses    Request::query
+     * @uses    Request::redirect
+     * @uses    Route::get
+     * @uses    Route::uri
+     * @uses    URL::query
+     * @uses    Post::delete
+     * @uses    Message::success
+     * @uses    Message::error
+     * @uses    Log::add
+     */
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
@@ -455,22 +471,22 @@ class Controller_Page extends Template {
 		$this->response->body($view);
 	}
 
-	/**
-	 * Category selector
-	 *
-	 * @throws  HTTP_Exception_403
-	 * @throws  HTTP_Exception_404
-	 *
-	 * @uses    Config::load
-	 * @uses    Config::get
-	 * @uses    Log::add
-	 * @uses    ACL::check
-	 * @uses    Route::get
-	 * @uses    Route::uri
-	 * @uses    Route::url
-	 * @uses    Meta::links
-	 * @uses    URL::canonical
-	 */
+    /**
+     * Category selector
+     *
+     * @throws  HTTP_Exception_403
+     * @throws  HTTP_Exception_404
+     * @throws Kohana_Exception
+     * @uses    Config::load
+     * @uses    Config::get
+     * @uses    Log::add
+     * @uses    ACL::check
+     * @uses    Route::get
+     * @uses    Route::uri
+     * @uses    Route::url
+     * @uses    Meta::links
+     * @uses    URL::canonical
+     */
 	public function action_term()
 	{
 		$config = Kohana::$config->load('page');
@@ -543,21 +559,22 @@ class Controller_Page extends Template {
 		}
 	}
 
-	/**
-	 * Tags view
-	 *
-	 * @throw  HTTP_Exception_404
-	 *
-	 * @uses   Config::load
-	 * @uses   Config::get
-	 * @uses   Log::add
-	 * @uses   Text::ucfirst
-	 * @uses   Route::get
-	 * @uses   Route::uri
-	 * @uses   Route::url
-	 * @uses   Meta::links
-	 * @uses   URL::canonical
-	 */
+    /**
+     * Tags view
+     *
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     * @uses   Config::load
+     * @uses   Config::get
+     * @uses   Log::add
+     * @uses   Text::ucfirst
+     * @uses   Route::get
+     * @uses   Route::uri
+     * @uses   Route::url
+     * @uses   Meta::links
+     * @uses   URL::canonical
+     */
 	public function action_tag()
 	{
 		$config = Kohana::$config->load('page');

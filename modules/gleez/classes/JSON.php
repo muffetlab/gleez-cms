@@ -14,8 +14,8 @@ class JSON {
 	/**
 	 * Encodes the given value into a JSON string
 	 *
-	 * Converts a PHP variable into its Javascript equivalent  We use HTML-safe strings,
-	 * i.e. with <, > and & escaped. For more details For more details please refer to
+     * Converts a PHP variable into its JavaScript equivalent. We use HTML-safe strings, i.e. with <, > and & escaped.
+     * For more details For more details please refer to
 	 * [[http://www.php.net/manual/en/function.json-encode.php]]
 	 *
 	 * [!!] This function only works with UTF-8 encoded data
@@ -23,12 +23,12 @@ class JSON {
 	 * @link    http://www.php.net/manual/en/json.constants.php JSON Predefined Constants
 	 *
 	 * @param   mixed    $value    The data to be encoded
-	 * @param   integer  $options  Bitmask consisting of JSON Predefined Constants [Optional]
-	 * @param   integer  $depth    PHP 5.5 or higher [Optional]
+     * @param integer $options Bitmask consisting of JSON Predefined Constants [Optional]
+     * @param integer $depth PHP 5.5 or higher [Optional]
 	 * @return  string
 	 */
-	public static function encode($value, $options = 0, $depth = 512)
-	{
+    public static function encode($value, int $options = 0, int $depth = 512): string
+    {
 		if (version_compare(PHP_VERSION, '5.5.0', '>='))
 		{
 			$raw = json_encode($value, $options, $depth);
@@ -54,16 +54,14 @@ class JSON {
 	 * $j = JSON::decode('{"Organization": "Gleez"}');
 	 * ~~~
 	 *
-	 * @param   string   $json     The JSON string to be decoded
-	 * @param   boolean  $assoc    When TRUE, returned objects will be converted into associative arrays [Optional]
-	 * @param   integer  $depth    User specified recursion depth [Optional]
-	 * @param   integer  $options  Bitmask of JSON decode options. PHP 5.4 or higher [Optional]
-	 *
+     * @param string $json The JSON string to be decoded
+     * @param boolean $assoc When TRUE, returned objects will be converted into associative arrays [Optional]
+     * @param integer $depth User specified recursion depth [Optional]
+     * @param integer $options Bitmask of JSON decode options. PHP 5.4 or higher [Optional]
 	 * @return  mixed
-	 *
 	 * @throws Kohana_Exception
 	 */
-	public static function decode($json, $assoc = TRUE, $depth = 512, $options = 0)
+    public static function decode(string $json, bool $assoc = TRUE, int $depth = 512, int $options = 0)
 	{
 		if (version_compare(PHP_VERSION, '5.4.0', '>='))
 		{
@@ -106,27 +104,4 @@ class JSON {
 
 		return $result;
 	}
-
-	/**
-	 * Encodes the given value into a Mongo-like JSON string
-	 *
-	 * [!!] This function only works with UTF-8 encoded data
-	 *
-	 * Example:
-	 * ~~~
-	 * $j = JSON::encodeMongo(array('$id' => 1234567890));
-	 * ~~~
-	 *
-	 * @param   mixed  $value  The data to be encoded
-	 *
-	 * @return  string
-	 */
-	public static function encodeMongo($value)
-	{
-		$json = json_encode($value);
-		$json = preg_replace('/{"\$id":"(\w+)"}/','ObjectId("$1")', $json);
-
-		return $json;
-	}
-
 }

@@ -110,7 +110,7 @@ jQuery.noConflict();
 		statusText = '';
 
 		// In some cases, when statusCode == 0, xmlhttp.statusText may not be defined.
-		// Unfortunately, testing for it with typeof, etc, doesn't seem to catch that
+        // Unfortunately, testing for it with typeof, etc., doesn't seem to catch that
 		// and the test causes an exception. So we need to catch the exception here.
 		try
 		{

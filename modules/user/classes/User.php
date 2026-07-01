@@ -52,32 +52,35 @@ class User {
 	 */
 	protected static $roles = array();
 
-	/**
-	 * Return the active user.  If there's no active user, return the guest user.
-	 *
-	 * @return Model_User
-	 */
+    /**
+     * Return the active user. If there's no active user, return the guest user.
+     *
+     * @return Model_User
+     * @throws Kohana_Exception
+     */
 	public static function active_user()
 	{
 		// @todo (maybe) cache this object so we're not always doing session lookups.
 		return (! (Auth_ORM::instance()->get_user()) ? self::guest() : Auth_ORM::instance()->get_user());
 	}
 
-	/**
-	 * Check if current user is guest
-	 *
-	 * @return boolean TRUE if current user is guest
-	 */
+    /**
+     * Check if current user is guest
+     *
+     * @return boolean TRUE if current user is guest
+     * @throws Kohana_Exception
+     */
 	public static function is_guest()
 	{
-		return ( ! Auth_ORM::instance()->get_user() ? TRUE : FALSE );
+        return !Auth_ORM::instance()->get_user();
 	}
 
-	/**
-	 * Check if current user is admin
-	 *
-	 * @return  boolean TRUE if current user is admin
-	 */
+    /**
+     * Check if current user is admin
+     *
+     * @return boolean TRUE if current user is admin
+     * @throws Kohana_Exception
+     */
 	public static function is_admin()
 	{
 		if(User::is_guest())
@@ -112,11 +115,13 @@ class User {
 		return self::lookup(1);
 	}
 
-	/**
-	 * Counting all users
-	 *
-	 * @return integer Total number of registered users
-	 */
+    /**
+     * Counting all users
+     *
+     * @return integer Total number of registered users
+     * @throws Cache_Exception
+     * @throws Kohana_Exception
+     */
 	public static function count_all()
 	{
 		// initialize the cache
@@ -134,12 +139,13 @@ class User {
 		return $all;
 	}
 
-	/**
-	 * Checks if user belongs to group(s)
-	 *
-	 * @param   mixed    $groups  Group(s)
-	 * @return  boolean  TRUE if user belongs to group(s)
-	 */
+    /**
+     * Checks if user belongs to group(s)
+     *
+     * @param mixed $groups Group(s)
+     * @return boolean TRUE if user belongs to group(s)
+     * @throws Kohana_Exception
+     */
 	public static function belongsto($groups)
 	{
 		if ($groups == 'all' OR is_null($groups))
@@ -261,16 +267,15 @@ class User {
 		return FALSE;
 	}
 
-	/**
-	 * Is the password provided correct?
-	 *
-	 * @param  Model_User $user     User
-	 * @param  string     $password A plaintext password
-	 *
-	 * @return boolean TRUE if the password is correct
-	 *
-	 * @uses   Auth_ORM::hash
-	 */
+    /**
+     * Is the password provided correct?
+     *
+     * @param Model_User $user User
+     * @param string $password A plaintext password
+     * @return boolean TRUE if the password is correct
+     * @throws Kohana_Exception
+     * @uses   Auth_ORM::hash
+     */
 	public static function check_pass($user, $password)
 	{
 		if( !isset($user) || !isset($password) )
@@ -284,12 +289,12 @@ class User {
 		return System::hashEquals($valid, $guess);
 	}
 
-	/**
-	 * Saves visitor information as a cookie so it can be reused.
-	 *
-	 * @param $values
-	 *   An array of key/value pairs to be saved into a cookie.
-	 */
+    /**
+     * Saves visitor information as a cookie so it can be reused.
+     *
+     * @param $values An array of key/value pairs to be saved into a cookie.
+     * @throws Kohana_Exception
+     */
 	public static function cookie_save(array $values)
 	{
 		foreach ($values as $field => $value)
@@ -299,25 +304,25 @@ class User {
 		}
 	}
 
-	/**
-	 * Delete a visitor information cookie.
-	 *
-	 * @param $cookie_name
-	 *   A cookie name such as 'homepage'.
-	 */
+    /**
+     * Delete a visitor information cookie.
+     *
+     * @param $cookie_name A cookie name such as 'homepage'.
+     * @throws Kohana_Exception
+     */
 	public static function cookie_delete($cookie_name)
 	{
 		Cookie::set('Gleez.visitor.' . $cookie_name, '', time() - 3600);
 	}
 
-	/**
-	 * Check whether that id exists in our identities table (provider_id field)
-	 *
-	 * @param string $provider_id The provider user id
-	 * @param string $provider_name The provider name (facebook, google, live etc)
-	 *
-	 * @return  mixed user object or FALSE
-	 */
+    /**
+     * Check whether that id exists in our identities table (provider_id field)
+     *
+     * @param string $provider_id The provider user id
+     * @param string $provider_name The provider name (facebook, google, live etc)
+     * @return mixed user object or FALSE
+     * @throws Kohana_Exception
+     */
 	public static function check_identity($provider_id, $provider_name)
 	{
 		$uid = (int) DB::select('user_id')
@@ -333,12 +338,13 @@ class User {
 		return FALSE;
 	}
 
-	/**
-	 * Themed list of providers to print
-	 *  
-	 * @todo move to HTML class
-	 * @return string html to display
-	 */
+    /**
+     * Themed list of providers to print
+     *
+     * @return string html to display
+     * @throws Kohana_Exception
+     * @todo move to HTML class
+     */
 	public static function providers()
 	{
 		if(! Auth_ORM::instance()->logged_in())
@@ -346,6 +352,8 @@ class User {
 			$providers = array_filter(Auth_ORM::providers());
 			return View::factory('oauth/providers')->set('providers', $providers);
 		}
+
+        return '';
 	}
 
 	/**
@@ -366,34 +374,32 @@ class User {
 		return $roles;
 	}
 
-	/**
-	 * Get user avatar, and creates a image link
-	 *
-	 * Optionally, if it is allowed, used [Gravatar].
-	 *
-	 * Example:
-	 * ~~~
-	 * $post = Post::dcache($id, 'page', $config);
-	 *
-	 * echo HTML::anchor($post->user->url, User::getAvatar($post->user));
-	 * ~~~
-	 *
-	 * @since   1.1.0
-	 *
-	 * @param   ORM      $user      User model
-	 * @param   array    $attrs     Default attributes + type = crop|ratio [Optional]
-	 * @param   mixed    $protocol  Protocol to pass to `URL::base()` [Optional]
-	 * @param   boolean  $index     Include the index page [Optional]
-	 *
-	 * @return  string
-	 *
-	 * @uses    Config::get
-	 * @uses    Gravatar::setSize
-	 * @uses    Gravatar::setDefaultImage
-	 * @uses    Gravatar::getImage
-	 * @uses    URL::site
-	 * @uses    Arr::merge
-	 */
+    /**
+     * Get user avatar, and creates a image link
+     *
+     * Optionally, if it is allowed, used [Gravatar].
+     *
+     * Example:
+     * ~~~
+     * $post = Post::dcache($id, 'page', $config);
+     *
+     * echo HTML::anchor($post->user->url, User::getAvatar($post->user));
+     * ~~~
+     *
+     * @param ORM $user User model
+     * @param array $attrs Default attributes + type = crop|ratio [Optional]
+     * @param mixed $protocol Protocol to pass to `URL::base()` [Optional]
+     * @param boolean $index Include the index page [Optional]
+     * @return string
+     * @throws Kohana_Exception
+     * @since 1.1.0
+     * @uses Config::get
+     * @uses Gravatar::setSize
+     * @uses Gravatar::setDefaultImage
+     * @uses Gravatar::getImage
+     * @uses URL::site
+     * @uses Arr::merge
+     */
 	public static function getAvatar(ORM $user, array $attrs = array(), $protocol = NULL, $index = FALSE)
 	{
 		// Default user pic

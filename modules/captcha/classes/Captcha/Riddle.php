@@ -16,15 +16,16 @@ class Captcha_Riddle extends Captcha
 	 */
 	private $riddle;
 
-	/**
-	 * Generates a new Captcha challenge.
-	 *
-	 * @return string The challenge answer
-	 */
-	public function generate_challenge()
-	{
+    /**
+     * Generates a new Captcha challenge.
+     *
+     * @return string The challenge answer
+     * @throws Kohana_Exception
+     */
+    public function generate_challenge(): string
+    {
 		// Load riddles from the current language
-		$riddles = Kohana::config('captcha.riddles');
+        $riddles = Kohana::$config->load('captcha')->get('riddles');
 
 		// Pick a random riddle
 		$riddle = $riddles[array_rand($riddles)];
@@ -41,10 +42,10 @@ class Captcha_Riddle extends Captcha
 	 *
      * @param bool $html HTML output
      * @param string|null $type Image type override
-     * @return mixed
-	 */
-	public function render($html = TRUE, string $type = null)
-	{
+     * @return string
+     */
+    public function render(bool $html = TRUE, string $type = null): string
+    {
 		return $this->riddle;
 	}
 

@@ -29,9 +29,9 @@
 						</div>
 					</td>
 					<td>
-						<?php echo Form::label($key."[$perm]", Form::radio("perms[$perm]", ACL::PERM_ALLOW, (isset($oldperms[$perm]) AND $oldperms[$perm] == ACL::PERM_ALLOW) ? TRUE : FALSE). __('Allow'), array('class' => 'radio inline'))?>
-						<?php echo Form::label($key."[$perm]", Form::radio("perms[$perm]", ACL::PERM_DENY, (isset($oldperms[$perm]) AND $oldperms[$perm] == ACL::PERM_DENY) ? TRUE : FALSE). __('Disallow'), array('class' => 'radio inline'))?>
-						<?php echo Form::label($key."[$perm]", Form::radio("perms[$perm]", '', (isset($oldperms[$perm])) ? FALSE : TRUE). __('Inherit'), array('class' => 'radio inline'))?>
+                        <?php echo Form::label($key . "[$perm]", Form::radio("perms[$perm]", ACL::PERM_ALLOW, isset($oldperms[$perm]) && $oldperms[$perm] == ACL::PERM_ALLOW) . __('Allow'), array('class' => 'radio inline')) ?>
+                        <?php echo Form::label($key . "[$perm]", Form::radio("perms[$perm]", ACL::PERM_DENY, isset($oldperms[$perm]) && $oldperms[$perm] == ACL::PERM_DENY) . __('Disallow'), array('class' => 'radio inline')) ?>
+                        <?php echo Form::label($key . "[$perm]", Form::radio("perms[$perm]", '', !isset($oldperms[$perm])) . __('Inherit'), array('class' => 'radio inline')) ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

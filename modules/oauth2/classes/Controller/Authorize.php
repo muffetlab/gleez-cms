@@ -36,9 +36,13 @@ class Controller_Authorize extends Template {
 	protected $responseTypes;
 	protected $config;
 
-	/**
-	 * The before() method is called before controller action
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Http_Exception_415
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
 	public function before()
 	{
 		parent::before();
@@ -81,40 +85,37 @@ class Controller_Authorize extends Template {
 		$this->_sidebars = FALSE;
 	}
 
-	/**
-	 * Redirect the user appropriately after approval.
-	 *
-	 * After the user has approved or denied the resource request the
-	 * authorization server should call this function to redirect the user
-	 * appropriately.
-	 *
-	 * $request
-	 * The request should have the follow parameters set in the querystring:
-	 * - response_type: The requested response: an access token, an
-	 * authorization code, or both.
-	 * - client_id: The client identifier as described in Section 2.
-	 * - redirect_uri: An absolute URI to which the authorization server
-	 * will redirect the user-agent to when the end-user authorization
-	 * step is completed.
-	 * - scope: (optional) The scope of the resource request expressed as a
-	 * list of space-delimited strings.
-	 * - state: (optional) An opaque value used by the client to maintain
-	 * state between the request and callback.
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-4
-	 *
-	 * The "authorization_code" mechanism
-	 * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
-	 *
-	 * The "implicit" mechanism
-	 * @see http://tools.ietf.org/html/rfc6749#section-4.2.1
-	 */
+    /**
+     * Redirect the user appropriately after approval.
+     *
+     * After the user has approved or denied the resource request the
+     * authorization server should call this function to redirect the user
+     * appropriately.
+     *
+     * $request
+     * The request should have the follow parameters set in the querystring:
+     * - response_type: The requested response: an access token, an
+     * authorization code, or both.
+     * - client_id: The client identifier as described in Section 2.
+     * - redirect_uri: An absolute URI to which the authorization server
+     * will redirect the user-agent to when the end-user authorization
+     * step is completed.
+     * - scope: (optional) The scope of the resource request expressed as a
+     * list of space-delimited strings.
+     * - state: (optional) An opaque value used by the client to maintain
+     * state between the request and callback.
+     *
+     * @see http://tools.ietf.org/html/rfc6749#section-4
+     * @see http://tools.ietf.org/html/rfc6749#section-4.1.1 The "authorization_code" mechanism
+     * @see http://tools.ietf.org/html/rfc6749#section-4.2.1 The "implicit" mechanism
+     * @throws Kohana_Exception
+     */
 	public function action_index()
 	{
 		try
 		{
-			// We repeat this, because we need to re-validate. The request could be POSTed
-			// by a 3rd-party (because we are not internally enforcing NONCEs, etc)
+            // We repeat this, because we need to re-validate. The request could be POSTed by a 3rd-party (because we
+            // are not internally enforcing NONCEs, etc.)
 			$this->validateAuthorizeRequest();
 
 			// If no redirect_uri is passed in the request, use client's registered one
@@ -136,9 +137,7 @@ class Controller_Authorize extends Template {
 			{
 				// check the form data to see if the user authorized the request
 				$authorized = (bool) $this->request->post('authorize');
-			}
-			elseif( ! $authorized = (bool) $this->showAuthorizeForm($params)) 
-			{
+            } elseif (!$authorized = $this->showAuthorizeForm($params)) {
 				//return to show consent approval form
 				return;
 			}
@@ -176,7 +175,10 @@ class Controller_Authorize extends Template {
 		}
 	}
 
-	protected function authorizeFinish($params, $registered_redirect_uri)
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function authorizeFinish($params, $registered_redirect_uri)
 	{
 		// Complete the authorization and return the code
 		$user_id 	= Auth::instance()->get_user()->id;
@@ -194,7 +196,11 @@ class Controller_Authorize extends Template {
 		$this->setRedirect($this->config['redirect_status_code'], $uri);
 	}
 
-	protected function showAuthorizeForm($params)
+    /**
+     * @throws Kohana_Exception
+     * @throws View_Exception
+     */
+    protected function showAuthorizeForm($params)
 	{
 		$url = Route::get('oauth2/auth')->uri().URL::query($params);
 
@@ -212,7 +218,7 @@ class Controller_Authorize extends Template {
 
 		// Check if the client should be automatically approved
 		//$autoApprove = ($params['auto_approve'] === '1') ? TRUE : FALSE;
-		$autoApprove = ($params['approval_prompt'] === 'force') ? FALSE : TRUE;
+        $autoApprove = $params['approval_prompt'] !== 'force';
 
 		/*
 		 * Dispaly the "do you want to authorize?" form if previously not approved,
@@ -220,7 +226,7 @@ class Controller_Authorize extends Template {
 		 */ 
 		if ( $consent === FALSE || $autoApprove === FALSE )
 		{
-			$view   = View::factory('oauth2/authorize')->set('client', (object) $this->client)->set('action', $url);
+            $view = View::factory('oauth2/authorize')->set('client', $this->client)->set('action', $url);
 
 			$this->title = __('Welcome to the OAuth2.0 Server!');
 			$this->response->body($view);
@@ -231,43 +237,36 @@ class Controller_Authorize extends Template {
 		return TRUE;
 	}
 
-	/**
-	 * Pull the authorization request data out of the HTTP request.
-	 * - The redirect_uri is OPTIONAL as per draft 20. But your implementation can enforce it
-	 * by setting $config['enforce_redirect'] to true.
-	 * - The state is OPTIONAL but recommended to enforce CSRF. Draft 21 states, however, that
-	 * CSRF protection is MANDATORY. You can enforce this by setting the $config['enforce_state'] to true.
-	 *
-	 * The draft specifies that the parameters should be retrieved from GET, override the Response
-	 * object to change this
-	 *
-	 * @return
-	 * The authorization parameters so the authorization server can prompt
-	 * the user for approval if valid.
-	 *
-	 * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
-	 * @see http://tools.ietf.org/html/rfc6749#section-10.12
-	 *
-	 */
+    /**
+     * Pull the authorization request data out of the HTTP request.
+     * - The redirect_uri is OPTIONAL as per draft 20. But your implementation can enforce it
+     * by setting $config['enforce_redirect'] to true.
+     * - The state is OPTIONAL but recommended to enforce CSRF. Draft 21 states, however, that
+     * CSRF protection is MANDATORY. You can enforce this by setting the $config['enforce_state'] to true.
+     *
+     * The draft specifies that the parameters should be retrieved from GET, override the Response
+     * object to change this
+     *
+     * @return bool True if the authorization request is valid, false otherwise
+     * @throws Oauth2_Exception|Kohana_Exception
+     * @see http://tools.ietf.org/html/rfc6749#section-10.12
+     * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
+     */
 	protected function validateAuthorizeRequest()
 	{
 		// Make sure a valid client id was supplied (we can not redirect because we were unable to verify the URI)
 		if (!$client_id = $this->request->query("client_id")) {
 		    // We don't have a good URI to use
 		   	throw Oauth2_Exception::factory(400, 'invalid_client', "No client id supplied");
-
-		    return false;
 		}
 
 		// Get client details
 		if (!$clientData = $this->getClientDetails($client_id)) {
 		    throw Oauth2_Exception::factory(400, 'invalid_client', 'The client id supplied is invalid');
-
-		    return false;
 		}
 
 		$this->client 			 = $clientData;
-		$registered_redirect_uri = isset($clientData['redirect_uri']) ? $clientData['redirect_uri'] : '';
+        $registered_redirect_uri = $clientData['redirect_uri'] ?? '';
 
 		// Make sure a valid redirect_uri was supplied. If specified, it must match the clientData URI.
 		// @see http://tools.ietf.org/html/rfc6749#section-3.1.2
@@ -278,15 +277,11 @@ class Controller_Authorize extends Template {
 			$parts = parse_url($supplied_redirect_uri);
 			if (isset($parts['fragment']) && $parts['fragment']) {
 			    throw Oauth2_Exception::factory(400, 'invalid_uri', 'The redirect URI must not contain a fragment');
-
-			    return false;
 			}
 
 			// validate against the registered redirect uri(s) if available
 			if ($registered_redirect_uri && !$this->validateRedirectUri($supplied_redirect_uri, $registered_redirect_uri)) {
 			    throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', 'The redirect URI provided is missing or does not match');
-
-			    return false;
 			}
 
 			$redirect_uri = $supplied_redirect_uri;
@@ -294,14 +289,10 @@ class Controller_Authorize extends Template {
 			// use the registered redirect_uri if none has been supplied, if possible
 			if (!$registered_redirect_uri) {
 			    throw Oauth2_Exception::factory(400, 'invalid_uri', 'No redirect URI was supplied or stored');
-
-			    return false;
 			}
 
 			if (count(explode(' ', $registered_redirect_uri)) > 1) {
 			    throw Oauth2_Exception::factory(400, 'invalid_uri', 'A redirect URI must be supplied when multiple redirect URIs are registered');
-
-			    return false;
 			}
 
 			$redirect_uri = $registered_redirect_uri;
@@ -332,10 +323,8 @@ class Controller_Authorize extends Template {
 
 		        return false;
 		    }
-		    if ($this->config['enforce_redirect'] && !$redirect_uri) {
+            if ($this->config['enforce_redirect']) {
 		        throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', 'The redirect URI is mandatory and was not supplied');
-
-		        return false;
 		    }
 		}
 
@@ -419,7 +408,10 @@ class Controller_Authorize extends Template {
 	    return false;
 	}
 
-	protected function setRedirect($statusCode = 302, $url, $state = null, $error = null, $errorDescription = null)
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function setRedirect($statusCode = 302, $url, $state = null, $error = null, $errorDescription = null)
 	{
 		$parameters = array();
 
@@ -444,7 +436,10 @@ class Controller_Authorize extends Template {
 		$this->request->redirect($url, $statusCode);
 	}
 
-	protected function getClientDetails($id)
+    /**
+     * @throws Kohana_Exception
+     */
+    protected function getClientDetails($id)
 	{
         $client = ORM::factory('OAClient')->where('client_id', '=', $id)->find();
 
@@ -453,7 +448,10 @@ class Controller_Authorize extends Template {
 		return FALSE;
 	}
 
-	public function checkRestrictedGrantType($client_id, $grant_type)
+    /**
+     * @throws Kohana_Exception
+     */
+    public function checkRestrictedGrantType($client_id, $grant_type)
 	{
 		$details = $this->getClientDetails($client_id);
 
@@ -472,22 +470,17 @@ class Controller_Authorize extends Template {
 	{
 		$oatoken = Model::factory('oauth')->checkConsent($client_id, $user_id);
 
-		return empty($oatoken) ? FALSE : TRUE;
+        return !empty($oatoken);
 	}
 
-	/**
-	 * Build the absolute URI based on supplied URI and parameters.
-	 *
-	 * @param $uri
-	 * An absolute URI.
-	 * @param $params
-	 * Parameters to be append as GET.
-	 *
-	 * @return
-	 * An absolute URI with supplied parameters.
-	 *
-	 * @ingroup oauth2_section_4
-	 */
+    /**
+     * Build the absolute URI based on supplied URI and parameters.
+     *
+     * @param string $uri An absolute URI
+     * @param array $params Parameters to be append as GET
+     * @return string An absolute URI with supplied parameters
+     * @ingroup oauth2_section_4
+     */
 	private function buildUri($uri, $params)
 	{
 		$parse_url = parse_url($uri);
@@ -501,7 +494,7 @@ class Controller_Authorize extends Template {
 			}
 		}
 
-		// Put humpty dumpty back together
+        // Put Humpty Dumpty back together
 		return
 			((isset($parse_url["scheme"])) ? $parse_url["scheme"] . "://" : "")
 			. ((isset($parse_url["user"])) ? $parse_url["user"]
@@ -509,7 +502,7 @@ class Controller_Authorize extends Template {
 			. ((isset($parse_url["host"])) ? $parse_url["host"] : "")
 			. ((isset($parse_url["port"])) ? ":" . $parse_url["port"] : "")
 			. ((isset($parse_url["path"])) ? $parse_url["path"] : "")
-			. ((isset($parse_url["query"]) && !empty($parse_url['query'])) ? "?" . $parse_url["query"] : "")
+            . (!empty($parse_url['query']) ? "?" . $parse_url["query"] : "")
 			. ((isset($parse_url["fragment"])) ? "#" . $parse_url["fragment"] : "");
 	}
 }

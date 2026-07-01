@@ -28,13 +28,14 @@ class Controller_Install_Install extends Controller_Template {
 	 */
 	protected $_session;
 
-	/**
-	 * The before() method is called before controller action
-	 *
-	 * @uses  Route::get
-	 * @uses  Session::destroy
-	 * @uses  Session::instance
-	 */
+    /**
+     * The before() method is called before controller action
+     *
+     * @throws Kohana_Exception
+     * @uses  Session::destroy
+     * @uses  Session::instance
+     * @uses  Route::get
+     */
 	public function before()
 	{
 		if ($this->request->action() === 'media')
@@ -68,11 +69,12 @@ class Controller_Install_Install extends Controller_Template {
 		}
 	}
 
-	/**
-	 * The after() method is called after controller action
-	 *
-	 * @uses  Route::uri
-	 */
+    /**
+     * The after() method is called after controller action
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::uri
+     */
 	public function after()
 	{
 		if ($this->auto_render)
@@ -103,15 +105,16 @@ class Controller_Install_Install extends Controller_Template {
 		parent::after();
 	}
 
-	/**
-	 * ## First step of installation
-	 *
-	 * Welcome page
-	 *
-	 * @uses  HTML::anchor
-	 * @uses  Route::get
-	 * @uses  Route::uri
-	 */
+    /**
+     * ## First step of installation
+     *
+     * Welcome page
+     *
+     * @throws Kohana_Exception
+     * @uses  Route::get
+     * @uses  Route::uri
+     * @uses  HTML::anchor
+     */
 	public function action_index()
 	{
 		$this->template->title = __('Install');
@@ -128,7 +131,11 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->content = new View('install/welcome');
 	}
 
-	public function action_systemcheck()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_systemcheck()
 	{
 		$this->template->title =  __('System Check');
 		$this->template->_activity = __('40');
@@ -181,7 +188,11 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->content = $view;
 	}
 
-	public function action_database()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_database()
 	{
 		$action = Route::get('install')->uri(array('action' => 'database'));
 		$view = View::factory('install/database')
@@ -260,7 +271,10 @@ class Controller_Install_Install extends Controller_Template {
 		}
 	}
 
-	public function action_install()
+    /**
+     * @throws Kohana_Exception
+     */
+    public function action_install()
 	{
 		$config = $this->_session->get('database_data');
 
@@ -288,7 +302,11 @@ class Controller_Install_Install extends Controller_Template {
 
 	}
 
-	public function action_finalize()
+    /**
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_finalize()
 	{
 		$data = $this->_session->get('database_data');
 		$this->template->_activity = __('80');
@@ -304,7 +322,7 @@ class Controller_Install_Install extends Controller_Template {
 		{
 			if( ! $this->create_database_config($data['user'], $data['pass'], $data['hostname'], $data['database'], $data['table_prefix']))
 			{
-				$this->template->error = __('Couldn\'t create application/config/database.php');
+                $this->template->error = __("Couldn't create application/config/database.php");
 			}
 
 			$password = $this->add_user();
@@ -323,8 +341,11 @@ class Controller_Install_Install extends Controller_Template {
 		}
 	}
 
-	public function check_database($username, $password, $hostname, $database)
-	{
+    /**
+     * @throws Exception
+     */
+    public function check_database($username, $password, $hostname, $database): bool
+    {
 
 		if ( ! $link = mysqli_connect($hostname, $username, $password))
 		{
@@ -368,8 +389,11 @@ class Controller_Install_Install extends Controller_Template {
 		return TRUE;
 	}
 
-	public function create_database_config($username, $password, $hostname, $database, $table_prefix)
-	{
+    /**
+     * @throws View_Exception
+     */
+    public function create_database_config($username, $password, $hostname, $database, $table_prefix): bool
+    {
 		$config = new View('install/config');
 
 		$config->type	  = 'MySQLi';
@@ -392,8 +416,11 @@ class Controller_Install_Install extends Controller_Template {
 		return $row->Value;
 	}
 
-	private function unpack_sql($config)
-	{
+    /**
+     * @throws Exception
+     */
+    private function unpack_sql($config): void
+    {
 		$prefix = $config["table_prefix"];
 		$buf = null;
 
@@ -414,17 +441,18 @@ class Controller_Install_Install extends Controller_Template {
 				$buf = "";
 			}
 		}
-		
-		return true;
-	}
+    }
 
 	private function prepend_prefix($prefix, $sql)
 	{
         return preg_replace("#{([a-zA-Z0-9_]+)}#", $prefix . '$1', $sql);
 	}
 
-	private function add_user()
-	{
+    /**
+     * @throws Kohana_Exception
+     */
+    private function add_user(): string
+    {
 		$config = $this->_session->get('database_data');
 		$link   = mysqli_connect($config["hostname"], $config["user"], $config["pass"]);
 
@@ -447,7 +475,7 @@ class Controller_Install_Install extends Controller_Template {
 
 		// Update user
         $algo = Kohana::$config->load('auth')->get('hash_method', '');
-		$password = Text::random('alnum', 8);
+        $password = Text::random('alnum');
         $pass = hash_hmac($algo, $password, $aKey);
 		mysqli_query($link, "UPDATE `{$prefix}users` SET `pass` = '$pass', `created` = $time, `updated` = $time WHERE `id` = 2");
 

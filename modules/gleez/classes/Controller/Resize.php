@@ -35,7 +35,7 @@ class Controller_Resize extends Controller {
 		$dimensions  	   = $this->request->param('dimensions', '80x80');
 		list($this->width, $this->height) = explode('x', $dimensions);
 
-		$image_src  	   = $this->request->param('file', NULL);
+        $image_src = $this->request->param('file');
 		$this->image_src   = (isset($_REQUEST['s']) AND !empty($_REQUEST['s'])) ? $_REQUEST['s'] : $image_src;
 
 		$this->cache();
@@ -50,8 +50,11 @@ class Controller_Resize extends Controller {
 
 	}
 
-	private function cache()
-	{
+    /**
+     * @throws Kohana_Exception
+     */
+    private function cache(): void
+    {
 		// is it a remote image?
 		if($this->is_remote())
 		{
@@ -76,7 +79,9 @@ class Controller_Resize extends Controller {
 		}
 
 		//if image file not found stop here
-		if( !$this->is_valid($image_original_name) ) return FALSE;
+        if (!$this->is_valid($image_original_name)) {
+            return;
+        }
         $this->resized_image = "$this->image_folder/imagecache/$this->resize_type/{$this->width}x$this->height/$this->image_src";
 
 		if(!file_exists($this->resized_image))
@@ -89,13 +94,13 @@ class Controller_Resize extends Controller {
 			$image_function = ($this->resize_type === 'crop') ? 'crop' : 'resize';
 			Image::factory($image_original_name)->$image_function($this->width, $this->height)->save($this->resized_image, 85);
 		}
+    }
 
-		return TRUE;
-
-	}
-
-	private function is_valid($image_path)
-	{
+    /**
+     * @throws Kohana_Exception
+     */
+    private function is_valid($image_path): bool
+    {
 		try
 		{
 			// get the size and MIME type of the requested image
@@ -118,8 +123,8 @@ class Controller_Resize extends Controller {
 		return true;
 	}
 
-	private function is_remote()
-	{
+    private function is_remote(): bool
+    {
 		return strpos( strtolower($this->image_src), 'http://') !== false ;
 	}
 

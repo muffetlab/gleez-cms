@@ -3,7 +3,7 @@
 	First Previous 1 2 3 ... 22 23 24 25 26 [27] 28 29 30 31 32 ... 48 49 50 Next Last
 */
 
-// Number of page links in the begin and end of whole range
+// Number of page links at the start and end of the whole range
 $count_out = ( ! empty($config['count_out'])) ? (int) $config['count_out'] : 1;
 // Number of page links on each side of current page
 $count_in = ( ! empty($config['count_in'])) ? (int) $config['count_in'] : 5;

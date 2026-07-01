@@ -4,13 +4,14 @@ return array(
 	// Leave this alone
 	'modules' => array(
 
-		// This should be the path to this modules userguide pages, without the 'guide/'. Ex: '/guide/modulename/' would be 'modulename'
+        // This should be the path to this module's user guide pages, without the 'guide/'. For example,
+        // '/guide/module-name/' would be 'module-name'.
 		'gleez' => array(
 
-			// Whether this modules userguide pages should be shown
+            // Whether this module's user guide pages should be shown
 			'enabled' => TRUE,
-			
-			// The name that should show up on the userguide index page
+
+            // The name that should show up on the user guide index page
 			'name' => 'Gleez',
 
 			// A short description of this module, shown on the index page
