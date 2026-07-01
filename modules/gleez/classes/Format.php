@@ -48,7 +48,7 @@ class Format {
 		if (empty($config))
 		{
 			// Load the configuration
-			$config = Kohana::$config->load('inputfilter');
+            $config = Kohana::$config->load('input_filter');
 		}
 
 		new Format($config->as_array());

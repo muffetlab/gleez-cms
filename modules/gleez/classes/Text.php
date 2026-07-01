@@ -151,7 +151,7 @@ class Text extends Kohana_Text
 			return $text;
 		}
 
-		$format_id = is_null($format_id) ? Kohana::$config->load('inputfilter')->get('default_format', 1) : $format_id;
+        $format_id = is_null($format_id) ? Kohana::$config->load('input_filter')->get('default_format', 1) : $format_id;
         $langCode = is_null($langCode) ? I18n::$lang : $langCode;
 
 		// Check for a cached version of this piece of text.
@@ -172,7 +172,7 @@ class Text extends Kohana_Text
             'cache_id' => $cache_id
 		), ArrayObject::ARRAY_AS_PROPS);
 
-		Module::event('inputfilter', $textObj);
+        Module::event('input_filter', $textObj);
 
 		$text = Filter::process($textObj); // run all filters
 

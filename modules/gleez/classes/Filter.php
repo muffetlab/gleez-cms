@@ -101,7 +101,7 @@ class Filter {
      */
     public static function formats(): array
     {
-		$config = Kohana::$config->load('inputfilter');
+        $config = Kohana::$config->load('input_filter');
 
         return array_map(function ($format) {
             return $format['name'];
@@ -175,7 +175,7 @@ class Filter {
      */
     public static function process($text): string
     {
-		$config = Kohana::$config->load('inputfilter');
+        $config = Kohana::$config->load('input_filter');
 		if(!array_key_exists($text->format, $config->get('formats') ) OR !isset($text->format))
 		{
 			//make sure a valid format id exists, if not set default format id
