@@ -87,12 +87,12 @@ class System {
     public static function mkdir(string $path, int $mode = 0777, bool $recursive = TRUE): bool
     {
 		$out = FALSE;
-		$oldumask = umask(0);
+        $oldUmask = umask(0);
 		if (! is_dir($path))
 		{
 			$out = @mkdir($path, $mode, $recursive);
 		}
-		umask($oldumask);
+        umask($oldUmask);
 
 		return $out;
 	}
