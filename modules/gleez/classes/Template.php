@@ -124,12 +124,6 @@ abstract class Template extends Controller {
 	 * The destination url
 	 * @var array
 	 */
-	protected $_desti;
-
-	/**
-	 * The destination url
-	 * @var array
-	 */
 	protected $redirect;
 
 	/**
@@ -346,11 +340,7 @@ abstract class Template extends Controller {
 			$this->_widgets         = Widgets::instance();
 			$this->template->_admin = Theme::$is_admin;
 
-			// Set the destination & redirect url
-			$this->_desti = array(
-				'destination' => $this->request->uri()
-			);
-
+            // Set the redirect URL
 			$this->redirect = ($this->request->query('destination') !== NULL) ? $this->request->query('destination') : array();
 
 			// Bind the generic page variables
