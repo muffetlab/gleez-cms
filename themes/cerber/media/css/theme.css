@@ -275,13 +275,13 @@ a {
 	padding: 10px 0;
 }
 
-.readmore {
+.read-more {
 	background-color: #d93 !important;
 	border-color: #d93 !important;
 	color: #fff !important;
 }
 
-.readmore:hover {
+.read-more:hover {
 	background-color: #c48c2d !important;
 	border-color: #c48c2d !important;
 }

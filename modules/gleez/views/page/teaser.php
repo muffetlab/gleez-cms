@@ -34,6 +34,6 @@
 		</div>
 	<?php endif;?>
 	<div class="post-postarea">
-		<?php echo HTML::anchor($post->url, __('Read More'), array('title' => __('Read more about :title', array(':title' => $post->title)), 'class' => 'readmore btn btn-default btn-xs', 'itemprop' => 'url')); ?>
+        <?php echo HTML::anchor($post->url, __('Read More'), array('title' => __('Read more about :title', array(':title' => $post->title)), 'class' => 'read-more btn btn-default btn-xs', 'itemprop' => 'url')); ?>
 	</div>
 </section>
