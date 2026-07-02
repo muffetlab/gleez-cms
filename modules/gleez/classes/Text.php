@@ -238,7 +238,7 @@ class Text extends Kohana_Text
 	 * @return  string
 	 * @link    http://drupal.org/project/more_filters
 	 */
-    public static function initialcaps(string $text): string
+    public static function initialCaps(string $text): string
     {
 		// Adds <span class="initial"> tag around the initial letter of each paragraph.
 		// Only add after an opening <p> tag, ignoring any leading spaces. First letter must be a letter or number (no symbols).

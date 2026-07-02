@@ -448,7 +448,7 @@ if ( ! ACL::cache())
  * @uses  Text::auto_p
  * @uses  HTML::chars
  * @uses  Text::autolink
- * @uses  Text::initialcaps
+ * @uses  Text::initialCaps
  * @uses  Text::markdown
  */
 if ( ! Filter::cache())
@@ -494,9 +494,9 @@ if ( ! Filter::cache())
 			'url_length' => 72
 		));
 
-		Filter::set('initialcaps',  array(
+    Filter::set('initial_caps', array(
 			'prepare callback' => FALSE,
-			'process callback' => 'Text::initialcaps'
+        'process callback' => 'Text::initialCaps'
 		))
 		->title(__('Adds Initialcaps'))
 		->description(__('Adds <span class="initial"> tag around the initial letter of each paragraph'));
