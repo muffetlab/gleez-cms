@@ -385,7 +385,7 @@ return array(
 	'The :iconv extension is not loaded.' => 'Extensia :iconv nu este încărcată.',
 	'The :json extension is not loaded.' => 'Extensia :json nu este încărcată.',
 	'The :mbstring extension is overloading PHP\'s native string functions.' => 'Extensia :mbstring supraîncarcă funcțiile native PHP pentru manipularea șirurilor de caractere.',
-	'The :simplexml extension is not loaded.' => 'Extensia :simplexml nu este încărcată.',
+    'The :simpleXml extension is not loaded.' => 'Extensia :simpleXml nu este încărcată.',
 	'The :spl extension is either not loaded or not compiled in.' => 'Extensia :spl nu este încărcată sau compilată.',
 	'The ability to create pages' => 'Capacitatea de a crea pagini',
 	'The admin menu provides quick access to all of :cms_url\'s options and settings. Here are a few of the most used options to get you started.' => 'Meniul de administrare furnizează accesul la toate opțiunile si setările ale :cms_url. Iată câteva dintre cele mai uzuale opțiuni pentru început.',

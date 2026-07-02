@@ -385,7 +385,7 @@ return array(
 	'The :iconv extension is not loaded.' => 'L\'estensione :iconv non &#269; stata caricata.',
 	'The :json extension is not loaded.' => 'L\'estensione :json non &#269; stata caricata.',
 	'The :mbstring extension is overloading PHP\'s native string functions.' => 'L\'estensione :mbstring sta sovrascrivendo le funzioni di stringa native di PHP.',
-	'The :simplexml extension is not loaded.' => 'L\'estensione :simplexml non &#269; stata caricata.',
+    'The :simpleXml extension is not loaded.' => 'L\'estensione :simpleXml non &#269; stata caricata.',
 	'The :spl extension is either not loaded or not compiled in.' => 'L\'estensione :spl non &#269; stata caricata o compilata.',
 	'The ability to create pages' => 'Permesso di creare pagine',
 	'The admin menu provides quick access to all of :cms_url\'s options and settings. Here are a few of the most used options to get you started.' => 'Il menu Admin consente di accedere rapidamente a tutte le opzioni e le impostazioni: cms_url. Ecco alcune delle opzioni pi&#367; frequentemente usate per iniziare.',

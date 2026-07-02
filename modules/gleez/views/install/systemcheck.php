@@ -119,12 +119,12 @@
 			<?php endif ?>
 		</tr>
 
-		<tr class="<?php echo $simplexml ? 'success' : 'danger' ?>">
+        <tr class="<?php echo $simpleXml ? 'success' : 'danger' ?>">
 			<td><?php echo __('SimpleXML Extension'); ?></td>
-			<?php if ($simplexml): ?>
+            <?php if ($simpleXml): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-                <td><?php echo __('The :simlexml extension is not loaded.', array(':simplexml' => HTML::anchor('https://www.php.net/simplexml', 'SimpleXML'))); ?></td>
+                <td><?php echo __('The :simpleXml extension is not loaded.', array(':simpleXml' => HTML::anchor('https://www.php.net/simplexml', 'SimpleXML'))); ?></td>
 			<?php endif ?>
 		</tr>
 

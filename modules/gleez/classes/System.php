@@ -256,7 +256,7 @@ class System {
 			'spl_autoload_register' => function_exists('spl_autoload_register'),
 			'filters_enabled'       => function_exists('filter_list'),
 			'iconv_loaded'          => extension_loaded('iconv'),
-			'simplexml'             => extension_loaded('simplexml'),
+            'simpleXml' => extension_loaded('simplexml'),
 			'json_encode'           => function_exists('json_encode'),
 			'mbstring'              => (extension_loaded('mbstring') && MB_OVERLOAD_STRING),
 			'ctype_digit'           => function_exists('ctype_digit'),

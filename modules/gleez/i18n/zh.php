@@ -426,7 +426,7 @@ Links:
   'The :iconv extension is not loaded.' => ':iconv 扩展未加载。',
   'The :json extension is not loaded.' => ':json 扩展未加载。',
   'The :mbstring extension is overloading PHP\'s native string functions.' => ':mbstring 扩展重载了PHP的原生字符串函数。',
-  'The :simlexml extension is not loaded.' => ':simlexml 扩展未加载。',
+    'The :simpleXml extension is not loaded.' => ':simpleXml 扩展未加载。',
   'The :spl extension is either not loaded or not compiled in.' => ':spl 扩展名未加载或未编译。',
   'The admin menu provides quick access to all of :cms_url\'s options and settings. Here are a few of the most used options to get you started.' => '管理菜单可以快速访问 :cms_url的所有选项和设置。下面是几个最常用的选项，帮助您入门。',
   'The configured :application directory does not exist or does not contain required files.' => '配置的 :application 目录不存在，或不包含所需的文件。',

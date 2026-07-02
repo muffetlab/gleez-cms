@@ -902,7 +902,7 @@ return array(
 	'The :iconv extension is not loaded.' => ':iconv pole laetud.',
 	'The :json extension is not loaded.' => ':json pole laetud.',
 	'The :mbstring extension is overloading PHP\'s native string functions.' => ':mbstring pole laetud ja ülekoormus ühebaitiliste funksioonide analoogidega mbstring on väljalülitatud.',
-	'The :simplexml extension is not loaded.' => ':simplexml pole laetud.',
+    'The :simpleXml extension is not loaded.' => ':simpleXml pole laetud.',
 	'The :spl extension is either not loaded or not compiled in.' => 'Andmebaas :spl pole laetud, või PHP on koostatud ilma tema toeta.',
 	'The ability to create pages' => 'Lehekülgede koostamise võimalus',
 	'The admin menu provides quick access to all of :cms_url\'s options and settings. Here are a few of the most used options to get you started.' => 'Administraatori menüü pakub kiiret juurdepääsu kõikidele võimalustele ja sätetele :cms_url. Siin on mõned enamkasutatavatest võimalustest mis aitavad teile alustada.',

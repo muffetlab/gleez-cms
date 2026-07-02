@@ -411,7 +411,7 @@ return array(
 'The :iconv extension is not loaded.' =>'Ekstensi :iconv tidak dimuat .',
 'The :json extension is not loaded.' =>'Ekstensi :json tidak dimuat .',
 'The :mbstring extension is overloading PHP\'s native string functions.' =>'Ekstensi :mbstring adalah melewati beban dari fungsi string asli PHP.',
-'The :simplexml extension is not loaded.' =>'Ekstensi :simplexml tidak dimuat .',
+    'The :simpleXml extension is not loaded.' => 'Ekstensi :simpleXml tidak dimuat .',
 'The :spl extension is either not loaded or not compiled in.' =>'Ekstensi :spl sebaiknya tidak dimuat atau tidak dimasukkan kompilasi',
 'The ability to create pages' =>'Kemampuan untuk membuat halaman',
 'The admin menu provides quick access to all of :cms_url\'s options and settings. Here are a few of the most used options to get you started.' =>'Menu admin menyediakan akses cepat ke semua opsi dan pengaturan :cms_url\'s. Berikut adalah beberapa pilihan yang paling sering digunakan untuk Anda mulai.',

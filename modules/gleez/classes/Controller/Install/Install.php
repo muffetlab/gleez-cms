@@ -172,7 +172,7 @@ class Controller_Install_Install extends Controller_Template {
 			AND $view->filters_enabled
 			AND $view->iconv_loaded
 			AND $view->spl_autoload_register
-			AND $view->simplexml
+            && $view->simpleXml
 			AND $view->json_encode
 			AND $view->mbstring
 			AND $view->ctype_digit

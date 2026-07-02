@@ -586,7 +586,7 @@ return array(
 	'The :iconv extension is not loaded.' => 'Расширение :iconv не загружено.',
 	'The :json extension is not loaded.' => 'Расширение :json не загружено.',
 	'The :mbstring extension is overloading PHP\'s native string functions.' => 'Расширение :mbstring не загружено и перегрузка однобайтовых функций аналогами из mbstring отключена.',
-	'The :simplexml extension is not loaded.' => 'Расширение :simplexml не загружено.',
+    'The :simpleXml extension is not loaded.' => 'Расширение :simpleXml не загружено.',
 	'The :spl extension is either not loaded or not compiled in.' => 'Библиотека :spl не загружена, либо PHP собран без её поддержки.',
 	'The ability to create pages' => 'Возможность создавать страницы',
 	'The admin menu provides quick access to all of :cms_url\'s options and settings. Here are a few of the most used options to get you started.' => 'Меню администратора предоставляет быстрый доступ ко всем опциям и настройкам :cms_url. Вот некоторые из наиболее часто используемых опций которые помогут вам начать.',
