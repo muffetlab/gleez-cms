@@ -572,11 +572,11 @@ abstract class Template extends Controller {
 		$headers = $this->_config->get('headers', array());
 		$headers['X-Gleez-Version'] = Gleez::getVersion(TRUE, TRUE) . ' ('.Gleez::CODENAME.')';
 
-        $xmlrpc = $this->_config->get('xmlrpc');
+        $xmlRpc = $this->_config->get('xml_rpc');
 
-		if ( ! is_null($xmlrpc))
+        if (!is_null($xmlRpc))
 		{
-			$headers['X-Pingback'] = URL::site($xmlrpc, TRUE);
+            $headers['X-Pingback'] = URL::site($xmlRpc, TRUE);
 		}
 
 		// replace nonce variable

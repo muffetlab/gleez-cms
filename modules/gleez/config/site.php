@@ -74,8 +74,8 @@ return array(
 	//	'Content-Security-Policy'   => "script-src 'self' '{NONCE}' metrics.gleez.com; frame-ancestors 'self';"
 	),
 
-    // XMLRPC
-	'xmlrpc' => 'xmlrpc',
+    // XML-RPC
+    'xml_rpc' => 'xml-rpc',
 
     // Number of minutes, which indicates how long the channel can be cached without updating
 	'feed_ttl' => 60,
