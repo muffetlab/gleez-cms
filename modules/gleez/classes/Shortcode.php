@@ -200,17 +200,17 @@ class Shortcode {
 		}
 
 		$tag = $m[2];
-		$attr = self::parse_atts( $m[3] );
+        $attrs = self::parseAttrs($m[3]);
 
 		if ( isset( $m[5] ) )
 		{
 			// enclosing tag - extra parameter
-			return $m[1] . call_user_func( self::$_tags[$tag], $attr, $m[5], $tag ) . $m[6];
+            return $m[1] . call_user_func(self::$_tags[$tag], $attrs, $m[5], $tag) . $m[6];
 		}
 		else
 		{
 			// self-closing tag
-			return $m[1] . call_user_func( self::$_tags[$tag], $attr, NULL,  $tag ) . $m[6];
+            return $m[1] . call_user_func(self::$_tags[$tag], $attrs, NULL, $tag) . $m[6];
 		}
 	}
 
@@ -233,14 +233,14 @@ class Shortcode {
 	 */
     protected static function get_regex(): string
     {
-		$tagnames = array_keys(self::$_tags);
-		$tagregexp = join( '|', array_map('preg_quote', $tagnames) );
+        $tagNames = array_keys(self::$_tags);
+        $tagRegexp = join('|', array_map('preg_quote', $tagNames));
 
 		// WARNING! Do not change this regex without changing do_shortcode_tag() and strip_shortcode_tag()
 		return
 			'\\['                              // Opening bracket
 			. '(\\[?)'                           // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
-			. "($tagregexp)"                     // 2: Shortcode name
+            . "($tagRegexp)"                     // 2: Shortcode name
 			. '\\b'                              // Word boundary
 			. '('                                // 3: Unroll the loop: Inside the opening shortcode tag
 			.     '[^\\]\\/]*'                   // Not a closing bracket or forward slash
@@ -278,9 +278,9 @@ class Shortcode {
 	 * @param string $text
 	 * @return array List of attributes and their value.
 	 */
-    public static function parse_atts(string $text): array
+    public static function parseAttrs(string $text): array
     {
-		$atts = array();
+        $attrs = array();
 		$pattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
 		$text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
 
@@ -289,23 +289,23 @@ class Shortcode {
 			foreach ($match as $m)
 			{
 				if (!empty($m[1]))
-					$atts[strtolower($m[1])] = stripcslashes($m[2]);
+                    $attrs[strtolower($m[1])] = stripcslashes($m[2]);
 				elseif (!empty($m[3]))
-					$atts[strtolower($m[3])] = stripcslashes($m[4]);
+                    $attrs[strtolower($m[3])] = stripcslashes($m[4]);
 				elseif (!empty($m[5]))
-					$atts[strtolower($m[5])] = stripcslashes($m[6]);
+                    $attrs[strtolower($m[5])] = stripcslashes($m[6]);
 				elseif (isset($m[7]) and strlen($m[7]))
-					$atts[] = stripcslashes($m[7]);
+                    $attrs[] = stripcslashes($m[7]);
 				elseif (isset($m[8]))
-					$atts[] = stripcslashes($m[8]);
+                    $attrs[] = stripcslashes($m[8]);
 			}
 		}
 		else
 		{
-			$atts = ltrim($text);
+            $attrs = ltrim($text);
 		}
 
-		return $atts;
+        return $attrs;
 	}
 
 	/**
@@ -315,22 +315,22 @@ class Shortcode {
 	 * supported by the caller and given as a list. The returned attributes will
 	 * only contain the attributes in the $pairs list.
 	 *
-	 * If the $atts list has unsupported attributes, then they will be ignored and
-	 * removed from the final returned list.
+     * If the $attrs list has unsupported attributes, then they will be ignored and removed from the final returned
+     * list.
 	 *
-	 * @param array $pairs Entire list of supported attributes and their defaults.
-	 * @param array $atts User defined attributes in shortcode tag.
-	 * @return array Combined and filtered attribute list.
+     * @param array $pairs Entire list of supported attributes and their defaults
+     * @param array $attrs User defined attributes in shortcode tag
+     * @return array Combined and filtered attribute list
 	 */
-    public static function attributes(array $pairs, array $atts): array
+    public static function attributes(array $pairs, array $attrs): array
     {
 		$out = array();
 
 		foreach($pairs as $name => $default)
 		{
-			if ( array_key_exists($name, $atts) )
+            if (array_key_exists($name, $attrs))
 			{
-				$out[$name] = $atts[$name];
+                $out[$name] = $attrs[$name];
 			}
 			else
 			{
