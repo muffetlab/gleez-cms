@@ -397,12 +397,12 @@ class Module
 				), array());
 			}
 
-			$amodule = self::get($module->name);
+            $activeModule = self::get($module->name);
 
-			if ($amodule->loaded()) {
-				$amodule->active = true;
-				$amodule->path   = $module->path;
-				$amodule->save();
+            if ($activeModule->loaded()) {
+                $activeModule->active = true;
+                $activeModule->path = $module->path;
+                $activeModule->save();
 			}
 
 			// clear any cache for sure
@@ -416,7 +416,7 @@ class Module
 
 			Kohana::$log->add(Log::INFO, 'Activated module :module_name', array(':module_name' => $module->title));
 
-			unset($module, $amodule);
+            unset($module, $activeModule);
 		}
 	}
 
