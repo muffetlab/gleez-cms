@@ -381,7 +381,7 @@ class User {
      *
      * Example:
      * ~~~
-     * $post = Post::dcache($id, 'page', $config);
+     * $post = Post::dynamicCache($id, 'page', $config);
      *
      * echo HTML::anchor($post->user->url, User::getAvatar($post->user));
      * ~~~

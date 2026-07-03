@@ -145,7 +145,7 @@ class Controller_Page extends Template {
      * @throws Kohana_Exception|ReflectionException
      * @uses    ACL::post
      * @uses    ACL::check
-     * @uses    Post::dcache
+     * @uses    Post::dynamicCache
      * @uses    Auth::logged_in
      * @uses    Meta::links
      * @uses    URL::canonical
@@ -159,7 +159,7 @@ class Controller_Page extends Template {
 		$id     = (int) $this->request->param('id', 0);
 		$config = Kohana::$config->load('page');
 
-		$post = Post::dcache($id, 'page', $config);
+        $post = Post::dynamicCache($id, 'page', $config);
 
 		if ( ! ACL::post('view', $post))
 		{

@@ -895,7 +895,7 @@ class Post extends ORM_Versioned {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public static function dcache(int $id, string $type, $config): ORM
+    public static function dynamicCache(int $id, string $type, $config): ORM
 	{
         $cache = Cache::instance();
 		$use_cache = (bool) $config->get('use_cache', FALSE);

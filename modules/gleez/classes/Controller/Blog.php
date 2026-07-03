@@ -152,7 +152,7 @@ class Controller_Blog extends Template {
      * @throws Request_Exception
      * @throws View_Exception
      * @uses    Gleez_Config::load
-     * @uses    Post::dcache
+     * @uses    Post::dynamicCache
      * @uses    ACL::post
      * @uses    ACL::check
      * @uses    Auth::logged_in
@@ -166,7 +166,7 @@ class Controller_Blog extends Template {
 		$id     = (int) $this->request->param('id', 0);
 		$config = Kohana::$config->load('blog');
 
-		$post = Post::dcache($id, 'blog', $config);
+        $post = Post::dynamicCache($id, 'blog', $config);
 
 		if ( ! ACL::post('view', $post))
 		{
