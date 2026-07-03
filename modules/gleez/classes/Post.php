@@ -855,30 +855,30 @@ class Post extends ORM_Versioned {
 		}
 
 		$poses = array();
-		$lastpos = -1;
-		$repchar = "<p";
+        $lastPos = -1;
+        $repChar = "<p";
 
 		// if we didn't find a p tag, try br tag
 		if (strpos($content, "<p") === FALSE)
 		{
-			$repchar = "<br";
+            $repChar = "<br";
 		}
 
-		while (strpos($content, $repchar, $lastpos+1) !== FALSE)
+        while (strpos($content, $repChar, $lastPos + 1) !== FALSE)
 		{
-			$lastpos = strpos($content, $repchar, $lastpos+1);
-			$poses[] = $lastpos;
+            $lastPos = strpos($content, $repChar, $lastPos + 1);
+            $poses[] = $lastPos;
 		}
 
 		// Cut the doc in half, so the widgets don't go past the end of the article.
-		$pickme = $poses[ceil(sizeof($poses)/2) -1];
+        $pickMe = $poses[ceil(sizeof($poses) / 2) - 1];
 
 		$widgets     = Widgets::instance()->render($region);
-		$replacewith = ($widgets) ? '<div id="'.$region.'" class="clear-block">'.$widgets.'</div>' : NULL;
-		$content     = substr_replace($content, $replacewith.$repchar, $pickme, 2);
+        $replaceWith = ($widgets) ? '<div id="' . $region . '" class="clear-block">' . $widgets . '</div>' : NULL;
+        $content = substr_replace($content, $replaceWith . $repChar, $pickMe, 2);
 
 		// save some memory
-		unset($poses, $lastpos, $repchar, $half, $pickme, $widgets, $replacewith);
+        unset($poses, $lastPos, $repChar, $half, $pickMe, $widgets, $replaceWith);
 
 		return $content;
 	}
