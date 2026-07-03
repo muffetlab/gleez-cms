@@ -618,15 +618,15 @@ class Module
      *
      * @param string $action The name of the action to execute
      * @param mixed $return The initial return value
-     * @param mixed ...$filterargs Additional arguments to pass to the action handler
+     * @param mixed ...$filterArgs Additional arguments to pass to the action handler
 	 */
-    public static function action(string $action, $return, ...$filterargs)
+    public static function action(string $action, $return, ...$filterArgs)
 	{
 		$function = str_replace(".", "_", $action);
 
 		foreach (self::$active as $name => $module) {
 			$class = ucfirst($name).'_Action';
-			$args = $filterargs;
+            $args = $filterArgs;
 			array_unshift($args, $return);
 
 			if (is_callable(array($class, $function))) {
