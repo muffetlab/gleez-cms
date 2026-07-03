@@ -259,7 +259,7 @@ class Controller_Page extends Template {
 					->set('created',     FALSE)
 					->set('author',      FALSE)
 					->set('path',        FALSE)
-            ->set('tags', $_POST['ftags'] ?? FALSE)
+            ->set('tags', $_POST['form_tags'] ?? FALSE)
 					->bind('errors',     $this->_errors)
 					->bind('terms',      $terms)
 					->bind('post',       $post);
@@ -283,7 +283,7 @@ class Controller_Page extends Template {
 		{
 			try
 			{
-                $post->ftags = $this->request->post('ftags');
+                $post->formTags = $this->request->post('form_tags');
                 $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
 				Kohana::$log->add(Log::INFO, 'Page :title created.', array(':title' => $post->title));
@@ -373,7 +373,7 @@ class Controller_Page extends Template {
 		{
 			try
 			{
-                $post->ftags = $this->request->post('ftags');
+                $post->formTags = $this->request->post('form_tags');
                 $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
 				Kohana::$log->add(Log::INFO, 'Page: :title updated.', array(':title' => $post->title));

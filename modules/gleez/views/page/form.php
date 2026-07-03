@@ -24,10 +24,10 @@
 			<?php endif; ?>
 
 			<?php if ($config->use_tags) : ?>
-				<div class="form-group <?php echo isset($errors['ftags']) ? 'has-error': ''; ?>">
-					<?php echo Form::label('ftags', __('Tags'), array('class' => 'control-label') ) ?>
+                <div class="form-group <?php echo isset($errors['form_tags']) ? 'has-error' : ''; ?>">
+                    <?php echo Form::label('form_tags', __('Tags'), array('class' => 'control-label')) ?>
 					<div class="controls">
-						<?php echo Form::input('ftags', $tags, array('class' => 'form-control'), 'autocomplete/tag/page'); ?>
+                        <?php echo Form::input('form_tags', $tags, array('class' => 'form-control'), 'autocomplete/tag/page'); ?>
 					</div>
 				</div>
 			<?php endif; ?>

@@ -22,7 +22,7 @@ class Post extends ORM_Versioned {
      *
      * @var string|null
      */
-    public $ftags = null;
+    public $formTags = null;
 
 	/**
 	 * Special tag for stopping widgets setting
@@ -115,7 +115,7 @@ class Post extends ORM_Versioned {
 		'author_pubdate',
 		'path',
 		'categories',
-		'ftags',
+        'form_tags',
 		'content'
 	);
 
@@ -461,9 +461,9 @@ class Post extends ORM_Versioned {
      */
 	private function _tags()
 	{
-		if (isset($this->ftags))
+        if (isset($this->formTags))
 		{
-            Tags::factory()->tagging($this->ftags, $this, $this->author, FALSE);
+            Tags::factory()->tagging($this->formTags, $this, $this->author, FALSE);
 		}
 	}
 
