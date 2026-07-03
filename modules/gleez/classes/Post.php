@@ -587,12 +587,12 @@ class Post extends ORM_Versioned {
             case 'image':
 				return $this->rawimage ? $this->_image_url.$this->rawimage : NULL;
             case 'count_comments':
-				return (int) DB::select(array(DB::expr('COUNT(*)'), 'mycount'))
+                return (int) DB::select(array(DB::expr('COUNT(*)'), 'count_comments'))
 					->from('comments')
 					->where('status', '=', 'publish')
 					->where('post_id', '=', $this->id)
 					->execute()
-					->get('mycount');
+                    ->get('count_comments');
         }
 
         return parent::__get($column);
