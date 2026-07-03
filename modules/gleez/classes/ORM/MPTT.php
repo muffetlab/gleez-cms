@@ -704,7 +704,7 @@ class ORM_MPTT extends Gleez_Model
      * @return  object
      * @throws Kohana_Exception
      */
-    public function fulltree(bool $scope = NULL)
+    public function fullTree(bool $scope = NULL)
 	{
 		$result = self::factory($this->object_name());
 
@@ -1059,8 +1059,8 @@ class ORM_MPTT extends Gleez_Model
 				return $this->leaves();
 			case 'descendants':
 				return $this->descendants();
-			case 'fulltree':
-				return $this->fulltree();
+            case 'full_tree':
+                return $this->fullTree();
 			default:
                 return parent::__get($column);
 		}
