@@ -956,7 +956,7 @@ class Post extends ORM_Versioned {
 			'limit'     => 10,
 			'offset'    => 0,
 			'type'      => 'post',
-			'orderby'   => 'created',
+            'orderBy' => 'created',
 			'order'     => 'DESC',
             'status' => implode(',', array_keys(Post::status())),
 			'use_cache' => TRUE,
@@ -971,7 +971,7 @@ class Post extends ORM_Versioned {
 		{
             $post = ORM::factory(ucfirst($params->type))
 						->where('status', 'IN', $params->status)
-						->order_by($params->orderby, $params->order)
+                ->order_by($params->orderBy, $params->order)
 						->limit($params->limit)
 						->offset($params->offset)
 						->find_all();
