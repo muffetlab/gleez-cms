@@ -380,7 +380,7 @@ class Gleez_Locale {
 
 		$language      = setlocale(LC_ALL, 0);
 		$languages     = explode(';', $language);
-		$languagearray = array();
+        $languageArray = array();
 		$locale_data   = Locale_Data::getLocaleData();
 
 		foreach ($languages as $locale)
@@ -418,19 +418,19 @@ class Gleez_Locale {
 
 				if (isset($locale_data[$language]))
 				{
-					$languagearray[$language] = 1;
+                    $languageArray[$language] = 1;
 
 					if (strpos($language, '_') !== FALSE)
 					{
-						$languagearray[substr($language, 0, strpos($language, '_'))] = 1;
+                        $languageArray[substr($language, 0, strpos($language, '_'))] = 1;
 					}
 				}
 			}
 		}
 
-		self::$_environment_locales = $languagearray;
+        self::$_environment_locales = $languageArray;
 
-		return $languagearray;
+        return $languageArray;
 	}
 
 	/**
@@ -623,11 +623,11 @@ class Gleez_Locale {
 		}
 		else
 		{
-			$elocale = explode('_', (string) $locale);
+            $explodedLocale = explode('_', (string) $locale);
 
-			if (isset($locale_data[$elocale[0]]))
+            if (isset($locale_data[$explodedLocale[0]]))
 			{
-				self::$_framework = array($elocale[0] => $quality);
+                self::$_framework = array($explodedLocale[0] => $quality);
 			}
 			else
 			{
