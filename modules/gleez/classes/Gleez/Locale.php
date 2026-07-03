@@ -302,14 +302,14 @@ class Gleez_Locale {
 		}
 
 		$languages  = array();
-		$http_langs = getenv('HTTP_ACCEPT_LANGUAGE');
+        $httpLanguages = getenv('HTTP_ACCEPT_LANGUAGE');
 
-		if ( ! $http_langs)
+        if (!$httpLanguages)
 		{
 			return $languages;
 		}
 
-		$accepted = preg_split('/,\s*/', $http_langs);
+        $accepted = preg_split('/,\s*/', $httpLanguages);
 
 		foreach ($accepted as $accept)
 		{
