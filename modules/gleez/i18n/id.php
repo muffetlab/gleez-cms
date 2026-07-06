@@ -523,7 +523,7 @@ return array(
 'Your Name'=>'Nama Anda',
 'Reply-to'=>'Balas-ke',
 'Please Choose Category'=>'Pilih kategori',
-'If you want more information about the %sitename or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.'=>'Jika anda ingin informasi lebih lanjut tentang %sitename atau ingin memberikan kritik, saran tentang website kami, silahkan gunakan form kontak dibawah ini. Jika pesan mengenai halaman yang spesifik di %site_url silahkan masukkan referensi URL',
+    'If you want more information about the %siteName or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.' => 'Jika anda ingin informasi lebih lanjut tentang %siteName atau ingin memberikan kritik, saran tentang website kami, silahkan gunakan form kontak dibawah ini. Jika pesan mengenai halaman yang spesifik di %site_url silahkan masukkan referensi URL',
 ':format words'=>':format kata',
 'You must provide mail subject'=>'Harus mengisi mail subject',
 'You must select a category'=>'Harus memilih kategori',

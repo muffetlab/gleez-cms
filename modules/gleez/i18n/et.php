@@ -455,7 +455,7 @@ return array(
 	'Icon' => 'Ikoon',
 	'Iconv Extension' => 'Iconv',
 	'If you use Gleez, we ask that you donate to ensure future development is possible.' => 'Kui Te kasutate Gleezi, Me palume Teid annetada tulevase arenguvõimaluse jaoks.',
-	'If you want more information about the %sitename or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.' => 'Kui Te tahate saada rohkem infot seoses %sitename või Teil on kommentaare veebilehe kohta, palun, kasutage allpool toodud kontaktvormi. Kui Teie teade on veebi %site_url konkreetse lehekülje kohta, siis palun lisage lehekülje aadress teatisesse.',
+    'If you want more information about the %siteName or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.' => 'Kui Te tahate saada rohkem infot seoses %siteName või Teil on kommentaare veebilehe kohta, palun, kasutage allpool toodud kontaktvormi. Kui Teie teade on veebi %site_url konkreetse lehekülje kohta, siis palun lisage lehekülje aadress teatisesse.',
 	'Indian' => 'India ookean',
 	'Indiana' => 'Indiaana',
 	'Info' => 'Info',

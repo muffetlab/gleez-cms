@@ -325,7 +325,7 @@ return array(
 	'Icon' => 'Иконка',
 	'Iconv Extension' => 'Расширение Iconv',
 	'If you use Gleez, we ask that you donate to ensure future development is possible.' => 'Если вы используете Gleez, мы просим вас пожертвовать для обеспечения возможности будущего развития.',
-	'If you want more information about the %sitename or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.' => 'Если вы хотите получить больше информации о %sitename или если у вас есть комментарии об этом сайте, пожалуйста, используйте контактную форму ниже. Если ваше сообщение конкретно о какой-то странице сайта %site_url, пожалуйста включите адрес страницы в сообщение.',
+    'If you want more information about the %siteName or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.' => 'Если вы хотите получить больше информации о %siteName или если у вас есть комментарии об этом сайте, пожалуйста, используйте контактную форму ниже. Если ваше сообщение конкретно о какой-то странице сайта %site_url, пожалуйста включите адрес страницы в сообщение.',
 	'Info' => 'Информация',
 	'Innovate IT' => 'Инновационные информационные технологии',
 	'Install' => 'Установка',

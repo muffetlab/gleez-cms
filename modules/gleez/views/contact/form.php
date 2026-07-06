@@ -1,8 +1,9 @@
 <div class="help">
 	<p>
-		<?php _e('If you want more information about the %sitename or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.',
-			array('%sitename' => $site_name, '%site_url' => $site_url));
-		?>
+        <?php _e('If you want more information about the %siteName or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.', array(
+            '%siteName' => $site_name,
+            '%site_url' => $site_url
+        )); ?>
 	</p>
 </div>
 

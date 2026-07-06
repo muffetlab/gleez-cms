@@ -216,6 +216,7 @@ return array(
   'Iconv Extension' => 'iconv扩展',
   'If you think this is an error, talk to the Site administrator!' => '如果您觉得这是个错误，请告诉网站管理员！',
   'If you use Gleez, we ask that you donate to ensure future development is possible.' => '如果您使用Gleez的，我们请您捐赠，以确保未来能够发展。',
+    'If you want more information about the %siteName or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.' => '如果您想了解更多关于 %siteName 的信息，或者您对本网站有任何意见，请使用下面的联系表单。如果您的留言是关于 %site_url 网站上的特定页面，请在留言中包含该页面的URL以供参考。',
   'Included files' => '包含的文件',
   'Innovate IT' => '创新IT',
   'Install' => '安装',

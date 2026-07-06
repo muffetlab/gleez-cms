@@ -197,6 +197,7 @@ return array(
 	'Icon' => 'Icona',
 	'Iconv Extension' => 'Estensione Iconv',
 	'If you use Gleez, we ask that you donate to ensure future development is possible.' => 'Se usi Gleez, ti chiediamo, se possibile, di effettuare una donazione per sostenerne il futuro sviluppo.',
+    'If you want more information about the %siteName or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.' => 'Se vuoi ottenere ulteriori informazioni su %siteName o se hai commenti riguardo a questo sito web, utilizza il modulo di contatto qui sotto. Se il tuo messaggio riguarda una pagina specifica del sito %site_url, includi l\'URL nel tuo messaggio per riferimento.',
 	'Innovate IT' => 'Tecnologie informatiche innovative',
 	'Install' => 'Installa',
 	'Installed'=> 'Installato',

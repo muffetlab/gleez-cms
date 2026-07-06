@@ -197,6 +197,7 @@ return array(
 	'Icon' => 'Icoană',
 	'Iconv Extension' => 'Extensie Iconv',
 	'If you use Gleez, we ask that you donate to ensure future development is possible.' => 'Dacă ești utilizator Gleez, te încurajăm să donezi pentru asigurarea posibilitații dezvoltării viitoare.',
+    'If you want more information about the %siteName or if you have comments about this website please use the contact form below. If you message is about a specific page on the %site_url website please include the URL in your message for reference.' => 'Dacă vrei mai multe informații despre %siteName sau dacă ai comentarii despre acest site, te rugăm să folosești formularul de contact de mai jos. Dacă mesajul tău este despre o pagină specifică de pe site-ul %site_url, te rugăm să incluzi URL-ul în mesajul tău pentru referință.',
 	'Innovate IT' => 'Inovează IT',
 	'Install' => 'Instalează',
 	'Installed'=> 'Instalat',
