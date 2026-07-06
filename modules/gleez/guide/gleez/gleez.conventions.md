@@ -69,7 +69,7 @@ Gleez just provides an interface that wraps around your Kohana 3 Module.
 
 3. **Declaring Widgets**
 
-   Unlike other CMS's, Gleez's Widgets aren't necessarily separate from your app. Widgets are simply HMVC calls. Thus, widgets can reside in the same controller as the app. It can also be a stand-alone widget.
+   Unlike other CMSs, widgets in Gleez aren't necessarily separate from your app. Widgets are simply HMVC calls. Thus, widgets can reside in the same controller as the app. It can also be a stand-alone widget.
 
    You don't need a route to make your widgets accessible, all you have to do is declare them in your extension's init.php, where you also declare your app's routes.
 
@@ -119,7 +119,7 @@ Gleez just provides an interface that wraps around your Kohana 3 Module.
 
    This is just a basic declaration of permissions. More details will be discussed in another chapter. But as a preview, you can specify the controllers and actions related to the permission. This will allow Gleez to automatically check for the user's permissions when certain controllers are accessed.
 
-5. **Extending Gleez's Controllers**
+5. **Extending Controllers in Gleez**
 
    If you want your app to automatically check user permissions as declared in your init.php, you must extend `Controller_Base` or `Controller_Admin`.
 
