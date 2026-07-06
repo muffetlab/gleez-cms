@@ -33,7 +33,7 @@
 						<?php if ($post->loaded()): ?>
 							<div id="delete-action" class="btn btn-default pull-left">
                                 <i class="fas fa-trash-can"></i>
-								<?php echo HTML::anchor($post->delete_url.URL::query($destination), __('Move to Trash'), array('class' => 'submitdelete')) ?>
+                                <?php echo HTML::anchor($post->delete_url . URL::query($destination), __('Move to Trash')) ?>
 							</div>
 						<?php endif; ?>
 
