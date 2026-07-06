@@ -5,12 +5,12 @@
 <div class="row">
 	<?php if (ACL::check('administer comment') AND $is_edit): ?>
 		<div id="side-info-column" class="col-md-3 col-md-push-9">
-			<div id="submitdiv" class="panel panel-default">
+            <div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title"><?php echo __('Status'); ?></h3>
 				</div>
 
-				<div class="panel-body" id="submitpost">
+                <div class="panel-body">
 					<div id="minor-publishing">
 						<div class="form-group <?php echo isset($errors['status']) ? 'has-error': ''; ?>">
 							<?php echo Form::label('status', __('Change Status'), array('class' => 'control-label')); ?>
@@ -50,7 +50,7 @@
 	<div id="comment-body" class="<?php echo ( ! ACL::check('administer comment') OR ! $is_edit) ? 'col-md-12' : 'col-md-9 col-md-pull-3'; ?>">
 
         <?php if (!$auth->logged_in() or ($is_edit and $post->author == 1)): ?>
-			<div id="submitdiv" class="stuffbox">
+            <div class="stuffbox">
 				<h3 class='hndle'><?php echo __('Author') ?></h3>
 
 				<div class="inside">

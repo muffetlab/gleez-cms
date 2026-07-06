@@ -83,11 +83,11 @@
 
 		<div id="side-info-column" class="col-md-3">
 			<?php if (ACL::check('administer content') OR ACL::check('administer page')): ?>
-				<div id="submitdiv" class="panel panel-info">
+                <div class="panel panel-info">
 					<div class="panel-heading">
 						<h3 class="panel-title"><?php echo __('Publication') ?></h3>
 					</div>
-					<div class="panel-body" id="submitpost">
+                    <div class="panel-body">
 						<div id="minor-publishing">
 							<div class="form-group <?php echo isset($errors['status']) ? 'has-error': ''; ?>">
 								<?php echo Form::label('status', __('Status'), array('class' => 'control-label')) ?>
@@ -144,7 +144,7 @@
 			<?php endif; ?>
 
 			<?php if($config->use_category) : ?>
-				<div id="categorydiv" class="panel panel-default">
+                <div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title"><?php echo __('Category'); ?></h3>
 					</div>
@@ -157,7 +157,7 @@
 			<?php endif; ?>
 
 			<?php if( $config->use_comment) : ?>
-				<div id="commentdiv" class="panel panel-default">
+                <div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title"><?php echo  __('Comments'); ?></h3>
 					</div>
