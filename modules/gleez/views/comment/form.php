@@ -72,7 +72,7 @@
 			</div>
 		<?php endif; ?>
 
-		<div id="postdiv" class="postarea <?php echo isset($errors['body']) ? 'error': ''; ?>">
+        <div class="postarea <?php echo isset($errors['body']) ? 'error' : ''; ?>">
 			<?php if ( ! ACL::check('administer comment') OR ! $is_edit) : ?>
 				<h3 class='hndle'><?php echo __('Leave a Comment') ?></h3>
 			<?php endif; ?>
