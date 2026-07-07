@@ -151,7 +151,7 @@
 		//add the popup element to form data
 		//add the datatable element to form data
 		$(submitBtn)
-				.attr('data-toggle', 'ajaxform')
+            .attr('data-toggle', 'ajaxForm')
 				.attr('class',		 sAttr)
 				.attr('href',		 '#')
 				.data('form',		 this.forms)
@@ -185,7 +185,7 @@
 			.not('input[name^="cancel"]')
 			.not('input[name$="no"]')
 			.not('input[name$="cancel"]')
-			.attr('data-toggle', 'ajaxform')
+            .attr('data-toggle', 'ajaxForm')
             .data('popup', this.$element)
 
 		//add close handler to no/cancel buttons

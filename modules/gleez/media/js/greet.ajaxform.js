@@ -22,29 +22,12 @@
     const Ajaxform = function (element, options) {
         // Set the options
         options.dataType = options.datatype
-        options.beforeSerialize = options.beforeserialize
-        options.beforeSubmit = options.beforesubmit || Ajaxform.prototype.beforeSubmit
+        options.beforeSubmit = options.beforeSubmit || Ajaxform.prototype.beforeSubmit
         options.success = options.success || Ajaxform.prototype.showResponse
         options.error = options.error || Ajaxform.prototype.errorResponse
-        options.resetForm = options.resetform
-        options.clearForm = options.clearform
-        options.closeKeepAlive = options.closekeepalive
-        options.extraData = options.extradata
-        options.replaceTarget = options.replacetarget
-        options.includeHidden = options.includehidden
-        options.uploadProgress = options.uploadprogress
 
         // Delete unused options
         delete options.datatype
-        delete options.beforeserialize
-        delete options.beforesubmit
-        delete options.resetform
-        delete options.clearform
-        delete options.closekeepalive
-        delete options.extradata
-        delete options.replacetarget
-        delete options.includehidden
-        delete options.uploadprogress
 
         this.init(element, options)
     };
@@ -69,7 +52,7 @@
 	
 		// Hide any errorContainers
 		$(form).find('.error-message-container').slideUp(250)
-		$(options.clkbtn).attr('disabled', true).addClass('InProgress')
+        $(options.clickedButton).attr('disabled', true).addClass('InProgress')
 	
 		return true
 	}
@@ -137,7 +120,7 @@
 
 		// Empty any previous error messages, insert the new errors and slide it in to view.
 		$(form).find('.error-message-container').empty().html(tmpl).slideDown(250)
-		$(form).data('clkbtn').removeAttr('disabled').removeClass('InProgress')
+        $(form).data('clickedButton').removeAttr('disabled').removeClass('InProgress')
 	}
 
 	Ajaxform.prototype.captureSubmittingElement = function(e) {
@@ -176,54 +159,54 @@
 	// GREET AJAXFROM PLUGIN DEFINITION
 	// =======================
 
-    const old = $.fn.aform;
+    const old = $.fn.ajaxform;
 
-    $.fn.aform = function (option) {
+    $.fn.ajaxform = function (option) {
 		return this.each(function () {
             const $this = $(this);
-            let data = $this.data('ajaxform');
-            const options = $.extend({}, $.fn.aform.defaults, $this.data(), typeof option == 'object' && option);
+            let data = $this.data('ajaxForm');
+            const options = $.extend({}, $.fn.ajaxform.defaults, $this.data(), typeof option == 'object' && option);
 
-            if (!data) $this.data('ajaxform', (data = new Ajaxform(this, options)))
+            if (!data) $this.data('ajaxForm', (data = new Ajaxform(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
 
-	$.fn.aform.defaults = {
+    $.fn.ajaxform.defaults = {
 		keyboard: true
 		, loading: true
 		, delegation: true
 		, datatype: 'json'
-		, type: 'POST'
-		, beforeserialize: false
-		, beforesubmit: false
-		, resetform: false
-		, clearform: false
-		, button: false
-		, clkbtn: false
-		, target: false
+        , type: 'POST',
+        beforeSerialize: false,
+        beforeSubmit: false,
+        resetForm: false,
+        clearForm: false,
+        button: false,
+        clickedButton: false,
+        target: false
 		, success: false
 		, context: false
 		, error: false
 		, complete: false
 		, traditional: false
 		, iframe: false
-		, semantic: false
-		, closekeepalive: false
-		, extradata: false
-		, replacetarget:'html'
-		, includehidden: true
-		, uploadprogress: false
+        , semantic: false,
+        closeKeepAlive: false,
+        extraData: false,
+        replaceTarget: 'html',
+        includeHidden: true,
+        uploadProgress: false
 	}
 
-	$.fn.aform.Constructor = Ajaxform
+    $.fn.ajaxform.Constructor = Ajaxform
 
 
 	// GREET AJAXFROM NO CONFLICT
 	// =================
 
-	$.fn.aform.noConflict = function () {
-		$.fn.aform = old
+    $.fn.ajaxform.noConflict = function () {
+        $.fn.ajaxform = old
 		return this
 	}
 
@@ -231,7 +214,7 @@
    // GREET AJAXFROM DATA-API
    // ==============
 
-	$(document).on('submit.ajaxform.data-api, click.ajaxform.data-api', '[data-toggle="ajaxform"]', function (e) {
+    $(document).on('submit.ajaxform.data-api, click.ajaxform.data-api', '[data-toggle="ajaxForm"]', function (e) {
         const $this = $(this),
             $target = $this.data('form') || $this.parents('form'),
             option = $.extend({}, $target.data(), $this.data());
@@ -239,12 +222,12 @@
         // If event has been canceled, don't proceed
 		if (!e.isDefaultPrevented()) {
 			e.preventDefault()
-			
-			option.clkbtn = $this
-			$target.data('clkbtn', $this)
+
+            option.clickedButton = $this
+            $target.data('clickedButton', $this)
 			$target.data('popup', option.popup)
 			$target.data('datatable', option.datatable)
-			$target.removeData('ajaxform').aform(option)
+            $target.removeData('ajaxForm').ajaxform(option)
 		}
 	})
 
