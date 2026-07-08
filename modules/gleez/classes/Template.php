@@ -85,12 +85,6 @@ abstract class Template extends Controller {
 	protected $_ajax = FALSE;
 
 	/**
-	 * Is pjax request?
-	 * @var boolean
-	 */
-	protected $_pjax = FALSE;
-
-	/**
 	 * is internal request?
 	 * @var boolean
 	 */
@@ -269,17 +263,10 @@ abstract class Template extends Controller {
 				$this->auto_render = FALSE;
 			}
 
-			// Test whether the current request is pjax request
-			if (isset($_SERVER['HTTP_X_PJAX']) && $this->_config->get('allow_pjax', FALSE))
-			{
-				$this->_pjax       = TRUE;
-			}
-
 			// Test whether the current request is jquery mobile request. ugly hack
 			if (isset($_SERVER['HTTP_X_THEME']) && $_SERVER['HTTP_X_THEME'] == 'mobile' && $this->_config->get('mobile_theme', FALSE))
 			{
 				$this->_ajax       = FALSE;
-				$this->_pjax       = FALSE;
 				$this->auto_render = TRUE;
 			}
 
@@ -287,7 +274,6 @@ abstract class Template extends Controller {
 			if (Request::is_mobile() && $this->_config->get('mobile_theme', FALSE))
 			{
 				$this->_ajax       = FALSE;
-				$this->_pjax       = FALSE;
 				$this->auto_render = TRUE;
 			}
 
@@ -505,10 +491,7 @@ abstract class Template extends Controller {
 			$output = $this->response->body();
 			$this->process_ajax();
 
-			if($this->_pjax) {
-				$output = '<title>'. $this->title .'</title>' . $this->response->body();
-			}
-			elseif ($this->_response_format === 'application/json')
+            if ($this->_response_format === 'application/json')
 			{
 				// Check for dataTables request
 				if ($this->request->query('draw') !== NULL) return;

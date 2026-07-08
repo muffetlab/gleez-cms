@@ -192,15 +192,4 @@
             $table.gDataTable($table.data())
 		})
 	})
-
-	// Added pajax and jquery mobile support
-    $(document).on('pjax:complete pagecontainerchange', function () {
-		if (!$.fn.dataTable) return
-		
-		$('[data-toggle="datatable"]').each(function () {
-            const $table = $(this);
-            $table.gDataTable($table.data())
-		})
-	})
-
 }(jQuery);
