@@ -17,7 +17,7 @@
 	// GREET FILEUPLOAD PUBLIC CLASS DEFINITION
 	// ======================
 
-    const Fileupload = function (element, options) {
+    const FileUpload = function (element, options) {
         this.options = options
         this.$element = $(element)
         this.isHTML5 = false
@@ -49,30 +49,30 @@
             this.$element.prepend(this.$hidden)
         }
 
-        this.$preview = this.$element.find('.fileupload-preview')
+        this.$preview = this.$element.find('.file-upload-preview')
         const height = this.$preview.css('height');
         if (this.$preview.css('display') !== 'inline' && height !== '0px' && height !== 'none')
             this.$preview.css('line-height', height)
 
         this.original = {
-            exists: this.$element.hasClass('fileupload-exists'),
+            exists: this.$element.hasClass('file-upload-exists'),
             preview: this.$preview.html(),
             hiddenVal: this.$hidden.val()
         }
 
         this.listen()
-        this.$element.trigger('init.gt.fileupload', this)
+        this.$element.trigger('init.gt.fileUpload', this)
     };
 
-    Fileupload.prototype.listen = function () {
-		this.$input.on('change.gt.fileupload', $.proxy(this.change, this))
-		$(this.$input[0].form).on('reset.gt.fileupload', $.proxy(this.reset, this))
+    FileUpload.prototype.listen = function () {
+        this.$input.on('change.gt.fileUpload', $.proxy(this.change, this))
+        $(this.$input[0].form).on('reset.gt.fileUpload', $.proxy(this.reset, this))
 
-		this.$element.find('[data-trigger="fileupload"]').on('click.gt.fileupload', $.proxy(this.trigger, this))
-		this.$element.find('[data-dismiss="fileupload"]').on('click.gt.fileupload', $.proxy(this.clear, this))
+        this.$element.find('[data-trigger="file-upload"]').on('click.gt.fileUpload', $.proxy(this.trigger, this))
+        this.$element.find('[data-dismiss="file-upload"]').on('click.gt.fileUpload', $.proxy(this.clear, this))
 	}
 
-	Fileupload.prototype.accept = function(file) {
+    FileUpload.prototype.accept = function (file) {
 		//restrict number of uploaded files when queue is 0
 		if(this.options.maxfiles > 0 && this.total >= this.options.maxfiles && this.options.queuefiles === 0){
 			this.acceptErrors(file, 'maxfiles')
@@ -96,7 +96,7 @@
 		return true
 	}
 
-	Fileupload.prototype.addFile = function(file, i) {
+    FileUpload.prototype.addFile = function (file, i) {
 		file.upload = {
 			progress    : 0
 			, total     : file.size
@@ -108,7 +108,7 @@
 		file.chunked = false
 		file.errors  = false
 
-		file.status = Fileupload.ADDED
+        file.status = FileUpload.ADDED
 		this.files.push(file)
 
 		// Show image preview
@@ -116,20 +116,20 @@
 
 		if(this.accept(file)) {
 			this.workQueue.push(i)
-			this.$element.trigger('add.gt.fileupload', [file, i])
+            this.$element.trigger('add.gt.fileUpload', [file, i])
 		}
 	}
 
-	Fileupload.prototype.change = function(e) {
+    FileUpload.prototype.change = function (e) {
 		if (e.target.files === undefined) e.target.files = e.target && e.target.value ? [ {name: e.target.value.replace(/^.+\\/, '')} ] : []
 		if (e.target.files.length === 0) return
 
 		this.$hidden.val('')
 		this.$hidden.attr('name', '')
 		this.$input.attr('name', this.name)
-		this.$element.find('.fileupload-error').css('display', 'none')
-		this.$element.find('.fileupload-success').css('display', 'none')
-		this.$element.find('.fileupload-message').css('display', 'none')
+        this.$element.find('.file-upload-error').css('display', 'none')
+        this.$element.find('.file-upload-success').css('display', 'none')
+        this.$element.find('.file-upload-message').css('display', 'none')
 
         let files = e.target.files || [],
             i,
@@ -150,7 +150,7 @@
 		}
 	}
 
-	Fileupload.prototype.processUpload = function() {
+    FileUpload.prototype.processUpload = function () {
         let fileIndex,
             that = this;
 
@@ -185,16 +185,16 @@
 		}
 	}
 
-	Fileupload.prototype.upload = function(file, fileIndex) {
-        if (file.status === Fileupload.ADDED && file.status !== Fileupload.UPLOADING) {
+    FileUpload.prototype.upload = function (file, fileIndex) {
+        if (file.status === FileUpload.ADDED && file.status !== FileUpload.UPLOADING) {
 			file.processing = true
-			file.status = Fileupload.UPLOADING
+            file.status = FileUpload.UPLOADING
 
 			// Create a new AJAX request
             const xhr = file.xhr = new XMLHttpRequest(),
                 that = this;
 
-            this.$element.trigger('upload.gt.fileupload', [file, fileIndex])
+            this.$element.trigger('upload.gt.fileUpload', [file, fileIndex])
 
 			if(this.isHTML5){
 				// Add event handlers
@@ -233,7 +233,7 @@
 		}
 	}
 
-	Fileupload.prototype.formDataUpload = function(xhr, file) {
+    FileUpload.prototype.formDataUpload = function (xhr, file) {
         const formData = new FormData();
 
         // Add the form data
@@ -250,7 +250,7 @@
 		this.send(xhr, file)
 	}
 
-	Fileupload.prototype.chunkUpload = function(xhr, file, start = 0) {
+    FileUpload.prototype.chunkUpload = function (xhr, file, start = 0) {
         const bpc = this.options.chunksize || 1024 * 1024;
 
         file.chunked = true
@@ -265,7 +265,7 @@
 		this.send(xhr, file)
 	}
 
-	Fileupload.prototype.send = function(xhr, file) {
+    FileUpload.prototype.send = function (xhr, file) {
 		// Open the AJAX call
 		xhr.open(this.options.method, this.options.remote, this.options.async)
 
@@ -274,7 +274,7 @@
 			xhr.setRequestHeader(k, v)
 		})
 
-		this.$element.trigger('send.gt.fileupload', file, xhr)
+        this.$element.trigger('send.gt.fileUpload', file, xhr)
 
 		// set the XMLHttpRequest header
 		xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
@@ -312,7 +312,7 @@
 		}
 	}
 
-	Fileupload.prototype.preview = function(file) {
+    FileUpload.prototype.preview = function (file) {
 		if (this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match('image.*') : file.name.match(/\.(gif|png|jpe?g)$/i)) && typeof FileReader !== "undefined") {
             const reader = new FileReader();
             const preview = this.$preview;
@@ -324,30 +324,30 @@
 				$img[0].src = re.target.result
 				file.result = re.target.result
 
-				element.find('.fileupload-filename').text(file.name)
+                element.find('.file-upload-filename').text(file.name)
 
 				// if parent has max-height, using `(max-)height: 100%` on child doesn't take padding and border into account
                 if (preview.css('max-height') !== 'none')
                     $img.css('max-height', parseInt(preview.css('max-height'), 10) - parseInt(preview.css('padding-top'), 10) - parseInt(preview.css('padding-bottom'), 10) - parseInt(preview.css('border-top'), 10) - parseInt(preview.css('border-bottom'), 10))
 
 				preview.html($img)
-				element.addClass('fileupload-exists').removeClass('fileupload-new')
+                element.addClass('file-upload-exists').removeClass('file-upload-new')
 
-                element.trigger('change.gt.fileupload', [that.files, file, that.$element])
+                element.trigger('change.gt.fileUpload', [that.files, file, that.$element])
 			}
 
 			reader.readAsDataURL(file)
 		} else {
-			this.$element.find('.fileupload-filename').text(file.name)
+            this.$element.find('.file-upload-filename').text(file.name)
 			this.$preview.text(file.name)
 
-			this.$element.addClass('fileupload-exists').removeClass('fileupload-new')
+            this.$element.addClass('file-upload-exists').removeClass('file-upload-new')
 
-			this.$element.trigger('change.gt.fileupload')
+            this.$element.trigger('change.gt.fileUpload')
 		}
 	}
 
-	Fileupload.prototype.clear = function(e) {
+    FileUpload.prototype.clear = function (e) {
 		if (e) e.preventDefault()
 
 		this.$hidden.val('')
@@ -356,40 +356,42 @@
         this.$input.val('')
 
 		this.$preview.html('')
-		this.$element.find('.fileupload-filename').text('')
-		this.$element.addClass('fileupload-new').removeClass('fileupload-exists')
-		this.$element.find('.fileupload-error').css('display', 'none')
-		this.$element.find('.fileupload-success').css('display', 'none')
-		this.$element.find('.fileupload-message').css('display', 'none')
+        this.$element.find('.file-upload-filename').text('')
+        this.$element.addClass('file-upload-new').removeClass('file-upload-exists')
+        this.$element.find('.file-upload-error').css('display', 'none')
+        this.$element.find('.file-upload-success').css('display', 'none')
+        this.$element.find('.file-upload-message').css('display', 'none')
 
 		if (e !== false) {
 			this.$input.trigger('change')
-			this.$element.trigger('clear.gt.fileupload')
+            this.$element.trigger('clear.gt.fileUpload')
 		}
 	}
 
-	Fileupload.prototype.reset = function() {
+    FileUpload.prototype.reset = function () {
 		this.clear(false)
 
 		this.$hidden.val(this.original.hiddenVal)
 		this.$preview.html(this.original.preview)
-		this.$element.find('.fileupload-filename').text('')
-		this.$element.find('.fileupload-error').css('display', 'none')
-		this.$element.find('.fileupload-success').css('display', 'none')
-		this.$element.find('.fileupload-message').css('display', 'none')
+        this.$element.find('.file-upload-filename').text('')
+        this.$element.find('.file-upload-error').css('display', 'none')
+        this.$element.find('.file-upload-success').css('display', 'none')
+        this.$element.find('.file-upload-message').css('display', 'none')
 
-		if (this.original.exists) this.$element.addClass('fileupload-exists').removeClass('fileupload-new')
-		 else this.$element.addClass('fileupload-new').removeClass('fileupload-exists')
+        if (this.original.exists)
+            this.$element.addClass('file-upload-exists').removeClass('file-upload-new')
+        else
+            this.$element.addClass('file-upload-new').removeClass('file-upload-exists')
 
-		this.$element.trigger('reset.gt.fileupload')
+        this.$element.trigger('reset.gt.fileUpload')
 	}
 
-	Fileupload.prototype.trigger = function(e) {
+    FileUpload.prototype.trigger = function (e) {
 		this.$input.trigger('click')
 		e.preventDefault()
 	}
 
-	Fileupload.prototype.loading = function(file) {
+    FileUpload.prototype.loading = function (file) {
 		file.$loading = $('<div class="loading">')
 
         const height = this.$preview.css('max-height') || this.$element.height(),
@@ -411,10 +413,10 @@
 		file.$loading .css('height', height).css('width',  width)
 		this.$element.prepend(file.$loading)
 
-		this.$element.trigger('loading.gt.fileupload', file)
+        this.$element.trigger('loading.gt.fileUpload', file)
 	}
 
-	Fileupload.prototype.fileProgress = function(event, file, fileIndex) {
+    FileUpload.prototype.fileProgress = function (event, file, fileIndex) {
 		if (event.lengthComputable) {
             let total = event.total,
                 loaded = event.loaded,
@@ -433,27 +435,27 @@
 				bytesSent : loaded
 			}
 
-			this.$element.trigger('progress.gt.fileupload', [file, fileIndex])
+            this.$element.trigger('progress.gt.fileUpload', [file, fileIndex])
 		}
 	}
 
-	Fileupload.prototype.fileAbort = function(event, file, fileIndex) {
-		file.status = Fileupload.CANCELED
+    FileUpload.prototype.fileAbort = function (event, file, fileIndex) {
+        file.status = FileUpload.CANCELED
 
 		file.$loading.remove()
-		this.$element.find('.fileupload-error').css('display', 'block')
-		this.$element.trigger('abort.gt.fileupload', [file, fileIndex])
+        this.$element.find('.file-upload-error').css('display', 'block')
+        this.$element.trigger('abort.gt.fileUpload', [file, fileIndex])
 	}
 
-	Fileupload.prototype.fileError = function(event, file, fileIndex) {
-		file.status = Fileupload.ERROR
+    FileUpload.prototype.fileError = function (event, file, fileIndex) {
+        file.status = FileUpload.ERROR
 
 		file.$loading.remove()
-		this.$element.find('.fileupload-error').css('display', 'block')
-		this.$element.trigger('error.gt.fileupload', [file, fileIndex])
+        this.$element.find('.file-upload-error').css('display', 'block')
+        this.$element.trigger('error.gt.fileUpload', [file, fileIndex])
 	}
 
-	Fileupload.prototype.uploadComplete = function(response, file, fileIndex) {
+    FileUpload.prototype.uploadComplete = function (response, file, fileIndex) {
         const that = this;
 
         if (file.chunked && typeof file.end !== "undefined" && file.end !== file.size) {
@@ -461,7 +463,7 @@
 		}
 		else {
 			// Update processing data
-			file.status    = Fileupload.SUCCESS
+            file.status = FileUpload.SUCCESS
 			file.upload.progress  = 100
 			file.upload.bytesSent = file.upload.total
 
@@ -481,14 +483,14 @@
 			this.doneQueue.push(fileIndex)
 			file.$loading.remove()
 
-			this.$element.find('.fileupload-success').css('display', 'block')
-			this.$element.trigger('uploaded.gt.fileupload', [response, file, fileIndex])
+            this.$element.find('.file-upload-success').css('display', 'block')
+            this.$element.trigger('uploaded.gt.fileUpload', [response, file, fileIndex])
 		}
 	}
 
-	Fileupload.prototype.acceptErrors = function(file, error) {
-		this.$element.trigger('error.gt.fileupload', [file, error])
-        const $message = this.$element.find('.fileupload-message');
+    FileUpload.prototype.acceptErrors = function (file, error) {
+        this.$element.trigger('error.gt.fileUpload', [file, error])
+        const $message = this.$element.find('.file-upload-message');
 
         if ($message.length > 0 && error) {
 			$message
@@ -500,14 +502,14 @@
 
 	// Helper function to enable pause of processing to wait
 	// for in process queue to complete
-	Fileupload.prototype.queueWait = function(timeout) {
+    FileUpload.prototype.queueWait = function (timeout) {
 		setTimeout(this.processUpload, timeout)
 	}
 
 	/**
 	* Pause the upload (works for chunked uploads only).
 	*/
-	Fileupload.prototype.pause = function(file){
+    FileUpload.prototype.pause = function (file) {
 		if (file.chunked && !file.paused) {
 			file.paused = true
 		}
@@ -516,14 +518,14 @@
 	/**
 	* Resume the upload (works for chunked uploads only).
 	*/
-	Fileupload.prototype.resume = function(file){
+    FileUpload.prototype.resume = function (file) {
 		if (file.chunked && file.paused) {
 			file.paused = false
 			//this.upload()
 		}
 	}
 
-	Fileupload.DEFAULTS = {
+    FileUpload.DEFAULTS = {
 		auto         : true,
 		async        : true,
 		json         : true,
@@ -543,41 +545,42 @@
 		maxchunksize : undefined
 	}
 
-	Fileupload.ADDED      = "added"
-	Fileupload.QUEUED     = "queued"
-	Fileupload.ACCEPTED   = Fileupload.QUEUED
-	Fileupload.UPLOADING  = "uploading"
-	Fileupload.PROCESSING = Fileupload.UPLOADING
-	Fileupload.CANCELED   = "canceled"
-	Fileupload.ERROR      = "error"
-	Fileupload.SUCCESS    = "success"
+    FileUpload.ADDED = "added"
+    FileUpload.QUEUED = "queued"
+    FileUpload.ACCEPTED = FileUpload.QUEUED
+    FileUpload.UPLOADING = "uploading"
+    FileUpload.PROCESSING = FileUpload.UPLOADING
+    FileUpload.CANCELED = "canceled"
+    FileUpload.ERROR = "error"
+    FileUpload.SUCCESS = "success"
 
 	// FILEUPLOAD PLUGIN DEFINITION
 	// ==========================
 
-    const old = $.fn.fileupload;
+    const old = $.fn.fileUpload;
 
-    $.fn.fileupload = function (option) {
+    $.fn.fileUpload = function (option) {
         const args = Array.prototype.slice.call(arguments, 1);
         return this.each(function () {
             const $this = $(this);
-            let data = $this.data('gt.fileupload');
-            const options = $.extend({}, Fileupload.DEFAULTS, $this.data(), typeof option == 'object' && option);
+            let data = $this.data('gt.fileUpload');
+            const options = $.extend({}, FileUpload.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
-            if (!data) $this.data('gt.fileupload', (data = new Fileupload(this, options)))
+            if (!data)
+                $this.data('gt.fileUpload', (data = new FileUpload(this, options)))
             if (typeof option == 'string') {
                 data[option].apply(data, args);
             }
 		})
 	}
 
-	$.fn.fileupload.Constructor = Fileupload
+    $.fn.fileUpload.Constructor = FileUpload
 
 	// FILEUPLOAD NO CONFLICT
 	// ====================
 
-	$.fn.fileupload.noConflict = function () {
-		$.fn.fileupload = old
+    $.fn.fileUpload.noConflict = function () {
+        $.fn.fileUpload = old
 		return this
 	}
 
@@ -585,15 +588,16 @@
 	// FILEUPLOAD DATA-API
 	// ==================
 
-	$(document).on('click.fileupload.data-api', '[data-provides="fileupload"]', function (e) {
+    $(document).on('click.fileUpload.data-api', '[data-provides="file-upload"]', function (e) {
         const $this = $(this);
-        if ($this.data('gt.fileupload')) return
-		$this.fileupload($this.data())
+        if ($this.data('gt.fileUpload'))
+            return
+        $this.fileUpload($this.data())
 
-        const $target = $(e.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');
+        const $target = $(e.target).closest('[data-dismiss="file-upload"],[data-trigger="file-upload"]');
         if ($target.length > 0) {
 			e.preventDefault()
-			$target.trigger('click.gt.fileupload')
+            $target.trigger('click.gt.fileUpload')
 		}
 	})
 
