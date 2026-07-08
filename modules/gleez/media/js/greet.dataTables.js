@@ -158,9 +158,9 @@
     // GREET DATATABLE PLUGIN DEFINITION
 	// =======================
 
-    const old = $.fn.gdatatable;
+    const old = $.fn.gDataTable;
 
-    $.fn.gdatatable = function (option) {
+    $.fn.gDataTable = function (option) {
 		return this.each(function () {
             const $this = $(this);
             let data = $this.data('gdatatable');
@@ -171,13 +171,13 @@
 		})
 	}
 
-	$.fn.gdatatable.Constructor = DataTable
+    $.fn.gDataTable.Constructor = DataTable
 
 	// GREET DATATABLES NO CONFLICT
 	// =================
 
-	$.fn.gdatatable.noConflict = function () {
-		$.fn.gdatatable = old
+    $.fn.gDataTable.noConflict = function () {
+        $.fn.gDataTable = old
 		return this
 	}
 
@@ -189,7 +189,7 @@
 		
 		$('[data-toggle="datatable"]').each(function () {
             const $table = $(this);
-            $table.gdatatable($table.data())
+            $table.gDataTable($table.data())
 		})
 	})
 
@@ -199,7 +199,7 @@
 		
 		$('[data-toggle="datatable"]').each(function () {
             const $table = $(this);
-            $table.gdatatable($table.data())
+            $table.gDataTable($table.data())
 		})
 	})
 
