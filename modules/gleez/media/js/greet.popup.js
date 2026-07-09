@@ -88,7 +88,7 @@
 
         // Now, if there are any forms in the popup, hijack them if necessary.
 		// Pass the popup object to the form as data() to handle popup events from form
-		if (data && this.options.consumeform) {
+        if (data && this.options.consumeForm) {
 			this.forms = $data.filter('form')
 			
 			//if only one form, remove and create custom buttons in popup footer
@@ -200,12 +200,11 @@
 
 	Popup.prototype.dataTable = function () {
         let dTable;
-        if (this.options.consumedt && this.options.table) {
+        if (this.options.consumeDataTable && this.options.table) {
             dTable = $(this.options.table);
             this.options.table = false
 			if(dTable.length > 0) this.options.table = dTable
-		}
-		else if (this.options.consumedt && !this.options.table){
+        } else if (this.options.consumeDataTable && !this.options.table) {
             dTable = $(this.options.click).closest('table.dataTable');
             if (dTable.length > 0) this.options.table = dTable
 		}
@@ -214,7 +213,7 @@
 	Popup.prototype.tab = function () {
         const that = this;
 
-        if (this.isShown && this.options.consumetab) {
+        if (this.isShown && this.options.consumeTab) {
 			this.$element.on('keydown.tabindex.popup', '[data-tabindex]', function (e) {
                 if (e.keyCode && e.keyCode === 9) {
                     let $next = $(this),
@@ -310,9 +309,9 @@
 			}
 		}
 
-		if (this.options.modaloverflow){
+        if (this.options.modalOverflow) {
             const modalOverflow = $(window).height() - 10 < this.$element.height();
-            if (modalOverflow || this.options.modaloverflow) {
+            if (modalOverflow || this.options.modalOverflow) {
 				this.$element
 					.css('margin-top', 0)
 					.addClass('popup-overflow')
@@ -604,12 +603,12 @@
 		, minWidth      : 100
 		, minHeight     : 100
 		, maxWidth      : 9999
-		, maxHeight     : 9999
-		, modaloverflow : false
-		, consumetab    : true
-		, consumeform   : true
-		, consumedt     : true
-		, table         : false
+        , maxHeight: 9999,
+        modalOverflow: false,
+        consumeTab: true,
+        consumeForm: true,
+        consumeDataTable: true,
+        table: false
 		, focusOn       : false
 		, replace       : false
 		, resize        : false
