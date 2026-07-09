@@ -72,6 +72,6 @@ body div.table-drag-changed-warning {
 	text-decoration:none;
 }
 
-.table-drag-hide {
-	/*display: none;*/
+.js .table-drag-hide {
+    display: none;
 }

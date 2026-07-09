@@ -213,12 +213,6 @@
 	 * Hide the columns containing weight/parent form elements.
 	 */
 	TableDrag.prototype.hideColumns = function () {
-		// Hide weight/parent cells and headers.
-        $('.table-drag-hide', this.table).css('display', 'none')
-
-		// Show TableDrag handles.
-        $('.table-drag-handle', this.table).css('display', '')
-
 		// Reduce the colspan of any effected multi-span columns.
         $('.table-drag-has-colspan', this.table).each(function () {
 			this.colSpan = this.colSpan - 1
