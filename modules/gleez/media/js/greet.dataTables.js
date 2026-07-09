@@ -163,10 +163,11 @@
     $.fn.gDataTable = function (option) {
 		return this.each(function () {
             const $this = $(this);
-            let data = $this.data('gdatatable');
+            let data = $this.data('gDataTable');
             const options = $.extend({}, DataTable.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
-            if (!data) $this.data('gdatatable', (data = new DataTable(this, options)))
+            if (!data)
+                $this.data('gDataTable', (data = new DataTable(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
