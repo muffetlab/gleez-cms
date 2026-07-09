@@ -223,9 +223,6 @@
         $('.table-drag-has-colspan', this.table).each(function () {
 			this.colSpan = this.colSpan - 1
 		})
-
-		// Trigger an event to allow other scripts to react to this display change.
-		$(this.table).trigger('columnschange', 'hide')
 	}
 
 	/**
@@ -304,13 +301,6 @@
 				$(self.oldRowElement).removeClass('drag-previous')
 			}
 
-			// Hack for IE6 that flickers uncontrollably if select lists are moved.
-            if (navigator.userAgent.indexOf('MSIE 6.') !== -1) {
-				$('select', this.table).css('display', 'none')
-			}
-
-			// Hack for Konqueror, prevent the blur handler from firing.
-			// Konqueror always gives links focus, even after returning false on mousedown.
 			self.safeBlur = false
 		
 			// @ Todo better event Handling
@@ -616,11 +606,6 @@
 			self.dragObject = null
 			$('body').removeClass('drag')
 			clearInterval(self.scrollInterval)
-
-			// Hack for IE6 that flickers uncontrollably if select lists are moved.
-            if (navigator.userAgent.indexOf('MSIE 6.') !== -1) {
-				$('select', this.table).css('display', 'block')
-			}
 		}
 	}
 
