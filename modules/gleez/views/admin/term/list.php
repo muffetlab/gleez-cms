@@ -4,11 +4,11 @@
 <?php echo Form::open(Route::get('admin/term')->uri(array('action' => 'confirm', 'id' => $id)), array('id'=>'menu-form', 'class'=>'form')); ?>
 	<div class="clearfix"></div>
 
-	<table id="term-admin-list" class="table table-striped table-bordered table-highlight" data-toggle="tabledrag">
+<table id="term-admin-list" class="table table-striped table-bordered table-highlight" data-toggle="tableDrag">
 		<thead>
 		<tr>
 			<th width="30%"><?php echo __('Name'); ?></th>
-			<th class="tabledrag-hide"><?php echo __('Weight'); ?></th>
+            <th class="table-drag-hide"><?php echo __('Weight'); ?></th>
 			<th width="50%"><?php echo __('Description'); ?></th>
 			<th width="10%"><?php echo __('Actions'); ?></th>
 		</tr>
@@ -28,7 +28,7 @@
 						echo HTML::chars($item['name'])
 					?>
 				</td>
-				<td class="tabledrag-hide">
+                <td class="table-drag-hide">
 					<?php echo Form::weight('tid:'.$item['id'].'[weight]', 0, array('class' => 'row-weight')) ?>
 					<?php echo Form::hidden('tid:'.$item['id'].'[pid]', $item['pid'], array('class' => 'row-parent')) ?>
 					<?php echo Form::hidden('tid:'.$item['id'].'[tid]', $item['id'], array('class' => 'row-id')) ?>

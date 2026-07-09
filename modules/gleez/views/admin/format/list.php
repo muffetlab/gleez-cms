@@ -2,12 +2,12 @@
 	<?php echo __('Text formats defines the HTML tags, code, and other formatting that can be used when entering text. Improper text format configuration is a security risk. Text formats are presented on content editing pages in the order defined on this page. The first format available to a user will be selected by default.'); ?>
 </div>
 
-<table id="text-format-order" class="table table-striped table-bordered table-apparent" data-toggle="tabledrag">
+<table id="text-format-order" class="table table-striped table-bordered table-apparent" data-toggle="tableDrag">
 	<thead>
 		<tr>
 			<th><?php echo __('Name') ?></th>
 			<th><?php echo __('Roles') ?></th>
-			<th class="tabledrag-hide"><?php echo __('Weight') ?></th>
+            <th class="table-drag-hide"><?php echo __('Weight') ?></th>
 			<th><?php echo __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -20,7 +20,7 @@
 			<td>
 				<?php echo $format['roles'] ?>
 			</td>
-			<td class="tabledrag-hide">
+            <td class="table-drag-hide">
 				<?php
 					echo Form::weight('formats['.$id.'][weight]', $format['weight'], array('class' => 'row-weight text-format-order-weight'));
 				?>

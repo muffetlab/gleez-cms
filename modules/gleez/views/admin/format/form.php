@@ -34,7 +34,7 @@
 							<td>
 								<?php echo __(':title', array(':title' => HTML::chars($filter->title))); ?>
 							</td>
-							<td class="tabledrag-hide" >
+                            <td class="table-drag-hide">
 								<?php echo Form::weight('filters['.$name.'][weight]', 0, array('class' => 'filter-order-weight')) ?>
 							</td>
 							<td>

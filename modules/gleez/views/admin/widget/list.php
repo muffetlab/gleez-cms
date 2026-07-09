@@ -10,7 +10,7 @@
 			<tr>
 				<th><?php echo __('Title') ?></th>
 				<th><?php echo __('Region') ?></th>
-				<th class="tabledrag-hide" ><?php echo __('Order') ?></th>
+                <th class="table-drag-hide"><?php echo __('Order') ?></th>
 				<th><?php echo __('Operations') ?></th>
 			</tr>
 		</thead>
@@ -34,7 +34,7 @@
 						<td>
 							<?php echo Form::select('widgets['.$widget->name.'][region]', $widget_regions, $widget->region, array('class' => 'form-control input-sm widget-region-select widget-region-'.$region)); ?>
 						</td>
-						<td class="tabledrag-hide" >
+                        <td class="table-drag-hide">
 							<?php
 								echo Form::weight('widgets['.$widget->name.'][weight]', $widget->weight, array('class' => 'row-weight widget-weight-'.$region), $weight_delta);
 								echo Form::hidden('widgets['.$widget->name.'][id]', $widget->id);

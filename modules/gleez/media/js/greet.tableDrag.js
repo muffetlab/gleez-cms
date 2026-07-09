@@ -194,11 +194,11 @@
 						cell = row.children(':nth-child(' + index + ')')
 						if (cell[0].colSpan > 1) {
 							// If this cell has a colspan, mark it so we can reduce the colspan.
-							$(cell[0]).addClass('tabledrag-has-colspan')
+                            $(cell[0]).addClass('table-drag-has-colspan')
 						}
 						else {
 							// Mark this cell so we can hide it.
-							$(cell[0]).addClass('tabledrag-hide')
+                            $(cell[0]).addClass('table-drag-hide')
 						}
 					}
 				})
@@ -214,13 +214,13 @@
 	 */
 	TableDrag.prototype.hideColumns = function () {
 		// Hide weight/parent cells and headers.
-		$('.tabledrag-hide', this.table).css('display', 'none')
+        $('.table-drag-hide', this.table).css('display', 'none')
 
 		// Show TableDrag handles.
-		$('.tabledrag-handle', this.table).css('display', '')
+        $('.table-drag-handle', this.table).css('display', '')
 
 		// Reduce the colspan of any effected multi-span columns.
-		$('.tabledrag-has-colspan', this.table).each(function () {
+        $('.table-drag-has-colspan', this.table).each(function () {
 			this.colSpan = this.colSpan - 1
 		})
 
@@ -252,7 +252,7 @@
         const self = this;
 
         // Create the handle.
-        const handle = $('<a href="#" class="tabledrag-handle"><div class="handle">&nbsp;</div></a>').attr('title', 'Drag to re-order');
+        const handle = $('<a href="#" class="table-drag-handle"><div class="handle">&nbsp;</div></a>').attr('title', 'Drag to re-order');
 
         // Insert the handle after indentations (if any).
 		if ($('td:first .indentation:last', item).length) {
@@ -267,9 +267,9 @@
 
 		// Add hover action for the handle.
         handle.on('mouseenter', function () {
-			self.dragObject == null ? $(this).addClass('tabledrag-handle-hover') : null
+            self.dragObject == null ? $(this).addClass('table-drag-handle-hover') : null
         }).on('mouseleave', function () {
-			self.dragObject == null ? $(this).removeClass('tabledrag-handle-hover') : null
+            self.dragObject == null ? $(this).removeClass('table-drag-handle-hover') : null
 		})
 
 		// Add the mousedown action for the handle.
@@ -284,7 +284,7 @@
 
 			// If there's a lingering row object from the keyboard, remove its focus.
 			if (self.rowObject) {
-                $('a.tabledrag-handle', self.rowObject.element).trigger('blur');
+                $('a.table-drag-handle', self.rowObject.element).trigger('blur');
 			}
 
 			// Create a new rowObject for manipulation of this row.
@@ -295,7 +295,7 @@
 			self.table.bottomY = self.table.topY + self.table.offsetHeight
 
 			// Add classes to the handle and row.
-			$(this).addClass('tabledrag-handle-hover')
+            $(this).addClass('table-drag-handle-hover')
 			$(item).addClass('drag')
 
 			// Set the document to use the move cursor during drag.
@@ -326,13 +326,13 @@
 
 		// Similar to the hover event, add a class when the handle is focused.
         handle.on('focus', function () {
-			$(this).addClass('tabledrag-handle-hover')
+            $(this).addClass('table-drag-handle-hover')
 			self.safeBlur = true
 		})
 
 		// Remove the handle class on blur and fire the same function as a mouseup.
         handle.on('blur', function (event) {
-			$(this).removeClass('tabledrag-handle-hover');
+            $(this).removeClass('table-drag-handle-hover');
 			if (self.rowObject && self.safeBlur) {
 				self.dropRow(event, self)
 			}
@@ -364,7 +364,7 @@
 						self.rowObject.direction = 'up'
 						keyChange = true
 
-						if ($(item).is('.tabledrag-root')) {
+                        if ($(item).is('.table-drag-root')) {
 							// Swap with the previous top-level row.
                             groupHeight = 0;
                             while (previousRow && $('.indentation', previousRow).size()) {
@@ -405,7 +405,7 @@
 						self.rowObject.direction = 'down'
 						keyChange = true
 
-					 	if ($(item).is('.tabledrag-root')) {
+                        if ($(item).is('.table-drag-root')) {
 							// Swap with the next group (necessarily a top-level one).
                             groupHeight = 0;
                             const nextGroup = new self.row(nextRow, 'keyboard', self.indentEnabled, self.maxDepth, false);
@@ -610,7 +610,7 @@
 		// Functionality specific only to mouseup event.
 		if (self.dragObject != null) {
             if (droppedRow) {
-                $('.tabledrag-handle', droppedRow).removeClass('tabledrag-handle-hover')
+                $('.table-drag-handle', droppedRow).removeClass('table-drag-handle-hover')
             }
 
 			self.dragObject = null
@@ -1069,7 +1069,7 @@
 		minIndent = nextRow ? $('.indentation', nextRow).size() : 0
 
 		// Maximum indentation:
-		if (!prevRow || $(prevRow).is(':not(.draggable)') || $(this.element).is('.tabledrag-root')) {
+        if (!prevRow || $(prevRow).is(':not(.draggable)') || $(this.element).is('.table-drag-root')) {
 			// Do not indent:
 			// - the first row in the table,
 			// - rows dragged below a non-draggable row,
@@ -1078,7 +1078,7 @@
 		}
 		else {
 			// Do not go deeper than as a child of the previous row.
-			maxIndent = $('.indentation', prevRow).size() + ($(prevRow).is('.tabledrag-leaf') ? 0 : 1)
+            maxIndent = $('.indentation', prevRow).size() + ($(prevRow).is('.table-drag-leaf') ? 0 : 1)
 
 			// Limit by the maximum allowed depth for the table.
 			if (this.maxDepth) {
@@ -1199,7 +1199,7 @@
         const marker = Gleez.theme('tableDragChangedMarker');
         const cell = $('td:first', this.element);
 
-        if ($('span.tabledrag-changed', cell).length === 0) {
+        if ($('span.table-drag-changed', cell).length === 0) {
 			cell.append(marker)
 		}
 	}
@@ -1212,7 +1212,7 @@
 	}
 
 	Gleez.theme.prototype.tableDragChangedMarker = function () {
-		return '<span class="warning tabledrag-changed">*</span>'
+        return '<span class="warning table-drag-changed">*</span>'
 	}
 
 	Gleez.theme.prototype.tableDragIndentation = function () {
@@ -1220,33 +1220,34 @@
 	}
 
 	Gleez.theme.prototype.tableDragChangedWarning = function () {
-		return '<div class="tabledrag-changed-warning  alert alert-warning">' + Gleez.theme('tableDragChangedMarker') + ' ' + 'Changes made in this table will not be saved until the form is submitted.' + '</div>';
+        return '<div class="table-drag-changed-warning alert alert-warning">' + Gleez.theme('tableDragChangedMarker') + ' ' + 'Changes made in this table will not be saved until the form is submitted.' + '</div>';
 	}
 
 	// GREET TABLEDRAG PLUGIN DEFINITION
 	// =======================
 
-    const old = $.fn.tabledrag;
+    const old = $.fn.tableDrag;
 
-    $.fn.tabledrag = function (option) {
+    $.fn.tableDrag = function (option) {
 		// ugly hack to access the object for widgets
 		$.fn.extend({
 			vObject: function() {
-				return $(this).data('tabledrag')
+                return $(this).data('tableDrag')
 			}
 		})
 
 		return this.each(function () {
             const $this = $(this);
-            let data = $this.data('tabledrag');
-            const options = $.extend({}, $.fn.tabledrag.defaults, $this.data(), typeof option == 'object' && option);
+            let data = $this.data('tableDrag');
+            const options = $.extend({}, $.fn.tableDrag.defaults, $this.data(), typeof option == 'object' && option);
 
-            if (!data) $this.data('tabledrag', (data = new TableDrag(this, options)))
+            if (!data)
+                $this.data('tableDrag', (data = new TableDrag(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
 
-	$.fn.tabledrag.defaults = {
+    $.fn.tableDrag.defaults = {
 		draggableClass: 'draggable'
 
 		// The parent option allows elements to be children of one another.
@@ -1288,14 +1289,14 @@
 		}
 	}
 
-	$.fn.tabledrag.Constructor = TableDrag
+    $.fn.tableDrag.Constructor = TableDrag
 
 
 	// GREET TABLEDRAG NO CONFLICT
 	// =================
 
-	$.fn.tabledrag.noConflict = function () {
-		$.fn.tabledrag = old
+    $.fn.tableDrag.noConflict = function () {
+        $.fn.tableDrag = old
 		return this
 	}
 
@@ -1303,9 +1304,9 @@
 	// ==============
 
     $(window).on('load.tabledrag.data-api', function () {
-		$('[data-toggle="tabledrag"]').each(function () {
+        $('[data-toggle="tableDrag"]').each(function () {
             const $table = $(this);
-            $table.tabledrag($table.data())
+            $table.tableDrag($table.data())
 		})
 	})
 }(jQuery);

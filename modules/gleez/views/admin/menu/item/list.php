@@ -3,12 +3,13 @@
 
 	<?php echo Form::open(Route::get('admin/menu/item')->uri(array('action' => 'confirm', 'id' => $id)), array('id'=>'menu-form', 'class'=>'form')); ?>
 
-	<table id="admin-list-menu-items" class="table table-striped table-bordered table-highlight" data-toggle="tabledrag">
+    <table id="admin-list-menu-items" class="table table-striped table-bordered table-highlight"
+           data-toggle="tableDrag">
 		<thead>
 			<tr>
 				<th><?php echo __('Name') ?></th>
 				<th><?php echo __('Enabled') ?></th>
-				<th class="tabledrag-hide"><?php echo __('Weight') ?></th>
+                <th class="table-drag-hide"><?php echo __('Weight') ?></th>
 				<th><?php echo __('Actions') ?></th>
 			</tr>
 		</thead>
@@ -31,7 +32,7 @@
                     <?php echo Form::checkbox('mlid:' . $item['id'] . '[hidden]', TRUE, (bool) $item['active']); ?>
 				</td>
 
-				<td class="tabledrag-hide">
+                <td class="table-drag-hide">
 					<?php echo Form::weight('mlid:'.$item['id'].'[weight]', 0, array('class' => 'row-weight')) ?>
 					<?php echo Form::hidden('mlid:'.$item['id'].'[plid]', $item['pid'], array('class' => 'row-parent')) ?>
 					<?php echo Form::hidden('mlid:'.$item['id'].'[mlid]', $item['id'], array('class' => 'row-id')) ?>

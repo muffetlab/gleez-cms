@@ -1,12 +1,8 @@
-/**
- * TableDrag behavior.
- *
- * @see tabledrag.js
- */
 body.drag {
   cursor: move;
 }
-.draggable a.tabledrag-handle {
+
+.draggable a.table-drag-handle {
 	cursor: move;
 	float: left; /* LTR */
 	height: 1.7em;
@@ -14,16 +10,19 @@ body.drag {
 	padding: 0.42em 1.5em 0.42em 0.5em; /* LTR */
 	text-decoration: none;
 }
-a.tabledrag-handle:hover {
+
+a.table-drag-handle:hover {
   text-decoration: none;
 }
-a.tabledrag-handle .handle {
+
+a.table-drag-handle .handle {
   background: url(../images/draggable.png) no-repeat 0 0;
   height: 13px;
   margin-top: 4px;
   width: 13px;
 }
-a.tabledrag-handle-hover .handle {
+
+a.table-drag-handle-hover .handle {
   background-position: 0 -20px;
 }
 a.sort{
@@ -45,7 +44,8 @@ div.tree-child-last {
 div.tree-child-horizontal {
   background: url('../images/tree.png') no-repeat -11px center;
 }
-.tabledrag-toggle-weight-wrapper {
+
+.table-drag-toggle-weight-wrapper {
   text-align: right; /* LTR */
 }
 tr.drag {
@@ -54,13 +54,16 @@ tr.drag {
 tr.drag-previous {
 	background-color: #ffd;
 }
-.tabledrag-toggle-weight {
+
+.table-drag-toggle-weight {
 	font-size: 0.9em;
 }
-body div.tabledrag-changed-warning {
+
+body div.table-drag-changed-warning {
 	margin-bottom: 0.5em;
 }
-.draggable a.tabledrag-handle {
+
+.draggable a.table-drag-handle {
 	cursor:move;
 	float:left;
 	height:1.7em;
@@ -68,6 +71,7 @@ body div.tabledrag-changed-warning {
 	padding:0.42em 1.5em 0.42em 0.5em;
 	text-decoration:none;
 }
-.tabledrag-hide{
+
+.table-drag-hide {
 	/*display: none;*/
 }
