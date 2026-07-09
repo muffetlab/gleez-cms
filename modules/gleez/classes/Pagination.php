@@ -532,7 +532,7 @@ class Pagination {
      * @return  void
      * @throws Kohana_Exception
      */
-	public function __set($key, $value)
+    public function __set(string $key, $value)
 	{
 		$this->setup(array($key => $value));
 	}
