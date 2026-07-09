@@ -12,8 +12,7 @@
 +function ($) {
 	'use strict';
 
-	// GREET DATATABLE CLASS DEFINITION
-	// ======================
+    // Greet DataTable Class Definition
 
     const DataTable = function (table, options) {
         const $table = $(table),
@@ -155,8 +154,7 @@
         }
 	}
 
-    // GREET DATATABLE PLUGIN DEFINITION
-	// =======================
+    // Greet DataTable Plugin Definition
 
     const old = $.fn.gDataTable;
 
@@ -174,16 +172,14 @@
 
     $.fn.gDataTable.Constructor = DataTable
 
-	// GREET DATATABLES NO CONFLICT
-	// =================
+    // Greet DataTables No Conflict
 
     $.fn.gDataTable.noConflict = function () {
         $.fn.gDataTable = old
 		return this
 	}
 
-	// GREET DATATABLES DATA-API
-	// ==============
+    // Greet DataTables Data API
 
     $(window).on('load.datatable.data-api', function () {
 		if (!$.fn.dataTable) return

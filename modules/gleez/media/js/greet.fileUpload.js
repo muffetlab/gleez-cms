@@ -14,8 +14,7 @@
 +function ($) {
 	'use strict';
 
-	// GREET FILEUPLOAD PUBLIC CLASS DEFINITION
-	// ======================
+    // Greet FileUpload Class Definition
 
     const FileUpload = function (element, options) {
         this.options = options
@@ -554,8 +553,7 @@
     FileUpload.ERROR = "error"
     FileUpload.SUCCESS = "success"
 
-	// FILEUPLOAD PLUGIN DEFINITION
-	// ==========================
+    // Greet FileUpload Plugin Definition
 
     const old = $.fn.fileUpload;
 
@@ -576,17 +574,14 @@
 
     $.fn.fileUpload.Constructor = FileUpload
 
-	// FILEUPLOAD NO CONFLICT
-	// ====================
+    // Greet FileUpload No Conflict
 
     $.fn.fileUpload.noConflict = function () {
         $.fn.fileUpload = old
 		return this
 	}
 
-
-	// FILEUPLOAD DATA-API
-	// ==================
+    // Greet FileUpload Data API
 
     $(document).on('click.fileUpload.data-api', '[data-provides="file-upload"]', function (e) {
         const $this = $(this);

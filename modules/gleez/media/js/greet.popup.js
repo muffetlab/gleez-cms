@@ -14,8 +14,7 @@
 +function ($) {
 	'use strict';
 
-	// GREET POPUP CLASS DEFINITION
-	// ======================
+    // Greet Popup Class Definition
 
     const Popup = function (element, options) {
         this.init(element, options)
@@ -621,8 +620,7 @@
 		, template      : '<div id="{popup.id}" class="popup fade" tabIndex="-1" role="dialog"><div class="popup-dialog"><div class="popup-content"><div class="popup-header"><button type="button" class="close" data-dismiss="popup">&times;</button><h4 class="popup-title">&nbsp;</h4></div><div class="popup-body"></div><div class="popup-footer"></div></div></div></div>'
 	}
 
-	// GREET POPUP PLUGIN DEFINITION
-	// =======================
+    // Greet Popup Plugin Definition
 
     const old = $.fn.popup;
 
@@ -644,16 +642,14 @@
 
 	$.fn.popup.Constructor = Popup
 
-	// GREET POPUP NO CONFLICT
-	// =================
+    // Greet Popup No Conflict
 
 	$.fn.popup.noConflict = function () {
 		$.fn.popup = old
 		return this
 	}
 
-	// GREET POPUP DATA-API
-	// ==============
+    // Greet Popup Data API
 
 	$(document).on('click.popup.data-api', '[data-toggle="popup"]', function (e) {
         const $this = $(this);

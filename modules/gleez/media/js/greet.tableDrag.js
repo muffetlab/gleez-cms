@@ -18,6 +18,9 @@
 
 +function ($) {
 	'use strict';
+
+    // Greet TableDrag Class Definition
+
     /**
      * Constructor for the tableDrag object. Provides table and field manipulation.
      *
@@ -1202,8 +1205,7 @@
         return '<div class="table-drag-changed-warning alert alert-warning">' + Gleez.theme('tableDragChangedMarker') + ' ' + 'Changes made in this table will not be saved until the form is submitted.' + '</div>';
 	}
 
-	// GREET TABLEDRAG PLUGIN DEFINITION
-	// =======================
+    // Greet TableDrag Plugin Definition
 
     const old = $.fn.tableDrag;
 
@@ -1270,17 +1272,14 @@
 
     $.fn.tableDrag.Constructor = TableDrag
 
-
-	// GREET TABLEDRAG NO CONFLICT
-	// =================
+    // Greet TableDrag No Conflict
 
     $.fn.tableDrag.noConflict = function () {
         $.fn.tableDrag = old
 		return this
 	}
 
-	// GREET TABLEDRAG DATA-API
-	// ==============
+    // Greet TableDrag Data API
 
     $(window).on('load.tabledrag.data-api', function () {
         $('[data-toggle="tableDrag"]').each(function () {

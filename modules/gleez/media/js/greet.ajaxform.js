@@ -16,8 +16,7 @@
 +function ($) {
 	'use strict';
 
-	// GREET AJAXFROM CLASS DEFINITION
-	// ======================
+    // Greet AjaxForm Class Definition
 
     const Ajaxform = function (element, options) {
         // Set the options
@@ -156,8 +155,7 @@
 		setTimeout(function() { form.clk = form.clk_x = form.clk_y = null; }, 100)
 	}
 
-	// GREET AJAXFROM PLUGIN DEFINITION
-	// =======================
+    // Greet AjaxForm Plugin Definition
 
     const old = $.fn.ajaxform;
 
@@ -201,18 +199,14 @@
 
     $.fn.ajaxform.Constructor = Ajaxform
 
-
-	// GREET AJAXFROM NO CONFLICT
-	// =================
+    // Greet AjaxForm No Conflict
 
     $.fn.ajaxform.noConflict = function () {
         $.fn.ajaxform = old
 		return this
 	}
 
-
-   // GREET AJAXFROM DATA-API
-   // ==============
+    // Greet AjaxForm Data API
 
     $(document).on('submit.ajaxform.data-api, click.ajaxform.data-api', '[data-toggle="ajaxForm"]', function (e) {
         const $this = $(this),
