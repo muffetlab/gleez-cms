@@ -74,8 +74,8 @@
 
     FileUpload.prototype.accept = function (file) {
 		//restrict number of uploaded files when queue is 0
-		if(this.options.maxfiles > 0 && this.total >= this.options.maxfiles && this.options.queuefiles === 0){
-			this.acceptErrors(file, 'maxfiles')
+        if (this.options.maxFiles > 0 && this.total >= this.options.maxFiles && this.options.queueFiles === 0) {
+            this.acceptErrors(file, 'maxFiles')
 			return false
 		}
 
@@ -155,8 +155,8 @@
             that = this;
 
         // Check to see if are in queue mode
-		if (this.options.queuefiles > 0 && this.processingQueue.length >= this.options.queuefiles) {
-			this.queueWait(this.options.queuewait)
+        if (this.options.queueFiles > 0 && this.processingQueue.length >= this.options.queueFiles) {
+            this.queueWait(this.options.queueWait)
 		} 
 		else {
 			// Take first thing off work queue
@@ -237,7 +237,7 @@
         const formData = new FormData();
 
         // Add the form data
-		formData.append(this.options.inputname, file)
+        formData.append(this.options.inputName, file)
 
 		// Add the rest of the formData
 		$.each(this.options.data, function(key, value) {
@@ -251,7 +251,7 @@
 	}
 
     FileUpload.prototype.chunkUpload = function (xhr, file, start = 0) {
-        const bpc = this.options.chunksize || 1024 * 1024;
+        const bpc = this.options.chunkSize || 1024 * 1024;
 
         file.chunked = true
 		file.paused  = false
@@ -531,18 +531,18 @@
 		json         : true,
 		method       : 'POST',
 		remote       : false,
-		inputname    : 'files',
+        inputName: 'files',
 		multiple     : '',
 		size         : 0, // Max individual file size
         filetypes: {}, // Allowed file extensions. Example: 'image/png', 'image/jpeg'
 		data         : {},
 		headers      : {},
-		maxfiles     : 15, // Ignored if queuefiles is set > 0
-		queuefiles   : 0, // Max files before queueing (for large volume uploads)
-		queuewait    : 200, // Queue wait time if full
+        maxFiles: 15, // Ignored if queueFiles is set > 0
+        queueFiles: 0, // Max files before queueing (for large volume uploads)
+        queueWait: 200, // Queue wait time if full
 		chunked      : false,
-		chunksize    : 1048576, // Size of each chunk (default 1024*1024, 1 MiB)
-		maxchunksize : undefined
+        chunkSize: 1048576, // Size of each chunk (default 1024*1024, 1 MiB)
+        maxChunkSize: undefined
 	}
 
     FileUpload.ADDED = "added"
