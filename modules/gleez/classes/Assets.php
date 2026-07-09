@@ -782,12 +782,6 @@ class Assets {
 				// Get contents of file
 				$contents = file_get_contents($file);
 
-				// Compress if allowed
-				if ($config['compress'])
-				{
-					// @todo self::minify($contents);
-				}
-
 				// Append
 				$compiled .= PHP_EOL.$contents;
 			}

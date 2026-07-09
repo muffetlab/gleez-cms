@@ -56,7 +56,6 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 * TinyMCE [(https://www.tiny.cloud/tinymce/)](https://www.tiny.cloud/tinymce/)
 * PHP Markdown [(https://github.com/michelf/php-markdown)](https://github.com/michelf/php-markdown)
 * PHPMailer [(https://github.com/PHPMailer/PHPMailer)](https://github.com/PHPMailer/PHPMailer)
-* JSMin [(https://github.com/rgrove/jsmin-php)](https://github.com/rgrove/jsmin-php)
 
 ## Credits
 

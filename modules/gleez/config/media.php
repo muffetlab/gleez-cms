@@ -11,9 +11,6 @@ return array(
     // Write the files to the public directory?
 	'cache' => Kohana::$environment === Kohana::PRODUCTION,
 
-    // Compress assets?
-	'compress' => Kohana::$environment === Kohana::PRODUCTION,
-
     // Combine multiple css/js files into single file. Defaults to FALSE
 	'combine' => FALSE,
 
