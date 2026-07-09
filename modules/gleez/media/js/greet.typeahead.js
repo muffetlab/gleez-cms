@@ -116,7 +116,7 @@
     Typeahead.prototype.lookup = function () {
         let items;
         if (this.ajax) {
-		this.ajaxer()
+            this.handleAjax()
 	  }
 	  else {
 		this.query = this.$element.val()
@@ -159,7 +159,7 @@
 	}
 
     // Filters relevant results
-	Typeahead.prototype.grepper = function(data) {
+    Typeahead.prototype.filter = function (data) {
         const that = this;
 
         if (data && data.length && !data[0].hasOwnProperty(that.options.display)) {
@@ -204,18 +204,21 @@
 	}
   
 	Typeahead.prototype.sorter = function (items) {
-        let beginswith = [],
+        let beginsWith = [],
             caseSensitive = [],
             caseInsensitive = [],
             item;
 
         while (item = items.shift()) {
-			if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
-			else if (~item.indexOf(this.query)) caseSensitive.push(item)
-			else caseInsensitive.push(item)
+            if (!item.toLowerCase().indexOf(this.query.toLowerCase()))
+                beginsWith.push(item)
+            else if (~item.indexOf(this.query))
+                caseSensitive.push(item)
+            else
+                caseInsensitive.push(item)
 		}
-	
-		return beginswith.concat(caseSensitive, caseInsensitive)
+
+        return beginsWith.concat(caseSensitive, caseInsensitive)
 	}
   
 	Typeahead.prototype.highlighter = function (item) {
@@ -380,7 +383,7 @@
 	}
 
 	// Handle AJAX source
-	Typeahead.prototype.ajaxer = function () {
+    Typeahead.prototype.handleAjax = function () {
         const that = this,
             query = that.$element.val();
 
@@ -459,8 +462,8 @@
 	  
         // Save for selection retrieval
 		this.ajax.data = data
-	  
-		items = this.grepper(this.ajax.data)
+
+        items = this.filter(this.ajax.data)
 	  
 		if (!items || !items.length) {
 			return this.shown ? this.hide() : this
