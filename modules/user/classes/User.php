@@ -146,7 +146,7 @@ class User {
      * @return boolean TRUE if user belongs to group(s)
      * @throws Kohana_Exception
      */
-	public static function belongsto($groups)
+    public static function belongsTo($groups)
 	{
 		if ($groups == 'all' OR is_null($groups))
 		{

@@ -456,7 +456,7 @@ class Widgets {
 		}
 
 		// role based widget access
-		if ( ! User::belongsto($widget->roles))
+        if (!User::belongsTo($widget->roles))
 		{
 			$widget->visible = FALSE;
 		}
