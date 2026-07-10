@@ -118,7 +118,7 @@
 					}
 				?>
 			</div>
-			<p class="help-signin">
+            <p class="help-sign-up">
 				<?php _e("If you don't use any of these services, you can create an account.") ?>
 				<?php _e('Fast, safe & secure way!') ?>
 			</p>
