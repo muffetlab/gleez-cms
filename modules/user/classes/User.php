@@ -375,7 +375,7 @@ class User {
 	}
 
     /**
-     * Get user avatar, and creates a image link
+     * Get user avatar, and creates an image link.
      *
      * Optionally, if it is allowed, used [Gravatar].
      *

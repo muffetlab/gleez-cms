@@ -66,7 +66,7 @@ class Gravatar {
 	protected $_email;
 
 	/**
-	 * If default image shall be shown even if user the has an gravatar profile.
+     * If default image shall be shown even if user the has a gravatar profile.
 	 * @var boolean
 	 */
 	protected $_default_force = FALSE;
@@ -281,7 +281,7 @@ class Gravatar {
 	}
 
     /**
-     * Creates a image link
+     * Creates an image link.
      *
      * Example:
      * ~~~
@@ -309,7 +309,7 @@ class Gravatar {
 		// Merge attributes
 		$attrs = Arr::merge($attributes, (array) $attrs);
 
-		// Return html
+        // Return HTML
 		return HTML::resize($this, $attrs, $protocol, $index);
 	}
 
@@ -682,11 +682,10 @@ class Gravatar {
 	}
 
 	/**
-	 * Check if need to force the default image to always load
-	 *
-	 * @since   1.2.0
+     * Check if we need to force the default image to always load.
 	 *
 	 * @return boolean
+     * @since 1.2.0
 	 */
 	public function isForceDefault()
 	{

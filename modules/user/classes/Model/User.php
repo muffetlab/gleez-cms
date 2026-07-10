@@ -43,7 +43,7 @@ class Model_User extends Gleez_Model
 	);
 
 	/**
-	 * Auto fill create column
+     * Autofill create column
 	 * @var array
 	 */
 	protected $_created_column = array('column' => 'created', 'format' => TRUE);
@@ -171,7 +171,7 @@ class Model_User extends Gleez_Model
                 return HTML::chars($this->get($column) ?? '');
             case 'nick':
 				// Return the best version of the user's name.
-                // Either their specified nick name, or fall back to the username.
+                // Either their specified nickname, or fall back to the username.
 				return empty($nick) ? HTML::chars($this->name) : HTML::chars($nick);
             case 'rawurl':
 				return Route::get('user')->uri(array('id' => $this->id));
@@ -252,7 +252,7 @@ class Model_User extends Gleez_Model
 	 */
 	protected function before_delete($id, $soft = FALSE)
 	{
-		// If it is an internal request (eg. popup dialog) and id < 3
+        // If it is an internal request (e.g. popup dialog) and id < 3
 		if ($id == User::GUEST_ID OR $id == User::ADMIN_ID)
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to delete system user.');
@@ -629,7 +629,7 @@ class Model_User extends Gleez_Model
     /**
      * Sign-up using data from OAuth provider.
      *
-     * Override this method to add your own sign up process.
+     * Override this method to add your own sign-up process.
      *
      * @param array $data
      * @param array $provider
@@ -1028,8 +1028,8 @@ class Model_User extends Gleez_Model
 
 		Kohana::$log->add(Log::INFO, 'User %name used one-time login link.', array('%name' => $this->name));
 
-		// It could be that the user resets his password before he confirmed his sign-up,
-		// or a the reset password form could be used in case the original sign-up confirmation mail got lost.
+        // It could be that the user resets his password before he confirmed his sign-up, or the reset password form
+        // could be used in case the original sign-up confirmation mail got lost.
 		// Since the user could only come to this point if he supplied a valid email address,
 		// we confirm his account right here.
 		if ( ! $this->has('roles', User::USER_ROLE_ID))

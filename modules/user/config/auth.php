@@ -66,7 +66,7 @@ return array
 	 * This helps prevent brute-force attacks.
 	 */
 	'auth' => array(
-        // Define the maximum failed attempts to login. Set 0 to disable the login jail.
+        // Define the maximum failed attempts to log in. Set 0 to disable the login jail.
 		'max_failed_logins' => 5,
 
         // Define the time that user who archive the max_failed_logins will need to wait before his next attempt.

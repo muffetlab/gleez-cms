@@ -130,7 +130,7 @@ class Controller_Admin_User extends Controller_Admin {
 					// Create the User
 					$post->save();
 
-					// Make sure to $_POST is set and it is array
+                    // Ensure $_POST['roles'] is set and is an array
 					if ( ! isset($_POST['roles']) OR ! is_array($_POST['roles']))
 					{
 						$_POST['roles'] = array();
@@ -230,7 +230,7 @@ class Controller_Admin_User extends Controller_Admin {
                     $post->values($_POST, ['name', 'nick', 'mail', 'status']);
 					$post->save();
 
-					// Make sure to $_POST is set and it is array
+                    // Ensure $_POST['roles'] is set and is an array
 					if ( ! isset($_POST['roles']) OR ! is_array($_POST['roles']))
 					{
 						$_POST['roles'] = array();

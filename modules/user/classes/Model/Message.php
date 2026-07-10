@@ -41,7 +41,7 @@ class Model_Message extends Gleez_Model
 	);
 
 	/**
-	 * Auto fill created column
+     * Autofill created column
 	 * @var array
 	 */
 	protected $_created_column = array(

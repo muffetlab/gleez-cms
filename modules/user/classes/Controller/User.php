@@ -31,7 +31,7 @@ class Controller_User extends Template {
 
 		parent::before();
 
-		// Get the currently logged in user or set up a new one.
+        // Get the currently logged-in user or set up a new one.
 		// Note that get_user will also do an auto_login check.
 		if (($this->_user = $this->_auth->get_user()) === FALSE)
 		{
@@ -71,7 +71,7 @@ class Controller_User extends Template {
 		// set the template title (see Template for implementation)
 		$this->title = __('User Registration');
 
-		// If user already signed-in
+        // If user already signed in
 		if ($this->_auth->logged_in())
 		{
 			// redirect to the user account
@@ -147,7 +147,7 @@ class Controller_User extends Template {
      */
 	public function action_login()
 	{
-		// If user already signed-in
+        // If user already signed in
 		if ($this->_auth->logged_in())
 		{
 			// redirect to the user account
