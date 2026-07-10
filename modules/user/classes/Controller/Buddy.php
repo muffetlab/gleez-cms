@@ -171,12 +171,12 @@ class Controller_Buddy extends Template {
 			'uri'				=> $url,
 		));
 
-        $pending = $model->pending($id, $pagination->itemsPerPage(), $pagination->offset());
+        $pendingRequests = $model->pendingRequests($id, $pagination->itemsPerPage(), $pagination->offset());
 			
 		$view = View::factory('user/buddy/pending')
 					->set('total',$total)
 					->set('id',$id)
-					->set('pendings',$pending)
+            ->set('pendingRequests', $pendingRequests)
 					->set('pagination',$pagination);
 		
 		$this->title = __('Pending Requests');

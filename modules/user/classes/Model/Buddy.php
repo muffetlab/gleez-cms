@@ -181,7 +181,7 @@ class Model_Buddy extends Model
     /**
      * @throws Kohana_Exception
      */
-    public function pending($user_id, $limit = 15, $offset = FALSE)
+    public function pendingRequests($user_id, $limit = 15, $offset = FALSE)
 	{
 		$query = DB::select()
 					->from('buddies')->where('request_to', '=', $user_id)
