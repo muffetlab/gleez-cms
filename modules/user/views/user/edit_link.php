@@ -1,4 +1,4 @@
-<ul id="tabnav" class="nav nav-pills nav-stacked">
+<ul class="nav nav-pills nav-stacked">
 	<li class="active">
 		<a href="#profile-tab" data-toggle="tab">
             <i class="fas fa-fw fa-user"></i> <?php echo __('Profile Settings'); ?>

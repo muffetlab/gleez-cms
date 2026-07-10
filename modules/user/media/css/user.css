@@ -233,15 +233,6 @@ ul{
 	list-style:none;
 }
 
-ul.tabnav > li {
-    color: #333;
-    display: inline;
-    float: right;
-    font-size: 11px;
-    list-style-type: none;
-    margin: 0 5px 0 0;
-}
-
 .reset_password legend {
 	padding: 0 1em;
 }
