@@ -121,12 +121,12 @@ class Controller_Buddy extends Template {
 			'uri'				=> $url,
 		));
 
-        $sents = $model->sents($id, $pagination->itemsPerPage(), $pagination->offset());
+        $sentRequests = $model->sentRequests($id, $pagination->itemsPerPage(), $pagination->offset());
 			
 		$view = View::factory('user/buddy/sent')
 					->set('id',$id)
 					->set('total',$total)
-					->set('sents',$sents)
+            ->set('sentRequests', $sentRequests)
 					->set('pagination',$pagination);
 		
 		$this->title = __('Sent Requests');

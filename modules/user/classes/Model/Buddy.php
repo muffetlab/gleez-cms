@@ -163,7 +163,7 @@ class Model_Buddy extends Model
     /**
      * @throws Kohana_Exception
      */
-    public function sents($user_id, $limit = 15, $offset = FALSE)
+    public function sentRequests($user_id, $limit = 15, $offset = FALSE)
 	{
 		$query = DB::select()
 					->from('buddies')->where('request_from', '=', $user_id)
