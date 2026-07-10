@@ -122,7 +122,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 
 		$view = View::factory('admin/permission/user')
 			->set('post',        $post)
-			->set('oldperms',    $post->perms())
+            ->set('oldPermissions', $post->perms())
 			->set('permissions', ACL::all())
 			->set('action',      $action)
 			->bind('errors',     $this->_errors);
