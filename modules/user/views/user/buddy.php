@@ -16,7 +16,7 @@
 		</div>
 
 		<?php foreach($friends as $id): ?>
-			<div class="list-group-item allusers panel-body">
+            <div class="list-group-item friend-item panel-body">
 				<?php $accept = User::lookup($id); ?>
 				<div class="col-md-5">
 					<?php echo HTML::anchor("user/view/".$accept->id , User::getAvatar($accept, array('size' => 80)), array('class' => 'action-view', 'title'=> __('View profile'))); ?>

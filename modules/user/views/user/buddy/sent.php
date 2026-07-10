@@ -16,7 +16,7 @@
 		</div>
 
             <?php foreach ($sentRequests as $sent): ?>
-			<div class="list-group-item allusers panel-body">
+                <div class="list-group-item friend-item panel-body">
 				<?php $accept = User::lookup($sent['request_to']); ?>
 				<?php if($accept): ?>
 					<div class="col-md-2">

@@ -16,7 +16,7 @@
 		</div>
 
             <?php foreach ($pendingRequests as $pending): ?>
-			<div class="list-group-item allusers panel-body col-md-12">
+                <div class="list-group-item friend-item panel-body col-md-12">
 				<?php $accept = User::lookup($pending['request_from']); ?>
 				<?php if($accept): ?>
 					<div class="col-md-2">

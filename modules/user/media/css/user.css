@@ -290,7 +290,8 @@ ul{
 	width:50px;
 	display:inline-block;
 }
-.list-all .allusers img{
+
+.list-all .friend-item img {
 	height:80px;
 	width:80px;
 }
@@ -300,7 +301,8 @@ ul{
 .list-all .all-view{
 	padding-right: 5px;
 }
-.list-group-item.friends, .list-group-item.allusers{
+
+.list-group-item.friends, .list-group-item.friend-item {
 	border-left: none;
 	border-right: none;
 }
@@ -308,7 +310,7 @@ ul{
 	border-bottom: none;
 }
 
-.list-all .allusers img{
+.list-all .friend-item img {
 	height:80px;
 	width:80px;
 }
