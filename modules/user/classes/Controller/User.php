@@ -303,7 +303,7 @@ class Controller_User extends Template {
 					->set('user',		 $user)
 					->set('is_owner',	 $is_owner)
 					->set('request',	 $request)
-					->set('isfriend',	 $isFriend)
+            ->set('isFriend', $isFriend)
 					->set('friends', 	 $friends)
 					->set('enable_buddy',$enable_buddy);
 
