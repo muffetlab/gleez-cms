@@ -1044,27 +1044,27 @@ class Model_User extends Gleez_Model
 	protected function _data()
 	{
         $data = $this->_original_values['data'] ?? null;
-		$olddata =  unserialize($data);
-		$newdata = is_array($this->data) ? $this->data : array();
+        $oldData = unserialize($data);
+        $newData = is_array($this->data) ? $this->data : array();
 
-		if (empty($data) OR ! $olddata)
+        if (empty($data) or !$oldData)
 		{
-			return empty($this->data) ? NULL : serialize($newdata);
+            return empty($this->data) ? NULL : serialize($newData);
 		}
 
-		foreach ($newdata AS $key => $value)
+        foreach ($newData as $key => $value)
 		{
 			if ($value === NULL)
 			{
-				unset($olddata[$key]);
+                unset($oldData[$key]);
 			}
 			elseif (!empty($key))
 			{
-				$olddata[$key] = $value;
+                $oldData[$key] = $value;
 			}
 		}
 
-		return empty($olddata) ? NULL : serialize($olddata);
+        return empty($oldData) ? NULL : serialize($oldData);
 	}
 
     /**
