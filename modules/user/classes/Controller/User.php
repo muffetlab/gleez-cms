@@ -632,9 +632,9 @@ class Controller_User extends Template {
 	 * This situation could arise, for example, when a user follows a
 	 * confirmation links while another user was still logged in.
 	 *
-	 * @param  integer  $id  User id of the current user
+     * @param int $id User ID of the current user
 	 */
-	protected function _preventCollision($id)
+    protected function _preventCollision(int $id)
 	{
 		// Another user (on the same browser) is still logged in
 		if ($this->_auth->logged_in() AND $id != $this->_user->id)

@@ -238,16 +238,13 @@ class Model_User extends Gleez_Model
 	/**
 	 * Take actions before the user is deleted
 	 *
-	 * @since   1.0.1
-	 * @since   1.1.0  Used GUEST_ID & ADMIN_ID constants
-	 *
 	 * @param   integer  $id  User ID
-	 *
 	 * @throws  Kohana_Exception
-	 *
+     * @since   1.0.1
+     * @since   1.1.0  Used GUEST_ID & ADMIN_ID constants
 	 * @uses    Log::ERROR
 	 */
-	protected function before_delete($id, $soft = FALSE)
+    protected function before_delete(int $id, $soft = FALSE)
 	{
         // If it is an internal request (e.g. popup dialog) and id < 3
 		if ($id == User::GUEST_ID OR $id == User::ADMIN_ID)
@@ -367,7 +364,7 @@ class Model_User extends Gleez_Model
      * @param string $field Field name
      * @throws Kohana_Exception
      */
-	public function username_available(Validation $validation, $field)
+    public function username_available(Validation $validation, string $field)
 	{
 		if ($this->unique_key_exists($validation[$field], 'name'))
 		{
@@ -384,7 +381,7 @@ class Model_User extends Gleez_Model
      * @param string $field Field name
      * @throws Kohana_Exception
      */
-	public function email_available(Validation $validation, $field)
+    public function email_available(Validation $validation, string $field)
 	{
 		if ($this->unique_key_exists($validation[$field], 'mail'))
 		{
@@ -401,7 +398,7 @@ class Model_User extends Gleez_Model
      * @param string $field Field name
      * @throws Kohana_Exception
      */
-	public function email_not_available(Validation $validation, $field)
+    public function email_not_available(Validation $validation, string $field)
 	{
 		if ( ! $this->unique_key_exists($validation[$field], 'mail'))
 		{
@@ -413,11 +410,11 @@ class Model_User extends Gleez_Model
      * Tests if a unique key value exists in the database.
      *
      * @param mixed $value The value to test
-     * @param string $field Field name [Optional]
+     * @param string|null $field Field name
      * @return boolean
      * @throws Kohana_Exception
      */
-    public function unique_key_exists($value, $field = NULL): bool
+    public function unique_key_exists($value, string $field = NULL): bool
     {
 		if ($field === NULL)
 		{
@@ -438,12 +435,11 @@ class Model_User extends Gleez_Model
 	/**
 	 * Allows a model use both email and username as unique identifiers for login
 	 *
-	 * @param   string  $value  Unique value
+     * @param string $value Unique value
 	 * @return  boolean
-	 *
 	 * @uses    Valid::email
 	 */
-	public function unique_key($value)
+    public function unique_key(string $value)
 	{
 		return Valid::email($value) ? 'mail' : 'name';
 	}
@@ -458,7 +454,7 @@ class Model_User extends Gleez_Model
      * @uses Validation::rule
      * @uses Config::get
      */
-    public static function get_password_validation($values): Validation
+    public static function get_password_validation(array $values): Validation
     {
         $config = Kohana::$config->load('auth')->get('password');
 
@@ -616,7 +612,7 @@ class Model_User extends Gleez_Model
      * @return Model_User
      * @throws Kohana_Exception
      */
-    public function find_sso_user($provider_field, $data): Model_User
+    public function find_sso_user(string $provider_field, array $data): Model_User
     {
 		return $this->where($provider_field, '=', $data['id'])
 			->or_where('mail', '=', $data['mail'])
@@ -781,7 +777,7 @@ class Model_User extends Gleez_Model
      * @uses Auth_ORM::hash
      * @uses Auth_ORM::instance
      */
-    public function confirm_signup($id, $token): bool
+    public function confirm_signup(int $id, string $token): bool
     {
 		// Don't even bother, save us the user lookup query
 		if (empty($id) OR empty($token))
@@ -957,7 +953,7 @@ class Model_User extends Gleez_Model
      * @uses Config::get
      * @uses Auth_ORM::instance
      */
-    public function confirm_reset_password_link($id, $token, $time): bool
+    public function confirm_reset_password_link(int $id, string $token, int $time): bool
     {
 		// Don't even bother, save us the user lookup query
 		if (empty($id) OR empty($token) OR empty($time))
