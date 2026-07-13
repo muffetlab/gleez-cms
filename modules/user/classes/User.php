@@ -294,7 +294,7 @@ class User {
     /**
      * Saves visitor information as a cookie so it can be reused.
      *
-     * @param $values An array of key/value pairs to be saved into a cookie.
+     * @param array $values An array of key/value pairs to be saved into a cookie
      * @throws Kohana_Exception
      */
 	public static function cookie_save(array $values)
