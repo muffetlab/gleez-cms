@@ -55,7 +55,7 @@ class User {
     /**
      * Return the active user. If there's no active user, return the guest user.
      *
-     * @return Model_User
+     * @return ORM|bool
      * @throws Kohana_Exception
      */
 	public static function active_user()
@@ -108,7 +108,7 @@ class User {
 	/**
 	 * Generates a default anonymous $user object.
 	 *
-	 * @return Object - the user object.
+     * @return ORM|bool The user object
 	 */
 	public static function guest()
 	{
