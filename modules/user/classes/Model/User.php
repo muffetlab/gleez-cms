@@ -235,27 +235,6 @@ class Model_User extends Gleez_Model
 		return parent::create($validation);
 	}
 
-	/**
-	 * Take actions before the user is deleted
-	 *
-	 * @param   integer  $id  User ID
-	 * @throws  Kohana_Exception
-     * @since   1.0.1
-     * @since   1.1.0  Used GUEST_ID & ADMIN_ID constants
-	 * @uses    Log::ERROR
-	 */
-    protected function before_delete(int $id, $soft = FALSE)
-	{
-        // If it is an internal request (e.g. popup dialog) and id < 3
-		if ($id == User::GUEST_ID OR $id == User::ADMIN_ID)
-		{
-			Kohana::$log->add(Log::ERROR, 'Attempt to delete system user.');
-			throw new Kohana_Exception("You can't delete system users!");
-		}
-
-		parent::before_delete($id, $soft = FALSE);
-	}
-
     /**
      * Override the create method with defaults
      *
