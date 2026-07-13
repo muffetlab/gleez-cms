@@ -191,8 +191,8 @@ class Model_User extends Gleez_Model
 	 *
 	 * @return array
 	 */
-	public function perms()
-	{
+    public function perms(): array
+    {
 		if (empty($this->data))
 		{
 			return array();
@@ -209,8 +209,8 @@ class Model_User extends Gleez_Model
      * @return array
      * @throws Kohana_Exception|ReflectionException
      */
-	public function roles()
-	{
+    public function roles(): array
+    {
 		return $this->_roles();
 	}
 
@@ -417,8 +417,8 @@ class Model_User extends Gleez_Model
      * @return boolean
      * @throws Kohana_Exception
      */
-	public function unique_key_exists($value, $field = NULL)
-	{
+    public function unique_key_exists($value, $field = NULL): bool
+    {
 		if ($field === NULL)
 		{
 			// Automatically determine field by looking at the value
@@ -458,8 +458,8 @@ class Model_User extends Gleez_Model
      * @uses Validation::rule
      * @uses Config::get
      */
-	public static function get_password_validation($values)
-	{
+    public static function get_password_validation($values): Validation
+    {
         $config = Kohana::$config->load('auth')->get('password');
 
         $validation = Validation::factory($values)
@@ -493,8 +493,8 @@ class Model_User extends Gleez_Model
      * @return NULL|string NULL when filed, otherwise file path
      * @throws Kohana_Exception
      */
-    public function uploadPhoto(array $file)
-	{
+    public function uploadPhoto(array $file): ?string
+    {
 		if (isset($file['tmp_name']) AND ! empty($file['tmp_name']))
 		{
 			return Upload::uploadImage($file);
@@ -518,8 +518,8 @@ class Model_User extends Gleez_Model
      * @uses Request::initial
      * @uses Request::redirect
      */
-	public function login(array $array, $redirect = FALSE)
-	{
+    public function login(array $array, $redirect = FALSE): Model_User
+    {
 		$labels = $this->labels();
 		$rules  = $this->rules();
 
@@ -596,8 +596,8 @@ class Model_User extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-    public function change_pass($values)
-	{
+    public function change_pass($values): Model_User
+    {
 		// Validation for passwords
 		$extra_validation = self::get_password_validation($values)
 			->rule('old_pass', 'not_empty')
@@ -616,8 +616,8 @@ class Model_User extends Gleez_Model
      * @return Model_User
      * @throws Kohana_Exception
      */
-	public function find_sso_user($provider_field, $data)
-	{
+    public function find_sso_user($provider_field, $data): Model_User
+    {
 		return $this->where($provider_field, '=', $data['id'])
 			->or_where('mail', '=', $data['mail'])
 			->find();
@@ -636,8 +636,8 @@ class Model_User extends Gleez_Model
      * @throws ReflectionException
      * @throws \PHPMailer\PHPMailer\Exception
      */
-	public function sso_signup(array $data, array $provider)
-	{
+    public function sso_signup(array $data, array $provider): Model_User
+    {
 		if ( ! $this->_loaded)
 		{
 			// Add user
@@ -725,8 +725,8 @@ class Model_User extends Gleez_Model
      * @uses Email::message
      * @uses Email::send
      */
-	public function signup(array $data)
-	{
+    public function signup(array $data): bool
+    {
 		// Add user
         $this->values($data, ['name', 'mail', 'pass', 'nick', 'gender', 'dob'])->save();
 
@@ -781,8 +781,8 @@ class Model_User extends Gleez_Model
      * @uses Auth_ORM::hash
      * @uses Auth_ORM::instance
      */
-	public function confirm_signup($id, $token)
-	{
+    public function confirm_signup($id, $token): bool
+    {
 		// Don't even bother, save us the user lookup query
 		if (empty($id) OR empty($token))
 			return FALSE;
@@ -825,8 +825,8 @@ class Model_User extends Gleez_Model
      * @uses Email::send
      * @uses Email::factory
      */
-	public function welcome_mail()
-	{
+    public function welcome_mail(): bool
+    {
 		if ($this->_loaded)
 		{
 			$body = View::factory('email/welcome_signup', $this->as_array())
@@ -878,8 +878,8 @@ class Model_User extends Gleez_Model
      * @uses Email::message
      * @uses Email::send
      */
-	public function reset_password(array & $data)
-	{
+    public function reset_password(array &$data): bool
+    {
 		$labels = $this->labels();
 		$rules  = $this->rules();
 
@@ -957,8 +957,8 @@ class Model_User extends Gleez_Model
      * @uses Config::get
      * @uses Auth_ORM::instance
      */
-	public function confirm_reset_password_link($id, $token, $time)
-	{
+    public function confirm_reset_password_link($id, $token, $time): bool
+    {
 		// Don't even bother, save us the user lookup query
 		if (empty($id) OR empty($token) OR empty($time))
 			return FALSE;
@@ -1005,8 +1005,8 @@ class Model_User extends Gleez_Model
      * @uses Validation::label
      * @uses Log::INFO
      */
-	public function confirm_reset_password_form(array & $data)
-	{
+    public function confirm_reset_password_form(array &$data): bool
+    {
 		$data = Validation::factory($data)
 			->label('pass', __('Password'))
 			->label('pass_confirm', __('Password Confirm'))
@@ -1041,8 +1041,8 @@ class Model_User extends Gleez_Model
 	/**
 	 * update user data field in the $user->data
 	 */
-	protected function _data()
-	{
+    protected function _data(): ?string
+    {
         $data = $this->_original_values['data'] ?? null;
         $oldData = unserialize($data);
         $newData = is_array($this->data) ? $this->data : array();
@@ -1098,8 +1098,8 @@ class Model_User extends Gleez_Model
      * @return array
      * @throws Kohana_Exception|ReflectionException
      */
-	protected function _set_roles()
-	{
+    protected function _set_roles(): array
+    {
 		if ($this->_loaded)
 		{
 			$roles = $this->roles->find_all()->as_array('id', 'name');

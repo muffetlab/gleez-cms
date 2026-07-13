@@ -52,8 +52,8 @@ class Model_User_Token extends ORM {
      * @return ORM
      * @throws Kohana_Exception
      */
-	public function delete_expired()
-	{
+    public function delete_expired(): ORM
+    {
 		// Delete all expired tokens
 		DB::delete($this->_table_name)
 			->where('expires', '<', time())
@@ -69,8 +69,8 @@ class Model_User_Token extends ORM {
 		return parent::create($validation);
 	}
 
-	protected function create_token()
-	{
+    protected function create_token(): string
+    {
 		do
 		{
 			$token = sha1(uniqid(Text::random('alnum', 32), TRUE));

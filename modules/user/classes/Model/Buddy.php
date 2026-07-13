@@ -34,8 +34,8 @@ class Model_Buddy extends Model
     /**
      * @throws Kohana_Exception
      */
-    public function friends($user_id, $limit = 15, $offset = FALSE)
-	{
+    public function friends($user_id, $limit = 15, $offset = FALSE): array
+    {
 		$sql = DB::select('request_from', 'request_to')
 						->from('buddies')
 						->where_open()

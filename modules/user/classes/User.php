@@ -70,8 +70,8 @@ class User {
      * @return boolean TRUE if current user is guest
      * @throws Kohana_Exception
      */
-	public static function is_guest()
-	{
+    public static function is_guest(): bool
+    {
         return !Auth_ORM::instance()->get_user();
 	}
 
@@ -81,8 +81,8 @@ class User {
      * @return boolean TRUE if current user is admin
      * @throws Kohana_Exception
      */
-	public static function is_admin()
-	{
+    public static function is_admin(): bool
+    {
 		if(User::is_guest())
 		{
 			return FALSE;
@@ -122,8 +122,8 @@ class User {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-	public static function count_all()
-	{
+    public static function count_all(): int
+    {
 		// initialize the cache
         $cache = Cache::instance();
 
@@ -146,8 +146,8 @@ class User {
      * @return boolean TRUE if user belongs to group(s)
      * @throws Kohana_Exception
      */
-    public static function belongsTo($groups)
-	{
+    public static function belongsTo($groups): bool
+    {
 		if ($groups == 'all' OR is_null($groups))
 		{
 			return TRUE;
@@ -278,8 +278,8 @@ class User {
      * @throws Kohana_Exception
      * @uses   Auth_ORM::hash
      */
-    public static function check_pass(Model_User $user, string $password)
-	{
+    public static function check_pass(Model_User $user, string $password): bool
+    {
 		if( !isset($user) || !isset($password) )
 		{
 			return FALSE;
@@ -347,8 +347,8 @@ class User {
      * @throws Kohana_Exception
      * @todo move to HTML class
      */
-	public static function providers()
-	{
+    public static function providers(): string
+    {
 		if(! Auth_ORM::instance()->logged_in())
 		{
 			$providers = array_filter(Auth_ORM::providers());
@@ -364,8 +364,8 @@ class User {
 	 * @param   ORM     $user  The user object
 	 * @return  string  html to display
 	 */
-	public static function roles(ORM $user)
-	{
+    public static function roles(ORM $user): string
+    {
 		$roles = '<div class="user-roles">';
 		foreach ($user->roles() as $role)
 		{
@@ -402,8 +402,8 @@ class User {
      * @uses URL::site
      * @uses Arr::merge
      */
-    public static function getAvatar(ORM $user, array $attrs = array(), $protocol = NULL, bool $index = FALSE)
-	{
+    public static function getAvatar(ORM $user, array $attrs = array(), $protocol = NULL, bool $index = FALSE): string
+    {
 		// Default user pic
 		$avatar = 'media/images/avatar-user-400.png';
 

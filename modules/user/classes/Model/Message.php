@@ -161,8 +161,8 @@ class Model_Message extends Gleez_Model
      * @throws Kohana_Exception
      * @todo Cache
      */
-    public function load(int $type = 0, string $direction = self::DESC)
-	{
+    public function load(int $type = 0, string $direction = self::DESC): Model_Message
+    {
 		if ( ! $this->loaded())
 		{
 			$this->order_by('created', $direction);
@@ -215,8 +215,8 @@ class Model_Message extends Gleez_Model
      * @return Model_Message
      * @throws Kohana_Exception
      */
-    public function loadInbox(string $direction = self::DESC)
-	{
+    public function loadInbox(string $direction = self::DESC): Model_Message
+    {
 		return $this->load(PM::INBOX, $direction);
 	}
 
@@ -235,8 +235,8 @@ class Model_Message extends Gleez_Model
      * @return Model_Message
      * @throws Kohana_Exception
      */
-    public function loadOutbox(string $direction = self::DESC)
-	{
+    public function loadOutbox(string $direction = self::DESC): Model_Message
+    {
 		return $this->load(PM::OUTBOX, $direction);
 	}
 
@@ -255,8 +255,8 @@ class Model_Message extends Gleez_Model
      * @return Model_Message
      * @throws Kohana_Exception
      */
-    public function loadDrafts(string $direction = self::DESC)
-	{
+    public function loadDrafts(string $direction = self::DESC): Model_Message
+    {
 		return $this->load(PM::DRAFTS, $direction);
 	}
 
@@ -274,8 +274,8 @@ class Model_Message extends Gleez_Model
 	 *
 	 * @throws  HTTP_Exception_404
 	 */
-	public function getOne()
-	{
+    public function getOne(): Model_Message
+    {
 		if ( ! $this->loaded())
 		{
 			throw new HTTP_Exception_404('Message not found!');
@@ -313,8 +313,8 @@ class Model_Message extends Gleez_Model
      * @return bool
      * @throws Kohana_Exception
      */
-    public function exists(string $recipient)
-	{
+    public function exists(string $recipient): bool
+    {
         $result = ORM::factory('User')
 				->where('name', '=', $recipient)
 				->and_where('name', '!=', 'guest')

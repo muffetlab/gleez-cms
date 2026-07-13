@@ -27,8 +27,8 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws Kohana_Exception
      * @uses   Module::is_active
      */
-	public static function providers()
-	{
+    public static function providers(): array
+    {
 		if ( ! Module::is_active('oauth2'))
 			return array();
 
@@ -59,8 +59,8 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function logged_in_oauth($provider = NULL)
-	{
+    public function logged_in_oauth($provider = NULL): bool
+    {
 		// For starters, the user needs to be logged in
 		if ( ! parent::logged_in())
 			return FALSE;
@@ -86,8 +86,8 @@ class Auth_ORM extends Kohana_Auth_ORM
 	 *
 	 * @return  string
 	 */
-	public function get_provider()
-	{
+    public function get_provider(): string
+    {
         return $this->_session->get($this->_config['session_key'] . '_provider');
 	}
 
@@ -160,8 +160,8 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-    public function force_sso_login(ORM $user, bool $mark_session_as_forced = FALSE)
-	{
+    public function force_sso_login(ORM $user, bool $mark_session_as_forced = FALSE): bool
+    {
 		if ($mark_session_as_forced === TRUE)
 		{
 			// Mark the session as forced, to prevent users from changing account information

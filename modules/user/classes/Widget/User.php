@@ -31,8 +31,8 @@ class Widget_User extends Widget {
      * @throws View_Exception
      * @throws Kohana_Exception
      */
-    public function login()
-	{
+    public function login(): ?string
+    {
 		$auth    = Auth_ORM::instance();
 		$request = Request::current();
 
