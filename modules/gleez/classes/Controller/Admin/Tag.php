@@ -218,8 +218,8 @@ class Controller_Admin_Tag extends Controller_Admin {
 				Kohana::$log->add(Log::ERROR, 'Error occurred deleting tag id: :id, :msg',
 					array(':id' => $tag->id, ':msg' => $e->getMessage())
 				);
-				Message::error('An error occurred deleting tag %tag',array('%tag' => $tag->name));
-				$this->_errors = array(__('An error occurred deleting tag %tag',array('%tag' => $tag->name)));
+                Message::error(__('An error occurred while deleting tag %tag', array('%tag' => $tag->name)));
+                $this->_errors = array(__('An error occurred while deleting tag %tag', array('%tag' => $tag->name)));
 
 				$this->request->redirect(Route::get('admin/tag')->uri(), 503);
 			}

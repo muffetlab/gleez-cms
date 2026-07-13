@@ -150,9 +150,9 @@ class Controller_Comment extends Template {
 				Kohana::$log->add(Log::ERROR, 'Error occurred deleting comment id: :id, :msg',
 					array(':id' => $comment->id, ':msg' => $e->getMessage())
 				);
-				Message::error('An error occurred deleting comment %post.',array('%post' => $title));
+                Message::error(__('An error occurred while deleting comment %post', array('%post' => $title)));
 
-				$this->_errors = array('An error occurred deleting comment %post.',array('%post' => $title));
+                $this->_errors = array(__('An error occurred while deleting comment %post', array('%post' => $title)));
 			}
 
 			$redirect = empty($destination) ? $redirect : $this->redirect;

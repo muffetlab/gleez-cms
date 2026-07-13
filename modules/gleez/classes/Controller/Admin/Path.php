@@ -221,7 +221,7 @@ class Controller_Admin_Path extends Controller_Admin {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting alias id: :id, :msg',
 					array(':id' => $path->id, ':message' => $e->getMessage())
 				);
-				Message::error('An error occurred deleting alias %path',array(':path' => $path->alias));
+                Message::error(__('An error occurred while deleting alias %path', array('%path' => $path->alias)));
 
 				$this->request->redirect(Route::get('admin/path')->uri( array('action' => 'list')), 503);
 			}
