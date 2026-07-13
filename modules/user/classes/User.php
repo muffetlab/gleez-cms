@@ -187,31 +187,34 @@ class User {
 	}
 
 	/**
-	 * Look up a user by id.
-	 * @param integer      $id the user id
+	 * Look up a user by ID.
+     *
+     * @param int $id The user ID
      * @return ORM|bool The user object, or boolean if the ID was invalid
 	 */
-	public static function lookup($id)
+    public static function lookup(int $id)
 	{
 		return self::_lookup_by_field('id', $id);
 	}
 
-	/**
-	 * Look up a user by name.
-	 * @param integer      $name the user name
+    /**
+     * Look up a user by name.
+     *
+     * @param string $name The user name
      * @return ORM|bool The user object, or boolean if the name was invalid
-	 */
-	public static function lookup_by_name($name)
+     */
+    public static function lookup_by_name(string $name)
 	{
 		return self::_lookup_by_field('name', $name);
 	}
 
-	/**
-	 * Look up a user by email.
-	 * @param integer      $email the user email
+    /**
+     * Look up a user by email.
+     *
+     * @param string $email The user email
      * @return ORM|bool The user object, or boolean if the email was invalid
-	 */
-	public static function lookup_by_mail($email)
+     */
+    public static function lookup_by_mail(string $email)
 	{
 		return self::_lookup_by_field('mail', $email);
 	}
@@ -219,11 +222,11 @@ class User {
 	/**
 	 * Look up a user by field value
 	 *
-	 * @param   string  $field  Search field
-	 * @param   string  $value  Search value
+     * @param string $field Search field
+     * @param string $value Search value
      * @return ORM|bool The user object, or boolean if the name was invalid
 	 */
-	private static function _lookup_by_field($field, $value)
+    private static function _lookup_by_field(string $field, string $value)
 	{
 		try
 		{
@@ -242,13 +245,13 @@ class User {
 	}
 
 	/**
-	 * Get role by id
+	 * Get role by ID.
 	 *
-	 * @param  integer  $id  Role id
+     * @param int $id Role ID
      * @return ORM|bool The Role object, or FALSE if ID is invalid or not found
      * @since  1.2.0
 	 */
-	public static function getRoleById($id)
+    public static function getRoleById(int $id)
 	{
 		try
 		{
@@ -275,7 +278,7 @@ class User {
      * @throws Kohana_Exception
      * @uses   Auth_ORM::hash
      */
-	public static function check_pass($user, $password)
+    public static function check_pass(Model_User $user, string $password)
 	{
 		if( !isset($user) || !isset($password) )
 		{
@@ -306,10 +309,10 @@ class User {
     /**
      * Delete a visitor information cookie.
      *
-     * @param $cookie_name A cookie name such as 'homepage'.
+     * @param string $cookie_name A cookie name such as 'homepage'
      * @throws Kohana_Exception
      */
-	public static function cookie_delete($cookie_name)
+    public static function cookie_delete(string $cookie_name)
 	{
 		Cookie::set('Gleez.visitor.' . $cookie_name, '', time() - 3600);
 	}
@@ -322,7 +325,7 @@ class User {
      * @return mixed user object or FALSE
      * @throws Kohana_Exception
      */
-	public static function check_identity($provider_id, $provider_name)
+    public static function check_identity(string $provider_id, string $provider_name)
 	{
 		$uid = (int) DB::select('user_id')
 			->from('identities')
@@ -399,7 +402,7 @@ class User {
      * @uses URL::site
      * @uses Arr::merge
      */
-	public static function getAvatar(ORM $user, array $attrs = array(), $protocol = NULL, $index = FALSE)
+    public static function getAvatar(ORM $user, array $attrs = array(), $protocol = NULL, bool $index = FALSE)
 	{
 		// Default user pic
 		$avatar = 'media/images/avatar-user-400.png';

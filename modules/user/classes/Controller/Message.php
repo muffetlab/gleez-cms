@@ -427,12 +427,11 @@ class Controller_Message extends Template {
 	/**
 	 * Bulk updates
 	 *
-	 * @param  array  $post
-	 *
+     * @param array $post
 	 * @uses   PM::bulk_actions
 	 * @uses   Arr::callback
 	 */
-	private function _bulk_update($post)
+    private function _bulk_update(array $post)
 	{
         $operations = PM::bulk_actions();
 		$operation  = $operations[$post['operation']];

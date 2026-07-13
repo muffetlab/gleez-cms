@@ -160,7 +160,7 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function force_sso_login(ORM $user, $mark_session_as_forced = FALSE)
+    public function force_sso_login(ORM $user, bool $mark_session_as_forced = FALSE)
 	{
 		if ($mark_session_as_forced === TRUE)
 		{

@@ -161,7 +161,7 @@ class Model_Message extends Gleez_Model
      * @throws Kohana_Exception
      * @todo Cache
      */
-	public function load($type = 0, $direction = self::DESC)
+    public function load(int $type = 0, string $direction = self::DESC)
 	{
 		if ( ! $this->loaded())
 		{
@@ -215,7 +215,7 @@ class Model_Message extends Gleez_Model
      * @return Model_Message
      * @throws Kohana_Exception
      */
-	public function loadInbox($direction = self::DESC)
+    public function loadInbox(string $direction = self::DESC)
 	{
 		return $this->load(PM::INBOX, $direction);
 	}
@@ -235,7 +235,7 @@ class Model_Message extends Gleez_Model
      * @return Model_Message
      * @throws Kohana_Exception
      */
-	public function loadOutbox($direction = self::DESC)
+    public function loadOutbox(string $direction = self::DESC)
 	{
 		return $this->load(PM::OUTBOX, $direction);
 	}
@@ -255,7 +255,7 @@ class Model_Message extends Gleez_Model
      * @return Model_Message
      * @throws Kohana_Exception
      */
-	public function loadDrafts($direction = self::DESC)
+    public function loadDrafts(string $direction = self::DESC)
 	{
 		return $this->load(PM::DRAFTS, $direction);
 	}
@@ -294,7 +294,7 @@ class Model_Message extends Gleez_Model
      * @return void
      * @throws Kohana_Exception
      */
-	public function toExists(Validation $validation, $field)
+    public function toExists(Validation $validation, string $field)
 	{
 		if ( $this->status != PM::STATUS_DRAFT AND empty($validation[$field]))
 		{
@@ -313,7 +313,7 @@ class Model_Message extends Gleez_Model
      * @return bool
      * @throws Kohana_Exception
      */
-	public function exists($recipient)
+    public function exists(string $recipient)
 	{
         $result = ORM::factory('User')
 				->where('name', '=', $recipient)

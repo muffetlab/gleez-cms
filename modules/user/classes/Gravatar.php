@@ -118,12 +118,12 @@ class Gravatar {
      * Get a singleton Gravatar instance
      *
      * @param string $email User email
-     * @param array $config Gravatar config [Optional]
+     * @param array|null $config Gravatar config
      * @return Gravatar
      * @throws Kohana_Exception
      * @uses Config::get
      */
-	public static function instance($email, $config = NULL)
+    public static function instance(string $email, array $config = NULL)
 	{
 		if ( ! isset(self::$_instances[$email]))
 		{
@@ -149,7 +149,7 @@ class Gravatar {
      * @param array|Config_Group $config Gravatar config
      * @throws Kohana_Exception
      */
-	protected function __construct($email, $config)
+    protected function __construct(string $email, $config)
 	{
 		// Set the email address
 		$this->setEmail($email);
@@ -297,7 +297,7 @@ class Gravatar {
      * @uses HTML::resize
      * @since 1.3.0
      */
-	public function getImage(array $attrs = NULL, $protocol = NULL, $index = FALSE)
+    public function getImage(array $attrs = NULL, $protocol = NULL, bool $index = FALSE)
 	{
 		// Set auto attributes
 		$attributes = array(
@@ -367,13 +367,11 @@ class Gravatar {
 	 * // For example /srv/http/public_html/site.com/application/media/pictures/filename
 	 * ~~~
 	 *
-	 * @since   1.4.0
-	 *
-	 * @param   string  $filename File name [Optional]
-	 *
+     * @param string|null $filename File name
 	 * @return  string
+     * @since   1.4.0
 	 */
-	public function getStoreLocation($filename = NULL)
+    public function getStoreLocation(string $filename = NULL)
 	{
 		return $this->_store_location . $filename;
 	}
@@ -383,15 +381,12 @@ class Gravatar {
 	 *
 	 * [!!] Note: By default, images from Gravatar.com will be returned as 80x80 px
 	 *
-	 * @since   1.1.0
-	 *
 	 * @param   integer  $size  The avatar size to use, must be less than 512 and greater than 0
-	 *
 	 * @return  Gravatar
-	 *
 	 * @throws Kohana_Exception
+     * @since 1.1.0
 	 */
-	public function setSize($size)
+    public function setSize(int $size)
 	{
 		if ( ! is_int($size) AND ! ctype_digit($size))
 		{
@@ -430,20 +425,15 @@ class Gravatar {
 	 * [!!] Note: If `$location` is NULL, by default used `APPPATH . 'media/pictures'`.
 	 *      If dir not exists and fails create it used sys_get_temp_dir()
 	 *
-	 * @since   1.4.0
-	 *
-	 * @link    http://www.php.net/manual/en/function.sys-get-temp-dir.php sys_get_temp_dir()
-	 *
-	 * @param   string  $location  Store location [Optional]
-	 *
+     * @param string|null $location Store location
 	 * @return  Gravatar
-	 *
 	 * @throws  Kohana_Exception
-	 *
+     * @link    http://www.php.net/manual/en/function.sys-get-temp-dir.php sys_get_temp_dir()
+     * @since   1.4.0
 	 * @uses    Text::reduce_slashes
 	 * @uses    System::mkdir
 	 */
-	public function setStoreLocation($location = NULL)
+    public function setStoreLocation(string $location = NULL)
 	{
 		$location = Text::reduce_slashes(trim($location));
 		// Set default picture location for downloading
@@ -475,17 +465,13 @@ class Gravatar {
 	/**
 	 * Set the email address for current user
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   string  $email  Email address of the user
-	 *
 	 * @return  Gravatar
-	 *
 	 * @throws  Kohana_Exception
-	 *
+     * @since   1.2.0
 	 * @uses    Valid::email
 	 */
-	public function setEmail($email)
+    public function setEmail(string $email)
 	{
 		// trim leading/trailing white spaces
 		$email = trim($email);
@@ -552,15 +538,12 @@ class Gravatar {
 	/**
 	 * Set the maximum allowed rating for avatars
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   string  $rating   The maximum rating to use for avatars ('G', 'PG', 'R', 'X')
-	 *
 	 * @return  Gravatar
-	 *
 	 * @throws Kohana_Exception
+     * @since   1.2.0
 	 */
-	public function setRating($rating)
+    public function setRating(string $rating)
 	{
 		$rating = strtolower($rating);
 
@@ -579,13 +562,11 @@ class Gravatar {
 	/**
 	 * Forces gravatar to display default image
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   boolean  $force  Force default? [Optional]
-	 *
 	 * @return  Gravatar
+     * @since   1.2.0
 	 */
-	public function setForceDefault($force = TRUE)
+    public function setForceDefault(bool $force = TRUE)
 	{
 		$this->_default_force = (bool)$force;
 

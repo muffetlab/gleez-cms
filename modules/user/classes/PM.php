@@ -52,12 +52,11 @@ class PM {
 	/**
 	 * Bulk Actions
 	 *
-	 * @param   boolean  $list  TRUE for dropdown for bulk actions [Optional]
-	 *
+     * @param boolean $list TRUE for dropdown for bulk actions
 	 * @return  mixed
 	 * @uses    Module::action
 	 */
-	public static function bulk_actions($list = FALSE)
+    public static function bulk_actions(bool $list = FALSE)
 	{
 		$states = array(
 			'read'    => array(
