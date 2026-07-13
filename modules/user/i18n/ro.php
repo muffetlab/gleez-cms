@@ -28,6 +28,7 @@ return array(
 	'Add Role' => 'Adauga Rol',
 	'Administer permissions' => 'Administrează permisiuni',
 	'Administer users' => 'Administrează utilizatori',
+    'An error occurred while deleting the role :name.' => 'A apărut o eroare în timpul ștergerii rolului :name.',
 	'Access profiles' => 'Accesează profiluri',
 	'Access to all profiles' => 'Acces la toate profilurile',
 	'After logging in, you will be redirected, so you can change your password. We do not encourage you to lose your password again. Be aware that this behaviour can be dangerous.' => 'Dupa autentificare vei fi redirecționat pentru aț-i modifica parola. Nu încurajăm pierderea parolei. Acest comportament poate fi periculos.',

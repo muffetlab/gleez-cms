@@ -33,6 +33,7 @@ return array(
 	'Administer permissions' => 'Volituste sätted',
 	'Administer users' => 'Kasutajate sätted',
 	'An error occurred deleting user %user: :message' => 'Viga kasutaja %user: kustutamisel :message',
+    'An error occurred while deleting the role :name.' => 'Viga rolli :name: kustutamisel',
 	'After logging in, you will be redirected, so you can change your password. We do not encourage you to lose your password again. Be aware that this behaviour can be dangerous.' => 'Pärast süsteemi sisenemist Teid suunatakse parooli muutmisele. Me ei soovita kaotada oma parool teistkorselt. See on potentsiaalselt ebaturvaline.',
 	'Allow' => 'Lubada',
 	'Already have an account?' => 'Juba konto olemas?',

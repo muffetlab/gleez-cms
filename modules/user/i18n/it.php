@@ -28,6 +28,7 @@ return array(
 	'Add Role' => 'Aggiungi ruolo',
 	'Administer permissions' => 'Permessi di amministrazione',
 	'Administer users' => 'Amministratore',
+    'An error occurred while deleting the role :name.' => 'Si è verificato un errore durante l\'eliminazione del ruolo :name.',
 	'Access profiles' => 'Accedi ai profili',
 	'Access to all profiles' => 'Accedi a tutti i profili',
 	'After logging in, you will be redirected, so you can change your password. We do not encourage you to lose your password again. Be aware that this behaviour can be dangerous.' => 'Dopo il login, sarai reindirizzato, in modo da poter modificare la password. Noi non ti incoraggiamo a perdere di nuovo la tua password. Sii consapevole del fatto che questo comportamento può essere pericoloso.',

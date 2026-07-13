@@ -25,6 +25,7 @@ return array(
   'After logging in, you will be redirected, so you can change your password. We do not encourage you to lose your password again. Be aware that this behaviour can be dangerous.' => '您可以在登录后的跳转页面修改您的密码。我们不鼓励您再次丢失您的密码。要知道，这种行为可能是危险的。',
   'Already have an account?' => '已经有一个帐户？',
   'An error occured deleting user, :user.' => '删除用户 :user 时发生错误。',
+    'An error occurred while deleting the role :name.' => '删除角色 :name 时发生错误。',
   'Apply password and go to signin form' => '应用密码密码并跳转到登录表单',
   'A request to reset the password for your account has been made at !site.' => '!site 要求您重置账号的密码',
   'Attached identity :nick (:provider) to your account.' => '身份 :nick（:provider）已附加到您的帐户。',

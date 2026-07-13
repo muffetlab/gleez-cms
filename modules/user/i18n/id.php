@@ -33,6 +33,7 @@ return array(
 	'Administer permissions' => 'Izin Pengelolaan',
 	'Administer users' => ' Pengelolaan pengguna',
 	'An error occurred deleting user %user: :message' => 'Telah terjadi kesalahan menghapus %user: :message',
+    'An error occurred while deleting the role :name.' => 'Terjadi kesalahan saat menghapus peran :name.',
 	'After logging in, you will be redirected, so you can change your password. We do not encourage you to lose your password again. Be aware that this behaviour can be dangerous.' => 'Setelah masuk, anda akan dialihkan, jadi bisa langsung ganti password. Mudah2an ga lupa password lagi. Hati2, kebiasaan ini bisa bikin bahaya',
 	'Allow' => 'Bolehkan',
 	'Already have an account?' => 'Sudah punya akun?',

@@ -214,7 +214,7 @@ class Controller_Admin_Role extends Controller_Admin {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting role id: :id, :message',
 					array(':id' => $role->id, ':message' => $e->getMessage())
 				);
-                Message::error('An error occurred deleting role, :post.', array(':post' => $post->title));
+                Message::error(__('An error occurred while deleting the role :name.', [':name' => $role->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri());
 			}

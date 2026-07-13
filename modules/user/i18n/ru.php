@@ -39,6 +39,7 @@ return array(
 	'Administer users' => 'Администрирование пользователей',
 	'An error occurred deleting message %title' => 'Произошла ошибка при удалении сообщения %title',
 	'An error occurred deleting user %user: :message' => 'Произошла ошибка при удалении пользователя %user: :message',
+    'An error occurred while deleting the role :name.' => 'Произошла ошибка при удалении роли :name.',
 	'After logging in, you will be redirected, so you can change your password. We do not encourage you to lose your password again. Be aware that this behaviour can be dangerous.' => 'После входа в систему вы будете перенаправлены для того чтоб изменить свой пароль. Мы не рекомендуем вам терять свой пароль повторно. Эта ситуация потенциально опасна.',
 	'All Messages' => 'Все сообщения',
 	'Allow' => 'Разрешить',
