@@ -189,7 +189,7 @@ class User {
 	/**
 	 * Look up a user by id.
 	 * @param integer      $id the user id
-	 * @return Model_User  the user object, or boolean if the id was invalid.
+     * @return ORM|bool The user object, or boolean if the ID was invalid
 	 */
 	public static function lookup($id)
 	{
@@ -199,7 +199,7 @@ class User {
 	/**
 	 * Look up a user by name.
 	 * @param integer      $name the user name
-	 * @return Model_User  the user object, or boolean if the name was invalid.
+     * @return ORM|bool The user object, or boolean if the name was invalid
 	 */
 	public static function lookup_by_name($name)
 	{
@@ -209,7 +209,7 @@ class User {
 	/**
 	 * Look up a user by email.
 	 * @param integer      $email the user email
-	 * @return Model_User  the user object, or boolean if the email was invalid.
+     * @return ORM|bool The user object, or boolean if the email was invalid
 	 */
 	public static function lookup_by_mail($email)
 	{
@@ -221,7 +221,7 @@ class User {
 	 *
 	 * @param   string  $field  Search field
 	 * @param   string  $value  Search value
-	 * @return  Model_User  the user object, or boolean if the name was invalid.
+     * @return ORM|bool The user object, or boolean if the name was invalid
 	 */
 	private static function _lookup_by_field($field, $value)
 	{
@@ -244,10 +244,9 @@ class User {
 	/**
 	 * Get role by id
 	 *
-	 * @since  1.2.0
-	 *
 	 * @param  integer  $id  Role id
-	 * @return Model_Role|boolean The Role object, or FALSE if ID is invalid or not found
+     * @return ORM|bool The Role object, or FALSE if ID is invalid or not found
+     * @since  1.2.0
 	 */
 	public static function getRoleById($id)
 	{
