@@ -235,7 +235,7 @@ class Controller_Message extends Template {
 					'status'    => $status,
 					'format'    => $_POST['format'],
 					'sent'      => $sent
-				))->save();
+                ), ['sender', 'recipient', 'subject', 'body', 'status', 'format', 'sent'])->save();
 
 				Kohana::$log->add(Log::INFO, 'Message :id successfully :act.', array(':id' => $message->id, ':act' => $act));
 				Message::success(__('Message successfully :act.', array(':act' => $act)));

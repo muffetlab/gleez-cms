@@ -272,13 +272,13 @@ class User {
     /**
      * Is the password provided correct?
      *
-     * @param Model_User $user User
+     * @param ORM $user User
      * @param string $password A plaintext password
      * @return boolean TRUE if the password is correct
      * @throws Kohana_Exception
      * @uses   Auth_ORM::hash
      */
-    public static function check_pass(Model_User $user, string $password): bool
+    public static function check_pass(ORM $user, string $password): bool
     {
 		if( !isset($user) || !isset($password) )
 		{
