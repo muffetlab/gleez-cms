@@ -568,7 +568,7 @@ class Gravatar {
 	 */
     public function setForceDefault(bool $force = TRUE): Gravatar
     {
-		$this->_default_force = (bool)$force;
+        $this->_default_force = $force;
 
 		return $this;
 	}
