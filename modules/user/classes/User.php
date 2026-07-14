@@ -322,7 +322,7 @@ class User {
      *
      * @param string $provider_id The provider user id
      * @param string $provider_name The provider name (facebook, google, live etc)
-     * @return mixed user object or FALSE
+     * @return ORM|null User object or NULL
      * @throws Kohana_Exception
      */
     public static function check_identity(string $provider_id, string $provider_name)
@@ -334,10 +334,7 @@ class User {
 			->execute()
 			->get('user_id');
 
-		// if the user id is found return the user object
-        if ($uid and $uid > 1) return ORM::factory('User', $uid);
-
-		return FALSE;
+        return $uid > 1 ? ORM::factory('User', $uid) : null;
 	}
 
     /**
