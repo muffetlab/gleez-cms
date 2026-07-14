@@ -416,11 +416,11 @@ class Model_User extends Gleez_Model
 	 * Allows a model use both email and username as unique identifiers for login
 	 *
      * @param string $value Unique value
-	 * @return  boolean
-	 * @uses    Valid::email
+     * @return string
+     * @uses Valid::email
 	 */
-    public function unique_key(string $value)
-	{
+    public function unique_key(string $value): string
+    {
 		return Valid::email($value) ? 'mail' : 'name';
 	}
 
