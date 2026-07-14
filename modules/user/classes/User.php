@@ -320,8 +320,8 @@ class User {
      * @return ORM|null User object or NULL
      * @throws Kohana_Exception
      */
-    public static function check_identity(string $provider_id, string $provider_name)
-	{
+    public static function check_identity(string $provider_id, string $provider_name): ?ORM
+    {
 		$uid = (int) DB::select('user_id')
 			->from('identities')
 			->where('provider', '=',  $provider_name)
