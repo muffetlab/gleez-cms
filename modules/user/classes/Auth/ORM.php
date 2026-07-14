@@ -109,7 +109,7 @@ class Auth_ORM extends Kohana_Auth_ORM
     /**
      * Get the stored password for a username.
      *
-     * @param mixed username string, or user ORM object
+     * @param mixed $user Username string, or user ORM object
      * @return string
      * @throws Kohana_Exception
      */
@@ -190,9 +190,9 @@ class Auth_ORM extends Kohana_Auth_ORM
     /**
      * Logs a user in.
      *
-     * @param string username
-     * @param string password
-     * @param boolean enable autologin
+     * @param string $username Username
+     * @param string $password Password
+     * @param bool $remember Enable autologin
      * @return bool
      * @throws Kohana_Exception|ReflectionException
      */
