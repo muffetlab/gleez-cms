@@ -280,7 +280,7 @@ class Module
 	{
         $available = static::$available;
 
-		if (in_array($module, array_keys($available)) && isset($available[$module])) {
+        if (isset($available[$module])) {
 			$module = $available[$module];
 
 			$modules = Kohana::modules();
@@ -304,7 +304,7 @@ class Module
         $available = static::$available;
 		$kohana_modules = Kohana::modules();
 
-		if (in_array($module, array_keys($available)) && isset($available[$module])) {
+        if (isset($available[$module])) {
 			$module = $available[$module];
 
 			if (($key = array_search($module->path, $kohana_modules)) !== false) {
