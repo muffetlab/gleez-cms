@@ -280,11 +280,6 @@ class User {
      */
     public static function check_pass(ORM $user, string $password): bool
     {
-		if( !isset($user) || !isset($password) )
-		{
-			return FALSE;
-		}
-
 		$valid = $user->pass;
 		$guess = Auth_ORM::instance()->hash($password);
 		

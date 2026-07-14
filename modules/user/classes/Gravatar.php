@@ -388,11 +388,6 @@ class Gravatar {
 	 */
     public function setSize(int $size): Gravatar
     {
-		if ( ! is_int($size) AND ! ctype_digit($size))
-		{
-			throw new Kohana_Exception('Avatar size specified must be an integer');
-		}
-
 		if ($size > 2048 OR $size < 0)
 		{
 			throw new Kohana_Exception('Avatar size must be within 0 pixels and 2048 pixels');
