@@ -217,9 +217,10 @@ class Model_User extends Gleez_Model
     /**
      * Override the create method with defaults
      *
-     * @param Validation $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return ORM
      * @throws Kohana_Exception
+     * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
 	public function create(Validation $validation = NULL): Kohana_ORM
