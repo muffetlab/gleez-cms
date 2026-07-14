@@ -297,7 +297,7 @@ class Gravatar {
      * @uses HTML::resize
      * @since 1.3.0
      */
-    public function getImage(array $attrs = NULL, $protocol = NULL, bool $index = FALSE): string
+    public function getImage(array $attrs = [], $protocol = NULL, bool $index = FALSE): string
     {
 		// Set auto attributes
 		$attributes = array(
@@ -307,7 +307,7 @@ class Gravatar {
 		);
 
 		// Merge attributes
-		$attrs = Arr::merge($attributes, (array) $attrs);
+        $attrs = Arr::merge($attributes, $attrs);
 
         // Return HTML
 		return HTML::resize($this, $attrs, $protocol, $index);
