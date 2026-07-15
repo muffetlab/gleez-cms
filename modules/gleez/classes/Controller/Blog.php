@@ -26,12 +26,12 @@ class Controller_Blog extends Template {
 	{
 		$id = $this->request->param('id', FALSE);
 
-		if ($id AND $this->request->action() == 'index')
+        if ($id && $this->request->action() == 'index')
 		{
 			$this->request->action('view');
 		}
 
-		if ( ! $id AND $this->request->action() == 'index')
+        if (!$id && $this->request->action() == 'index')
 		{
 			$this->request->action('list');
 		}
@@ -195,9 +195,9 @@ class Controller_Blog extends Template {
 			$comments = Request::factory('comments/blog/public/'.$id.$p)->execute()->body();
 		}
 
-		if ($post->comment == Comment::COMMENT_OPEN AND ACL::check('post comment'))
+        if ($post->comment == Comment::COMMENT_OPEN && ACL::check('post comment'))
 		{
-			if ($this->_auth->logged_in() OR ($config->comment_anonymous AND ! $this->_auth->logged_in()))
+            if ($this->_auth->logged_in() or $config->comment_anonymous && !$this->_auth->logged_in())
 			{
 				// Handle comment posting
 				$comment_form = Comment::form($this, $post);
@@ -206,7 +206,7 @@ class Controller_Blog extends Template {
 		}
 
 		// show site and other provider login buttons
-		if ($post->comment == Comment::COMMENT_OPEN AND $config->use_provider_buttons)
+        if ($post->comment == Comment::COMMENT_OPEN && $config->use_provider_buttons)
 		{
 			$provider_buttons = User::providers();
 		}
@@ -522,7 +522,7 @@ class Controller_Blog extends Template {
 
 		$posts = $term->posts;
 
-		if ( ! ACL::check('administer terms') AND !ACL::check('administer content'))
+        if (!ACL::check('administer terms') && !ACL::check('administer content'))
 		{
 			$posts->where('status', '=', 'publish');
 		}
@@ -594,7 +594,7 @@ class Controller_Blog extends Template {
 
 		$posts = $tag->posts;
 
-		if ( ! ACL::check('administer tags') AND !ACL::check('administer content'))
+        if (!ACL::check('administer tags') && !ACL::check('administer content'))
 		{
 			$posts->where('status', '=', 'publish');
 		}

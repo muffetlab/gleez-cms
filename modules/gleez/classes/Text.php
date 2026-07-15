@@ -156,7 +156,7 @@ class Text extends Kohana_Text
 
 		// Check for a cached version of this piece of text.
         $cache_id = $format_id . ':' . $langCode . ':' . hash('sha256', $text);
-        if ($cache and $cached = Cache::instance()->get('cache_filter:' . $cache_id)) {
+        if ($cache && ($cached = Cache::instance()->get('cache_filter:' . $cache_id))) {
 			return $cached;
 		}
 

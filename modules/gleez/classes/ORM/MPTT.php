@@ -219,7 +219,7 @@ class ORM_MPTT extends Gleez_Model
     public function make_root(Validation $validation = NULL, int $scope = NULL): ORM_MPTT
     {
 		// If node already exists, and already root, exit
-		if ($this->loaded() AND $this->is_root())
+        if ($this->loaded() && $this->is_root())
 			return $this;
 
 		// delete node space first
@@ -526,7 +526,7 @@ class ORM_MPTT extends Gleez_Model
 			// Stop $this being moved into a descendant or itself or disallow if target is root
 			if ($target->is_descendant($this)
 				OR $this->{$this->primary_key()} === $target->{$this->primary_key()}
-				OR ($allow_root_target === FALSE AND $target->is_root()))
+                or $allow_root_target === FALSE && $target->is_root())
 			{
 				$this->_db->rollback();
                 throw new Kohana_Exception('Invalid target for node move');
@@ -595,7 +595,7 @@ class ORM_MPTT extends Gleez_Model
 				->execute($this->_db)
 				->current();
 
-		if ($scope AND intval($scope['scope']) > 0)
+        if ($scope && intval($scope['scope']) > 0)
 			return intval($scope['scope']) + 1;
 
 		return 1;
@@ -610,12 +610,10 @@ class ORM_MPTT extends Gleez_Model
 	 */
     public function root(int $scope = NULL)
 	{
-		if (is_null($scope) AND $this->loaded())
+        if (is_null($scope) && $this->loaded())
 		{
 			$scope = $this->scope();
-		}
-		elseif (is_null($scope) AND ! $this->loaded())
-		{
+        } elseif (is_null($scope) && !$this->loaded()) {
 			throw new Kohana_Exception(':method must be called on an ORM_MPTT object instance.', array(':method' => 'root'));
 		}
 		
@@ -984,7 +982,7 @@ class ORM_MPTT extends Gleez_Model
     public function rebuild_tree(int $left = 1, $target = NULL): int
     {
 		// check if using target or self as root and load if not loaded
-		if (is_null($target) AND ! $this->loaded())
+        if (is_null($target) && !$this->loaded())
 		{
             throw new Kohana_Exception('Cannot rebuild tree: node is not loaded');
 		}

@@ -314,7 +314,7 @@ class Widgets {
 
         $response = null;
 
-		if ($widget->status AND $widget->visible)
+        if ($widget->status && $widget->visible)
 		{
 			try
 			{
@@ -353,7 +353,7 @@ class Widgets {
      */
     public static function install(array $widget, string $module)
 	{
-		if (isset($widget['name']) AND isset($widget['title']))
+        if (isset($widget['name']) && isset($widget['title']))
 		{
 			// name must be unique
 			$values['name']   = @strtolower($widget['name']);

@@ -192,7 +192,7 @@ class Filter {
 		foreach ($filters as $name => $filter)
 		{
 			$prepare_callback = $filter_info[$name]->prepare_callback;
-			if ($filter['status'] AND !empty($prepare_callback))
+            if ($filter['status'] && !empty($prepare_callback))
 			{
                 $text->text = Filter::execute($prepare_callback, $text->text, $filter);
 			}
@@ -202,7 +202,7 @@ class Filter {
 		foreach ($filters as $name => $filter)
 		{
 			$process_callback = $filter_info[$name]->process_callback;
-			if ($filter['status'] AND !empty($process_callback))
+            if ($filter['status'] && !empty($process_callback))
 			{
                 $text->text = Filter::execute($process_callback, $text->text, $filter);
 			}
@@ -225,13 +225,13 @@ class Filter {
 		$args = func_get_args();
 		array_shift($args);
 
-		if (is_string($callback) AND strpos($callback, '::') !== FALSE)
+        if (is_string($callback) && strpos($callback, '::') !== FALSE)
 		{
 			// Make the static callback into an array
 			$callback = explode('::', $callback, 2);
 		}
 
-		if ($callback AND is_callable($callback))
+        if ($callback && is_callable($callback))
 		{
 			try
 			{

@@ -127,13 +127,13 @@ class Controller_Comment extends Template {
 				->set('title', $comment->title);
 
 		// If deletion is not desired, redirect to post
-		if (isset($post['no']) AND $this->valid_post())
+        if (isset($post['no']) && $this->valid_post())
 		{
 			$this->request->redirect(empty($this->redirect) ? $route : $this->redirect);
 		}
 
 		// If deletion is confirmed
-		if (isset($post['yes']) AND $this->valid_post())
+        if (isset($post['yes']) && $this->valid_post())
 		{
 			$redirect = $comment->post->url;
 			$title = $comment->title;

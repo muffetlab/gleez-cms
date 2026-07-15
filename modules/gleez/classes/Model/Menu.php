@@ -105,7 +105,7 @@ class Model_Menu extends ORM_MPTT {
 	 */
 	public function is_valid(Validation $validation)
 	{
-		if ( empty($this->name) AND empty($this->title) )
+        if (empty($this->name) && empty($this->title))
 		{
 			$validation->error('title', 'not_empty', array($this->title));
 		}
@@ -142,8 +142,9 @@ class Model_Menu extends ORM_MPTT {
     {
 		$i = 1;
 		$original = $str;
+        $post = ORM::factory('Menu', array('name' => $str));
 
-        while ($post = ORM::factory('Menu', array('name' => $str)) and $post->loaded() and $post->id !== $this->id)
+        while ($post && $post->loaded() && $post->id !== $this->id)
 		{
 			$str = $original . '-' . $i;
 			$i++;

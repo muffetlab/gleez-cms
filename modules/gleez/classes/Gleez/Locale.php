@@ -251,7 +251,7 @@ class Gleez_Locale {
 
 		if ( ! isset($locale_data[$parts[0]]))
 		{
-			if ((count($parts) == 1) AND array_key_exists($parts[0], $territory_data))
+            if (count($parts) == 1 && array_key_exists($parts[0], $territory_data))
 			{
 				return $territory_data[$parts[0]];
 			}

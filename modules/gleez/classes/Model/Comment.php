@@ -137,7 +137,7 @@ class Model_Comment extends Gleez_Model
 		}
 
 		// Validate the comment's title. If not specified, extract from comment body.
-		if (trim($this->title) == '' AND !empty($this->body))
+        if (trim($this->title) == '' && !empty($this->body))
 		{
 			// The body may be in any format, so:
 			// 1) Filter it into HTML
@@ -208,7 +208,7 @@ class Model_Comment extends Gleez_Model
      */
     public function valid_author(Validation $validation, string $field)
 	{
-		if ( ! empty($this->author_name) AND ! ($account = User::lookup_by_name($this->author_name)))
+        if (!empty($this->author_name) && !($account = User::lookup_by_name($this->author_name)))
 		{
 			$validation->error('author', 'invalid', array($this->author_name));
 		}
@@ -223,13 +223,9 @@ class Model_Comment extends Gleez_Model
 		if (empty($this->author))
 		{
 			$validation->error($field, 'not_empty', array($validation[$field]));
-		}
-		elseif ($this->author == 1 AND empty($this->guest_name))
-		{
+        } elseif ($this->author == 1 && empty($this->guest_name)) {
 			$validation->error('guest_name', 'not_empty', array($validation[$field]));
-		}
-		elseif ($this->author == 1 AND ! empty($this->guest_name))
-		{
+        } elseif ($this->author == 1 && !empty($this->guest_name)) {
 			$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 						->from('users')
 						->where('name', 'LIKE', $this->guest_name)
@@ -324,7 +320,7 @@ class Model_Comment extends Gleez_Model
 		}
 
 		// If no user object is supplied, the access check is for the current user.
-		empty($user) AND $user = User::active_user();
+        empty($user) and $user = User::active_user();
 
 		if (ACL::check('bypass comment access', $user))
 		{
@@ -336,12 +332,12 @@ class Model_Comment extends Gleez_Model
 
 		if ($action === 'view')
 		{
-			if ($this->status === 'publish' AND ACL::check('access comment', $user))
+            if ($this->status === 'publish' && ACL::check('access comment', $user))
 			{
 				return $this;
 			}
 			// Check if authors can view their own unpublished posts.
-			elseif ($this->status != 'publish' AND $this->author == (int)$user->id AND $user->id != 1)
+            elseif ($this->status != 'publish' && $this->author == (int) $user->id && $user->id != 1)
 			{
 				return $this;
 			}
@@ -358,7 +354,7 @@ class Model_Comment extends Gleez_Model
 
 		if ($action === 'edit')
 		{
-			if (ACL::check('edit own comment') AND $this->author == (int)$user->id AND $user->id != 1)
+            if (ACL::check('edit own comment') && $this->author == (int) $user->id && $user->id != 1)
 			{
 				return $this;
 			}
@@ -375,8 +371,11 @@ class Model_Comment extends Gleez_Model
 
 		if ($action === 'delete')
 		{
-			if ((ACL::check('delete own comment') OR ACL::check('delete any comment')) AND
-				$this->author == (int)$user->id AND $user->id != 1)
+            if (
+                (ACL::check('delete own comment') or ACL::check('delete any comment'))
+                && $this->author == (int) $user->id
+                && $user->id != 1
+            )
 			{
 				return $this;
 			}
@@ -444,12 +443,12 @@ class Model_Comment extends Gleez_Model
 		// can view?
 		if ($action === 'view')
 		{
-			if ($this->status === 'publish' AND ACL::check('access comment', $user))
+            if ($this->status === 'publish' && ACL::check('access comment', $user))
 			{
 				return $this;
 			}
 			// Check if commentators can view their own unpublished comments.
-			elseif ($this->status != 'publish' AND $this->author == (int)$user->id AND $user->id != 1)
+            elseif ($this->status != 'publish' && $this->author == (int) $user->id && $user->id != 1)
 			{
 				return $this;
 			}
@@ -469,7 +468,7 @@ class Model_Comment extends Gleez_Model
 		// can edit?
 		if ($action === 'edit')
 		{
-			if (ACL::check('edit own comment') AND $this->author == (int)$user->id AND $user->id != 1)
+            if (ACL::check('edit own comment') && $this->author == (int) $user->id && $user->id != 1)
 			{
 				return $this;
 			}
@@ -489,8 +488,11 @@ class Model_Comment extends Gleez_Model
 		// can delete?
 		if ($action === 'delete')
 		{
-			if ((ACL::check('delete own comment') OR ACL::check('delete any comment')) AND
-				$this->author == (int)$user->id AND $user->id != 1)
+            if (
+                (ACL::check('delete own comment') or ACL::check('delete any comment'))
+                && $this->author == (int) $user->id
+                && $user->id != 1
+            )
 			{
 				return $this;
 			}

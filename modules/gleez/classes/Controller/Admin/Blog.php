@@ -209,13 +209,13 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$post = $this->request->post();
 
 		// If deletion is not desired, redirect to list
-		if (isset($post['no']) AND $this->valid_post())
+        if (isset($post['no']) && $this->valid_post())
 		{
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-		if (isset($post['yes']) AND $this->valid_post())
+        if (isset($post['yes']) && $this->valid_post())
 		{
 			$blogs = array_filter($post['items']);
 
@@ -228,7 +228,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 
 		if ($this->valid_post('blog-bulk-actions'))
 		{
-			if(isset($post['operation']) AND empty($post['operation']))
+            if (isset($post['operation']) && empty($post['operation']))
 			{
 				Message::error(__('No bulk operation selected.'));
 				$this->request->redirect($redirect);

@@ -15,7 +15,7 @@
 </div>
 
 <div class="blog-comment-form-wrapper">
-	<?php if (isset($provider_buttons) AND ! isset($comment_form)): ?>
+    <?php if (isset($provider_buttons) && !isset($comment_form)): ?>
 		<p>
 			<?php
 			_e('Only authorized users can post comments. :register or login using one of these services:',

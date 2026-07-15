@@ -1,5 +1,5 @@
 <?php
-	if (isset($widget->id) AND Valid::digit($widget->id))
+if (isset($widget->id) && Valid::digit($widget->id))
 	{
 		$parms = array('id' => $widget->id, 'action' => 'edit');
 		$split_name = explode('/', $widget->name);

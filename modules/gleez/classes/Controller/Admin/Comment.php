@@ -158,13 +158,13 @@ class Controller_Admin_Comment extends Controller_Admin {
 		$post     = $this->request->post();
 
 		// If deletion is not desired, redirect to list
-		if (isset($post['no']) AND $this->valid_post())
+        if (isset($post['no']) && $this->valid_post())
 		{
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-		if (isset($post['yes']) AND $this->valid_post())
+        if (isset($post['yes']) && $this->valid_post())
 		{
 			$comments = array_filter($post['items']);
 
@@ -282,7 +282,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 
 			foreach ($this->_datatables->result() as $post)
 			{
-				if ($post->author == 1 AND ! is_null($post->guest_name))
+                if ($post->author == 1 && !is_null($post->guest_name))
 				{
 					$author = HTML::anchor($post->guest_url, $post->guest_name, array()) . __(' (not verified)');
 				}

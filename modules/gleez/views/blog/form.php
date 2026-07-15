@@ -71,7 +71,7 @@
 				</div>
 			<?php endif; ?>
 
-			<?php if ($config->use_captcha  AND ! $captcha->promoted()): ?>
+            <?php if ($config->use_captcha && !$captcha->promoted()): ?>
 				<div class="form-group <?php echo isset($errors['captcha']) ? 'has-error': ''; ?>">
 					<?php echo Form::label('_captcha', __('Security'), array('class' => 'wrap')) ?>
 					<?php echo Form::input('_captcha', '', array('class' => 'form-control')); ?><br>
@@ -128,7 +128,7 @@
 					</div>
 					<div class="panel-footer">
 						<div id="major-publishing-actions" class="row">
-							<?php if ($blog->loaded() AND ACL::post('delete', $blog)): ?>
+                            <?php if ($blog->loaded() && ACL::post('delete', $blog)): ?>
 								<div id="delete-action" class="btn btn-default pull-left">
                                     <i class="fas fa-trash-can"></i>
                                     <?php echo HTML::anchor($blog->delete_url . URL::query($destination), __('Move to Trash')) ?>

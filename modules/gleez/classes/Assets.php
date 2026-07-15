@@ -105,7 +105,7 @@ class Assets {
 	{
 		$config = Kohana::$config->load('media');
 
-		if(Kohana::$environment === Kohana::PRODUCTION AND $config->get('combine', FALSE))
+        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', FALSE))
 		{
 			$format = self::FORMAT_FILENAME;
 		}
@@ -229,7 +229,7 @@ class Assets {
 	{
 		$config = Kohana::$config->load('media');
 
-		if(Kohana::$environment === Kohana::PRODUCTION AND $config->get('combine', FALSE))
+        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', FALSE))
 		{
 			$format = self::FORMAT_FILENAME;
 		}

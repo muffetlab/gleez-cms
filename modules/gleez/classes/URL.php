@@ -28,7 +28,7 @@ class URL extends Kohana_URL
 			return self::site($url->uri(), $protocol);
 		}
 
-		if ($pagination AND $pagination->current_page > 1)
+        if ($pagination && $pagination->current_page > 1)
 		{
 			$url .= '/p' . $pagination->current_page;
 		}

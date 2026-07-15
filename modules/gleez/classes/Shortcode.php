@@ -59,8 +59,8 @@ class Shortcode {
 
 		self::$_tags[$tag] = $callback;
 
-		if($asset AND $asset == 'css') Assets::css($tag, "media/css/shortcodes/$tag.css");
-		if($asset AND $asset == 'js')  Assets::js($tag, "media/js/shortcodes/$tag.js");
+        if ($asset && $asset == 'css') Assets::css($tag, "media/css/shortcodes/$tag.css");
+        if ($asset && $asset == 'js') Assets::js($tag, "media/js/shortcodes/$tag.js");
 
 		return self::$_tags;
 	}
@@ -294,7 +294,7 @@ class Shortcode {
                     $attrs[strtolower($m[3])] = stripcslashes($m[4]);
 				elseif (!empty($m[5]))
                     $attrs[strtolower($m[5])] = stripcslashes($m[6]);
-				elseif (isset($m[7]) and strlen($m[7]))
+                elseif (isset($m[7]) && strlen($m[7]))
                     $attrs[] = stripcslashes($m[7]);
 				elseif (isset($m[8]))
                     $attrs[] = stripcslashes($m[8]);
@@ -359,7 +359,7 @@ class Shortcode {
 	protected static function strip_tag( $m )
 	{
 		// allow [[foo]] syntax for escaping a tag
-		if ( $m[1] == '[' AND $m[6] == ']' )
+        if ($m[1] == '[' && $m[6] == ']')
 		{
 			return substr($m[0], 1, -1);
 		}

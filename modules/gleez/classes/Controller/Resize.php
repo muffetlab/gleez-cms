@@ -36,7 +36,7 @@ class Controller_Resize extends Controller {
 		list($this->width, $this->height) = explode('x', $dimensions);
 
         $image_src = $this->request->param('file');
-		$this->image_src   = (isset($_REQUEST['s']) AND !empty($_REQUEST['s'])) ? $_REQUEST['s'] : $image_src;
+        $this->image_src = !empty($_REQUEST['s']) ? $_REQUEST['s'] : $image_src;
 
 		$this->cache();
 		if( !$this->resized_image ) return;

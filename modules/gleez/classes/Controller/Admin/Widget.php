@@ -264,13 +264,13 @@ class Controller_Admin_Widget extends Controller_Admin {
 					->set('title', $widget->title);
 
 		// If deletion is not desired, redirect to post
-		if (isset($_POST['no']) AND $this->valid_post())
+        if (isset($_POST['no']) && $this->valid_post())
 		{
 			$this->request->redirect(Route::get('admin/widget')->uri(array('id' => $widget->id)));
 		}
 
 		// If deletion is confirmed
-		if (isset($_POST['yes']) AND $this->valid_post())
+        if (isset($_POST['yes']) && $this->valid_post())
 		{
 			try
 			{

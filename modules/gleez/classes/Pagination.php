@@ -178,7 +178,7 @@ class Pagination {
         $config['group'] = $group;
 
 		// Recursively load requested config groups
-		while (isset($config['group']) AND $config_file->offsetExists($config['group']))
+        while (isset($config['group']) && $config_file->offsetExists($config['group']))
 		{
 			// Temporarily store config group name
 			$group = $config['group'];
@@ -282,7 +282,7 @@ class Pagination {
 		$pager = '/p'. $page;
 
 		// No page number in URLs to first page
-		if ($page === 1 AND ! $this->config['first_page_in_url'])
+        if ($page === 1 && !$this->config['first_page_in_url'])
 		{
 			$page = NULL;
 			$pager = NULL;
@@ -324,7 +324,7 @@ class Pagination {
 			return FALSE;
 		}
 
-		return $page > 0 AND $page <= $this->total_pages;
+        return $page > 0 && $page <= $this->total_pages;
 	}
 
     /**
@@ -337,7 +337,7 @@ class Pagination {
     public function render($view = NULL): string
     {
 		// Automatically hide pagination whenever it is superfluous
-		if ($this->config['auto_hide'] === TRUE AND $this->total_pages <= 1)
+        if ($this->config['auto_hide'] === TRUE && $this->total_pages <= 1)
 		{
 			return '';
 		}

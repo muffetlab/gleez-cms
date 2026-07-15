@@ -256,13 +256,13 @@ class Controller_Admin_Term extends Controller_Admin {
 					->set('action', $action);
 
 		// If deletion is not desired, redirect to list
-		if (isset( $_POST['no']) AND $this->valid_post())
+        if (isset($_POST['no']) && $this->valid_post())
 		{
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
 		}
 
 		// If deletion is confirmed
-		if (isset($_POST['yes']) AND $this->valid_post())
+        if (isset($_POST['yes']) && $this->valid_post())
 		{
 			try
 			{
@@ -298,13 +298,13 @@ class Controller_Admin_Term extends Controller_Admin {
 	{
         $id = $this->request->param('id');
 
-		if ($this->valid_post('term-list') AND ! is_null($id))
+        if ($this->valid_post('term-list') && !is_null($id))
 		{
             $updated_items = [];
 
             foreach ($_POST as $val)
 			{
-                if (isset($val['tid']) and is_array($val))
+                if (isset($val['tid']) && is_array($val))
 				{
                     $updated_items[$val['tid']] = $val;
 				}

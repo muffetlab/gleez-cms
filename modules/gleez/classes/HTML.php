@@ -32,7 +32,7 @@ class HTML extends Kohana_HTML
     public static function script(string $file, array $attributes = null, $protocol = null, bool $index = false): string
     {
 		// Allow theme to serve its own media assets
-        if (strpos($file, 'media/js') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
+        if (strpos($file, 'media/js') !== FALSE && Gleez::$installed && strpos($file, 'guide-media') === FALSE)
 		{
 			$theme = Theme::$active;
             $file = str_replace(array('media/js'), "media/$theme/js", $file);
@@ -60,7 +60,7 @@ class HTML extends Kohana_HTML
     public static function style(string $file, array $attributes = null, $protocol = null, bool $index = false): string
     {
 		// Allow theme to serve its own media assets
-        if (strpos($file, 'media/css') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
+        if (strpos($file, 'media/css') !== FALSE && Gleez::$installed && strpos($file, 'guide-media') === FALSE)
 		{
 			$theme = Theme::$active;
             $file = str_replace(array('media/css'), "media/$theme/css", $file);
@@ -116,14 +116,14 @@ class HTML extends Kohana_HTML
 
 		if (strpos($file, '://') === FALSE)
 		{
-			if (isset($width) AND isset($height))
+            if (isset($width) && isset($height))
 			{
 				$file = (strpos($file, 'media/') === FALSE) ? $file : str_replace('media/', '', $file);
                 $file = "media/imagecache/$type/{$width}x$height/$file";
 			}
 
             // Auto-detect index file
-            $index = (!$index and !empty(Kohana::$index_file)) ? TRUE : $index;
+            $index = !$index && !empty(Kohana::$index_file) ? TRUE : $index;
 
 			// Add the base URL
 			$file = URL::base($protocol, $index).$file;
@@ -165,12 +165,10 @@ class HTML extends Kohana_HTML
 				}
 
 				// Check if the menu item URI is or contains the current URI
-				if(is_object($item) AND self::is_active($item->link))
+                if (is_object($item) && self::is_active($item->link))
 				{
 					$class .= ' active';
-				}
-				elseif(is_array($item) AND self::is_active($item['link']))
-				{
+                } elseif (is_array($item) && self::is_active($item['link'])) {
 					$class .= ' active';
 				}
 
@@ -222,7 +220,7 @@ class HTML extends Kohana_HTML
 			{
 				$class = 'tab-' . $i;
 
-				if(isset($tab['active']) OR ( isset($tab['link']) AND self::is_active($tab['link'])))
+                if (isset($tab['active']) or (isset($tab['link']) && self::is_active($tab['link'])))
 				{
 					$class .= ' active';
 				}

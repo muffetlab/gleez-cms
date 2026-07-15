@@ -63,14 +63,14 @@ class Theme {
 		}
 
 		//Set mobile theme, if enabled and mobile request
-		if(Request::is_mobile() AND $config->get('mobile_theme', FALSE))
+        if (Request::is_mobile() && $config->get('mobile_theme', FALSE))
 		{
 			// Load the mobile theme
 			Theme::$active = $config->get('mobile_theme', 'cerber');
 		}
 
 		// Admins can override the site theme, temporarily. This lets us preview themes.
-        if (User::is_admin() and isset($_GET['theme']) and $override = HTML::chars($_GET['theme']))
+        if (User::is_admin() && isset($_GET['theme']) && ($override = HTML::chars($_GET['theme'])))
 		{
 			Theme::$active = $override;
 		}
@@ -91,7 +91,7 @@ class Theme {
 		$modules = Kohana::modules();
 
 		// Check if the active theme is not loaded already
-		if( ! empty(Theme::$active) AND ! in_array(Theme::$active, array_keys($modules)))
+        if (!empty(Theme::$active) && !in_array(Theme::$active, array_keys($modules)))
 		{
 			// Make sure the theme is available
 			if( $theme = self::getTheme() )
@@ -143,7 +143,7 @@ class Theme {
 		$theme->description = __($theme->description);
 
 		// Add i18n support
-		if (isset($theme->regions) AND ! empty($theme->regions))
+        if (!empty($theme->regions))
 		{
 			foreach ($theme->regions as $name => $title)
 			{

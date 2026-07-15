@@ -235,7 +235,7 @@ class Gleez {
         $blocked_ips = Kohana::$config->load('site')->get('blocked_ips');
 		$ip          = Request::$client_ip;
 
-		if ( ! empty($blocked_ips) AND in_array($ip, preg_split("/[\s,]+/",$blocked_ips)))
+        if (!empty($blocked_ips) && in_array($ip, preg_split("/[\s,]+/", $blocked_ips)))
 		{
 			throw HTTP_Exception::factory(403, 'Sorry, your ip address (:ip) has been banned.', array(':ip' => $ip));
 		}

@@ -1,4 +1,4 @@
-<?php if( isset($comments) AND !empty($comments)): ?>
+<?php if (!empty($comments)): ?>
 	<ul class="comments-list">
 		<?php foreach($comments as $i => $comment) : ?>
 			<li class="widget-title">

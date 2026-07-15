@@ -104,14 +104,12 @@ class Controller_Admin_Modules extends Controller_Admin {
 			{
 				$desired = Arr::get($_POST, $module_name) == 1;
 
-				if ($info->active AND ! $desired AND Module::is_active($module_name))
+                if ($info->active && !$desired && Module::is_active($module_name))
 				{
 					Module::deactivate($module_name);
 					$changes->deactivate[] = $module_name;
 					$deactivated_names[] = __($info->name);
-				}
-				elseif ( ! $info->active AND $desired AND ! Module::is_active($module_name))
-				{
+                } elseif (!$info->active && $desired && !Module::is_active($module_name)) {
 					if (Module::is_installed($module_name))
 					{
 						Module::upgrade($module_name);

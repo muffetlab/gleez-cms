@@ -26,12 +26,12 @@ class Controller_Page extends Template {
 	{
 		$id = $this->request->param('id', FALSE);
 
-		if ($id AND $this->request->action() == 'index')
+        if ($id && $this->request->action() == 'index')
 		{
 			$this->request->action('view');
 		}
 
-		if ( ! $id AND $this->request->action() == 'index')
+        if (!$id && $this->request->action() == 'index')
 		{
 			$this->request->action('list');
 		}
@@ -178,7 +178,7 @@ class Controller_Page extends Template {
 			$this->_tabs[] = array('link' => $post->delete_url, 'text' => __('Delete'));
 		}
 
-		if (($post->comment > Comment::COMMENT_HIDDEN) AND ACL::check('access comment'))
+        if ($post->comment > Comment::COMMENT_HIDDEN && ACL::check('access comment'))
 		{
 			// Determine pagination offset
 			$p = ((int) $this->request->param('page', 0)) ? '/p'.$this->request->param('page', 0) : FALSE;
@@ -187,9 +187,9 @@ class Controller_Page extends Template {
 			$comments = Request::factory('comments/page/public/'.$id.$p)->execute()->body();
 		}
 
-		if ($post->comment == Comment::COMMENT_OPEN AND ACL::check('post comment'))
+        if ($post->comment == Comment::COMMENT_OPEN && ACL::check('post comment'))
 		{
-			if ($this->_auth->logged_in() OR ($config->comment_anonymous AND ! $this->_auth->logged_in()))
+            if ($this->_auth->logged_in() or $config->comment_anonymous && !$this->_auth->logged_in())
 			{
 				// Handle comment posting
 				$comment_form = Comment::form($this, $post);
@@ -197,7 +197,7 @@ class Controller_Page extends Template {
 		}
 
 		// show site and other provider login buttons
-		if ($post->comment == Comment::COMMENT_OPEN AND $config->use_provider_buttons)
+        if ($post->comment == Comment::COMMENT_OPEN && $config->use_provider_buttons)
 		{
 			$provider_buttons = User::providers();
 		}
@@ -439,13 +439,13 @@ class Controller_Page extends Template {
 					->set('title',  $post->title);
 
 		// If deletion is not desired, redirect to post
-		if (isset($_POST['no']) AND $this->valid_post())
+        if (isset($_POST['no']) && $this->valid_post())
 		{
 			$this->request->redirect($post->url);
 		}
 
 		// If deletion is confirmed
-		if ( isset($_POST['yes']) AND $this->valid_post() )
+        if (isset($_POST['yes']) && $this->valid_post())
 		{
 			try
 			{
@@ -515,7 +515,7 @@ class Controller_Page extends Template {
 
 		$posts = $term->posts;
 
-		if ( ! ACL::check('administer terms') AND ! ACL::check('administer content'))
+        if (!ACL::check('administer terms') && !ACL::check('administer content'))
 		{
 			$posts->where('status', '=', 'publish');
 		}
@@ -596,7 +596,7 @@ class Controller_Page extends Template {
 
 		$posts = $tag->posts;
 
-		if ( ! ACL::check('administer tags') AND ! ACL::check('administer content'))
+        if (!ACL::check('administer tags') && !ACL::check('administer content'))
 		{
 			$posts->where('status', '=', 'publish');
 		}

@@ -84,7 +84,12 @@ class Upload extends Kohana_Upload
             }
         }
         // Check if there is an uploaded file and valid type
-        if ($save AND self::valid($file) AND self::type($file, $valid_formats) and self::size($file, self::getUploadMaxFilesize()))
+        if (
+            $save
+            && self::valid($file)
+            && self::type($file, $valid_formats)
+            && self::size($file, self::getUploadMaxFilesize())
+        )
         {
             $filename = File::getUnique($file['name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
             $path     = self::save($file, $filename, $picture_path);

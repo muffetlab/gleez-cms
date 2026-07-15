@@ -220,13 +220,13 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 					->set('action', $action);
 
 		// If deletion is not desired, redirect to list
-		if (isset( $_POST['no'] ) AND $this->valid_post())
+        if (isset($_POST['no']) && $this->valid_post())
 		{
 			$this->request->redirect(Route::get('admin/menu/item')->uri(array('id' => $menu->pid)));
 		}
 
 		// If deletion is confirmed
-		if (isset($_POST['yes']) AND $this->valid_post())
+        if (isset($_POST['yes']) && $this->valid_post())
 		{
 			try
 			{
@@ -259,12 +259,12 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-		if ($this->valid_post('menu-item-list') AND $id)
+        if ($this->valid_post('menu-item-list') && $id)
 		{
             $updated_items = [];
             foreach ($_POST as $val)
 			{
-                if (isset($val['mlid']) and is_array($val))
+                if (isset($val['mlid']) && is_array($val))
 				{
                     $updated_items[$val['mlid']] = $val;
 				}

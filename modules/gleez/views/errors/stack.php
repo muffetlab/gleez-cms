@@ -96,7 +96,7 @@ $code = $code ?? 500;
 </script>
 
 <?php //try { $user = Identity::active_user(); } catch (Exception $e) { } ?>
-    <?php $admin = (class_exists('Model_User') AND class_exists('ACL') AND ACL::check('administer site')) ?>
+<?php $admin = class_exists('Model_User') && class_exists('ACL') && ACL::check('administer site') ?>
 
     <?php if ($admin): ?>
     <div class="big_box" id="error_details clear-block">

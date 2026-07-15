@@ -43,12 +43,12 @@ class Form extends Kohana_Form
     public static function open($action = null, array $attributes = null): string
     {
 		// Dynamically sets destination url to from action if exists in url
-        if (PHP_SAPI !== 'cli' and $destination = Request::current()->query('destination') and !empty($destination)) {
+        if (PHP_SAPI !== 'cli' && ($destination = Request::current()->query('destination')) && !empty($destination)) {
 			// Properly parse the path and query
 			$url = URL::explode($action);
 
 			//On seriously malformed URLs, parse_url() may return FALSE.
-			if (isset($url['path']) AND is_array($url['query_params']))
+            if (isset($url['path']) && is_array($url['query_params']))
 			{
 				//add destination param
                 $url['query_params']['destination'] = $destination;
@@ -105,7 +105,7 @@ class Form extends Kohana_Form
             $attributes['id'] = self::_get_id_by_name($name);
 		}
 
-        if ($attributes['type'] === 'text' and !empty($url))
+        if ($attributes['type'] === 'text' && !empty($url))
 		{
             $attributes['class'] = isset($attributes['class']) ? $attributes['class'] . ' form-autocomplete' : 'form-autocomplete';
             $attributes['id'] = $name;

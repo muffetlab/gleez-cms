@@ -55,7 +55,7 @@ class Controller_Taxonomy extends Template {
 
 			$posts = $term->posts;
 
-		if ( ! ACL::check('administer terms') AND !ACL::check('administer content'))
+        if (!ACL::check('administer terms') && !ACL::check('administer content'))
 		{
 			$posts->where('status', '=', 'publish');
 		}

@@ -46,7 +46,7 @@ class ORM_Versioned extends Gleez_Model
 		parent::update($validation);
 
 		// Create version only if its general update not version restore
-        if ($this->_saved and !$this->_restore && $object)
+        if ($this->_saved && !$this->_restore && $object)
 		{
             $data = [];
 			foreach ($object as $key => $value)

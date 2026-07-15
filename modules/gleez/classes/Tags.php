@@ -91,7 +91,7 @@ class Tags {
         $preserve_tags = [];
         $remove_tags = [];
 
-		if ( ! $skip_updates AND count($old_tags))
+        if (!$skip_updates && count($old_tags))
 		{
 			foreach ($old_tags as $tag)
 			{
@@ -138,7 +138,7 @@ class Tags {
 		{
 			$tag = trim($tag);
 
-			if ( ! empty($tag) AND (strlen($tag) <= $this->config['max_tag_length']))
+            if (!empty($tag) && strlen($tag) <= $this->config['max_tag_length'])
 			{
 				$this->safe_tag($user_id, $object, $tag);
 			}
@@ -168,7 +168,7 @@ class Tags {
 			return FALSE;
 		}
 
-		if ( ! empty($this->config['append_to_integer']) and is_numeric($tag) and intval($tag) == $tag)
+        if (!empty($this->config['append_to_integer']) && is_numeric($tag) && intval($tag) == $tag)
 		{
 			// Converts numeric tag "123" to "123_" to facilitate
 			// alphanumeric sorting (otherwise, PHP converts string to

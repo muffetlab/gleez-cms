@@ -200,13 +200,13 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 				->set('title', $term->name);
 
 		// If deletion is not desired, redirect to list
-		if (isset($_POST['no']) AND $this->valid_post())
+        if (isset($_POST['no']) && $this->valid_post())
 		{
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
 		}
 
 		// If deletion is confirmed
-		if (isset($_POST['yes']) AND $this->valid_post())
+        if (isset($_POST['yes']) && $this->valid_post())
 		{
 			try
 			{

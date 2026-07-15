@@ -243,8 +243,11 @@ class Message {
 
 			foreach ($messages as $message)
 			{
-				if (($message['type'] === $type) OR (is_array($type) AND in_array($message['type'], $type)) OR (is_array($type) AND Arr::is_assoc($type) AND !in_array($message['type'], $type[1])))
-				{
+                if (
+                    $message['type'] === $type
+                    or is_array($type) && in_array($message['type'], $type)
+                    or is_array($type) && Arr::is_assoc($type) && !in_array($message['type'], $type[1])
+                ) {
 					$return[] = $message;
 				}
 				else

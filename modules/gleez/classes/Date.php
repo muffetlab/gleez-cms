@@ -23,7 +23,7 @@ class Date extends Kohana_Date
     public static function formatted_time(string $datetime_str = 'now', string $timestamp_format = null, string $timezone = null): string
     {
 		//Display Dates in site defined timezone format
-		if(Kohana::$config->load('site')->get('timezone_override', FALSE) AND $timezone === NULL)
+        if (Kohana::$config->load('site')->get('timezone_override', FALSE) && $timezone === NULL)
 		{
 			// Default timezone from config
             $timezone = Kohana::$config->load('site')->get('timezone', 'UTC');

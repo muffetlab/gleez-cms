@@ -81,7 +81,7 @@ class Controller_Contact extends Template {
 					->bind('errors',     $this->_errors);
 
 		// Initiate Captcha
-		if($config->get('use_captcha', FALSE) AND ! $this->_auth->logged_in())
+        if ($config->get('use_captcha', FALSE) && !$this->_auth->logged_in())
 		{
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);

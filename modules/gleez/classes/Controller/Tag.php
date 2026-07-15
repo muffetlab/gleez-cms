@@ -65,7 +65,7 @@ class Controller_Tag extends Template {
 
 		$posts = $tag->posts;
 
-		if ( ! ACL::check('administer tags') AND ! ACL::check('administer content'))
+        if (!ACL::check('administer tags') && !ACL::check('administer content'))
 		{
 			$posts->where('status', '=', 'publish');
 		}

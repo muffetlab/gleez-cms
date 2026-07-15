@@ -66,25 +66,25 @@ class Gleez_I18n extends I18n
 		$locale = Gleez_I18n::cookieLocale();
 
 		// 2. Check the user's preference
-		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'USER'))
+        if (!$locale && ($locale_override == 'ALL' or $locale_override == 'USER'))
 		{
 			$locale = Gleez_I18n::userLocale();
 		}
 
 		// 3. Check the request client/browser's preference
-		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'CLIENT'))
+        if (!$locale && ($locale_override == 'ALL' or $locale_override == 'CLIENT'))
 		{
 			$locale = Gleez_I18n::requestLocale();
 		}
 
 		// 4. Check the url preference and get the language from url
-		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'URL'))
+        if (!$locale && ($locale_override == 'ALL' or $locale_override == 'URL'))
 		{
 			$locale = Gleez_I18n::urlLocale();
 		}
 
         // 5. Check the subdomain preference and get the language form subdomain
-		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'DOMAIN'))
+        if (!$locale && ($locale_override == 'ALL' or $locale_override == 'DOMAIN'))
 		{
 			$locale = Gleez_I18n::domainLocale();
 		}
@@ -185,7 +185,7 @@ class Gleez_I18n extends I18n
 		$cookie_data = strtolower(Cookie::get(self::$_cookie));
 
 		//double check cookie data
-		if ($cookie_data AND preg_match("/^([a-z]{2,3}(?:_[A-Z]{2})?)$/", trim($cookie_data), $matches))
+        if ($cookie_data && preg_match("/^([a-z]{2,3}(?:_[A-Z]{2})?)$/", trim($cookie_data), $matches))
 		{
 			$locale = $matches[1];
 
@@ -346,7 +346,7 @@ class Gleez_I18n extends I18n
 					return 'one';
 				} else if ($count == 2) {
 					return 'two';
-				} else if (is_int($count) AND ($i = $count % 100) >= 3 AND $i <= 10) {
+                } else if (is_int($count) && ($i = $count % 100) >= 3 && $i <= 10) {
 					return 'few';
                 } else if (is_int($count) && $count % 100 >= 11) {
 					return 'many';
@@ -373,7 +373,7 @@ class Gleez_I18n extends I18n
 				}
 
 			case 'fr':
-				if ($count >= 0 and $count < 2) {
+                if ($count >= 0 && $count < 2) {
 					return 'one';
 				} else {
 					return 'other';
@@ -382,7 +382,7 @@ class Gleez_I18n extends I18n
 			case 'lv':
 				if ($count == 0) {
 					return 'zero';
-				} else if ($count % 10 == 1 AND $count % 100 != 11) {
+                } else if ($count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
 				} else {
 					return 'other';
@@ -414,7 +414,7 @@ class Gleez_I18n extends I18n
 				}
 
 			case 'lt':
-				if (is_int($count) AND $count % 10 == 1 AND $count % 100 != 11) {
+                if (is_int($count) && $count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
                 } else if (
                     is_int($count)
@@ -433,7 +433,7 @@ class Gleez_I18n extends I18n
 			case 'be':
 			case 'bs':
 			case 'sh':
-				if (is_int($count) AND $count % 10 == 1 AND $count % 100 != 11) {
+                if (is_int($count) && $count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
                 } else if (
                     is_int($count)
@@ -454,7 +454,7 @@ class Gleez_I18n extends I18n
 			case 'sk':
 				if ($count == 1) {
 					return 'one';
-				} else if (is_int($count) AND $count >= 2 AND $count <= 4) {
+                } else if (is_int($count) && $count >= 2 && $count <= 4) {
 					return 'few';
 				} else {
 					return 'other';
@@ -479,7 +479,7 @@ class Gleez_I18n extends I18n
 					return 'one';
 				} else if ($count % 100 == 2) {
 					return 'two';
-				} else if (is_int($count) AND ($i = $count % 100) >= 3 AND $i <= 4) {
+                } else if (is_int($count) && ($i = $count % 100) >= 3 && $i <= 4) {
 					return 'few';
 				} else {
 					return 'other';
@@ -488,9 +488,9 @@ class Gleez_I18n extends I18n
 			case 'mt':
 				if ($count == 1) {
 					return 'one';
-				} else if ($count == 0 OR is_int($count) AND ($i = $count % 100) >= 2 AND $i <= 10) {
+                } else if ($count == 0 or is_int($count) && ($i = $count % 100) >= 2 && $i <= 10) {
 					return 'few';
-				} else if (is_int($count) AND ($i = $count % 100) >= 11 AND $i <= 19) {
+                } else if (is_int($count) && ($i = $count % 100) >= 11 && $i <= 19) {
 					return 'many';
 				} else {
 					return 'other';

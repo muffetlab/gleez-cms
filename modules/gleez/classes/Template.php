@@ -394,7 +394,7 @@ abstract class Template extends Controller {
         if ($this->auto_render && !$this->bare)
 		{
 			// Controller name as the default page id if none set
-			empty($this->_page_id) AND $this->_page_id = $this->request->controller();
+            empty($this->_page_id) and $this->_page_id = $this->request->controller();
 
 			// Load left and right sidebars if available
 			$this->_set_sidebars();
@@ -477,7 +477,7 @@ abstract class Template extends Controller {
 			}
 
 			// And profiler if debug is true
-			if (Kohana::$environment !== Kohana::PRODUCTION AND $this->debug)
+            if (Kohana::$environment !== Kohana::PRODUCTION && $this->debug)
 			{
 				$this->template->profiler = View::factory('profiler/stats');
 			}
@@ -672,7 +672,7 @@ abstract class Template extends Controller {
 		$sidebar_left  = $this->template->sidebar_left;
 		$sidebar_right = $this->template->sidebar_right;
 
-		if ( ! empty($sidebar_left) AND ! empty($sidebar_right))
+        if (!empty($sidebar_left) && !empty($sidebar_right))
 		{
 			$this->template->column_class = 'main-both';
 			$this->template->main_column  = 6;
@@ -722,7 +722,7 @@ abstract class Template extends Controller {
 		Assets::js('bootstrap', 'media/js/bootstrap.min.js', array('jquery'), FALSE, array('weight' => -8));
 
 		// Google js only in production and not in admin section
-		if (Kohana::PRODUCTION === Kohana::$environment AND Theme::$is_admin === FALSE)
+        if (Kohana::PRODUCTION === Kohana::$environment && Theme::$is_admin === FALSE)
 		{
             $ua = $this->_config->get('google_ua');
 
@@ -781,7 +781,7 @@ abstract class Template extends Controller {
         $has_csrf = !empty($_token) && !empty($_action);
 		$valid_csrf = CSRF::valid($_token, $_action);
 
-		if ($has_csrf AND ! $valid_csrf)
+        if ($has_csrf && !$valid_csrf)
 		{
 			// CSRF was submitted but expired
 			$this->_errors = array('_token' => __('This form has expired. Please try submitting it again.'));
@@ -804,7 +804,7 @@ abstract class Template extends Controller {
 			}
 		}
 
-		return $has_csrf AND $valid_csrf;
+        return $has_csrf && $valid_csrf;
 	}
 
 	/**

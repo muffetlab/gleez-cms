@@ -48,7 +48,7 @@ class Path {
         $alias = preg_replace($reg_ex, '', $alias);
 
 		// Check if it's a front page request and set <front> tag
-		if (empty($alias) AND $alias == NULL)
+        if (empty($alias) && $alias == NULL)
 		{
 			$alias = self::FRONT_ALIAS;
 		}
@@ -91,7 +91,7 @@ class Path {
 	{
 		try
 		{
-			if (isset($values['id']) AND is_numeric($values['id']))
+            if (isset($values['id']) && is_numeric($values['id']))
 			{
                 $path = ORM::factory('Path', $values['id'])
                     ->values($values, ['source', 'alias'])

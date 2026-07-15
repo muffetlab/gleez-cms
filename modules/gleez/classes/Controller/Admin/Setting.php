@@ -31,7 +31,7 @@ class Controller_Admin_Setting extends Controller_Admin {
 		$this->title = __('Settings');
 		$config = Kohana::$config->load('site');
 
-		if (isset($config['maintenance_mode']) AND $config['maintenance_mode'] == 1)
+        if (isset($config['maintenance_mode']) && $config['maintenance_mode'] == 1)
 		{
 			Message::success(__('Site running in maintenance mode!'));
 		}

@@ -295,7 +295,7 @@ class Model_Term extends ORM_MPTT {
      */
     public function uploadImage(array $file): ?string
     {
-		if (isset($file['tmp_name']) AND ! empty($file['tmp_name']))
+        if (!empty($file['tmp_name']))
 		{
 			return Upload::uploadImage($file);
 		}

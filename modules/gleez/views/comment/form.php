@@ -3,7 +3,7 @@
 <?php include Kohana::find_file('views', 'errors/partial'); ?>
 
 <div class="row">
-	<?php if (ACL::check('administer comment') AND $is_edit): ?>
+	<?php if (ACL::check('administer comment') && $is_edit): ?>
 		<div id="side-info-column" class="col-md-3 col-md-push-9">
             <div class="panel panel-default">
 				<div class="panel-heading">
@@ -49,7 +49,7 @@
 
 	<div id="comment-body" class="<?php echo ( ! ACL::check('administer comment') OR ! $is_edit) ? 'col-md-12' : 'col-md-9 col-md-pull-3'; ?>">
 
-        <?php if (!$auth->logged_in() or ($is_edit and $post->author == 1)): ?>
+        <?php if (!$auth->logged_in() or $is_edit && $post->author == 1): ?>
             <div class="stuffbox">
 				<h3 class='hndle'><?php echo __('Author') ?></h3>
 
@@ -85,7 +85,7 @@
 
 		</div>
 
-		<?php if ($use_captcha  AND ! $captcha->promoted()) : ?>
+        <?php if ($use_captcha && !$captcha->promoted()) : ?>
 			<div class="form-group <?php echo isset($errors['captcha']) ? 'error': ''; ?>">
 				<?php echo Form::label('_captcha', __('Security'), array('class' => 'form-control nowrap')) ?>
 				<?php echo Form::input('_captcha', '', array('class' => 'text form-control')); ?>

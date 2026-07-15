@@ -141,12 +141,12 @@ class HTMLFilter {
 		// Load the configuration for this type
         $config = Kohana::$config->load('input_filter');
 
-		if ($config->allowed_protocols AND is_array($config->allowed_protocols))
+        if ($config->allowed_protocols && is_array($config->allowed_protocols))
 		{
 			$this->allowed_protocols = $config->allowed_protocols;
 		}
 
-		if ($config->allowed_tags AND is_array($config->allowed_tags))
+        if ($config->allowed_tags && is_array($config->allowed_tags))
 		{
 			$this->allowed_tags = $config->allowed_tags;
 		}
@@ -467,7 +467,7 @@ class HTMLFilter {
 		}
 
 		// The attribute list ends with a valueless attribute like "selected".
-		if ($mode == 1 AND ! $skip)
+        if ($mode == 1 && !$skip)
 		{
 			$attrarr[] = $attrname;
 		}

@@ -65,7 +65,7 @@
 		</div>
 
 		<hr>
-		<?php if (isset($captcha)  AND ! $captcha->promoted()): ?>
+        <?php if (isset($captcha) && !$captcha->promoted()): ?>
 			<div class="form-group <?php echo isset($errors['captcha']) ? 'has-error': ''; ?>">
 				<?php echo Form::label('_captcha', __('Security'), array('class' => 'col-sm-3 control-label')) ?>
 				<div class="col-sm-9">

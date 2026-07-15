@@ -221,7 +221,7 @@ class Post extends ORM_Versioned {
 		// Make sure we have a valid term id set
 		if ($name == 'category')
 		{
-			if (isset($this->categories) AND is_array($this->categories))
+            if (isset($this->categories) && is_array($this->categories))
 			{
                 foreach ($this->categories as $term)
 				{
@@ -235,7 +235,7 @@ class Post extends ORM_Versioned {
         // Make sure we have a valid date is set, or current time
 		elseif ($name == 'created')
 		{
-			if ( ! empty($this->author_date) AND ! ($date = strtotime($this->author_date)))
+            if (!empty($this->author_date) && !($date = strtotime($this->author_date)))
 			{
 				$validation->error($field, 'invalid', array($this->author_date));
 			}
@@ -250,7 +250,7 @@ class Post extends ORM_Versioned {
         // Make sure we have a valid author id set, or a guest id
 		elseif ($name == 'author')
 		{
-			if ( ! empty($this->author_name) AND ! ($account = User::lookup_by_name($this->author_name)))
+            if (!empty($this->author_name) && !($account = User::lookup_by_name($this->author_name)))
 			{
 				$validation->error($field, 'invalid', array($this->author_name));
 			}
@@ -265,7 +265,7 @@ class Post extends ORM_Versioned {
         // Make sure we have a valid date is set, or current time
 		elseif ($name == 'pubdate')
 		{
-			if ( ! empty($this->author_pubdate) AND ! ($date = strtotime($this->author_pubdate)))
+            if (!empty($this->author_pubdate) && !($date = strtotime($this->author_pubdate)))
 			{
 				$validation->error($field, 'invalid', array($validation[$field]));
 			}
@@ -303,7 +303,7 @@ class Post extends ORM_Versioned {
      */
 	protected function before_save()
 	{
-		if (isset($_FILES['image']['name']) AND ! empty($_FILES['image']['name']))
+        if (!empty($_FILES['image']['name']))
 		{
             // Validate image before saving
             $allowedTypes = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
@@ -410,7 +410,7 @@ class Post extends ORM_Versioned {
 		$delimiter = strpos($this->rawbody, self::TEASER_TAG);
 
 		// If the size is zero, and there is no delimiter, the entire body is teaser.
-		if ($size == 0 AND $delimiter === FALSE)
+        if ($size == 0 && $delimiter === FALSE)
 		{
 			return $this->rawbody;
 		}
@@ -437,7 +437,7 @@ class Post extends ORM_Versioned {
 			$this->categories = array_filter($this->categories);
 		}
 
-		if (isset($this->categories) AND is_array($this->categories))
+        if (isset($this->categories) && is_array($this->categories))
 		{
 			// Remove the previous terms relationship
 			$this->remove('terms');
@@ -445,7 +445,7 @@ class Post extends ORM_Versioned {
             foreach ($this->categories as $term)
 			{
 				// Add the term relationship
-				if ( isset($term) AND !empty($term) AND $term != 'last')
+                if (!empty($term) && $term != 'last')
 				{
                     $this->add('terms', (int) $term);
 				}
@@ -997,7 +997,7 @@ class Post extends ORM_Versioned {
 	 */
     protected function _delete_image(): Post
     {
-		if ($this->rawimage AND file_exists($this->_image_path.$this->rawimage))
+        if ($this->rawimage && file_exists($this->_image_path . $this->rawimage))
 		{
 			@unlink($this->_image_path.$this->rawimage);
 		}
