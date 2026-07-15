@@ -30,7 +30,7 @@ $n6 = (int) (($n5 + $n7) / 2);
 $use_n6 = ($use_middle AND (($n7 - $n5) > 1));
 
 // Links to display as array(page => content)
-$links = array();
+$links = [];
 
 // Generate links data in accordance with calculated numbers
 for ($i = $n1; $i <= $n2; $i++)

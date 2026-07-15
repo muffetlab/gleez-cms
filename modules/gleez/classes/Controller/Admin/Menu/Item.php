@@ -261,7 +261,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 
 		if ($this->valid_post('menu-item-list') AND $id)
 		{
-			$updated_items = array();
+            $updated_items = [];
             foreach ($_POST as $val)
 			{
                 if (isset($val['mlid']) and is_array($val))
@@ -269,7 +269,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
                     $updated_items[$val['mlid']] = $val;
 				}
 			}
-			$this->tree = array();
+            $this->tree = [];
 			$this->counter = 1;
 			$this->level_zero = 1;
 			$this->calculate_mptt( $this->generate_tree($updated_items) );
@@ -319,12 +319,12 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	 */
     private function generate_tree(array $tree): array
     {
-		$menu = array();
-		$ref  = array();
+        $menu = [];
+        $ref = [];
 
 		foreach($tree as $d)
 		{
-			$d['children'] = array();
+            $d['children'] = [];
 
 			if(isset($ref[$d['plid']]))
 			{

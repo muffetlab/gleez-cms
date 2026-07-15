@@ -236,10 +236,10 @@ class Message {
 		if ($type !== NULL)
 		{
 			// Will hold the filtered set of messages to return
-			$return = array();
+            $return = [];
 
 			// Store the remainder in case delete or get_once is called
-			$remainder = array();
+            $remainder = [];
 
 			foreach ($messages as $message)
 			{

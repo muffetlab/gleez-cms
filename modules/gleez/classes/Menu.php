@@ -18,13 +18,13 @@ class Menu {
 	 * Associative array of list items
 	 * @var array
 	 */
-	protected $items = array();
+    protected $items = [];
 
 	/**
 	 * Associative array of attributes for list
 	 * @var array
 	 */
-	protected $attributes = array();
+    protected $attributes = [];
 
     /**
      * Creates and returns a new menu object
@@ -182,7 +182,7 @@ class Menu {
 		{
             $has_children = count($item['children'] ?? []);
 			$classes = NULL;
-			$attributes  = array();
+            $attributes = [];
 			$caret = NULL;
 
 			// Add first, last and parent classes to the list of links to help out themers.

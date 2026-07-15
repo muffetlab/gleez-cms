@@ -102,7 +102,7 @@ class Pagination {
 	 * Parameters to use with Route to create URIs
 	 * @var array
 	 */
-	protected $_route_params = array();
+    protected $_route_params = [];
 
 	/**
 	 * Requested URI

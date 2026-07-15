@@ -60,7 +60,7 @@ class Controller_Admin_Autocomplete extends Controller {
 		ACL::required('administer menu');
 
 		$string  = $this->request->param('string', FALSE);
-		$matches = array();
+        $matches = [];
 
 		if ($string)
 		{

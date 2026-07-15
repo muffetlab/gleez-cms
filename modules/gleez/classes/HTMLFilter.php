@@ -353,7 +353,7 @@ class HTMLFilter {
 	 */
     private function xss_attributes(string $attr): array
     {
-		$attrarr  = array();
+        $attrarr = [];
 		$mode     = 0;
 		$attrname = '';
 		$skip     = FALSE;

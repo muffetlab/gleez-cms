@@ -1,5 +1,5 @@
 <?php
-	$elements = array();
+$elements = [];
 
 	for($i = 0; $i < $items_count; $i++)
 	{

@@ -68,7 +68,7 @@ class Controller_Feeds_Template extends Controller {
 	 * Feed items
 	 * @var array
 	 */
-	protected $_items = array();
+    protected $_items = [];
 
 	/**
 	 * Feed item

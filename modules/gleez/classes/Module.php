@@ -17,19 +17,19 @@ class Module
 	 * Array of modules
 	 * @var array
 	 */
-	public static $modules = array();
+    public static $modules = [];
 
 	/**
 	 * List of active modules
 	 * @var array
 	 */
-	public static $active = array();
+    public static $active = [];
 
 	/**
 	 * List of available modules, including uninstalled modules
 	 * @var array
 	 */
-	public static $available = array();
+    public static $available = [];
 
     /**
      * Set the version of the corresponding Module_Model
@@ -199,7 +199,7 @@ class Module
     public static function can_activate(string $module_name): array
     {
 		self::_add_to_path($module_name);
-		$messages = array();
+        $messages = [];
 
 		$installer_class = ucfirst($module_name).'_Installer';
 		if (is_callable(array($installer_class, "can_activate"))) {
@@ -502,10 +502,10 @@ class Module
      */
     public static function load_modules(bool $reset = true)
 	{
-		self::$modules = array();
-		self::$active  = array();
+        self::$modules = [];
+        self::$active = [];
 
-		$kohana_modules  = array();
+        $kohana_modules = [];
         $cache = Cache::instance();
 		$data            = $cache->get('load_modules', false);
 
@@ -522,7 +522,7 @@ class Module
 				->order_by('name','ASC')
 				->find_all();
 
-			$_cache_modules = $_cache_active = array();
+            $_cache_modules = $_cache_active = [];
 			foreach ($modules as $module) {
 				self::$modules[$module->name] = $module;
 				$_cache_modules[$module->name]  = $module->as_array();
@@ -545,7 +545,7 @@ class Module
 				}
 			}
 
-            $data = array();
+            $data = [];
             $data['modules'] = $_cache_modules;
             $data['active']  = $_cache_active;
             $data['kohana_modules'] = $kohana_modules;

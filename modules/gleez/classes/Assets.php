@@ -61,31 +61,31 @@ class Assets {
 	 * CSS assets
 	 * @var array
 	 */
-	public static $css = array();
+    public static $css = [];
 
 	/**
 	 * Javascript assets
 	 * @var array
 	 */
-	public static $js = array();
+    public static $js = [];
 
 	/**
 	 * Script blocks
 	 * @var array
 	 */
-	public static $codes = array();
+    public static $codes = [];
 
 	/**
 	 * Settings blocks
 	 * @var array
 	 */
-	public static $settings = array();
+    public static $settings = [];
 
 	/**
 	 * Other asset groups (meta data, links, etc...)
 	 * @var array
 	 */
-	public static $groups = array();
+    public static $groups = [];
 
     /**
      * CSS wrapper
@@ -188,7 +188,7 @@ class Assets {
             return $format === self::FORMAT_AJAX ? [] : '';
 		}
 
-		$assets = array();
+        $assets = [];
 
 		foreach (self::_sort(self::$css) as $handle => $data)
 		{
@@ -522,7 +522,7 @@ class Assets {
 			return '';
 		}
 
-		$assets = array();
+        $assets = [];
 
 		foreach (self::_sort(self::$groups[$group]) as $handle => $data)
 		{

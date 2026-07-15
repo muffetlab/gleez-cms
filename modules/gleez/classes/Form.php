@@ -215,7 +215,7 @@ class Form extends Kohana_Form
      */
     public static function weight(string $name, int $selected = 0, array $attrs = NULL, int $delta = 15): string
     {
-		$options = array();
+        $options = [];
 
 		for ($n = (-1 * $delta); $n <= $delta; $n++)
 		{

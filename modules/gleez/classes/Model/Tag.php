@@ -122,7 +122,7 @@ class Model_Tag extends Gleez_Model
 	private function _aliases()
 	{
 		// Create and save alias for the post
-		$values = array();
+        $values = [];
 
 		$path = Path::load($this->rawurl);
 

@@ -300,7 +300,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 		if ($this->valid_post('term-list') AND ! is_null($id))
 		{
-			$updated_items = array();
+            $updated_items = [];
 
             foreach ($_POST as $val)
 			{
@@ -311,7 +311,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 			}
 
-			$this->tree = array();
+            $this->tree = [];
 			$this->counter = 1;
 			$this->level_zero = 1;
 
@@ -364,12 +364,12 @@ class Controller_Admin_Term extends Controller_Admin {
 	 */
     private function generate_tree($tree): array
     {
-		$menu = array();
-		$ref = array();
+        $menu = [];
+        $ref = [];
 
 		foreach ($tree as $d)
 		{
-			$d['children'] = array();
+            $d['children'] = [];
 
 			if (isset($ref[$d['pid']]))
 			{

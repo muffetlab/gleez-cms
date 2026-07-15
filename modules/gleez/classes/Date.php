@@ -97,7 +97,7 @@ class Date extends Kohana_Date
 
 		$zones = DateTimeZone::listIdentifiers();
 
-		$locations = array();
+        $locations = [];
 
 		foreach ($zones as $zone)
 		{

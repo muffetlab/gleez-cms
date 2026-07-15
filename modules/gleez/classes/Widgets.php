@@ -22,19 +22,19 @@ class Widgets {
 	 * Associative array of widgets
      * @var array
 	 */
-	protected $_widgets = array();
+    protected $_widgets = [];
 
 	/**
 	 * Associative array of widget regions that will be loaded
      * @var array
 	 */
-	protected $_regions = array();
+    protected $_regions = [];
 
 	/**
 	 * Count of widgets inside a region
      * @var array
 	 */
-	protected $_widget_count = array();
+    protected $_widget_count = [];
 
 	/**
 	 * Status of Widgets, if it's already loaded from the database
@@ -114,7 +114,7 @@ class Widgets {
 
 		if ( ! isset($this->_regions[$region]))
 		{
-			$this->_regions[$region] = array();
+            $this->_regions[$region] = [];
 		}
 
         $this->_regions[$region][] = $name;
@@ -276,7 +276,7 @@ class Widgets {
             return '';
 		}
 
-		$response = array();
+        $response = [];
 
         foreach ($this->_regions[$this->_region] as $name)
 		{
@@ -420,7 +420,7 @@ class Widgets {
 				->order_by('weight', 'ASC')
 				->find_all();
 
-			$widgets = array();
+            $widgets = [];
 
 			foreach($_widgets as $_widget)
 			{

@@ -39,7 +39,7 @@ class Gleez_I18n extends I18n
 	/**
 	 * @var  array  array of available languages
 	 */
-	protected static $_languages = array();
+    protected static $_languages = [];
 
 	/**
 	 * @var  string  source language: en-us, es-es, zh-cn, etc

@@ -65,7 +65,7 @@ class Controller_Admin_Page extends Controller_Admin {
         $articles = ORM::factory('Page')->where('type', '=', 'page')->find_all();
         $comments = ORM::factory('Comment')->where('type', '=', 'page')->find_all();
 
-		$stats = array();
+        $stats = [];
 		$stats['categories']['total'] = count($categories);
 		$stats['tags']['total']       = count($tags);
 		$stats['articles']['total']   = count($articles);

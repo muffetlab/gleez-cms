@@ -88,8 +88,8 @@ class Tags {
 		$tags = self::explode($tags);
 		$old_tags = $object->tags->find_all();
 
-		$preserve_tags = array();
-		$remove_tags = array();
+        $preserve_tags = [];
+        $remove_tags = [];
 
 		if ( ! $skip_updates AND count($old_tags))
 		{
@@ -280,7 +280,7 @@ class Tags {
         // This handles cases like: this, "some-company, llc", "and ""this"" w,o.rks", foo bar
         $typed_tags = array_unique(str_getcsv($tags));
 
-		$tags = array();
+        $tags = [];
 		foreach ($typed_tags as $tag)
 		{
             $tag = trim($tag);
@@ -302,7 +302,7 @@ class Tags {
 	 */
     public static function implode(array $tags): string
     {
-		$encoded_tags = array();
+        $encoded_tags = [];
 		foreach ($tags as $tag)
 		{
 			// Commas and quotes in tag names are special cases, so encode them.

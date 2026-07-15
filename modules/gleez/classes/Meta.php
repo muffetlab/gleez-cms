@@ -14,13 +14,13 @@ class Meta {
 	 * An array of meta links
 	 * @var array
 	 */
-	public static $links = array();
+    public static $links = [];
 
 	/**
 	 * An array of meta tags
 	 * @var array
 	 */
-	public static $tags = array();
+    public static $tags = [];
 
     /**
      * Meta Link wrapper
@@ -104,7 +104,7 @@ class Meta {
             return '';
 		}
 
-		$assets = array();
+        $assets = [];
 
 		foreach (self::_sort(self::$links) as $handle => $data)
 		{
@@ -136,7 +136,7 @@ class Meta {
 
 		if ( ! is_array($attrs))
 		{
-			$attrs = array();
+            $attrs = [];
 		}
 
 		$name_type = isset($attrs['http_equiv']) ? 'http-equiv' : 'name';
@@ -145,7 +145,7 @@ class Meta {
 
 		if ($handle == 'charset')
 		{
-			$attrs = array();
+            $attrs = [];
 		}
 
 		return self::$tags[$handle] = array('handle' => $handle, 'value' => $value, 'attrs' => $attrs);
@@ -205,7 +205,7 @@ class Meta {
             return '';
 		}
 
-		$assets = array();
+        $assets = [];
 
 		foreach (self::_sort(self::$tags) as $handle => $data)
 		{

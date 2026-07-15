@@ -84,7 +84,7 @@ class Controller_Admin_Setting extends Controller_Admin {
 		Path::delete(array('alias' => Path::FRONT_ALIAS));
 
 		// Create and save alias
-		$values = array();
+        $values = [];
 		$values['source'] = $source;
 		$values['alias']  = Path::FRONT_ALIAS;
 

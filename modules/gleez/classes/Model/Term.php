@@ -158,7 +158,7 @@ class Model_Term extends ORM_MPTT {
 	private function _aliases()
 	{
 		// Create and save alias for the post
-		$values = array();
+        $values = [];
 
 		$path = Path::load($this->rawurl);
 

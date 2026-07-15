@@ -39,13 +39,13 @@ class Datatables {
 	 * Columns
 	 * @var array
 	 */
-	protected $_columns = array();
+    protected $_columns = [];
 
 	/**
 	 * Search columns
 	 * @var array
 	 */
-	protected $_search_columns = array();
+    protected $_search_columns = [];
 
 	/**
 	 * Count for request
@@ -69,7 +69,7 @@ class Datatables {
 	 * Rows
 	 * @var array
 	 */
-	protected $_rows = array();
+    protected $_rows = [];
 
 	/**
 	 * View

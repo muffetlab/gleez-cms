@@ -61,7 +61,7 @@ class Widget_Blog extends Widget {
         if (!$items = $cache->get('widgets:recent_blogs')) {
             $blogs = ORM::factory('Blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
-			$items = array();
+            $items = [];
 			foreach($blogs as $blog)
 			{
 				$items[$blog->id]['id']       = $blog->id;
@@ -108,7 +108,7 @@ class Widget_Blog extends Widget {
         if (!$items = $cache->get('widgets:recent_announce_blogs')) {
             $blogs = ORM::factory('Blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
-			$items = array();
+            $items = [];
 			foreach($blogs as $blog)
 			{
 				$items[$blog->id]['id']    = $blog->id;

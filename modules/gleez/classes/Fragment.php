@@ -39,7 +39,7 @@ class Fragment {
 	 * List of buffer => cache key
 	 * @var array
 	 */
-	protected static $_caches = array();
+    protected static $_caches = [];
 
 	/**
 	 * Generate the cache key name for a fragment

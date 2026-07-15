@@ -45,12 +45,12 @@ class ACL {
 	/**
 	 * @var array All permissions
 	 */
-	protected static $_all_perms = array();
+    protected static $_all_perms = [];
 
 	/**
 	 * @var array Single permission
 	 */
-	protected static $_perm = array();
+    protected static $_perm = [];
 
     /**
      * Get all roles for user.
@@ -63,7 +63,7 @@ class ACL {
      */
     private static function get_user_roles(Model_User $user): array
     {
-		$roles = array();
+        $roles = [];
 
 		// User #1 is guest
 		if ($user->id == User::GUEST_ID)
@@ -406,7 +406,7 @@ class ACL {
 	
 		// Filter out active roles
 		$roles = array_filter(array_keys($user_roles), array('self', 'is_role'));
-		self::$_perm[$user->id] = array();
+        self::$_perm[$user->id] = [];
 
 		//role based permissions
 		foreach($roles as $role)

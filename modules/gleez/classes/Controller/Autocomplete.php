@@ -36,7 +36,7 @@ class Controller_Autocomplete extends Controller {
 	public function action_user()
 	{
 		$string  = $this->request->param('string', FALSE);
-		$matches = array();
+        $matches = [];
 
 		if ($string)
 		{
@@ -63,7 +63,7 @@ class Controller_Autocomplete extends Controller {
 	public function action_nick()
 	{
 		$string = $this->request->param('string', FALSE);
-		$matches = array();
+        $matches = [];
 
 		if ($string)
 		{
@@ -95,7 +95,7 @@ class Controller_Autocomplete extends Controller {
 		// The user enters a comma-separated list of tags. We only autocomplete the last tag.
 		$tags_typed = Tags::explode($string);
         $tag_last = UTF8::strtolower(array_pop($tags_typed) ?? '');
-		$matches    = array();
+        $matches = [];
 
 		if ( ! empty($tag_last))
 		{

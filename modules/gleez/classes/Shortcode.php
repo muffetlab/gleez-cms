@@ -26,7 +26,7 @@ class Shortcode {
 	 * Container for storing shortcode tags and their hook to call for the shortcode
 	 * @var array
 	 */
-	protected static $_tags = array();
+    protected static $_tags = [];
 
 	/**
 	 * Indicates whether shortcodes are cached
@@ -88,7 +88,7 @@ class Shortcode {
 	 */
     public static function remove_all(): array
     {
-		self::$_tags = array();
+        self::$_tags = [];
 
 		return self::$_tags;
 	}
@@ -280,7 +280,7 @@ class Shortcode {
 	 */
     public static function parseAttrs(string $text): array
     {
-        $attrs = array();
+        $attrs = [];
 		$pattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
 		$text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
 
@@ -324,7 +324,7 @@ class Shortcode {
 	 */
     public static function attributes(array $pairs, array $attrs): array
     {
-		$out = array();
+        $out = [];
 
 		foreach($pairs as $name => $default)
 		{

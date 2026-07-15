@@ -31,7 +31,7 @@ class Theme {
 	 * Available themes?
 	 * @var array
 	 */
-	public static $themes = array();
+    public static $themes = [];
 
     /**
      * Load the active theme.

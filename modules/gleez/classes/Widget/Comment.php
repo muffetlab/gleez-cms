@@ -57,7 +57,7 @@ class Widget_Comment extends Widget {
 					->limit(10)
 					->find_all();
 
-			$comments = array();
+            $comments = [];
 			foreach($blogs as $blog)
 			{
 				$comments[$blog->id]['id'] = $blog->id;

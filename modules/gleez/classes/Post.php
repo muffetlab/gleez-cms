@@ -477,7 +477,7 @@ class Post extends ORM_Versioned {
 	protected function aliases()
 	{
 		// Create and save alias for the post
-		$values = array();
+        $values = [];
 
 		$path = Path::load($this->rawurl);
 
@@ -854,7 +854,7 @@ class Post extends ORM_Versioned {
 			return $content;
 		}
 
-		$poses = array();
+        $poses = [];
         $lastPos = -1;
         $repChar = "<p";
 
@@ -914,7 +914,7 @@ class Post extends ORM_Versioned {
 
 			if ($use_cache)
 			{
-				$data               = array();
+                $data = [];
 				$data['author']     = (int)$post->author;
 				$data['status']     = $post->status;
 				$data['title']      = $post->title;

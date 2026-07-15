@@ -88,10 +88,10 @@ class Controller_Admin_Modules extends Controller_Admin {
 	private function _do_save()
 	{
 		$changes = new stdClass();
- 		$changes->activate = array();
-		$changes->deactivate = array();
-		$activated_names = array();
-		$deactivated_names = array();
+        $changes->activate = [];
+        $changes->deactivate = [];
+        $activated_names = [];
+        $deactivated_names = [];
 
 		foreach (Module::available() as $module_name => $info)
 		{

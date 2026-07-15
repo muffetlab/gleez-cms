@@ -23,7 +23,7 @@ class Format {
 	public static $fallback_format;
 
 	/** @var array Format configuration */
-	protected $_config = array();
+    protected $_config = [];
 
     /**
      * Creates a singleton of a Gleez_Format

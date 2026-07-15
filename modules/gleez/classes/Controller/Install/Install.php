@@ -89,7 +89,7 @@ class Controller_Install_Install extends Controller_Template {
             $this->template->link = $this->_media->uri(array('file' => 'icons/favicon.ico'));
 
 			// Do some CSS magic to page class
-			$classes   = array();
+            $classes = [];
 			$classes[] = I18n::$lang;
 			$classes[] = $this->request->controller();
 			$classes[] = $this->request->action();

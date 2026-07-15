@@ -301,7 +301,7 @@ class Gleez_Locale {
 			return self::$_client_locales;
 		}
 
-		$languages  = array();
+        $languages = [];
         $httpLanguages = getenv('HTTP_ACCEPT_LANGUAGE');
 
         if (!$httpLanguages)
@@ -380,7 +380,7 @@ class Gleez_Locale {
 
 		$language      = setlocale(LC_ALL, 0);
 		$languages     = explode(';', $language);
-        $languageArray = array();
+        $languageArray = [];
 		$locale_data   = Locale_Data::getLocaleData();
 
 		foreach ($languages as $locale)

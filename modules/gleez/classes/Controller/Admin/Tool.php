@@ -48,7 +48,7 @@ class Controller_Admin_Tool extends Controller_Admin {
 	{
 		//get tables names and the size and the index
 		$total_space = 0;
-		$tables_info = array();
+        $tables_info = [];
 
         $tables = DB::query(Database::SELECT, 'SHOW TABLE STATUS')->execute()->as_array();
 
@@ -79,7 +79,7 @@ class Controller_Admin_Tool extends Controller_Admin {
      */
     public function action_environment()
 	{
-		$gleezEnv = array();
+        $gleezEnv = [];
 
 		// First Step. The lowest priority
 		// Get environment variable from $_SERVER, .htaccess, apache.conf, nginx.conf, etc.

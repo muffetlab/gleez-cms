@@ -76,7 +76,7 @@ abstract class Template extends Controller {
 	 * The sidebar content
 	 * @var array
 	 */
-	protected $_regions = array();
+    protected $_regions = [];
 
 	/**
 	 * Is ajax request?
@@ -195,7 +195,7 @@ abstract class Template extends Controller {
 	 * An array of form error messages to be displayed to the user.
 	 * @var array
 	 */
-	protected $_errors = array();
+    protected $_errors = [];
 
 	/**
 	 * If JSON is going to be delivered to the client,
@@ -634,7 +634,7 @@ abstract class Template extends Controller {
 					$value       = Arr::get($value, 'value', '');
 				}
 
-				$attrs = array();
+                $attrs = [];
 
 				if (isset($conditional))
 				{

@@ -83,7 +83,7 @@ class URL extends Kohana_URL
     public static function explode(string $url): array
     {
 		$url = parse_url($url);
-		$url['query_params'] = array();
+        $url['query_params'] = [];
 
 		// On seriously malformed URLs, parse_url() may return FALSE.
 		if (isset($url['query']))

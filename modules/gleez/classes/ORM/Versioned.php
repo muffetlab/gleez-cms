@@ -48,7 +48,7 @@ class ORM_Versioned extends Gleez_Model
 		// Create version only if its general update not version restore
         if ($this->_saved and !$this->_restore && $object)
 		{
-			$data = array();
+            $data = [];
 			foreach ($object as $key => $value)
 			{
 				if ($key === $this->_primary_key OR array_key_exists($key, $this->_ignored_columns))
@@ -171,7 +171,7 @@ class ORM_Versioned extends Gleez_Model
 		{
             if (is_array($this->_deleted_column) && $soft)
 			{
-				$data = array();
+                $data = [];
 
 				// Fill the deleted column
 				$column = $this->_deleted_column['column'];

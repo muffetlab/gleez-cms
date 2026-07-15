@@ -67,11 +67,11 @@ class Controller_Admin_Widget extends Controller_Admin {
 		foreach ($widget_regions as $key => $value)
 		{
 			// Initialize an empty array for the region.
-			$widget_listing[$key] = array();
+            $widget_listing[$key] = [];
 		}
 
 		// Initialize disabled widgets array.
-		$widget_listing[self::$WIDGET_REGION_NONE] = array();
+        $widget_listing[self::$WIDGET_REGION_NONE] = [];
 
 		// Add each block in the form to the appropriate place in the widget listing.
 		foreach ($widgets as $widget)

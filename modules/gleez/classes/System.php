@@ -361,7 +361,7 @@ class System {
 
 		$css = file_get_contents($path);
 
-		$icons = array();
+        $icons = [];
 
         // Match selector lists and Unicode in one regex pass, e.g., ".fa-edit,.fa-pen-to-square{--fa:"\f044"}"
         $pattern = '/((?:\.' . preg_quote($class_prefix, '/') . '[\w-]+\s*,\s*)*\.' . preg_quote($class_prefix, '/') . '[\w-]+)\s*\{[^{}]*--fa:\s*"([^"]+)"[^{}]*}/';
@@ -390,7 +390,7 @@ class System {
 	*/
     public static function faReadableName(array $array, string $class_prefix = 'fa-'): array
     {
-        $temp = array();
+        $temp = [];
 		foreach ($array as $class => $unicode) {
 			$temp[$class] = ucfirst( str_ireplace(array($class_prefix, '-'), array('', ' '), $class) );
 		}

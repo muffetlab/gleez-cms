@@ -18,7 +18,7 @@ class Filter {
 	 * An array of Filters
 	 * @var array
 	 */
-	protected static $_filters = array();
+    protected static $_filters = [];
 
 	/**
 	 * Indicates whether filters are cached
@@ -270,7 +270,7 @@ class Filter {
 	 * Filter Settings
 	 * @var array
 	 */
-	protected $_settings = array();
+    protected $_settings = [];
 
 	/**
 	 * Filter Description
