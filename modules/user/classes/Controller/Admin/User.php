@@ -133,7 +133,7 @@ class Controller_Admin_User extends Controller_Admin {
                     // Ensure $_POST['roles'] is set and is an array
 					if ( ! isset($_POST['roles']) OR ! is_array($_POST['roles']))
 					{
-						$_POST['roles'] = array();
+                        $_POST['roles'] = [];
 					}
 
 					// Make sure to add an empty if none of the roles checked to avoid errors
@@ -233,7 +233,7 @@ class Controller_Admin_User extends Controller_Admin {
                     // Ensure $_POST['roles'] is set and is an array
 					if ( ! isset($_POST['roles']) OR ! is_array($_POST['roles']))
 					{
-						$_POST['roles'] = array();
+                        $_POST['roles'] = [];
 					}
 
 					// Make sure to add an empty if none of the roles checked to avoid errors

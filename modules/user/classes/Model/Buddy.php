@@ -52,7 +52,7 @@ class Model_Buddy extends Model
 
 		$results = $sql->execute();
 
-		$friends = array();
+        $friends = [];
 		foreach($results as $friend)
 		{
 			if($friend["request_from"] == $user_id)

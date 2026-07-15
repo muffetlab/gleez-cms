@@ -33,7 +33,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 			return array();
 
 		$config    = Kohana::$config->load('oauth2')->get('providers', array());
-		$providers = array();
+        $providers = [];
 
 		foreach($config as $name => $provider)
 		{

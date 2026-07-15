@@ -25,7 +25,7 @@ class Gravatar {
 	 * Static instances
 	 * @var  array
 	 */
-	protected static $_instances = array();
+    protected static $_instances = [];
 
 	/**
 	 * Configuration array
@@ -335,14 +335,14 @@ class Gravatar {
      */
     public function getValidTypes(): array
     {
-		$valid_formats = array();
+        $valid_formats = [];
 
 		foreach($this->_valid_formats as $format)
 		{
 			$valid_formats[$format] = Kohana::$config->load('mimes')->get($format);
 		}
 
-		$valid_types   = array();
+        $valid_types = [];
 
 		foreach($valid_formats as $format => $types)
 		{

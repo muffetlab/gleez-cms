@@ -50,7 +50,7 @@ class User {
 	 * All Roles
 	 * @var array
 	 */
-	protected static $roles = array();
+    protected static $roles = [];
 
     /**
      * Return the active user. If there's no active user, return the guest user.
