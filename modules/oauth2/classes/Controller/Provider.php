@@ -240,7 +240,7 @@ class Controller_Provider extends Template {
 		$provider['provider_id']   = $data['id'];
 		$provider['refresh_token'] = $this->session->get($this->key('refresh'));
 
-		if($user instanceof Model_User AND ! Auth::instance()->logged_in())
+        if ($user instanceof Model_User && !Auth::instance()->logged_in())
 		{
 			// If they're loaded, they're a member. Login if not logged
 			if($user->loaded())

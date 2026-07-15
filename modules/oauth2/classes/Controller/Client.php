@@ -71,8 +71,8 @@ class Controller_Client extends Template {
 		$view        = View::factory('client/form')->set('grant_types', $grant_types)->bind('oaclient', $oaclient)->bind('errors', $this->_errors);
 
         $oaclient = ORM::factory('OAClient');
-		
-		if ( isset($_POST['cancel']) AND $this->valid_post() )
+
+        if (isset($_POST['cancel']) && $this->valid_post())
 		{
 		    $this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
 		}
@@ -88,8 +88,8 @@ class Controller_Client extends Template {
 					$grant_types_selected = implode(" ", $_POST['grant_types']);
 					$oaclient->grant_types = $grant_types_selected;
 			    }
-			    
-			    if (isset($_FILES) AND isset($_FILES['logo']))
+
+                if (isset($_FILES) && isset($_FILES['logo']))
 			    {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
 
@@ -136,8 +136,8 @@ class Controller_Client extends Template {
 				
 			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
 		}
-		
-		if ( isset($_POST['cancel']) AND $this->valid_post() )
+
+        if (isset($_POST['cancel']) && $this->valid_post())
 		{
 		    $this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
 		}
@@ -154,8 +154,8 @@ class Controller_Client extends Template {
 				$grant_types_selected = implode(" ", $_POST['grant_types']);
 				$oaclient->grant_types = $grant_types_selected;
 			    }
-			    
-			    if (isset($_FILES) AND isset($_FILES['logo']))
+
+                if (isset($_FILES) && isset($_FILES['logo']))
 			    {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
 
@@ -252,11 +252,11 @@ class Controller_Client extends Template {
 		$form = View::factory('form/confirm')->set('action', $oaclient->delete_url)->set('title', $oaclient->client_id);
 
 		// If deletion is not desired, redirect to post
-		if ( isset($_POST['no']) AND $this->valid_post() )
+        if (isset($_POST['no']) && $this->valid_post())
 			$this->request->redirect( 'oauth2/client' );
 
 		// If deletion is confirmed
-		if ( isset($_POST['yes']) AND $this->valid_post() )
+        if (isset($_POST['yes']) && $this->valid_post())
 		{
 			try
 			{

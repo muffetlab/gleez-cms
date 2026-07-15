@@ -57,7 +57,7 @@ class OAuth2_Client_Live extends OAuth2_Client {
         $data = [];
 
 		//make sure the response is valid
-		if ( $response AND !array_key_exists('error', $response) )
+        if ($response && !array_key_exists('error', $response))
 		{
 			if( $response['emails'] )
 			{

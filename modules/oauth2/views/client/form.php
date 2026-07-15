@@ -1,6 +1,6 @@
 <?php include Kohana::find_file('views', 'errors/partial');?>
 <?php
-    if ( isset($oaclient->id) AND Valid::digit($oaclient->id) )
+if (isset($oaclient->id) && Valid::digit($oaclient->id))
     {
 		$parms     = array('id' => $oaclient->id, 'action' => 'edit');
 		$btntxt    = __("Save Changes");
