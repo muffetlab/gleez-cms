@@ -96,7 +96,7 @@ abstract class OAuth2_Client {
     /**
      * @var array   cURL options
      */
-    protected $_curl_options = array();
+    protected $_curl_options = [];
 
     /**
      * @var array   The last response from the OAuth server
@@ -233,7 +233,7 @@ abstract class OAuth2_Client {
         // Set grant type
         $parameters['grant_type'] = $grant_type;
 
-        $http_headers = array();
+        $http_headers = [];
 
         switch ($this->_client_auth_type)
         {
@@ -509,7 +509,7 @@ abstract class OAuth2_Client {
 
         if (is_array($http_headers))
         {
-            $header = array();
+            $header = [];
             foreach ($http_headers as $key => $parsed_url_value)
             {
                 $header[] = "$key: $parsed_url_value";

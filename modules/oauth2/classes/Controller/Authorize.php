@@ -413,7 +413,7 @@ class Controller_Authorize extends Template {
      */
     protected function setRedirect($statusCode = 302, $url, $state = null, $error = null, $errorDescription = null)
 	{
-		$parameters = array();
+        $parameters = [];
 
 		if (!is_null($error)) {
 			$parameters = array(

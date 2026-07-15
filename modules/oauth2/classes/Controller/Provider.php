@@ -235,7 +235,7 @@ class Controller_Provider extends Template {
 		//vars for processing stuff
 		$creation = FALSE;
 
-		$provider = array();
+        $provider = [];
 		$provider['provider']      = $this->provider;
 		$provider['provider_id']   = $data['id'];
 		$provider['refresh_token'] = $this->session->get($this->key('refresh'));

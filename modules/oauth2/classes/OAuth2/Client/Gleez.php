@@ -54,7 +54,7 @@ class OAuth2_Client_Gleez extends OAuth2_Client {
 
 	protected function parseResponse($response)
 	{
-		$data = array();
+        $data = [];
 
 		if( isset($response['email']) )
 		{

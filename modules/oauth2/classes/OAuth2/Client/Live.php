@@ -54,7 +54,7 @@ class OAuth2_Client_Live extends OAuth2_Client {
 
 	protected function parseResponse($response)
 	{
-		$data     = array();
+        $data = [];
 
 		//make sure the response is valid
 		if ( $response AND !array_key_exists('error', $response) )
