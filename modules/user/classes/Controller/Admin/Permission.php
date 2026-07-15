@@ -58,7 +58,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent role.');
 		}
 
-		if (isset($_POST['permissions']) AND $this->valid_post('role'))
+        if (isset($_POST['permissions']) && $this->valid_post('role'))
 		{
 			$per_insert = DB::insert('permissions', array('rid', 'permission', 'module'));
 

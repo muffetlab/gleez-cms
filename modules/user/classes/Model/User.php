@@ -471,7 +471,7 @@ class Model_User extends Gleez_Model
      */
     public function uploadPhoto(array $file): ?string
     {
-		if (isset($file['tmp_name']) AND ! empty($file['tmp_name']))
+        if (!empty($file['tmp_name']))
 		{
 			return Upload::uploadImage($file);
 		}
@@ -528,16 +528,14 @@ class Model_User extends Gleez_Model
 			// Attempt to load the user
 			$this->where($login_name, '=', $array['name'])->find();
 
-			if ($this->loaded() AND $this->status != 1)
+            if ($this->loaded() && $this->status != 1)
 			{
 				$array->error('name', 'blocked');
 				Module::event('user_blocked', $array);
 
 				Kohana::$log->add(Log::ERROR, 'User: :name account blocked.', array(':name' => $array['name']));
 				throw new Validation_Exception($array, 'Account Blocked');
-			}
-			elseif ($this->loaded() AND Auth_ORM::instance()->login($array['name'], $array['password'], $remember))
-			{
+            } elseif ($this->loaded() && Auth_ORM::instance()->login($array['name'], $array['password'], $remember)) {
 				// Redirect after a successful login
 				if (is_string($redirect))
 				{
@@ -1057,7 +1055,7 @@ class Model_User extends Gleez_Model
 		if ($this->_loaded)
 		{
 			$data = empty($this->data) ? array() : unserialize($this->data);
-			if (isset($data['roles']) AND !empty($data['roles']))
+            if (!empty($data['roles']))
 			{
 				return $data['roles'];
 			}

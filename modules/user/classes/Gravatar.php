@@ -579,7 +579,7 @@ class Gravatar {
      */
 	protected function _prepareConfig($config)
 	{
-		if (isset($config['secure_url']) AND $config['secure_url'])
+        if (isset($config['secure_url']) && $config['secure_url'])
 		{
 			$this->enableSecureURL();
 		}
@@ -604,12 +604,12 @@ class Gravatar {
 			$this->setForceDefault($config['force_default']);
 		}
 
-		if (isset($config['valid_formats']) and is_array($config['valid_formats']))
+        if (isset($config['valid_formats']) && is_array($config['valid_formats']))
 		{
 			$this->setValidFormats($config['valid_formats']);
 		}
 
-		if (isset($config['store_location']) and is_string($config['store_location']))
+        if (isset($config['store_location']) && is_string($config['store_location']))
 		{
 			$this->setStoreLocation($config['store_location']);
 		}

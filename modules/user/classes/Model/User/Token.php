@@ -39,7 +39,7 @@ class Model_User_Token extends ORM {
 			$this->delete_expired();
 		}
 
-		if ($this->expires < time() AND $this->_loaded)
+        if ($this->expires < time() && $this->_loaded)
 		{
 			// This object has expired
 			$this->delete();

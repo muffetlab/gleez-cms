@@ -77,7 +77,7 @@
 					</div>
 				</div>
 
-				<?php if ($config->use_captcha  AND ! $captcha->promoted()) : ?>
+                <?php if ($config->use_captcha && !$captcha->promoted()): ?>
 					<div class="form-group captcha <?php echo isset($errors['captcha']) ? 'has-error': ''; ?>">
 						<?php echo Form::label('_captcha', __('Security code'), array('class' => 'col-sm-3 control-label')); ?>
 						<div class="col-sm-4">

@@ -242,7 +242,7 @@ class Auth_ORM extends Kohana_Auth_ORM
         }
 
 		// If the passwords match, perform a login! role id: 2
-		if ($user->has('roles', 2) AND User::check_pass($user, $password) AND $user->id !== 1)
+        if ($user->has('roles', 2) && User::check_pass($user, $password) && $user->id !== 1)
 		{
             // Successful login, reset failed attempts
             if ($maxFailedLogins > 0) {

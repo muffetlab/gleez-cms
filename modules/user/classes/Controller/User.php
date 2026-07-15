@@ -637,7 +637,7 @@ class Controller_User extends Template {
     protected function _preventCollision(int $id)
 	{
 		// Another user (on the same browser) is still logged in
-		if ($this->_auth->logged_in() AND $id != $this->_user->id)
+        if ($this->_auth->logged_in() && $id != $this->_user->id)
 		{
 			// Cover your ears, we're blowing up the whole session!
 			$this->_auth->logout(TRUE);

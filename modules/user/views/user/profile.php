@@ -71,14 +71,14 @@
 					<div class="col-md-5">
 					<?php if($enable_buddy):?>
 							<?php if(Auth::instance()->logged_in()):?>
-								<?php if($request AND ($request == $user->id )):?>
+                            <?php if ($request && $request == $user->id): ?>
 									<?php echo HTML::anchor("buddy/accept/".$user->id , __('Accept'), array('class' => 'btn btn-success')); ?>
 									<?php echo HTML::anchor("buddy/reject/".$user->id , __('Reject'), array('class' => 'btn btn-danger')); ?>
-                            <?php elseif ($request and !$isFriend and !$is_owner): ?>
+                            <?php elseif ($request && !$isFriend && !$is_owner): ?>
 									<div class= 'btn btn-info'><?php echo __('Pending Request'); ?></div>
-                            <?php elseif ($isFriend and !$is_owner): ?>
+                            <?php elseif ($isFriend && !$is_owner): ?>
 									<div class= 'btn btn-info'><?php echo __('Friend'); ?></div>
-                            <?php elseif (!$request and !$isFriend and !$is_owner): ?>
+                            <?php elseif (!$request && !$isFriend && !$is_owner): ?>
 									<?php echo HTML::anchor("buddy/add/".$user->id , __('Send Request'), array('class' => 'btn btn-success')); ?>
 								<?php endif; ?>
 							<?php endif; ?>

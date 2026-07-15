@@ -49,7 +49,7 @@ class Controller_Buddy extends Template {
 			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
 		}
 
-		if ($account AND ($user->id === $account->id))
+        if ($account && $user->id === $account->id)
 		{
 			$is_owner = TRUE;
 		}
@@ -101,7 +101,7 @@ class Controller_Buddy extends Template {
 			$account = Auth_ORM::instance()->get_user();
 		}
 
-		if ($account AND ($user->id === $account->id))
+        if ($account && $user->id === $account->id)
 		{
 			$is_owner = TRUE;
 		}

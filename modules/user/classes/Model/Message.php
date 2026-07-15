@@ -296,12 +296,10 @@ class Model_Message extends Gleez_Model
      */
     public function toExists(Validation $validation, string $field)
 	{
-		if ( $this->status != PM::STATUS_DRAFT AND empty($validation[$field]))
+        if ($this->status != PM::STATUS_DRAFT && empty($validation[$field]))
 		{
 			$validation->error($field, 'not_empty', array($validation[$field]));
-		}
-		elseif ( $this->status != PM::STATUS_DRAFT AND $this->exists($validation[$field]))
-		{
+        } elseif ($this->status != PM::STATUS_DRAFT && $this->exists($validation[$field])) {
 			$validation->error($field, 'exists', array($validation[$field]));
 		}
 	}

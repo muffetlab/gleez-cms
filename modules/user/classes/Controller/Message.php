@@ -27,11 +27,11 @@ class Controller_Message extends Template {
 
 		$id = $this->request->param('id', FALSE);
 
-		if ($id AND 'index' == $this->request->action())
+        if ($id && 'index' == $this->request->action())
 		{
 			$this->request->action('view');
 		}
-		if ( ! $id AND 'index' == $this->request->action())
+        if (!$id && 'index' == $this->request->action())
 		{
 			$this->request->action('inbox');
 		}
@@ -220,7 +220,7 @@ class Controller_Message extends Template {
 
 		if ($this->valid_post('message'))
 		{
-			$sent   = (isset($_POST['draft']) AND $_POST['draft']) ? 0 : time();
+            $sent = isset($_POST['draft']) && $_POST['draft'] ? 0 : time();
 			$sender = Auth_ORM::instance()->get_user();
 			$status = $sent == 0 ? PM::STATUS_DRAFT : PM::STATUS_UNREAD;
 			$act    = $sent == 0 ? __('saved') : __('sent');
@@ -288,13 +288,13 @@ class Controller_Message extends Template {
 			->set('title',  $message->subject);
 
 		// If deletion is not desired, redirect
-		if (isset($_POST['no']) AND $this->valid_post())
+        if (isset($_POST['no']) && $this->valid_post())
 		{
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-		if ( isset($_POST['yes']) AND $this->valid_post() )
+        if (isset($_POST['yes']) && $this->valid_post())
 		{
 			try
 			{
@@ -356,13 +356,13 @@ class Controller_Message extends Template {
 		$this->title = __('Bulk Actions');
 
 		// If deletion is not desired, redirect to list
-		if (isset($post['no']) AND $this->valid_post())
+        if (isset($post['no']) && $this->valid_post())
 		{
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-		if (isset($post['yes']) AND $this->valid_post())
+        if (isset($post['yes']) && $this->valid_post())
 		{
 			$ids = array_filter($post['items']);
 
@@ -375,7 +375,7 @@ class Controller_Message extends Template {
 
 		if ($this->valid_post('message-bulk-actions'))
 		{
-			if (isset($post['operation']) AND empty($post['operation']))
+            if (isset($post['operation']) && empty($post['operation']))
 			{
 				Message::error(__('No bulk operation selected.'));
 				$this->request->redirect($redirect);
