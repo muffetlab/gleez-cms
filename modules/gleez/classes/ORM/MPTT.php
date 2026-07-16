@@ -105,7 +105,7 @@ class ORM_MPTT extends Gleez_Model
 
         return $this->{$this->left_column} > $target->{$target->left_column}
             && $this->{$this->right_column} < $target->{$target->right_column}
-            && $this->{$this->scope_column} = $target->{$target->scope_column};
+            && $this->{$this->scope_column} === $target->{$target->scope_column};
 	}
 
 	/**
