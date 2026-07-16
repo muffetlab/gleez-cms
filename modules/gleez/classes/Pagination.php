@@ -399,9 +399,7 @@ class Pagination {
 		if ($route instanceof Route)
 		{
 			$this->_route = $route;
-		}
-		else if (is_string($route))
-		{
+        } elseif (is_string($route)) {
 			$this->_route = Route::get($route);
 		}
 

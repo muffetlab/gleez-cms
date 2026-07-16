@@ -298,25 +298,15 @@ class Filter {
 		if($key == 'title')
 		{
 			return $this->_title;
-		}
-		else if($key == 'description')
-		{
+        } elseif ($key == 'description') {
 			return $this->_description;
-		}
-		else if($key == 'prepare_callback')
-		{
+        } elseif ($key == 'prepare_callback') {
 			return $this->_callbacks['prepare callback'];
-		}
-		else if($key == 'process_callback')
-		{
+        } elseif ($key == 'process_callback') {
 			return $this->_callbacks['process callback'];
-		}
-		else if($key == 'callbacks')
-		{
+        } elseif ($key == 'callbacks') {
 			return $this->_callbacks;
-		}
-		else if($key == 'settings')
-		{
+        } elseif ($key == 'settings') {
 			return $this->_settings;
 		}
 		else

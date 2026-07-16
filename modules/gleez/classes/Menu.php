@@ -95,9 +95,7 @@ class Menu {
 		if ($parent_id)
 		{
 			$this->items = static::remove_child($target_id, $this->items);
-		}
-		else if (isset( $this->items[$target_id]))
-		{
+        } elseif (isset($this->items[$target_id])) {
 			unset($this->items[$target_id]);
 		}
 
@@ -117,9 +115,7 @@ class Menu {
 		if ( $parent_id )
 		{
 			$this->items = static::change_title_url($target_id, $this->items, $title);
-		}
-		else if ( isset( $this->items[$target_id] ) )
-		{
+        } elseif (isset($this->items[$target_id])) {
             $this->items[$target_id]['title'] = $title;
 		}
 
@@ -139,9 +135,7 @@ class Menu {
 		if ( $parent_id )
 		{
 			$this->items = static::change_title_url($target_id, $this->items, $url, 'url');
-		}
-		else if ( isset( $this->items[$target_id] ) )
-		{
+        } elseif (isset($this->items[$target_id])) {
             $this->items[$target_id]['url'] = $url;
 		}
 

@@ -171,9 +171,7 @@ class Model_Menu extends ORM_MPTT {
 		if ($location == 'first')
 		{
 			$this->insert_as_first_child($parent);
-		}
-		else if ($location == 'last')
-		{
+        } elseif ($location == 'last') {
 			$this->insert_as_last_child($parent);
 		}
 		else

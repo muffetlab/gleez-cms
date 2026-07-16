@@ -342,13 +342,13 @@ class Gleez_I18n extends I18n
 			case 'ar':
 				if ($count == 0) {
 					return 'zero';
-				} else if ($count == 1) {
+                } elseif ($count == 1) {
 					return 'one';
-				} else if ($count == 2) {
+                } elseif ($count == 2) {
 					return 'two';
-                } else if (is_int($count) && ($i = $count % 100) >= 3 && $i <= 10) {
+                } elseif (is_int($count) && ($i = $count % 100) >= 3 && $i <= 10) {
 					return 'few';
-                } else if (is_int($count) && $count % 100 >= 11) {
+                } elseif (is_int($count) && $count % 100 >= 11) {
 					return 'many';
 				} else {
 					return 'other';
@@ -382,7 +382,7 @@ class Gleez_I18n extends I18n
 			case 'lv':
 				if ($count == 0) {
 					return 'zero';
-                } else if ($count % 10 == 1 && $count % 100 != 11) {
+                } elseif ($count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
 				} else {
 					return 'other';
@@ -397,7 +397,7 @@ class Gleez_I18n extends I18n
 			case 'sms':
 				if ($count == 1) {
 					return 'one';
-				} else if ($count == 2) {
+                } elseif ($count == 2) {
 					return 'two';
 				} else {
 					return 'other';
@@ -407,7 +407,7 @@ class Gleez_I18n extends I18n
 			case 'mo':
 				if ($count == 1) {
 					return 'one';
-                } else if ($count === 0 || ($i = $count % 100) >= 1 && $i <= 19) {
+                } elseif ($count === 0 || ($i = $count % 100) >= 1 && $i <= 19) {
 					return 'few';
 				} else {
 					return 'other';
@@ -416,7 +416,7 @@ class Gleez_I18n extends I18n
 			case 'lt':
                 if (is_int($count) && $count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
-                } else if (
+                } elseif (
                     is_int($count)
                     && $count % 10 >= 2
                     && (($i = $count % 100) < 11 || $i > 19)
@@ -435,13 +435,13 @@ class Gleez_I18n extends I18n
 			case 'sh':
                 if (is_int($count) && $count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
-                } else if (
+                } elseif (
                     is_int($count)
                     && ($i = $count % 10) >= 2 && $i <= 4
                     && (($j = $count % 100) < 12 || $j > 14)
                 ) {
 					return 'few';
-                } else if (
+                } elseif (
                     is_int($count)
                     && ($count % 10 == 0 || $count % 10 >= 5 || ($i = $count % 100) >= 11 && $i <= 14)
                 ) {
@@ -454,7 +454,7 @@ class Gleez_I18n extends I18n
 			case 'sk':
 				if ($count == 1) {
 					return 'one';
-                } else if (is_int($count) && $count >= 2 && $count <= 4) {
+                } elseif (is_int($count) && $count >= 2 && $count <= 4) {
 					return 'few';
 				} else {
 					return 'other';
@@ -463,7 +463,7 @@ class Gleez_I18n extends I18n
 			case 'pl':
 				if ($count == 1) {
 					return 'one';
-                } else if (
+                } elseif (
                     is_int($count)
                     && ($i = $count % 10) >= 2 && $i <= 4
                     && (($j = $count % 100) < 12 || $j > 14)
@@ -477,9 +477,9 @@ class Gleez_I18n extends I18n
 			case 'sl':
 				if ($count % 100 == 1) {
 					return 'one';
-				} else if ($count % 100 == 2) {
+                } elseif ($count % 100 == 2) {
 					return 'two';
-                } else if (is_int($count) && ($i = $count % 100) >= 3 && $i <= 4) {
+                } elseif (is_int($count) && ($i = $count % 100) >= 3 && $i <= 4) {
 					return 'few';
 				} else {
 					return 'other';
@@ -488,9 +488,9 @@ class Gleez_I18n extends I18n
 			case 'mt':
 				if ($count == 1) {
 					return 'one';
-                } else if ($count == 0 || is_int($count) && ($i = $count % 100) >= 2 && $i <= 10) {
+                } elseif ($count == 0 || is_int($count) && ($i = $count % 100) >= 2 && $i <= 10) {
 					return 'few';
-                } else if (is_int($count) && ($i = $count % 100) >= 11 && $i <= 19) {
+                } elseif (is_int($count) && ($i = $count % 100) >= 11 && $i <= 19) {
 					return 'many';
 				} else {
 					return 'other';
@@ -506,9 +506,9 @@ class Gleez_I18n extends I18n
 			case 'cy':
 				if ($count == 1) {
 					return 'one';
-				} else if ($count == 2) {
+                } elseif ($count == 2) {
 					return 'two';
-                } else if ($count == 8 || $count == 11) {
+                } elseif ($count == 8 || $count == 11) {
 					return 'many';
 				} else {
 					return 'other';
