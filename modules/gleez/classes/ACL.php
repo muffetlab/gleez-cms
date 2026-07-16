@@ -263,7 +263,7 @@ class ACL {
 	{
 		if ( ! self::check($perm_name))
 		{
-			if ( ! is_null($route) AND is_string($route))
+            if (is_string($route))
 			{
 				Request::initial()->redirect(Route::get($route)->uri($uri), 403);
 
@@ -411,7 +411,7 @@ class ACL {
 		//role based permissions
 		foreach($roles as $role)
 		{
-			if(isset($site_perms[$role]) AND is_array($site_perms[$role]))
+            if (isset($site_perms[$role]) && is_array($site_perms[$role]))
 			{
                 self::$_perm[$user->id] = array_merge(self::$_perm[$user->id], $site_perms[$role]);
 			}
@@ -483,15 +483,17 @@ class ACL {
 
 		if ($action === 'view')
 		{
-			if ($post->status === 'publish' AND self::check('access content', $user))
+            if ($post->status === 'publish' && self::check('access content', $user))
 			{
 				return TRUE;
 			}
 			// Check if authors can view their own unpublished posts.
-			elseif ($post->status != 'publish'
-				AND self::check('view own unpublished content', $user)
-				AND $post->author == (int)$user->id
-				AND $user->id != 1)
+            elseif (
+                $post->status != 'publish'
+                && self::check('view own unpublished content', $user)
+                && $post->author == (int) $user->id
+                && $user->id != 1
+            )
 			{
 				return TRUE;
 			}
@@ -505,8 +507,8 @@ class ACL {
 		{
             if (
                 (self::check('edit own ' . $post->type) || self::check('edit any ' . $post->type))
-				AND $post->author == (int)$user->id
-                and $user->id != 1
+                && $post->author == (int) $user->id
+                && $user->id != 1
             )
 			{
 				return TRUE;
@@ -521,8 +523,8 @@ class ACL {
 		{
             if (
                 (self::check('delete own ' . $post->type) || self::check('delete any ' . $post->type))
-				AND $post->author == (int)$user->id
-                and $user->id != 1
+                && $post->author == (int) $user->id
+                && $user->id != 1
             )
 			{
 				return TRUE;
@@ -584,14 +586,12 @@ class ACL {
 
 		if ($action === 'view')
 		{
-			if ($comment->status === 'publish' AND self::check('access comment', $user))
+            if ($comment->status === 'publish' && self::check('access comment', $user))
 			{
 				return TRUE;
 			}
 			// Check if commenters can view their own unpublished comments.
-			elseif ($comment->status != 'publish'
-				AND $comment->author == (int)$user->id
-				AND $user->id != 1)
+            elseif ($comment->status != 'publish' && $comment->author == (int) $user->id && $user->id != 1)
 			{
 				return TRUE;
 			}
@@ -607,9 +607,7 @@ class ACL {
 
 		if ($action === 'edit')
 		{
-			if (self::check('edit own comment')
-				AND $comment->author == (int)$user->id
-				AND $user->id != 1)
+            if (self::check('edit own comment') && $comment->author == (int) $user->id && $user->id != 1)
 			{
 				return TRUE;
 			}
@@ -627,8 +625,8 @@ class ACL {
 		{
             if (
                 (self::check('delete own comment') || self::check('delete any comment'))
-				AND $comment->author == (int)$user->id
-                and $user->id != 1
+                && $comment->author == (int) $user->id
+                && $user->id != 1
             )
 			{
 				return TRUE;

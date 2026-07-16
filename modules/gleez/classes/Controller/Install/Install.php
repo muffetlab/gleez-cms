@@ -159,25 +159,27 @@ class Controller_Install_Install extends Controller_Template {
 
 		$view = View::factory('install/systemcheck', System::check());
 
-		if (	$view->php_version
-			AND $view->mysqli
-			AND $view->system_directory
-			AND $view->application_directory
-			AND $view->modules_directory
-			AND $view->config_writable
-			AND $view->cache_writable
-			AND $view->pcre_utf8
-			AND $view->pcre_unicode
-			AND $view->reflection_enabled
-			AND $view->filters_enabled
-			AND $view->iconv_loaded
-			AND $view->spl_autoload_register
+        if (
+            $view->php_version
+            && $view->mysqli
+            && $view->system_directory
+            && $view->application_directory
+            && $view->modules_directory
+            && $view->config_writable
+            && $view->cache_writable
+            && $view->pcre_utf8
+            && $view->pcre_unicode
+            && $view->reflection_enabled
+            && $view->filters_enabled
+            && $view->iconv_loaded
+            && $view->spl_autoload_register
             && $view->simpleXml
-			AND $view->json_encode
-			AND $view->mbstring
-			AND $view->ctype_digit
-			AND $view->uri_determination
-			AND $view->gd_info)
+            && $view->json_encode
+            && $view->mbstring
+            && $view->ctype_digit
+            && $view->uri_determination
+            && $view->gd_info
+        )
 			$this->request->redirect(Route::get('install')->uri(array('action' => 'database')));
 
 		else

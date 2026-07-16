@@ -132,11 +132,9 @@ class Model_Path extends Gleez_Model
 	{
 		$slug   = $str;
 		$suffix = 0;
+        $path = ORM::factory('Path', array('alias' => $str));
 
-        while ($path = ORM::factory('Path', array('alias' => $str))
-			AND $path->loaded()
-			AND $path->source != $this->source
-			)
+        while ($path->loaded() && $path->source != $this->source)
 		{
 			$str = substr($slug, 0, 200 - (strlen($suffix) + 1)) . "-$suffix";
 			$suffix++;

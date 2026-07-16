@@ -102,12 +102,10 @@ class ORM_MPTT extends Gleez_Model
 		{
 			$target = self::factory($this->object_name(), $target);
 		}
-		
-		return (
-				$this->{$this->left_column} > $target->{$target->left_column}
-				AND $this->{$this->right_column} < $target->{$target->right_column}
-				AND $this->{$this->scope_column} = $target->{$target->scope_column}
-			);
+
+        return $this->{$this->left_column} > $target->{$target->left_column}
+            && $this->{$this->right_column} < $target->{$target->right_column}
+            && $this->{$this->scope_column} = $target->{$target->scope_column};
 	}
 
 	/**
