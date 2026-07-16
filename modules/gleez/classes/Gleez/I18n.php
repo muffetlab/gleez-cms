@@ -66,25 +66,25 @@ class Gleez_I18n extends I18n
 		$locale = Gleez_I18n::cookieLocale();
 
 		// 2. Check the user's preference
-        if (!$locale && ($locale_override == 'ALL' or $locale_override == 'USER'))
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'USER'))
 		{
 			$locale = Gleez_I18n::userLocale();
 		}
 
 		// 3. Check the request client/browser's preference
-        if (!$locale && ($locale_override == 'ALL' or $locale_override == 'CLIENT'))
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'CLIENT'))
 		{
 			$locale = Gleez_I18n::requestLocale();
 		}
 
 		// 4. Check the url preference and get the language from url
-        if (!$locale && ($locale_override == 'ALL' or $locale_override == 'URL'))
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'URL'))
 		{
 			$locale = Gleez_I18n::urlLocale();
 		}
 
         // 5. Check the subdomain preference and get the language form subdomain
-        if (!$locale && ($locale_override == 'ALL' or $locale_override == 'DOMAIN'))
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'DOMAIN'))
 		{
 			$locale = Gleez_I18n::domainLocale();
 		}
@@ -366,7 +366,7 @@ class Gleez_I18n extends I18n
 			case 'nso':
 			case 'ti':
 			case 'wa':
-				if ($count == 0 OR $count == 1) {
+                if ($count == 0 || $count == 1) {
 					return 'one';
 				} else {
 					return 'other';
@@ -488,7 +488,7 @@ class Gleez_I18n extends I18n
 			case 'mt':
 				if ($count == 1) {
 					return 'one';
-                } else if ($count == 0 or is_int($count) && ($i = $count % 100) >= 2 && $i <= 10) {
+                } else if ($count == 0 || is_int($count) && ($i = $count % 100) >= 2 && $i <= 10) {
 					return 'few';
                 } else if (is_int($count) && ($i = $count % 100) >= 11 && $i <= 19) {
 					return 'many';
@@ -508,7 +508,7 @@ class Gleez_I18n extends I18n
 					return 'one';
 				} else if ($count == 2) {
 					return 'two';
-				} else if ($count == 8 OR $count == 11) {
+                } else if ($count == 8 || $count == 11) {
 					return 'many';
 				} else {
 					return 'other';

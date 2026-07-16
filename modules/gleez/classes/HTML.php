@@ -220,7 +220,7 @@ class HTML extends Kohana_HTML
 			{
 				$class = 'tab-' . $i;
 
-                if (isset($tab['active']) or (isset($tab['link']) && self::is_active($tab['link'])))
+                if (isset($tab['active']) || isset($tab['link']) && self::is_active($tab['link']))
 				{
 					$class .= ' active';
 				}

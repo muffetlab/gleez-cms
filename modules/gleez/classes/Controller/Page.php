@@ -50,7 +50,7 @@ class Controller_Page extends Template {
      */
 	public function after()
 	{
-		if ($this->request->action() == 'add' OR $this->request->action() == 'edit')
+        if ($this->request->action() == 'add' || $this->request->action() == 'edit')
 		{
 			// Add RichText Support
 			Assets::editor('.textarea', I18n::$lang);
@@ -189,7 +189,7 @@ class Controller_Page extends Template {
 
         if ($post->comment == Comment::COMMENT_OPEN && ACL::check('post comment'))
 		{
-            if ($this->_auth->logged_in() or $config->comment_anonymous && !$this->_auth->logged_in())
+            if ($this->_auth->logged_in() || $config->comment_anonymous && !$this->_auth->logged_in())
 			{
 				// Handle comment posting
 				$comment_form = Comment::form($this, $post);

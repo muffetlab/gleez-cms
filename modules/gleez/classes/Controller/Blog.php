@@ -48,7 +48,7 @@ class Controller_Blog extends Template {
      */
 	public function after()
 	{
-		if ($this->request->action() == 'add' OR $this->request->action() == 'edit')
+        if ($this->request->action() == 'add' || $this->request->action() == 'edit')
 		{
 			// Add RichText Support
 			Assets::editor('.textarea', I18n::$lang);
@@ -185,8 +185,10 @@ class Controller_Blog extends Template {
 			$this->_tabs[] =  array('link' => $post->delete_url, 'text' => __('Delete'));
 		}
 
-		if (($post->comment == Comment::COMMENT_OPEN OR $post->comment == Comment::COMMENT_CLOSED)
-			AND ACL::check('access comment'))
+        if (
+            ($post->comment == Comment::COMMENT_OPEN || $post->comment == Comment::COMMENT_CLOSED)
+            and ACL::check('access comment')
+        )
 		{
 			// Determine pagination offset
 			$p = ((int) $this->request->param('page', 0)) ? '/p'.$this->request->param('page', 0) : FALSE;
@@ -197,7 +199,7 @@ class Controller_Blog extends Template {
 
         if ($post->comment == Comment::COMMENT_OPEN && ACL::check('post comment'))
 		{
-            if ($this->_auth->logged_in() or $config->comment_anonymous && !$this->_auth->logged_in())
+            if ($this->_auth->logged_in() || $config->comment_anonymous && !$this->_auth->logged_in())
 			{
 				// Handle comment posting
 				$comment_form = Comment::form($this, $post);

@@ -161,9 +161,9 @@ class Tags {
      */
     public function safe_tag(int $user_id, Model $object, string $tag = ''): bool
     {
-		$object_id = $object->id;
+        $object_id = (int) $object->id;
 
-        if (!$user_id or !$object_id = intval($object_id) or empty($tag))
+        if (!$user_id || !$object_id || empty($tag))
 		{
 			return FALSE;
 		}
@@ -306,7 +306,7 @@ class Tags {
 		foreach ($tags as $tag)
 		{
 			// Commas and quotes in tag names are special cases, so encode them.
-			if (strpos($tag, ',') !== FALSE OR strpos($tag, '"') !== FALSE)
+            if (strpos($tag, ',') !== FALSE || strpos($tag, '"') !== FALSE)
 			{
 				$tag = '"' . str_replace('"', '""', $tag) . '"';
 			}

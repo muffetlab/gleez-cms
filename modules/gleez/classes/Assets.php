@@ -234,7 +234,7 @@ class Assets {
 			$format = self::FORMAT_FILENAME;
 		}
 
-		if ($handle === TRUE OR $handle === FALSE)
+        if ($handle === TRUE || $handle === FALSE)
 		{
 			return self::all_js($handle, $format);
 		}
@@ -354,7 +354,7 @@ class Assets {
      */
     public static function codes($handle, string $code = NULL, $deps = NULL, bool $footer = FALSE, array $attrs = NULL)
 	{
-		if ($handle === TRUE OR $handle === FALSE )
+        if ($handle === TRUE || $handle === FALSE)
 		{
 			return self::all_codes($handle, $code);
 		}
@@ -501,7 +501,7 @@ class Assets {
 	 */
     public static function get_group(string $group, string $handle): ?string
     {
-		if ( ! isset(self::$groups[$group]) OR ! isset(self::$groups[$group][$handle]))
+        if (!isset(self::$groups[$group]) || !isset(self::$groups[$group][$handle]))
 		{
 			return null;
 		}
@@ -589,7 +589,7 @@ class Assets {
      */
 	private static function _init_js()
 	{
-		if(isset(self::$js) OR isset(self::$codes) OR isset(self::$settings))
+        if (isset(self::$js) || isset(self::$codes) || isset(self::$settings))
 		{
             self::js('jquery', 'media/js/jquery-2.2.4.min.js', null, false, ['weight' => -20]);
 			self::js('gleez', 'media/js/gleez.js', array('jquery'), FALSE, array('weight' => -5));

@@ -245,8 +245,8 @@ class Message {
 			{
                 if (
                     $message['type'] === $type
-                    or is_array($type) && in_array($message['type'], $type)
-                    or is_array($type) && Arr::is_assoc($type) && !in_array($message['type'], $type[1])
+                    || is_array($type) && in_array($message['type'], $type)
+                    || is_array($type) && Arr::is_assoc($type) && !in_array($message['type'], $type[1])
                 ) {
 					$return[] = $message;
 				}
@@ -265,7 +265,7 @@ class Message {
 
 		if ($delete === TRUE)
 		{
-			if ($type === NULL OR empty($remainder))
+            if ($type === NULL || empty($remainder))
 			{
 				// Nothing to save, delete the key from memory
 				self::clear();

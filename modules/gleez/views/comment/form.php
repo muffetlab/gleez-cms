@@ -47,9 +47,10 @@
 		</div>
 	<?php endif; ?>
 
-	<div id="comment-body" class="<?php echo ( ! ACL::check('administer comment') OR ! $is_edit) ? 'col-md-12' : 'col-md-9 col-md-pull-3'; ?>">
+    <div id="comment-body"
+         class="<?php echo !ACL::check('administer comment') || !$is_edit ? 'col-md-12' : 'col-md-9 col-md-pull-3'; ?>">
 
-        <?php if (!$auth->logged_in() or $is_edit && $post->author == 1): ?>
+        <?php if (!$auth->logged_in() || $is_edit && $post->author == 1): ?>
             <div class="stuffbox">
 				<h3 class='hndle'><?php echo __('Author') ?></h3>
 
@@ -73,7 +74,7 @@
 		<?php endif; ?>
 
         <div class="postarea <?php echo isset($errors['body']) ? 'error' : ''; ?>">
-			<?php if ( ! ACL::check('administer comment') OR ! $is_edit) : ?>
+            <?php if (!ACL::check('administer comment') || !$is_edit): ?>
 				<h3 class='hndle'><?php echo __('Leave a Comment') ?></h3>
 			<?php endif; ?>
 
@@ -96,7 +97,7 @@
 
 </div>
 
-	<?php if ( ! ACL::check('administer comment') OR ! $is_edit) : ?>
+<?php if (!ACL::check('administer comment') || !$is_edit): ?>
 		<div class="form-actions">
 			<?php echo Form::submit('comment', __('Post Comment'), array('class' => 'btn btn-default bth-lg')); ?>
 		</div>

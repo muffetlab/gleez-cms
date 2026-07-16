@@ -5,7 +5,7 @@
                 $widget_p_bot = Widgets::instance()->render('post_bottom');
         ?>
 
-	<?php if($post->taxonomy OR $config->use_submitted): ?>
+    <?php if ($post->taxonomy || $config->use_submitted): ?>
 		<div class="row meta">
 			<?php if ($config->use_submitted): ?>
 				<div class="col-md-7">

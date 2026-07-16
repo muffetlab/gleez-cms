@@ -50,7 +50,7 @@ class Widget_Blog extends Widget {
 		$action = Request::current()->action();
 
 		// Don't show the widget on edit or delete actions
-		if ($action == 'edit' OR $action == 'delete')
+        if ($action == 'edit' || $action == 'delete')
 		{
 			return FALSE;
 		}
@@ -97,7 +97,7 @@ class Widget_Blog extends Widget {
 		$action = Request::current()->action();
 
 		// Don't show the widget on edit or delete actions
-		if ($action == 'edit' OR $action == 'delete')
+        if ($action == 'edit' || $action == 'delete')
 		{
 			return FALSE;
 		}

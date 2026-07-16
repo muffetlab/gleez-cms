@@ -218,10 +218,12 @@ class Pagination {
 		$this->config = $config + $this->config;
 
 		// Only (re)calculate pagination when needed
-		if (is_null($this->current_page)
-			OR isset($config['current_page'])
-			OR isset($config['total_items'])
-			OR isset($config['items_per_page']))
+        if (
+            is_null($this->current_page)
+            || isset($config['current_page'])
+            || isset($config['total_items'])
+            || isset($config['items_per_page'])
+        )
 		{
 			// Retrieve the current page number
 			if ( ! empty($this->config['current_page']['page']))

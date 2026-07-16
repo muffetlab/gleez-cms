@@ -178,7 +178,7 @@ class Shortcode {
 	 */
     public static function process(string $content): string
     {
-		if (empty(self::$_tags) OR !is_array(self::$_tags))
+        if (empty(self::$_tags) || !is_array(self::$_tags))
 			return $content;
 
 		$pattern = self::get_regex();
@@ -349,7 +349,7 @@ class Shortcode {
 	 */
     protected static function strip(string $content): string
     {
-		if (empty(self::$_tags) OR !is_array(self::$_tags))
+        if (empty(self::$_tags) || !is_array(self::$_tags))
 			return $content;
 
 		$pattern = self::get_regex();

@@ -85,7 +85,7 @@ class Email {
      */
     public function message(string $body, string $type = NULL): Email
     {
-		if ( ! $type OR $type === 'text/plain')
+        if (!$type || $type === 'text/plain')
 		{
 			// Set the main text/plain body
 			$this->_mail->Body = $body;

@@ -1,4 +1,4 @@
-<?php if ($post->taxonomy OR $config->use_submitted): ?>
+<?php if ($post->taxonomy || $config->use_submitted): ?>
 	<section class="post-meta row">
 		<?php if ($config->use_submitted): ?>
 			<div class="col-md-7">

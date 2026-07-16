@@ -860,7 +860,7 @@ abstract class Template extends Controller {
     {
 		$uri = preg_replace("#(/p\d+)+$#uD", '', rtrim($this->request->uri(), '/'));
 
-		return (empty($uri) OR ($uri === $this->_config->front_page));
+        return empty($uri) || $uri === $this->_config->front_page;
 	}
 
     /**

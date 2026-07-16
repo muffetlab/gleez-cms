@@ -108,7 +108,7 @@ class Controller_Resize extends Controller {
 		} catch(Exception $e) {}
 
 		// make sure that the requested file is actually an image
-		if(!isset($size) OR !is_array($size) OR substr($size['mime'], 0, 6) != 'image/')
+        if (!isset($size) || !is_array($size) || substr($size['mime'], 0, 6) != 'image/')
 		{
 
 			if($this->is_remote()) unlink($image_path);

@@ -218,8 +218,8 @@ class Controller_Admin_Page extends Controller_Admin {
 				Message::error(__('No bulk operation selected.'));
 				$this->request->redirect($redirect);
 			}
-			
-			if ( ! isset($post['posts']) OR ( ! is_array($post['posts']) OR ! count(array_filter($post['posts']))))
+
+            if (!isset($post['posts']) || !is_array($post['posts']) || !count(array_filter($post['posts'])))
 			{
 				Message::error(__('No pages selected.'));
 				$this->request->redirect($redirect);

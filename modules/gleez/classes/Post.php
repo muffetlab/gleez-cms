@@ -225,7 +225,7 @@ class Post extends ORM_Versioned {
 			{
                 foreach ($this->categories as $term)
 				{
-					if ($term == 'last' OR ! Valid::numeric($term))
+                    if ($term == 'last' || !Valid::numeric($term))
 					{
 						$validation->error('categories', 'invalid', array($validation[$field]));
 					}
@@ -842,7 +842,7 @@ class Post extends ORM_Versioned {
     public static function widgets(string $content, string $region = 'post_inline'): string
     {
 		// Save some cpu cycles, when the content is empty
-		if ($content == NULL or empty($content))
+        if (empty($content))
 		{
 			return $content;
 		}

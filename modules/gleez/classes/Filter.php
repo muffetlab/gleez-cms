@@ -176,7 +176,7 @@ class Filter {
     public static function process($text): string
     {
         $config = Kohana::$config->load('input_filter');
-		if(!array_key_exists($text->format, $config->get('formats') ) OR !isset($text->format))
+        if (!array_key_exists($text->format, $config->get('formats')) || !isset($text->format))
 		{
 			//make sure a valid format id exists, if not set default format id
 			$text->format = (int) $config->get('default_format', 1);

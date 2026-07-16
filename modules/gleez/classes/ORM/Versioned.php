@@ -51,7 +51,7 @@ class ORM_Versioned extends Gleez_Model
             $data = [];
 			foreach ($object as $key => $value)
 			{
-				if ($key === $this->_primary_key OR array_key_exists($key, $this->_ignored_columns))
+                if ($key === $this->_primary_key || array_key_exists($key, $this->_ignored_columns))
 				{
 					continue;
 				}
@@ -104,7 +104,7 @@ class ORM_Versioned extends Gleez_Model
 
 			foreach ($row as $key => $value)
 			{
-				if ($key === $this->_primary_key OR $key === $this->foreign_key() OR $key == 'version_log')
+                if ($key === $this->_primary_key || $key === $this->foreign_key() || $key == 'version_log')
 				{
 					// Do not overwrite the primary key
 					continue;

@@ -12,7 +12,7 @@
 				</div>
 			</div>
 
-			<?php if (ACL::check('administer content') OR ACL::check('administer page')) : ?>
+            <?php if (ACL::check('administer content') || ACL::check('administer page')): ?>
 				<div class="form-group <?php echo isset($errors['slug']) ? 'has-error': ''; ?>">
 					<?php echo Form::label('path', __('Permalink: %slug', array('%slug' => $site_url )), array('class' => 'control-label')) ?>
 					<div class="controls">
@@ -60,7 +60,7 @@
 				</div>
 			</div>
 
-			<?php if (ACL::check('administer content') OR ACL::check('administer page')): ?>
+            <?php if (ACL::check('administer content') || ACL::check('administer page')): ?>
 				<div class="form-group <?php echo isset($errors['format']) ? 'has-error': ''; ?>">
 					<div class="controls">
 						<div class="input-group">
@@ -82,7 +82,7 @@
 		</div>
 
 		<div id="side-info-column" class="col-md-3">
-			<?php if (ACL::check('administer content') OR ACL::check('administer page')): ?>
+            <?php if (ACL::check('administer content') || ACL::check('administer page')): ?>
                 <div class="panel panel-info">
 					<div class="panel-heading">
 						<h3 class="panel-title"><?php echo __('Publication') ?></h3>

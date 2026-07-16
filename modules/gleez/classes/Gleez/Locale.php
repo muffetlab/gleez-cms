@@ -224,7 +224,7 @@ class Gleez_Locale {
             $locale = self::$_framework;
         }
 
-        if (($locale === 'detected') OR (is_null($locale)))
+        if ($locale === 'detected' || is_null($locale))
         {
             $locale = self::$_detected;
         }
@@ -346,7 +346,7 @@ class Gleez_Locale {
 				$languages[$region . '_' . strtoupper($country)] = $quality;
 			}
 
-			if ( ! isset($languages[$region]) OR $languages[$region] < $quality)
+            if (!isset($languages[$region]) || $languages[$region] < $quality)
 			{
 				$languages[$region] = $quality;
 			}
@@ -558,7 +558,7 @@ class Gleez_Locale {
 
 			if (isset($region[2]))
 			{
-				if (($region[2] === '_') OR ($region[2] === '-'))
+                if ($region[2] === '_' || $region[2] === '-')
 				{
 					$region = substr($region, 0, 2);
 				}
@@ -604,7 +604,7 @@ class Gleez_Locale {
 			throw new Kohana_Exception('Only full qualified locales can be used as default!');
 		}
 
-		if (($quality < 0.1) or ($quality > 100))
+        if ($quality < 0.1 || $quality > 100)
 		{
 			throw new Kohana_Exception('Locale quality (priority) must be between 0.1 and 100');
 		}

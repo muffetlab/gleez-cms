@@ -271,7 +271,7 @@ class Widgets {
 			$this->format($format);
 		}
 
-		if ( ! isset($this->_regions[$this->_region]) OR is_null($this->_regions[$this->_region]))
+        if (!isset($this->_regions[$this->_region]) || is_null($this->_regions[$this->_region]))
 		{
             return '';
 		}

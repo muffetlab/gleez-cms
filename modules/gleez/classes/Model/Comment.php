@@ -372,7 +372,7 @@ class Model_Comment extends Gleez_Model
 		if ($action === 'delete')
 		{
             if (
-                (ACL::check('delete own comment') or ACL::check('delete any comment'))
+                (ACL::check('delete own comment') || ACL::check('delete any comment'))
                 && $this->author == (int) $user->id
                 && $user->id != 1
             )
@@ -489,7 +489,7 @@ class Model_Comment extends Gleez_Model
 		if ($action === 'delete')
 		{
             if (
-                (ACL::check('delete own comment') or ACL::check('delete any comment'))
+                (ACL::check('delete own comment') || ACL::check('delete any comment'))
                 && $this->author == (int) $user->id
                 && $user->id != 1
             )

@@ -497,35 +497,39 @@ class ACL {
 			}
 			else
 			{
-				return self::check('administer content', $user) OR self::check('administer content '.$post->type, $user);
+                return self::check('administer content', $user) || self::check('administer content ' . $post->type, $user);
 			}
 		}
 
 		if ($action === 'edit')
 		{
-			if ((self::check('edit own '.$post->type) OR self::check('edit any '.$post->type))
+            if (
+                (self::check('edit own ' . $post->type) || self::check('edit any ' . $post->type))
 				AND $post->author == (int)$user->id
-				AND $user->id != 1)
+                and $user->id != 1
+            )
 			{
 				return TRUE;
 			}
 			else
 			{
-				return self::check('administer content', $user) OR self::check('administer content '.$post->type, $user);
+                return self::check('administer content', $user) || self::check('administer content ' . $post->type, $user);
 			}
 		}
 
 		if ($action === 'delete')
 		{
-			if ((self::check('delete own '.$post->type) OR self::check('delete any '.$post->type))
+            if (
+                (self::check('delete own ' . $post->type) || self::check('delete any ' . $post->type))
 				AND $post->author == (int)$user->id
-				AND $user->id != 1)
+                and $user->id != 1
+            )
 			{
 				return TRUE;
 			}
 			else
 			{
-				return self::check('administer content', $user) OR self::check('administer content '.$post->type, $user);
+                return self::check('administer content', $user) || self::check('administer content ' . $post->type, $user);
 			}
 		}
 
@@ -621,9 +625,11 @@ class ACL {
 
 		if ($action === 'delete')
 		{
-			if ((self::check('delete own comment') OR self::check('delete any comment'))
+            if (
+                (self::check('delete own comment') || self::check('delete any comment'))
 				AND $comment->author == (int)$user->id
-				AND $user->id != 1)
+                and $user->id != 1
+            )
 			{
 				return TRUE;
 			}

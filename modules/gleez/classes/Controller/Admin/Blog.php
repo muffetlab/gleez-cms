@@ -234,7 +234,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 				$this->request->redirect($redirect);
 			}
 
-			if ( ! isset($post['blogs']) OR ( ! is_array($post['blogs']) OR ! count(array_filter($post['blogs']))))
+            if (!isset($post['blogs']) || !is_array($post['blogs']) || !count(array_filter($post['blogs'])))
 			{
 				Message::error(__('No blogs selected.'));
 				$this->request->redirect($redirect);

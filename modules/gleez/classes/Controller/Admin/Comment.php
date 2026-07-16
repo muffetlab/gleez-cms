@@ -178,7 +178,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 
 		if ($this->valid_post('comment-bulk-actions'))
 		{
-			if ( ! isset($post['comments']) OR ( ! is_array($post['comments']) OR ! count(array_filter($post['comments']))))
+            if (!isset($post['comments']) || !is_array($post['comments']) || !count(array_filter($post['comments'])))
 			{
 				$this->_errors = array(__('No items selected.'));
 

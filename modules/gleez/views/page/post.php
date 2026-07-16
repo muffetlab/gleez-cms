@@ -14,7 +14,7 @@
 	</div>
 <?php endif;?>
 
-<?php if(isset($provider_buttons) or isset($comment_form)): ?>
+<?php if (isset($provider_buttons) || isset($comment_form)): ?>
 <div class="post-comment-form-wrapper">
     <?php if (isset($provider_buttons) && !isset($comment_form)): ?>
 		<div id="post-auth-request">

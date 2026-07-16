@@ -370,7 +370,7 @@ class HTMLFilter {
 					if (preg_match('/^([-a-zA-Z]+)/', $attr, $match))
 					{
 						$attrname = strtolower($match[1]);
-						$skip     = ($attrname == 'style' OR substr($attrname, 0, 2) == 'on');
+                        $skip = $attrname == 'style' || substr($attrname, 0, 2) == 'on';
 						$working  = $mode = 1;
 						$attr     = preg_replace('/^[-a-zA-Z]+/', '', $attr);
 					}

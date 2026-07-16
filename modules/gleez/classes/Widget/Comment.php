@@ -40,7 +40,7 @@ class Widget_Comment extends Widget {
     public function recent()
 	{
 		// Don't show the widget on edit or delete actions.
-		if (Request::current()->action() == 'edit' OR Request::current()->action() == 'delete')
+        if (Request::current()->action() == 'edit' || Request::current()->action() == 'delete')
 		{
 			return FALSE;
 		}

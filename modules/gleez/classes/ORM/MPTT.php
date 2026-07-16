@@ -524,9 +524,11 @@ class ORM_MPTT extends Gleez_Model
 			}
 
 			// Stop $this being moved into a descendant or itself or disallow if target is root
-			if ($target->is_descendant($this)
-				OR $this->{$this->primary_key()} === $target->{$this->primary_key()}
-                or $allow_root_target === FALSE && $target->is_root())
+            if (
+                $target->is_descendant($this)
+                || $this->{$this->primary_key()} === $target->{$this->primary_key()}
+                || $allow_root_target === FALSE && $target->is_root()
+            )
 			{
 				$this->_db->rollback();
                 throw new Kohana_Exception('Invalid target for node move');
