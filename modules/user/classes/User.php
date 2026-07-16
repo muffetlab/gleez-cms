@@ -97,12 +97,7 @@ class User {
 			User::$roles[$user->id] = $user->roles();
 		}
 
-		if(in_array('admin', User::$roles[$user->id]) OR  array_key_exists(4, User::$roles[$user->id]))
-		{
-			return TRUE;
-		}
-
-		return FALSE;
+        return in_array('admin', User::$roles[$user->id]) || array_key_exists(4, User::$roles[$user->id]);
 	}
 
 	/**
