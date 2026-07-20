@@ -176,7 +176,7 @@ $code = $code ?? 500;
 				<?php endforeach ?>
 			</table>
 		</div>
-		<?php foreach (array('_SESSION', '_GET', '_POST', '_FILES', '_COOKIE', '_SERVER') as $var): ?>
+        <?php foreach (['_SESSION', '_GET', '_POST', '_FILES', '_COOKIE', '_SERVER'] as $var): ?>
             <?php if (empty($GLOBALS[$var]) || !is_array($GLOBALS[$var])) continue ?>
 		<h3><a href="#<?php echo $env_id = $error_id.'environment'.strtolower($var) ?>" onclick="return toggle('<?php echo $env_id ?>')">$<?php echo $var ?></a></h3>
 		<div id="<?php echo $env_id ?>" class="collapsed">

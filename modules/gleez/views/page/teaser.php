@@ -10,7 +10,7 @@
 				</span>
 				<span class="post-author">
                     <i class="fas fa-user"></i>
-					<?php echo HTML::anchor($post->user->url, $post->user->name, array('title' => $post->user->nick, 'itemprop' => 'author')); ?>
+                    <?php echo HTML::anchor($post->user->url, $post->user->name, ['title' => $post->user->nick, 'itemprop' => 'author']); ?>
 				</span>
 			</div>
 		<?php endif;?>
@@ -29,11 +29,11 @@
 	<?php if ($post->tagcloud): ?>
 		<div class="post-tags col-md-12">
 			<span class="tagcloud">
-				<?php echo __('Tagged with :tag', array(':tag' => $post->tagcloud)); ?>
+                <?php echo __('Tagged with :tag', [':tag' => $post->tagcloud]); ?>
 			</span>
 		</div>
 	<?php endif;?>
 	<div class="post-postarea">
-        <?php echo HTML::anchor($post->url, __('Read More'), array('title' => __('Read more about :title', array(':title' => $post->title)), 'class' => 'read-more btn btn-default btn-xs', 'itemprop' => 'url')); ?>
+        <?php echo HTML::anchor($post->url, __('Read More'), ['title' => __('Read more about :title', [':title' => $post->title]), 'class' => 'read-more btn btn-default btn-xs', 'itemprop' => 'url']); ?>
 	</div>
 </section>

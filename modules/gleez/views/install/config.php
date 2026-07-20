@@ -1,10 +1,8 @@
 <?php echo '<?php'.PHP_EOL; ?>
-return array
-(
-	'default' => array
-	(
+return [
+    'default' => [
 		'type'       => 'MySQLi',
-		'connection' => array(
+        'connection' => [
 			/**
 			 * The following options are available for MySQLi:
 			 *
@@ -21,10 +19,10 @@ return array
 			'username'   => '<?php echo $user ?>',
 			'password'   => '<?php echo str_replace("'", "\\'", $password) ?>',
 			'persistent' => FALSE,
-		),
+        ],
 		'table_prefix' => '<?php echo $prefix ?>',
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 		'profiling'    => FALSE,
-	),
-);
+    ],
+];

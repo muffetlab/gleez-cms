@@ -3,7 +3,7 @@
 		<?php foreach ($items as $key => $item): ?>
 			<li>
                 <?php $title = '<i class="shortcut-icon ' . $item['image'] . ' fa-2x"></i></br><span class="shortcut-label">' . HTML::chars($item['title']) . '</span>'; ?>
-				<?php echo HTML::anchor($item['url'], $title, array('class' => 'shortcut')); ?>
+                <?php echo HTML::anchor($item['url'], $title, ['class' => 'shortcut']); ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>

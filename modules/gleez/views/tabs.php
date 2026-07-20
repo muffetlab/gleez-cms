@@ -1,2 +1,1 @@
-<?php
-	echo HTML::tabs($tabs, array('class' => 'nav nav-tabs'));
+<?php echo HTML::tabs($tabs, ['class' => 'nav nav-tabs']); ?>

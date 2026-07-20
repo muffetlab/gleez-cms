@@ -1,12 +1,12 @@
 <div class="alert alert-warning">
-	<?php echo __('Database space: :space KB', array(':space' => round($space, 2)) ); ?>
+    <?php echo __('Database space: :space KB', [':space' => round($space, 2)]); ?>
 </div>
 
 <div class="table-responsive">
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
-				<th><?php echo __('Tables (:count)', array(':count' => $count)); ?></th>
+                <th><?php echo __('Tables (:count)', [':count' => $count]); ?></th>
 				<th><?php echo __('Rows'); ?></th>
 				<th><?php echo __('Size'); ?> KB</th>
 			</tr>

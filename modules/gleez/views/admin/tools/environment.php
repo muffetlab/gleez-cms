@@ -59,7 +59,7 @@
 			<td><code><?php echo THEMEPATH?></code></td>
 		</tr>
 		<tr>
-			<th><?php echo __(':kohana settings', array(':kohana' => 'Kohana::init()')) ?></th>
+            <th><?php echo __(':kohana settings', [':kohana' => 'Kohana::init()']) ?></th>
 			<td>
 					"base_url" = <?php echo Debug::dump(Kohana::$base_url) ?><br>
 					"index_file" = <?php echo Debug::dump(Kohana::$index_file) ?><br>

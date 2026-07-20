@@ -2,9 +2,9 @@
 	<?php echo __('This page provides interface for assigning a widget to a region, and for controlling the order of widgets within regions. Click the configure link next to each widget to configure its specific title and visibility settings.'); ?>
 </div>
 
-<?php echo HTML::anchor(Route::get('admin/widget')->uri(array('action' => 'add')), '<i class="fas fa-plus"></i>' . __('Add Widget'), array('class' => 'btn btn-success pull-right')) ?>
+<?php echo HTML::anchor(Route::get('admin/widget')->uri(['action' => 'add']), '<i class="fas fa-plus"></i>' . __('Add Widget'), ['class' => 'btn btn-success pull-right']) ?>
 <div class="clearfix"></div><br>
-<?php echo Form::open( Route::url('admin/widget', array('action' => 'index')), array('id'=>'widgets-form', 'class'=>'form') ); ?>
+<?php echo Form::open(Route::url('admin/widget', ['action' => 'index']), ['id' => 'widgets-form', 'class' => 'form']); ?>
 	<table id="widgets" class="table table-striped table-bordered table-apparent">
 		<thead>
 			<tr>
@@ -32,21 +32,21 @@
                             <?php echo HTML::chars($widget->title) ?>
 						</td>
 						<td>
-							<?php echo Form::select('widgets['.$widget->name.'][region]', $widget_regions, $widget->region, array('class' => 'form-control input-sm widget-region-select widget-region-'.$region)); ?>
+                            <?php echo Form::select('widgets[' . $widget->name . '][region]', $widget_regions, $widget->region, ['class' => 'form-control input-sm widget-region-select widget-region-' . $region]); ?>
 						</td>
                         <td class="table-drag-hide">
 							<?php
-								echo Form::weight('widgets['.$widget->name.'][weight]', $widget->weight, array('class' => 'row-weight widget-weight-'.$region), $weight_delta);
+                            echo Form::weight('widgets[' . $widget->name . '][weight]', $widget->weight, ['class' => 'row-weight widget-weight-' . $region], $weight_delta);
 								echo Form::hidden('widgets['.$widget->name.'][id]', $widget->id);
 							?>
 						</td>
 						<td class="action">
 							<?php
-                            echo HTML::anchor($widget->edit_url, '<i class="fas fa-cog"></i>', array('class' => 'action-edit', 'title' => __('Configure')));
+                            echo HTML::anchor($widget->edit_url, '<i class="fas fa-cog"></i>', ['class' => 'action-edit', 'title' => __('Configure')]);
 
 								if ($static)
 								{
-                                    echo HTML::anchor(Route::get('admin/widget')->uri(array('action' => 'delete', 'id' => $widget->id)), ' <i class="fas fa-trash-can"></i>', array('class' => 'action-delete', 'title' => __('Delete')));
+                                    echo HTML::anchor(Route::get('admin/widget')->uri(['action' => 'delete', 'id' => $widget->id]), ' <i class="fas fa-trash-can"></i>', ['class' => 'action-delete', 'title' => __('Delete')]);
 								}
 
 								unset($static);
@@ -58,5 +58,5 @@
 		</tbody>
 	</table>
 
-	<?php echo Form::submit('widget-list', __('Save Widgets'), array('class'=>'btn btn-success pull-right')); ?>
+<?php echo Form::submit('widget-list', __('Save Widgets'), ['class' => 'btn btn-success pull-right']); ?>
 <?php echo Form::close(); ?>

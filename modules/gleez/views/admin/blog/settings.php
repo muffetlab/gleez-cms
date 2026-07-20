@@ -4,19 +4,19 @@
 
 <?php include Kohana::find_file('views', 'errors/partial'); ?>
 
-<?php echo Form::open($action, array('class'=>'blog-settings-form form form-horizontal')); ?>
+<?php echo Form::open($action, ['class' => 'blog-settings-form form form-horizontal']); ?>
 
 	<div class="form-group <?php echo isset($errors['items_per_page']) ? 'has-error': ''; ?>">
-		<?php echo Form::label('title', __('Blog entries per page'), array('class' => 'control-label col-sm-3')) ?>
+        <?php echo Form::label('title', __('Blog entries per page'), ['class' => 'control-label col-sm-3']) ?>
 		<div class="controls col-sm-4">
-            <?php echo Form::select('items_per_page', HTML::per_page(), $config['items_per_page'] ?? null, array('class' => 'form-control')); ?>
+            <?php echo Form::select('items_per_page', HTML::per_page(), $config['items_per_page'] ?? null, ['class' => 'form-control']); ?>
 		</div>
 	</div>
 
 	<div class="form-group <?php echo isset($errors['default_status']) ? 'has-error': ''; ?>">
-		<?php echo Form::label('default_status', __('Default Blog Status'), array('class' => 'control-label col-sm-3')) ?>
+        <?php echo Form::label('default_status', __('Default Blog Status'), ['class' => 'control-label col-sm-3']) ?>
 		<div class="controls col-sm-4">
-            <?php echo Form::select('default_status', Post::status(), $config['default_status'] ?? null, array('class' => 'form-control')); ?>
+            <?php echo Form::select('default_status', Post::status(), $config['default_status'] ?? null, ['class' => 'form-control']); ?>
 		</div>
 	</div>
 
@@ -80,7 +80,7 @@
 	<hr>
 
 	<div class="form-group <?php echo isset($errors['comment']) ? 'has-error': ''; ?>">
-		<?php echo Form::label('comment', __('Allow people to post comments'), array('class' => 'control-label col-sm-3')); ?>
+        <?php echo Form::label('comment', __('Allow people to post comments'), ['class' => 'control-label col-sm-3']); ?>
 		<div class="controls col-sm-4">
 			<div class="radio">
                 <?php echo Form::label('comment', Form::radio('comment', 0, ($config['comment'] ?? null) === 0) . __('Disabled')); ?>
@@ -98,7 +98,7 @@
 	</div>
 
 	<div class="form-group <?php echo isset($errors['comment_default_mode']) ? 'has-error': ''; ?>">
-		<?php echo Form::label('comment_default_mode', __('Comment display mode'), array('class' => 'control-label col-sm-3')) ?>
+        <?php echo Form::label('comment_default_mode', __('Comment display mode'), ['class' => 'control-label col-sm-3']) ?>
 		<div class="controls col-sm-4">
 			<div class="radio">
                 <?php echo Form::label('comment_default_mode', Form::radio('comment_default_mode', 1, ($config['comment_default_mode'] ?? null) === 1) . __('Flat list &mdash; collapsed')) ?>
@@ -119,20 +119,20 @@
 	</div>
 
 	<div class="form-group <?php echo isset($errors['comment_order']) ? 'has-error': ''; ?>">
-		<?php echo Form::label('comment_order', __('Comment Order'), array('class' => 'control-label col-sm-3')) ?>
+        <?php echo Form::label('comment_order', __('Comment Order'), ['class' => 'control-label col-sm-3']) ?>
 		<div class="controls col-sm-4">
-            <?php echo Form::select('comment_order', array('asc' => __('Older'), 'desc' => __('Newer')), $config['comment_order'] ?? 'asc', array('class' => 'form-control')); ?>
+            <?php echo Form::select('comment_order', ['asc' => __('Older'), 'desc' => __('Newer')], $config['comment_order'] ?? 'asc', ['class' => 'form-control']); ?>
 			<p class="help-block"><?php echo __('Comments should be displayed with the older/new comments at the top of each blog'); ?></p>
 		</div>
 	</div>
 
 	<div class="form-group <?php echo isset($errors['comments_per_page']) ? 'has-error': ''; ?>">
-		<?php echo Form::label('comments_per_page', __('Comments per page'), array('class' => 'control-label col-sm-3')); ?>
+        <?php echo Form::label('comments_per_page', __('Comments per page'), ['class' => 'control-label col-sm-3']); ?>
 		<div class="controls col-sm-4">
-            <?php echo Form::select('comments_per_page', HTML::per_page(), $config['comments_per_page'] ?? 50, array('class' => 'form-control')); ?>
+            <?php echo Form::select('comments_per_page', HTML::per_page(), $config['comments_per_page'] ?? 50, ['class' => 'form-control']); ?>
 		</div>
 	</div>
 
-	<?php echo Form::submit('blog_settings', __('Save'), array('class' => 'btn btn-success pull-right')); ?>
+<?php echo Form::submit('blog_settings', __('Save'), ['class' => 'btn btn-success pull-right']); ?>
 	<div class="clearfix"></div><br>
 <?php echo Form::close() ?>

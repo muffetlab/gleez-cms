@@ -1,17 +1,17 @@
 <?php
 if (isset($widget->id) && Valid::digit($widget->id))
 	{
-		$parms = array('id' => $widget->id, 'action' => 'edit');
+        $parms = ['id' => $widget->id, 'action' => 'edit'];
 		$split_name = explode('/', $widget->name);
         $static = $split_name && $split_name[0] == 'static';
 	}
 	else
 	{
-		$parms = array('action' => 'add');
+        $parms = ['action' => 'add'];
 		$static = TRUE;
 	}
 
-	echo Form::open(Route::get('admin/widget')->uri( $parms ), array('id'=>'widget-form', 'class'=>'form'));
+echo Form::open(Route::get('admin/widget')->uri($parms), ['id' => 'widget-form', 'class' => 'form']);
 ?>
 
 	<?php include Kohana::find_file('views', 'errors/partial'); ?>
@@ -20,29 +20,29 @@ if (isset($widget->id) && Valid::digit($widget->id))
 		<div class="col-md-6">
 
 			<div class="form-group <?php echo isset($errors['title']) ? 'has-error': ''; ?>">
-				<?php echo Form::label('title', __('Title'), array('class' => 'control-label')) ?>
-				<?php echo Form::input('title', $widget->title, array('class' => 'form-control')); ?>
+                <?php echo Form::label('title', __('Title'), ['class' => 'control-label']) ?>
+                <?php echo Form::input('title', $widget->title, ['class' => 'form-control']); ?>
 			</div>
 
 
 			<div class="form-group <?php echo isset($errors['region']) ? 'has-error': ''; ?>">
-				<?php echo Form::label('region', __('Region'), array('class' => 'control-label')) ?>
-				<?php echo Form::select('region', $regions, $widget->region, array('class' => 'form-control')); ?>
+                <?php echo Form::label('region', __('Region'), ['class' => 'control-label']) ?>
+                <?php echo Form::select('region', $regions, $widget->region, ['class' => 'form-control']); ?>
 			</div>
 
 			<div class="form-group <?php echo isset($errors['status']) ? 'has-error': ''; ?>">
                 <?php $enabled_off = isset($widget->status) && $widget->status == 0; ?>
                 <?php $enabled_on = isset($widget->status) && $widget->status == 1; ?>
 
-				<?php echo Form::label('status', __('Status'), array('class' => 'control-label')) ?>
+                <?php echo Form::label('status', __('Status'), ['class' => 'control-label']) ?>
 				<div class="controls">
-					<?php echo Form::label('status', Form::radio('status', 0, $enabled_off).__('Disabled'), array('class' => 'radio-inline')) ?>
-					<?php echo Form::label('status', Form::radio('status', 1, $enabled_on).__('Enabled'),  array('class' => 'radio-inline')) ?>
+                    <?php echo Form::label('status', Form::radio('status', 0, $enabled_off) . __('Disabled'), ['class' => 'radio-inline']) ?>
+                    <?php echo Form::label('status', Form::radio('status', 1, $enabled_on) . __('Enabled'), ['class' => 'radio-inline']) ?>
 				</div>
 			</div>
 
 			<div class="form-group <?php echo isset($errors['roles']) ? 'has-error': ''; ?>">
-				<?php echo Form::label('roles', __('Roles'), array('class' => 'control-label')) ?>
+                <?php echo Form::label('roles', __('Roles'), ['class' => 'control-label']) ?>
 				<?php foreach($roles as $role => $name): ?>
 					<div class="checkbox">
                         <?php echo Form::label('roles', Form::checkbox('roles[' . $role . ']', $role, in_array($role, explode(',', $widget->roles))) . ucfirst($name)); ?>
@@ -55,7 +55,7 @@ if (isset($widget->id) && Valid::digit($widget->id))
 		<div class="col-md-6">
 
 			<div class="form-group <?php echo isset($errors['icon']) ? 'has-error': ''; ?>">
-				<?php echo Form::label('icon', __('Icon'), array('class' => 'control-label')) ?>
+                <?php echo Form::label('icon', __('Icon'), ['class' => 'control-label']) ?>
 				<div class="controls sys-icon">
                     <?php echo Form::select('icon', $widget->icons, $widget->icon, ['class' => 'select-icons col-md-12', 'useSelect2' => true]); ?>
 				</div>
@@ -65,10 +65,10 @@ if (isset($widget->id) && Valid::digit($widget->id))
                 <?php $show_title_off = isset($widget->show_title) && $widget->show_title == 0; ?>
                 <?php $show_title_on = isset($widget->show_title) && $widget->show_title == 1; ?>
 
-				<?php echo Form::label('show_title', __('Show Title'), array('class' => 'control-label')); ?>
+                <?php echo Form::label('show_title', __('Show Title'), ['class' => 'control-label']); ?>
 				<div class="controls">
-					<?php echo Form::label('show_title', Form::radio('show_title', 0, $show_title_off).__('Hide'), array('class' => 'radio-inline')); ?>
-					<?php echo Form::label('show_title', Form::radio('show_title', 1, $show_title_on).__('Show'), array('class' => 'radio-inline')); ?>
+                    <?php echo Form::label('show_title', Form::radio('show_title', 0, $show_title_off) . __('Hide'), ['class' => 'radio-inline']); ?>
+                    <?php echo Form::label('show_title', Form::radio('show_title', 1, $show_title_on) . __('Show'), ['class' => 'radio-inline']); ?>
 				</div>
 			</div>
 
@@ -76,7 +76,7 @@ if (isset($widget->id) && Valid::digit($widget->id))
                 <?php $visible_off = isset($widget->status) && $widget->visibility == 0; ?>
                 <?php $visible_on = isset($widget->status) && $widget->visibility == 1; ?>
 
-				<?php echo Form::label('pages', __('Show widget on specific pages'), array('class' => 'control-label')) ?>
+                <?php echo Form::label('pages', __('Show widget on specific pages'), ['class' => 'control-label']) ?>
 				<div class="radio">
 					<?php echo Form::label('visibility', Form::radio('visibility', 0, $visible_off).__('All pages except those listed')); ?>
 				</div>
@@ -86,21 +86,21 @@ if (isset($widget->id) && Valid::digit($widget->id))
 			</div>
 
 			<div class="form-group <?php echo isset($errors['pages']) ? 'has-error': ''; ?>">
-                <?php echo Form::textarea('pages', $widget->pages ?? '', array('class' => 'textarea form-control nowrap', 'rows' => 3)) ?>
+                <?php echo Form::textarea('pages', $widget->pages ?? '', ['class' => 'textarea form-control nowrap', 'rows' => 3]) ?>
 			</div>
 
 			<?php echo $fields; /* custom fields set by widget */ ?>
 
 			<?php if ($static): ?>
 				<div class="form-group <?php echo isset($errors['body']) ? 'has-error': ''; ?>">
-					<?php echo Form::label('body', __('Content'), array('class' => 'control-label')) ?>
-                    <?php echo Form::textarea('body', $widget->body ?? '', array('class' => 'textarea form-control nowrap', 'rows' => 5)) ?>
+                    <?php echo Form::label('body', __('Content'), ['class' => 'control-label']) ?>
+                    <?php echo Form::textarea('body', $widget->body ?? '', ['class' => 'textarea form-control nowrap', 'rows' => 5]) ?>
 				</div>
 
 				<div class="form-group <?php echo isset($errors['format']) ? 'has-error': ''; ?>">
 					<div class="controls">
-						<?php echo Form::label('format', __('Text format'), array('class' => 'control-label')) ?>
-						<?php echo Form::select('format', Filter::formats(), $widget->format, array('class' => 'form-control')); ?>
+                        <?php echo Form::label('format', __('Text format'), ['class' => 'control-label']) ?>
+                        <?php echo Form::select('format', Filter::formats(), $widget->format, ['class' => 'form-control']); ?>
 					</div>
 				</div>
 			<?php endif ?>
@@ -111,5 +111,5 @@ if (isset($widget->id) && Valid::digit($widget->id))
 	<div class="clearfix"></div>
 
 	<?php echo Form::hidden('widget', $widget->name); ?>
-	<?php echo Form::submit('widget', __('Save'), array('class' => 'btn btn-success pull-right')); ?>
+<?php echo Form::submit('widget', __('Save'), ['class' => 'btn btn-success pull-right']); ?>
 <?php echo Form::close(); ?>

@@ -19,7 +19,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<?php echo HTML::anchor($site_url, $site_name, array('class' => 'navbar-brand', 'title' => $site_name)) ?>
+                <?php echo HTML::anchor($site_url, $site_name, ['class' => 'navbar-brand', 'title' => $site_name]) ?>
 			</div>
 		</div>
 	</header>
@@ -64,10 +64,10 @@
 		<div class="container-fluid text-muted">
 			<div class="row">
 				<div class="col-xs-6 col-md-6">
-					<p class="pull-left"><?php echo __('&copy; :year :site', array(':year' => date('Y'), ':site' => HTML::anchor(URL::site(false, true), $site_name)));?></p>
+                    <p class="pull-left"><?php echo __('&copy; :year :site', [':year' => date('Y'), ':site' => HTML::anchor(URL::site(false, true), $site_name)]); ?></p>
 				</div>
 				<div class="col-xs-6 col-md-6">
-                    <p class="pull-right"><?php echo __('Powered by :gleez v{gleez_version}', array(':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'))) ?></p>
+                    <p class="pull-right"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS')]) ?></p>
 				</div>
 			</div>
 			<div class="row">

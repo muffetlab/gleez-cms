@@ -1,7 +1,7 @@
-<?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'add', 'id' => $id)), '<i class="fas fa-plus"></i>' . __('Add New Item'), array('title' => __('Add New Item'), 'class' => 'btn btn-success pull-right')); ?>
+<?php echo HTML::anchor(Route::get('admin/menu/item')->uri(['action' => 'add', 'id' => $id]), '<i class="fas fa-plus"></i>' . __('Add New Item'), ['title' => __('Add New Item'), 'class' => 'btn btn-success pull-right']); ?>
 <div class='clearfix'></div><br/>
 
-	<?php echo Form::open(Route::get('admin/menu/item')->uri(array('action' => 'confirm', 'id' => $id)), array('id'=>'menu-form', 'class'=>'form')); ?>
+<?php echo Form::open(Route::get('admin/menu/item')->uri(['action' => 'confirm', 'id' => $id]), ['id' => 'menu-form', 'class' => 'form']); ?>
 
     <table id="admin-list-menu-items" class="table table-striped table-bordered table-highlight"
            data-toggle="tableDrag">
@@ -33,19 +33,19 @@
 				</td>
 
                 <td class="table-drag-hide">
-					<?php echo Form::weight('mlid:'.$item['id'].'[weight]', 0, array('class' => 'row-weight')) ?>
-					<?php echo Form::hidden('mlid:'.$item['id'].'[plid]', $item['pid'], array('class' => 'row-parent')) ?>
-					<?php echo Form::hidden('mlid:'.$item['id'].'[mlid]', $item['id'], array('class' => 'row-id')) ?>
+                    <?php echo Form::weight('mlid:' . $item['id'] . '[weight]', 0, ['class' => 'row-weight']) ?>
+                    <?php echo Form::hidden('mlid:' . $item['id'] . '[plid]', $item['pid'], ['class' => 'row-parent']) ?>
+                    <?php echo Form::hidden('mlid:' . $item['id'] . '[mlid]', $item['id'], ['class' => 'row-id']) ?>
 				</td>
 
 				<td class="action">
-                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'edit', 'id' => $item['id'])), '<i class="fa far fa-edit"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Edit Item'))) ?>
-                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(array('action' => 'delete', 'id' => $item['id'])), '<i class="fa fas fa-trash-can"></i>', array('class' => 'btn btn-sm btn-default', 'title' => __('Delete Item'))) ?>
+                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(['action' => 'edit', 'id' => $item['id']]), '<i class="fa far fa-edit"></i>', ['class' => 'btn btn-sm btn-default', 'title' => __('Edit Item')]) ?>
+                    <?php echo HTML::anchor(Route::get('admin/menu/item')->uri(['action' => 'delete', 'id' => $item['id']]), '<i class="fa fas fa-trash-can"></i>', ['class' => 'btn btn-sm btn-default', 'title' => __('Delete Item')]) ?>
         </td>
 			  </tr>
 			<?php endforeach ?>
 		</tbody>
 	</table>
-	<?php echo Form::submit('menu-item-list', __('Save'), array('class'=>'btn btn-success pull-right')); ?>
+<?php echo Form::submit('menu-item-list', __('Save'), ['class' => 'btn btn-success pull-right']); ?>
     <div class="clearfix"></div><br>
 <?php echo Form::close(); ?>

@@ -1,4 +1,4 @@
-<?php echo Form::open($action, array('id'=>'multi-delete-form ', 'class'=>'form')); ?>
+<?php echo Form::open($action, ['id'=>'multi-delete-form ', 'class'=>'form']); ?>
 
 <p>
 	<?php echo __n( count($items),
@@ -18,7 +18,7 @@
 </ul>
 
 <div class="clearfix"></div>
-<?php echo Form::submit('no', __('Cancel'), array('class' => 'btn btn-default')) ?> &nbsp;
-<?php echo Form::submit('yes', __('Delete'), array('class' => 'btn btn-danger')) ?>
+<?php echo Form::submit('no', __('Cancel'), ['class' => 'btn btn-default']) ?> &nbsp;
+<?php echo Form::submit('yes', __('Delete'), ['class' => 'btn btn-danger']) ?>
 
 <?php echo Form::close(); ?>

@@ -6,7 +6,7 @@
 				<div class="col-md-7">
 					<span class="author">
 						<?php echo HTML::anchor($post->user->url, User::getAvatar($post->user)); ?>
-						<?php echo HTML::anchor($post->user->url, $post->user->nick, array('title' => $post->user->nick)); ?>
+                        <?php echo HTML::anchor($post->user->url, $post->user->nick, ['title' => $post->user->nick]); ?>
 					</span>
 					<span class="date-created"><?php echo Date::date_format($post->created); ?></span>
 				</div>
@@ -19,7 +19,7 @@
 	<div class="blog-content"> <?php echo $post->teaser; ?> </div>
 
 	<?php if ($post->tagcloud): ?>
-		<div class="tagcloud"><?php echo __('Tagged with :tag', array(':tag' => $post->tagcloud) ); ?></div>
+        <div class="tagcloud"><?php echo __('Tagged with :tag', [':tag' => $post->tagcloud]); ?></div>
 	<?php endif;?>
 
 </div>

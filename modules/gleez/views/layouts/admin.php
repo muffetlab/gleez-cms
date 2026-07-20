@@ -19,12 +19,12 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<?php echo HTML::anchor($site_url, $site_name, array('class' => 'navbar-brand', 'title' => $site_name)) ?>
+                <?php echo HTML::anchor($site_url, $site_name, ['class' => 'navbar-brand', 'title' => $site_name]) ?>
 			</div>
 			<nav class="navbar-collapse collapse" role="navigation">
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<?php echo HTML::anchor(Route::get('user')->uri(array('action' => 'profile')), User::getAvatar($_user, array('size' => 20)).' '.$_user->name); ?>
+                        <?php echo HTML::anchor(Route::get('user')->uri(['action' => 'profile']), User::getAvatar($_user, ['size' => 20]) . ' ' . $_user->name); ?>
 					</li>
 					<li>
                         <a href="<?php echo URL::site('/user/logout'); ?>" title="<?php echo __('Sign Out') ?>"><i class="fas fa-fw fa-power-off"></i></a>
@@ -48,10 +48,10 @@
 		<div class="container-fluid text-muted">
 			<div class="row">
 				<div class="col-xs-6 col-md-6">
-					<p class="pull-left"><?php echo __('&copy; :year :site', array(':year' => date('Y'), ':site' => HTML::anchor(URL::site(false, true), $site_name)));?></p>
+                    <p class="pull-left"><?php echo __('&copy; :year :site', [':year' => date('Y'), ':site' => HTML::anchor(URL::site(false, true), $site_name)]); ?></p>
 				</div>
 				<div class="col-xs-6 col-md-6">
-                    <p class="pull-right"><?php echo __('Powered by :gleez v{gleez_version}', array(':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'))) ?></p>
+                    <p class="pull-right"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS')]) ?></p>
 				</div>
 			</div>
 			<div class="row">

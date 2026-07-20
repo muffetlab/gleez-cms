@@ -5,16 +5,16 @@
 <p>
   <?php echo __('We\'ve created an account for you to use:'); ?>
   <br>
-  <?php echo __('username: :username', array(':username' => '<strong>admin</strong>')); ?>
+    <?php echo __('username: :username', [':username' => '<strong>admin</strong>']); ?>
   <br>
-  <?php echo __('password: :password', array(':password' => '<strong>'.$password.'</strong>')); ?>
+    <?php echo __('password: :password', [':password' => '<strong>' . $password . '</strong>']); ?>
   <br>
   <br>
-  <?php echo __('Save this information in a safe place, or change your :profile right away!', array(':profile' => HTML::anchor($admin_url, __('admin password')) )); ?>
+    <?php echo __('Save this information in a safe place, or change your :profile right away!', [':profile' => HTML::anchor($admin_url, __('admin password'))]); ?>
 </p>
 
 <div class="button-controls">
-	<?php echo HTML::anchor(Route::get('default')->uri(), __('Start using Gleez'), array('class' => 'button btn btn-large btn-primary')) ?>
+    <?php echo HTML::anchor(Route::get('default')->uri(), __('Start using Gleez'), ['class' => 'button btn btn-large btn-primary']) ?>
 </div>
 
 

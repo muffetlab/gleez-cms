@@ -17,11 +17,9 @@
 <div class="blog-comment-form-wrapper">
     <?php if (isset($provider_buttons) && !isset($comment_form)): ?>
 		<p>
-			<?php
-			_e('Only authorized users can post comments. :register or login using one of these services:',
-				array(':register' => HTML::anchor(Route::get('user')->uri(array('action' => 'register')), __('Please register')))
-			);
-			?>
+            <?php _e('Only authorized users can post comments. :register or login using one of these services:', [
+                ':register' => HTML::anchor(Route::get('user')->uri(['action' => 'register']), __('Please register'))
+            ]); ?>
 		</p>
 		<div id="blog-provider-buttons">
 			<?php echo $provider_buttons; ?>

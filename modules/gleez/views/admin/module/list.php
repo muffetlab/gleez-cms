@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="table-responsive">
-			<?php echo Form::open($action, array('id' => 'module-form', 'class' => 'form')); ?>
+            <?php echo Form::open($action, ['id' => 'module-form', 'class' => 'form']); ?>
 				<table class="table table-condensed table-hover" id="admin-modules">
 					<thead>
 						<tr>
@@ -18,7 +18,7 @@
 						<tr class="<?php echo ($module_info->active) ? 'info' : 'active' ?>">
 							<td class="check-column">
 								<?php if ($module_info->locked): ?>
-									<?php echo Form::checkbox($module_name, TRUE, $module_info->active, array('disabled')); ?>
+                                    <?php echo Form::checkbox($module_name, TRUE, $module_info->active, ['disabled']); ?>
 								<?php else: ?>
 									<?php echo Form::checkbox($module_name, TRUE, $module_info->active); ?>
 								<?php endif ?>
@@ -31,18 +31,17 @@
 									<p><?php echo __($module_info->description); ?></p>
 								</div>
 								<div class="module-version">
-									<?php echo __('Version: %ver | By: :author', array(
-                                            '%ver' => HTML::chars($module_info->version),
+                                    <?php echo __('Version: %ver | By: :author', [
+                                        '%ver' => HTML::chars($module_info->version),
 										':author' => HTML::anchor($module_info->authorURL, __($module_info->author))
-									));
-									?>
+                                    ]); ?>
 								</div>
 							</td>
 						</tr>
 					<?php endforeach ?>
 					</tbody>
 				</table>
-				<?php echo Form::submit('modules', __('Save'), array('class'=>'btn btn-success pull-right')); ?>
+            <?php echo Form::submit('modules', __('Save'), ['class' => 'btn btn-success pull-right']); ?>
 			<?php echo Form::close(); ?>
 		</div>
 	</div>

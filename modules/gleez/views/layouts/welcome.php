@@ -21,7 +21,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<?php echo HTML::anchor('/', HTML::image($site_logo, array('alt' => $site_slogan, 'class' => 'logo')), array('class' => 'navbar-brand', 'title' => $site_name)) ?>
+                <?php echo HTML::anchor('/', HTML::image($site_logo, ['alt' => $site_slogan, 'class' => 'logo']), ['class' => 'navbar-brand', 'title' => $site_name]) ?>
 			</div>
 			<nav class="navbar-collapse collapse" role="navigation">
 				<?php echo $primary_menu; ?>
@@ -34,7 +34,7 @@
                             <li><a href="<?php echo URL::site('/user/login'); ?>"><i class="fas fa-fw fa-chevron-left"></i><?php echo __('Sign In') ?></a></li>
 						<?php else:  ?>
 						<li class="dropdown">
-							<?php echo HTML::anchor('#', User::getAvatar($_user, array('size' => 20)).' '.$_user->name.'<b class="caret"></b>', array('data-toggle' => 'dropdown', 'class' => 'dropdown-toggle')); ?>
+                            <?php echo HTML::anchor('#', User::getAvatar($_user, ['size' => 20]) . ' ' . $_user->name . '<b class="caret"></b>', ['data-toggle' => 'dropdown', 'class' => 'dropdown-toggle']); ?>
 
 							<ul class="dropdown-menu">
 								<li class="dropdown-header"><strong><?php echo $_user->nick ?></strong></li>
@@ -82,10 +82,10 @@
 			<div class="container text-muted">
 				<div class="row">
 					<div class="col-xs-6 col-md-6">
-						<p class="pull-left"><?php echo __('&copy; :year :site', array(':year' => date('Y'), ':site' => HTML::anchor(URL::site(false, true), $site_name)));?></p>
+                        <p class="pull-left"><?php echo __('&copy; :year :site', [':year' => date('Y'), ':site' => HTML::anchor(URL::site(false, true), $site_name)]); ?></p>
 					</div>
 					<div class="col-xs-6 col-md-6">
-                        <p class="pull-right"><?php echo __('Powered by :gleez v{gleez_version}', array(':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'))) ?></p>
+                        <p class="pull-right"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS')]) ?></p>
 					</div>
 				</div>
 				<div class="row">

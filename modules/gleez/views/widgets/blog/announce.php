@@ -4,7 +4,7 @@
 			<?php foreach($items as $item) : ?>
 				<div class="announce-blog">
 					<div class="image"><?php echo $item['image']; ?></div>
-					<h3 itemprop='url'><?php echo HTML::anchor($item['url'], $item['title'], array('itemprop' => 'url')) ?></h3>
+                    <h3 itemprop='url'><?php echo HTML::anchor($item['url'], $item['title'], ['itemprop' => 'url']) ?></h3>
 				</div>
 			<?php endforeach; ?>
 		</div>

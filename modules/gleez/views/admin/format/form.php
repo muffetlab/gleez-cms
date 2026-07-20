@@ -2,7 +2,7 @@
 	<?php echo __('A text format contains filters that change the user input, for example stripping out malicious HTML or making URLs clickable. Filters are executed from top to bottom and the order is important, since one filter may prevent another filter from doing its job. For example, when URLs are converted into links before disallowed HTML tags are removed, all links may be removed. When this happens, the order of filters may need to be re-arranged.'); ?>
 </div>
 
-<?php echo Form::open(Route::get('admin/format')->uri($params), array('id'=>'filter-admin-format-form ', 'class'=>'format-form form')) ?>
+<?php echo Form::open(Route::get('admin/format')->uri($params), ['id' => 'filter-admin-format-form ', 'class' => 'format-form form']) ?>
 
 <?php include Kohana::find_file('views', 'errors/partial'); ?>
 
@@ -10,13 +10,13 @@
 		<div class="col-md-6">
 			<div class="form-group <?php echo isset($errors['name']) ? 'has-error': ''; ?>">
 				<div class="controls">
-					<?php echo Form::label('name', __('Title'), array('class' => 'control-label')); ?>
-					<?php echo Form::input('name', $format['name'], array('class' => 'form-control')); ?>
+                    <?php echo Form::label('name', __('Title'), ['class' => 'control-label']); ?>
+                    <?php echo Form::input('name', $format['name'], ['class' => 'form-control']); ?>
 				</div>
 			</div>
 
 			<div class="form-group <?php echo isset($errors['roles']) ? 'has-error': ''; ?>">
-				<?php echo Form::label('roles', __('Roles'), array('class' => 'control-label')) ?>
+                <?php echo Form::label('roles', __('Roles'), ['class' => 'control-label']) ?>
 				<?php foreach($roles as $role => $name): ?>
 					<div class="checkbox">
                         <?php echo Form::label('roles', Form::checkbox('roles[' . $role . ']', $role) . ucfirst($name)); ?>
@@ -27,15 +27,15 @@
 
 		<div class="col-md-6">
 			<div class="form-group">
-				<?php echo Form::label('order', __('Filters'), array('class' => 'control-label')) ?>
+                <?php echo Form::label('order', __('Filters'), ['class' => 'control-label']) ?>
 				<table id="filter-order" class="table table-striped table-bordered table-condensed">
 					<?php foreach ($filters as $name => $filter): ?>
 						<tr id="filter-row-<?php echo $name ?>" class="draggable <?php echo Text::alternate("odd", "even") ?>">
 							<td>
-								<?php echo __(':title', array(':title' => HTML::chars($filter->title))); ?>
+                                <?php echo __(':title', [':title' => HTML::chars($filter->title)]); ?>
 							</td>
                             <td class="table-drag-hide">
-								<?php echo Form::weight('filters['.$name.'][weight]', 0, array('class' => 'filter-order-weight')) ?>
+                                <?php echo Form::weight('filters[' . $name . '][weight]', 0, ['class' => 'filter-order-weight']) ?>
 							</td>
 							<td>
 								<?php
@@ -54,7 +54,7 @@
 
 	<div class="form-group">
 		<div id="settings-filter clearfix">
-			<?php echo Form::label('settings', __('Filter Settings'), array('class' => 'control-label')) ?>
+            <?php echo Form::label('settings', __('Filter Settings'), ['class' => 'control-label']) ?>
 			<div class="tabbable tabs-left table-bordered">
 				<ul class="nav nav-tabs">
 					<?php foreach($filters as $name => $filter): ?>
@@ -70,8 +70,8 @@
 							<div class="tab-pane"  id="<?php echo URL::title($filter->title)?>">
 								<?php foreach($filter->settings as $key => $value): ?>
 								   <div class="form-group">
-									<?php echo Form::label('edit-filters', str_replace('_', ' ', ucfirst($key)), array('class' => 'control-label')) ?>
-									<?php echo Form::input('filters['.$name.'][settings]['.$key.']', $value, array('class' => 'form-control col-md-5')) ?>
+                                       <?php echo Form::label('edit-filters', str_replace('_', ' ', ucfirst($key)), ['class' => 'control-label']) ?>
+                                       <?php echo Form::input('filters[' . $name . '][settings][' . $key . ']', $value, ['class' => 'form-control col-md-5']) ?>
                                        <div class="description"><?php //echo HTML::chars($filter->description) ?></div>
 								   </div>
 								<?php endforeach; ?>
@@ -83,5 +83,5 @@
 		</div>
 	</div>
 
-	<?php echo Form::submit('filter', __('Save Filters'), array('class' => 'btn btn-success pull-right')) ?>
+<?php echo Form::submit('filter', __('Save Filters'), ['class' => 'btn btn-success pull-right']) ?>
 <?php echo Form::close() ?>

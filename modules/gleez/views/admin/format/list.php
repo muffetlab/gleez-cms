@@ -21,19 +21,13 @@
 				<?php echo $format['roles'] ?>
 			</td>
             <td class="table-drag-hide">
-				<?php
-					echo Form::weight('formats['.$id.'][weight]', $format['weight'], array('class' => 'row-weight text-format-order-weight'));
-				?>
+                <?php echo Form::weight('formats[' . $id . '][weight]', $format['weight'], ['class' => 'row-weight text-format-order-weight']); ?>
 			</td>
 			<td class="action">
-				<?php
-					$route_param = array(
-						'id' => $id,
-						'action' => 'configure'
-					);
-
-                echo HTML::anchor(Route::get('admin/format')->uri($route_param), '<i class="fas fa-cog"></i>', array('class' => 'action-list', 'title' => __('Configure')));
-				?>
+                <?php echo HTML::anchor(Route::get('admin/format')->uri([
+                    'id' => $id,
+                    'action' => 'configure'
+                ]), '<i class="fas fa-cog"></i>', ['class' => 'action-list', 'title' => __('Configure')]); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
