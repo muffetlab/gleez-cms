@@ -22,9 +22,9 @@ class Controller_Admin_Autocomplete extends Controller {
 		// Ajax request only!
 		if ( ! $this->request->is_ajax())
 		{
-			throw HTTP_Exception::factory(404, 'Accessing an ajax request :type externally',
-				array(':type' => '<small>'.$this->request->uri().'</small>')
-			);
+            throw HTTP_Exception::factory(404, 'Accessing an ajax request :type externally', [
+                ':type' => '<small>' . $this->request->uri() . '</small>'
+            ]);
 		}
 
 		parent::before();

@@ -38,7 +38,7 @@ class Controller_Comment extends Template {
 	{
 		$id       = (int) $this->request->param('id', 0);
         $comment = ORM::factory('Comment', $id)->access();
-		$route    = Route::get('comment')->uri(array('action' => 'list'));
+        $route = Route::get('comment')->uri(['action' => 'list']);
 
 		if ( ! $comment->loaded())
 		{
@@ -73,9 +73,11 @@ class Controller_Comment extends Template {
         $comment = ORM::factory('Comment', $id)->access('edit');
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 		// Set form action
-		$action = Route::get('comment')->uri(array('id' => $id, 'action' => 'edit')).URL::query($destination);
+        $action = Route::get('comment')->uri(['id' => $id, 'action' => 'edit']) . URL::query($destination);
 
 		$this->title = __('Edit Comment');
 		$view = View::factory('comment/form')
@@ -95,8 +97,8 @@ class Controller_Comment extends Template {
 				/** @var $comment ORM */
                 $comment->values($_POST, ['status', 'body'])->save();
 
-				Kohana::$log->add(Log::INFO, 'Comment: :title updated.', array(':title' => $comment->title));
-				Message::success(__('Comment %title has been updated.', array('%title' => $comment->title)));
+                Kohana::$log->add(Log::INFO, 'Comment: :title updated.', [':title' => $comment->title]);
+                Message::success(__('Comment %title has been updated.', ['%title' => $comment->title]));
 
 				$this->request->redirect(empty($destination) ? $comment->url : $this->request->query('destination'));
 			}
@@ -118,12 +120,15 @@ class Controller_Comment extends Template {
 		$id          = (int) $this->request->param('id', 0);
         $comment = ORM::factory('Comment', $id)->access('delete');
 		$this->title = __('Are you absolutely sure?');
-		$destination = empty($this->redirect) ? array() : array('destination' => $this->redirect);
+        $destination = empty($this->redirect) ? [] : ['destination' => $this->redirect];
 		$post        = $this->request->post();
-		$route       = Route::get('comment')->uri(array('action' => 'view', 'id' => $comment->id));
+        $route = Route::get('comment')->uri(['action' => 'view', 'id' => $comment->id]);
 
 		$view = View::factory('form/confirm')
-				->set('action', Route::get('comment')->uri(array('action' => 'delete', 'id' => $comment->id)).URL::query($destination))
+            ->set('action', Route::get('comment')->uri([
+                    'action' => 'delete',
+                    'id' => $comment->id
+                ]) . URL::query($destination))
 				->set('title', $comment->title);
 
 		// If deletion is not desired, redirect to post
@@ -142,17 +147,18 @@ class Controller_Comment extends Template {
 			{
 				$comment->delete();
 
-				Kohana::$log->add(Log::INFO, 'Comment: :title deleted.', array(':title' => $title));
-				Message::success(__('Comment %title deleted successful!', array('%title' => $title)));
+                Kohana::$log->add(Log::INFO, 'Comment: :title deleted.', [':title' => $title]);
+                Message::success(__('Comment %title deleted successful!', ['%title' => $title]));
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting comment id: :id, :msg',
-					array(':id' => $comment->id, ':msg' => $e->getMessage())
-				);
-                Message::error(__('An error occurred while deleting comment %post', array('%post' => $title)));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting comment id: :id, :msg', [
+                    ':id' => $comment->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred while deleting comment %post', ['%post' => $title]));
 
-                $this->_errors = array(__('An error occurred while deleting comment %post', array('%post' => $title)));
+                $this->_errors = [__('An error occurred while deleting comment %post', ['%post' => $title])];
 			}
 
 			$redirect = empty($destination) ? $redirect : $this->redirect;

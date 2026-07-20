@@ -100,7 +100,9 @@ class Controller_Media extends Controller {
 		}
 		else
 		{
-            Kohana::$log->add(Log::ERROR, 'Media controller error while loading file: :file', array(':file' => $originalFile));
+            Kohana::$log->add(Log::ERROR, 'Media controller error while loading file: :file', [
+                ':file' => $originalFile
+            ]);
 
 			// Return a 404 status
 			$this->response->status(404);

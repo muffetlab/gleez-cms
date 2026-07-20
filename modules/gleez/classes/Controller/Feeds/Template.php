@@ -130,7 +130,7 @@ class Controller_Feeds_Template extends Controller {
         $this->_cache_key = "feeds:feed-{$this->request->controller()}-{$this->request->action()}-$this->_limit-$this->_page-$this->_id";
 
 		// Fills the array elements
-		$this->_items = $this->_cache->get($this->_cache_key, array());
+        $this->_items = $this->_cache->get($this->_cache_key, []);
 
 		parent::before();
 
@@ -138,9 +138,10 @@ class Controller_Feeds_Template extends Controller {
 
 		if (Kohana::$environment === Kohana::DEVELOPMENT)
 		{
-			Kohana::$log->add(Log::DEBUG, 'Executing Controller: :controller, action: :action',
-				array(':controller' => $this->request->controller(), ':action' => $this->request->action())
-			);
+            Kohana::$log->add(Log::DEBUG, 'Executing Controller: :controller, action: :action', [
+                ':controller' => $this->request->controller(),
+                ':action' => $this->request->action()
+            ]);
 		}
 	}
 

@@ -49,25 +49,32 @@ class Controller_Admin_Tag extends Controller_Admin {
 		if ($is_datatables)
 		{
             $tags = ORM::factory('Tag');
-			$this->_datatables = $tags->dataTables(array('name', 'id', 'type'));
+            $this->_datatables = $tags->dataTables(['name', 'id', 'type']);
 
 			foreach ($this->_datatables->result() as $tag)
 			{
-				$this->_datatables->add_row(
-					array(
+                $this->_datatables->add_row([
                         HTML::chars($tag->name),
 						HTML::anchor($tag->url, $tag->url),
                         HTML::chars($tag->type),
 
-                        HTML::icon($tag->edit_url, 'fa far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit Tag'))) . '&nbsp;' .
-                        HTML::icon($tag->delete_url, 'fa fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Tag'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-tags'))
-					)
-				);
+                    HTML::icon($tag->edit_url, 'fa far fa-edit', [
+                        'class' => 'btn btn-sm btn-default action-edit',
+                        'title' => __('Edit Tag')
+                    ])
+                    . '&nbsp;'
+                    . HTML::icon($tag->delete_url, 'fa fas fa-trash-can', [
+                        'class' => 'btn btn-sm btn-default action-delete',
+                        'title' => __('Delete Tag'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#admin-list-tags'
+                    ])
+                ]);
 			}
 		}
 
 		$this->title = __('Tags');
-		$url         = Route::url('admin/tag', array('action' => 'list'), TRUE);
+        $url = Route::url('admin/tag', ['action' => 'list'], TRUE);
 
 		$view = View::factory('admin/tag/list')
 				->bind('datatables',   $this->_datatables)
@@ -90,7 +97,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 	{
 		$this->title = __('Add New Tag');
         $post = ORM::factory('Tag');
-		$action      = Route::get('admin/tag')->uri(array('action' => 'add'));
+        $action = Route::get('admin/tag')->uri(['action' => 'add']);
 
 		if ($this->valid_post('tag'))
 		{
@@ -98,7 +105,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 			try
 			{
 				$post->save();
-				Message::success(__('Tag %name saved successful!', array('%name' => $post->name)));
+                Message::success(__('Tag %name saved successful!', ['%name' => $post->name]));
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
 			}
 			catch (ORM_Validation_Exception $e)
@@ -140,7 +147,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/tag')->uri(), 404);
 		}
 
-		$this->title = __('Edit Tag %name', array('%name' => $post->name));
+        $this->title = __('Edit Tag %name', ['%name' => $post->name]);
 
 		if ($this->valid_post('tag'))
 		{
@@ -149,8 +156,8 @@ class Controller_Admin_Tag extends Controller_Admin {
 			{
 				$post->save();
 
-				Kohana::$log->add(Log::INFO, 'Tag :name saved successful.', array(':name' => $post->name));
-				Message::success(__('Tag %name saved successful!', array('%name' => $post->name)));
+                Kohana::$log->add(Log::INFO, 'Tag :name saved successful.', [':name' => $post->name]);
+                Message::success(__('Tag %name saved successful!', ['%name' => $post->name]));
 
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
 			}
@@ -192,7 +199,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/tag')->uri(), 404);
 		}
 
-		$this->title = __('Delete Tag %title', array('%title' => $tag->name));
+        $this->title = __('Delete Tag %title', ['%title' => $tag->name]);
 
 		$view = View::factory('form/confirm')
 				->set('action', $tag->delete_url)
@@ -210,16 +217,17 @@ class Controller_Admin_Tag extends Controller_Admin {
 			try
 			{
 				$tag->delete();
-				Message::success(__('Tag %name deleted successful!', array('%name' => $tag->name)));
+                Message::success(__('Tag %name deleted successful!', ['%name' => $tag->name]));
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting tag id: :id, :msg',
-					array(':id' => $tag->id, ':msg' => $e->getMessage())
-				);
-                Message::error(__('An error occurred while deleting tag %tag', array('%tag' => $tag->name)));
-                $this->_errors = array(__('An error occurred while deleting tag %tag', array('%tag' => $tag->name)));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting tag id: :id, :msg', [
+                    ':id' => $tag->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred while deleting tag %tag', ['%tag' => $tag->name]));
+                $this->_errors = [__('An error occurred while deleting tag %tag', ['%tag' => $tag->name])];
 
 				$this->request->redirect(Route::get('admin/tag')->uri(), 503);
 			}

@@ -66,11 +66,11 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 			$config = Kohana::$config->load($this->_type);
 
 			$id  = $this->request->param('id', 0);
-            $tag = ORM::factory('Tag', array('id' => $id, 'type' => $this->_type));
+            $tag = ORM::factory('Tag', ['id' => $id, 'type' => $this->_type]);
 
 			if ( ! $tag->loaded())
 			{
-				throw HTTP_Exception::factory(404, 'Tag ":tag" Not Found', array(':tag' => $id));
+                throw HTTP_Exception::factory(404, 'Tag ":tag" Not Found', [':tag' => $id]);
 			}
 
 			$posts = $tag->posts
@@ -90,8 +90,12 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 
 		if (isset($this->_items[0]))
 		{
-			$this->_info['title']   = __(':tag - Recent updates', array(':tag' => ucfirst($this->_items['title'])));
-			$this->_info['link']    = Route::url('rss', array('controller' => $this->_type, 'action' => 'tag', 'id' => (int) $this->request->param('id')), TRUE);
+            $this->_info['title'] = __(':tag - Recent updates', [':tag' => ucfirst($this->_items['title'])]);
+            $this->_info['link'] = Route::url('rss', [
+                'controller' => $this->_type,
+                'action' => 'tag',
+                'id' => (int) $this->request->param('id')
+            ], TRUE);
 			$this->_info['pubDate'] = $this->_items[0]['pubDate'];
 		}
 	}
@@ -152,7 +156,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 
 			if ( ! $term->loaded())
 			{
-				throw HTTP_Exception::factory(404, 'Term ":term" Not Found', array(':term' => $id));
+                throw HTTP_Exception::factory(404, 'Term ":term" Not Found', [':term' => $id]);
 			}
 
 			$posts = $term->posts
@@ -172,8 +176,12 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 
 		if (isset($this->_items[0]))
 		{
-			$this->_info['title']   = __(':term - Recent updates', array(':term' => ucfirst($this->_items['title'])));
-			$this->_info['link']    = Route::url('rss', array('controller' => $this->_type, 'action' => 'term', 'id' => (int) $this->request->param('id')), TRUE);
+            $this->_info['title'] = __(':term - Recent updates', [':term' => ucfirst($this->_items['title'])]);
+            $this->_info['link'] = Route::url('rss', [
+                'controller' => $this->_type,
+                'action' => 'term',
+                'id' => (int) $this->request->param('id')
+            ], TRUE);
 			$this->_info['pubDate'] = $this->_items[0]['pubDate'];
 		}
 	}

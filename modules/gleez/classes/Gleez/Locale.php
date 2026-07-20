@@ -69,7 +69,7 @@ class Gleez_Locale {
 	 * Default locale
 	 * @var array
 	 */
-	protected static $_framework = array('en' => TRUE);
+    protected static $_framework = ['en' => TRUE];
 
 	/**
 	 * Gleez_Locale instance
@@ -599,7 +599,7 @@ class Gleez_Locale {
 	 */
     public static function set_default($locale, int $quality = 1)
 	{
-		if (in_array($locale, array('detected', 'root', 'framework', 'environment', 'client')))
+        if (in_array($locale, ['detected', 'root', 'framework', 'environment', 'client']))
 		{
 			throw new Kohana_Exception('Only full qualified locales can be used as default!');
 		}
@@ -619,7 +619,7 @@ class Gleez_Locale {
 
 		if (isset($locale_data[(string)$locale]))
 		{
-			self::$_framework = array((string) $locale => $quality);
+            self::$_framework = [(string) $locale => $quality];
 		}
 		else
 		{
@@ -627,7 +627,7 @@ class Gleez_Locale {
 
             if (isset($locale_data[$explodedLocale[0]]))
 			{
-                self::$_framework = array($explodedLocale[0] => $quality);
+                self::$_framework = [$explodedLocale[0] => $quality];
 			}
 			else
 			{

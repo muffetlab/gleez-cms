@@ -247,7 +247,7 @@ class Request extends Kohana_Request
 	 */
     public function create_response(bool $bind = TRUE): Response
     {
-		$response = new Response(array('_protocol' => $this->protocol()));
+        $response = new Response(['_protocol' => $this->protocol()]);
 
 		if ($bind)
 		{

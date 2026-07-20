@@ -40,76 +40,76 @@ class Post extends ORM_Versioned {
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'       => array( 'type' => 'int' ),
-		'version'  => array( 'type' => 'int' ),
-		'author'   => array( 'type' => 'int' ),
-		'title'    => array( 'type' => 'string' ),
-		'body'     => array( 'type' => 'string' ),
-		'teaser'   => array( 'type' => 'string' ),
-		'status'   => array( 'type' => 'string' ),
-		'promote'  => array( 'type' => 'int' ),
-		'moderate' => array( 'type' => 'int' ),
-		'sticky'   => array( 'type' => 'int' ),
-		'type'     => array( 'type' => 'string' ),
-		'format'   => array( 'type' => 'int' ),
-		'created'  => array( 'type' => 'int' ),
-		'updated'  => array( 'type' => 'int' ),
-		'pubdate'  => array( 'type' => 'int' ),
-		'password' => array( 'type' => 'string' ),
-		'comment'  => array( 'type' => 'int' ),
-		'lang'     => array( 'type' => 'string' ),
-		'layout'   => array( 'type' => 'string' ),
-		'image'    => array( 'type' => 'string' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'version' => ['type' => 'int'],
+        'author' => ['type' => 'int'],
+        'title' => ['type' => 'string'],
+        'body' => ['type' => 'string'],
+        'teaser' => ['type' => 'string'],
+        'status' => ['type' => 'string'],
+        'promote' => ['type' => 'int'],
+        'moderate' => ['type' => 'int'],
+        'sticky' => ['type' => 'int'],
+        'type' => ['type' => 'string'],
+        'format' => ['type' => 'int'],
+        'created' => ['type' => 'int'],
+        'updated' => ['type' => 'int'],
+        'pubdate' => ['type' => 'int'],
+        'password' => ['type' => 'string'],
+        'comment' => ['type' => 'int'],
+        'lang' => ['type' => 'string'],
+        'layout' => ['type' => 'string'],
+        'image' => ['type' => 'string'],
+    ];
 
 	/**
      * Autofill updated column
 	 * @var array
 	 */
-	protected $_updated_column = array(
+    protected $_updated_column = [
 		'column' => 'updated',
 		'format' => TRUE
-	);
+    ];
 
 	/**
 	 * "Belongs to" relationships
 	 * @var array
 	 */
-	protected $_belongs_to = array(
-		'user' => array(
+    protected $_belongs_to = [
+        'user' => [
 			'foreign_key' => 'author'
-		)
-	);
+        ]
+    ];
 
 	/**
 	 * "Has many" relationships
 	 * @var array
 	 */
-	protected $_has_many = array(
-		'tags' => array(
+    protected $_has_many = [
+        'tags' => [
             'model' => 'Tag',
 			'through'     => 'posts_tags',
 			'foreign_key' => 'post_id',
 			'far_key'     => 'tag_id'
-		),
-		'terms' => array(
+        ],
+        'terms' => [
             'model' => 'Term',
 			'through'     => 'posts_terms',
 			'foreign_key' => 'post_id',
 			'far_key'     => 'term_id'
-		),
-		'comments' => array(
+        ],
+        'comments' => [
             'model' => 'Comment',
 			'foreign_key' => 'post_id'
-		)
-	);
+        ]
+    ];
 
 	/**
 	 * Ignored columns
 	 * @var array
 	 */
-	protected $_ignored_columns = array(
+    protected $_ignored_columns = [
 		'author_name',
 		'author_date',
 		'author_pubdate',
@@ -117,7 +117,7 @@ class Post extends ORM_Versioned {
 		'categories',
         'form_tags',
 		'content'
-	);
+    ];
 
 	/**
 	 * Post type
@@ -165,31 +165,31 @@ class Post extends ORM_Versioned {
 	 */
     public function rules(): array
     {
-		return array(
-			'title' => array(
-				array('not_empty'),
-			),
-			'body' => array(
-				array('not_empty'),
-				array('min_length', array(':value', 10)),
-			),
-			'author' => array(
-				array(array($this, 'is_valid'), array('author', ':validation', ':field')),
-			),
-			'created' => array(
-				array(array($this, 'is_valid'), array('created', ':validation', ':field')),
-			),
-			'pubdate' => array(
-				array(array($this, 'is_valid'), array('pubdate', ':validation', ':field')),
-			),
-			'status' => array(
-				array('not_empty'),
-				array('Post::valid_state', array(':value')),
-			),
-			'categories' => array(
-				array(array($this, 'is_valid'), array('category', ':validation', ':field')),
-			),
-		);
+        return [
+            'title' => [
+                ['not_empty'],
+            ],
+            'body' => [
+                ['not_empty'],
+                ['min_length', [':value', 10]],
+            ],
+            'author' => [
+                [[$this, 'is_valid'], ['author', ':validation', ':field']],
+            ],
+            'created' => [
+                [[$this, 'is_valid'], ['created', ':validation', ':field']],
+            ],
+            'pubdate' => [
+                [[$this, 'is_valid'], ['pubdate', ':validation', ':field']],
+            ],
+            'status' => [
+                ['not_empty'],
+                ['Post::valid_state', [':value']],
+            ],
+            'categories' => [
+                [[$this, 'is_valid'], ['category', ':validation', ':field']],
+            ],
+        ];
 	}
 
 	/**
@@ -199,12 +199,12 @@ class Post extends ORM_Versioned {
 	 */
     public function labels(): array
     {
-		return array(
+        return [
 			'title'  => __('Title'),
 			'body'   => __('Body'),
 			'teaser' => __('Teaser'),
 			'image'  => __('Primary Image'),
-		);
+        ];
 	}
 
 	/**
@@ -227,7 +227,7 @@ class Post extends ORM_Versioned {
 				{
                     if ($term == 'last' || !Valid::numeric($term))
 					{
-						$validation->error('categories', 'invalid', array($validation[$field]));
+                        $validation->error('categories', 'invalid', [$validation[$field]]);
 					}
 				}
 			}
@@ -237,7 +237,7 @@ class Post extends ORM_Versioned {
 		{
             if (!empty($this->author_date) && !($date = strtotime($this->author_date)))
 			{
-				$validation->error($field, 'invalid', array($this->author_date));
+                $validation->error($field, 'invalid', [$this->author_date]);
 			}
 			else
 			{
@@ -252,7 +252,7 @@ class Post extends ORM_Versioned {
 		{
             if (!empty($this->author_name) && !($account = User::lookup_by_name($this->author_name)))
 			{
-				$validation->error($field, 'invalid', array($this->author_name));
+                $validation->error($field, 'invalid', [$this->author_name]);
 			}
 			else
 			{
@@ -267,7 +267,7 @@ class Post extends ORM_Versioned {
 		{
             if (!empty($this->author_pubdate) && !($date = strtotime($this->author_pubdate)))
 			{
-				$validation->error($field, 'invalid', array($validation[$field]));
+                $validation->error($field, 'invalid', [$validation[$field]]);
 			}
 			else
 			{
@@ -525,7 +525,7 @@ class Post extends ORM_Versioned {
 			parent::delete($soft);
 
 			// Delete the path aliases associated with this object
-			Path::delete(array('source' => $source));
+            Path::delete(['source' => $source]);
 			unset($source);
 		}
 
@@ -559,11 +559,11 @@ class Post extends ORM_Versioned {
             case 'tags_form':
                 return $this->tags->find_all()->as_array('id', 'rawname');
             case 'taxonomy':
-                return HTML::links($this->terms->find_all()->as_array(), array('class' => 'nav nav-pills pull-right'));
+                return HTML::links($this->terms->find_all()->as_array(), ['class' => 'nav nav-pills pull-right']);
             case 'tagcloud':
-                return HTML::links($this->tags->find_all()->as_array(), array('class' => 'nav nav-pills'));
+                return HTML::links($this->tags->find_all()->as_array(), ['class' => 'nav nav-pills']);
             case 'links':
-				return HTML::links($this->links(), array('class' => 'links inline'));
+                return HTML::links($this->links(), ['class' => 'links inline']);
             case 'rawtitle':
                 // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('title');
@@ -574,20 +574,20 @@ class Post extends ORM_Versioned {
                 // Raw fields without markup. Usage: during edit or etc.!
                 return parent::__get('body') ?: '';
             case 'rawurl':
-				return Route::get($this->type)->uri(array( 'id' => $this->id, 'action' => 'view'));
+                return Route::get($this->type)->uri(['id' => $this->id, 'action' => 'view']);
             case 'rawimage':
                 // Raw fields without path. Usage: during edit or etc.!
 				return parent::__get('image');
             case 'url':
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
             case 'edit_url':
-				return Route::get($this->type)->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get($this->type)->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get($this->type)->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get($this->type)->uri(['id' => $this->id, 'action' => 'delete']);
             case 'image':
 				return $this->rawimage ? $this->_image_url.$this->rawimage : NULL;
             case 'count_comments':
-                return (int) DB::select(array(DB::expr('COUNT(*)'), 'count_comments'))
+                return (int) DB::select([DB::expr('COUNT(*)'), 'count_comments'])
 					->from('comments')
 					->where('status', '=', 'publish')
 					->where('post_id', '=', $this->id)
@@ -606,12 +606,12 @@ class Post extends ORM_Versioned {
 	 */
     public static function status(): array
     {
-		$states = array(
+        $states = [
 			'archive' => __('Archive'),
 			'draft'   => __('Draft'),
 			'private' => __('Private'),
 			'publish' => __('Published'),
-		);
+        ];
 
         return Module::action('post_status', $states);
 	}
@@ -627,11 +627,11 @@ class Post extends ORM_Versioned {
 	 */
     public function links(): array
     {
-		$links = array(
-			'more'   => array('link' => $this->url,        'name' => __('Read More')),
-			'edit'   => array('link' => $this->edit_url,   'name' => __('Edit')),
-			'delete' => array('link' => $this->delete_url, 'name' => __('Delete')),
-		);
+        $links = [
+            'more' => ['link' => $this->url, 'name' => __('Read More')],
+            'edit' => ['link' => $this->edit_url, 'name' => __('Edit')],
+            'delete' => ['link' => $this->delete_url, 'name' => __('Delete')],
+        ];
 
 		// Unset read more link on full page view
 		if (Request::current()->uri() == $this->url)
@@ -654,64 +654,64 @@ class Post extends ORM_Versioned {
 	 */
     public static function bulk_actions(bool $list = FALSE, string $type = 'post')
 	{
-		$states = array(
-			'publish'    => array(
+        $states = [
+            'publish' => [
 				'label'     => __('Publish'),
 				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('status' => 'publish')),
-			),
-			'unpublish'  => array(
+                'arguments' => ['updates' => ['status' => 'publish']],
+            ],
+            'unpublish' => [
 				'label'     => __('Unpublish'),
 				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('status' => 'draft')),
-			),
-			'promote'    => array(
+                'arguments' => ['updates' => ['status' => 'draft']],
+            ],
+            'promote' => [
 				'label'     => __('Promote to front page'),
 				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('status' => 'publish', 'promote' => 1)),
-			),
-			'demote'     => array(
+                'arguments' => ['updates' => ['status' => 'publish', 'promote' => 1]],
+            ],
+            'demote' => [
 				'label'     => __('Demote from front page'),
 				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('promote' => 0)),
-			),
-			'sticky'     => array(
+                'arguments' => ['updates' => ['promote' => 0]],
+            ],
+            'sticky' => [
 				'label'     => __('Make sticky'),
 				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('sticky' => 1)),
-			),
-			'unsticky'   => array(
+                'arguments' => ['updates' => ['sticky' => 1]],
+            ],
+            'unsticky' => [
 				'label'     => __('Remove stickiness'),
 				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('sticky' => 0)),
-			),
-			'delete'     => array(
+                'arguments' => ['updates' => ['sticky' => 0]],
+            ],
+            'delete' => [
 				'label'     => __('Delete'),
 				'callback'  => NULL,
-			),
-			'ct_page'    => array(
-				'label'     => __('Convert to @page', array('@page' => __('Page'))),
+            ],
+            'ct_page' => [
+                'label' => __('Convert to @page', ['@page' => __('Page')]),
 				'callback'  => 'Post::bulk_convert',
-				'arguments' => array('actions' => array('page')),
-			),
-			'ct_blog'    => array(
-				'label'     => __('Convert to @blog', array('@blog' => __('Blog'))),
+                'arguments' => ['actions' => ['page']],
+            ],
+            'ct_blog' => [
+                'label' => __('Convert to @blog', ['@blog' => __('Blog')]),
 				'callback'  => 'Post::bulk_convert',
-				'arguments' => array('actions' => array('blog')),
-			),
-			'ct_forum'   => array(
-				'label'     => __('Convert to @forum', array('@forum' => __('Forum'))),
+                'arguments' => ['actions' => ['blog']],
+            ],
+            'ct_forum' => [
+                'label' => __('Convert to @forum', ['@forum' => __('Forum')]),
 				'callback'  => 'Post::bulk_convert',
-				'arguments' => array('actions' => array('forum')),
-			),
-		);
+                'arguments' => ['actions' => ['forum']],
+            ],
+        ];
 
 		// Allow module developers to override
 		$values = Module::action('post_bulk_actions', $states);
 
 		if ($list)
 		{
-			$options = array('' => __('Bulk Options'));
+            $options = ['' => __('Bulk Options')];
 			foreach ($values as $operation => $array)
 			{
                 if ($operation == "ct_$type") continue;
@@ -802,7 +802,7 @@ class Post extends ORM_Versioned {
 		foreach($posts as $post)
 		{
 			// Delete the path aliases associated with this object
-			Path::delete(array('source' => $post->rawurl));
+            Path::delete(['source' => $post->rawurl]);
 
 			// Remove the previous terms relationship
 			$post->remove('terms');
@@ -812,7 +812,7 @@ class Post extends ORM_Versioned {
 
 			// Update the type column in comments
 			DB::update('comments')
-				->set(array('type' => $new_type))
+                ->set(['type' => $new_type])
 				->where('post_id', '=', $post->id)
 				->execute();
 
@@ -950,9 +950,9 @@ class Post extends ORM_Versioned {
      * @uses    Cache::get
      * @uses    Cache::set
      */
-	public static function recent_posts(array $args = array())
+    public static function recent_posts(array $args = [])
 	{
-		$default = array(
+        $default = [
 			'limit'     => 10,
 			'offset'    => 0,
 			'type'      => 'post',
@@ -961,7 +961,7 @@ class Post extends ORM_Versioned {
             'status' => implode(',', array_keys(Post::status())),
 			'use_cache' => TRUE,
 			'as_array'  => TRUE,
-		);
+        ];
 
 		$params = (object) System::parse_args($args, $default);
         $cache = Cache::instance();

@@ -14,30 +14,30 @@ class Model_Term extends ORM_MPTT {
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'          => array( 'type' => 'int' ),
-		'name'        => array( 'type' => 'string' ),
-		'description' => array( 'type' => 'string' ),
-		'image'       => array( 'type' => 'string' ),
-		'type'        => array( 'type' => 'string' ),
-		'pid'         => array( 'type' => 'int' ),
-		'lft'         => array( 'type' => 'int' ),
-		'rgt'         => array( 'type' => 'int' ),
-		'lvl'         => array( 'type' => 'int' ),
-		'scp'         => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'name' => ['type' => 'string'],
+        'description' => ['type' => 'string'],
+        'image' => ['type' => 'string'],
+        'type' => ['type' => 'string'],
+        'pid' => ['type' => 'int'],
+        'lft' => ['type' => 'int'],
+        'rgt' => ['type' => 'int'],
+        'lvl' => ['type' => 'int'],
+        'scp' => ['type' => 'int'],
+    ];
 
 	/**
 	 * "Has many" relationships
 	 * @var array
 	 */
-	protected $_has_many = array(
-		'posts' => array(
+    protected $_has_many = [
+        'posts' => [
             'model' => 'Post',
 			'through'     => 'posts_terms',
 			'foreign_key' => 'term_id'
-		),
-	);
+        ],
+    ];
 
 	/**
 	 * Left column name
@@ -76,11 +76,11 @@ class Model_Term extends ORM_MPTT {
 	 */
 	public function filters(): array
     {
-		return array(
-			'image' => array(
-				array(array($this, 'uploadImage'))
-			)
-		);
+        return [
+            'image' => [
+                [[$this, 'uploadImage']]
+            ]
+        ];
 	}
 
 	/**
@@ -90,11 +90,11 @@ class Model_Term extends ORM_MPTT {
 	 */
 	public function rules(): array
     {
-		return array(
-			'name' => array(
-				array('not_empty'),
-			),
-		);
+        return [
+            'name' => [
+                ['not_empty'],
+            ],
+        ];
 	}
 
     /**
@@ -141,7 +141,7 @@ class Model_Term extends ORM_MPTT {
 			parent::delete($soft);
 
 			// Delete the path aliases associated with this object
-			Path::delete(array('source' => $source));
+            Path::delete(['source' => $source]);
 			unset($source);
 		}
 
@@ -203,14 +203,14 @@ class Model_Term extends ORM_MPTT {
 				return parent::__get('name');
             case 'rawurl':
                 // Raw fields without markup. Usage: during edit or etc.!
-				return Route::get($this->type)->uri(array('action' => 'term', 'id' => $this->id));
+                return Route::get($this->type)->uri(['action' => 'term', 'id' => $this->id]);
             case 'url':
 			case 'link':
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
             case 'edit_url':
-				return Route::get('admin/term')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('admin/term')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get('admin/term')->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get('admin/term')->uri(['id' => $this->id, 'action' => 'delete']);
         }
 
         return parent::__get($column);
@@ -229,7 +229,7 @@ class Model_Term extends ORM_MPTT {
      */
     public function term_available(Validation $validation, string $field)
 	{
-		$query = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
+        $query = DB::select([DB::expr('COUNT(*)'), 'total_count'])
 				->from($this->_table_name)
 				->where('name', '=', $validation[$field])
 				->where($this->_primary_key, '!=', $this->pk())
@@ -239,7 +239,7 @@ class Model_Term extends ORM_MPTT {
 
 		if ($query > 0)
 		{
-			$validation->error($field, 'term_available', array($validation[$field]));
+            $validation->error($field, 'term_available', [$validation[$field]]);
 		}
 	}
 
@@ -272,8 +272,10 @@ class Model_Term extends ORM_MPTT {
 
 			if ( ! $target->loaded())
 			{
-				throw new Kohana_Exception('Could not create term, could not find target for insert_as_next_sibling id: :location ',
-					array(':location' =>  (int) $location));
+                throw new Kohana_Exception(
+                    'Could not create term, could not find target for insert_as_next_sibling id: :location ',
+                    [':location' => (int) $location]
+                );
 			}
 
 			$this->insert_as_last_child($target);

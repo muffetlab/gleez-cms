@@ -26,7 +26,7 @@ class Tags {
      * @return Tags
      * @throws Kohana_Exception
      */
-    public static function factory(array $config = array()): Tags
+    public static function factory(array $config = []): Tags
     {
 		if ( ! isset(self::$_instance))
 		{
@@ -45,7 +45,7 @@ class Tags {
      * @throws Kohana_Exception
      * @uses  Log::DEBUG
      */
-	public function __construct($config = array())
+    public function __construct($config = [])
 	{
 		// Append default tags configuration
 		$config += Kohana::$config->load('tags')->as_array();

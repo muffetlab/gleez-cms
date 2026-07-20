@@ -53,20 +53,20 @@ class Message {
 		{
             foreach ($message as $_message)
 			{
-				$messages[] = (object) array(
+                $messages[] = (object) [
 					'type'     => $type,
 					'text'     => $_message,
 					'options'  => (array) $options,
-				);
+                ];
 			}
 		}
 		else
 		{
-			$messages[] = (object) array(
+            $messages[] = (object) [
 				'type'     => $type,
 				'text'     => $message,
 				'options'  => (array) $options,
-			);
+            ];
 		}
 
 		// set messages
@@ -225,7 +225,7 @@ class Message {
     public static function get($type = NULL, $default = NULL, bool $delete = FALSE)
 	{
 		// Get the messages
-		$messages = Session::instance()->get(self::$session_key, array());
+        $messages = Session::instance()->get(self::$session_key, []);
 
 		if ($messages === NULL)
 		{

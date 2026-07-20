@@ -23,9 +23,9 @@ class Controller_Taxonomy extends Template {
 		// Internal request only!
 		if ($this->request->is_initial())
 		{
-			throw HTTP_Exception::factory(404, 'Access denied!',
-				array(':type' => '<small>'.$this->request->uri().'</small>')
-			);
+            throw HTTP_Exception::factory(404, 'Access denied!', [
+                ':type' => '<small>' . $this->request->uri() . '</small>'
+            ]);
 		}
 
 		ACL::required('access content');
@@ -44,10 +44,10 @@ class Controller_Taxonomy extends Template {
 
 		if ( ! $term->loaded())
 		{
-			throw HTTP_Exception::factory(404, 'Term ":term" Not Found', array(':term'=>$id));
+            throw HTTP_Exception::factory(404, 'Term ":term" Not Found', [':term' => $id]);
 		}
 
-			$this->title    = __(':title', array(':title' => $term->name) );
+        $this->title = __(':title', [':title' => $term->name]);
 			$view = View::factory('taxonomy/term')
 					->set('teaser', TRUE)
 					->bind('pagination', $pagination)
@@ -69,12 +69,12 @@ class Controller_Taxonomy extends Template {
 			return;
 		}
 
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
 			'total_items'    => $total,
 			'items_per_page' => 5,
 			'uri'		 => $term->url
-		));
+        ]);
 
 		$posts  = $posts->order_by('created', 'DESC')
             ->limit($pagination->itemsPerPage())
@@ -86,8 +86,8 @@ class Controller_Taxonomy extends Template {
 		//Set the canonical and shortlink for search engines
 		if ($this->auto_render === TRUE)
 		{
-			Meta::links(URL::canonical($term->url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('taxonomy', array('action' => 'term', 'id' => $term->id)), array('rel' => 'shortlink'));
+            Meta::links(URL::canonical($term->url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('taxonomy', ['action' => 'term', 'id' => $term->id]), ['rel' => 'shortlink']);
 		}
 	}
 

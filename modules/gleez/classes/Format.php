@@ -37,7 +37,7 @@ class Format {
      * @return  Format  Format instance
      * @throws Kohana_Exception
      */
-    public static function instance(array $config = array()): ?Format
+    public static function instance(array $config = []): ?Format
     {
 		if ( ! is_null(Format::$instance))
 		{

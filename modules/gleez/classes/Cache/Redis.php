@@ -69,10 +69,10 @@ class Cache_Redis extends Cache {
 		}
 
 		// Define a default settings array.
-		$default_settings = array(
+        $default_settings = [
 			'host' => 'localhost',
 			'port' => 6379
-		);
+        ];
 
 		// Merge the default settings with the user-defined settings.
 		$this->config(Arr::merge($default_settings, $config));
@@ -118,8 +118,10 @@ class Cache_Redis extends Cache {
 		catch (Exception $e)
 		{
 			// Cache is corrupt or not exists, let return happen normally
-			Kohana::$log->add(Log::ERROR, 'An error occurred retrieving corrupt or not exists cache name: [:name]',
-				array(':name' => System::sanitize_id($this->config('prefix').$id))
+            Kohana::$log->add(
+                Log::ERROR,
+                'An error occurred retrieving corrupt or not exists cache name: [:name]',
+                [':name' => System::sanitize_id($this->config('prefix') . $id)]
 			);
 		}
 
@@ -160,9 +162,9 @@ class Cache_Redis extends Cache {
 		}
 		catch (Exception $e)
 		{
-			Kohana::$log->add(Log::ERROR, 'An error occurred setting [:name] to cache.',
-				array(':name' => System::sanitize_id($this->config('prefix').$id))
-			);
+            Kohana::$log->add(Log::ERROR, 'An error occurred setting [:name] to cache.', [
+                ':name' => System::sanitize_id($this->config('prefix') . $id)
+            ]);
 		}
 
 		// Failed to write cache
@@ -256,8 +258,10 @@ class Cache_Redis extends Cache {
 		catch (Exception $e)
 		{
 			// Cache is corrupt or not exists, let return happen normally
-			Kohana::$log->add(Log::ERROR, 'An error occurred retrieving corrupt or not exists cache name: [:name]',
-				array(':name' => System::sanitize_id($this->config('prefix').$id))
+            Kohana::$log->add(
+                Log::ERROR,
+                'An error occurred retrieving corrupt or not exists cache name: [:name]',
+                [':name' => System::sanitize_id($this->config('prefix') . $id)]
 			);
 		}
 

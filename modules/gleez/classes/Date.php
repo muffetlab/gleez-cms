@@ -46,7 +46,7 @@ class Date extends Kohana_Date
 	 */
     public static function amounts_min(): array
     {
-        return array(
+        return [
             1 => __('Minute'),
             30 => __('Half an hour'),
             60 => __('Hour'),
@@ -54,7 +54,7 @@ class Date extends Kohana_Date
             10080 => __('Week'),
             302400 => __('Month'),
             107654400 => __('Year'),
-        );
+        ];
 	}
 
 	/**
@@ -64,7 +64,7 @@ class Date extends Kohana_Date
 	 */
     public static function weekdays(): array
     {
-		return array(
+        return [
 			0 => __('Sunday'),
 			1 => __('Monday'),
 			2 => __('Tuesday'),
@@ -72,7 +72,7 @@ class Date extends Kohana_Date
 			4 => __('Thursday'),
 			5 => __('Friday'),
 			6 => __('Saturday')
-		);
+        ];
 	}
 
 	/**
@@ -82,7 +82,7 @@ class Date extends Kohana_Date
 	 */
     public static function timezones(): array
     {
-		$continents = array(
+        $continents = [
 			'Africa',
 			'America',
 			'Antarctica',
@@ -93,7 +93,7 @@ class Date extends Kohana_Date
 			'Europe',
 			'Indian',
 			'Pacific'
-		);
+        ];
 
 		$zones = DateTimeZone::listIdentifiers();
 
@@ -115,7 +115,7 @@ class Date extends Kohana_Date
 			}
 		}
 
-		$offset_range = array(
+        $offset_range = [
 			-12,
 			-11.5,
 			-11,
@@ -171,7 +171,7 @@ class Date extends Kohana_Date
 			13,
 			13.75,
 			14
-		);
+        ];
 
 		foreach ($offset_range as $offset)
 		{
@@ -185,19 +185,9 @@ class Date extends Kohana_Date
 			}
 
 			$offset_value = $offset_name;
-			$offset_name  = str_replace(array(
-				'.25',
-				'.5',
-				'.75'
-			), array(
-				':15',
-				':30',
-				':45'
-			), $offset_name);
+            $offset_name = str_replace(['.25', '.5', '.75'], [':15', ':30', ':45'], $offset_name);
 
-			$locations[__('Manual Offsets')]['UTC' . $offset_value] = __('UTC :value', array(
-				':value' => $offset_name
-			));
+            $locations[__('Manual Offsets')]['UTC' . $offset_value] = __('UTC :value', [':value' => $offset_name]);
 		}
 
 		return $locations;
@@ -213,7 +203,7 @@ class Date extends Kohana_Date
 	 */
     public static function date_time_formats(bool $timestamp = FALSE): array
     {
-		$date_time_format = array(
+        $date_time_format = [
 			'l, F j, Y - H:i',
 			'l, j F, Y - H:i',
 			'l, Y, F j - H:i',
@@ -249,7 +239,7 @@ class Date extends Kohana_Date
 			'M j Y - g:ia',
 			'j M Y - g:ia',
 			'Y M j - g:ia'
-		);
+        ];
 
 		if ($timestamp)
 		{
@@ -274,7 +264,7 @@ class Date extends Kohana_Date
 	 */
     public static function date_formats(bool $timestamp = FALSE): array
     {
-		$date_format = array(
+        $date_format = [
 			'l, F j, Y',
 			'l, j F, Y',
 			'l, Y, F j',
@@ -299,7 +289,7 @@ class Date extends Kohana_Date
 			'M j, Y',
 			'j M Y',
 			'Y M j'
-		);
+        ];
 
 		if ($timestamp)
 		{
@@ -324,14 +314,14 @@ class Date extends Kohana_Date
 	 */
     public static function time_formats(bool $timestamp = FALSE): array
     {
-		$time_format = array(
+        $time_format = [
 			'g:i:s a',
 			'g:i:s A',
 			'g:i a',
 			'g:i A',
 			'H:i:s',
 			'G:i'
-		);
+        ];
 
 		if ($timestamp)
 		{

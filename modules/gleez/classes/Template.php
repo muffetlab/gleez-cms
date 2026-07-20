@@ -167,7 +167,7 @@ abstract class Template extends Controller {
 	 * (accept-type => path to format template)
 	 * @var array
 	 */
-	protected $_accept_formats = array(
+    protected $_accept_formats = [
 		'text/html'             => 'html',
 		'application/xhtml+xml' => 'xhtml',
 		'application/xml'       => 'xml',
@@ -176,7 +176,7 @@ abstract class Template extends Controller {
 		'text/plain'            => 'php',
 		'text/javascript'       => 'jsonp',
 		'*/*'                   => 'xhtml' //ie7 ie8
-	);
+    ];
 
 	/**
 	 * Enable sidebars for this request?
@@ -327,14 +327,14 @@ abstract class Template extends Controller {
 			$this->template->_admin = Theme::$is_admin;
 
             // Set the redirect URL
-			$this->redirect = ($this->request->query('destination') !== NULL) ? $this->request->query('destination') : array();
+            $this->redirect = ($this->request->query('destination') !== NULL) ? $this->request->query('destination') : [];
 
 			// Bind the generic page variables
             $this->template
 				->set('site_slogan',   $this->_config->get('site_slogan', __('Innovate IT')))
 				->set('site_logo',     $this->_config->get('site_logo', FALSE))
-				->set('sidebar_left',  array())
-				->set('sidebar_right', array())
+                ->set('sidebar_left', [])
+                ->set('sidebar_right', [])
 				->set('column_class',  '')
 				->set('main_column',   12)
 				->set('head_title',    $this->title)
@@ -375,11 +375,10 @@ abstract class Template extends Controller {
 
 		if (Kohana::$environment === Kohana::DEVELOPMENT)
 		{
-			Kohana::$log->add(Log::DEBUG, 'Executing Controller [:controller] action [:action]',
-				array(
+            Kohana::$log->add(Log::DEBUG, 'Executing Controller [:controller] action [:action]', [
 					':controller' => $this->request->controller(),
 					':action'     => $this->request->action(),
-			));
+            ]);
 		}
 	}
 
@@ -403,7 +402,7 @@ abstract class Template extends Controller {
 			$this->_set_column_class();
 
 			// Do some CSS magic to page class
-			$classes   = array(
+            $classes = [
 				I18n::$lang,
 				$this->request->controller(),
 				$this->request->action(),
@@ -411,7 +410,7 @@ abstract class Template extends Controller {
 				$this->template->column_class,
 				$this->_page_class,
 				($this->_auth->logged_in()) ? 'logged-in' : 'not-logged-in'
-			);
+            ];
 
 			// Special check for frontpage and frontpage title
 			if ($this->is_frontpage())
@@ -426,10 +425,10 @@ abstract class Template extends Controller {
 				$this->template->mission = __($this->_config->get('site_mission', ''));
 			}
 
-			View::set_global(array(
+            View::set_global([
 				'is_front' => $this->template->front,
 				'is_admin' => $this->template->_admin
-			));
+            ]);
 
 			$classes[]  = $this->template->_admin ? 'backend' : 'frontend';
 			$classes[]  = ($this->template->front) ? 'front' : 'not-front';
@@ -442,9 +441,9 @@ abstract class Template extends Controller {
 			Module::event('template', $this);
 
 			// Set primary menu
-			$primary_menu = Menu::links('main-menu', array(
+            $primary_menu = Menu::links('main-menu', [
 				'class' => 'menus nav navbar-nav'
-			));
+            ]);
 
 			// Bind the generic page variables
 			$this->template->set('lang', I18n::$lang)
@@ -527,14 +526,14 @@ abstract class Template extends Controller {
 	{
 		if ($this->title)
 		{
-			$head_title = array(
+            $head_title = [
 				strip_tags($this->title),
 				$this->template->site_name
-			);
+            ];
 		}
 		else
 		{
-			$head_title = array($this->template->site_name);
+            $head_title = [$this->template->site_name];
 
 			if ($this->template->site_slogan)
 			{
@@ -552,7 +551,7 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_server_headers()
 	{
-		$headers = $this->_config->get('headers', array());
+        $headers = $this->_config->get('headers', []);
 		$headers['X-Gleez-Version'] = Gleez::getVersion(TRUE, TRUE) . ' ('.Gleez::CODENAME.')';
 
         $xmlRpc = $this->_config->get('xml_rpc');
@@ -592,7 +591,7 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_meta_links()
 	{
-		$meta  = $this->_config->get('meta', array());
+        $meta = $this->_config->get('meta', []);
 		$links = Arr::get($meta, 'links');
 
 		if ($links)
@@ -615,12 +614,12 @@ abstract class Template extends Controller {
 	 */
 	protected function _set_default_meta_tags()
 	{
-		$meta        = $this->_config->get('meta', array());
+        $meta = $this->_config->get('meta', []);
 		$keywords    = $this->_config->get('keywords', '');
 		$description = $this->_config->get('description', '');
 
 		$tags = Arr::get($meta, 'tags');
-		$tags = Arr::merge($tags, array('keywords' => $keywords), array('description' => $description));
+        $tags = Arr::merge($tags, ['keywords' => $keywords], ['description' => $description]);
 
 		if ($tags)
 		{
@@ -702,13 +701,13 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_css()
 	{
-		Assets::css('bootstrap', 'media/css/bootstrap.min.css', NULL, array('weight' => -15));
+        Assets::css('bootstrap', 'media/css/bootstrap.min.css', NULL, ['weight' => -15]);
         Assets::css('fontawesome-all', 'media/fontawesome/css/all.min.css', null, ['weight' => -13]);
         Assets::css('fontawesome-solid', 'media/fontawesome/css/solid.min.css', ['fontawesome-all'], ['weight' => -12]);
         Assets::css('fontawesome-regular', 'media/fontawesome/css/regular.min.css', ['fontawesome-all'], ['weight' => -12]);
         Assets::css('fontawesome-brands', 'media/fontawesome/css/brands.min.css', ['fontawesome-all'], ['weight' => -12]);
-		Assets::css('default', 'media/css/default.css', NULL, array('weight' => 0));
-		Assets::css('theme', "media/css/theme.css", array('default'), array('weight' => 50));
+        Assets::css('default', 'media/css/default.css', NULL, ['weight' => 0]);
+        Assets::css('theme', "media/css/theme.css", ['default'], ['weight' => 50]);
 	}
 
     /**
@@ -719,7 +718,7 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_js()
 	{
-		Assets::js('bootstrap', 'media/js/bootstrap.min.js', array('jquery'), FALSE, array('weight' => -8));
+        Assets::js('bootstrap', 'media/js/bootstrap.min.js', ['jquery'], FALSE, ['weight' => -8]);
 
 		// Google js only in production and not in admin section
         if (Kohana::PRODUCTION === Kohana::$environment && Theme::$is_admin === FALSE)
@@ -761,8 +760,9 @@ abstract class Template extends Controller {
 
 		if (Request::post_max_size_exceeded())
 		{
-			$this->_errors = array('_action' => __('Max file size of :max Bytes exceeded!',
-				array(':max' => Request::get_post_max_size())) );
+            $this->_errors = [
+                '_action' => __('Max file size of :max Bytes exceeded!', [':max' => Request::get_post_max_size()])
+            ];
 			return FALSE;
 		}
 
@@ -770,7 +770,7 @@ abstract class Template extends Controller {
 		{
 			if ( ! isset($_POST[$submit]))
 			{
-				$this->_errors = array('_action' => __('This form has altered. Please try submitting it again.'));
+                $this->_errors = ['_action' => __('This form has altered. Please try submitting it again.')];
 				return FALSE;
 			}
 		}
@@ -784,7 +784,7 @@ abstract class Template extends Controller {
         if ($has_csrf && !$valid_csrf)
 		{
 			// CSRF was submitted but expired
-			$this->_errors = array('_token' => __('This form has expired. Please try submitting it again.'));
+            $this->_errors = ['_token' => __('This form has expired. Please try submitting it again.')];
 			return FALSE;
 		}
 
@@ -794,12 +794,12 @@ abstract class Template extends Controller {
 			if (empty($captcha))
 			{
 				// CSRF was not entered
-				$this->_errors = array('_captcha' => __('The security code can\'t be empty.'));
+                $this->_errors = ['_captcha' => __('The security code can\'t be empty.')];
 				return FALSE;
 			}
 			elseif ( ! Captcha::valid($captcha))
 			{
-				$this->_errors = array('_captcha' => __('The security answer was wrong.'));
+                $this->_errors = ['_captcha' => __('The security answer was wrong.')];
 				return FALSE;
 			}
 		}
@@ -837,13 +837,13 @@ abstract class Template extends Controller {
 		$realMemoryUsage = Request::isHHVM();
 
 		// Get the total memory and execution time
-		$total = array(
+        $total = [
             '{memory_usage}' => number_format((memory_get_peak_usage($realMemoryUsage) - KOHANA_START_MEMORY) / 1024 / 1024, 2) . '&nbsp;' . __('MB'),
 			'{gleez_version}'    => Gleez::VERSION,
             '{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 3) . '&nbsp;' . __('seconds'),
 			'{included_files}'   => count(get_included_files()),
 			'{database_queries}' => $queries
-		);
+        ];
 
 		// Insert the totals into the response
 		$this->template = strtr((string) $this->template, $total);

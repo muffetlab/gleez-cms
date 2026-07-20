@@ -25,8 +25,10 @@ class Controller_Admin_Comment extends Controller_Admin {
 	{
 		ACL::required('administer comment');
 
-		$this->_destination = '?destination='.Route::get('admin/comment')->uri(array('action' => $this->request->action()));
-		$this->_form_action = Route::get('admin/comment')->uri(array('action' => 'process')).$this->_destination;
+        $this->_destination = '?destination=' . Route::get('admin/comment')->uri([
+                'action' => $this->request->action()
+            ]);
+        $this->_form_action = Route::get('admin/comment')->uri(['action' => 'process']) . $this->_destination;
 
 		parent::before();
 	}
@@ -40,11 +42,11 @@ class Controller_Admin_Comment extends Controller_Admin {
      */
 	public function after()
 	{
-		$this->_tabs =  array(
-			array('link' => Route::get('admin/comment')->uri(array('action' =>'list')), 'text' => __('Approved')),
-			array('link' => Route::get('admin/comment')->uri(array('action' =>'pending')), 'text' => __('Pending')),
-			array('link' => Route::get('admin/comment')->uri(array('action' =>'spam')), 'text' => __('Spam')),
-		);
+        $this->_tabs = [
+            ['link' => Route::get('admin/comment')->uri(['action' => 'list']), 'text' => __('Approved')],
+            ['link' => Route::get('admin/comment')->uri(['action' => 'pending']), 'text' => __('Pending')],
+            ['link' => Route::get('admin/comment')->uri(['action' => 'spam']), 'text' => __('Spam')],
+        ];
 
 		parent::after();
 	}
@@ -68,7 +70,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 				->set('is_datatables', Request::is_datatables())
 				->set('bulk_actions',  Comment::bulk_actions(TRUE))
 				->set('action',        $this->_form_action)
-				->set('url',           Route::url('admin/comment', array('action' => 'list'), TRUE));
+            ->set('url', Route::url('admin/comment', ['action' => 'list'], TRUE));
 
 		$this->response->body($view);
 	}
@@ -92,7 +94,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/comment')->uri());
 		}
 
-		$this->title = __('Comment :name', array(':name' => Text::limit_chars($comment->title, 40)));
+        $this->title = __('Comment :name', [':name' => Text::limit_chars($comment->title, 40)]);
 		$view = View::factory('comment/view')->set('comment', $comment);
 
 		$this->response->body($view);
@@ -117,7 +119,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 			->set('is_datatables', Request::is_datatables())
 			->set('bulk_actions',  Comment::bulk_actions(TRUE))
 			->set('action',        $this->_form_action)
-			->set('url',           Route::url('admin/comment', array('action' => 'pending'), TRUE));
+            ->set('url', Route::url('admin/comment', ['action' => 'pending'], TRUE));
 
 		$this->response->body($view);
 	}
@@ -141,7 +143,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 			->set('is_datatables', Request::is_datatables())
 			->set('bulk_actions',  Comment::bulk_actions(TRUE))
 			->set('action',        $this->_form_action)
-			->set('url',           Route::url('admin/comment', array('action' => 'pending'), TRUE));
+            ->set('url', Route::url('admin/comment', ['action' => 'pending'], TRUE));
 
 		$this->response->body($view);
 	}
@@ -153,7 +155,7 @@ class Controller_Admin_Comment extends Controller_Admin {
      */
 	public function action_process()
 	{
-		$route    = Route::get('admin/comment')->uri(array('action' => 'list'));
+        $route = Route::get('admin/comment')->uri(['action' => 'list']);
 		$redirect = empty($this->redirect) ? $route : $this->redirect ;
 		$post     = $this->request->post();
 
@@ -180,7 +182,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 		{
             if (!isset($post['comments']) || !is_array($post['comments']) || !count(array_filter($post['comments'])))
 			{
-				$this->_errors = array(__('No items selected.'));
+                $this->_errors = [__('No items selected.')];
 
 				$this->request->redirect($redirect);
 			}
@@ -243,11 +245,11 @@ class Controller_Admin_Comment extends Controller_Admin {
             list($func) = Arr::callback($operation['callback']);
 			if (isset($operation['arguments']))
 			{
-				$args = Arr::merge(array($comments), $operation['arguments']);
+                $args = Arr::merge([$comments], $operation['arguments']);
 			}
 			else
 			{
-				$args = array($comments);
+                $args = [$comments];
 			}
 
 			// Execute the bulk operation
@@ -278,28 +280,42 @@ class Controller_Admin_Comment extends Controller_Admin {
 	{
 		if (Request::is_datatables())
 		{
-			$this->_datatables = $posts->dataTables(array('id', 'title', 'author', 'guest_name', 'created'));
+            $this->_datatables = $posts->dataTables(['id', 'title', 'author', 'guest_name', 'created']);
 
 			foreach ($this->_datatables->result() as $post)
 			{
                 if ($post->author == 1 && !is_null($post->guest_name))
 				{
-					$author = HTML::anchor($post->guest_url, $post->guest_name, array()) . __(' (not verified)');
+                    $author = HTML::anchor($post->guest_url, $post->guest_name, []) . __(' (not verified)');
 				}
 				else
 				{
-					$author = HTML::anchor(Route::get('user')->uri(array('action' => 'profile', 'id' => $post->author)), $post->user->nick, array());
+                    $author = HTML::anchor(Route::get('user')->uri([
+                        'action' => 'profile',
+                        'id' => $post->author
+                    ]), $post->user->nick, []);
 				}
 
-				$this->_datatables->add_row(array(
+                $this->_datatables->add_row([
 						Form::checkbox('comments['.$post->id.']', $post->id, isset($_POST['comments'][$post->id]) ),
-						HTML::anchor($post->url, Text::limit_chars($post->title,40), array('class'=>'action-view','title' => Text::limit_chars($post->rawbody, 120))),
+                    HTML::anchor($post->url, Text::limit_chars($post->title, 40), [
+                        'class' => 'action-view',
+                        'title' => Text::limit_chars($post->rawbody, 120)
+                    ]),
 						$author,
-						HTML::anchor($post->post->url, $post->post->title, array('class'=>'action-view')),
+                    HTML::anchor($post->post->url, $post->post->title, ['class' => 'action-view']),
 						Date::formatted_time($post->created),
-                        HTML::icon($post->edit_url . $this->_destination, 'fa far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit'))),
-                        HTML::icon($post->delete_url . $this->_destination, 'fa fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-comments'))
-				));
+                    HTML::icon($post->edit_url . $this->_destination, 'fa far fa-edit', [
+                        'class' => 'btn btn-sm btn-default action-edit',
+                        'title' => __('Edit')
+                    ]),
+                    HTML::icon($post->delete_url . $this->_destination, 'fa fas fa-trash-can', [
+                        'class' => 'btn btn-sm btn-default action-delete',
+                        'title' => __('Delete'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#admin-list-comments'
+                    ])
+                ]);
 			}
 		}
 	}

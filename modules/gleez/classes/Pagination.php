@@ -13,15 +13,15 @@ class Pagination {
 	/** Merged configuration settings
 	 * @var array
 	 */
-	protected $config = array(
-		'current_page'      => array('source' => 'query_string', 'key' => 'page'),
+    protected $config = [
+        'current_page' => ['source' => 'query_string', 'key' => 'page'],
 		'total_items'       => 0,
 		'items_per_page'    => 10,
 		'view'              => 'pagination/basic',
 		'auto_hide'         => TRUE,
 		'first_page_in_url' => FALSE,
 		'uri'               => NULL
-	);
+    ];
 
 	// Current page number
 	protected $current_page;
@@ -118,7 +118,7 @@ class Pagination {
      * @return  Pagination
      * @throws Kohana_Exception
      */
-    public static function factory(array $config = array(), Request $request = NULL): Pagination
+    public static function factory(array $config = [], Request $request = NULL): Pagination
     {
 		return new self($config, $request);
 	}
@@ -130,7 +130,7 @@ class Pagination {
      * @param Request|null $request Request [Optional]
      * @throws Kohana_Exception
      */
-	public function __construct(array $config = array(), Request $request = NULL)
+    public function __construct(array $config = [], Request $request = NULL)
 	{
 		// Overwrite system defaults with application defaults
 		$this->config = $this->config_group() + $this->config;
@@ -206,7 +206,7 @@ class Pagination {
      * @return  object  Pagination
      * @throws Kohana_Exception
      */
-	public function setup(array $config = array())
+    public function setup(array $config = [])
 	{
 		if (isset($config['group']))
 		{
@@ -294,16 +294,13 @@ class Pagination {
 		{
 			case 'query_string':
 
-				return URL::site($this->_route->uri($this->_route_params).
-					$this->query(array($this->config['current_page']['key'] => $page)));
+                return URL::site($this->_route->uri($this->_route_params)
+                    . $this->query([$this->config['current_page']['key'] => $page]));
 
 			case 'route':
-				return URL::site($this->_route->uri(
-						array_merge(
-							$this->_route_params,
-							array($this->config['current_page']['key'] => $page)
-						)
-					). $this->query());
+                return URL::site($this->_route->uri(array_merge($this->_route_params, [
+                        $this->config['current_page']['key'] => $page
+                    ])) . $this->query());
 			case 'cms':
 				return URL::site($this->_uri . $pager . $this->query());
 		}
@@ -534,6 +531,6 @@ class Pagination {
      */
     public function __set(string $key, $value)
 	{
-		$this->setup(array($key => $value));
+        $this->setup([$key => $value]);
 	}
 }

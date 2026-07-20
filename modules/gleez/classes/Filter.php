@@ -44,7 +44,7 @@ class Filter {
      * @param array $callbacks Filter callbacks
      * @return  Filter
      */
-    public static function set(string $name, array $callbacks = array()): Filter
+    public static function set(string $name, array $callbacks = []): Filter
     {
 		return Filter::$_filters[$name] = new Filter($name, $callbacks);
 	}
@@ -65,8 +65,7 @@ class Filter {
     {
 		if ( ! isset(Filter::$_filters[$name]))
 		{
-			throw new Kohana_Exception('The requested filter does not exist: :filter',
-				array(':filter' => $name));
+            throw new Kohana_Exception('The requested filter does not exist: :filter', [':filter' => $name]);
 		}
 
 		return Filter::$_filters[$name];
@@ -243,9 +242,10 @@ class Filter {
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Filter callback response :msg for filter: :filter',
-					array(':msg' => $e->getMessage(), 'filter' => $filter['name'])
-				);
+                Kohana::$log->add(Log::ERROR, 'Filter callback response :msg for filter: :filter', [
+                    ':msg' => $e->getMessage(),
+                    'filter' => $filter['name']
+                ]);
 
 				return $text;
 			}
@@ -264,7 +264,7 @@ class Filter {
 	 * The prepare and process callbacks for filter
 	 * @var array
 	 */
-	protected $_callbacks = array('prepare callback' => FALSE, 'process callback' => FALSE);
+    protected $_callbacks = ['prepare callback' => FALSE, 'process callback' => FALSE];
 
 	/**
 	 * Filter Settings
@@ -284,7 +284,7 @@ class Filter {
      * @param string $title Filter title
      * @param array $callbacks Filter callbacks
 	 */
-    public function __construct(string $title, array $callbacks = array())
+    public function __construct(string $title, array $callbacks = [])
 	{
 		$this->_title = $title;
 		$this->_callbacks = $callbacks;
@@ -311,7 +311,7 @@ class Filter {
 		}
 		else
 		{
-			throw new Kohana_Exception('The requested property does not exist: :key', array(':key' => $key));
+            throw new Kohana_Exception('The requested property does not exist: :key', [':key' => $key]);
 		}
 	}
 

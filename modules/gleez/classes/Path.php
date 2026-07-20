@@ -53,7 +53,7 @@ class Path {
 			$alias = self::FRONT_ALIAS;
 		}
 
-		$result = self::load(array('alias' => $alias));
+        $result = self::load(['alias' => $alias]);
 		if ( ! $result)
 		{
             // No alias found, return original params to allow normal routing
@@ -66,14 +66,14 @@ class Path {
 			$result['alias'] = '';
 		}
 
-		return array(
+        return [
 			'directory'  => $result['route_directory'],
 			'controller' => $result['route_controller'],
 			'action'     => $result['route_action'],
 			'id' 	     => $result['route_id'],
 			'uri'	     => $result['alias'],
 			'page'	     => $page
-		);
+        ];
 	}
 
 	/**
@@ -107,9 +107,7 @@ class Path {
 		catch (Exception $e)
 		{
 			// log error and return, to avoid breaking process
-			Kohana::$log->add(Log::ERROR, 'Error: :error creating path alias.',
-				array(':error' => $e->getMessage())
-			);
+            Kohana::$log->add(Log::ERROR, 'Error: :error creating path alias.', [':error' => $e->getMessage()]);
 			return FALSE;
 		}
 
@@ -130,7 +128,7 @@ class Path {
 
 			if ( ! is_array($criteria))
 			{
-				$criteria = array('id' => $criteria);
+                $criteria = ['id' => $criteria];
 			}
 
 			foreach ($criteria as $field => $value)
@@ -142,7 +140,7 @@ class Path {
 		}
 		catch (Exception $e)
 		{
-			Kohana::$log->add(Log::ERROR, 'Error: :error deleting path alias.', array(':error' => $e->getMessage()));
+            Kohana::$log->add(Log::ERROR, 'Error: :error deleting path alias.', [':error' => $e->getMessage()]);
 			return FALSE;
 		}
 
@@ -185,7 +183,7 @@ class Path {
 		}
 		catch(Exception $e)
 		{
-			Kohana::$log->add(Log::ERROR, 'Error: :error lookup path alias.', array(':error' => $e->getMessage()));
+            Kohana::$log->add(Log::ERROR, 'Error: :error lookup path alias.', [':error' => $e->getMessage()]);
 			return FALSE;
 		}
 
@@ -210,7 +208,7 @@ class Path {
 		}
 		catch (Exception $e)
 		{
-			Kohana::$log->add(Log::ERROR, 'Error: :error getting alias.', array(':error' => $e->getMessage()));
+            Kohana::$log->add(Log::ERROR, 'Error: :error getting alias.', [':error' => $e->getMessage()]);
 			return $source;
 		}
 	}
@@ -270,16 +268,16 @@ class Path {
     {
 		// Convert path settings to a regular expression.
         // Therefore, replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.
-		$to_replace = array(
+        $to_replace = [
 			'/(\r\n?|\n)/', // newlines
 			'/\\\\\*/',     // asterisks
 			'/(^|\|)\\\\<front\\\\>($|\|)/' // <front>
-		);
-		$replacements = array(
+        ];
+        $replacements = [
 			'|',
 			'.*',
 			'\1' . preg_quote(URL::base(), '/') . '\2'
-		);
+        ];
 		$patterns_quoted = preg_quote($patterns, '/');
 		$regexps[$patterns] = '/^(' . preg_replace($to_replace, $replacements, $patterns_quoted) . ')$/';
 

@@ -48,24 +48,31 @@ class Controller_Admin_Path extends Controller_Admin {
 
 		if ($is_datatables)
 		{
-			$this->_datatables = $paths->dataTables(array('source', 'alias'));
+            $this->_datatables = $paths->dataTables(['source', 'alias']);
 
 			foreach ($this->_datatables->result() as $path)
 			{
-				$this->_datatables->add_row(
-					array(
+                $this->_datatables->add_row([
                         HTML::chars($path->source),
                         HTML::chars($path->alias),
-                        HTML::icon($path->edit_url, 'fa far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit Alias'))) . '&nbsp;' .
-                        HTML::icon($path->delete_url, 'fa fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Alias'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-paths'))
-					)
-				);
+                    HTML::icon($path->edit_url, 'fa far fa-edit', [
+                        'class' => 'btn btn-sm btn-default action-edit',
+                        'title' => __('Edit Alias')
+                    ])
+                    . '&nbsp;'
+                    . HTML::icon($path->delete_url, 'fa fas fa-trash-can', [
+                        'class' => 'btn btn-sm btn-default action-delete',
+                        'title' => __('Delete Alias'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#admin-list-paths'
+                    ])
+                ]);
 			}
 		}
 
 		$this->title = __('Path Aliases');
-		$add_url     = Route::get('admin/path')->uri(array('action' =>'add'));
-		$url         = Route::url('admin/path', array('action' => 'list'), TRUE);
+        $add_url = Route::get('admin/path')->uri(['action' => 'add']);
+        $url = Route::url('admin/path', ['action' => 'list'], TRUE);
 
 		$view = View::factory('admin/path/list')
 				->bind('datatables',   $this->_datatables)
@@ -88,7 +95,7 @@ class Controller_Admin_Path extends Controller_Admin {
 	public function action_add()
 	{
 		$this->title = __('Creating an Alias');
-		$action      = Route::get('admin/path')->uri(array('action' =>'add'));
+        $action = Route::get('admin/path')->uri(['action' => 'add']);
 
 		$view = View::factory('admin/path/form')
 			->bind('errors', $this->_errors)
@@ -105,9 +112,9 @@ class Controller_Admin_Path extends Controller_Admin {
 			{
 				$post->save();
 
-				Message::success(__('Alias %name saved successful!', array('%name' => $post->alias)));
+                Message::success(__('Alias %name saved successful!', ['%name' => $post->alias]));
 
-				$this->request->redirect(Route::get('admin/path')->uri(array('action' => 'list')), 200);
+                $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 200);
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -139,11 +146,11 @@ class Controller_Admin_Path extends Controller_Admin {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent alias.');
             Message::error(__("Alias doesn't exists!"));
 
-			$this->request->redirect(Route::get('admin/path')->uri(array('action' => 'list')), 404);
+            $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 404);
 		}
 
-		$this->title = __('Edit Alias %name', array('%name' => $post->source));
-		$action      = Route::get('admin/path')->uri( array('id' => $post->id, 'action' => 'edit'));
+        $this->title = __('Edit Alias %name', ['%name' => $post->source]);
+        $action = Route::get('admin/path')->uri(['id' => $post->id, 'action' => 'edit']);
 
 		$view = View::factory('admin/path/form')
 				->bind('errors', $this->_errors)
@@ -159,9 +166,9 @@ class Controller_Admin_Path extends Controller_Admin {
 			{
 				$post->save();
 
-				Message::success(__('Alias %name saved successful!', array('%name' => $post->source)));
+                Message::success(__('Alias %name saved successful!', ['%name' => $post->source]));
 
-				$this->request->redirect(Route::get('admin/path')->uri(array('action' => 'list')), 200);
+                $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 200);
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -191,10 +198,10 @@ class Controller_Admin_Path extends Controller_Admin {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent alias.');
             Message::error(__("Alias doesn't exists!"));
 
-			$this->request->redirect(Route::get('admin/path')->uri( array('action' => 'list')), 404);
+            $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 404);
 		}
 
-		$this->title = __('Delete Alias %title', array('%title' => $path->source));
+        $this->title = __('Delete Alias %title', ['%title' => $path->source]);
 
 		$view = View::factory('form/confirm')
 			->set('action',  $path->delete_url)
@@ -212,18 +219,18 @@ class Controller_Admin_Path extends Controller_Admin {
 			try
 			{
 				$path->delete();
-				Message::success(__('Alias %name deleted successful!', array('%name' => $path->alias)));
+                Message::success(__('Alias %name deleted successful!', ['%name' => $path->alias]));
 
-				$this->request->redirect(Route::get('admin/path')->uri( array('action' => 'list')), 200);
+                $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 200);
 			}
 			catch (Exception $e)
 			{
-                Kohana::$log->add(Log::ERROR, 'Error occurred deleting alias id: :id, :msg',
-					array(':id' => $path->id, ':message' => $e->getMessage())
-				);
-                Message::error(__('An error occurred while deleting alias %path', array('%path' => $path->alias)));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting alias id: :id, :msg', [
+                    ':id' => $path->id, ':message' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred while deleting alias %path', ['%path' => $path->alias]));
 
-				$this->request->redirect(Route::get('admin/path')->uri( array('action' => 'list')), 503);
+                $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 503);
 			}
 		}
 

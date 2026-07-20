@@ -15,39 +15,39 @@ class Model_Comment extends Gleez_Model
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'          => array( 'type' => 'int' ),
-		'post_id'     => array( 'type' => 'int' ),
-		'pid'         => array( 'type' => 'int' ),
-		'author'      => array( 'type' => 'int' ),
-		'title'       => array( 'type' => 'string' ),
-		'body'        => array( 'type' => 'string' ),
-		'hostname'    => array( 'type' => 'string' ),
-		'created'     => array( 'type' => 'int' ),
-		'updated'     => array( 'type' => 'int' ),
-		'status'      => array( 'type' => 'string' ),
-		'type'        => array( 'type' => 'string' ),
-		'format'      => array( 'type' => 'int' ),
-		'thread'      => array( 'type' => 'string' ),
-		'guest_email' => array( 'type' => 'string' ),
-		'guest_name'  => array( 'type' => 'string' ),
-		'guest_url'   => array( 'type' => 'string' ),
-		'karma'       => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'post_id' => ['type' => 'int'],
+        'pid' => ['type' => 'int'],
+        'author' => ['type' => 'int'],
+        'title' => ['type' => 'string'],
+        'body' => ['type' => 'string'],
+        'hostname' => ['type' => 'string'],
+        'created' => ['type' => 'int'],
+        'updated' => ['type' => 'int'],
+        'status' => ['type' => 'string'],
+        'type' => ['type' => 'string'],
+        'format' => ['type' => 'int'],
+        'thread' => ['type' => 'string'],
+        'guest_email' => ['type' => 'string'],
+        'guest_name' => ['type' => 'string'],
+        'guest_url' => ['type' => 'string'],
+        'karma' => ['type' => 'int'],
+    ];
 
 	/**
 	 * "Belongs to" relationships
 	 * @var array
 	 */
-	protected $_belongs_to = array(
-		'post' => array(
+    protected $_belongs_to = [
+        'post' => [
             'model' => 'Post',
 			'foreign_key' => 'post_id'
-		),
-		'user' => array(
+        ],
+        'user' => [
 			'foreign_key' => 'author'
-		)
-	);
+        ]
+    ];
 
 	/**
 	 * Rules for the post model
@@ -56,33 +56,33 @@ class Model_Comment extends Gleez_Model
 	 */
 	public function rules(): array
     {
-		return array(
-			'author' => array(
-				array('not_empty'),
-			),
-			'post_id' => array(
-				array('not_empty'),
-				array(array($this, 'valid_post'), array(':validation', ':field')),
-			),
-			'guest_name' => array(
-				array(array($this, 'valid_author'), array(':validation', ':field')),
-			),
-			'guest_email' => array(
-				array(array($this, 'valid_email'), array(':validation', ':field')),
-			),
-			'guest_url' => array(
-				array('url'),
-			),
-			'status' => array(
-				array('Comment::valid_state', array(':value')),
-			),
-			'body' => array(
-				array('not_empty'),
-			),
-			'type' => array(
-				array('not_empty'),
-			),
-		);
+        return [
+            'author' => [
+                ['not_empty'],
+            ],
+            'post_id' => [
+                ['not_empty'],
+                [[$this, 'valid_post'], [':validation', ':field']],
+            ],
+            'guest_name' => [
+                [[$this, 'valid_author'], [':validation', ':field']],
+            ],
+            'guest_email' => [
+                [[$this, 'valid_email'], [':validation', ':field']],
+            ],
+            'guest_url' => [
+                ['url'],
+            ],
+            'status' => [
+                ['Comment::valid_state', [':value']],
+            ],
+            'body' => [
+                ['not_empty'],
+            ],
+            'type' => [
+                ['not_empty'],
+            ],
+        ];
 	}
 
 	/**
@@ -92,14 +92,14 @@ class Model_Comment extends Gleez_Model
 	 */
 	public function labels(): array
     {
-		return array(
+        return [
 			'title'       => __('Title'),
 			'body'        => __('Comment'),
 			'guest_name'  => __('Name'),
 			'guest_email' => __('Email'),
 			'guest_url'   => __('Website'),
 			'author'      => __('Author'),
-		);
+        ];
 	}
 
     /**
@@ -183,11 +183,11 @@ class Model_Comment extends Gleez_Model
                 // Raw fields without markup. Usage: during edit or etc.!
                 return $this->get('body') ?? '';
             case 'url':
-				return Route::get('comment')->uri( array('id' => $this->id, 'action' => 'view'));
+                return Route::get('comment')->uri(['id' => $this->id, 'action' => 'view']);
             case 'edit_url':
-				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('comment')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get('comment')->uri(['id' => $this->id, 'action' => 'delete']);
         }
 
         return parent::__get($column);
@@ -210,7 +210,7 @@ class Model_Comment extends Gleez_Model
 	{
         if (!empty($this->author_name) && !($account = User::lookup_by_name($this->author_name)))
 		{
-			$validation->error('author', 'invalid', array($this->author_name));
+            $validation->error('author', 'invalid', [$this->author_name]);
 		}
 		else
 		{
@@ -222,11 +222,11 @@ class Model_Comment extends Gleez_Model
 
 		if (empty($this->author))
 		{
-			$validation->error($field, 'not_empty', array($validation[$field]));
+            $validation->error($field, 'not_empty', [$validation[$field]]);
         } elseif ($this->author == 1 && empty($this->guest_name)) {
-			$validation->error('guest_name', 'not_empty', array($validation[$field]));
+            $validation->error('guest_name', 'not_empty', [$validation[$field]]);
         } elseif ($this->author == 1 && !empty($this->guest_name)) {
-			$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
+            $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
 						->from('users')
 						->where('name', 'LIKE', $this->guest_name)
 						->or_where('nick', 'LIKE', $this->guest_name)
@@ -235,7 +235,7 @@ class Model_Comment extends Gleez_Model
 
 			if ($result > 0)
 			{
-				$validation->error($field, 'registered_user', array($validation[$field]));
+                $validation->error($field, 'registered_user', [$validation[$field]]);
 			}
 		}
 	}
@@ -254,11 +254,11 @@ class Model_Comment extends Gleez_Model
 		{
 			if (empty($validation[$field]))
 			{
-				$validation->error($field, 'not_empty', array($validation[$field]));
+                $validation->error($field, 'not_empty', [$validation[$field]]);
 			}
 			elseif ( ! Valid::email($validation[$field]))
 			{
-				$validation->error($field, 'invalid', array($validation[$field]));
+                $validation->error($field, 'invalid', [$validation[$field]]);
 			}
 		}
 	}
@@ -275,7 +275,7 @@ class Model_Comment extends Gleez_Model
      */
     public function valid_post(Validation $validation, string $field)
 	{
-		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
+        $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
 				->from('posts')
 				->where('id', '=', $this->post_id)
 				->execute($this->_db)
@@ -283,7 +283,7 @@ class Model_Comment extends Gleez_Model
 
 		if ($result  != 1)
 		{
-			$validation->error($field, 'invalid', array($validation[$field]));
+            $validation->error($field, 'invalid', [$validation[$field]]);
 		}
 	}
 
@@ -306,11 +306,12 @@ class Model_Comment extends Gleez_Model
 			$action = 'view';
 		}
 
-		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
-			throw HTTP_Exception::factory(404, 'Unauthorized attempt to access non-existent action :act.',
-				array(':act' => $action));
+            throw HTTP_Exception::factory(404, 'Unauthorized attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
 		}
 
 		if ( ! $this->loaded())
@@ -347,8 +348,9 @@ class Model_Comment extends Gleez_Model
 			}
 			else
 			{
-				throw HTTP_Exception::factory(403, 'Unauthorized attempt to view comment :post.',
-					array(':post' => $this->id));
+                throw HTTP_Exception::factory(403, 'Unauthorized attempt to view comment :post.', [
+                    ':post' => $this->id
+                ]);
 			}
 		}
 
@@ -364,8 +366,9 @@ class Model_Comment extends Gleez_Model
 			}
 			else
 			{
-				throw HTTP_Exception::factory(403, 'Unauthorized attempt to edit comment :post',
-					array(':post' => $this->id));
+                throw HTTP_Exception::factory(403, 'Unauthorized attempt to edit comment :post', [
+                    ':post' => $this->id
+                ]);
 			}
 		}
 
@@ -385,8 +388,9 @@ class Model_Comment extends Gleez_Model
 			}
 			else
 			{
-				throw HTTP_Exception::factory(403, 'Unauthorised attempt to delete comment :post',
-					array(':post' => $this->id));
+                throw HTTP_Exception::factory(403, 'Unauthorised attempt to delete comment :post', [
+                    ':post' => $this->id
+                ]);
 			}
 		}
 
@@ -414,12 +418,12 @@ class Model_Comment extends Gleez_Model
 	{
 		if( ! $action) $action = 'view';
 
-		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
-			Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to access non-existent action :act.',
-				array(':act' => $action)
-			);
+            Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
 			return FALSE;
 		}
 
@@ -458,9 +462,9 @@ class Model_Comment extends Gleez_Model
 			}
 			else
 			{
-				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to view comment :post.',
-					array(':post' => $this->id)
-				);
+                Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to view comment :post.', [
+                    ':post' => $this->id
+                ]);
 				return FALSE;
 			}
 		}
@@ -478,9 +482,9 @@ class Model_Comment extends Gleez_Model
 			}
 			else
 			{
-				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to edit comment :post.',
-					array(':post' => $this->id)
-				);
+                Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to edit comment :post.', [
+                    ':post' => $this->id
+                ]);
 				return FALSE;
 			}
 		}
@@ -502,9 +506,9 @@ class Model_Comment extends Gleez_Model
 			}
 			else
 			{
-				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to delete comment :post.',
-					array(':post' => $this->id)
-				);
+                Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to delete comment :post.', [
+                    ':post' => $this->id
+                ]);
 				return FALSE;
 			}
 		}

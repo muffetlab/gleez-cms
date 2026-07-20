@@ -210,7 +210,7 @@ class Email {
 		}
 		catch(Exception $e)
 		{
-			Kohana::$log->add(Log::ERROR, 'Error queuing mail error: :e', array(':e' => $e->getMessage()));
+            Kohana::$log->add(Log::ERROR, 'Error queuing mail error: :e', [':e' => $e->getMessage()]);
 		}
 
 		return $this;
@@ -235,7 +235,7 @@ class Email {
 		}
 		catch(Exception $e)
 		{
-			Kohana::$log->add(Log::ERROR, 'Error sending mail error: :e', array(':e' => $e->getMessage()));
+            Kohana::$log->add(Log::ERROR, 'Error sending mail error: :e', [':e' => $e->getMessage()]);
 			return FALSE;
 		}
 	}

@@ -53,23 +53,27 @@ class Controller_Contact extends Template {
 
 		$config = Kohana::$config->load('contact');
 
-		Assets::js('textareaCounter', 'media/js/jquery.textareaCounter.plugin.js', array('jquery'), FALSE, array('weight' => 10));
-		Assets::js('greet/form', 'media/js/greet.form.js', array('textareaCounter'), FALSE, array('weight' => 15));
+        Assets::js('textareaCounter', 'media/js/jquery.textareaCounter.plugin.js', ['jquery'], FALSE, [
+            'weight' => 10
+        ]);
+        Assets::js('greet/form', 'media/js/greet.form.js', ['textareaCounter'], FALSE, ['weight' => 15]);
 
 		//Add schema.org support
 		$this->schemaType = 'ContactPage';
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 
 		// Set form action
-		$action = Route::get('contact')->uri(array('action' => $this->request->action())).URL::query($destination);
+        $action = Route::get('contact')->uri(['action' => $this->request->action()]) . URL::query($destination);
 
 		// Get user
 		$user = User::active_user();
 
 		// Set mail types
-		$types = $config->get('types', array());
+        $types = $config->get('types', []);
 
 		$view = View::factory('contact/form')
 					->set('destination', $destination)
@@ -114,10 +118,10 @@ class Controller_Contact extends Template {
 			if ($post->check())
 			{
 				// Create the email subject
-				$subject = __('[:category] :subject', array(
+                $subject = __('[:category] :subject', [
 					':category' => $types[$post['category']],
                     ':subject' => HTML::chars($post['subject'])
-				));
+                ]);
 
 				// Create the email body
 				$body = View::factory('email/contact')
@@ -128,7 +132,10 @@ class Controller_Contact extends Template {
 
 				// Create an email message
 				$email = Email::factory()
-                    ->to(HTML::chars($this->_config->get('site_email', 'webmaster@gleezcms.org')), __('Webmaster :site', array(':site' => Template::getSiteName())))
+                    ->to(
+                        HTML::chars($this->_config->get('site_email', 'webmaster@gleezcms.org')),
+                        __('Webmaster :site', [':site' => Template::getSiteName()])
+                    )
 						->subject($subject)
                     ->from($post['email'], HTML::chars($post['name']))
 						->message($body, 'text/html'); // @todo message type should be configurable
@@ -136,9 +143,10 @@ class Controller_Contact extends Template {
 				// Send the message
 				$email->send();
 
-				Kohana::$log->add(Log::INFO, ':name sent an e-mail regarding :cat',
-                    array(':name' => HTML::chars($post['name']), ':cat' => $types[$post['category']])
-				);
+                Kohana::$log->add(Log::INFO, ':name sent an e-mail regarding :cat', [
+                    ':name' => HTML::chars($post['name']),
+                    ':cat' => $types[$post['category']]
+                ]);
 				Message::success(__('Your message has been sent.'));
 
 				// Always redirect after a successful POST to prevent refresh warnings

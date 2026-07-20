@@ -136,11 +136,11 @@ class Controller_Admin_Modules extends Controller_Admin {
 		// @todo This type of collation is questionable from an i18n perspective
 		if ($activated_names)
 		{
-			Message::success(__('Activated: %names', array('%names' => join(", ", $activated_names))));
+            Message::success(__('Activated: %names', ['%names' => join(", ", $activated_names)]));
 		}
 		if ($deactivated_names)
 		{
-			Message::success(__('Deactivated: %names', array('%names' => join(", ", $deactivated_names))));
+            Message::success(__('Deactivated: %names', ['%names' => join(", ", $deactivated_names)]));
 		}
 
 		// Clear any cache for sure

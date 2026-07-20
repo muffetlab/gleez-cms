@@ -57,7 +57,7 @@ class Controller_Feeds_Page extends Controller_Feeds_Base {
 		if (isset($this->_items[0]))
 		{
 			$this->_info['title']   = __('Pages - Recent updates');
-			$this->_info['link']    = Route::url('rss', array('controller' => 'page'), TRUE);
+            $this->_info['link'] = Route::url('rss', ['controller' => 'page'], TRUE);
 			$this->_info['pubDate'] = $this->_items[0]['pubDate'];
 		}
 	}

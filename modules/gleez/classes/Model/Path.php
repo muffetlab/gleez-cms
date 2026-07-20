@@ -14,17 +14,17 @@ class Model_Path extends Gleez_Model
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'               => array( 'type' => 'int' ),
-		'source'           => array( 'type' => 'string' ),
-		'alias'            => array( 'type' => 'string' ),
-		'lang'             => array( 'type' => 'string' ),
-		'route_name' 	   => array( 'type' => 'string' ),
-		'route_directory'  => array( 'type' => 'string' ),
-		'route_controller' => array( 'type' => 'string' ),
-		'route_action'     => array( 'type' => 'string' ),
-		'route_id'         => array( 'type' => 'string' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'source' => ['type' => 'string'],
+        'alias' => ['type' => 'string'],
+        'lang' => ['type' => 'string'],
+        'route_name' => ['type' => 'string'],
+        'route_directory' => ['type' => 'string'],
+        'route_controller' => ['type' => 'string'],
+        'route_action' => ['type' => 'string'],
+        'route_id' => ['type' => 'string'],
+    ];
 
  	/**
 	 * The language code used when no language is explicitly assigned.
@@ -41,11 +41,11 @@ class Model_Path extends Gleez_Model
 	 */
 	public function labels(): array
     {
-		return array(
+        return [
 			'source' => __('URL Path'),
 			'alias'  => __('Alias'),
 			'lang'   => __('Language'),
-		);
+        ];
 	}
 
 	/**
@@ -55,20 +55,20 @@ class Model_Path extends Gleez_Model
 	 */
 	public function rules(): array
     {
-		return array(
-			'source' => array(
-				array('not_empty'),
-			),
-			'alias' => array(
-				array('not_empty'),
-				array(array($this, 'process_alias'), array(':validation', ':field')),
-			),
-			'lang' => array(
-				array('min_length', array(':value', 2)),
-				array('max_length', array(':value', 3)),
-				array('regex', array(':value', '/^[a-z]{2,3}/')),
-			),
-		);
+        return [
+            'source' => [
+                ['not_empty'],
+            ],
+            'alias' => [
+                ['not_empty'],
+                [[$this, 'process_alias'], [':validation', ':field']],
+            ],
+            'lang' => [
+                ['min_length', [':value', 2]],
+                ['max_length', [':value', 3]],
+                ['regex', [':value', '/^[a-z]{2,3}/']],
+            ],
+        ];
 	}
 
     /**
@@ -124,7 +124,7 @@ class Model_Path extends Gleez_Model
 			}
 			$this->alias = $alias;
         } else {
-			$validation->error($field, 'invalid_source', array($validation[$field]));
+            $validation->error($field, 'invalid_source', [$validation[$field]]);
 		}
 	}
 
@@ -132,7 +132,7 @@ class Model_Path extends Gleez_Model
 	{
 		$slug   = $str;
 		$suffix = 0;
-        $path = ORM::factory('Path', array('alias' => $str));
+        $path = ORM::factory('Path', ['alias' => $str]);
 
         while ($path->loaded() && $path->source != $this->source)
 		{
@@ -183,9 +183,9 @@ class Model_Path extends Gleez_Model
 	{
         switch ($column) {
 			case 'edit_url':
-				return Route::get('admin/path')->uri(array('action' => 'edit', 'id' => $this->id));
+                return Route::get('admin/path')->uri(['action' => 'edit', 'id' => $this->id]);
             case 'delete_url':
-				return Route::get('admin/path')->uri(array('action' => 'delete', 'id' => $this->id));
+                return Route::get('admin/path')->uri(['action' => 'delete', 'id' => $this->id]);
         }
 
         return parent::__get($column);

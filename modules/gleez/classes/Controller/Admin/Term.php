@@ -60,7 +60,7 @@ class Controller_Admin_Term extends Controller_Admin {
 	public function action_list()
 	{
 		$id    = (int) $this->request->param('id', 0);
-        $vocab = ORM::factory('Term', array('id' => $id, 'lft' => 1));
+        $vocab = ORM::factory('Term', ['id' => $id, 'lft' => 1]);
 
 		if ( ! $vocab->loaded())
 		{
@@ -70,8 +70,8 @@ class Controller_Admin_Term extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/taxonomy')->uri(), 404);
 		}
 
-		$this->title = __('Categories of Group %vocab', array('%vocab' => $vocab->name));
-		$params = array('action' => 'add', 'id' => $id);
+        $this->title = __('Categories of Group %vocab', ['%vocab' => $vocab->name]);
+        $params = ['action' => 'add', 'id' => $id];
 
 		$view = View::factory('admin/term/list')
 					->bind('terms',  $terms)
@@ -88,7 +88,7 @@ class Controller_Admin_Term extends Controller_Admin {
 
 		if (count($terms) == 0)
 		{
-			Message::info(__('There are no Categories that have been created for %vocab.', array('%vocab' => $vocab->name)));
+            Message::info(__('There are no Categories that have been created for %vocab.', ['%vocab' => $vocab->name]));
 
 			$view = View::factory('admin/term/none')->bind('params', $params);
 		}
@@ -112,7 +112,7 @@ class Controller_Admin_Term extends Controller_Admin {
 	{
 		$id    = (int) $this->request->param('id', 0);
 		/** @var $vocab Model_Term */
-        $vocab = ORM::factory('Term', array('id' => $id, 'lft' => 1));
+        $vocab = ORM::factory('Term', ['id' => $id, 'lft' => 1]);
 
 		if ( ! $vocab->loaded())
 		{
@@ -122,11 +122,11 @@ class Controller_Admin_Term extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
 		}
 
-		$this->title = __('Add Category for %vocab', array('%vocab' => $vocab->name));
+        $this->title = __('Add Category for %vocab', ['%vocab' => $vocab->name]);
 
 		$terms = $vocab->select_list('id', 'name', '--');
-		$action = Route::get('admin/term')->uri(array('action' =>'add', 'id' => $vocab->id));
-		$allowed_types = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'png', 'gif'));
+        $action = Route::get('admin/term')->uri(['action' => 'add', 'id' => $vocab->id]);
+        $allowed_types = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
 
 		$view = View::factory('admin/term/form')
 					->bind('vocab',  $vocab)
@@ -148,9 +148,9 @@ class Controller_Admin_Term extends Controller_Admin {
 				$post->type = $vocab->type;
 				$post->create_at($id, Arr::get($_POST, 'parent', 'last'));
 
-				Message::success(__('Category %name saved successful!', array('%name' => $post->name)));
+                Message::success(__('Category %name saved successful!', ['%name' => $post->name]));
 
-				$this->request->redirect(Route::get('admin/term')->uri(array('action' => 'list', 'id' => $vocab->id)), 200);
+                $this->request->redirect(Route::get('admin/term')->uri(['action' => 'list', 'id' => $vocab->id]), 200);
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -186,11 +186,11 @@ class Controller_Admin_Term extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
 		}
 
-		$this->title = __('Edit Category %name', array('%name' => $term->name));
+        $this->title = __('Edit Category %name', ['%name' => $term->name]);
 
-		$action = Route::get('admin/term')->uri(array('action' =>'edit', 'id' => $term->id));
+        $action = Route::get('admin/term')->uri(['action' => 'edit', 'id' => $term->id]);
 		$terms = $term->select_list('id', 'name', '--');
-		$allowed_types = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'png', 'gif'));
+        $allowed_types = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
 
 		$view = View::factory('admin/term/form')
 				->bind('vocab',  $term)
@@ -210,10 +210,10 @@ class Controller_Admin_Term extends Controller_Admin {
 				$post = Arr::merge($this->request->post(), $_FILES);
 				$term->values($post, ['name', 'image', 'description'])->save();
 
-				Message::success(__('Category %name saved successful!', array('%name' => $term->name)));
+                Message::success(__('Category %name saved successful!', ['%name' => $term->name]));
 
 				// Redirect to listing
-				$this->request->redirect(Route::get('admin/term')->uri( array('id'=> $term->root())));
+                $this->request->redirect(Route::get('admin/term')->uri(['id' => $term->root()]));
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -248,9 +248,9 @@ class Controller_Admin_Term extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/taxonomy')->uri(), 404);
 		}
 
-		$action = Route::get('admin/term')->uri(array('action' =>'delete', 'id' => $term->id));
+        $action = Route::get('admin/term')->uri(['action' => 'delete', 'id' => $term->id]);
 
-		$this->title = __('Deleting Category %name', array('%name' => $term->name));
+        $this->title = __('Deleting Category %name', ['%name' => $term->name]);
 		$view = View::factory('form/confirm')
 					->set('title', $term->name)
 					->set('action', $action);
@@ -269,19 +269,20 @@ class Controller_Admin_Term extends Controller_Admin {
 				$name = $term->name;
 				$term->delete();
 
-				Kohana::$log->add(Log::INFO, 'Category :name deleted successful.', array(':name' => $name));
-				Message::success(__('Category %name deleted successful!', array('%name' => $name)));
+                Kohana::$log->add(Log::INFO, 'Category :name deleted successful.', [':name' => $name]);
+                Message::success(__('Category %name deleted successful!', ['%name' => $name]));
 
-				$this->request->redirect(Route::get('admin/taxonomy')->uri(array('action' =>'list')));
+                $this->request->redirect(Route::get('admin/taxonomy')->uri(['action' => 'list']));
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting category id: :id, :msg',
-					array(':id' => $term->id, ':msg' => $e->getMessage())
-				);
-				Message::error(__('An error occurred deleting category %term.', array('%term' => $term->name)));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting category id: :id, :msg', [
+                    ':id' => $term->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred deleting category %term.', ['%term' => $term->name]));
 
-				$this->request->redirect(Route::get('admin/term')->uri(array('action' =>'list', 'id' => $term->id )), 500);
+                $this->request->redirect(Route::get('admin/term')->uri(['action' => 'list', 'id' => $term->id]), 500);
 			}
 		}
 
@@ -323,9 +324,7 @@ class Controller_Admin_Term extends Controller_Admin {
 				Kohana::$log->add(Log::ERROR, 'Category order could not be saved.');
 				Message::error(__('Order of the categories could not be saved.'));
 
-				$this->request->redirect(
-					Route::get('admin/term')->uri( array( 'action'=>'list', 'id' => $id ) )
-				);
+                $this->request->redirect(Route::get('admin/term')->uri(['action' => 'list', 'id' => $id]));
 			}
 
 			try
@@ -333,12 +332,12 @@ class Controller_Admin_Term extends Controller_Admin {
 				foreach($this->tree as $node)
 				{
 					DB::update('terms')
-						->set(array(
+                        ->set([
 								'pid' => $node['pid'],
 								'lvl' => $node['lvl'],
 								'lft' => $node['lft'],
-								'rgt' => $node['rgt'])
-						)
+                            'rgt' => $node['rgt']
+                        ])
 						->where('id', '=', $node['id'])
 						->execute();
 				}
@@ -350,7 +349,7 @@ class Controller_Admin_Term extends Controller_Admin {
 				Message::error(__('Order of the categories could not be saved.'));
 			}
 
-			$this->request->redirect(Route::get('admin/term')->uri(array('action'=>'list', 'id' => $id )));
+            $this->request->redirect(Route::get('admin/term')->uri(['action' => 'list', 'id' => $id]));
 		}
 
 	}
@@ -416,13 +415,13 @@ class Controller_Admin_Term extends Controller_Admin {
 				$this->level_zero++;
 			}
 
-			$this->tree[] = array(
+            $this->tree[] = [
 				'id'  => $id,
 				'pid' => (int) $val['pid'],
 				'lvl' => $level,
 				'lft' => $left,
 				'rgt' => $right
-			);
+            ];
 		}
 	}
 

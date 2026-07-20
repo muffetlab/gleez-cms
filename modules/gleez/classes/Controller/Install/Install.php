@@ -59,13 +59,13 @@ class Controller_Install_Install extends Controller_Template {
 		if ($this->auto_render)
 		{
 			$this->_session = Session::instance('cookie');
-			$this->template->menu = array(
+            $this->template->menu = [
 				__('Welcome'),
 				__('System Check'),
 				__('Database'),
 				__('Install'),
 				__('Finish')
-			);
+            ];
 		}
 	}
 
@@ -80,13 +80,13 @@ class Controller_Install_Install extends Controller_Template {
 		if ($this->auto_render)
 		{
 			// Add styles
-			$this->template->styles = array(
-                $this->_media->uri(array('file' => 'css/bootstrap.min.css')) => 'screen',
-				$this->_media->uri(array('file' => 'css/install.css')) => 'screen',
-			);
+            $this->template->styles = [
+                $this->_media->uri(['file' => 'css/bootstrap.min.css']) => 'screen',
+                $this->_media->uri(['file' => 'css/install.css']) => 'screen',
+            ];
 
-            $this->template->logo = $this->_media->uri(array('file' => 'images/logo.png'));
-            $this->template->link = $this->_media->uri(array('file' => 'icons/favicon.ico'));
+            $this->template->logo = $this->_media->uri(['file' => 'images/logo.png']);
+            $this->template->link = $this->_media->uri(['file' => 'icons/favicon.ico']);
 
 			// Do some CSS magic to page class
             $classes = [];
@@ -120,13 +120,13 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->title = __('Install');
 
 		$this->template->_activity = __('20');
-		$this->template->menu = array(
+        $this->template->menu = [
 			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
 			__('System Check'),
 			__('Database'),
 			__('Install'),
 			__('Finish')
-		);
+        ];
 
 		$this->template->content = new View('install/welcome');
 	}
@@ -139,13 +139,13 @@ class Controller_Install_Install extends Controller_Template {
 	{
 		$this->template->title =  __('System Check');
 		$this->template->_activity = __('40');
-		$this->template->menu = array(
+        $this->template->menu = [
 			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'systemcheck')), __('System Check')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
 			__('Database'),
 			__('Install'),
 			__('Finish')
-		);
+        ];
 
 		!file_exists(APPPATH . "cache") && System::mkdir(APPPATH . "cache");
 		!file_exists(APPPATH . "config") && System::mkdir(APPPATH . "config");
@@ -180,7 +180,7 @@ class Controller_Install_Install extends Controller_Template {
             && $view->uri_determination
             && $view->gd_info
         )
-			$this->request->redirect(Route::get('install')->uri(array('action' => 'database')));
+            $this->request->redirect(Route::get('install')->uri(['action' => 'database']));
 
 		else
 		{
@@ -196,7 +196,7 @@ class Controller_Install_Install extends Controller_Template {
      */
     public function action_database()
 	{
-		$action = Route::get('install')->uri(array('action' => 'database'));
+        $action = Route::get('install')->uri(['action' => 'database']);
 		$view = View::factory('install/database')
 					->bind('form', $form)
 					->set('action', $action);
@@ -205,31 +205,31 @@ class Controller_Install_Install extends Controller_Template {
 
 		$this->template->title = __('Database Configuration');
 		$this->template->_activity = __('60');
-		$this->template->menu = array(
+        $this->template->menu = [
 			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'systemcheck')), __('System Check')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'database')), __('Database')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
 			__('Install'),
 			__('Finish')
-		);
+        ];
 
-		$form = array(
+        $form = [
 			'user' => '',
 			'pass' => '',
 			'hostname' => 'localhost',
 			'database' => 'gleezcms',
 			'table_prefix' => 'gl_'
-		);
+        ];
 
 		if (isset($_POST['db']))
 		{
-			$data = array(
+            $data = [
 				'user' => $username = $_POST['user'],
 				'pass' => $password = $_POST['pass'],
 				'hostname' => $hostname = $_POST['hostname'],
 				'database' => $database = $_POST['database'],
                     'table_prefix' => $_POST['table_prefix']
-			);
+            ];
 
 			try
 			{
@@ -237,7 +237,7 @@ class Controller_Install_Install extends Controller_Template {
 
 				$this->_session->set('database_data', $data);
 
-				$this->request->redirect(Route::get('install')->uri(array('action' => 'install')));
+                $this->request->redirect(Route::get('install')->uri(['action' => 'install']));
 			}
 			catch (Exception $e)
 			{
@@ -262,8 +262,9 @@ class Controller_Install_Install extends Controller_Template {
 						$this->template->error = __('Could not select the database');
 					break;
 					case 'version':
-						$this->template->error = __('Gleez requires at least MySQL version 5.0.0. You\'re using version :version',
-								array( ':version' => $this->mysql_version(1) )
+                        $this->template->error = __(
+                            'Gleez requires at least MySQL version 5.0.0. You\'re using version :version',
+                            [':version' => $this->mysql_version(1)]
 							);
 					break;
 					default:
@@ -283,18 +284,18 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->title = __('Install');
 		$this->template->content = '';
 		$this->template->_activity = __('80');
-		$this->template->menu = array(
+        $this->template->menu = [
 			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'systemcheck')), __('System Check')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'database')), __('Database')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'install')), __('Install')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'install']), __('Install')),
 				__('Finish')
-			);
+        ];
 
 		try
 		{
 			$this->unpack_sql($config);
-			$this->request->redirect(Route::get('install')->uri(array('action' => 'finalize')));
+            $this->request->redirect(Route::get('install')->uri(['action' => 'finalize']));
 		}
 		catch (Exception $e)
 		{
@@ -312,13 +313,13 @@ class Controller_Install_Install extends Controller_Template {
 	{
 		$data = $this->_session->get('database_data');
 		$this->template->_activity = __('80');
-		$this->template->menu = array(
+        $this->template->menu = [
 			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'systemcheck')), __('System Check')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'database')), __('Database')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'install')), __('Install')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'finalize')), __('Finish')),
-			);
+            HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'install']), __('Install')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'finalize']), __('Finish')),
+        ];
 
 		if(isset($data))
 		{
@@ -330,12 +331,15 @@ class Controller_Install_Install extends Controller_Template {
 			$password = $this->add_user();
 			chmod(APPPATH.'config/database.php', 0444);
 
-			$admin_user = Route::get('admin/user')->uri( array('action' => 'edit', 'id' => 2));
-			$admin_url = Route::get('user')->uri( array('action' => 'login')).URL::query(array('destination' => $admin_user));
+            $admin_user = Route::get('admin/user')->uri(['action' => 'edit', 'id' => 2]);
+            $admin_url = Route::get('user')->uri(['action' => 'login']) . URL::query(['destination' => $admin_user]);
 
 			$this->template->title = __('Success!');
 			$this->template->_activity = __('100');
-			$this->template->content = View::factory('install/finalize', array('password' => $password, 'admin_url' => $admin_url) );
+            $this->template->content = View::factory('install/finalize', [
+                'password' => $password,
+                'admin_url' => $admin_url
+            ]);
 		}
 		else
 		{

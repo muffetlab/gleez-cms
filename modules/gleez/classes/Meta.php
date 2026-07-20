@@ -34,7 +34,7 @@ class Meta {
      * @uses    URL::site
      * @uses    URL::is_absolute
      */
-    public static function links(string $handle = NULL, array $attrs = array())
+    public static function links(string $handle = NULL, array $attrs = [])
 	{
 		// Return all meta links
 		if (is_null($handle))
@@ -50,7 +50,7 @@ class Meta {
 			$handle = 'canonical';
 		}
 
-		return self::$links[$handle] = array('url' => $attrs['href'], 'attrs' => $attrs);
+        return self::$links[$handle] = ['url' => $attrs['href'], 'attrs' => $attrs];
 	}
 
 	/**
@@ -126,7 +126,7 @@ class Meta {
      * @param array $attrs An associative array of tag settings [Optional]
      * @return array|string Setting returns asset array, getting returns asset HTML
 	 */
-    public static function tags(string $handle = NULL, string $value = NULL, array $attrs = array())
+    public static function tags(string $handle = NULL, string $value = NULL, array $attrs = [])
 	{
 		// Return all meta links
 		if (is_null($handle))
@@ -148,7 +148,7 @@ class Meta {
             $attrs = [];
 		}
 
-		return self::$tags[$handle] = array('handle' => $handle, 'value' => $value, 'attrs' => $attrs);
+        return self::$tags[$handle] = ['handle' => $handle, 'value' => $value, 'attrs' => $attrs];
 	}
 
 	/**

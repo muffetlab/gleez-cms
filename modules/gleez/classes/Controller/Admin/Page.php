@@ -38,11 +38,11 @@ class Controller_Admin_Page extends Controller_Admin {
 	public function after()
 	{
 		// Tabs
-		$this->_tabs =  array(
-			array('link' => Route::get('admin/page')->uri(array('action' =>'index')), 'text' => __('Statistics')),
-			array('link' => Route::get('admin/page')->uri(array('action' =>'list')), 'text' => __('List')),
-			array('link' => Route::get('admin/page')->uri(array('action' =>'settings')),'text' => __('Settings')),
-		);
+        $this->_tabs = [
+            ['link' => Route::get('admin/page')->uri(['action' => 'index']), 'text' => __('Statistics')],
+            ['link' => Route::get('admin/page')->uri(['action' => 'list']), 'text' => __('List')],
+            ['link' => Route::get('admin/page')->uri(['action' => 'settings']), 'text' => __('Settings')],
+        ];
 
 		parent::after();
 	}
@@ -87,7 +87,7 @@ class Controller_Admin_Page extends Controller_Admin {
 		$this->title = __('Page Settings');
 
         $config = Kohana::$config->load('page');
-		$action   = Route::get('admin/page')->uri(array('action' =>'settings'));
+        $action = Route::get('admin/page')->uri(['action' => 'settings']);
 
 		$view = View::factory('admin/page/settings')
                 ->set('config', $config)
@@ -97,7 +97,7 @@ class Controller_Admin_Page extends Controller_Admin {
 		{
 			unset($_POST['page_settings'], $_POST['_token'], $_POST['_action']);
 
-            $cats = $config->get('category', array());
+            $cats = $config->get('category', []);
 
 			foreach ($_POST as $key => $value)
 			{
@@ -117,7 +117,7 @@ class Controller_Admin_Page extends Controller_Admin {
 			Kohana::$log->add(Log::INFO, 'Page Settings updated.');
 			Message::success(__('Page Settings updated!'));
 
-			$this->request->redirect(Route::get('admin/page')->uri(array('action' =>'settings')), 200);
+            $this->request->redirect(Route::get('admin/page')->uri(['action' => 'settings']), 200);
 		}
 
 		$this->response->body($view);
@@ -134,9 +134,9 @@ class Controller_Admin_Page extends Controller_Admin {
 	{
 		Assets::popup();
 
-		$url         = Route::url('admin/page', array('action' => 'list'), TRUE);
-		$redirect    = Route::get('admin/page')->uri(array('action' => 'list'));
-		$form_action = Route::get('admin/page')->uri(array('action' => 'bulk'));
+        $url = Route::url('admin/page', ['action' => 'list'], TRUE);
+        $redirect = Route::get('admin/page')->uri(['action' => 'list']);
+        $form_action = Route::get('admin/page')->uri(['action' => 'bulk']);
 		$destination = '?destination='.$redirect;
 		
 		$is_datatables = Request::is_datatables();
@@ -144,21 +144,28 @@ class Controller_Admin_Page extends Controller_Admin {
 
 		if ($is_datatables)
 		{
-			$this->_datatables = $pages->dataTables(array('id', 'title', 'author', 'status', 'updated'));
+            $this->_datatables = $pages->dataTables(['id', 'title', 'author', 'status', 'updated']);
 
 			foreach ($this->_datatables->result() as $page)
 			{
-				$this->_datatables->add_row(
-					array(
+                $this->_datatables->add_row([
 						Form::checkbox('posts['.$page->id.']', $page->id, isset($_POST['posts'][$page->id])),
 						HTML::anchor($page->url, $page->title),
 						HTML::anchor($page->user->url, $page->user->nick),
 						HTML::label(__($page->status), $page->status),
 						Date::formatted_time($page->updated, 'M d, Y'),
-                        HTML::icon($page->edit_url . $destination, 'fa far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit Page'))) . '&nbsp;' .
-                        HTML::icon($page->delete_url . $destination, 'fa fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Page'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-pages'))
-					)
-				);
+                    HTML::icon($page->edit_url . $destination, 'fa far fa-edit', [
+                        'class' => 'btn btn-sm btn-default action-edit',
+                        'title' => __('Edit Page')
+                    ])
+                    . '&nbsp;'
+                    . HTML::icon($page->delete_url . $destination, 'fa fas fa-trash-can', [
+                        'class' => 'btn btn-sm btn-default action-delete',
+                        'title' => __('Delete Page'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#admin-list-pages'
+                    ])
+                ]);
 			}
 		}
 
@@ -188,7 +195,7 @@ class Controller_Admin_Page extends Controller_Admin {
      */
 	public function action_bulk()
 	{
-		$redirect = Route::get('admin/page')->uri(array('action' => 'list'));
+        $redirect = Route::get('admin/page')->uri(['action' => 'list']);
 
 		$this->title = __('Bulk Actions');
 		$post = $this->request->post();
@@ -279,11 +286,11 @@ class Controller_Admin_Page extends Controller_Admin {
             list($func) = Arr::callback($operation['callback']);
 			if (isset($operation['arguments']))
 			{
-				$args = array_merge(array($pages), $operation['arguments']);
+                $args = array_merge([$pages], $operation['arguments']);
 			}
 			else
 			{
-				$args = array($pages);
+                $args = [$pages];
 			}
 
 			// set model name

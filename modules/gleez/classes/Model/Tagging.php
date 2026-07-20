@@ -19,38 +19,38 @@ class Model_Tagging extends ORM {
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'post_id' => array( 'type' => 'int' ),
-		'tag_id'  => array( 'type' => 'int' ),
-		'author'  => array( 'type' => 'int' ),
-		'type'    => array( 'type' => 'string' ),
-		'created' => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'post_id' => ['type' => 'int'],
+        'tag_id' => ['type' => 'int'],
+        'author' => ['type' => 'int'],
+        'type' => ['type' => 'string'],
+        'created' => ['type' => 'int'],
+    ];
 
 	/**
 	 * "Belongs to" relationships
 	 * @var array
 	 */
-	protected $_belongs_to = array(
-		'user' => array(
+    protected $_belongs_to = [
+        'user' => [
 			'foreign_key' => 'author'
-		),
-		'tags' => array(
+        ],
+        'tags' => [
 			'foreign_key' => 'tag_id'
-		),
-		'posts' => array(
+        ],
+        'posts' => [
 			'foreign_key' => 'post_id'
-		)
-	);
+        ]
+    ];
 
 
 	/**
 	 * Auto-update columns for creation
 	 * @var string
 	 */
-	protected $_created_column = array(
+    protected $_created_column = [
 		'column' => 'created',
 		'format' => TRUE
-	);
+    ];
 
 }

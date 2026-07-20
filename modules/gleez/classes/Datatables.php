@@ -209,7 +209,7 @@ class Datatables {
      */
     public function sort(string $column, string $direction = self::SORT_ASC): Datatables
     {
-		if ( ! in_array($direction, array(self::SORT_ASC, self::SORT_DESC)))
+        if (!in_array($direction, [self::SORT_ASC, self::SORT_DESC]))
 		{
 			throw new Kohana_Exception('Invalid sort order of `' . $direction . '`.');
 		}
@@ -443,16 +443,15 @@ class Datatables {
 		{
 			if ($this->_view)
 			{
-				View::factory($this->_view, array('datatables' => $this))->render();
+                View::factory($this->_view, ['datatables' => $this])->render();
 			}
 
-			$this->_render = json_encode(array
-			(
+            $this->_render = json_encode([
 				'draw'              => intval($this->request()->query('draw')),
                 'recordsTotal' => $this->_count_total,
                 'recordsFiltered' => $this->_count,
 				'data'              => $this->_rows
-			));
+            ]);
 		}
 
 		return $this->_render;

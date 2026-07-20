@@ -68,8 +68,7 @@ class Menu {
 		}
 		else
 		{
-			$this->items[$id] = array
-			(
+            $this->items[$id] = [
 				'title'    => $title,
 				'url'      => $url,
 				'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
@@ -77,7 +76,7 @@ class Menu {
 				'descp'	   => $descp,
 				'params'   => $params,
 				'image'    => $image
-			);
+            ];
 		}
 
 		return $this;
@@ -198,15 +197,15 @@ class Menu {
 
 			if ( ! empty($classes))
 			{
-				$classes = HTML::attributes(array('class' => implode(' ', $classes)));
+                $classes = HTML::attributes(['class' => implode(' ', $classes)]);
 			}
 
 			if ( ! empty($attributes))
 			{
-				$attributes = array('class' => implode(' ', $attributes));
+                $attributes = ['class' => implode(' ', $attributes)];
 			}
 
-			$id = HTML::attributes(array('id' => 'menu-'.$key));
+            $id = HTML::attributes(['id' => 'menu-' . $key]);
 
 			//Twitter bootstrap attributes
             $class = '';
@@ -244,7 +243,7 @@ class Menu {
 
 			if ( $has_children )
 			{
-				$menu .= $this->render(array('class' => $class, 'id' => 'collapse-'.$key),  $item['children']);
+                $menu .= $this->render(['class' => $class, 'id' => 'collapse-' . $key], $item['children']);
 			}
 
 			$_i++;
@@ -302,7 +301,7 @@ class Menu {
      * @return string
      * @throws Kohana_Exception
      */
-    public static function links(string $name, array $attr = array('class' => 'menus')): ?string
+    public static function links(string $name, array $attr = ['class' => 'menus']): ?string
     {
         $menu = static::buildMenu($name);
 
@@ -455,8 +454,7 @@ class Menu {
 		{
 			if ($key == $needle)
 			{
-				$array[$key]['children'][$id] = array
-				(
+                $array[$key]['children'][$id] = [
 					'title'    => $title,
 					'url'      => $url,
 					'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
@@ -464,7 +462,7 @@ class Menu {
 					'descp'	   => $descp,
 					'params'   => $params,
 					'image'    => $image
-				);
+                ];
 
 				return $array;
 			}

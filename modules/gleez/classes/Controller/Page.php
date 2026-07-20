@@ -109,13 +109,13 @@ class Controller_Page extends Template {
 					->bind('posts',      $posts);
 
 		$url        = Route::get('page')->uri();
-		$rss_link   = Route::get('rss')->uri(array('controller' => 'page'));
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
+        $rss_link = Route::get('rss')->uri(['controller' => 'page']);
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
 			'total_items'    => $total,
 			'items_per_page' => $config->get('items_per_page', 15),
 			'uri'            => $url,
-		));
+        ]);
 
 		$posts = $posts->order_by('sticky', 'DESC')
 					->order_by('created', 'DESC')
@@ -128,13 +128,13 @@ class Controller_Page extends Template {
 		// Set the canonical and shortlink for search engines
 		if ($this->auto_render)
 		{
-			Meta::links(URL::canonical($url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('page', array(), TRUE), array('rel' => 'shortlink'));
-			Meta::links(URL::site('rss/page', TRUE), array(
+            Meta::links(URL::canonical($url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('page', [], TRUE), ['rel' => 'shortlink']);
+            Meta::links(URL::site('rss/page', TRUE), [
 				'rel'   => 'alternate',
 				'type'  => 'application/rss+xml',
 				'title' => Template::getSiteName() . ' : ' . __('Pages'),
-			));
+            ]);
 		}
 	}
 
@@ -169,13 +169,13 @@ class Controller_Page extends Template {
 
 		if (ACL::post('edit', $post))
 		{
-			$this->_tabs[] = array('link' => $post->url, 'text' => __('View'));
-			$this->_tabs[] = array('link' => $post->edit_url, 'text' => __('Edit'));
+            $this->_tabs[] = ['link' => $post->url, 'text' => __('View')];
+            $this->_tabs[] = ['link' => $post->edit_url, 'text' => __('Edit')];
 		}
 
 		if (ACL::post('delete', $post))
 		{
-			$this->_tabs[] = array('link' => $post->delete_url, 'text' => __('Delete'));
+            $this->_tabs[] = ['link' => $post->delete_url, 'text' => __('Delete')];
 		}
 
         if ($post->comment > Comment::COMMENT_HIDDEN && ACL::check('access comment'))
@@ -217,8 +217,8 @@ class Controller_Page extends Template {
 		// Set the canonical and shortlink for search engines
 		if ($this->auto_render)
 		{
-			Meta::links(URL::canonical($post->url), array('rel' => 'canonical'));
-			Meta::links($post->rawurl, array('rel' => 'shortlink'));
+            Meta::links(URL::canonical($post->url), ['rel' => 'canonical']);
+            Meta::links($post->rawurl, ['rel' => 'shortlink']);
 		}
 	}
 
@@ -248,9 +248,11 @@ class Controller_Page extends Template {
 		$config = Kohana::$config->load('page');
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 		// Set form action
-		$action = Route::get('page')->uri(array('action' => 'add')).URL::query($destination);
+        $action = Route::get('page')->uri(['action' => 'add']) . URL::query($destination);
 
 		$view = View::factory('page/form')
 					->set('destination', $destination)
@@ -270,7 +272,7 @@ class Controller_Page extends Template {
 
 		if($config->get('use_category', FALSE))
 		{
-            $terms = ORM::factory('Term', array('type' => 'page', 'lvl' => 1))->select_list('id', 'name', '--');
+            $terms = ORM::factory('Term', ['type' => 'page', 'lvl' => 1])->select_list('id', 'name', '--');
 		}
 
 		if($config->get('use_captcha', FALSE))
@@ -286,8 +288,8 @@ class Controller_Page extends Template {
                 $post->formTags = $this->request->post('form_tags');
                 $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
-				Kohana::$log->add(Log::INFO, 'Page :title created.', array(':title' => $post->title));
-				Message::success(__('Page %title created', array('%title' => $post->title)));
+                Kohana::$log->add(Log::INFO, 'Page :title created.', [':title' => $post->title]);
+                Message::success(__('Page %title created', ['%title' => $post->title]));
 
 				$this->request->redirect($post->url);
 			}
@@ -336,9 +338,11 @@ class Controller_Page extends Template {
 		$config = Kohana::$config->load('page');
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 		// Set form action
-		$action = Route::get('page')->uri(array('id' => $id, 'action' => 'edit')).URL::query($destination);
+        $action = Route::get('page')->uri(['id' => $id, 'action' => 'edit']) . URL::query($destination);
 
 		$view = View::factory('page/form')
 				->set('destination',  $destination)
@@ -365,7 +369,7 @@ class Controller_Page extends Template {
 
 		if ($config->get('use_category', FALSE))
 		{
-            $terms = ORM::factory('Term', array('type' => 'page', 'lvl' => 1))
+            $terms = ORM::factory('Term', ['type' => 'page', 'lvl' => 1])
 					->select_list('id', 'name', '--');
 		}
 
@@ -376,8 +380,8 @@ class Controller_Page extends Template {
                 $post->formTags = $this->request->post('form_tags');
                 $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
-				Kohana::$log->add(Log::INFO, 'Page: :title updated.', array(':title' => $post->title));
-				Message::success(__('Page %title updated', array('%title' => $post->title)));
+                Kohana::$log->add(Log::INFO, 'Page: :title updated.', [':title' => $post->title]);
+                Message::success(__('Page %title updated', ['%title' => $post->title]));
 
 				$this->request->redirect(empty($destination) ? $post->url : $this->request->query('destination'));
 			}
@@ -387,14 +391,14 @@ class Controller_Page extends Template {
 			}
 		}
 
-		$this->_tabs =  array(
-			array('link' => $post->url, 'text' => __('View')),
-			array('link' => $post->edit_url, 'text' => __('Edit')),
-		);
+        $this->_tabs = [
+            ['link' => $post->url, 'text' => __('View')],
+            ['link' => $post->edit_url, 'text' => __('Edit')],
+        ];
 
 		if (ACL::post('delete', $post))
 		{
-			$this->_tabs[] =  array('link' => $post->delete_url, 'text' => __('Delete'));
+            $this->_tabs[] = ['link' => $post->delete_url, 'text' => __('Delete')];
 		}
 
 		$this->response->body($view);
@@ -429,10 +433,11 @@ class Controller_Page extends Template {
 			throw HTTP_Exception::factory(403, 'Access denied!');
 		}
 
-		$this->title = __('Delete :title', array(':title' => $post->title));
+        $this->title = __('Delete :title', [':title' => $post->title]);
 
-		$destination = ($this->request->query('destination') !== NULL) ?
-					array('destination' => $this->request->query('destination')) : array();
+        $destination = $this->request->query('destination') !== NULL
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 
 		$view = View::factory('form/confirm')
 					->set('action', $post->delete_url.URL::query($destination))
@@ -452,15 +457,16 @@ class Controller_Page extends Template {
 				$title = $post->title;
 				$post->delete();
 
-				Kohana::$log->add(Log::INFO, 'Page: :title deleted.', array(':title' => $title));
-				Message::success(__('Page: :title deleted successful!', array(':title' => $title)));
+                Kohana::$log->add(Log::INFO, 'Page: :title deleted.', [':title' => $title]);
+                Message::success(__('Page: :title deleted successful!', [':title' => $title]));
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting page id: :id, :msg',
-					array(':id' => $post->id, ':msg' => $e->getMessage())
-				);
-				Message::error(__('An error occurred deleting page %post',array('%post' => $post->title)));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting page id: :id, :msg', [
+                    ':id' => $post->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred deleting page %post', ['%post' => $post->title]));
 			}
 
 			$redirect = empty($destination) ? Route::get('page')->uri() : $this->request->query('destination');
@@ -497,15 +503,15 @@ class Controller_Page extends Template {
 		}
 
 		$id    = (int) $this->request->param('id', 0);
-		$array = array('id' => $id, 'type' => 'page');
+        $array = ['id' => $id, 'type' => 'page'];
         $term = ORM::factory('Term', $array)->where('lvl', '!=', 1);
 
 		if ( ! $term->loaded())
 		{
-			throw HTTP_Exception::factory(404, 'Category ":term" not found', array(':term' => $id));
+            throw HTTP_Exception::factory(404, 'Category ":term" not found', [':term' => $id]);
 		}
 
-		$this->title = __(':term', array(':term' => $term->name));
+        $this->title = __(':term', [':term' => $term->name]);
 		$view = View::factory('page/list')
 					->set('teaser',      TRUE)
 					->set('config',      $config)
@@ -528,13 +534,13 @@ class Controller_Page extends Template {
 			$this->response->body(View::factory('page/none'));
 			return;
 		}
-		$rss_link   = Route::get('rss')->uri(array('controller' => 'page', 'action' => 'term', 'id' => $term->id));
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
+        $rss_link = Route::get('rss')->uri(['controller' => 'page', 'action' => 'term', 'id' => $term->id]);
+        $pagination = Pagination::factory([
+			'current_page'   => ['source'=>'cms', 'key'=>'page'],
 			'total_items'    => $total,
 			'items_per_page' => $config->get('items_per_page', 15),
 			'uri'            => $term->url,
-		));
+        ]);
 
 		$posts = $posts->order_by('sticky', 'DESC')
 						->order_by('created', 'DESC')
@@ -547,15 +553,15 @@ class Controller_Page extends Template {
 		// Set the canonical and shortlink for search engines
 		if ($this->auto_render)
 		{
-			Meta::links(URL::canonical($term->url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('page', array('action' => 'term', 'id' => $term->id), TRUE), array(
+            Meta::links(URL::canonical($term->url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('page', ['action' => 'term', 'id' => $term->id], TRUE), [
 				'rel' => 'shortlink'
-			));
-			Meta::links(Route::url('rss', array('controller' => 'page', 'action' => 'term', 'id' => $term->id), TRUE), array(
+            ]);
+            Meta::links(Route::url('rss', ['controller' => 'page', 'action' => 'term', 'id' => $term->id], TRUE), [
 				'rel'   => 'alternate',
 				'type'  => 'application/rss+xml',
 				'title' => Template::getSiteName() . ' : ' . $term->name,
-			));
+            ]);
 		}
 	}
 
@@ -579,14 +585,14 @@ class Controller_Page extends Template {
 	{
 		$config = Kohana::$config->load('page');
 		$id     = (int) $this->request->param('id', 0);
-        $tag = ORM::factory('Tag', array('id' => $id, 'type' => 'page'));
+        $tag = ORM::factory('Tag', ['id' => $id, 'type' => 'page']);
 
 		if ( ! $tag->loaded())
 		{
-			throw HTTP_Exception::factory(404, 'Tag ":tag" Not Found', array(':tag'=>$id));
+            throw HTTP_Exception::factory(404, 'Tag ":tag" Not Found', [':tag' => $id]);
 		}
 
-		$this->title = __(':title', array(':title' => Text::ucfirst($tag->name)));
+        $this->title = __(':title', [':title' => Text::ucfirst($tag->name)]);
 		$view        = View::factory('page/list')
 					->set('teaser',      TRUE)
 					->set('config',      $config)
@@ -610,13 +616,13 @@ class Controller_Page extends Template {
 			return;
 		}
 
-		$rss_link   = Route::get('rss')->uri(array('controller' => 'page', 'action' => 'tag', 'id' => $tag->id));
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
+        $rss_link = Route::get('rss')->uri(['controller' => 'page', 'action' => 'tag', 'id' => $tag->id]);
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
 			'total_items'    => $total,
 			'items_per_page' => $config->get('items_per_page', 15),
 			'uri'            => $tag->url,
-		));
+        ]);
 
         $posts = $posts->order_by('post.created', 'DESC')
             ->limit($pagination->itemsPerPage())
@@ -628,15 +634,15 @@ class Controller_Page extends Template {
 		// Set the canonical and shortlink for search engines
 		if ($this->auto_render)
 		{
-			Meta::links(URL::canonical($tag->url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('page', array('action' => 'tag', 'id' => $tag->id), TRUE), array(
+            Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('page', ['action' => 'tag', 'id' => $tag->id], TRUE), [
 				'rel' => 'shortlink'
-			));
-			Meta::links(Route::url('rss', array('controller' => 'page', 'action' => 'tag', 'id' => $tag->id), TRUE), array(
+            ]);
+            Meta::links(Route::url('rss', ['controller' => 'page', 'action' => 'tag', 'id' => $tag->id], TRUE), [
 				'rel'   => 'alternate',
 				'type'  => 'application/rss+xml',
 				'title' => Template::getSiteName() . ' : ' . $tag->name,
-			));
+            ]);
 		}
 	}
 

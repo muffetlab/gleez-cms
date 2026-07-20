@@ -21,10 +21,10 @@ class Widget_Static extends Widget {
     public function render(): string
     {
 		return View::factory('widgets/static')
-			->set(array(
+            ->set([
                 'title' => HTML::chars($this->widget->title),
 					'content' => Text::markup($this->widget->body, $this->widget->format)
-			))
+            ])
 			->render();
 	}
 

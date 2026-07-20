@@ -27,7 +27,7 @@ class Locale_Data {
 	 * Locales for Full Named Locales
 	 * @var array
 	 */
-	public static $languages = array(
+    public static $languages = [
 		'Afrikaans'        => 'af',
 		'Albanian'         => 'sq',
 		'Amharic'          => 'am',
@@ -160,13 +160,13 @@ class Locale_Data {
 		'Yiddish'          => 'yi',
 		'Yoruba'           => 'yo',
 		'Zulu'             => 'zu'
-	);
+    ];
 
 	/**
 	 * Regions for Full Named Locales
 	 * @var array
 	 */
-	public static $regions = array(
+    public static $regions = [
 		'Albania'                    => 'AL',
 		'Algeria'                    => 'DZ',
 		'Argentina'                  => 'AR',
@@ -272,13 +272,13 @@ class Locale_Data {
 		'Venezuela'                  => 'VE',
 		'Yemen'                      => 'YE',
 		'Zimbabwe'                   => 'ZW'
-	);
+    ];
 
 	/**
 	 * Class wide Locale Constants
 	 * @var array
 	 */
-	protected static $_locale_data = array(
+    protected static $_locale_data = [
 		'root'  => TRUE, 'aa_DJ' => TRUE, 'aa_ER' => TRUE, 'aa_ET' => TRUE, 'aa'    => TRUE,
 		'af_NA' => TRUE, 'af_ZA' => TRUE, 'af'    => TRUE, 'ak_GH' => TRUE, 'ak'    => TRUE,
 		'am_ET' => TRUE, 'am'    => TRUE, 'ar_AE' => TRUE, 'ar_BH' => TRUE, 'ar_DZ' => TRUE,
@@ -360,13 +360,13 @@ class Locale_Data {
 		'xh'    => TRUE, 'yo_NG' => TRUE, 'yo'    => TRUE, 'zh_CN' => TRUE, 'zh_HK' => TRUE,
 		'zh_MO' => TRUE, 'zh_SG' => TRUE, 'zh_TW' => TRUE, 'zh'    => TRUE, 'zu_ZA' => TRUE,
 		'zu'    => TRUE
-	);
+    ];
 
 	/**
 	 * Class wide Locale Constants
 	 * @var array $_territory_data
 	 */
-	protected static $_territory_data = array(
+    protected static $_territory_data = [
 		'AD' => 'ca_AD', 'AE' => 'ar_AE', 'AF' => 'fa_AF', 'AG' => 'en_AG', 'AI' => 'en_AI',
 		'AL' => 'sq_AL', 'AM' => 'hy_AM', 'AN' => 'pap_AN', 'AO' => 'pt_AO', 'AQ' => 'und_AQ',
 		'AR' => 'es_AR', 'AS' => 'sm_AS', 'AT' => 'de_AT', 'AU' => 'en_AU', 'AW' => 'nl_AW',
@@ -416,7 +416,7 @@ class Locale_Data {
 		'UY' => 'es_UY', 'UZ' => 'uz_Cyrl_UZ', 'VA' => 'it_VA', 'VC' => 'en_VC', 'VE' => 'es_VE',
 		'VG' => 'en_VG', 'VI' => 'en_VI', 'VU' => 'bi_VU', 'WF' => 'wls_WF', 'WS' => 'sm_WS',
 		'YE' => 'ar_YE', 'YT' => 'swb_YT', 'ZA' => 'en_ZA', 'ZM' => 'en_ZM', 'ZW' => 'sn_ZW'
-	);
+    ];
 
 	/**
 	 * Get Class wide locale constants

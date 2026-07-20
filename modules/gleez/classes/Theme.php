@@ -97,11 +97,11 @@ class Theme {
 			if( $theme = self::getTheme() )
 			{
 				//set absolute theme path and load the request theme as kohana module
-				Kohana::modules(array('theme' => $theme->path) + $modules);
+                Kohana::modules(['theme' => $theme->path] + $modules);
 			}
 			else
 			{
-				Kohana::$log->add(Log::ERROR, 'Missing site theme: :theme', array(':theme' => Theme::$active) );
+                Kohana::$log->add(Log::ERROR, 'Missing site theme: :theme', [':theme' => Theme::$active]);
 			}
 		}
 

@@ -57,7 +57,7 @@ class Gleez_I18n extends I18n
     public static function initialize(): string
     {
 		// Installed Locales
-		self::$_languages = Kohana::$config->load('site')->get('installed_locales', array());
+        self::$_languages = Kohana::$config->load('site')->get('installed_locales', []);
 
 		// Allow the user or browser to override the default locale
 		$locale_override  = Kohana::$config->load('site')->get('locale_override', FALSE);
@@ -608,7 +608,7 @@ function _e(string $string, array $values = NULL, string $lang = 'en-us')
 	echo __($string, $values, $lang);
 }
 
-function __n($count, $singular, $plural, array $values = array(), $lang = 'en-us'): string
+function __n($count, $singular, $plural, array $values = [], $lang = 'en-us'): string
 {
 	if ($lang !== Gleez_I18n::$lang)
 	{
@@ -617,5 +617,5 @@ function __n($count, $singular, $plural, array $values = array(), $lang = 'en-us
 	else
 		$string = $count === 1 ? $singular : $plural;
 
-	return strtr($string, array_merge($values, array('%count' => $count)));
+    return strtr($string, array_merge($values, ['%count' => $count]));
 }

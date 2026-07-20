@@ -109,7 +109,7 @@ class Widgets {
     {
 		if ( ! is_object($widget))
 		{
-			throw new Kohana_Exception('Not a valid widget object: :widget', array(':widget' => $name));
+            throw new Kohana_Exception('Not a valid widget object: :widget', [':widget' => $name]);
 		}
 
 		if ( ! isset($this->_regions[$region]))
@@ -323,7 +323,10 @@ class Widgets {
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error processing widget ":name": :msg', array(':name' => $name, ':msg' => $e->getMessage()));
+                Kohana::$log->add(Log::ERROR, 'Error processing widget ":name": :msg', [
+                    ':name' => $name,
+                    ':msg' => $e->getMessage()
+                ]);
 			}
 		}
 
@@ -365,11 +368,11 @@ class Widgets {
 			try
 			{
                 ORM::factory('Widget')->values($values, ['name', 'title', 'module', 'status', 'region'])->save();
-				Kohana::$log->add(Log::DEBUG, 'Insert widget where module: :module', array(':module' => $module));
+                Kohana::$log->add(Log::DEBUG, 'Insert widget where module: :module', [':module' => $module]);
 			}
 			catch (Database_Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Unable to insert widgets: :mgs', array(':msg' => $e->getMessage()));
+                Kohana::$log->add(Log::ERROR, 'Unable to insert widgets: :mgs', [':msg' => $e->getMessage()]);
 			}
 		}
 	}
@@ -388,11 +391,11 @@ class Widgets {
             ORM::factory('Widget')->where('module', '=', $module)->delete();
             Cache::instance()->delete_all();
 
-			Kohana::$log->add(Log::INFO, 'Deleted widgets where module: :module', array(':module' => $module));
+            Kohana::$log->add(Log::INFO, 'Deleted widgets where module: :module', [':module' => $module]);
 		}
 		catch (Database_Exception $e)
 		{
-			Kohana::$log->add(Log::ERROR, 'Unable to delete widgets: :msg', array(':msg' => $e->getMessage()));
+            Kohana::$log->add(Log::ERROR, 'Unable to delete widgets: :msg', [':msg' => $e->getMessage()]);
 		}
 	}
 

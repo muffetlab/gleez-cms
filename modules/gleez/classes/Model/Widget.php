@@ -13,24 +13,24 @@ class Model_Widget extends ORM {
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'         => array( 'type' => 'int' ),
-		'name'       => array( 'type' => 'string' ),
-		'title'      => array( 'type' => 'string' ),
-		'module'     => array( 'type' => 'string' ),
-		'theme'      => array( 'type' => 'string' ),
-		'status'     => array( 'type' => 'int' ),
-		'region'     => array( 'type' => 'string' ),
-		'weight'     => array( 'type' => 'int' ),
-		'cache'      => array( 'type' => 'int' ),
-		'visibility' => array( 'type' => 'int' ),
-		'pages'      => array( 'type' => 'string' ),
-		'show_title' => array( 'type' => 'int' ),
-		'roles'      => array( 'type' => 'string' ),
-		'body'       => array( 'type' => 'string' ),
-		'format'     => array( 'type' => 'int' ),
-		'icon'       => array( 'type' => 'string' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'name' => ['type' => 'string'],
+        'title' => ['type' => 'string'],
+        'module' => ['type' => 'string'],
+        'theme' => ['type' => 'string'],
+        'status' => ['type' => 'int'],
+        'region' => ['type' => 'string'],
+        'weight' => ['type' => 'int'],
+        'cache' => ['type' => 'int'],
+        'visibility' => ['type' => 'int'],
+        'pages' => ['type' => 'string'],
+        'show_title' => ['type' => 'int'],
+        'roles' => ['type' => 'string'],
+        'body' => ['type' => 'string'],
+        'format' => ['type' => 'int'],
+        'icon' => ['type' => 'string'],
+    ];
 
 	/**
 	 * Rules for the post model
@@ -39,11 +39,11 @@ class Model_Widget extends ORM {
 	 */
 	public function rules(): array
     {
-		return array(
-			'name' => array(
-				array('not_empty'),
-			),
-		);
+        return [
+            'name' => [
+                ['not_empty'],
+            ],
+        ];
 	}
 
     /**
@@ -83,7 +83,7 @@ class Model_Widget extends ORM {
 	{
         switch ($column) {
 			case 'edit_url':
-				return Route::get('admin/widget')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('admin/widget')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'icons':
 				return System::icons();
         }

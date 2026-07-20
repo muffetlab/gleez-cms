@@ -63,7 +63,7 @@ class Form extends Kohana_Form
 		if (Gleez::$installed)
 		{
 			// Assign the global form css file
-			Assets::css('form', 'media/css/form.css', array('weight' => 2));
+            Assets::css('form', 'media/css/form.css', ['weight' => 2]);
 
 			$action  = md5($action . CSRF::key());
 			$out 	.= self::hidden('_token', CSRF::token(FALSE, $action)).PHP_EOL;
@@ -235,7 +235,7 @@ class Form extends Kohana_Form
      * @throws Kohana_Exception
      * @uses    Arr::get
      */
-    public static function filter(string $column, array $vals, array $attrs = array()): string
+    public static function filter(string $column, array $vals, array $attrs = []): string
     {
 		if ( ! isset($attrs['style']))
 		{
@@ -342,6 +342,6 @@ class Form extends Kohana_Form
 	 */
     protected static function _get_id_by_name(string $name): string
     {
-		return 'form-'.str_replace(array('[]', '][', '[', ']', '\\'), array('', '_', '_', '', '_'), $name);
+        return 'form-' . str_replace(['[]', '][', '[', ']', '\\'], ['', '_', '_', '', '_'], $name);
 	}
 }

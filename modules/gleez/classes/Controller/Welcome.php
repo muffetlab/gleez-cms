@@ -46,10 +46,10 @@ class Controller_Welcome extends Template {
 		if ( ! Gleez::$installed)
 		{
 			// Send to the installer with server status
-			$this->request->redirect(Route::get('install')->uri(array('action' => 'index')), 200);
+            $this->request->redirect(Route::get('install')->uri(['action' => 'index']), 200);
 		}
 
-		Assets::css('welcome', "media/css/welcome.css", array('default'), array('weight' => 30));
+        Assets::css('welcome', "media/css/welcome.css", ['default'], ['weight' => 30]);
 
 		$this->title = __('Welcome!');
 		$this->schemaType = 'WebPage';

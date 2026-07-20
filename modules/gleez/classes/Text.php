@@ -162,15 +162,15 @@ class Text extends Kohana_Text
 
 		// Convert all Windows and Mac newlines to a single newline, so filters
 		// only need to deal with one possibility.
-		$text = str_replace(array("\r\n", "\r"), "\n", $text);
+        $text = str_replace(["\r\n", "\r"], "\n", $text);
 
-		$textObj = new ArrayObject(array(
+        $textObj = new ArrayObject([
 				'text' 	   => (string) $text,
 				'format'   => (int)    $format_id,
             'langCode' => $langCode,
             'cache' => $cache,
             'cache_id' => $cache_id
-		), ArrayObject::ARRAY_AS_PROPS);
+        ], ArrayObject::ARRAY_AS_PROPS);
 
         Module::event('input_filter', $textObj);
 

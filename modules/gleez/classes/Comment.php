@@ -39,7 +39,7 @@ class Comment {
 					->set('action',      $action)
 					->set('is_edit',     FALSE)
 					->set('auth',        Auth::instance())
-					->set('destination', array())
+            ->set('destination', [])
 					->set('item',        $item)
 					->bind('errors',     $errors)
 					->bind('post',       $post);
@@ -56,7 +56,7 @@ class Comment {
 
 		if ($controller->valid_post('comment'))
 		{
-			$values = Arr::merge(array('post_id' => $item->id, 'type' => $item->type), $_POST);
+            $values = Arr::merge(['post_id' => $item->id, 'type' => $item->type], $_POST);
 			try
 			{
                 $post->values($values, ['post_id', 'type', 'body'])->save();
@@ -66,20 +66,20 @@ class Comment {
 				}
 				else
 				{
-					Message::success(__('Your comment has been posted.', array(':title' => $post->title)) );
+                    Message::success(__('Your comment has been posted.', [':title' => $post->title]));
 				}
 
 				// Save the anonymous user information to a cookie for reuse.
 				if (User::is_guest())
 				{
-					User::cookie_save(array(
+                    User::cookie_save([
 						'name'  => $post->guest_name,
 						'email' => $post->guest_email,
 						'url'   => $post->guest_url
-					));
+                    ]);
 				}
 
-				Kohana::$log->add(Log::INFO, 'Comment: :title has posted.', array(':title' => $post->title));
+                Kohana::$log->add(Log::INFO, 'Comment: :title has posted.', [':title' => $post->title]);
 
 				// Redirect to post page
 				$controller->request->redirect(Request::current()->uri());
@@ -109,12 +109,12 @@ class Comment {
      */
     public static function status(): array
     {
-		$states = array(
+        $states = [
 			'publish'   => __('Publish'),
 			'draft'     => __('Unpublish'),
 			'spam'      => __('Spam'),
 			'delete'    => __('Delete'),
-		);
+        ];
 
         return Module::action('comment_status', $states);
 	}
@@ -127,33 +127,33 @@ class Comment {
 	 */
     public static function bulk_actions(bool $list = FALSE): array
     {
-		$states = array(
-			'publish' => array(
+        $states = [
+            'publish' => [
 				'label' => __('Publish the selected comments'),
 				'callback' => 'Comment::bulk_update',
-				'arguments' => array(
-					'updates' => array('status' => 'publish')
-				),
-			),
-			'draft' => array(
+                'arguments' => [
+                    'updates' => ['status' => 'publish']
+                ],
+            ],
+            'draft' => [
 				'label' => __('Unpublish the selected comments'),
 				'callback' => 'Comment::bulk_update',
-				'arguments' => array(
-					'updates' => array('status' => 'draft')
-				),
-			),
-			'spam' => array(
+                'arguments' => [
+                    'updates' => ['status' => 'draft']
+                ],
+            ],
+            'spam' => [
 				'label' => __('Mark the selected comments as Spam'),
 				'callback' => 'Comment::bulk_update',
-				'arguments' => array(
-					'updates' => array('status' => 'spam')
-				),
-			),
-			'delete' => array(
+                'arguments' => [
+                    'updates' => ['status' => 'spam']
+                ],
+            ],
+            'delete' => [
 				'label' => __('Delete the selected comments'),
 				'callback' => NULL,
-			)
-		);
+            ]
+        ];
 
 		// Allow module developers to override
 		$values = Module::action('comment_bulk_actions', $states);

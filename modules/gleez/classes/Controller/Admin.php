@@ -78,8 +78,8 @@ class Controller_Admin extends Template {
 
 		// Create form action
         $destination = $_GET['destination'] ?? 'admin';
-		$params      = array('action' => 'login');
-		$action      = Route::get('admin/login')->uri($params).URL::query(array('destination' => $destination));
+        $params = ['action' => 'login'];
+        $action = Route::get('admin/login')->uri($params) . URL::query(['destination' => $destination]);
 
         if (kohana::find_file('views', 'layouts/login'))
 		{
@@ -100,8 +100,8 @@ class Controller_Admin extends Template {
 				$user->login($this->request->post());
 
 				// If the post data validates using the rules setup in the user model
-				Message::success(__('Welcome, %title!', array('%title' => $user->nick)));
-				Kohana::$log->add(Log::INFO, 'User :name logged in.', array(':name' => $user->name));
+                Message::success(__('Welcome, %title!', ['%title' => $user->nick]));
+                Kohana::$log->add(Log::INFO, 'User :name logged in.', [':name' => $user->name]);
 
 				// redirect to the user account
                 $this->request->redirect($_GET['destination'] ?? 'admin', 200);
@@ -117,7 +117,7 @@ class Controller_Admin extends Template {
 
 	public function after()
 	{
-		Assets::css('admin', "media/css/admin.css", array('default'), array('weight' => 60));
+        Assets::css('admin', "media/css/admin.css", ['default'], ['weight' => 60]);
 		parent::after();
 	}
 

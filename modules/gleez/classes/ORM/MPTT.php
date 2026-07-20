@@ -59,7 +59,7 @@ class ORM_MPTT extends Gleez_Model
 	{
 		if (empty($this->_sorting))
 		{
-			$this->_sorting = array($this->scope_column => 'ASC', $this->left_column => 'ASC');
+            $this->_sorting = [$this->scope_column => 'ASC', $this->left_column => 'ASC'];
 		}
 		else
 		{
@@ -266,7 +266,7 @@ class ORM_MPTT extends Gleez_Model
 	{
 		if ( ! $target instanceof $this)
 		{
-			$target = self::factory($this->object_name(), array($this->primary_key() => $target));
+            $target = self::factory($this->object_name(), [$this->primary_key() => $target]);
 		}
 
 		if ($column === NULL)
@@ -367,7 +367,7 @@ class ORM_MPTT extends Gleez_Model
 		 
 		if ( ! $target instanceof $this)
 		{
-			$target = self::factory($this->object_name(), array($this->primary_key() => $target));
+            $target = self::factory($this->object_name(), [$this->primary_key() => $target]);
 		 
 			if ( ! $target->loaded())
 			{
@@ -508,7 +508,7 @@ class ORM_MPTT extends Gleez_Model
 		{
 			if ( ! $target instanceof $this)
 			{
-				$target = self::factory($this->object_name(), array($this->primary_key() => $target));
+                $target = self::factory($this->object_name(), [$this->primary_key() => $target]);
 				 
 				if ( ! $target->loaded())
 				{
@@ -614,10 +614,12 @@ class ORM_MPTT extends Gleez_Model
 		{
 			$scope = $this->scope();
         } elseif (is_null($scope) && !$this->loaded()) {
-			throw new Kohana_Exception(':method must be called on an ORM_MPTT object instance.', array(':method' => 'root'));
+            throw new Kohana_Exception(':method must be called on an ORM_MPTT object instance.', [
+                ':method' => 'root'
+            ]);
 		}
-		
-		return self::factory($this->object_name(), array($this->left_column => 1, $this->scope_column => $scope));
+
+        return self::factory($this->object_name(), [$this->left_column => 1, $this->scope_column => $scope]);
 	}
 
     /**
@@ -839,13 +841,13 @@ class ORM_MPTT extends Gleez_Model
     protected function create_space(int $start, int $size = 2)
 	{
 		DB::update($this->_table_name)
-			->set(array($this->left_column => DB::expr($this->left_column.' + '.$size)))
+            ->set([$this->left_column => DB::expr($this->left_column . ' + ' . $size)])
 			->where($this->left_column,'>=', $start)
 			->where($this->scope_column, '=', $this->scope())
 			->execute($this->_db);
 
 		DB::update($this->_table_name)
-			->set(array($this->right_column => DB::expr($this->right_column.' + '.$size)))
+            ->set([$this->right_column => DB::expr($this->right_column . ' + ' . $size)])
 			->where($this->right_column,'>=', $start)
 			->where($this->scope_column, '=', $this->scope())
 			->execute($this->_db);
@@ -861,13 +863,13 @@ class ORM_MPTT extends Gleez_Model
     protected function delete_space(int $start, int $size = 2)
 	{
 		DB::update($this->_table_name)
-			->set(array($this->left_column => DB::expr($this->left_column.' - '.$size)))
+            ->set([$this->left_column => DB::expr($this->left_column . ' - ' . $size)])
 			->where($this->left_column, '>=', $start)
 			->where($this->scope_column, '=', $this->scope())
 			->execute($this->_db);
 
 		DB::update($this->_table_name)
-			->set(array($this->right_column => DB::expr($this->right_column.' - '.$size)))
+            ->set([$this->right_column => DB::expr($this->right_column . ' - ' . $size)])
 			->where($this->right_column,'>=', $start)
 			->where($this->scope_column, '=', $this->scope())
 			->execute($this->_db);
@@ -1097,7 +1099,7 @@ class ORM_MPTT extends Gleez_Model
 		
 		if (is_string($indent))
 		{
-			$array = array('last' => '');
+            $array = ['last' => ''];
 			foreach ($result as $row)
 			{
 				$array[$row[$key]] = str_repeat($indent, $row[$this->level_column] - 2).$row[$value];

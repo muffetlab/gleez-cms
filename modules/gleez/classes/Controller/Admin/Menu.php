@@ -51,25 +51,37 @@ class Controller_Admin_Menu extends Controller_Admin {
 
 		if ($is_datatables)
 		{
-			$this->_datatables = $menus->dataTables(array('title', 'descp'));
+            $this->_datatables = $menus->dataTables(['title', 'descp']);
 
 			foreach ($this->_datatables->result() as $menu)
 			{
-				$this->_datatables->add_row(
-					array(
+                $this->_datatables->add_row([
                         HTML::chars($menu->title) . '<div class="description">' . HTML::chars($menu->descp) . '</div>',
-                        HTML::icon($menu->list_items_url, 'fas fa-th-list', array('class' => 'action-list', 'title' => __('List Links'))),
-                        HTML::icon($menu->add_item_url, 'fas fa-plus', array('class' => 'action-add', 'title' => __('Add Link'))),
-                        HTML::icon($menu->edit_url, 'far fa-edit', array('class' => 'action-edit', 'title' => __('Edit Menu'))),
-                        HTML::icon($menu->delete_url, 'fas fa-trash-can', array('class' => 'action-delete', 'title' => __('Delete Menu'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-menus'))
-					)
-				);
+                    HTML::icon($menu->list_items_url, 'fas fa-th-list', [
+                        'class' => 'action-list',
+                        'title' => __('List Links')
+                    ]),
+                    HTML::icon($menu->add_item_url, 'fas fa-plus', [
+                        'class' => 'action-add',
+                        'title' => __('Add Link')
+                    ]),
+                    HTML::icon($menu->edit_url, 'far fa-edit', [
+                        'class' => 'action-edit',
+                        'title' => __('Edit Menu')
+                    ]),
+                    HTML::icon($menu->delete_url, 'fas fa-trash-can', [
+                        'class' => 'action-delete',
+                        'title' => __('Delete Menu'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#admin-list-menus'
+                    ])
+                ]);
 			}
 		}
 
 		$this->title = __('Menus');
-		$add_url     = Route::get('admin/menu')->uri(array('action' =>'add'));
-		$url         = Route::url('admin/menu', array('action' => 'list'), TRUE);
+        $add_url = Route::get('admin/menu')->uri(['action' => 'add']);
+        $url = Route::url('admin/menu', ['action' => 'list'], TRUE);
 
 		$view = View::factory('admin/menu/list')
 				->bind('datatables',   $this->_datatables)
@@ -97,7 +109,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 	public function action_add()
 	{
         $post = ORM::factory('Menu');
-		$action = Route::get('admin/menu')->uri(array('action' => 'add'));
+        $action = Route::get('admin/menu')->uri(['action' => 'add']);
 
 		if ($this->valid_post('menu'))
 		{
@@ -105,11 +117,11 @@ class Controller_Admin_Menu extends Controller_Admin {
 			try
 			{
 				$post->make_root();
-				DB::insert('widgets', array('name', 'title', 'module'))
-					->values(array('menu/'.$post->name, $post->title, 'gleez'))
+                DB::insert('widgets', ['name', 'title', 'module'])
+                    ->values(['menu/' . $post->name, $post->title, 'gleez'])
 					->execute();
 
-				Message::success(__('Menu %name created successful!', array('%name' => $post->title)));
+                Message::success(__('Menu %name created successful!', ['%name' => $post->title]));
                 Cache::instance()->delete('menus:' . $post->name);
 
 				// Redirect to listing
@@ -157,8 +169,8 @@ class Controller_Admin_Menu extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/menu')->uri(), 404);
 		}
 
-		$this->title = __('Edit %name menu', array('%name' => $post->title));
-		$action = Route::get('admin/menu')->uri(array('action' => 'edit', 'id' => $id));
+        $this->title = __('Edit %name menu', ['%name' => $post->title]);
+        $action = Route::get('admin/menu')->uri(['action' => 'edit', 'id' => $id]);
 
 		if ($this->valid_post('menu'))
 		{
@@ -166,7 +178,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 			try
 			{
 				$post->save();
-				Message::success(__('Menu %name saved successful!', array('%name' => $post->title)));
+                Message::success(__('Menu %name saved successful!', ['%name' => $post->title]));
                 Cache::instance()->delete('menus:' . $post->name);
 
 				// Redirect to listing
@@ -225,7 +237,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/menu')->uri(), 403);
 		}
 
-		$this->title = __('Delete Menu :title', array(':title' => $menu->title));
+        $this->title = __('Delete Menu :title', [':title' => $menu->title]);
 
 		$view = View::factory('form/confirm')
 			->set('action', $menu->delete_url)
@@ -245,7 +257,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 			if ($menu->id == 2)
 			{
 				Kohana::$log->add(Log::ERROR, 'Attempt to delete system menu.');
-				$this->_errors = array(__("You can't delete system menu!"));
+                $this->_errors = [__("You can't delete system menu!")];
 			}
 			else
 			{
@@ -256,20 +268,19 @@ class Controller_Admin_Menu extends Controller_Admin {
                     Cache::instance()->delete('menus:' . $menu->name);
 
 					$menu->delete();
-					Message::success(__('Menu %name deleted successful!', array('%name' => $name)));
+                    Message::success(__('Menu %name deleted successful!', ['%name' => $name]));
 				}
 				catch (Exception $e)
 				{
-					Kohana::$log->add(Log::ERROR, 'Error occurred deleting menu :term, id: :id, :msg',
-						array(':id' => $menu->id, ':term' => $menu->name, ':msg' => $e->getMessage()
-						)
-					);
-					$this->_errors = array(__('An error occurred deleting menu %menu: :message',
-						array(
+                    Kohana::$log->add(Log::ERROR, 'Error occurred deleting menu :term, id: :id, :msg', [
+                        ':id' => $menu->id,
+                        ':term' => $menu->name,
+                        ':msg' => $e->getMessage()
+                    ]);
+                    $this->_errors = [__('An error occurred deleting menu %menu: :message', [
 							'%menu'    => $menu->name,
 							':message' => $e->getMessage()
-						)
-					));
+                    ])];
 				}
 			}
 

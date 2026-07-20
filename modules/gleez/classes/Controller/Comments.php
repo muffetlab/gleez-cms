@@ -14,12 +14,12 @@ class Controller_Comments extends Controller {
 	 * Supported return formats
 	 * @var array
 	 */
-	protected $supported_formats = array(
+    protected $supported_formats = [
 		'.xhtml',
 		'.json',
 		'.xml',
 		'.rss',
-	);
+    ];
 
 	/**
 	 * Comment model to use (based on group)
@@ -131,12 +131,12 @@ class Controller_Comments extends Controller {
 		$offset = ($page - 1) * $this->per_page;
 
 		// Create pagination
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
 			'total_items'    => $total,
 			'items_per_page' => $this->per_page,
 			'uri'            => $uri,
-		));
+        ]);
 
 		// Execute query
 		$comments = $posts->order_by('created', 'ASC')
@@ -147,9 +147,10 @@ class Controller_Comments extends Controller {
 		// If no comments found (bad offset/page)
 		if (count($comments) == 0)
 		{
-			Kohana::$log->add(Log::INFO, 'No comments found for state: :state, page: :page',
-				array(':state' => $state, ':page' => $page)
-			);
+            Kohana::$log->add(Log::INFO, 'No comments found for state: :state, page: :page', [
+                ':state' => $state,
+                ':page' => $page
+            ]);
 			return;
 		}
 

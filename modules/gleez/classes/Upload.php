@@ -67,7 +67,7 @@ class Upload extends Kohana_Upload
     	}
 
         $picture_path  = APPPATH . $upload_dir;
-        $valid_formats = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'gif', 'png'));
+        $valid_formats = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'gif', 'png']);
         $save          = TRUE;
 
         if ( ! is_dir($picture_path))
@@ -76,9 +76,9 @@ class Upload extends Kohana_Upload
             {
                 Message::error(__('Failed to create directory %dir for uploading picture.'));
 
-                Kohana::$log->add(Log::ERROR, 'Failed to create directory :dir for uploading picture.',
-                    array(':dir' => $picture_path)
-                );
+                Kohana::$log->add(Log::ERROR, 'Failed to create directory :dir for uploading picture.', [
+                    ':dir' => $picture_path
+                ]);
 
                 $save = FALSE;
             }

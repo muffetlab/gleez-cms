@@ -54,14 +54,13 @@ class System {
 			$load_averages = @fread($fh, 64);
 			@fclose($fh);
 
-			$load_averages = empty($load_averages) ? array() : explode(' ', $load_averages);
+            $load_averages = empty($load_averages) ? [] : explode(' ', $load_averages);
 
 			$server_load = isset($load_averages[2]) ? $load_averages[0] . ' ' . $load_averages[1] . ' ' . $load_averages[2] : $not_available;
-		}
-		elseif (!in_array(PHP_OS, array(
-			'WINNT',
-			'WIN32'
-		)) && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages))
+        } elseif (
+            !in_array(PHP_OS, ['WINNT', 'WIN32'])
+            && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages)
+        )
 		{
 			$server_load = $load_averages[1] . ' ' . $load_averages[2] . ' ' . $load_averages[3];
 		}
@@ -164,7 +163,7 @@ class System {
             Cache::instance()->set('icons:fa-icons', $icons, Date::WEEK);
 		}
 
-        return array("fa-none" => __('none')) + $icons;
+        return ["fa-none" => __('none')] + $icons;
 	}
 
 	/**
@@ -194,7 +193,7 @@ class System {
 	 * @param   array         $defaults  Array that serves as the defaults [Optional]
 	 * @return  array                    Merged user defined values with defaults
 	 */
-    public static function parse_args($args, array $defaults = array()): array
+    public static function parse_args($args, array $defaults = []): array
     {
 		if (is_object($args))
 		{
@@ -233,16 +232,12 @@ class System {
     public static function sanitize_id(string $id): string
     {
 		// Change slashes and spaces to underscores
-		return str_replace(array(
-			'/',
-			'\\',
-			' '
-		), '_', $id);
+        return str_replace(['/', '\\', ' '], '_', $id);
 	}
 
 	public static function check()
 	{
-		$criteria = array(
+        $criteria = [
 			'php_version'           => version_compare(PHP_VERSION, Gleez::PHP_MIN_REQ, '>='),
 			'mysqli'                => function_exists("mysqli_query"),
 			'system_directory'      => is_dir(SYSPATH),
@@ -262,7 +257,7 @@ class System {
 			'ctype_digit'           => function_exists('ctype_digit'),
 			'uri_determination'     => isset($_SERVER['REQUEST_URI']) || isset($_SERVER['PHP_SELF']) || isset($_SERVER['PATH_INFO']),
 			'gd_info'               => function_exists('gd_info'),
-		);
+        ];
 
 		// Allow other modules to override or add
         return Module::action('system_check', $criteria);
@@ -392,7 +387,7 @@ class System {
     {
         $temp = [];
 		foreach ($array as $class => $unicode) {
-			$temp[$class] = ucfirst( str_ireplace(array($class_prefix, '-'), array('', ' '), $class) );
+            $temp[$class] = ucfirst(str_ireplace([$class_prefix, '-'], ['', ' '], $class));
 		}
 
 		return $temp;

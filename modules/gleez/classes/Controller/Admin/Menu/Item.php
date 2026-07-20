@@ -54,17 +54,17 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	public function action_list()
 	{
 		$id    = (int) $this->request->param('id');
-        $menu = ORM::factory('Menu', array('id' => $id, 'lft' => 1));
+        $menu = ORM::factory('Menu', ['id' => $id, 'lft' => 1]);
 
 		if ( ! $menu->loaded())
 		{
-			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu id: :id', array(':id' => $id));
+            Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu id: :id', [':id' => $id]);
             Message::error(__("Menu: doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/menu')->uri());
 		}
 
-		$this->title  = __('Items for %vocab', array('%vocab' => $menu->title));
+        $this->title = __('Items for %vocab', ['%vocab' => $menu->title]);
 		$view = View::factory('admin/menu/item/list')
 					->bind('items', $items)
 					->bind('id', $id);
@@ -96,7 +96,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	public function action_add()
 	{
 		$id   = (int) $this->request->param('id');
-        $menu = ORM::factory('Menu', array('id' => $id, 'lft' => 1));
+        $menu = ORM::factory('Menu', ['id' => $id, 'lft' => 1]);
 
 		if ( ! $menu->loaded())
 		{
@@ -106,7 +106,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/menu')->uri(), 404);
 		}
 
-		$this->title = __('Add Item for %menu', array('%menu' => $menu->title));
+        $this->title = __('Add Item for %menu', ['%menu' => $menu->title]);
 		$view = View::factory('admin/menu/item/form')
 					->bind('menu', $menu)
 					->bind('post', $post)
@@ -119,10 +119,10 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			try
 			{
 				$post->create_at($id, Arr::get($_POST, 'parent', 'last'));
-				Message::success(__('Menu Item %name saved successful!', array('%name' => $post->title)));
+                Message::success(__('Menu Item %name saved successful!', ['%name' => $post->title]));
                 Cache::instance()->delete('menus:' . $menu->name);
 
-				$this->request->redirect(Route::get('admin/menu/item')->uri(array('action' => 'list', 'id' => $menu->id)));
+                $this->request->redirect(Route::get('admin/menu/item')->uri(['action' => 'list', 'id' => $menu->id]));
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -158,7 +158,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/menu')->uri());
 		}
 
-		$this->title = __('Edit Item :name', array(':name' => $menu->title));
+        $this->title = __('Edit Item :name', [':name' => $menu->title]);
 		$view = View::factory('admin/menu/item/form')
 					->bind('menu', $menu)
 					->bind('post', $menu)
@@ -172,10 +172,13 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			try
 			{
 				$post->save();
-				Message::success(__('Menu Item %name updated successful!', array('%name' => $post->title)));
+                Message::success(__('Menu Item %name updated successful!', ['%name' => $post->title]));
                 Cache::instance()->delete_all();
 
-				$this->request->redirect(Route::get('admin/menu/item')->uri(array('action' => 'list', 'id' => $menu->scp)), 200);
+                $this->request->redirect(Route::get('admin/menu/item')->uri([
+                    'action' => 'list',
+                    'id' => $menu->scp
+                ]), 200);
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -207,14 +210,14 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 
 		if ( ! $menu->loaded())
 		{
-			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu item :id', array(':id' => $id));
+            Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu item :id', [':id' => $id]);
 			Message::error(__("Menu item doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/menu')->uri(), 404);
 		}
 
-		$action = Route::get('admin/menu/item')->uri(array('action' =>'delete', 'id' => $menu->id));
-		$this->title = __('Delete Menu Item :name', array(':name' => $menu->title));
+        $action = Route::get('admin/menu/item')->uri(['action' => 'delete', 'id' => $menu->id]);
+        $this->title = __('Delete Menu Item :name', [':name' => $menu->title]);
 		$view = View::factory('form/confirm')
 					->set('title', $menu->title)
 					->set('action', $action);
@@ -222,7 +225,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		// If deletion is not desired, redirect to list
         if (isset($_POST['no']) && $this->valid_post())
 		{
-			$this->request->redirect(Route::get('admin/menu/item')->uri(array('id' => $menu->pid)));
+            $this->request->redirect(Route::get('admin/menu/item')->uri(['id' => $menu->pid]));
 		}
 
 		// If deletion is confirmed
@@ -233,18 +236,18 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 				$name = $menu->title;
 				$menu->delete();
                 Cache::instance()->delete_all();
-				Message::success(__('Menu Item %name deleted successful!', array('%name' => $name)));
+                Message::success(__('Menu Item %name deleted successful!', ['%name' => $name]));
 
-				$this->request->redirect(Route::get('admin/menu')->uri(array('action' =>'list')), 200);
+                $this->request->redirect(Route::get('admin/menu')->uri(['action' => 'list']), 200);
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting menu item id: :id, :msg',
-					array(':id' => $menu->id, ':msg' => $e->getMessage())
-				);
-				Message::error(__('An error occurred deleting menu item %term', array('%term' => $menu->title)));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting menu item id: :id, :msg', [
+                    ':id' => $menu->id, ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred deleting menu item %term', ['%term' => $menu->title]));
 
-				$this->request->redirect(Route::get('admin/menu')->uri(array('action' =>'list', 'id' => $menu->scp)));
+                $this->request->redirect(Route::get('admin/menu')->uri(['action' => 'list', 'id' => $menu->scp]));
 			}
 		}
 
@@ -280,20 +283,19 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 				Kohana::$log->add(Log::ERROR, 'Menu Items order could not be saved.');
 				Message::error(__('Menu Items order could not be saved.'));
 
-				$this->request->redirect(Route::get('admin/menu/item')->uri(array('action'=>'list', 'id' => $id)));
+                $this->request->redirect(Route::get('admin/menu/item')->uri(['action' => 'list', 'id' => $id]));
 			}
 
 			try
 			{
 				foreach($this->tree as $node)
 				{
-					DB::update('menus')->set(
-						array(
+                    DB::update('menus')->set([
 							'pid'     => $node['pid'],
 							'active'  => $node['active'],
 							'lvl'     => $node['lvl'], 'lft' => $node['lft'],
 							'rgt'     => $node['rgt']
-					))
+                    ])
 					->where('id', '=', $node['id'])
 					->execute();
 				}
@@ -306,7 +308,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			}
 
             Cache::instance()->delete_all();
-			$this->request->redirect(Route::get('admin/menu/item')->uri(array('action'=>'list', 'id' => $id)));
+            $this->request->redirect(Route::get('admin/menu/item')->uri(['action' => 'list', 'id' => $id]));
 		}
 	}
 
@@ -369,14 +371,14 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 				$this->level_zero++;
 			}
 
-			$this->tree[] = array(
+            $this->tree[] = [
 				'id'      => $id,
 				'pid'     => (int) $val['plid'],
 				'active'  => isset($val['hidden']) ? 1 : 0,
 				'lvl'     => $level,
 				'lft'     => $left,
 				'rgt'     => $right
-			);
+            ];
 		}
 	}
 }

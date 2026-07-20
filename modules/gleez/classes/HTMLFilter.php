@@ -18,7 +18,7 @@ class HTMLFilter {
 	 * Allowed elements
 	 * @var array
 	 */
-	protected $allowed_tags = array(
+    protected $allowed_tags = [
 		// http://www.w3.org/TR/html4/struct/global.html#h-7.5.4
 		'div', 'span',
 		// http://www.w3.org/TR/html4/struct/links.html#h-12.2
@@ -77,13 +77,13 @@ class HTMLFilter {
 		'noframes',
 		// http://www.w3.org/TR/html4/present/frames.html#h-16.5
 		'iframe',
-	);
+    ];
 
 	/**
 	 * Protocols that are ok for use in URIs
 	 * @var array
 	 */
-	protected $allowed_protocols = array(
+    protected $allowed_protocols = [
 		'http',
 		'https',
 		'ftp',
@@ -100,7 +100,7 @@ class HTMLFilter {
 		'telnet',
 		'webcal',
 		'git',
-	);
+    ];
 
 	/**
 	 * The text
@@ -254,12 +254,7 @@ class HTMLFilter {
 		// Named entities
 		$string = preg_replace('/&amp;([A-Za-z][A-Za-z0-9]*;)/', '&\1', $string);
 
-		return preg_replace_callback('%(
-			<(?=[^a-zA-Z!/])  # a lone <
-			| <!--.*?-->        # a comment
-			| <[^>]*(>|$)       # a string that starts with a <, up until the > or the end of the string
-			| >                 # just a >
-		)%x', array($this, 'xss_split'), $string);
+        return preg_replace_callback('%<(?=[^a-zA-Z!/])|<!--.*?-->|<[^>]*(>|$)|>%', [$this, 'xss_split'], $string);
 	}
 
     protected function xss_split($m): string

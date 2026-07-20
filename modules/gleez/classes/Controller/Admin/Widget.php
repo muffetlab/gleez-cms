@@ -89,11 +89,11 @@ class Controller_Admin_Widget extends Controller_Admin {
 				$widget['region'] = $widget['status'] ? $widget['region'] : self::$WIDGET_REGION_NONE;
 
 				DB::update('widgets')
-					->set(array(
+                    ->set([
 						'status'=> $widget['status'],
 						'weight' => $widget['weight'],
-						'region' => $widget['region'])
-					)
+                        'region' => $widget['region']
+                    ])
 					->where('id','=',$widget['id'])
 					->execute();
 			}
@@ -107,7 +107,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$this->response->body($view);
 
         Assets::tableDrag();
-		Assets::js('widgets', 'media/js/widgets.js', array('jquery'), FALSE, array('weight' => 5));
+        Assets::js('widgets', 'media/js/widgets.js', ['jquery'], FALSE, ['weight' => 5]);
 	}
 
     /**
@@ -149,7 +149,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 				$widget->module = 'gleez';
 				$widget->save();
 
-				Message::success(__('Widget %name created successful!', array('%name' => $widget->title)));
+                Message::success(__('Widget %name created successful!', ['%name' => $widget->title]));
                 Cache::instance()->delete_all();
 
 				// Redirect to listing
@@ -191,7 +191,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 						->find_all()
 						->as_array('id', 'name');
 
-		$this->title = __('Edit %widget widget', array('%widget' => $widget->title));
+        $this->title = __('Edit %widget widget', ['%widget' => $widget->title]);
 
 		$view = View::factory('admin/widget/form')
 					->set('widget', $widget)
@@ -211,7 +211,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 				}
 
 				$handler->save($_POST);
-				Message::success(__('Widget %name updated successful!', array('%name' => $widget->title)));
+                Message::success(__('Widget %name updated successful!', ['%name' => $widget->title]));
                 Cache::instance()->delete_all();
 
 				// Redirect to listing
@@ -254,19 +254,22 @@ class Controller_Admin_Widget extends Controller_Admin {
 		}
 
 		$handler     = Widget::factory($widget->name, $widget);
-		$this->title = __('Delete :title', array(':title' => $widget->title ));
-		$destination = ($this->request->query('destination') !== NULL) ?
-			array('destination' => $this->request->query('destination')) : array();
+        $this->title = __('Delete :title', [':title' => $widget->title]);
+        $destination = $this->request->query('destination') !== NULL
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 
 		$view = View::factory('form/confirm')
-					->set('action', Route::get('admin/widget')
-					->uri( array('action' => 'delete', 'id' => $widget->id) ).URL::query($destination) )
+            ->set('action', Route::get('admin/widget')->uri([
+                    'action' => 'delete',
+                    'id' => $widget->id
+                ]) . URL::query($destination))
 					->set('title', $widget->title);
 
 		// If deletion is not desired, redirect to post
         if (isset($_POST['no']) && $this->valid_post())
 		{
-			$this->request->redirect(Route::get('admin/widget')->uri(array('id' => $widget->id)));
+            $this->request->redirect(Route::get('admin/widget')->uri(['id' => $widget->id]));
 		}
 
 		// If deletion is confirmed
@@ -278,15 +281,16 @@ class Controller_Admin_Widget extends Controller_Admin {
 				$widget->delete();
 				$handler->delete($_POST);
 
-				Message::success(__('Widget :title deleted successful!', array(':title' => $title)));
+                Message::success(__('Widget :title deleted successful!', [':title' => $title]));
                 Cache::instance()->delete_all();
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting widget id: :id, :msg',
-					array(':id' => $widget->id, ':msg' => $e->getMessage())
-				);
-				Message::error(__('An error occurred deleting widget %title', array(':title' => $widget->title)));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting widget id: :id, :msg', [
+                    ':id' => $widget->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred deleting widget %title', [':title' => $widget->title]));
 			}
 
 			$redirect = empty($destination) ? Route::get('admin/widget')->uri() :

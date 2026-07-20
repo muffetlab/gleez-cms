@@ -19,7 +19,7 @@ class Widget_Menu extends Widget {
      */
     public function render(): ?string
     {
-        return Menu::links($this->name, array('class' => 'menus', 'widget' => TRUE));
+        return Menu::links($this->name, ['class' => 'menus', 'widget' => TRUE]);
 	}
 
 }

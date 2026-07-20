@@ -136,12 +136,12 @@ class Assets {
 			unset($attrs['weight']);
 		}
 
-		return self::$css[$handle] = array(
+        return self::$css[$handle] = [
 			'src'    => $src,
 			'deps'   => (array) $deps,
 			'attrs'  => (array) $attrs,
 			'weight' => (int) $weight,
-		);
+        ];
 	}
 
 	/**
@@ -252,13 +252,13 @@ class Assets {
 			unset($attrs['weight']);
 		}
 
-		return self::$js[$handle] = array(
+        return self::$js[$handle] = [
 			'src'    => $src,
 			'deps'   => (array) $deps,
 			'footer' => $footer,
 			'attrs'  => (array) $attrs,
 			'weight' => (int) $weight,
-		);
+        ];
 	}
 
 	/**
@@ -372,13 +372,13 @@ class Assets {
 			unset($attrs['weight']);
 		}
 
-		return self::$codes[$handle] = array(
+        return self::$codes[$handle] = [
 			'code'   => $code,
 			'deps'   => (array) $deps,
 			'footer' => $footer,
 			'attrs'  => (array) $attrs,
 			'weight' => (int) $weight,
-		);
+        ];
 	}
 
 	/**
@@ -398,7 +398,7 @@ class Assets {
 
 		$asset = self::$codes[$handle];
 
-		return "<script".HTML::attributes(array('type' => 'text/javascript', 'nonce' => $nonce)).'>
+        return "<script" . HTML::attributes(['type' => 'text/javascript', 'nonce' => $nonce]) . '>
 		<!--//--><![CDATA['.PHP_EOL.$asset['code'].PHP_EOL.'<!--//-->]]></script>';
 	}
 
@@ -484,12 +484,12 @@ class Assets {
 			unset($attrs['weight']);
 		}
 
-		return self::$groups[$group][$handle] = array(
+        return self::$groups[$group][$handle] = [
 			'content' => $content,
 			'deps'    => (array) $deps,
 			'attrs'   => (array) $attrs,
 			'weight'  => (int) $weight,
-		);
+        ];
 	}
 
 	/**
@@ -545,7 +545,7 @@ class Assets {
         $sorted = System::sortDependencies($assets);
 
         // Sort the Assets so that it appears in the correct order.
-        uasort($sorted, array('self', 'sort_assets'));
+        uasort($sorted, ['self', 'sort_assets']);
 
 		return $sorted;
 	}
@@ -575,7 +575,7 @@ class Assets {
      */
     public static function tableDrag()
 	{
-        self::js('jquery_once', 'media/js/jquery.once.min.js', array('jquery'), FALSE, array('weight' => -10));
+        self::js('jquery_once', 'media/js/jquery.once.min.js', ['jquery'], FALSE, ['weight' => -10]);
         self::js('table-drag', 'media/js/greet.tableDrag.js');
         self::css('table-drag', 'media/css/greet.tableDrag.css');
 	}
@@ -592,9 +592,9 @@ class Assets {
         if (isset(self::$js) || isset(self::$codes) || isset(self::$settings))
 		{
             self::js('jquery', 'media/js/jquery-2.2.4.min.js', null, false, ['weight' => -20]);
-			self::js('gleez', 'media/js/gleez.js', array('jquery'), FALSE, array('weight' => -5));
+            self::js('gleez', 'media/js/gleez.js', ['jquery'], FALSE, ['weight' => -5]);
 
-			$data = Arr::merge(array(array('basePath' => URL::base(TRUE))), self::$settings);
+            $data = Arr::merge([['basePath' => URL::base(TRUE)]], self::$settings);
 
 			$code = 'jQuery.extend(Gleez.settings, ' . JSON::encode(call_user_func_array('array_merge_recursive', $data)) . ');';
 
@@ -710,7 +710,7 @@ class Assets {
 	public static function datatables()
 	{
         self::js('datatables', 'media/js/datatables.min.js', ['jquery'], false, ['weight' => -10]);
-		self::js('greet.dataTables', 'media/js/greet.dataTables.js', array('bootstrap'), FALSE, array('weight' => -6));
+        self::js('greet.dataTables', 'media/js/greet.dataTables.js', ['bootstrap'], FALSE, ['weight' => -6]);
         self::css('datatables.bootstrap', 'media/css/dataTables.bootstrap.min.css', null, ['weight' => -2]);
 	}
 
@@ -721,13 +721,13 @@ class Assets {
      */
 	public static function popup()
 	{
-		self::css('form', 'media/css/form.css', array('weight' => 2));
-		self::css('greet.popup', 'media/css/greet.popup.css', array('bootstrap'), array('media' => 'screen', 'weight' => 15));
+        self::css('form', 'media/css/form.css', ['weight' => 2]);
+        self::css('greet.popup', 'media/css/greet.popup.css', ['bootstrap'], ['media' => 'screen', 'weight' => 15]);
 
-		self::js('form', 'media/js/jquery.form.min.js', array('jquery'), FALSE, array('weight' => 15));
-		self::js('greet.ajaxform', 'media/js/greet.ajaxform.js', NULL, FALSE, array('weight' => 17));
+        self::js('form', 'media/js/jquery.form.min.js', ['jquery'], FALSE, ['weight' => 15]);
+        self::js('greet.ajaxform', 'media/js/greet.ajaxform.js', NULL, FALSE, ['weight' => 17]);
 		self::js('greet.typeahead', 'media/js/greet.typeahead.js', 'gleez');
-		self::js('greet.popup', 'media/js/greet.popup.js', array('bootstrap'), FALSE, array('weight' => 20));
+        self::js('greet.popup', 'media/js/greet.popup.js', ['bootstrap'], FALSE, ['weight' => 20]);
 	}
 
 	/**
@@ -747,7 +747,7 @@ class Assets {
 	 * @uses   HTML::style
 	 * @uses   HTML::script
 	 */
-    public static function compile(array $files = array(), string $format = self::FORMAT_TAG, string $type = 'js'): string
+    public static function compile(array $files = [], string $format = self::FORMAT_TAG, string $type = 'js'): string
     {
 		// Compiled contents of file
 		$compiled = "";
@@ -775,7 +775,7 @@ class Assets {
 				// If file doesn't exist, log the fact and skip
 				if ( ! file_exists($file))
 				{
-					Kohana::$log->add(Log::ERROR, 'Could not find file: [:file]', array(':file' => $file));
+                    Kohana::$log->add(Log::ERROR, 'Could not find file: [:file]', [':file' => $file]);
 					continue;
 				}
 
@@ -820,7 +820,7 @@ class Assets {
     protected static function _get_file_path(string $file, string $type = '.php'): string
     {
 		// @todo need to overwrite the assets set and get to fix this
-		$file = str_replace(array('media/', '.'.$type), '', $file);
+        $file = str_replace(['media/', '.' . $type], '', $file);
 
 		return Kohana::find_file('media', $file, $type);
 	}

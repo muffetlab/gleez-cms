@@ -14,21 +14,21 @@ class Model_Menu extends ORM_MPTT {
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns =  array(
-		'id'     => array( 'type' => 'int' ),
-		'title'  => array( 'type' =>  'string' ),
-		'name'   => array( 'type' =>  'string' ),
-		'descp'  => array( 'type' =>  'string' ),
-		'image'  => array( 'type' =>  'string' ),
-		'url'    => array( 'type' =>  'string' ),
-		'params' => array( 'type' =>  'string' ),
-		'active' => array( 'type' => 'int' ),
-		'pid'    => array( 'type' => 'int' ),
-		'lft'    => array( 'type' => 'int' ),
-		'rgt'    => array( 'type' => 'int' ),
-		'lvl'    => array( 'type' => 'int' ),
-		'scp'    => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'title' => ['type' => 'string'],
+        'name' => ['type' => 'string'],
+        'descp' => ['type' => 'string'],
+        'image' => ['type' => 'string'],
+        'url' => ['type' => 'string'],
+        'params' => ['type' => 'string'],
+        'active' => ['type' => 'int'],
+        'pid' => ['type' => 'int'],
+        'lft' => ['type' => 'int'],
+        'rgt' => ['type' => 'int'],
+        'lvl' => ['type' => 'int'],
+        'scp' => ['type' => 'int'],
+    ];
 
 	/**
 	 * Scope column name
@@ -49,11 +49,11 @@ class Model_Menu extends ORM_MPTT {
 	 */
 	public function rules(): array
     {
-		return array(
-			'name' => array(
-                array(array($this, 'is_valid'), array(':validation')),
-			),
-		);
+        return [
+            'name' => [
+                [[$this, 'is_valid'], [':validation']],
+            ],
+        ];
 	}
 
 	/**
@@ -63,11 +63,11 @@ class Model_Menu extends ORM_MPTT {
 	 */
 	public function labels(): array
     {
-		return array(
+        return [
 			'title'  => __('Title'),
 			'name'   => __('Slug'),
 			'url'    => __('Link'),
-		);
+        ];
 	}
 
     /**
@@ -84,13 +84,13 @@ class Model_Menu extends ORM_MPTT {
 	{
         switch ($column) {
 			case 'list_items_url':
-				return Route::get('admin/menu/item')->uri(array('id' => $this->id));
+                return Route::get('admin/menu/item')->uri(['id' => $this->id]);
             case 'add_item_url':
-				return Route::get('admin/menu/item')->uri(array('id' => $this->id, 'action' => 'add'));
+                return Route::get('admin/menu/item')->uri(['id' => $this->id, 'action' => 'add']);
             case 'edit_url':
-				return Route::get('admin/menu')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('admin/menu')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get('admin/menu')->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get('admin/menu')->uri(['id' => $this->id, 'action' => 'delete']);
         }
 
         return parent::__get($column);
@@ -107,7 +107,7 @@ class Model_Menu extends ORM_MPTT {
 	{
         if (empty($this->name) && empty($this->title))
 		{
-			$validation->error('title', 'not_empty', array($this->title));
+            $validation->error('title', 'not_empty', [$this->title]);
 		}
 		else
 		{
@@ -142,7 +142,7 @@ class Model_Menu extends ORM_MPTT {
     {
 		$i = 1;
 		$original = $str;
-        $post = ORM::factory('Menu', array('name' => $str));
+        $post = ORM::factory('Menu', ['name' => $str]);
 
         while ($post && $post->loaded() && $post->id !== $this->id)
 		{

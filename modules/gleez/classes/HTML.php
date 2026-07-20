@@ -35,7 +35,7 @@ class HTML extends Kohana_HTML
         if (strpos($file, 'media/js') !== FALSE && Gleez::$installed && strpos($file, 'guide-media') === FALSE)
 		{
 			$theme = Theme::$active;
-            $file = str_replace(array('media/js'), "media/$theme/js", $file);
+            $file = str_replace(['media/js'], "media/$theme/js", $file);
 		}
 
 		return parent::script($file, $attributes, $protocol, $index);
@@ -63,7 +63,7 @@ class HTML extends Kohana_HTML
         if (strpos($file, 'media/css') !== FALSE && Gleez::$installed && strpos($file, 'guide-media') === FALSE)
 		{
 			$theme = Theme::$active;
-            $file = str_replace(array('media/css'), "media/$theme/css", $file);
+            $file = str_replace(['media/css'], "media/$theme/css", $file);
 		}
 
 		return parent::style($file, $attributes, $protocol, $index);
@@ -143,7 +143,7 @@ class HTML extends Kohana_HTML
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function links(array $links, array $attributes = array('class' => 'links')): string
+    public static function links(array $links, array $attributes = ['class' => 'links']): string
     {
 		$output = '';
 
@@ -176,7 +176,7 @@ class HTML extends Kohana_HTML
 				{
 					$class .= ' last';
 				}
-				$output .= '<li'.self::attributes(array('class' => $class)) .'>';
+                $output .= '<li' . self::attributes(['class' => $class]) . '>';
 
 				if( is_object($item))
 				{
@@ -205,7 +205,7 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    HTML::chars
      */
-    public static function tabs(array $tabs, array $attributes = array('class' => 'tabs')): string
+    public static function tabs(array $tabs, array $attributes = ['class' => 'tabs']): string
     {
 		$output = '';
 
@@ -233,7 +233,7 @@ class HTML extends Kohana_HTML
 					$class .= ' last';
 				}
 
-				$output .= '<li'.self::attributes(array('class' => $class)).'>';
+                $output .= '<li' . self::attributes(['class' => $class]) . '>';
 
 				// Sanitized link text
                 $tab['text'] = HTML::chars($tab['text']);
@@ -284,7 +284,7 @@ class HTML extends Kohana_HTML
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function icon(string $url, string $icon, array $attrs = array()): string
+    public static function icon(string $url, string $icon, array $attrs = []): string
     {
         return self::anchor($url, '<i class="' . $icon . '"></i>', $attrs);
 	}
@@ -342,7 +342,7 @@ class HTML extends Kohana_HTML
 	 */
     public static function per_page(): array
     {
-		return array(
+        return [
 			5 => 5,
 			10 => 10,
 			15 => 15,
@@ -358,6 +358,6 @@ class HTML extends Kohana_HTML
 			150 => 150,
 			250 => 250,
 			300 => 300,
-		);
+        ];
 	}
 }

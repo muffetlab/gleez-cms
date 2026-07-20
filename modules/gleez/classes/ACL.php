@@ -90,8 +90,9 @@ class ACL {
     {
 		if ( ! isset(self::$_all_perms[$name]))
 		{
-			throw new Kohana_Exception('The requested Permission does not exist: :permission',
-				array(':permission' => $name));
+            throw new Kohana_Exception('The requested Permission does not exist: :permission', [
+                ':permission' => $name
+            ]);
 		}
 
 	  return self::$_all_perms[$name];
@@ -222,7 +223,7 @@ class ACL {
      * @throws Kohana_Exception
      * @since     2.0
      */
-    public static function required(string $perm_name, Model_User $user = NULL, callable $callback = NULL, array $args = array())
+    public static function required(string $perm_name, Model_User $user = NULL, callable $callback = NULL, array $args = [])
 	{
 		if ( ! self::check($perm_name, $user))
 		{
@@ -239,8 +240,9 @@ class ACL {
 			}
 
 			// If the action is set and the role hasn't been matched, the user doesn't have permission
-			throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action :perm.',
-				array(':perm' => $perm_name));
+            throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action :perm.', [
+                ':perm' => $perm_name
+            ]);
 		}
 	}
 
@@ -259,7 +261,7 @@ class ACL {
      * @uses   Request::redirect()
      * @uses   Route::get()
      */
-    public static function redirect(string $perm_name, $route = NULL, array $uri = array())
+    public static function redirect(string $perm_name, $route = NULL, array $uri = [])
 	{
 		if ( ! self::check($perm_name))
 		{
@@ -271,8 +273,9 @@ class ACL {
 			}
 
 			// If the action is set and the role hasn't been matched, the user doesn't have permission.
-			throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action :perm.',
-				array(':perm' => $perm_name));
+            throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action :perm.', [
+                ':perm' => $perm_name
+            ]);
 		}
 	}
 
@@ -405,7 +408,7 @@ class ACL {
 		$user_roles = self::get_user_roles($user);
 	
 		// Filter out active roles
-		$roles = array_filter(array_keys($user_roles), array('self', 'is_role'));
+        $roles = array_filter(array_keys($user_roles), ['self', 'is_role']);
         self::$_perm[$user->id] = [];
 
 		//role based permissions
@@ -422,7 +425,7 @@ class ACL {
 		{
 			if($val == self::PERM_ALLOW)
 			{
-				self::$_perm[$user->id] = array_merge(self::$_perm[$user->id], array($perm => self::ALLOW) );
+                self::$_perm[$user->id] = array_merge(self::$_perm[$user->id], [$perm => self::ALLOW]);
 			}
 			elseif($val == self::PERM_DENY)
 			{
@@ -452,12 +455,12 @@ class ACL {
      */
     public static function post(string $action, ORM $post, Model_User $user = NULL): bool
     {
-		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
-			Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.',
-				array(':act' => $action)
-			);
+            Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
 			return FALSE;
 		}
 
@@ -555,12 +558,12 @@ class ACL {
      */
     public static function comment(string $action, ORM $comment, Model_User $user = NULL): bool
     {
-		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], TRUE))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
-			Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.',
-				array(':act' => $action)
-			);
+            Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
 			return FALSE;
 		}
 

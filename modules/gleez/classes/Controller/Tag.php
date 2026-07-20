@@ -53,10 +53,10 @@ class Controller_Tag extends Template {
 
 		if ( ! $tag->loaded())
 		{
-			throw HTTP_Exception::factory(404, 'Tag :tag not found!', array(':tag' => $id));
+            throw HTTP_Exception::factory(404, 'Tag :tag not found!', [':tag' => $id]);
 		}
 
-		$this->title = __(':title', array(':title' => Text::ucfirst($tag->name)));
+        $this->title = __(':title', [':title' => Text::ucfirst($tag->name)]);
 
 		$view = View::factory('tag/view')
 				->set('teaser',      TRUE)
@@ -79,12 +79,12 @@ class Controller_Tag extends Template {
 			return;
 		}
 
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
 			'total_items'    => $total,
 			'items_per_page' => 15,
 			'uri'            => $tag->url,
-		));
+        ]);
 
 		$posts = $posts->order_by('created', 'DESC')
             ->limit($pagination->itemsPerPage())
@@ -96,8 +96,8 @@ class Controller_Tag extends Template {
 		// Set the canonical and shortlink for search engines
 		if ($this->auto_render === TRUE)
 		{
-			Meta::links(URL::canonical($tag->url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('tag', array('action' => 'view', 'id' => $tag->id)), array('rel' => 'shortlink'));
+            Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('tag', ['action' => 'view', 'id' => $tag->id]), ['rel' => 'shortlink']);
 		}
 	}
 }

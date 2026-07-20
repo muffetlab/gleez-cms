@@ -44,7 +44,7 @@ class Widget_Admin extends Widget {
 		$menus = Menu::items('management')->get_items();
 		unset($menus['administer']);
 		return View::factory('widgets/shortcuts')
-				->set(array( 'items' => $menus ))
+            ->set(['items' => $menus])
 				->render();
 	}
 
@@ -53,10 +53,10 @@ class Widget_Admin extends Widget {
      */
     public function donate(): string
     {
-		return View::factory('widgets/static')->set(array(
+        return View::factory('widgets/static')->set([
 			'title' => __('Donate'),
 			'content' => __('If you use Gleez, we ask that you donate to ensure future development is possible.')
-		))->render();
+        ])->render();
 	}
 
     /**
@@ -64,9 +64,9 @@ class Widget_Admin extends Widget {
      */
     public function welcome(): string
     {
-		return View::factory('widgets/welcome')->set(array(
+        return View::factory('widgets/welcome')->set([
 			'title' => __('Welcome'),
-		))->render();
+        ])->render();
 	}
 
     /**

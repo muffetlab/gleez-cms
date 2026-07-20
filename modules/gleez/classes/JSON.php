@@ -39,7 +39,7 @@ class JSON {
 		}
 
 		// json_encode() does not escape <, > and &, so we do it with str_replace().
-		return str_replace(array('<', '>', '&'), array('\u003c', '\u003e', '\u0026'), $raw);
+        return str_replace(['<', '>', '&'], ['\u003c', '\u003e', '\u0026'], $raw);
 	}
 
 	/**
@@ -99,7 +99,7 @@ class JSON {
 
 		if ( ! empty($error))
 		{
-			throw new Kohana_Exception('JSON DECODE: :error', array(':error' => __($error)));
+            throw new Kohana_Exception('JSON DECODE: :error', [':error' => __($error)]);
 		}
 
 		return $result;

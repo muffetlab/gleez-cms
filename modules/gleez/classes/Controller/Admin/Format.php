@@ -79,7 +79,7 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		if (is_null($format))
 		{
-			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent format id :id', array(':id' => $id));
+            Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent format id :id', [':id' => $id]);
             Message::error(__("Text Format doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/format')->uri(), 404);
@@ -93,9 +93,9 @@ class Controller_Admin_Format extends Controller_Admin {
 		$enabled_filters = $formats[$id]['filters'];
 
 		// Form attributes
-		$params = array('id' => $id, 'action' => 'configure');
+        $params = ['id' => $id, 'action' => 'configure'];
 
-		$this->title = __('Configure %name format', array('%name' => $format['name']));
+        $this->title = __('Configure %name format', ['%name' => $format['name']]);
 
 		$view = View::factory('admin/format/form')
 			->set('roles', $all_roles)

@@ -143,23 +143,21 @@ class Gleez {
 			Kohana_Exception::$error_view = 'errors/error';
 
 			// Static file serving (CSS, JS, images)
-			Route::set('install/media', 'media(/<file>)', array(
+            Route::set('install/media', 'media(/<file>)', [
 				'file' => '.+'
-			))
-			->defaults(array(
+            ])->defaults([
 				'controller' => 'install',
 				'action'     => 'media',
 				'file'       => NULL,
 				'directory'  => 'install'
-			));
+            ]);
 
-			Route::set('install', '(install(/<action>))', array(
+            Route::set('install', '(install(/<action>))', [
 				'action' => 'index|systemcheck|database|install|finalize'
-			))
-			->defaults(array(
+            ])->defaults([
 				'controller' => 'install',
 				'directory'  => 'install'
-			));
+            ]);
 
 			return;
 		}
@@ -184,11 +182,11 @@ class Gleez {
 	 */
     public static function types(): array
     {
-		$states = array(
+        $states = [
 			'blog'  => __('Blog'),
 			'page'  => __('Page'),
 			'user'  => __('User')
-		);
+        ];
 
         return Module::action('gleez_types', $states);
 	}
@@ -237,7 +235,7 @@ class Gleez {
 
         if (!empty($blocked_ips) && in_array($ip, preg_split("/[\s,]+/", $blocked_ips)))
 		{
-			throw HTTP_Exception::factory(403, 'Sorry, your ip address (:ip) has been banned.', array(':ip' => $ip));
+            throw HTTP_Exception::factory(403, 'Sorry, your ip address (:ip) has been banned.', [':ip' => $ip]);
 		}
 	}
 
@@ -285,9 +283,9 @@ class Gleez {
 			return $uri;
 		}
 
-		throw new Kohana_Exception('Unable to locate file `:file`. No file exists with the specified file name.', array(
+        throw new Kohana_Exception('Unable to locate file `:file`. No file exists with the specified file name.', [
 			':file' => $file
-		));
+        ]);
 	}
 
 	/**

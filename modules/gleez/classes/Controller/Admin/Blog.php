@@ -36,11 +36,11 @@ class Controller_Admin_Blog extends Controller_Admin {
      */
 	public function after()
 	{
-		$this->_tabs =  array(
-			array('link' => Route::get('admin/blog')->uri(array('action' =>'index')), 'text' => __('Statistics')),
-			array('link' => Route::get('admin/blog')->uri(array('action' =>'list')), 'text' => __('List')),
-			array('link' => Route::get('admin/blog')->uri(array('action' =>'settings')),'text' => __('Settings')),
-		);
+        $this->_tabs = [
+            ['link' => Route::get('admin/blog')->uri(['action' => 'index']), 'text' => __('Statistics')],
+            ['link' => Route::get('admin/blog')->uri(['action' => 'list']), 'text' => __('List')],
+            ['link' => Route::get('admin/blog')->uri(['action' => 'settings']), 'text' => __('Settings')],
+        ];
 
 		parent::after();
 	}
@@ -89,8 +89,8 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$this->title = __('Blog Settings');
 
 		$config = Kohana::$config->load('blog');
-		$action = Route::get('admin/blog')->uri(array('action' =>'settings'));
-		$vocabs = array(__('none'));
+        $action = Route::get('admin/blog')->uri(['action' => 'settings']);
+        $vocabs = [__('none')];
 
 		$view   = View::factory('admin/blog/settings')
 					->bind('vocabs',            $vocabs)
@@ -103,7 +103,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 		{
 			unset($_POST['blog_settings'], $_POST['_token'], $_POST['_action']);
 
-			$cats = $config->get('category', array());
+            $cats = $config->get('category', []);
 
 			foreach ($_POST as $key => $value)
 			{
@@ -123,7 +123,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 			Kohana::$log->add(Log::INFO, 'Blog Settings updated.');
 			Message::success(__('Blog Settings updated!'));
 
-			$this->request->redirect(Route::get('admin/blog')->uri(array('action' =>'settings')));
+            $this->request->redirect(Route::get('admin/blog')->uri(['action' => 'settings']));
 		}
 
 		$this->response->body($view);
@@ -151,9 +151,9 @@ class Controller_Admin_Blog extends Controller_Admin {
 
 		$this->title = __('Blog List');
 
-		$url         = Route::url('admin/blog', array('action' => 'list'), TRUE);
-		$redirect    = Route::get('admin/blog')->uri(array('action' => 'list'));
-		$action      = Route::get('admin/blog')->uri(array('action' => 'bulk'));
+        $url = Route::url('admin/blog', ['action' => 'list'], TRUE);
+        $redirect = Route::get('admin/blog')->uri(['action' => 'list']);
+        $action = Route::get('admin/blog')->uri(['action' => 'bulk']);
 		$destination = '?destination='.$redirect;
 
 		$is_datatables = Request::is_datatables();
@@ -161,21 +161,26 @@ class Controller_Admin_Blog extends Controller_Admin {
 
 		if ($is_datatables)
 		{
-			$this->_datatables = $blogs->dataTables(array('id', 'title', 'author', 'status', 'updated'));
+            $this->_datatables = $blogs->dataTables(['id', 'title', 'author', 'status', 'updated']);
 
 			foreach ($this->_datatables->result() as $blog)
 			{
-				$this->_datatables->add_row(
-					array(
+                $this->_datatables->add_row([
 						Form::checkbox('blogs['.$blog->id.']', $blog->id, isset($_POST['blogs'][$blog->id])),
 						HTML::anchor($blog->url, $blog->title),
 						HTML::anchor($blog->user->url, $blog->user->nick),
 						HTML::label(__($blog->status), $blog->status),
 						Date::formatted_time($blog->updated, 'M d, Y'),
-                        HTML::icon($blog->edit_url . $destination, 'fa far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit Blog'))) . '&nbsp;' .
-                        HTML::icon($blog->delete_url . $destination, 'fa fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Blog'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-blogs'))
-					)
-				);
+                    HTML::icon($blog->edit_url . $destination, 'fa far fa-edit', [
+                        'class' => 'btn btn-sm btn-default action-edit',
+                        'title' => __('Edit Blog')
+                    ])
+                    . '&nbsp;'
+                    . HTML::icon($blog->delete_url . $destination, 'fa fas fa-trash-can', [
+                        'class' => 'btn btn-sm btn-default action-delete',
+                        'title' => __('Delete Blog'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-blogs'
+                    ])
+                ]);
 			}
 		}
 
@@ -203,7 +208,7 @@ class Controller_Admin_Blog extends Controller_Admin {
      */
 	public function action_bulk()
 	{
-		$redirect = Route::get('admin/blog')->uri(array('action' => 'list'));
+        $redirect = Route::get('admin/blog')->uri(['action' => 'list']);
 
 		$this->title = __('Bulk Actions');
 		$post = $this->request->post();
@@ -289,11 +294,11 @@ class Controller_Admin_Blog extends Controller_Admin {
             list($func) = Arr::callback($operation['callback']);
 			if (isset($operation['arguments']))
 			{
-				$args = array_merge(array($blogs), $operation['arguments']);
+                $args = array_merge([$blogs], $operation['arguments']);
 			}
 			else
 			{
-				$args = array($blogs);
+                $args = [$blogs];
 			}
 
 			// set model name

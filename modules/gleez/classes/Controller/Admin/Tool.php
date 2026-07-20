@@ -57,10 +57,11 @@ class Controller_Admin_Tool extends Controller_Admin {
 			$tot_data = $table['Data_length'];
 			$tot_idx  = $table['Index_length'];
 
-			$tables_info[] = array( 'name' => $table['Name'],
+            $tables_info[] = [
+                'name' => $table['Name'],
 									'rows' => $table['Rows'],
 									'space' => round (($tot_data + $tot_idx) / 1024,3),
-									);
+            ];
 
 			$total_space += ($tot_data + $tot_idx) / 1024;
 		}
@@ -70,7 +71,9 @@ class Controller_Admin_Tool extends Controller_Admin {
 				->set('count', count($tables))
 				->set('space', $total_space);
 
-        $this->title = __('Database :sub', array(':sub' => '<small>(' . Kohana::$config->load('database.default.connection.database') . ')</small>'));
+        $this->title = __('Database :sub', [
+            ':sub' => '<small>(' . Kohana::$config->load('database.default.connection.database') . ')</small>'
+        ]);
 		$this->response->body($view);
 	}
 
@@ -90,13 +93,13 @@ class Controller_Admin_Tool extends Controller_Admin {
 		get_cfg_var('GLEEZ_ENV') && $gleezEnv['env'] = 'Kohana::'.strtoupper(get_cfg_var('GLEEZ_ENV'));
 
 		//
-		!empty($gleezEnv) && $gleezEnv['all'] = array(
+        !empty($gleezEnv) and $gleezEnv['all'] = [
 			'Kohana::DEVELOPMENT' => Kohana::DEVELOPMENT,
 			'Kohana::TESTING'     => Kohana::TESTING,
 			'Kohana::STAGING'     => Kohana::STAGING,
 			'Kohana::PRODUCTION'  => Kohana::PRODUCTION
 
-		);
+        ];
 
 		$this->title = __('Gleez Environment');
 
