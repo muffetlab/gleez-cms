@@ -46,7 +46,7 @@ class Controller_Buddy extends Template {
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
         if ($account && $user->id === $account->id)
@@ -57,13 +57,13 @@ class Controller_Buddy extends Template {
 		$model 	  = Model::factory('buddy');
 		$total    = $model->countFriends($id);
 
-		$url = Route::get('user/buddy')->uri( array('action' => 'list','id' => $id) );
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
-			'total_items' 	 => $total,
-			'items_per_page' => 15,
-			'uri'  			 => $url,
-		));
+        $url = Route::get('user/buddy')->uri(['action' => 'list', 'id' => $id]);
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => 15,
+            'uri' => $url,
+        ]);
 
         $friends = $model->friends($id, $pagination->itemsPerPage(), $pagination->offset());
 
@@ -93,7 +93,7 @@ class Controller_Buddy extends Template {
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
 		if ($this->_auth->logged_in())
@@ -112,14 +112,14 @@ class Controller_Buddy extends Template {
 
 		$model = Model::factory('buddy');
 		$total = $model->countSent($id);
-		
-		$url = Route::get('user/buddy')->uri(array('action'=>'sent','id'=>$id));
-		$pagination = Pagination::factory(array(
-			'current_page'		=> array('source'=>'cms', 'key'=>'page'),
-			'total_items'		=> $total,
-			'items_per_page'	=> 15,
-			'uri'				=> $url,
-		));
+
+        $url = Route::get('user/buddy')->uri(['action' => 'sent', 'id' => $id]);
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => 15,
+            'uri' => $url,
+        ]);
 
         $sentRequests = $model->sentRequests($id, $pagination->itemsPerPage(), $pagination->offset());
 			
@@ -148,7 +148,7 @@ class Controller_Buddy extends Template {
 			{
 				Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 				// No user is currently logged in
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+                $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 			}
 		
 		if ($this->_auth->logged_in())
@@ -162,14 +162,14 @@ class Controller_Buddy extends Template {
 		
 		$model = Model::factory('buddy');
 		$total = $model->countPending($id);
-		
-		$url = Route::get('user/buddy')->uri(array('action'=>'pending','id'=>$id));
-		$pagination = Pagination::factory(array(
-			'current_page'		=> array('source'=>'cms', 'key'=>'page'),
-			'total_items'		=> $total,
-			'items_per_page'	=> 15,
-			'uri'				=> $url,
-		));
+
+        $url = Route::get('user/buddy')->uri(['action' => 'pending', 'id' => $id]);
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => 15,
+            'uri' => $url,
+        ]);
 
         $pendingRequests = $model->pendingRequests($id, $pagination->itemsPerPage(), $pagination->offset());
 			
@@ -196,13 +196,13 @@ class Controller_Buddy extends Template {
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
 		$model = Model::factory('buddy')->addFriend($account->id, $invitee->id);
-		 
-		Message::success(__("Buddy request sent to %title", array('%title' => $invitee->nick)));
-		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $id)));
+
+        Message::success(__("Buddy request sent to %title", ['%title' => $invitee->nick]));
+        $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $id]));
 	}
 
     /**
@@ -217,7 +217,7 @@ class Controller_Buddy extends Template {
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
 		$model = Model::factory('buddy');
@@ -225,16 +225,16 @@ class Controller_Buddy extends Template {
 		if ( $model->isFriend($this->user->id, $friend->id))
 		{
 			// Already friend
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $friend->id)));
+            $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $friend->id]));
 		}
 
 		if ( $model->isRequest($this->user->id, $friend->id))
 		{
-			$model->accept($this->user->id);		
-			Message::success(__("Buddy request: %title accepted", array('%title' => $friend->nick)));
+            $model->accept($this->user->id);
+            Message::success(__("Buddy request: %title accepted", ['%title' => $friend->nick]));
 		}
 
-		$this->request->redirect(Route::get('user')->uri(array('action' => 'view', 'id' => $id)));
+        $this->request->redirect(Route::get('user')->uri(['action' => 'view', 'id' => $id]));
 	}
 
     /**
@@ -249,7 +249,7 @@ class Controller_Buddy extends Template {
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
 		$model = Model::factory('buddy');
@@ -257,16 +257,16 @@ class Controller_Buddy extends Template {
 		if ( $model->isFriend($this->user->id, $friend->id))
 		{
 			// Already friend
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $id)));
+            $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $id]));
 		}
 
 		if ( $model->isRequest($this->user->id, $friend->id))
 		{
 			$model->reject($id);
-			Message::success(__("Buddy %title rejected", array('%title' => $friend->nick)));
+            Message::success(__("Buddy %title rejected", ['%title' => $friend->nick]));
 		}
 
-		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $id)));
+        $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $id]));
 	}
 
     /**
@@ -282,12 +282,12 @@ class Controller_Buddy extends Template {
 		{
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
 		Model::factory('buddy')->delete($id, $account->id);
-		Message::success( __("Buddy %title deleted", array('%title' => $friend->nick)) );
+        Message::success(__("Buddy %title deleted", ['%title' => $friend->nick]));
 
-		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile', 'id' => $this->user->id)));
+        $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $this->user->id]));
 	}
 }

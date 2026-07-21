@@ -60,13 +60,13 @@ class Controller_Admin_Permission extends Controller_Admin {
 
         if (isset($_POST['permissions']) && $this->valid_post('role'))
 		{
-			$per_insert = DB::insert('permissions', array('rid', 'permission', 'module'));
+            $per_insert = DB::insert('permissions', ['rid', 'permission', 'module']);
 
 			foreach ($_POST['role'] as $key => $val)
 			{
 				if (isset($val['name']))
 				{
-					$per_insert->values(array($role->id, $val['name'], $val['module']));
+                    $per_insert->values([$role->id, $val['name'], $val['module']]);
 				}
 			}
 
@@ -78,17 +78,17 @@ class Controller_Admin_Permission extends Controller_Admin {
 				Message::success(__('Permissions saved successfully!'));
 
 				// Redirect to listing
-				$this->request->redirect(Route::get('admin/permission')->uri(array('action' => 'role', 'id' => $role->id)));
+                $this->request->redirect(Route::get('admin/permission')->uri(['action' => 'role', 'id' => $role->id]));
 			}
 			catch(ORM_Validation_Exception $e)
 			{
 				Message::error(__('Permissions save failed!'));
-				$this->_errors = array('models', TRUE);
+                $this->_errors = ['models', TRUE];
 			}
 		}
 
 		$role_perms  = DB::select()->from('permissions')->as_object()->execute();
-		$this->title = __(':role Permissions', array(':role' => $role->name));
+        $this->title = __(':role Permissions', [':role' => $role->name]);
 
 		$view = View::factory('admin/permission/role')
 			->set('permissions', ACL::all())
@@ -114,11 +114,11 @@ class Controller_Admin_Permission extends Controller_Admin {
 			Message::error(__("User doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 
-			$this->request->redirect(Route::get('admin/user')->uri(array('action' => 'list')), 404);
+            $this->request->redirect(Route::get('admin/user')->uri(['action' => 'list']), 404);
 		}
 
-		$this->title = __(':user Permissions', array(":user" => $post->name));
-		$action      = Route::get('admin/permission')->uri(array('action' => 'user', 'id' => (isset($post->id) ? $post->id : 0)));
+        $this->title = __(':user Permissions', [":user" => $post->name]);
+        $action = Route::get('admin/permission')->uri(['action' => 'user', 'id' => isset($post->id) ? $post->id : 0]);
 
 		$view = View::factory('admin/permission/user')
 			->set('post',        $post)
@@ -130,14 +130,14 @@ class Controller_Admin_Permission extends Controller_Admin {
 		if ($this->valid_post('permissions'))
 		{
 			$perms = array_filter($_POST['perms']);
-			$post->data = array('permissions' => $perms);
+            $post->data = ['permissions' => $perms];
 
 			try
 			{
 				$post->save();
 				Message::success(__('Permissions: saved successful!'));
 
-				$this->request->redirect(Route::get('admin/permission')->uri(array('action' => 'user', 'id' => $post->id)));
+                $this->request->redirect(Route::get('admin/permission')->uri(['action' => 'user', 'id' => $post->id]));
 			}
 			catch(ORM_Validation_Exception $e)
 			{
@@ -149,7 +149,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 			{
 				Message::error(__('Permissions save failed!'));
 
-				$this->_errors = array($e->getMessage()); 
+                $this->_errors = [$e->getMessage()];
 			}
 		}
 

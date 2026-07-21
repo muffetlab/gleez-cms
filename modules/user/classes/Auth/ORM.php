@@ -30,20 +30,20 @@ class Auth_ORM extends Kohana_Auth_ORM
     public static function providers(): array
     {
 		if ( ! Module::is_active('oauth2'))
-			return array();
+            return [];
 
-		$config    = Kohana::$config->load('oauth2')->get('providers', array());
+        $config = Kohana::$config->load('oauth2')->get('providers', []);
         $providers = [];
 
 		foreach($config as $name => $provider)
 		{
 			if ($provider['enable'] === TRUE)
 			{
-				$providers[$name] = array(
-					'name' => $name,
-					'url'  => Route::get('oauth2/provider')->uri(array('provider' => $name, 'action' => 'login')),
+                $providers[$name] = [
+                    'name' => $name,
+                    'url' => Route::get('oauth2/provider')->uri(['provider' => $name, 'action' => 'login']),
                     'icon' => $provider['icon'] ?? 'facebook',
-				);
+                ];
 			}
 		}
 
@@ -169,11 +169,11 @@ class Auth_ORM extends Kohana_Auth_ORM
 		}
 
 		// Token data
-		$data = array(
-			'user_id'    => $user->id,
-			'expires'    => time() + $this->_config['lifetime'],
-			'user_agent' => sha1(Request::$user_agent),
-		);
+        $data = [
+            'user_id' => $user->id,
+            'expires' => time() + $this->_config['lifetime'],
+            'user_agent' => sha1(Request::$user_agent),
+        ];
 
 		// Create a new autologin token
         $token = ORM::factory('User_Token')
@@ -253,13 +253,13 @@ class Auth_ORM extends Kohana_Auth_ORM
 			if ($remember === TRUE)
 			{
 				// Token data
-				$data = array(
-					'user_id'    => $user->id,
-					'expires'    => time() + $this->_config['lifetime'],
-					'user_agent' => sha1(Request::$user_agent),
-					'type'	     => 'autologin',
-					'created'    => time(),
-				);
+                $data = [
+                    'user_id' => $user->id,
+                    'expires' => time() + $this->_config['lifetime'],
+                    'user_agent' => sha1(Request::$user_agent),
+                    'type' => 'autologin',
+                    'created' => time(),
+                ];
 
 				// Create a new autologin token
                 $token = ORM::factory('User_Token')

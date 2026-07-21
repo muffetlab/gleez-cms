@@ -41,31 +41,28 @@ class Controller_Admin_Role extends Controller_Admin {
 		if ($is_datatables)
 		{
             $roles = ORM::factory('Role');
-			$this->_datatables = $roles->dataTables(array('name', 'description', 'special'));
+            $this->_datatables = $roles->dataTables(['name', 'description', 'special']);
 
 			foreach ($this->_datatables->result() as $role)
 			{
-				$this->_datatables->add_row(
-					array(
-                        HTML::chars($role->name),
-                        HTML::chars($role->description),
-                            $role->special ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-ban"></i>',
-
-						$role->special
-                                ? HTML::icon($role->perm_url, 'fas fa-lock', array('title' => __('Edit Permissions')))
-                                : HTML::icon($role->edit_url, 'far fa-edit', array('title' => __('Edit Role')))
-                                . '&nbsp;'
-                                . HTML::icon($role->delete_url, 'fas fa-trash-can', array('title' => __('Delete Role')))
-                                . '&nbsp;'
-                                . HTML::icon($role->perm_url, 'fas fa-lock', array('title' => __('Edit Permissions')))
-					)
-				);
+                $this->_datatables->add_row([
+                    HTML::chars($role->name),
+                    HTML::chars($role->description),
+                    $role->special ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-ban"></i>',
+                    $role->special
+                        ? HTML::icon($role->perm_url, 'fas fa-lock', ['title' => __('Edit Permissions')])
+                        : HTML::icon($role->edit_url, 'far fa-edit', ['title' => __('Edit Role')])
+                        . '&nbsp;'
+                        . HTML::icon($role->delete_url, 'fas fa-trash-can', ['title' => __('Delete Role')])
+                        . '&nbsp;'
+                        . HTML::icon($role->perm_url, 'fas fa-lock', ['title' => __('Edit Permissions')])
+                ]);
 			}
 		}
 
 		$this->title = __('Roles');
-		$add_url = Route::get('admin/role')->uri(array('action' =>'add'));
-		$url = Route::url('admin/role', array('action' => 'list'), TRUE);
+        $add_url = Route::get('admin/role')->uri(['action' => 'add']);
+        $url = Route::url('admin/role', ['action' => 'list'], TRUE);
 
 		$view = View::factory('admin/role/list')
 				->bind('datatables',   $this->_datatables)
@@ -88,7 +85,7 @@ class Controller_Admin_Role extends Controller_Admin {
      */
 	public function action_add()
 	{
-		$action = Route::get('admin/role')->uri(array('action' => 'add'));
+        $action = Route::get('admin/role')->uri(['action' => 'add']);
 
 		$view = View::factory('admin/role/form')
 					->set('action',  $action)
@@ -104,7 +101,7 @@ class Controller_Admin_Role extends Controller_Admin {
 			try
 			{
 				$post->save();
-				Message::success(__('Role %name saved successful!', array('%name' => $post->name)));
+                Message::success(__('Role %name saved successful!', ['%name' => $post->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri(), 200);
 			}
@@ -141,8 +138,8 @@ class Controller_Admin_Role extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/role')->uri());
 		}
 
-		$this->title = __('Edit role %name', array('%name' => $post->name));
-		$action = Route::get('admin/role')->uri(array('id' => $post->id, 'action' => 'edit'));
+        $this->title = __('Edit role %name', ['%name' => $post->name]);
+        $action = Route::get('admin/role')->uri(['id' => $post->id, 'action' => 'edit']);
 
 		$view = View::factory('admin/role/form')
 					->set('action', $action)
@@ -157,7 +154,7 @@ class Controller_Admin_Role extends Controller_Admin {
 			{
 				$post->save();
 
-				Message::success(__('Role %name updated successful!', array('%name' => $post->name)));
+                Message::success(__('Role %name updated successful!', ['%name' => $post->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri(), 200);
 			}
@@ -187,11 +184,11 @@ class Controller_Admin_Role extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/role')->uri());
 		}
 
-		$this->title = __('Delete :title', array(':title' => $role->name ));
+        $this->title = __('Delete :title', [':title' => $role->name]);
 
-		$view = View::factory('form/confirm')
-						->set('action', Route::url('admin/role', array('action' => 'delete', 'id' => $role->id)))
-						->set('title', $role->name);
+        $view = View::factory('form/confirm')
+            ->set('action', Route::url('admin/role', ['action' => 'delete', 'id' => $role->id]))
+            ->set('title', $role->name);
 
 		// If deletion is not desired, redirect to list
         if (isset($_POST['no']) && $this->valid_post())
@@ -205,15 +202,16 @@ class Controller_Admin_Role extends Controller_Admin {
 			try
 			{
 				$role->delete(); //delete the role
-				Message::success(__('Role: :name deleted successful!', array(':name' => $role->name)));
+                Message::success(__('Role: :name deleted successful!', [':name' => $role->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri());
 			}
 			catch (Exception $e)
 			{
-                Kohana::$log->add(Log::ERROR, 'Error occurred deleting role id: :id, :message',
-					array(':id' => $role->id, ':message' => $e->getMessage())
-				);
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting role id: :id, :message', [
+                    ':id' => $role->id,
+                    ':message' => $e->getMessage()
+                ]);
                 Message::error(__('An error occurred while deleting the role :name.', [':name' => $role->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri());

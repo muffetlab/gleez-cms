@@ -27,7 +27,7 @@ class Controller_User extends Template {
      */
 	public function before()
 	{
-		Assets::css('user', 'media/css/user.css', array('theme'), array('weight' => 60));
+        Assets::css('user', 'media/css/user.css', ['theme'], ['weight' => 60]);
 
 		parent::before();
 
@@ -75,7 +75,7 @@ class Controller_User extends Template {
 		if ($this->_auth->logged_in())
 		{
 			// redirect to the user account
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 		}
 
 		/** @var $post Model_User */
@@ -89,7 +89,7 @@ class Controller_User extends Template {
 			throw HTTP_Exception::factory(403, __('User registration not allowed'));
 		}
 
-		$action = Route::get('user')->uri(array('action' => $this->request->action()));
+        $action = Route::get('user')->uri(['action' => $this->request->action()]);
 
         $male = isset($post->gender) && $post->gender == 1;
         $female = isset($post->gender) && $post->gender == 2;
@@ -121,10 +121,10 @@ class Controller_User extends Template {
 				// sign the user in
 				Auth_ORM::instance()->login($post->name, $post->pass);
 
-				Kohana::$log->add(Log::INFO, 'Account :title created successful.', array(':title' => $post->nick));
-				Message::success(__('Account %title created successful!', array('%title' => $post->nick)));
+                Kohana::$log->add(Log::INFO, 'Account :title created successful.', [':title' => $post->nick]);
+                Message::success(__('Account %title created successful!', ['%title' => $post->nick]));
 
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')));
+                $this->request->redirect(Route::get('user')->uri(['action' => 'profile']));
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -151,7 +151,7 @@ class Controller_User extends Template {
 		if ($this->_auth->logged_in())
 		{
 			// redirect to the user account
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 		}
 
 		$this->title = __('Sign In');
@@ -162,8 +162,8 @@ class Controller_User extends Template {
 
 		// Create form action
         $destination = $_GET['destination'] ?? Request::initial()->uri();
-		$params      = array('action' => 'login');
-		$action      = Route::get('user')->uri($params).URL::query(array('destination' => $destination));
+        $params = ['action' => 'login'];
+        $action = Route::get('user')->uri($params) . URL::query(['destination' => $destination]);
 
 		$view = View::factory('user/login')
 			->set('register',     Kohana::$config->load('auth')->get('register'))
@@ -181,8 +181,8 @@ class Controller_User extends Template {
 				$user->login($this->request->post());
 
 				// If the post data validates using the rules setup in the user model
-				Message::success(__('Welcome, %title!', array('%title' => $user->nick)));
-				Kohana::$log->add(Log::INFO, 'User :name logged in.', array(':name' => $user->name));
+                Message::success(__('Welcome, %title!', ['%title' => $user->nick]));
+                Kohana::$log->add(Log::INFO, 'User :name logged in.', [':name' => $user->name]);
 
 				// redirect to the user account
                 $this->request->redirect($_GET['destination'] ?? '', 200);
@@ -214,7 +214,7 @@ class Controller_User extends Template {
 		Auth_ORM::instance()->logout();
 
         // Redirect to the user account and then the sign-in page if logout worked as expected
-		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+        $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 	}
 
     /**
@@ -229,11 +229,14 @@ class Controller_User extends Template {
 		if ( ! $this->_auth->logged_in())
 		{
 			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 		else
 		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'view', 'id' => $this->_auth->get_user()->id)), 200);
+            $this->request->redirect(Route::get('user')->uri([
+                'action' => 'view',
+                'id' => $this->_auth->get_user()->id
+            ]), 200);
 		}
 	}
 
@@ -284,7 +287,7 @@ class Controller_User extends Template {
 		}
 		else
 		{
-            $this->title = __('Profile %title', array('%title' => Text::ucfirst($user->nick)));
+            $this->title = __('Profile %title', ['%title' => Text::ucfirst($user->nick)]);
 		}
 
         if ($this->_user->id == $user->id && $enable_buddy)
@@ -327,7 +330,7 @@ class Controller_User extends Template {
 		// The user is not logged in
 		if ( ! $this->_auth->logged_in())
 		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
 		$user = $this->_auth->get_user();
@@ -335,7 +338,7 @@ class Controller_User extends Template {
 
         $male = isset($user->gender) && $user->gender == 1;
         $female = isset($user->gender) && $user->gender == 2;
-		$action = Route::get('user')->uri(array('action' => $this->request->action(), 'id' => $user->id));
+        $action = Route::get('user')->uri(['action' => $this->request->action(), 'id' => $user->id]);
 
 		$view = View::factory('user/edit')
 				->set('user',    $user)
@@ -353,17 +356,17 @@ class Controller_User extends Template {
 			// Unset not needed field
 			unset($_POST['years'], $_POST['month'], $_POST['days'], $_POST['name']);
 
-			$post = Arr::merge($_POST, array('dob' => $dob));
+            $post = Arr::merge($_POST, ['dob' => $dob]);
 
 			try
 			{
                 $user->values($post, ['nick', 'homepage', 'mail', 'bio', 'dob'])->save();
 
 				// If the post data validates using the rules setup in the user model
-				Message::success(__("%title successfully updated!", array('%title' => $user->nick)));
+                Message::success(__("%title successfully updated!", ['%title' => $user->nick]));
 
 				// redirect to the user account
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+                $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 			}
 			catch (ORM_Validation_Exception $e)
 			{
@@ -388,13 +391,13 @@ class Controller_User extends Template {
 		// The user is not logged in
 		if ( ! $this->_auth->logged_in())
 		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 200);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 200);
 		}
 
 		$user = Auth_ORM::instance()->get_user();
 		$this->title =  __('Change Password');
 		$destination = Request::initial()->uri();
-		$params = array('action' => $this->request->action());
+        $params = ['action' => $this->request->action()];
 
 		$view = View::factory('user/password')
 				->set('destination', $destination)
@@ -413,7 +416,7 @@ class Controller_User extends Template {
 				Message::success(__('Password successfully changed! We hope you feel safer now.'));
 
 				// Redirect to the user account
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+                $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 
 			}
 			catch (ORM_Validation_Exception $e)
@@ -437,10 +440,10 @@ class Controller_User extends Template {
 		// The user is not logged in
 		if ( ! $this->_auth->logged_in())
 		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
-		$allowed_types = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'png', 'gif'));
+        $allowed_types = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
 		$user = $this->_auth->get_user();
 		$this->title =  __('Upload Photo');
 
@@ -458,10 +461,10 @@ class Controller_User extends Template {
                 $user->values($post, ['picture'])->save();
 
 				// If the post data validates using the rules setup in the user model
-				Message::success(__('Photo successfully uploaded!', array('%title' => $user->nick)));
+                Message::success(__('Photo successfully uploaded!', ['%title' => $user->nick]));
 
 				// Redirect to the user account
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+                $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 			}
 			catch(ORM_Validation_Exception $e)
 			{
@@ -520,13 +523,13 @@ class Controller_User extends Template {
 		// The user is logged in, yet it is possible that he lost his password anyway
 		if ($this->_auth->logged_in())
 		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'password', 'id' => $this->_user->id)), 200);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'password', 'id' => $this->_user->id]), 200);
 		}
 
 		// Show form
 		$this->title = __('Reset password');
 
-		$action = Route::get('user/reset')->uri(array('action' => 'password'));
+        $action = Route::get('user/reset')->uri(['action' => 'password']);
 
 		$view = View::factory('user/reset_pass')
 				->set('action',  $action)
@@ -541,12 +544,15 @@ class Controller_User extends Template {
 				// Try to reset the password
 				$this->_user->reset_password($_POST);
 
-				Message::success(__('Instructions to reset your password are being sent to your email address %mail.', array('%mail' => $_POST['mail'])));
-				Kohana::$log->add(Log::INFO, 'Password reset instructions mailed to :name at :mail.',
-					array(':name' => $this->_user->name, ':mail' => $_POST['mail'])
-				);
+                Message::success(__('Instructions to reset your password are being sent to your email address %mail.', [
+                    '%mail' => $_POST['mail']
+                ]));
+                Kohana::$log->add(Log::INFO, 'Password reset instructions mailed to :name at :mail.', [
+                    ':name' => $this->_user->name,
+                    ':mail' => $_POST['mail']
+                ]);
 
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'login')));
+                $this->request->redirect(Route::get('user')->uri(['action' => 'login']));
 
 			}
 			catch (Validation_Exception $e)
@@ -612,7 +618,7 @@ class Controller_User extends Template {
 				$this->_user->confirm_reset_password_form($_POST);
 				
 				Message::success(__('You can now sign in with your new password.'));
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'login')));
+                $this->request->redirect(Route::get('user')->uri(['action' => 'login']));
 
 			}
 			catch (Validation_Exception $e)

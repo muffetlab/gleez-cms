@@ -10,18 +10,18 @@
  */
 class Model_User_Token extends ORM {
 
-	protected $_table_columns = array(
-		'id' => array( 'type' => 'int' ),
-		'user_id' => array( 'type' => 'int' ),
-		'user_agent' => array( 'type' => 'string' ),
-		'token' => array( 'type' => 'string' ),
-		'type' => array( 'type' => 'string', "column_default" => NULL ),
-		'created' => array( 'type' => 'int' ),
-		'expires' => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'user_id' => ['type' => 'int'],
+        'user_agent' => ['type' => 'string'],
+        'token' => ['type' => 'string'],
+        'type' => ['type' => 'string', "column_default" => NULL],
+        'created' => ['type' => 'int'],
+        'expires' => ['type' => 'int'],
+    ];
 
 	// Relationships
-	protected $_belongs_to = array('user' => array());
+    protected $_belongs_to = ['user' => []];
 
     /**
      * Handles garbage collection and deleting of expired objects.
@@ -74,7 +74,7 @@ class Model_User_Token extends ORM {
 		do
 		{
 			$token = sha1(uniqid(Text::random('alnum', 32), TRUE));
-		} while (ORM::factory('User_token', array('token' => $token))->loaded());
+        } while (ORM::factory('User_token', ['token' => $token])->loaded());
 
 		return $token;
 	}

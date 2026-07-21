@@ -36,7 +36,7 @@ class Controller_Message extends Template {
 			$this->request->action('inbox');
 		}
 
-		Assets::css('user', 'media/css/user.css', array('theme'), array('weight' => 60));
+        Assets::css('user', 'media/css/user.css', ['theme'], ['weight' => 60]);
 
 		parent::before();
 	}
@@ -60,12 +60,12 @@ class Controller_Message extends Template {
 		else
 		{
 			// Tabs
-			$this->_tabs =  array(
-				array('link' => Route::get('user/message')->uri(array('action' =>'inbox')), 'text' => __('Inbox')),
-				array('link' => Route::get('user/message')->uri(array('action' =>'outbox')), 'text' => __('Sent Messages')),
-				array('link' => Route::get('user/message')->uri(array('action' =>'drafts')), 'text' => __('Drafts')),
-				array('link' => Route::get('user/message')->uri(array('action' =>'list')), 'text' => __('All Messages'))
-			);
+            $this->_tabs = [
+                ['link' => Route::get('user/message')->uri(['action' => 'inbox']), 'text' => __('Inbox')],
+                ['link' => Route::get('user/message')->uri(['action' => 'outbox']), 'text' => __('Sent Messages')],
+                ['link' => Route::get('user/message')->uri(['action' => 'drafts']), 'text' => __('Drafts')],
+                ['link' => Route::get('user/message')->uri(['action' => 'list']), 'text' => __('All Messages')]
+            ];
 
 			// Disable sidebars on message pages except compose and edit
 			$this->_sidebars = FALSE;
@@ -94,9 +94,9 @@ class Controller_Message extends Template {
 	{
 		Assets::popup();
 
-		$url         = Route::url('user/message', array('action' => 'inbox'), TRUE);
-		$redirect    = Route::get('user/message')->uri(array('action' => 'inbox'));
-		$form_action = Route::get('user/message')->uri(array('action' => 'bulk', 'id' => PM::INBOX));
+        $url = Route::url('user/message', ['action' => 'inbox'], TRUE);
+        $redirect = Route::get('user/message')->uri(['action' => 'inbox']);
+        $form_action = Route::get('user/message')->uri(['action' => 'bulk', 'id' => PM::INBOX]);
 		$destination = '?destination='.$redirect;
 
 		$is_datatables = Request::is_datatables();
@@ -106,21 +106,31 @@ class Controller_Message extends Template {
 
 		if ($is_datatables)
 		{
-			$this->_datatables = $messages->dataTables(array('id', 'subject', 'sender', 'sent'));
+            $this->_datatables = $messages->dataTables(['id', 'subject', 'sender', 'sent']);
 
 			foreach ($this->_datatables->result() as $message)
 			{
-				$this->_datatables->add_row(
-					array(
-						Form::checkbox('messages['.$message->id.']', $message->id, isset($_POST['messages'][$message->id])),
-						HTML::anchor($message->user->url, $message->user->nick, array('class' => 'message-'.$message->status)),
-						HTML::anchor($message->url, Text::limit_chars($message->subject, 20), array('class' => 'message-'.$message->status))
-						.' '.
-						HTML::anchor($message->url, Text::limit_chars(strip_tags($message->body), 80)),
-						Date::formatted_time($message->sent, 'M d, Y'),
-                        HTML::icon($message->delete_url . $destination, 'fas fa-trash-can', array('title' => __('Delete Message'), 'data-toggle' => 'popup', 'data-table' => '#user-message-inbox'))
-					)
-				);
+                $this->_datatables->add_row([
+                    Form::checkbox(
+                        'messages[' . $message->id . ']',
+                        $message->id,
+                        isset($_POST['messages'][$message->id])
+                    ),
+                    HTML::anchor($message->user->url, $message->user->nick, [
+                        'class' => 'message-' . $message->status
+                    ]),
+                    HTML::anchor($message->url, Text::limit_chars($message->subject, 20), [
+                        'class' => 'message-' . $message->status
+                    ])
+                    . ' '
+                    . HTML::anchor($message->url, Text::limit_chars(strip_tags($message->body), 80)),
+                    Date::formatted_time($message->sent, 'M d, Y'),
+                    HTML::icon($message->delete_url . $destination, 'fas fa-trash-can', [
+                        'title' => __('Delete Message'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#user-message-inbox'
+                    ])
+                ]);
 			}
 		}
 
@@ -205,9 +215,11 @@ class Controller_Message extends Template {
 		$this->title = __('New Message');
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 		// Set form action
-		$action = Route::get('user/message')->uri(array('action' => 'compose')).URL::query($destination);
+        $action = Route::get('user/message')->uri(['action' => 'compose']) . URL::query($destination);
 
 		$view = View::factory('message/form')
 				->bind('message',    $message)
@@ -227,18 +239,21 @@ class Controller_Message extends Template {
 
 			try
 			{
-				$message->values(array(
-					'sender'    => $sender->id,
-					'recipient' => User::lookup_by_name($_POST['recipient']),
-					'subject'   => $_POST['subject'],
-					'body'      => $_POST['body'],
-					'status'    => $status,
-					'format'    => $_POST['format'],
-					'sent'      => $sent
-                ), ['sender', 'recipient', 'subject', 'body', 'status', 'format', 'sent'])->save();
+                $message->values([
+                    'sender' => $sender->id,
+                    'recipient' => User::lookup_by_name($_POST['recipient']),
+                    'subject' => $_POST['subject'],
+                    'body' => $_POST['body'],
+                    'status' => $status,
+                    'format' => $_POST['format'],
+                    'sent' => $sent
+                ], ['sender', 'recipient', 'subject', 'body', 'status', 'format', 'sent'])->save();
 
-				Kohana::$log->add(Log::INFO, 'Message :id successfully :act.', array(':id' => $message->id, ':act' => $act));
-				Message::success(__('Message successfully :act.', array(':act' => $act)));
+                Kohana::$log->add(Log::INFO, 'Message :id successfully :act.', [
+                    ':id' => $message->id,
+                    ':act' => $act
+                ]);
+                Message::success(__('Message successfully :act.', [':act' => $act]));
 
 				// Redirect to Inbox
 				$this->request->redirect(Route::get('user/message')->uri());
@@ -275,9 +290,9 @@ class Controller_Message extends Template {
 
 		$this->title = __('Delete Message');
 
-		$destination = ($this->request->query('destination') !== NULL)
-			? array('destination' => $this->request->query('destination'))
-			: array();
+        $destination = $this->request->query('destination') !== NULL
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 
 		$redirect = empty($destination)
 			? Route::get('user/message')->uri()
@@ -302,15 +317,16 @@ class Controller_Message extends Template {
 				$id    = $message->id;
 				$message->delete();
 
-				Kohana::$log->add(Log::INFO, 'Message :id deleted.', array(':id' => $id));
-				Message::success(__('Message %title deleted successful!', array('%title' => $title)));
+                Kohana::$log->add(Log::INFO, 'Message :id deleted.', [':id' => $id]);
+                Message::success(__('Message %title deleted successful!', ['%title' => $title]));
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting message id: :id, :msg',
-					array(':id' => $message->id, ':msg' => $e->getMessage())
-				);
-				Message::error(__('An error occurred deleting message %title',array('%title' => $message->subject)));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting message id: :id, :msg', [
+                    ':id' => $message->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred deleting message %title', ['%title' => $message->subject]));
 			}
 
 			$this->request->redirect($redirect);
@@ -351,7 +367,7 @@ class Controller_Message extends Template {
 				$destination = 'list';
 		}
 
-		$redirect    = Route::get('user/message')->uri(array('action' => $destination));
+        $redirect = Route::get('user/message')->uri(['action' => $destination]);
 		$post        = $this->request->post();
 		$this->title = __('Bulk Actions');
 
@@ -442,11 +458,11 @@ class Controller_Message extends Template {
 			list($func, $params) = Arr::callback($operation['callback']);
 			if (isset($operation['arguments']))
 			{
-				$args = array_merge(array($messages), $operation['arguments']);
+                $args = array_merge([$messages], $operation['arguments']);
 			}
 			else
 			{
-				$args = array($messages);
+                $args = [$messages];
 			}
 
 			// set model name

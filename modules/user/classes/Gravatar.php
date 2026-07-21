@@ -75,38 +75,38 @@ class Gravatar {
 	 * List of valid picture formats for downloading
 	 * @var array
 	 */
-	protected $_valid_formats = array(
-		'jpe',
-		'jpg',
-		'jpeg',
-		'gif',
-		'png'
-	);
+    protected $_valid_formats = [
+        'jpe',
+        'jpg',
+        'jpeg',
+        'gif',
+        'png'
+    ];
 
 	/**
 	 * Gravatar defaults
 	 * @var array
 	 */
-	protected static $_default_gravatar = array(
-		'404'       => TRUE,
-		'mm'        => TRUE,
-		'identicon' => TRUE,
-		'monsterid' => TRUE,
-		'wavatar'   => TRUE,
-		'retro'     => TRUE,
-		'blank'     => TRUE
-	);
+    protected static $_default_gravatar = [
+        '404' => TRUE,
+        'mm' => TRUE,
+        'identicon' => TRUE,
+        'monsterid' => TRUE,
+        'wavatar' => TRUE,
+        'retro' => TRUE,
+        'blank' => TRUE
+    ];
 
 	/**
 	 * Gravatar rating
 	 * @var array
 	 */
-	protected static $_ratings = array(
-		'g'  => TRUE,
-		'pg' => TRUE,
-		'r'  => TRUE,
-		'x'  => TRUE
-	);
+    protected static $_ratings = [
+        'g' => TRUE,
+        'pg' => TRUE,
+        'r' => TRUE,
+        'x' => TRUE
+    ];
 
 	/**
 	 * Current store location for downloading user pictures
@@ -195,19 +195,19 @@ class Gravatar {
 
         $url .= $this->getEmailHash();
 
-		$query = array(
-			's' => $this->getSize(),
-			'r' => $this->getRating(),
-		);
+        $query = [
+            's' => $this->getSize(),
+            'r' => $this->getRating(),
+        ];
 
 		if ($this->getDefaultImage())
 		{
-			$query = Arr::merge($query, array('d' => $this->getDefaultImage()));
+            $query = Arr::merge($query, ['d' => $this->getDefaultImage()]);
 		}
 
 		if ($this->isForceDefault())
 		{
-			$query = Arr::merge($query, array('f' => 'y'));
+            $query = Arr::merge($query, ['f' => 'y']);
 		}
 
 		$url .= URL::query($query, FALSE);
@@ -300,11 +300,11 @@ class Gravatar {
     public function getImage(array $attrs = [], $protocol = NULL, bool $index = FALSE): string
     {
 		// Set auto attributes
-		$attributes = array(
-			'width'    => $this->_size,
-			'height'   => $this->_size,
-			'itemprop' => 'image'
-		);
+        $attributes = [
+            'width' => $this->_size,
+            'height' => $this->_size,
+            'itemprop' => 'image'
+        ];
 
 		// Merge attributes
         $attrs = Arr::merge($attributes, $attrs);
@@ -439,9 +439,10 @@ class Gravatar {
 		{
 			if ( ! System::mkdir($this->_store_location))
 			{
-				Kohana::$log->add(Log::WARNING, "Can't create location :loc1 for picture downloading. Current location: :loc2",
-					array(':loc1' => $this->_store_location, ':loc2' => sys_get_temp_dir())
-				);
+                Kohana::$log->add(
+                    Log::WARNING, "Can't create location :loc1 for picture downloading. Current location: :loc2",
+                    [':loc1' => $this->_store_location, ':loc2' => sys_get_temp_dir()]
+                );
 				$this->_store_location = sys_get_temp_dir();
 			}
 		}
@@ -449,7 +450,7 @@ class Gravatar {
 		// Make sure destination is writable
 		if ( ! is_writable($this->_store_location))
 		{
-			throw new Kohana_Exception('Gravatar download destination is not writable!', array(), 105);
+            throw new Kohana_Exception('Gravatar download destination is not writable!', [], 105);
 		}
 
 		$this->_store_location = $this->_store_location . DIRECTORY_SEPARATOR;
@@ -544,9 +545,10 @@ class Gravatar {
 
 		if ( ! isset(self::$_ratings[$rating]))
 		{
-			throw new Kohana_Exception('Invalid rating :rating specified, only "G", "PG", "R", or "X" are allowed to be used.',
-				array(':rating' => $rating)
-			);
+            throw new Kohana_Exception(
+                'Invalid rating :rating specified, only "G", "PG", "R", or "X" are allowed to be used.',
+                [':rating' => $rating]
+            );
 		}
 
 		$this->_rating = $rating;
@@ -703,13 +705,13 @@ class Gravatar {
 		// Make sure content type exists
 		if ( ! isset($headers['Content-Type']))
 		{
-			throw new Kohana_Exception('Content-Type not found', array(), 300);
+            throw new Kohana_Exception('Content-Type not found', [], 300);
 		}
 
 		// Make sure content type is valid
 		if ( ! in_array($headers['Content-Type'], $this->getValidTypes()))
 		{
-			throw new Kohana_Exception('Content-Type :type is invalid', array(':type' => $headers['Content-Type']), 305);
+            throw new Kohana_Exception('Content-Type :type is invalid', [':type' => $headers['Content-Type']], 305);
 		}
 
 		// Set file name

@@ -14,7 +14,7 @@ class Model_Buddy extends Model
      */
     public function isFriend($user_id, $friend_id)
 	{
-        return DB::select(array(DB::expr('COUNT("id")'), 'total'))
+        return DB::select([DB::expr('COUNT("id")'), 'total'])
             ->from('buddies')
             ->where_open()
             ->where_open()
@@ -73,15 +73,15 @@ class Model_Buddy extends Model
      */
     public function countFriends($user_id)
 	{
-		return DB::select(array(DB::expr('COUNT(*)'), 'total'))
-						->from('buddies')
-						->where_open()
-							->where('request_from', '=', $user_id)
-							->or_where('request_to', '=',$user_id)
-						->where_close()
-						->where('accepted','=','1')
-						->execute()
-						->get('total', FALSE);
+        return DB::select([DB::expr('COUNT(*)'), 'total'])
+            ->from('buddies')
+            ->where_open()
+            ->where('request_from', '=', $user_id)
+            ->or_where('request_to', '=', $user_id)
+            ->where_close()
+            ->where('accepted', '=', '1')
+            ->execute()
+            ->get('total', FALSE);
 	}
 
     /**
@@ -113,9 +113,9 @@ class Model_Buddy extends Model
      */
     public function addFriend($user_id, $friend_id)
 	{
-		return DB::insert('buddies',array('request_from', 'request_to', 'date_requested'))
-					->values(array($user_id, $friend_id ,time()))
-					->execute();
+        return DB::insert('buddies', ['request_from', 'request_to', 'date_requested'])
+            ->values([$user_id, $friend_id, time()])
+            ->execute();
 	}
 
     /**
@@ -123,10 +123,10 @@ class Model_Buddy extends Model
      */
     public function accept($id)
 	{
-		return DB::update('buddies')
-					->set(array('accepted' => '1' , 'date_accepted' => time()))
-					->where('request_to', '=', $id)
-					->execute();
+        return DB::update('buddies')
+            ->set(['accepted' => '1', 'date_accepted' => time()])
+            ->where('request_to', '=', $id)
+            ->execute();
 	}
 
     /**
@@ -201,12 +201,12 @@ class Model_Buddy extends Model
      */
     public function countPending($user_id)
 	{
-		return DB::select(array(DB::expr('COUNT(*)'), 'total'))
-						->from('buddies')
-						->where('request_to', '=', $user_id)
-						->where('accepted','=','0')
-						->execute()
-						->get('total', FALSE);
+        return DB::select([DB::expr('COUNT(*)'), 'total'])
+            ->from('buddies')
+            ->where('request_to', '=', $user_id)
+            ->where('accepted', '=', '0')
+            ->execute()
+            ->get('total', FALSE);
 	}
 
     /**
@@ -214,11 +214,11 @@ class Model_Buddy extends Model
      */
     public function countSent($user_id)
 	{
-		return DB::select(array(DB::expr('COUNT(*)'), 'total'))
-						->from('buddies')
-						->where('request_from', '=', $user_id)
-						->where('accepted','=','0')
-						->execute()
-						->get('total', FALSE);
+        return DB::select([DB::expr('COUNT(*)'), 'total'])
+            ->from('buddies')
+            ->where('request_from', '=', $user_id)
+            ->where('accepted', '=', '0')
+            ->execute()
+            ->get('total', FALSE);
 	}
 }

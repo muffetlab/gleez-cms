@@ -15,55 +15,55 @@ class Model_User extends Gleez_Model
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'                => array( 'type' => 'int' ),
-		'name'              => array( 'type' => 'string' ),
-		'pass'              => array( 'type' => 'string' ),
-		'mail'              => array( 'type' => 'string' ),
-		'homepage'          => array( 'type' => 'string' ),
-		'bio'               => array( 'type' => 'string' ),
-		'nick'              => array( 'type' => 'string' ),
-		'gender'            => array( 'type' => 'int' ),
-		'dob'               => array( 'type' => 'int' ),
-		'theme'             => array( 'type' => 'string' ),
-		'signature'         => array( 'type' => 'string' ),
-		'signature_format'  => array( 'type' => 'int' ),
-		'access'            => array( 'type' => 'int' ),
-		'logins'            => array( 'type' => 'int' ),
-		'created'           => array( 'type' => 'int' ),
-		'updated'           => array( 'type' => 'int' ),
-		'login'             => array( 'type' => 'int' ),
-		'status'            => array( 'type' => 'int' ),
-		'timezone'          => array( 'type' => 'string' ),
-		'language'          => array( 'type' => 'string' ),
-		'picture'           => array( 'type' => 'string' ),
-		'init'              => array( 'type' => 'string' ),
-		'hash'              => array( 'type' => 'string' ),
-		'data'              => array( 'type' => 'string' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'name' => ['type' => 'string'],
+        'pass' => ['type' => 'string'],
+        'mail' => ['type' => 'string'],
+        'homepage' => ['type' => 'string'],
+        'bio' => ['type' => 'string'],
+        'nick' => ['type' => 'string'],
+        'gender' => ['type' => 'int'],
+        'dob' => ['type' => 'int'],
+        'theme' => ['type' => 'string'],
+        'signature' => ['type' => 'string'],
+        'signature_format' => ['type' => 'int'],
+        'access' => ['type' => 'int'],
+        'logins' => ['type' => 'int'],
+        'created' => ['type' => 'int'],
+        'updated' => ['type' => 'int'],
+        'login' => ['type' => 'int'],
+        'status' => ['type' => 'int'],
+        'timezone' => ['type' => 'string'],
+        'language' => ['type' => 'string'],
+        'picture' => ['type' => 'string'],
+        'init' => ['type' => 'string'],
+        'hash' => ['type' => 'string'],
+        'data' => ['type' => 'string'],
+    ];
 
 	/**
      * Autofill create column
 	 * @var array
 	 */
-	protected $_created_column = array('column' => 'created', 'format' => TRUE);
+    protected $_created_column = ['column' => 'created', 'format' => TRUE];
 
 	/**
 	 * Auto fill update column
 	 * @var array
 	 */
-	protected $_updated_column = array('column' => 'updated', 'format' => TRUE);
+    protected $_updated_column = ['column' => 'updated', 'format' => TRUE];
 
 	/**
 	 * A user has many tokens and roles
 	 * @var array Relationships
 	 */
-	protected $_has_many = array(
-        'user_tokens' => array('model' => 'User_Token'),
-        'roles' => array('model' => 'Role', 'through' => 'roles_users'),
-        'identities' => array('model' => 'Identity'),
-        'buddies' => array('model' => 'User', 'through' => 'buddies', 'foreign_key' => 'request_from', 'far_key' => 'request_to'),
-	);
+    protected $_has_many = [
+        'user_tokens' => ['model' => 'User_Token'],
+        'roles' => ['model' => 'Role', 'through' => 'roles_users'],
+        'identities' => ['model' => 'Identity'],
+        'buddies' => ['model' => 'User', 'through' => 'buddies', 'foreign_key' => 'request_from', 'far_key' => 'request_to'],
+    ];
 
     /**
      * Rules for the user model
@@ -80,32 +80,32 @@ class Model_User extends Gleez_Model
      */
 	public function rules(): array
     {
-		return array(
-			'name' => array(
-				array('not_empty'),
-				array('min_length', array(':value', Kohana::$config->load('auth')->get('name.length_min', 4))),
-				array('max_length', array(':value', Kohana::$config->load('auth')->get('name.length_max', 32))),
-				array('regex', array(':value', '/^[' . Kohana::$config->load('auth')->get('name.chars', 'a-zA-Z0-9_\-\^\.') . ']+$/ui') ),
-				array(array($this, 'unique'), array('name', ':value')),
-			),
-			'pass' => array(
-				array('not_empty'),
-				array('min_length', array(':value', Kohana::$config->load('auth')->get('password.length_min', 4))),
-			),
-			'mail' => array(
-				array('not_empty'),
-				array('min_length', array(':value', 4)),
-				array('max_length', array(':value', 254)),
-				array('email'),
-				array(array($this, 'unique'), array('mail', ':value')),
-			),
-			'homepage' => array(
-				array('url'),
-			),
-			'bio' => array(
-				array('max_length', array(':value', 800)),
-			),
-		);
+        return [
+            'name' => [
+                ['not_empty'],
+                ['min_length', [':value', Kohana::$config->load('auth')->get('name.length_min', 4)]],
+                ['max_length', [':value', Kohana::$config->load('auth')->get('name.length_max', 32)]],
+                ['regex', [':value', '/^[' . Kohana::$config->load('auth')->get('name.chars', 'a-zA-Z0-9_\-\^\.') . ']+$/ui']],
+                [[$this, 'unique'], ['name', ':value']],
+            ],
+            'pass' => [
+                ['not_empty'],
+                ['min_length', [':value', Kohana::$config->load('auth')->get('password.length_min', 4)]],
+            ],
+            'mail' => [
+                ['not_empty'],
+                ['min_length', [':value', 4]],
+                ['max_length', [':value', 254]],
+                ['email'],
+                [[$this, 'unique'], ['mail', ':value']],
+            ],
+            'homepage' => [
+                ['url'],
+            ],
+            'bio' => [
+                ['max_length', [':value', 800]],
+            ],
+        ];
 	}
 
     /**
@@ -119,14 +119,14 @@ class Model_User extends Gleez_Model
      */
 	public function filters(): array
     {
-		return array(
-			'pass' => array(
-				array(array(Auth_ORM::instance(), 'hash'))
-			),
-			'picture' => array(
-				array(array($this, 'uploadPhoto'))
-			)
-		);
+        return [
+            'pass' => [
+                [[Auth_ORM::instance(), 'hash']]
+            ],
+            'picture' => [
+                [[$this, 'uploadPhoto']]
+            ]
+        ];
 	}
 
 	/**
@@ -136,18 +136,18 @@ class Model_User extends Gleez_Model
 	 */
 	public function labels(): array
     {
-		return array(
-			'name'         => __('Username'),
-			'mail'         => __('Email'),
-			'homepage'     => __('Home Page'),
-			'bio'          => __('Bio'),
-			'pass'         => __('Password'),
-			'pass_confirm' => __('Password Confirm'),
-			'nick'         => __('Display Name'),
-			'old_pass'     => __('Current password'),
-			'gender'       => __('Gender'),
-			'dob'          => __('Birthday'),
-		);
+        return [
+            'name' => __('Username'),
+            'mail' => __('Email'),
+            'homepage' => __('Home Page'),
+            'bio' => __('Bio'),
+            'pass' => __('Password'),
+            'pass_confirm' => __('Password Confirm'),
+            'nick' => __('Display Name'),
+            'old_pass' => __('Current password'),
+            'gender' => __('Gender'),
+            'dob' => __('Birthday'),
+        ];
 	}
 
     /**
@@ -174,13 +174,13 @@ class Model_User extends Gleez_Model
                 // Either their specified nickname, or fall back to the username.
 				return empty($nick) ? HTML::chars($this->name) : HTML::chars($nick);
             case 'rawurl':
-				return Route::get('user')->uri(array('id' => $this->id));
+                return Route::get('user')->uri(['id' => $this->id]);
             case 'url':
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
             case 'edit_url':
-				return Route::get('user')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('user')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get('admin/user')->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get('admin/user')->uri(['id' => $this->id, 'action' => 'delete']);
         }
 
         return $this->get($column);
@@ -195,12 +195,12 @@ class Model_User extends Gleez_Model
     {
 		if (empty($this->data))
 		{
-			return array();
+            return [];
 		}
 
 		$data = unserialize($this->data);
 
-        return $data['permissions'] ?? array();
+        return $data['permissions'] ?? [];
 	}
 
     /**
@@ -227,7 +227,9 @@ class Model_User extends Gleez_Model
     {
 		if ($this->_loaded)
 		{
-			throw new Kohana_Exception('Cannot create :model model because it is already loaded.', array(':model' => $this->_object_name));
+            throw new Kohana_Exception('Cannot create :model model because it is already loaded.', [
+                ':model' => $this->_object_name
+            ]);
 		}
 
 		$this->init = $this->mail;
@@ -246,7 +248,9 @@ class Model_User extends Gleez_Model
     {
 		if ( ! $this->_loaded)
 		{
-			throw new Kohana_Exception('Cannot Update :model model because it is not loaded.', array(':model' => $this->_object_name));
+            throw new Kohana_Exception('Cannot Update :model model because it is not loaded.', [
+                ':model' => $this->_object_name
+            ]);
 		}
 
 		$this->data = $this->_data();
@@ -348,7 +352,7 @@ class Model_User extends Gleez_Model
 	{
 		if ($this->unique_key_exists($validation[$field], 'name'))
 		{
-			$validation->error($field, 'username_available', array($validation[$field]));
+            $validation->error($field, 'username_available', [$validation[$field]]);
 		}
 	}
 
@@ -365,7 +369,7 @@ class Model_User extends Gleez_Model
 	{
 		if ($this->unique_key_exists($validation[$field], 'mail'))
 		{
-			$validation->error($field, 'email_available', array($validation[$field]));
+            $validation->error($field, 'email_available', [$validation[$field]]);
 		}
 	}
 
@@ -382,7 +386,7 @@ class Model_User extends Gleez_Model
 	{
 		if ( ! $this->unique_key_exists($validation[$field], 'mail'))
 		{
-			$validation->error($field, 'email_not_available', array($validation[$field]));
+            $validation->error($field, 'email_not_available', [$validation[$field]]);
 		}
 	}
 
@@ -402,12 +406,12 @@ class Model_User extends Gleez_Model
 			$field = $this->unique_key($value);
 		}
 
-		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
-			->from($this->_table_name)
-			->where($field, '=', $value)
-			->where($this->_primary_key, '!=', $this->pk())
-			->execute($this->_db)
-			->get('total_count');
+        $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
+            ->from($this->_table_name)
+            ->where($field, '=', $value)
+            ->where($this->_primary_key, '!=', $this->pk())
+            ->execute($this->_db)
+            ->get('total_count');
 
 		return (bool) $result;
 	}
@@ -533,7 +537,7 @@ class Model_User extends Gleez_Model
 				$array->error('name', 'blocked');
 				Module::event('user_blocked', $array);
 
-				Kohana::$log->add(Log::ERROR, 'User: :name account blocked.', array(':name' => $array['name']));
+                Kohana::$log->add(Log::ERROR, 'User: :name account blocked.', [':name' => $array['name']]);
 				throw new Validation_Exception($array, 'Account Blocked');
             } elseif ($this->loaded() && Auth_ORM::instance()->login($array['name'], $array['password'], $remember)) {
 				// Redirect after a successful login
@@ -554,7 +558,7 @@ class Model_User extends Gleez_Model
                 }
 				Module::event('user_auth_failed', $array);
 
-				Kohana::$log->add(Log::ERROR, 'User: :name failed login.', array(':name' => $array['name']));
+                Kohana::$log->add(Log::ERROR, 'User: :name failed login.', [':name' => $array['name']]);
 				throw new Validation_Exception($array, 'Validation has failed for login');
 			}
 		}
@@ -573,11 +577,11 @@ class Model_User extends Gleez_Model
     public function change_pass($values): Model_User
     {
 		// Validation for passwords
-		$extra_validation = self::get_password_validation($values)
-			->rule('old_pass', 'not_empty')
-			->rule('pass_confirm', 'not_empty')
-			->rule('pass', 'not_empty')
-			->rule('old_pass', array(Auth_ORM::instance(), 'check_password') );
+        $extra_validation = self::get_password_validation($values)
+            ->rule('old_pass', 'not_empty')
+            ->rule('pass_confirm', 'not_empty')
+            ->rule('pass', 'not_empty')
+            ->rule('old_pass', [Auth_ORM::instance(), 'check_password']);
 
         return $this->values($values, ['pass'])->save($extra_validation);
 	}
@@ -716,23 +720,23 @@ class Model_User extends Gleez_Model
 		// So as soon as the user logs in again, the reset link expires automatically
 		$token = Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login);
 
-		$body = View::factory('email/confirm_signup', $this->as_array())
-			->set('url', URL::site(
-				Route::get('user')->uri(array('action' => 'confirm',
-					'id' => $this->id,
-					'token' => $token,
-				)),
-				TRUE // Add protocol to URL
-			));
+        $body = View::factory('email/confirm_signup', $this->as_array())
+            ->set('url', URL::site(
+                Route::get('user')->uri(['action' => 'confirm',
+                    'id' => $this->id,
+                    'token' => $token,
+                ]),
+                TRUE // Add protocol to URL
+            ));
 
 		// Create an email message
-		$email = Email::factory()
-			->subject(__(':site - Validate account details for :name', array(
-				':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'),
-                ':name' => ($this->nick ?: $this->name)
-			)))
-			->to($this->mail, $this->nick)
-			->message($body);
+        $email = Email::factory()
+            ->subject(__(':site - Validate account details for :name', [
+                ':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'),
+                ':name' => $this->nick ?: $this->name
+            ]))
+            ->to($this->mail, $this->nick)
+            ->message($body);
 
 		// Send the message
 		$email->send();
@@ -777,11 +781,11 @@ class Model_User extends Gleez_Model
 
 		// User is already confirmed.
 		// We're not showing an error message.
-        if ($this->has('roles', ORM::factory('Role', array('name' => 'user'))))
+        if ($this->has('roles', ORM::factory('Role', ['name' => 'user'])))
 			return TRUE;
 
 		// Give the user the "user" role
-        $this->add('roles', ORM::factory('Role', array('name' => 'user')));
+        $this->add('roles', ORM::factory('Role', ['name' => 'user']));
 
 		return TRUE;
 	}
@@ -803,23 +807,23 @@ class Model_User extends Gleez_Model
     {
 		if ($this->_loaded)
 		{
-			$body = View::factory('email/welcome_signup', $this->as_array())
-				->set('url', URL::site('', TRUE ))
-				->set('uri_brief', URL::site(
-					Route::get('user')->uri(array(
-						'action' => 'login'
-					)),
-					TRUE // Protocol
-				));
+            $body = View::factory('email/welcome_signup', $this->as_array())
+                ->set('url', URL::site('', TRUE))
+                ->set('uri_brief', URL::site(
+                    Route::get('user')->uri([
+                        'action' => 'login'
+                    ]),
+                    TRUE // Protocol
+                ));
 
 			// Create an email message
-			$email = Email::factory()
-				->subject(__(':site - Account details for :name (approved)', array(
-					':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'),
-                    ':name' => ($this->nick ?: $this->name)
-				)))
-				->to($this->mail, $this->nick)
-				->message($body);
+            $email = Email::factory()
+                ->subject(__(':site - Account details for :name (approved)', [
+                    ':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS'),
+                    ':name' => $this->nick ?: $this->name
+                ]))
+                ->to($this->mail, $this->nick)
+                ->message($body);
 
 			// Send the message
 			$email->send();
@@ -859,12 +863,12 @@ class Model_User extends Gleez_Model
 
 		$config = Kohana::$config->load('site');
 
-		$data = Validation::factory($data)
-			->rule('mail', 'not_empty')
-			->rule('mail', 'min_length', array(':value', 4))
-			->rule('mail', 'max_length', array(':value', 254))
-			->rule('mail', 'email')
-			->rule('mail', array($this, 'email_not_available'), array(':validation', ':field'));
+        $data = Validation::factory($data)
+            ->rule('mail', 'not_empty')
+            ->rule('mail', 'min_length', [':value', 4])
+            ->rule('mail', 'max_length', [':value', 254])
+            ->rule('mail', 'email')
+            ->rule('mail', [$this, 'email_not_available'], [':validation', ':field']);
 
 		if ( ! $data->check())
 		{
@@ -884,16 +888,15 @@ class Model_User extends Gleez_Model
 		// So as soon as the user logs in again, the reset link expires automatically
 		$time = time();
 		$token = Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login);
-		$url = URL::site(
-			Route::get('user/reset')->uri(
-				array(
-					'action' => 'confirm_password',
-					'id'     => $this->id,
-					'token'  => $token,
-					'time'   => $time)
-			),
-			TRUE // Protocol
-		);
+        $url = URL::site(
+            Route::get('user/reset')->uri([
+                'action' => 'confirm_password',
+                'id' => $this->id,
+                'token' => $token,
+                'time' => $time
+            ]),
+            TRUE // Protocol
+        );
 
 		// Create e-mail body with reset password link
 		$body = View::factory('email/confirm_reset_password', $this->as_array())
@@ -902,15 +905,13 @@ class Model_User extends Gleez_Model
 			->set('config',   $config);
 
 		// Create an email message
-		$email = Email::factory()
-			->subject(__(':site - Reset password for :name',
-				array(
-					':name' => $this->nick,
-					':site' => Template::getSiteName()
-				)
-			))
-			->to($this->mail, $this->nick)
-			->message($body);
+        $email = Email::factory()
+            ->subject(__(':site - Reset password for :name', [
+                ':name' => $this->nick,
+                ':site' => Template::getSiteName()
+            ]))
+            ->to($this->mail, $this->nick)
+            ->message($body);
 
 		// Send the message
 		$email->send();
@@ -981,12 +982,12 @@ class Model_User extends Gleez_Model
      */
     public function confirm_reset_password_form(array &$data): bool
     {
-		$data = Validation::factory($data)
-			->label('pass', __('Password'))
-			->label('pass_confirm', __('Password Confirm'))
-			->rule('pass', 'not_empty' )
-			->rule('pass', 'min_length', array(':value', 4) )
-			->rule('pass_confirm', 'matches', array(':validation', ':field', 'pass'));
+        $data = Validation::factory($data)
+            ->label('pass', __('Password'))
+            ->label('pass_confirm', __('Password Confirm'))
+            ->rule('pass', 'not_empty')
+            ->rule('pass', 'min_length', [':value', 4])
+            ->rule('pass_confirm', 'matches', [':validation', ':field', 'pass']);
 
 		if ( ! $data->check())
 		{
@@ -997,7 +998,7 @@ class Model_User extends Gleez_Model
 		$this->pass = $data['pass'];
 		$this->save();
 
-		Kohana::$log->add(Log::INFO, 'User %name used one-time login link.', array('%name' => $this->name));
+        Kohana::$log->add(Log::INFO, 'User %name used one-time login link.', ['%name' => $this->name]);
 
         // It could be that the user resets his password before he confirmed his sign-up, or the reset password form
         // could be used in case the original sign-up confirmation mail got lost.
@@ -1019,7 +1020,7 @@ class Model_User extends Gleez_Model
     {
         $data = $this->_original_values['data'] ?? null;
         $oldData = unserialize($data);
-        $newData = is_array($this->data) ? $this->data : array();
+        $newData = is_array($this->data) ? $this->data : [];
 
         if (empty($data) or !$oldData)
 		{
@@ -1054,7 +1055,7 @@ class Model_User extends Gleez_Model
 	{
 		if ($this->_loaded)
 		{
-			$data = empty($this->data) ? array() : unserialize($this->data);
+            $data = empty($this->data) ? [] : unserialize($this->data);
             if (!empty($data['roles']))
 			{
 				return $data['roles'];
@@ -1079,12 +1080,12 @@ class Model_User extends Gleez_Model
 			$roles = $this->roles->find_all()->as_array('id', 'name');
 
 			// save to data field for performance
-			$this->data = array('roles' => $roles);
+            $this->data = ['roles' => $roles];
 			$this->update();
 
 			return $roles;
 		}
 
-		return array();
+        return [];
 	}
 }

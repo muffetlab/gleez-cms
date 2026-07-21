@@ -27,37 +27,37 @@ class Model_Message extends Gleez_Model
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'        => array( 'type' => 'int' ),
-		'sender'    => array( 'type' => 'int' ),
-		'recipient' => array( 'type' => 'int' ),
-		'subject'   => array( 'type' => 'string' ),
-		'body'      => array( 'type' => 'string' ),
-		'status'    => array( 'type' => 'string' ),
-		'format'    => array( 'type' => 'int' ),
-		'created'   => array( 'type' => 'int' ),
-		'sent'      => array( 'type' => 'int' ),
-		'lang'      => array( 'type' => 'string' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'sender' => ['type' => 'int'],
+        'recipient' => ['type' => 'int'],
+        'subject' => ['type' => 'string'],
+        'body' => ['type' => 'string'],
+        'status' => ['type' => 'string'],
+        'format' => ['type' => 'int'],
+        'created' => ['type' => 'int'],
+        'sent' => ['type' => 'int'],
+        'lang' => ['type' => 'string'],
+    ];
 
 	/**
      * Autofill created column
 	 * @var array
 	 */
-	protected $_created_column = array(
-		'column' => 'created',
-		'format' => TRUE
-	);
+    protected $_created_column = [
+        'column' => 'created',
+        'format' => TRUE
+    ];
 
 	/**
 	 * "Belongs to" relationships
 	 * @var array
 	 */
-	protected $_belongs_to = array(
-		'user' => array(
-			'foreign_key' => 'sender'
-		)
-	);
+    protected $_belongs_to = [
+        'user' => [
+            'foreign_key' => 'sender'
+        ]
+    ];
 
 	/**
 	 * Sets the rules for Contact form
@@ -68,18 +68,18 @@ class Model_Message extends Gleez_Model
 	 */
 	public function rules(): array
     {
-		return array(
-			'recipient' => array(
-				array(array($this, 'toExists'), array(':validation', ':field')),
-			),
-			'subject' => array(
-				array('max_length', array(':value', 128)),
-			),
-			'body' => array(
-				array('not_empty'),
-				array('min_length', array(':value', 2)),
-			)
-		);
+        return [
+            'recipient' => [
+                [[$this, 'toExists'], [':validation', ':field']],
+            ],
+            'subject' => [
+                ['max_length', [':value', 128]],
+            ],
+            'body' => [
+                ['not_empty'],
+                ['min_length', [':value', 2]],
+            ]
+        ];
 	}
 
 	/**
@@ -89,13 +89,13 @@ class Model_Message extends Gleez_Model
 	 */
 	public function labels(): array
     {
-		return array(
-			'recipient' => __('Recipient'),
-			'subject'   => __('Subject'),
-			'body'      => __('Body'),
-			'format'    => __('Format'),
-			'draft'     => __('Draft')
-		);
+        return [
+            'recipient' => __('Recipient'),
+            'subject' => __('Subject'),
+            'body' => __('Body'),
+            'format' => __('Format'),
+            'draft' => __('Draft')
+        ];
 	}
 
     /**
@@ -123,9 +123,9 @@ class Model_Message extends Gleez_Model
                 // Raw fields without markup. Usage: during edit or etc.!
                 return $this->get('body') ?? '';
 			case 'url':
-				return Route::get('user/message')->uri(array( 'id' => $this->id, 'action' => 'view'));
+                return Route::get('user/message')->uri(['id' => $this->id, 'action' => 'view']);
 			case 'delete_url':
-				return Route::get('user/message')->uri(array( 'id' => $this->id, 'action' => 'delete'));
+                return Route::get('user/message')->uri(['id' => $this->id, 'action' => 'delete']);
 			default:
                 return $this->get($column);
 		}
@@ -298,9 +298,9 @@ class Model_Message extends Gleez_Model
 	{
         if ($this->status != PM::STATUS_DRAFT && empty($validation[$field]))
 		{
-			$validation->error($field, 'not_empty', array($validation[$field]));
+            $validation->error($field, 'not_empty', [$validation[$field]]);
         } elseif ($this->status != PM::STATUS_DRAFT && $this->exists($validation[$field])) {
-			$validation->error($field, 'exists', array($validation[$field]));
+            $validation->error($field, 'exists', [$validation[$field]]);
 		}
 	}
 

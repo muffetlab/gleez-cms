@@ -58,29 +58,29 @@ class PM {
 	 */
     public static function bulk_actions(bool $list = FALSE)
 	{
-		$states = array(
-			'read'    => array(
-				'label'     => __('Mark as read'),
-				'callback'  => 'PM::bulk_update',
-				'arguments' => array('updates' => array('status' => self::STATUS_READ)),
-			),
-			'unread'  => array(
-				'label'     => __('Mark as unread'),
-				'callback'  => 'PM::bulk_update',
-				'arguments' => array('updates' => array('status' => self::STATUS_UNREAD)),
-			),
-			'delete'  => array(
-				'label'     => __('Delete'),
-				'callback'  => NULL,
-			)
-		);
+        $states = [
+            'read' => [
+                'label' => __('Mark as read'),
+                'callback' => 'PM::bulk_update',
+                'arguments' => ['updates' => ['status' => self::STATUS_READ]],
+            ],
+            'unread' => [
+                'label' => __('Mark as unread'),
+                'callback' => 'PM::bulk_update',
+                'arguments' => ['updates' => ['status' => self::STATUS_UNREAD]],
+            ],
+            'delete' => [
+                'label' => __('Delete'),
+                'callback' => NULL,
+            ]
+        ];
 
 		// Allow module developers to override
 		$values = Module::action('message_bulk_actions', $states);
 
 		if ($list)
 		{
-			$options = array('' => __('Bulk Actions'));
+            $options = ['' => __('Bulk Actions')];
 
 			foreach ($values as $operation => $array)
 			{

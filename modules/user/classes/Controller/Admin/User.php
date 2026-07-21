@@ -49,30 +49,43 @@ class Controller_Admin_User extends Controller_Admin {
             $users = ORM::factory('User');
 
 			// @todo fix dummy id column for roles to match the column order
-			$this->_datatables = $users->dataTables(array('name', 'mail', 'created', 'login', 'id', 'status'));
+            $this->_datatables = $users->dataTables(['name', 'mail', 'created', 'login', 'id', 'status']);
 
 			foreach ($this->_datatables->result() as $user)
 			{
-				$this->_datatables->add_row(
-					array(
-                        HTML::anchor($user->url, HTML::chars($user->nick)),
-						Text::auto_link($user->mail),
-						Date::formatted_time($user->created, 'M d, Y'),
-						($user->login > 0) ? Date::formatted_time($user->login, 'M d, Y') : __('Never'),
-						User::roles($user),
-                        $user->status == 1 ? '<span class="status-active"><i class="fas fa-check-circle"></i></span>' : '<span class="status-blocked"><i class="fas fa-ban"></i></span>',
-                        HTML::icon(Route::get('admin/user')->uri(array('action' => 'edit', 'id' => $user->id)), 'far fa-edit', array('class' => 'action-edit', 'title' => __('Edit User'))) . '&nbsp;' .
-                        HTML::icon(Route::get('admin/permission')->uri(array('action' => 'user', 'id' => $user->id)), 'fas fa-key', array('class' => '', 'title' => __('Edit Permission'))) . '&nbsp;' .
-                        HTML::icon($user->delete_url, 'fas fa-trash-can', array('class' => 'action-delete', 'title' => __('Delete User'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-users'))
-					)
-				);
+                $this->_datatables->add_row([
+                    HTML::anchor($user->url, HTML::chars($user->nick)),
+                    Text::auto_link($user->mail),
+                    Date::formatted_time($user->created, 'M d, Y'),
+                    $user->login > 0 ? Date::formatted_time($user->login, 'M d, Y') : __('Never'),
+                    User::roles($user),
+                    $user->status == 1
+                        ? '<span class="status-active"><i class="fas fa-check-circle"></i></span>'
+                        : '<span class="status-blocked"><i class="fas fa-ban"></i></span>',
+                    HTML::icon(Route::get('admin/user')->uri([
+                        'action' => 'edit',
+                        'id' => $user->id
+                    ]), 'far fa-edit', ['class' => 'action-edit', 'title' => __('Edit User')])
+                    . '&nbsp;'
+                    . HTML::icon(Route::get('admin/permission')->uri([
+                        'action' => 'user',
+                        'id' => $user->id
+                    ]), 'fas fa-key', ['class' => '', 'title' => __('Edit Permission')])
+                    . '&nbsp;'
+                    . HTML::icon($user->delete_url, 'fas fa-trash-can', [
+                        'class' => 'action-delete',
+                        'title' => __('Delete User'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#admin-list-users'
+                    ])
+                ]);
 			}
 		}
 
 		Assets::popup();
 
 		$this->title = __('Users');
-		$url         = Route::url('admin/user', array('action' => 'list'), TRUE);
+        $url = Route::url('admin/user', ['action' => 'list'], TRUE);
 
 		$view = View::factory('admin/user/list')
 				->bind('datatables',   $this->_datatables)
@@ -101,11 +114,11 @@ class Controller_Admin_User extends Controller_Admin {
 	{
 		$this->title = __('Add User');
 
-		$view = View::factory('admin/user/form')
-						->bind('all_roles', $all_roles)
-						->set('user_roles', array())
-						->bind('errors',    $this->_errors)
-						->bind('post',      $post);
+        $view = View::factory('admin/user/form')
+            ->bind('all_roles', $all_roles)
+            ->set('user_roles', [])
+            ->bind('errors', $this->_errors)
+            ->bind('post', $post);
 
         $post = ORM::factory('User');
         $all_roles = ORM::factory('Role')
@@ -115,10 +128,13 @@ class Controller_Admin_User extends Controller_Admin {
 
 		if ($this->valid_post('user'))
 		{
-			$data = Validation::factory($this->request->post())
-				->rule('pass', 'not_empty')
-				->rule('pass', 'min_length', array(':value', Kohana::$config->load('auth')->get('password.length_min', 4)))
-				->label('pass', __('Password'));
+            $data = Validation::factory($this->request->post())
+                ->rule('pass', 'not_empty')
+                ->rule('pass', 'min_length', [
+                    ':value',
+                    Kohana::$config->load('auth')->get('password.length_min', 4)
+                ])
+                ->label('pass', __('Password'));
 
 			if ($data->check())
 			{
@@ -139,16 +155,16 @@ class Controller_Admin_User extends Controller_Admin {
 					// Make sure to add an empty if none of the roles checked to avoid errors
                     if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login')))
 					{
-						$_POST['roles'] = Arr::merge($_POST['roles'], array('login' => ''));
+                        $_POST['roles'] = Arr::merge($_POST['roles'], ['login' => '']);
 					}
 
 					foreach(array_keys($_POST['roles']) as $role)
 					{
 						// add() executes the query immediately, and saves the data
-                        $post->add('roles', ORM::factory('Role', array('name' => $role)));
+                        $post->add('roles', ORM::factory('Role', ['name' => $role]));
 					}
 
-					Message::success(__("User %name saved successful!", array('%name' => $post->name)));
+                    Message::success(__("User %name saved successful!", ['%name' => $post->name]));
 
 					$this->request->redirect(Route::get('admin/user')->uri(), 200);
 				}
@@ -193,7 +209,7 @@ class Controller_Admin_User extends Controller_Admin {
 			Message::error(__("User doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user');
 
-			$this->request->redirect(Route::get('admin/user')->uri(array('action' => 'list')), 404);
+            $this->request->redirect(Route::get('admin/user')->uri(['action' => 'list']), 404);
 		}
 
 		$user_roles = $post->roles->find_all()->as_array('id', 'name');
@@ -203,7 +219,7 @@ class Controller_Admin_User extends Controller_Admin {
 					->find_all()
 					->as_array('name', 'description');
 
-		$this->title = __('Edit User %name', array('%name' => $post->nick));
+        $this->title = __('Edit User %name', ['%name' => $post->nick]);
 
 		$view = View::factory('admin/user/form')
 					->set('user_roles', $user_roles)
@@ -213,9 +229,12 @@ class Controller_Admin_User extends Controller_Admin {
 
 		if ($this->valid_post('user'))
 		{
-			$data = Validation::factory($this->request->post())
-				->rule('pass', 'min_length', array(':value', Kohana::$config->load('auth')->get('password.length_min', 4)))
-				->label('pass', __('Password'));
+            $data = Validation::factory($this->request->post())
+                ->rule('pass', 'min_length', [
+                    ':value',
+                    Kohana::$config->load('auth')->get('password.length_min', 4)
+                ])
+                ->label('pass', __('Password'));
 
 			if ($data->check())
 			{
@@ -239,7 +258,7 @@ class Controller_Admin_User extends Controller_Admin {
 					// Make sure to add an empty if none of the roles checked to avoid errors
                     if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login')))
 					{
-						$_POST['roles'] = Arr::merge($_POST['roles'], array('login' => ''));
+                        $_POST['roles'] = Arr::merge($_POST['roles'], ['login' => '']);
 					}
 
 					// Roles have to be added separately, and all users have to have the login role
@@ -250,10 +269,10 @@ class Controller_Admin_User extends Controller_Admin {
 					foreach(array_keys($_POST['roles']) as $role)
 					{
 						// add() executes the query immediately, and saves the data
-                        $post->add('roles', ORM::factory('Role', array('name' => $role)));
+                        $post->add('roles', ORM::factory('Role', ['name' => $role]));
 					}
 
-					Message::success(__("User %name saved successful!", array('%name' => $post->name)));
+                    Message::success(__("User %name saved successful!", ['%name' => $post->name]));
 
 					$this->request->redirect(Route::get('admin/user')->uri(), 200);
 				}
@@ -298,7 +317,7 @@ class Controller_Admin_User extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/user')->uri());
 		}
 
-		$this->title = __('Delete :title', array(':title' => $user->name));
+        $this->title = __('Delete :title', [':title' => $user->name]);
 
 		$view = View::factory('form/confirm')
 				->set('action',$user->delete_url)
@@ -316,21 +335,22 @@ class Controller_Admin_User extends Controller_Admin {
 			try
 			{
 				$user->delete();
-				Message::success(__('User %name deleted successful!', array('%name' => $user->name)));
+                Message::success(__('User %name deleted successful!', ['%name' => $user->name]));
 
 				$this->request->redirect(Route::get('admin/user')->uri());
 			}
 			catch (Exception $e)
 			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting user id: :id, :message',
-					array(':id' => $user->id,':message' => $e->getMessage())
-				);
-				$this->_errors = array(__('An error occurred deleting user %user: :message',
-					array(
-						'%user'    => $user->name,
-						':message' => $e->getMessage()
-					)
-				));
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting user id: :id, :message', [
+                    ':id' => $user->id,
+                    ':message' => $e->getMessage()
+                ]);
+                $this->_errors = [
+                    __('An error occurred deleting user %user: :message', [
+                        '%user' => $user->name,
+                        ':message' => $e->getMessage()
+                    ])
+                ];
 				$this->request->redirect(Route::get('admin/user')->uri());
 			}
 		}

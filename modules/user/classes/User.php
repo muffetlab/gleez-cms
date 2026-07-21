@@ -389,18 +389,18 @@ class User {
      * @uses URL::site
      * @uses Arr::merge
      */
-    public static function getAvatar(ORM $user, array $attrs = array(), $protocol = NULL, bool $index = FALSE): string
+    public static function getAvatar(ORM $user, array $attrs = [], $protocol = NULL, bool $index = FALSE): string
     {
 		// Default user pic
 		$avatar = 'media/images/avatar-user-400.png';
 
 		// Set default attributes
-		$attrs_default = array(
-			'size'          => 32,
-			'type'          => 'resize',
-			'itemprop'      => 'image',
-			'default_image' => URL::site($avatar, TRUE),
-		);
+        $attrs_default = [
+            'size' => 32,
+            'type' => 'resize',
+            'itemprop' => 'image',
+            'default_image' => URL::site($avatar, TRUE),
+        ];
 
 		// Merge attributes
 		$attrs = Arr::merge($attrs_default, $attrs);
@@ -409,15 +409,15 @@ class User {
 
 		if ($use_gravatar)
 		{
-			$avatar = Gravatar::instance($user->mail)
-				->setSize($attrs['size'])
-				->setDefaultImage($attrs['default_image'])
-				->getImage(array(
-					'alt'      => $user->nick,
-					'itemprop' => $attrs['itemprop'],
-					'width'    => $attrs['size'],
-					'height'   => $attrs['size']
-				), $protocol, $index);
+            $avatar = Gravatar::instance($user->mail)
+                ->setSize($attrs['size'])
+                ->setDefaultImage($attrs['default_image'])
+                ->getImage([
+                    'alt' => $user->nick,
+                    'itemprop' => $attrs['itemprop'],
+                    'width' => $attrs['size'],
+                    'height' => $attrs['size']
+                ], $protocol, $index);
 		}
 		else
 		{
@@ -426,13 +426,13 @@ class User {
 				$avatar = $user->picture;
 			}
 
-			$avatar = HTML::resize($avatar, array(
-				'alt'      => $user->nick,
-				'height'   => $attrs['size'],
-				'width'    => $attrs['size'],
-				'type'     => $attrs['type'],
-				'itemprop' => $attrs['itemprop'],
-			), $protocol, $index);
+            $avatar = HTML::resize($avatar, [
+                'alt' => $user->nick,
+                'height' => $attrs['size'],
+                'width' => $attrs['size'],
+                'type' => $attrs['type'],
+                'itemprop' => $attrs['itemprop'],
+            ], $protocol, $index);
 		}
 
 		return $avatar;
