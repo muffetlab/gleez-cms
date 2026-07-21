@@ -1,8 +1,13 @@
 <div class="help">
-	<p><?php echo __('Permissions let you control what users can do on your site. Each user role (defined on the :user-roles) has its own set of permissions. Permissions also allow trusted users to share the administrative burden of running a busy site.', array(':user-roles' => HTML::anchor(Route::get('admin/role')->uri(), __('user roles page')))); ?></p>
+    <p><?php echo __('Permissions let you control what users can do on your site. Each user role (defined on the :user-roles) has its own set of permissions. Permissions also allow trusted users to share the administrative burden of running a busy site.', [
+            ':user-roles' => HTML::anchor(Route::get('admin/role')->uri(), __('user roles page'))
+        ]); ?></p>
 </div>
 
-<?php echo Form::open(Route::get('admin/permission')->uri(array('action' => 'role', 'id' => $id)), array('id'=>'permission-form ', 'class'=>'permission-form form')) ?>
+<?php echo Form::open(Route::get('admin/permission')->uri(['action' => 'role', 'id' => $id]), [
+    'id' => 'permission-form ',
+    'class' => 'permission-form form'
+]) ?>
 
 	<?php include Kohana::find_file('views', 'errors/partial'); ?>
 
@@ -10,7 +15,7 @@
 		<thead>
 			<tr>
 				<th><?php echo __('Permission') ?></th>
-                <th><?php _e('Role :role', array(':role' => ucwords(HTML::chars($role->name)))) ?></th>
+                <th><?php _e('Role :role', [':role' => ucwords(HTML::chars($role->name))]) ?></th>
 			</tr>
 		</thead>
 		<?php
@@ -56,6 +61,6 @@
 		<?php endforeach ?>
 
 	</table>
-	<?php echo Form::submit('permissions', __('Save Permissions'), array('class' => 'btn btn-success pull-right')) ?>
+<?php echo Form::submit('permissions', __('Save Permissions'), ['class' => 'btn btn-success pull-right']) ?>
 	<div class="clearfix"></div><br>
 	<?php echo Form::close() ?>

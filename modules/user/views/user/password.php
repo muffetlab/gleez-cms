@@ -8,24 +8,29 @@
 
 		<?php include Kohana::find_file('views', 'errors/partial'); ?>
 		<div class="panel panel-default window-shadow">
-			<?php echo Form::open(Route::get('user')->uri($params).URL::query(array('destination' => Request::initial()->uri($destination))), array('class' => 'form')); ?>
+            <?php echo Form::open(Route::get('user')->uri($params) . URL::query([
+                    'destination' => Request::initial()->uri($destination)
+                ]), ['class' => 'form']); ?>
 			<div class="panel-body">
 				<div class="form-group <?php echo isset($errors['_external']['old_pass']) ? 'has-error': ''; ?>">
-					<?php echo Form::label('old_pass', __('Current password'), array('class' => 'control-label')) ?>
+                    <?php echo Form::label('old_pass', __('Current password'), ['class' => 'control-label']) ?>
 					<div class="controls">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-							<?php echo Form::password('old_pass', NULL, array('class' => 'form-control', 'placeholder' => __('************'))); ?>
+                            <?php echo Form::password('old_pass', NULL, [
+                                'class' => 'form-control',
+                                'placeholder' => __('************')
+                            ]); ?>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group <?php echo isset($errors['_external']['pass']) ? 'has-error': ''; ?>">
-					<?php echo Form::label('pass', __('New password'), array('class' => 'control-label')) ?>
+                    <?php echo Form::label('pass', __('New password'), ['class' => 'control-label']) ?>
 					<div class="controls">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-							<?php echo Form::password('pass', NULL, array('class' => 'form-control')); ?>
+                            <?php echo Form::password('pass', NULL, ['class' => 'form-control']); ?>
 						</div>
                         <span class="help-block">
                             <?php
@@ -52,11 +57,11 @@
 				</div>
 
 				<div class="form-group <?php echo isset($errors['_external']['pass_confirm']) ? 'has-error': ''; ?>">
-					<?php echo Form::label('pass_confirm', __('New password (again)'), array('class' => 'control-label')) ?>
+                    <?php echo Form::label('pass_confirm', __('New password (again)'), ['class' => 'control-label']) ?>
 					<div class="controls">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-							<?php echo Form::password('pass_confirm', NULL, array('class' => 'form-control')); ?>
+                            <?php echo Form::password('pass_confirm', NULL, ['class' => 'form-control']); ?>
 						</div>
 						<span class="help-block"><?php echo __('Confirm new password') ?></span>
 					</div>
@@ -65,10 +70,12 @@
 			<div class="panel-footer">
 				<div class="row">
 					<div class="col-sm-6">
-                        <?php echo HTML::anchor(Route::get('user')->uri(array('action' => 'profile')), '<i class="fas fa-arrow-left"></i> ' . __('Profile'), array('class' => 'btn')); ?>
+                        <?php echo HTML::anchor(Route::get('user')->uri([
+                            'action' => 'profile'
+                        ]), '<i class="fas fa-arrow-left"></i> ' . __('Profile'), ['class' => 'btn']); ?>
 					</div>
 					<div class="col-sm-6 form-actions-right">
-						<?php echo Form::submit('change_pass', __('Save'), array('class' => 'btn btn-info')); ?>
+                        <?php echo Form::submit('change_pass', __('Save'), ['class' => 'btn btn-info']); ?>
 					</div>
 				</div>
 			</div>

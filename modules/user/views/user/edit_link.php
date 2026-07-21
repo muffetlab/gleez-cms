@@ -9,7 +9,10 @@
 	</li>
 	<?php if (! Kohana::$config->load('site')->get('use_gravatars', FALSE)): ?>
 		<li>
-            <?php echo HTML::anchor('user/photo', '<i class="fas fa-fw fa-upload"></i> ' . __('Change Avatar'), array('id' => 'add-pic1', 'title' => __('Change your avatar'))) ?>
+            <?php echo HTML::anchor('user/photo', '<i class="fas fa-fw fa-upload"></i> ' . __('Change Avatar'), [
+                'id' => 'add-pic1',
+                'title' => __('Change your avatar')
+            ]) ?>
 		</li>
 	<?php endif; ?>
 </ul>

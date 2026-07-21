@@ -2,7 +2,7 @@
 	<p><?php echo __('Permissions let you control what users can do on your site. User defined permission override role based permissions.'); ?></p>
 </div>
 
-<?php echo Form::open($action, array('id'=>'permission-form ', 'class'=>'permission-form form')); ?>
+<?php echo Form::open($action, ['id' => 'permission-form ', 'class' => 'permission-form form']); ?>
 
 <?php include Kohana::find_file('views', 'errors/partial'); ?>
 
@@ -29,15 +29,27 @@
 						</div>
 					</td>
 					<td>
-                        <?php echo Form::label($key . "[$perm]", Form::radio("perms[$perm]", ACL::PERM_ALLOW, isset($oldPermissions[$perm]) && $oldPermissions[$perm] == ACL::PERM_ALLOW) . __('Allow'), array('class' => 'radio inline')) ?>
-                        <?php echo Form::label($key . "[$perm]", Form::radio("perms[$perm]", ACL::PERM_DENY, isset($oldPermissions[$perm]) && $oldPermissions[$perm] == ACL::PERM_DENY) . __('Disallow'), array('class' => 'radio inline')) ?>
-                        <?php echo Form::label($key . "[$perm]", Form::radio("perms[$perm]", '', !isset($oldPermissions[$perm])) . __('Inherit'), array('class' => 'radio inline')) ?>
+                        <?php echo Form::label($key . "[$perm]", Form::radio(
+                                "perms[$perm]",
+                                ACL::PERM_ALLOW,
+                                isset($oldPermissions[$perm]) && $oldPermissions[$perm] == ACL::PERM_ALLOW
+                            ) . __('Allow'), ['class' => 'radio inline']) ?>
+                        <?php echo Form::label($key . "[$perm]", Form::radio(
+                                "perms[$perm]",
+                                ACL::PERM_DENY,
+                                isset($oldPermissions[$perm]) && $oldPermissions[$perm] == ACL::PERM_DENY
+                            ) . __('Disallow'), ['class' => 'radio inline']) ?>
+                        <?php echo Form::label($key . "[$perm]", Form::radio(
+                                "perms[$perm]",
+                                '',
+                                !isset($oldPermissions[$perm])
+                            ) . __('Inherit'), ['class' => 'radio inline']) ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endforeach; ?>
 		</tbody>
 	</table>
-	<?php echo Form::submit('permissions', __('Save Permissions'), array('class' => 'btn btn-success pull-right')); ?>
+<?php echo Form::submit('permissions', __('Save Permissions'), ['class' => 'btn btn-success pull-right']); ?>
 	<div class="clearfix"></div><br>
 <?php echo Form::close() ?>

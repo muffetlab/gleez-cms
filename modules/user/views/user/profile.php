@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-md-3 col-sm-5 col-xs-12">
 				<div class="thumbnail vcard-avatar">
-					<?php echo User::getAvatar($user, array('size' => 210)); ?>
+                    <?php echo User::getAvatar($user, ['size' => 210]); ?>
 				</div>
 
 				<div class="list-group">
@@ -14,17 +14,33 @@
 					<?php
 						if ($is_owner)
 						{
-                            echo HTML::anchor('message/inbox', '<i class="fas fa-fw fa-envelope"></i> ' . __('Messages') . '<i class="fas fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item'));
+                            echo HTML::anchor(
+                                'message/inbox',
+                                '<i class="fas fa-fw fa-envelope"></i> ' . __('Messages') . '<i class="fas fa-chevron-right list-group-chevron"></i>',
+                                ['class' => 'list-group-item']
+                            );
 						}
 						elseif ( ! User::is_guest())
 						{
-                            echo HTML::anchor('message/compose', '<i class="fas fa-fw fa-envelope"></i> ' . __('Send Message') . '<i class="fas fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item'));
+                            echo HTML::anchor(
+                                'message/compose',
+                                '<i class="fas fa-fw fa-envelope"></i> ' . __('Send Message') . '<i class="fas fa-chevron-right list-group-chevron"></i>',
+                                ['class' => 'list-group-item']
+                            );
 						}
 					?>
 					<?php if($enable_buddy): ?>
-                        <?php echo HTML::anchor('buddy', '<i class="fas fa-fw fa-people-group"></i> ' . __('Friends') . '<i class="fas fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item')); ?>
+                        <?php echo HTML::anchor(
+                            'buddy',
+                            '<i class="fas fa-fw fa-people-group"></i> ' . __('Friends') . '<i class="fas fa-chevron-right list-group-chevron"></i>',
+                            ['class' => 'list-group-item']
+                        ); ?>
 					<?php endif; ?>
-                    <?php echo HTML::anchor('user/edit', '<i class="fas fa-fw fa-cog"></i> ' . __('Settings') . '<i class="fas fa-chevron-right list-group-chevron"></i>', array('class' => 'list-group-item')); ?>
+                    <?php echo HTML::anchor(
+                        'user/edit',
+                        '<i class="fas fa-fw fa-cog"></i> ' . __('Settings') . '<i class="fas fa-chevron-right list-group-chevron"></i>',
+                        ['class' => 'list-group-item']
+                    ); ?>
 				</div>
 			</div>
 
@@ -45,7 +61,9 @@
 						<?php if ($user->homepage): ?>
 							<dl title="<?php echo __('Home Page') ?>">
                                 <dt><i class="fas fa-fw fa-globe"></i></dt>
-								<dd><?php echo HTML::anchor($user->homepage, $user->homepage, array('itemprop' => 'url')); ?></dd>
+                                <dd><?php echo HTML::anchor($user->homepage, $user->homepage, [
+                                        'itemprop' => 'url'
+                                    ]); ?></dd>
 							</dl>
 						<?php endif; ?>
 
@@ -72,14 +90,20 @@
 					<?php if($enable_buddy):?>
 							<?php if(Auth::instance()->logged_in()):?>
                             <?php if ($request && $request == $user->id): ?>
-									<?php echo HTML::anchor("buddy/accept/".$user->id , __('Accept'), array('class' => 'btn btn-success')); ?>
-									<?php echo HTML::anchor("buddy/reject/".$user->id , __('Reject'), array('class' => 'btn btn-danger')); ?>
+                                <?php echo HTML::anchor("buddy/accept/" . $user->id, __('Accept'), [
+                                    'class' => 'btn btn-success'
+                                ]); ?>
+                                <?php echo HTML::anchor("buddy/reject/" . $user->id, __('Reject'), [
+                                    'class' => 'btn btn-danger'
+                                ]); ?>
                             <?php elseif ($request && !$isFriend && !$is_owner): ?>
 									<div class= 'btn btn-info'><?php echo __('Pending Request'); ?></div>
                             <?php elseif ($isFriend && !$is_owner): ?>
 									<div class= 'btn btn-info'><?php echo __('Friend'); ?></div>
                             <?php elseif (!$request && !$isFriend && !$is_owner): ?>
-									<?php echo HTML::anchor("buddy/add/".$user->id , __('Send Request'), array('class' => 'btn btn-success')); ?>
+                                <?php echo HTML::anchor("buddy/add/" . $user->id, __('Send Request'), [
+                                    'class' => 'btn btn-success'
+                                ]); ?>
 								<?php endif; ?>
 							<?php endif; ?>
 						<?php endif; ?>
@@ -122,11 +146,24 @@
 				<?php foreach($friends as $id): ?>
 					<div class="list-group-item friends panel-body">
 						<?php $accept = User::lookup($id); ?>
-						<?php echo HTML::anchor("user/view/".$accept->id , User::getAvatar($accept), array('class' => 'action-view', 'rel'=>"popover", 'data-placement'=>"right", 'rel1'=>"tooltip", 'data-html'=>"true", 'data-original-title'=>"<strong>$accept->nick</strong>" )) ?>
-						<?php echo HTML::anchor("user/view/".$accept->id , $accept->nick, array('class' => 'action-view', 'title'=> __('view profile'))) ?>
+                        <?php echo HTML::anchor("user/view/" . $accept->id, User::getAvatar($accept), [
+                            'class' => 'action-view',
+                            'rel' => "popover",
+                            'data-placement' => "right",
+                            'rel1' => "tooltip",
+                            'data-html' => "true",
+                            'data-original-title' => "<strong>$accept->nick</strong>"
+                        ]) ?>
+                        <?php echo HTML::anchor("user/view/" . $accept->id, $accept->nick, [
+                            'class' => 'action-view',
+                            'title' => __('view profile')
+                        ]) ?>
 
 						<?php if($is_owner): ?>
-                            <?php echo HTML::anchor("buddy/delete/" . $accept->id, '<i class="fas fa-trash-can"></i>', array('class' => 'action-delete pull-right', 'title' => __('Delete'))); ?>
+                            <?php echo HTML::anchor("buddy/delete/" . $accept->id, '<i class="fas fa-trash-can"></i>', [
+                                'class' => 'action-delete pull-right',
+                                'title' => __('Delete')
+                            ]); ?>
 						<?php endif; ?>
 					</div>
 				<?php endforeach ;?>
@@ -134,7 +171,10 @@
 				<?php if( !empty($friends) ): ?>
 					<div class="panel-footer">
 						<div class="row">
-							<?php echo HTML::anchor("buddy/".$user->id , __('All'),  array('class' => 'all-view pull-right', 'title'=> __('All'))); ?>
+                            <?php echo HTML::anchor("buddy/" . $user->id, __('All'), [
+                                'class' => 'all-view pull-right',
+                                'title' => __('All')
+                            ]); ?>
 						</div>
 					</div>
 				<?php endif; ?>

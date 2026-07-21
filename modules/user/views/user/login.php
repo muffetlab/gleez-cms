@@ -1,6 +1,6 @@
 <?php
 	// @todo Should be moved to controller
-	Assets::css('user', 'media/css/user.css', array('weight' => 2));
+Assets::css('user', 'media/css/user.css', ['weight' => 2]);
 ?>
 
 <div class="col-sm-4 col-sm-offset-4">
@@ -10,7 +10,7 @@
 		<div class="panel-heading">
 			<h1 class="panel-title"><?php echo $site_name ?></h1>
 		</div>
-		<?php echo Form::open($action, array('class' => 'form form-horizontal', 'role' => 'form')); ?>
+        <?php echo Form::open($action, ['class' => 'form form-horizontal', 'role' => 'form']); ?>
 			<div class="panel-body">
 				<div class="form-group">
 					<div class="col-sm-10 col-sm-offset-1">
@@ -19,14 +19,20 @@
 				</div>
 				<div class="form-group <?php echo isset($errors['name']) ? 'has-error': ''; ?>">
 					<div class="col-sm-10 col-sm-offset-1">
-						<?php echo Form::label('name', __('Username/Email'), array('class' => 'sr-only control-label')) ?>
-						<?php echo Form::input('name', $post->name, array('class' =>'form-control', 'placeholder' => __('Username/Email'))); ?>
+                        <?php echo Form::label('name', __('Username/Email'), ['class' => 'sr-only control-label']) ?>
+                        <?php echo Form::input('name', $post->name, [
+                            'class' => 'form-control',
+                            'placeholder' => __('Username/Email')
+                        ]); ?>
 					</div>
 				</div>
 				<div class="form-group <?php echo isset($errors['password']) ? 'has-error': ''; ?>">
 					<div class="col-sm-10 col-sm-offset-1">
-						<?php echo Form::label('name', __('Password'), array('class' => 'sr-only control-label')) ?>
-						<?php echo Form::password('password', NULL, array('class' =>'form-control', 'placeholder' => __('Password'))); ?>
+                        <?php echo Form::label('name', __('Password'), ['class' => 'sr-only control-label']) ?>
+                        <?php echo Form::password('password', NULL, [
+                            'class' => 'form-control',
+                            'placeholder' => __('Password')
+                        ]); ?>
 					</div>
 				</div>
 				<div class="form-group">
@@ -41,7 +47,10 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-10 col-sm-offset-1">
-						<?php echo Form::submit('login', __('Login'), array('class' => 'btn btn-primary btn-lg btn-block', 'type' => 'submit')); ?>
+                        <?php echo Form::submit('login', __('Login'), [
+                            'class' => 'btn btn-primary btn-lg btn-block',
+                            'type' => 'submit'
+                        ]); ?>
 					</div>
 				</div>
 				<div class="form-group">
@@ -50,7 +59,9 @@
 					</div>
 					<?php if ($register): ?>
 						<div class="col-sm-6">
-							<?php echo HTML::anchor('user/register', __("Don't have an account?"), array('class' => 'pull-right')); ?>
+                            <?php echo HTML::anchor('user/register', __("Don't have an account?"), [
+                                'class' => 'pull-right'
+                            ]); ?>
 						</div>
 					<?php endif; ?>
 				</div>
@@ -65,7 +76,10 @@
 						<?php
 						foreach ($providers as $name => $provider)
 						{
-                            echo HTML::anchor($provider['url'], '<i class="fab fa-' . $provider['icon'] . '"></i>', array('class' => 'btn btn-default', 'title' => __('Login with :provider', array(':provider' => $name))));
+                            echo HTML::anchor($provider['url'], '<i class="fab fa-' . $provider['icon'] . '"></i>', [
+                                'class' => 'btn btn-default',
+                                'title' => __('Login with :provider', [':provider' => $name])
+                            ]);
 						}
 						?>
 					</div>

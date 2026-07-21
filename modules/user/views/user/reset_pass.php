@@ -7,19 +7,19 @@
 				<?php _e('Enter email specified at registration for password reset')?>
 			</h3>
 		</div>
-		<?php echo Form::open($action, array('class' => 'form form-horizontal')) ?>
+        <?php echo Form::open($action, ['class' => 'form form-horizontal']) ?>
 			<div class="panel-body">
 				<div class="form-group <?php echo isset($errors['mail']) ? 'has-error': ''; ?>">
 					<div class="col-md-12">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-envelope fa-fw"></i></span>
-							<?php echo Form::input('mail', $post['mail'], array('class' => 'form-control input-lg')); ?>
+                            <?php echo Form::input('mail', $post['mail'], ['class' => 'form-control input-lg']); ?>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="panel-footer form-actions-right">
-                <?php echo Form::button('reset_pass', __('Reset'), array('class' => 'btn btn-danger')) ?>
+                <?php echo Form::button('reset_pass', __('Reset'), ['class' => 'btn btn-danger']) ?>
 			</div>
 		<?php echo Form::close() ?>
 	</div>

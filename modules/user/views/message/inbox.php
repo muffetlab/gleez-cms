@@ -6,19 +6,25 @@
 		<div class="col-md-12">
 			<?php include Kohana::find_file('views', 'errors/partial'); ?>
 			<div class="content">
-				<?php echo Form::open($action, array('class'=>'form-inline')); ?>
+                <?php echo Form::open($action, ['class' => 'form-inline']); ?>
 					<fieldset class="bulk-actions form-actions rounded">
 						<div class="row">
 							<div class="form-group col-xs-7 col-sm-3 col-md-3">
 								<div class="control-group <?php echo isset($errors['operation']) ? 'has-error': ''; ?>">
-									<?php echo Form::select('operation', PM::bulk_actions(TRUE), '', array('class' => 'form-control col-md-5')); ?>
+                                    <?php echo Form::select('operation', PM::bulk_actions(TRUE), '', [
+                                        'class' => 'form-control col-md-5'
+                                    ]); ?>
 								</div>
 							</div>
 							<div class="form-group col-xs-5 col-sm-2 col-md-2">
-								<?php echo Form::submit('message-bulk-actions', __('Apply'), array('class'=>'btn btn-primary col-md-5')); ?>
+                                <?php echo Form::submit('message-bulk-actions', __('Apply'), [
+                                    'class' => 'btn btn-primary col-md-5'
+                                ]); ?>
 							</div>
 							<div class="form-group col-xs-6 col-sm-7 col-md-7 form-actions-right">
-                                <?php echo HTML::anchor(Route::get('user/message')->uri(array('action' => 'compose')), '<i class="fas fa-plus"></i> ' . __('Compose'), array('class' => 'btn btn-success')); ?>
+                                <?php echo HTML::anchor(Route::get('user/message')->uri([
+                                    'action' => 'compose'
+                                ]), '<i class="fas fa-plus"></i> ' . __('Compose'), ['class' => 'btn btn-success']); ?>
 							</div>
 						</div>
 					</fieldset>

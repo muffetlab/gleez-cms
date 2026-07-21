@@ -1,43 +1,46 @@
 <?php
-	$params = isset($post->id) ? array('id' => $post->id, 'action' => 'edit') : array('action' => 'add');
+$params = isset($post->id) ? ['id' => $post->id, 'action' => 'edit'] : ['action' => 'add'];
 $destination = $GET['destination'] ?? '';
 
-	echo Form::open(Route::get('admin/user')->uri($params).URL::query(array($destination)), array('id'=>'user-form', 'class'=>'user-form form form-horizontal'));
+echo Form::open(Route::get('admin/user')->uri($params) . URL::query([$destination]), [
+    'id' => 'user-form',
+    'class' => 'user-form form form-horizontal'
+]);
 	include Kohana::find_file('views', 'errors/partial');
 ?>
 
 <div class="form-group <?php echo isset($errors['name']) ? 'has-error': ''; ?>">
-	<?php echo Form::label('username', __('User name'), array('class' => 'control-label col-sm-3')) ?>
+    <?php echo Form::label('username', __('User name'), ['class' => 'control-label col-sm-3']) ?>
 	<div class="controls col-sm-5">
-        <?php print Form::input('name', $_POST['name'] ?? $post->name, array('class' => 'form-control')); ?>
+        <?php print Form::input('name', $_POST['name'] ?? $post->name, ['class' => 'form-control']); ?>
 	</div>
 </div>
 
 <div class="form-group <?php echo isset($errors['pass']) ? 'has-error': ''; ?>">
-	<?php echo Form::label('password', __('Password'), array('class' => 'control-label col-sm-3')) ?>
+    <?php echo Form::label('password', __('Password'), ['class' => 'control-label col-sm-3']) ?>
 	<div class="controls col-sm-5">
-	<?php echo Form::Password('pass', null, array('class' => 'form-control')) ?>
+        <?php echo Form::Password('pass', null, ['class' => 'form-control']) ?>
 	</div>
 </div>
 
 <div class="form-group <?php echo isset($errors['nick']) ? 'has-error': ''; ?>">
-	<?php echo Form::label('nick', __('Nick name'), array('class' => 'control-label col-sm-3')) ?>
+    <?php echo Form::label('nick', __('Nick name'), ['class' => 'control-label col-sm-3']) ?>
 	<div class="controls col-sm-5">
-        <?php print Form::input('nick', $_POST['nick'] ?? $post->nick, array('class' => 'form-control')); ?>
+        <?php print Form::input('nick', $_POST['nick'] ?? $post->nick, ['class' => 'form-control']); ?>
 	</div>
 </div>
 
 <div class="form-group <?php echo isset($errors['mail']) ? 'has-error': ''; ?>">
-	<?php echo Form::label('mail', __('Email'), array('class' => 'control-label col-sm-3')) ?>
+    <?php echo Form::label('mail', __('Email'), ['class' => 'control-label col-sm-3']) ?>
 	<div class="controls col-sm-5">
-        <?php print Form::input('mail', $_POST['mail'] ?? $post->mail, array('class' => 'form-control')); ?>
+        <?php print Form::input('mail', $_POST['mail'] ?? $post->mail, ['class' => 'form-control']); ?>
 	</div>
 </div>
 
 <div class="form-group <?php echo isset($errors['status']) ? 'has-error': ''; ?>">
-	<?php echo Form::label('active', __('Status'), array('class' => 'control-label col-sm-3')) ?>
+    <?php echo Form::label('active', __('Status'), ['class' => 'control-label col-sm-3']) ?>
 	<div class="controls col-sm-5">
-	<?php print Form::select('status', array(0 => __('Blocked'), 1 => __('Active')), $post->status, array('class' => 'form-control')); ?>
+        <?php print Form::select('status', [0 => __('Blocked'), 1 => __('Active')], $post->status, ['class' => 'form-control']); ?>
 	</div>
 </div>
 
@@ -58,11 +61,11 @@ $destination = $GET['destination'] ?? '';
 	<?php endforeach; ?>
 </table>
 
-<?php echo Form::hidden('site_url', URL::site('', TRUE), array('id' => 'site_url')) ?>
+<?php echo Form::hidden('site_url', URL::site('', TRUE), ['id' => 'site_url']) ?>
 
 <div class="form-group">
 	<div class="col-sm-12 form-actions-right">
-        <?php echo Form::button('user', __('Save'), array('class' => 'btn btn-success')) ?>
+        <?php echo Form::button('user', __('Save'), ['class' => 'btn btn-success']) ?>
 	</div>
 </div>
 
