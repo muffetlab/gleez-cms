@@ -1,7 +1,7 @@
 <?php
 
-return array(
-	'name' => array(
+return [
+    'name' => [
 		'not_empty' => "Name of the group can't be empty",
-	),
-);
+    ],
+];

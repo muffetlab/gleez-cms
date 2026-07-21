@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
         
 	// Whether to normalize tags at all (recommended, as raw tags are preserved anyway.)
 	'normalize_tags'          => FALSE,
@@ -35,4 +35,4 @@ return array(
     // The foreign key name of the object being tagged (i.e. blog_id, comment_id, etc.)
 	'object_foreign_key'      => 'post_id',
 
-);
+];

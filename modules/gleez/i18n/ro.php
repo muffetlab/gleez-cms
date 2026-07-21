@@ -7,7 +7,7 @@
  * @copyright (c) 2011-2013 Gleez Technologies
  * @license   https://gleezcms.org/license Gleez CMS License
  */
-return array(
+return [
 	// :
 	':field must not be empty' => 'câmpul nu poate fi gol',
 	':pcre has not been compiled with Unicode property support.' => ':pcre nu a fost compilat cu suport pentru Unicode.',
@@ -466,4 +466,4 @@ return array(
 	'You are using an :out browser. Please :url or :frame to improve your experience' => 'Folosești un browser :out. Te rog :url sau :frame pentru a avea o experiență mai bună',
 	'Your Gleez install is complete!' => 'Instalarea Gleez este completă!',
 	// Z
-);
+];

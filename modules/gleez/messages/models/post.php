@@ -1,30 +1,30 @@
 <?php
 
-return array(
-	'title' => array(
+return [
+    'title' => [
 		'not_empty' => ':field must not be empty',
-	),
-	'body' => array(
+    ],
+    'body' => [
 		'not_empty'  => ':field must not be empty',
 		'min_length' => 'Body must be at least :param2 characters long',
-	),
-	'author' => array(
+    ],
+    'author' => [
 		'not_empty'  => ':field must not be empty',
 		'invalid'    => 'The username :param1 does not exist',
-	),
-	'created' => array(
+    ],
+    'created' => [
 		'not_empty'  => ':field must not be empty',
 		'invalid'    => 'The date :param1 is invalid',
-	),
-	'status' => array(
+    ],
+    'status' => [
 		'not_empty'  => ':field must not be empty',
-	),
-	'categories' => array(
+    ],
+    'categories' => [
 		'not_empty'  => ':field must not be empty',
 		'invalid'    => 'You must select at least one category',
-	),
-	'pubdate' => array(
+    ],
+    'pubdate' => [
 		'not_empty'  => ':field must not be empty',
 		'invalid'    => 'The publish date :param1 is invalid',
-	),
-);
+    ],
+];

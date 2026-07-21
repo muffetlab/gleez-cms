@@ -7,7 +7,7 @@
  * @copyright (c) 2011-2013 Gleez Technologies
  * @license   https://gleezcms.org/license Gleez CMS License
  */
-return array(
+return [
 	// :
 	'(:count) Comments' => '(:count) Kommentaarid',
 	':field must not be empty' => ':field ei saa olla tühi',
@@ -1058,4 +1058,4 @@ return array(
 	'Zagreb' => 'Zagreb',
 	'Zaporozhye' => 'Zaporozhye',
 	'Zurich' => 'Zurich',
-);
+];

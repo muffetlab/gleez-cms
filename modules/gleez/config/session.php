@@ -1,7 +1,7 @@
 <?php
 
-return array(
-    'database' => array(
+return [
+    'database' => [
 		/**
 		 * Database settings for session storage
 		 *
@@ -13,7 +13,7 @@ return array(
 		'group'   => 'default',
 		'table'   => 'sessions',
 		'gc'      => 500,
-		'columns' => array(
+        'columns' => [
 			/**
 			 * Table columns name
 			 *
@@ -24,9 +24,9 @@ return array(
 			'session_id'  => 'session_id',
 			'last_active' => 'last_active',
 			'contents'    => 'contents',
-		),
-	),
-	'redis' => array(
+        ],
+    ],
+    'redis' => [
 		/**
 		 * Collection field name
 		 *
@@ -37,8 +37,8 @@ return array(
 		'host'   => 'localhost',
 		'port'   => 6379,
 		'prefix' => 'session'
-	),
-	'cookie' => array(
+    ],
+    'cookie' => [
 		'encrypted' => FALSE,
-	),
-);
+    ],
+];

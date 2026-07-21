@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	/**
 	 * SwiftMailer driver, used with the email module.
 	 *
@@ -27,4 +27,4 @@ return array(
      * - smtp: hostname, (username), (password), (port), (encryption)
 	 */
 	'options' => NULL
-);
+];

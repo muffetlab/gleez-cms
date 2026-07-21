@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     // Site name
 	'site_name' => 'Gleez CMS',
@@ -45,10 +45,10 @@ return array(
 	'maintenance_mode' => FALSE,
 
     // The module search paths. They are searched in the order given.
-	'module_paths' => array(MODPATH),
+    'module_paths' => [MODPATH],
 
     // The theme search paths. They are searched in the order given.
-	'theme_paths' => array(THEMEPATH),
+    'theme_paths' => [THEMEPATH],
 
     // Offline message in Maintenance Mode
 	'offline_message' => '',
@@ -69,10 +69,10 @@ return array(
 	'front_page' => 'welcome',
 
     // Default headers
-	'headers' => array(
+    'headers' => [
 		'X-Powered-By'              => 'Gleez CMS (https://gleezcms.org)',
 	//	'Content-Security-Policy'   => "script-src 'self' '{NONCE}' metrics.gleez.com; frame-ancestors 'self';"
-	),
+    ],
 
     // XML-RPC
     'xml_rpc' => 'xml-rpc',
@@ -84,31 +84,31 @@ return array(
 	'use_gravatars' => FALSE,
 
     // Meta defaults
-	'meta' => array(
-		'links' => array(
-			URL::site('media/icons/favicon.ico', TRUE) => array(
+    'meta' => [
+        'links' => [
+            URL::site('media/icons/favicon.ico', TRUE) => [
 				'rel'  => 'shortcut icon',
 				'type' => 'image/x-icon'
-			),
-			URL::site('rss', TRUE) => array(
+            ],
+            URL::site('rss', TRUE) => [
 				'rel'   => 'alternate',
 				'type'  => 'application/rss+xml',
 				'title' => 'Gleez RSS 2.0'
-			),
-			URL::site('', TRUE) => array(
+            ],
+            URL::site('', TRUE) => [
 				'rel'   => 'index',
 				'title' => 'Gleez CMS'
-			),
-		),
-		'tags' => array(
+            ],
+        ],
+        'tags' => [
 			'charset'    		      => Kohana::$charset,
 			'generator'  		      => 'Gleez '.Gleez::VERSION.' (https://gleezcms.org)',
 			'author'     		      => 'Gleez Team',
 			'copyright'  		      => 'Copyright (c) Gleez Technologies (P) Limited 2011-2018. All rights reserved.',
 			'robots'     		      => 'index, follow, noodp',
 			'viewport'   		      => 'width=device-width, initial-scale=1.0',
-		),
-	),
+        ],
+    ],
 
 	/**
 	 * Default locale.
@@ -136,43 +136,43 @@ return array(
 	 *  i18n_code - The target language for the I18n class
 	 *  locale    - Locale name(s) for setting all locale information (http://php.net/setlocale)
 	 */
-	'installed_locales' => array(
-		'en' => array(
+    'installed_locales' => [
+        'en' => [
 			'name'      => 'English',
 			'i18n_code' => 'en-us',
-			'locale'    => array('en_US.utf-8'),
-		),
-		'et' => array(
+            'locale' => ['en_US.utf-8'],
+        ],
+        'et' => [
 			'name'      => 'Estonian',
 			'i18n_code' => 'et-ee',
-			'locale'    => array('et_EE.utf-8'),
-		),
-		'it' => array(
+            'locale' => ['et_EE.utf-8'],
+        ],
+        'it' => [
 			'name'      => 'Italian',
 			'i18n_code' => 'it-it',
-			'locale'    => array('it_IT.utf-8'),
-		),
-		'ro' => array(
+            'locale' => ['it_IT.utf-8'],
+        ],
+        'ro' => [
 			'name'      => 'Romanian',
 			'i18n_code' => 'ro-ro',
-			'locale'    => array('ro_RO.utf-8'),
-		),
-		'ru' => array(
+            'locale' => ['ro_RO.utf-8'],
+        ],
+        'ru' => [
 			'name'      => 'Russian',
 			'i18n_code' => 'ru-ru',
-			'locale'    => array('ru_RU.utf-8'),
-		),
-		'zh' => array(
+            'locale' => ['ru_RU.utf-8'],
+        ],
+        'zh' => [
 			'name'      => 'Chinese (Simplified)',
 			'i18n_code' => 'zh-cn',
-			'locale'    => array('zh_CN.utf-8'),
-		),
-		'id' => array(
+            'locale' => ['zh_CN.utf-8'],
+        ],
+        'id' => [
 			'name'      => 'Bahasa Indonesia',
 			'i18n_code' => 'id-id',
-			'locale'    => array('id_ID.utf-8'),
-		),
-	),
+            'locale' => ['id_ID.utf-8'],
+        ],
+    ],
 
     // Default timezone
 	'timezone' => 'Asia/Kolkata',
@@ -203,4 +203,4 @@ return array(
 
     // Define Google Analytics ID
 	'google_ua' => NULL,
-);
+];

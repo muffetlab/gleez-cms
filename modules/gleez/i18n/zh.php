@@ -7,7 +7,7 @@
  * @copyright (c) 2011-2013 Gleez Technologies
  * @license   https://gleezcms.org/license Gleez CMS License
  */
-return array(
+return [
   '(:count) Comments' => '（:count）评论',
   '(No subject)' => '（无主题）',
   ' (not verified)' => '（未验证）',
@@ -538,4 +538,4 @@ Links:
   'Your comment has been queued for review by
 							    site administrators and will be published after approval.' => '您的评论已排队等待网站管理员审查和批准后公布。',
   'Your Gleez install is complete!' => '您的Gleez安装完成！',
-);
+];

@@ -7,7 +7,7 @@
  * @copyright (c) 2011-2013 Gleez Technologies
  * @license   https://gleezcms.org/license Gleez CMS License
  */
-return array(
+return [
 	// :
 	':field must not be empty' => 'Il campo non pu&#328; essere vuoto',
 	':pcre has not been compiled with Unicode property support.' => ':pcre non &#269; stato compilato con il supporto Unicode.',
@@ -466,4 +466,4 @@ return array(
 	'You are using an :out browser. Please :url or :frame to improve your experience' => 'Si sta utilizzando un browser :out. Si prega di visualizzare :url o :frame per migliorare la vostra esperienza',
 	'Your Gleez install is complete!' => 'L\'installazione di Gleez &#269; completa!',
 	// Z
-);
+];

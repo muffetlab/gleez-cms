@@ -1,12 +1,12 @@
 <?php
 
-return array(
+return [
 	// Leave this alone
-	'modules' => array(
+    'modules' => [
 
         // This should be the path to this module's user guide pages, without the 'guide/'. For example,
         // '/guide/module-name/' would be 'module-name'.
-		'gleez' => array(
+        'gleez' => [
 
             // Whether this module's user guide pages should be shown
 			'enabled' => TRUE,
@@ -19,6 +19,6 @@ return array(
 			
 			// Copyright message, shown in the footer for this module
 			'copyright' => '&copy; 2011-2013 Gleez Technologies',
-		)
-	)
-);
+        ]
+    ]
+];

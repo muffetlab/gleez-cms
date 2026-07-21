@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     // Default blog status (eg: draft, review, publish, etc.)
 	'default_status' => 'draft',
@@ -52,4 +52,4 @@ return array(
 
     // Use primary image?
 	'primary_image' => TRUE,
-);
+];

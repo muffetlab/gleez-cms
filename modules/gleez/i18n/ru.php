@@ -7,7 +7,7 @@
  * @copyright (c) 2011-2014 Gleez Technologies
  * @license   https://gleezcms.org/license Gleez CMS License
  */
-return array(
+return [
 	// Validation
 	':field must be a digit' => 'Поле `:field` должно содержать только цифры',
 	':field must be a email address' => 'Поле `:field` должно содержать email адрес',
@@ -1115,4 +1115,4 @@ return array(
 		'Tongatapu' => 'Тонгатапу',
 		'Wake' => 'Уэйк',
 		'Wallis' => 'Уоллис'
-);
+];

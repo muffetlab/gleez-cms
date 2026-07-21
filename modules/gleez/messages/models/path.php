@@ -1,16 +1,16 @@
 <?php
 
-return array(
-	'source' => array(
+return [
+    'source' => [
 		'not_empty' => ':field must not be empty',
-	),
-	'alias' => array(
+    ],
+    'alias' => [
 		'not_empty' => ':field must not be empty',
 		'invalid_source' => 'Invalid URL Path'
-	),
-	'lang' => array(
+    ],
+    'lang' => [
 		'min_length' => 'Language must be at least :param2 characters long',
 		'max_length' => 'Language must be less than :param2 characters long',
 		'regex' => '',
-	),
-);
+    ],
+];

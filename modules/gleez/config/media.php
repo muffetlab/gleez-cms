@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     // The public accessible directory where the file will be copied
 	'public_dir' => 'media',
@@ -15,17 +15,17 @@ return array(
 	'combine' => FALSE,
 
     // Supported image formats
-	'supported_image_formats' => array(
+    'supported_image_formats' => [
 		'jpe',
 		'jpg',
 		'jpeg',
 		'gif',
 		'png',
-	),
+    ],
 
     // Maximum size of POST data that PHP will accept (e.g., '200K', '5MiB', '1M', '500B')
 	'post_max_size' => '8M',
 
     // Image quality
 	'quality' => 85,
-);
+];

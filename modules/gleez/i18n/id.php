@@ -7,7 +7,7 @@
  * @copyright (c) 2011-2014 Gleez Technologies
  * @license   https://gleezcms.org/license Gleez CMS License
  */
-return array(
+return [
 // :
 ':field must not be empty' => ':field tidak boleh kosong',
 ':pcre has not been compiled with Unicode property support.' => ':pcre belum dikompile dengan dukungan Unicode.',
@@ -571,4 +571,4 @@ return array(
 
 
 	
-);
+];

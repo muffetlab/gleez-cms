@@ -11,10 +11,10 @@ class Gleez_AclTest extends Unittest_TestCase
 {
     public function providerPerms(): array
     {
-		return array(
-			array('administer site', 2),
-			array('view page', 1),
-		);
+        return [
+            ['administer site', 2],
+            ['view page', 1],
+        ];
 	}
 	
 	/**
@@ -52,13 +52,13 @@ class Gleez_AclTest extends Unittest_TestCase
 		ACL::cache(TRUE);
 
         // Now let's modify the "current" routes
-		ACL::set('contact', array(
-			'sending mail' => array(
+        ACL::set('contact', [
+            'sending mail' => [
 				'title' => __('Sending Mails'),
 				'restrict access' => FALSE,
 				'description' => __('Ability to send messages for administrators from your site'),
-			),
-		));
+            ],
+        ]);
 
 		// Then try and load said cache
 		$this->assertTrue(ACL::cache());

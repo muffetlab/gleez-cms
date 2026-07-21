@@ -11,10 +11,10 @@ class Gleez_UserTest extends Unittest_TestCase
 {
     public function providerUsers(): array
     {
-		return array(
-			array(array("name" => "admin", "password" => "gleez1co")),
-			array(array("name" => "sundar", "password" => "gleez1co"))
-		);
+        return [
+            [["name" => "admin", "password" => "gleez1co"]],
+            [["name" => "sundar", "password" => "gleez1co"]]
+        ];
 	}
 	/**
 	 * @dataProvider providerUsers
@@ -31,6 +31,6 @@ class Gleez_UserTest extends Unittest_TestCase
         $this->expectException(Validation_Exception::class);
 
         $user = ORM::factory('User');
-		$user->login(array('name' => 'sundar1', 'password' => 'gleez1co'));
+        $user->login(['name' => 'sundar1', 'password' => 'gleez1co']);
 	}
 }
