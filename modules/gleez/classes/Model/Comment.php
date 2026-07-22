@@ -42,10 +42,10 @@ class Model_Comment extends Gleez_Model
     protected $_belongs_to = [
         'post' => [
             'model' => 'Post',
-			'foreign_key' => 'post_id'
+            'foreign_key' => 'post_id'
         ],
         'user' => [
-			'foreign_key' => 'author'
+            'foreign_key' => 'author'
         ]
     ];
 
@@ -93,12 +93,12 @@ class Model_Comment extends Gleez_Model
 	public function labels(): array
     {
         return [
-			'title'       => __('Title'),
-			'body'        => __('Comment'),
-			'guest_name'  => __('Name'),
-			'guest_email' => __('Email'),
-			'guest_url'   => __('Website'),
-			'author'      => __('Author'),
+            'title' => __('Title'),
+            'body' => __('Comment'),
+            'guest_name' => __('Name'),
+            'guest_email' => __('Email'),
+            'guest_url' => __('Website'),
+            'author' => __('Author'),
         ];
 	}
 
@@ -276,10 +276,10 @@ class Model_Comment extends Gleez_Model
     public function valid_post(Validation $validation, string $field)
 	{
         $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
-				->from('posts')
-				->where('id', '=', $this->post_id)
-				->execute($this->_db)
-				->get('total_count');
+            ->from('posts')
+            ->where('id', '=', $this->post_id)
+            ->execute($this->_db)
+            ->get('total_count');
 
 		if ($result  != 1)
 		{

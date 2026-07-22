@@ -119,7 +119,7 @@ class Controller_Contact extends Template {
 			{
 				// Create the email subject
                 $subject = __('[:category] :subject', [
-					':category' => $types[$post['category']],
+                    ':category' => $types[$post['category']],
                     ':subject' => HTML::chars($post['subject'])
                 ]);
 
@@ -131,14 +131,14 @@ class Controller_Contact extends Template {
 						->render();
 
 				// Create an email message
-				$email = Email::factory()
+                $email = Email::factory()
                     ->to(
                         HTML::chars($this->_config->get('site_email', 'webmaster@gleezcms.org')),
                         __('Webmaster :site', [':site' => Template::getSiteName()])
                     )
-						->subject($subject)
+                    ->subject($subject)
                     ->from($post['email'], HTML::chars($post['name']))
-						->message($body, 'text/html'); // @todo message type should be configurable
+                    ->message($body, 'text/html'); // @todo message type should be configurable
 
 				// Send the message
 				$email->send();

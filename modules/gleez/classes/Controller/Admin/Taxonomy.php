@@ -56,7 +56,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 			foreach ($this->_datatables->result() as $term)
 			{
                 $this->_datatables->add_row([
-                        HTML::chars($term->name) . '<div class="description">' . HTML::chars($term->description) . '</div>',
+                    HTML::chars($term->name) . '<div class="description">' . HTML::chars($term->description) . '</div>',
                     HTML::icon(Route::get('admin/term')->uri([
                         'action' => 'list',
                         'id' => $term->id
@@ -210,9 +210,9 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 
         $this->title = __('Delete Category Group :title', [':title' => $term->name]);
 
-		$view = View::factory('form/confirm')
+        $view = View::factory('form/confirm')
             ->set('action', Route::url('admin/taxonomy', ['action' => 'delete', 'id' => $term->id]))
-				->set('title', $term->name);
+            ->set('title', $term->name);
 
 		// If deletion is not desired, redirect to list
         if (isset($_POST['no']) && $this->valid_post())

@@ -88,14 +88,14 @@ class Controller_Admin_Widget extends Controller_Admin {
 				$widget['status'] = (int) ($widget['region'] != self::$WIDGET_REGION_NONE);
 				$widget['region'] = $widget['status'] ? $widget['region'] : self::$WIDGET_REGION_NONE;
 
-				DB::update('widgets')
+                DB::update('widgets')
                     ->set([
-						'status'=> $widget['status'],
-						'weight' => $widget['weight'],
+                        'status' => $widget['status'],
+                        'weight' => $widget['weight'],
                         'region' => $widget['region']
                     ])
-					->where('id','=',$widget['id'])
-					->execute();
+                    ->where('id', '=', $widget['id'])
+                    ->execute();
 			}
 
 			Message::success(__('The Widget settings have been updated.'));
@@ -259,12 +259,12 @@ class Controller_Admin_Widget extends Controller_Admin {
             ? ['destination' => $this->request->query('destination')]
             : [];
 
-		$view = View::factory('form/confirm')
+        $view = View::factory('form/confirm')
             ->set('action', Route::get('admin/widget')->uri([
                     'action' => 'delete',
                     'id' => $widget->id
                 ]) . URL::query($destination))
-					->set('title', $widget->title);
+            ->set('title', $widget->title);
 
 		// If deletion is not desired, redirect to post
         if (isset($_POST['no']) && $this->valid_post())

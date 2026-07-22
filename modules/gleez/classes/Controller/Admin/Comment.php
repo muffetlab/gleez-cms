@@ -297,14 +297,14 @@ class Controller_Admin_Comment extends Controller_Admin {
 				}
 
                 $this->_datatables->add_row([
-						Form::checkbox('comments['.$post->id.']', $post->id, isset($_POST['comments'][$post->id]) ),
+                    Form::checkbox('comments[' . $post->id . ']', $post->id, isset($_POST['comments'][$post->id])),
                     HTML::anchor($post->url, Text::limit_chars($post->title, 40), [
                         'class' => 'action-view',
                         'title' => Text::limit_chars($post->rawbody, 120)
                     ]),
-						$author,
+                    $author,
                     HTML::anchor($post->post->url, $post->post->title, ['class' => 'action-view']),
-						Date::formatted_time($post->created),
+                    Date::formatted_time($post->created),
                     HTML::icon($post->edit_url . $this->_destination, 'fa far fa-edit', [
                         'class' => 'btn btn-sm btn-default action-edit',
                         'title' => __('Edit')

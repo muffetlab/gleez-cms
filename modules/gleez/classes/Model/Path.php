@@ -42,9 +42,9 @@ class Model_Path extends Gleez_Model
 	public function labels(): array
     {
         return [
-			'source' => __('URL Path'),
-			'alias'  => __('Alias'),
-			'lang'   => __('Language'),
+            'source' => __('URL Path'),
+            'alias' => __('Alias'),
+            'lang' => __('Language'),
         ];
 	}
 

@@ -165,8 +165,8 @@ class Text extends Kohana_Text
         $text = str_replace(["\r\n", "\r"], "\n", $text);
 
         $textObj = new ArrayObject([
-				'text' 	   => (string) $text,
-				'format'   => (int)    $format_id,
+            'text' => (string) $text,
+            'format' => (int) $format_id,
             'langCode' => $langCode,
             'cache' => $cache,
             'cache_id' => $cache_id

@@ -28,8 +28,8 @@ class Model_Tag extends Gleez_Model
     protected $_has_many = [
         'posts' => [
             'model' => 'Post',
-			'through'     => 'posts_tags',
-			'foreign_key' => 'tag_id'
+            'through' => 'posts_tags',
+            'foreign_key' => 'tag_id'
         ],
     ];
 
@@ -41,8 +41,8 @@ class Model_Tag extends Gleez_Model
 	public function labels(): array
     {
         return [
-			'name' => __('Tag'),
-			'type'  => __('Type'),
+            'name' => __('Tag'),
+            'type' => __('Type'),
         ];
 	}
 

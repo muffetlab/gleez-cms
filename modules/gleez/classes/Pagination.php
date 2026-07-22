@@ -15,12 +15,12 @@ class Pagination {
 	 */
     protected $config = [
         'current_page' => ['source' => 'query_string', 'key' => 'page'],
-		'total_items'       => 0,
-		'items_per_page'    => 10,
-		'view'              => 'pagination/basic',
-		'auto_hide'         => TRUE,
-		'first_page_in_url' => FALSE,
-		'uri'               => NULL
+        'total_items' => 0,
+        'items_per_page' => 10,
+        'view' => 'pagination/basic',
+        'auto_hide' => TRUE,
+        'first_page_in_url' => FALSE,
+        'uri' => NULL
     ];
 
 	// Current page number

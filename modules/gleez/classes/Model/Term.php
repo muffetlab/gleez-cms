@@ -34,8 +34,8 @@ class Model_Term extends ORM_MPTT {
     protected $_has_many = [
         'posts' => [
             'model' => 'Post',
-			'through'     => 'posts_terms',
-			'foreign_key' => 'term_id'
+            'through' => 'posts_terms',
+            'foreign_key' => 'term_id'
         ],
     ];
 

@@ -81,9 +81,9 @@ class Controller_Tag extends Template {
 
         $pagination = Pagination::factory([
             'current_page' => ['source' => 'cms', 'key' => 'page'],
-			'total_items'    => $total,
-			'items_per_page' => 15,
-			'uri'            => $tag->url,
+            'total_items' => $total,
+            'items_per_page' => 15,
+            'uri' => $tag->url,
         ]);
 
 		$posts = $posts->order_by('created', 'DESC')

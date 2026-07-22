@@ -447,10 +447,10 @@ class Datatables {
 			}
 
             $this->_render = json_encode([
-				'draw'              => intval($this->request()->query('draw')),
+                'draw' => intval($this->request()->query('draw')),
                 'recordsTotal' => $this->_count_total,
                 'recordsFiltered' => $this->_count,
-				'data'              => $this->_rows
+                'data' => $this->_rows
             ]);
 		}
 

@@ -34,15 +34,15 @@ class Comment {
 		// Set default comment form action
 		$action = Request::current()->uri();
 
-		$view = View::factory('comment/form')
-					->set('use_captcha', $captcha)
-					->set('action',      $action)
-					->set('is_edit',     FALSE)
-					->set('auth',        Auth::instance())
+        $view = View::factory('comment/form')
+            ->set('use_captcha', $captcha)
+            ->set('action', $action)
+            ->set('is_edit', FALSE)
+            ->set('auth', Auth::instance())
             ->set('destination', [])
-					->set('item',        $item)
-					->bind('errors',     $errors)
-					->bind('post',       $post);
+            ->set('item', $item)
+            ->bind('errors', $errors)
+            ->bind('post', $post);
 
 		// Set if captcha necessary
 		if ($captcha)
@@ -73,9 +73,9 @@ class Comment {
 				if (User::is_guest())
 				{
                     User::cookie_save([
-						'name'  => $post->guest_name,
-						'email' => $post->guest_email,
-						'url'   => $post->guest_url
+                        'name' => $post->guest_name,
+                        'email' => $post->guest_email,
+                        'url' => $post->guest_url
                     ]);
 				}
 
@@ -110,10 +110,10 @@ class Comment {
     public static function status(): array
     {
         $states = [
-			'publish'   => __('Publish'),
-			'draft'     => __('Unpublish'),
-			'spam'      => __('Spam'),
-			'delete'    => __('Delete'),
+            'publish' => __('Publish'),
+            'draft' => __('Unpublish'),
+            'spam' => __('Spam'),
+            'delete' => __('Delete'),
         ];
 
         return Module::action('comment_status', $states);
@@ -129,29 +129,29 @@ class Comment {
     {
         $states = [
             'publish' => [
-				'label' => __('Publish the selected comments'),
-				'callback' => 'Comment::bulk_update',
+                'label' => __('Publish the selected comments'),
+                'callback' => 'Comment::bulk_update',
                 'arguments' => [
                     'updates' => ['status' => 'publish']
                 ],
             ],
             'draft' => [
-				'label' => __('Unpublish the selected comments'),
-				'callback' => 'Comment::bulk_update',
+                'label' => __('Unpublish the selected comments'),
+                'callback' => 'Comment::bulk_update',
                 'arguments' => [
                     'updates' => ['status' => 'draft']
                 ],
             ],
             'spam' => [
-				'label' => __('Mark the selected comments as Spam'),
-				'callback' => 'Comment::bulk_update',
+                'label' => __('Mark the selected comments as Spam'),
+                'callback' => 'Comment::bulk_update',
                 'arguments' => [
                     'updates' => ['status' => 'spam']
                 ],
             ],
             'delete' => [
-				'label' => __('Delete the selected comments'),
-				'callback' => NULL,
+                'label' => __('Delete the selected comments'),
+                'callback' => NULL,
             ]
         ];
 

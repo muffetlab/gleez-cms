@@ -67,12 +67,12 @@ class Path {
 		}
 
         return [
-			'directory'  => $result['route_directory'],
-			'controller' => $result['route_controller'],
-			'action'     => $result['route_action'],
-			'id' 	     => $result['route_id'],
-			'uri'	     => $result['alias'],
-			'page'	     => $page
+            'directory' => $result['route_directory'],
+            'controller' => $result['route_controller'],
+            'action' => $result['route_action'],
+            'id' => $result['route_id'],
+            'uri' => $result['alias'],
+            'page' => $page
         ];
 	}
 
@@ -269,14 +269,14 @@ class Path {
 		// Convert path settings to a regular expression.
         // Therefore, replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.
         $to_replace = [
-			'/(\r\n?|\n)/', // newlines
-			'/\\\\\*/',     // asterisks
-			'/(^|\|)\\\\<front\\\\>($|\|)/' // <front>
+            '/(\r\n?|\n)/', // newlines
+            '/\\\\\*/',     // asterisks
+            '/(^|\|)\\\\<front\\\\>($|\|)/' // <front>
         ];
         $replacements = [
-			'|',
-			'.*',
-			'\1' . preg_quote(URL::base(), '/') . '\2'
+            '|',
+            '.*',
+            '\1' . preg_quote(URL::base(), '/') . '\2'
         ];
 		$patterns_quoted = preg_quote($patterns, '/');
 		$regexps[$patterns] = '/^(' . preg_replace($to_replace, $replacements, $patterns_quoted) . ')$/';

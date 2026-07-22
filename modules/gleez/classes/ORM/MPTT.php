@@ -840,17 +840,17 @@ class ORM_MPTT extends Gleez_Model
      */
     protected function create_space(int $start, int $size = 2)
 	{
-		DB::update($this->_table_name)
+        DB::update($this->_table_name)
             ->set([$this->left_column => DB::expr($this->left_column . ' + ' . $size)])
-			->where($this->left_column,'>=', $start)
-			->where($this->scope_column, '=', $this->scope())
-			->execute($this->_db);
+            ->where($this->left_column, '>=', $start)
+            ->where($this->scope_column, '=', $this->scope())
+            ->execute($this->_db);
 
-		DB::update($this->_table_name)
+        DB::update($this->_table_name)
             ->set([$this->right_column => DB::expr($this->right_column . ' + ' . $size)])
-			->where($this->right_column,'>=', $start)
-			->where($this->scope_column, '=', $this->scope())
-			->execute($this->_db);
+            ->where($this->right_column, '>=', $start)
+            ->where($this->scope_column, '=', $this->scope())
+            ->execute($this->_db);
 	}
 
     /**
@@ -862,17 +862,17 @@ class ORM_MPTT extends Gleez_Model
      */
     protected function delete_space(int $start, int $size = 2)
 	{
-		DB::update($this->_table_name)
+        DB::update($this->_table_name)
             ->set([$this->left_column => DB::expr($this->left_column . ' - ' . $size)])
-			->where($this->left_column, '>=', $start)
-			->where($this->scope_column, '=', $this->scope())
-			->execute($this->_db);
+            ->where($this->left_column, '>=', $start)
+            ->where($this->scope_column, '=', $this->scope())
+            ->execute($this->_db);
 
-		DB::update($this->_table_name)
+        DB::update($this->_table_name)
             ->set([$this->right_column => DB::expr($this->right_column . ' - ' . $size)])
-			->where($this->right_column,'>=', $start)
-			->where($this->scope_column, '=', $this->scope())
-			->execute($this->_db);
+            ->where($this->right_column, '>=', $start)
+            ->where($this->scope_column, '=', $this->scope())
+            ->execute($this->_db);
 	}
 
     /**

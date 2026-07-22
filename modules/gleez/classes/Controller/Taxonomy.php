@@ -71,9 +71,9 @@ class Controller_Taxonomy extends Template {
 
         $pagination = Pagination::factory([
             'current_page' => ['source' => 'cms', 'key' => 'page'],
-			'total_items'    => $total,
-			'items_per_page' => 5,
-			'uri'		 => $term->url
+            'total_items' => $total,
+            'items_per_page' => 5,
+            'uri' => $term->url
         ]);
 
 		$posts  = $posts->order_by('created', 'DESC')

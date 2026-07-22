@@ -113,9 +113,9 @@ class Controller_Blog extends Template {
         $rss_link = Route::get('rss')->uri(['controller' => 'blog']);
         $pagination = Pagination::factory([
             'current_page' => ['source' => 'cms', 'key' => 'page'],
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $url,
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $url,
         ]);
 
 		$posts = $posts->order_by('sticky', 'DESC')
@@ -132,9 +132,9 @@ class Controller_Blog extends Template {
             Meta::links(URL::canonical($url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('blog', [], TRUE), ['rel' => 'shortlink']);
             Meta::links(URL::site('rss/blog', TRUE), [
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . __('Blogs'),
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . __('Blogs'),
             ]);
 		}
 	}
@@ -452,12 +452,12 @@ class Controller_Blog extends Template {
 		$destination = ($this->request->query('destination') !== NULL) ?
             ['destination' => $this->request->query('destination')] : [];
 
-		$view = View::factory('form/confirm')
+        $view = View::factory('form/confirm')
             ->set('action', Route::get('blog')->uri([
                     'action' => 'delete',
                     'id' => $post->id
                 ]) . URL::query($destination))
-			->set('title', $post->title);
+            ->set('title', $post->title);
 
 		// If deletion is not desired, redirect to post
 		if ($this->valid_post('no'))
@@ -550,9 +550,9 @@ class Controller_Blog extends Template {
         $rss_link = Route::get('rss')->uri(['controller' => 'blog', 'action' => 'term', 'id' => $term->id]);
         $pagination = Pagination::factory([
             'current_page' => ['source' => 'cms', 'key' => 'page'],
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $term->url,
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $term->url,
         ]);
 
 		$posts = $posts->order_by('sticky', 'DESC')
@@ -568,12 +568,12 @@ class Controller_Blog extends Template {
 		{
             Meta::links(URL::canonical($term->url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('blog', ['action' => 'term', 'id' => $term->id], TRUE), [
-				'rel' => 'shortlink'
+                'rel' => 'shortlink'
             ]);
             Meta::links(Route::url('rss', ['controller' => 'blog', 'action' => 'term', 'id' => $term->id], TRUE), [
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . $term->name,
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . $term->name,
             ]);
 		}
 	}
@@ -622,9 +622,9 @@ class Controller_Blog extends Template {
         $rss_link = Route::get('rss')->uri(['controller' => 'blog', 'action' => 'tag', 'id' => $tag->id]);
         $pagination = Pagination::factory([
             'current_page' => ['source' => 'cms', 'key' => 'page'],
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $tag->url,
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $tag->url,
         ]);
 
 		$posts = $posts->order_by('created', 'DESC')
@@ -639,12 +639,12 @@ class Controller_Blog extends Template {
 		{
             Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('blog', ['action' => 'tag', 'id' => $tag->id], TRUE), [
-				'rel' => 'shortlink'
+                'rel' => 'shortlink'
             ]);
             Meta::links(Route::url('rss', ['controller' => 'blog', 'action' => 'tag', 'id' => $tag->id], TRUE), [
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . $tag->name,
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . $tag->name,
             ]);
 		}
 	}

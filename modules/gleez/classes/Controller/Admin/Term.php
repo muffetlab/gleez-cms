@@ -331,15 +331,15 @@ class Controller_Admin_Term extends Controller_Admin {
 			{
 				foreach($this->tree as $node)
 				{
-					DB::update('terms')
+                    DB::update('terms')
                         ->set([
-								'pid' => $node['pid'],
-								'lvl' => $node['lvl'],
-								'lft' => $node['lft'],
+                            'pid' => $node['pid'],
+                            'lvl' => $node['lvl'],
+                            'lft' => $node['lft'],
                             'rgt' => $node['rgt']
                         ])
-						->where('id', '=', $node['id'])
-						->execute();
+                        ->where('id', '=', $node['id'])
+                        ->execute();
 				}
 
 				Message::success(__('Order of the categories has been saved.'));
@@ -416,11 +416,11 @@ class Controller_Admin_Term extends Controller_Admin {
 			}
 
             $this->tree[] = [
-				'id'  => $id,
-				'pid' => (int) $val['pid'],
-				'lvl' => $level,
-				'lft' => $left,
-				'rgt' => $right
+                'id' => $id,
+                'pid' => (int) $val['pid'],
+                'lvl' => $level,
+                'lft' => $left,
+                'rgt' => $right
             ];
 		}
 	}

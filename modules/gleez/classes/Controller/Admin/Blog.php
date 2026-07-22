@@ -166,11 +166,11 @@ class Controller_Admin_Blog extends Controller_Admin {
 			foreach ($this->_datatables->result() as $blog)
 			{
                 $this->_datatables->add_row([
-						Form::checkbox('blogs['.$blog->id.']', $blog->id, isset($_POST['blogs'][$blog->id])),
-						HTML::anchor($blog->url, $blog->title),
-						HTML::anchor($blog->user->url, $blog->user->nick),
-						HTML::label(__($blog->status), $blog->status),
-						Date::formatted_time($blog->updated, 'M d, Y'),
+                    Form::checkbox('blogs[' . $blog->id . ']', $blog->id, isset($_POST['blogs'][$blog->id])),
+                    HTML::anchor($blog->url, $blog->title),
+                    HTML::anchor($blog->user->url, $blog->user->nick),
+                    HTML::label(__($blog->status), $blog->status),
+                    Date::formatted_time($blog->updated, 'M d, Y'),
                     HTML::icon($blog->edit_url . $destination, 'fa far fa-edit', [
                         'class' => 'btn btn-sm btn-default action-edit',
                         'title' => __('Edit Blog')

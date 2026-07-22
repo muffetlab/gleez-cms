@@ -33,13 +33,13 @@ class Model_Tagging extends ORM {
 	 */
     protected $_belongs_to = [
         'user' => [
-			'foreign_key' => 'author'
+            'foreign_key' => 'author'
         ],
         'tags' => [
-			'foreign_key' => 'tag_id'
+            'foreign_key' => 'tag_id'
         ],
         'posts' => [
-			'foreign_key' => 'post_id'
+            'foreign_key' => 'post_id'
         ]
     ];
 
@@ -49,8 +49,8 @@ class Model_Tagging extends ORM {
 	 * @var string
 	 */
     protected $_created_column = [
-		'column' => 'created',
-		'format' => TRUE
+        'column' => 'created',
+        'format' => TRUE
     ];
 
 }

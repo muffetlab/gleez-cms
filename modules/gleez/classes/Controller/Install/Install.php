@@ -60,11 +60,11 @@ class Controller_Install_Install extends Controller_Template {
 		{
 			$this->_session = Session::instance('cookie');
             $this->template->menu = [
-				__('Welcome'),
-				__('System Check'),
-				__('Database'),
-				__('Install'),
-				__('Finish')
+                __('Welcome'),
+                __('System Check'),
+                __('Database'),
+                __('Install'),
+                __('Finish')
             ];
 		}
 	}
@@ -121,11 +121,11 @@ class Controller_Install_Install extends Controller_Template {
 
 		$this->template->_activity = __('20');
         $this->template->menu = [
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			__('System Check'),
-			__('Database'),
-			__('Install'),
-			__('Finish')
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            __('System Check'),
+            __('Database'),
+            __('Install'),
+            __('Finish')
         ];
 
 		$this->template->content = new View('install/welcome');
@@ -140,11 +140,11 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->title =  __('System Check');
 		$this->template->_activity = __('40');
         $this->template->menu = [
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
             HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
-			__('Database'),
-			__('Install'),
-			__('Finish')
+            __('Database'),
+            __('Install'),
+            __('Finish')
         ];
 
 		!file_exists(APPPATH . "cache") && System::mkdir(APPPATH . "cache");
@@ -206,29 +206,29 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->title = __('Database Configuration');
 		$this->template->_activity = __('60');
         $this->template->menu = [
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
             HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
             HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
-			__('Install'),
-			__('Finish')
+            __('Install'),
+            __('Finish')
         ];
 
         $form = [
-			'user' => '',
-			'pass' => '',
-			'hostname' => 'localhost',
-			'database' => 'gleezcms',
-			'table_prefix' => 'gl_'
+            'user' => '',
+            'pass' => '',
+            'hostname' => 'localhost',
+            'database' => 'gleezcms',
+            'table_prefix' => 'gl_'
         ];
 
 		if (isset($_POST['db']))
 		{
             $data = [
-				'user' => $username = $_POST['user'],
-				'pass' => $password = $_POST['pass'],
-				'hostname' => $hostname = $_POST['hostname'],
-				'database' => $database = $_POST['database'],
-                    'table_prefix' => $_POST['table_prefix']
+                'user' => $username = $_POST['user'],
+                'pass' => $password = $_POST['pass'],
+                'hostname' => $hostname = $_POST['hostname'],
+                'database' => $database = $_POST['database'],
+                'table_prefix' => $_POST['table_prefix']
             ];
 
 			try
@@ -265,7 +265,7 @@ class Controller_Install_Install extends Controller_Template {
                         $this->template->error = __(
                             'Gleez requires at least MySQL version 5.0.0. You\'re using version :version',
                             [':version' => $this->mysql_version(1)]
-							);
+                        );
 					break;
 					default:
 						$this->template->error = $error;
@@ -285,11 +285,11 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->content = '';
 		$this->template->_activity = __('80');
         $this->template->menu = [
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
             HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
             HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
             HTML::anchor(Route::get('install')->uri(['action' => 'install']), __('Install')),
-				__('Finish')
+            __('Finish')
         ];
 
 		try
@@ -314,7 +314,7 @@ class Controller_Install_Install extends Controller_Template {
 		$data = $this->_session->get('database_data');
 		$this->template->_activity = __('80');
         $this->template->menu = [
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
             HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
             HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
             HTML::anchor(Route::get('install')->uri(['action' => 'install']), __('Install')),

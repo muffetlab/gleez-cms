@@ -2,43 +2,43 @@
 
 return [
     'database' => [
-		/**
-		 * Database settings for session storage
-		 *
-		 * string   group  Database config group name
-		 * string   table  The name of the session table
-		 * integer  gc     Number of requests before gc is invoked
-		 * columns  array  Custom column names
-		 */
-		'group'   => 'default',
-		'table'   => 'sessions',
-		'gc'      => 500,
+        /**
+         * Database settings for session storage
+         *
+         * string   group  Database config group name
+         * string   table  The name of the session table
+         * integer  gc     Number of requests before gc is invoked
+         * columns  array  Custom column names
+         */
+        'group' => 'default',
+        'table' => 'sessions',
+        'gc' => 500,
         'columns' => [
-			/**
-			 * Table columns name
-			 *
-			 * string  session_id   Session identifier
-			 * string  last_active  Timestamp of the last activity
-			 * string  contents     Serialized session data
-			 */
-			'session_id'  => 'session_id',
-			'last_active' => 'last_active',
-			'contents'    => 'contents',
+            /**
+             * Table columns name
+             *
+             * string  session_id   Session identifier
+             * string  last_active  Timestamp of the last activity
+             * string  contents     Serialized session data
+             */
+            'session_id' => 'session_id',
+            'last_active' => 'last_active',
+            'contents' => 'contents',
         ],
     ],
     'redis' => [
-		/**
-		 * Collection field name
-		 *
-		 * string  host    Redis Host
-		 * int     port    Redis Port
-		 * string  prefix  Redis key prefix
-		 */
-		'host'   => 'localhost',
-		'port'   => 6379,
-		'prefix' => 'session'
+        /**
+         * Collection field name
+         *
+         * string  host    Redis Host
+         * int     port    Redis Port
+         * string  prefix  Redis key prefix
+         */
+        'host' => 'localhost',
+        'port' => 6379,
+        'prefix' => 'session'
     ],
     'cookie' => [
-		'encrypted' => FALSE,
+        'encrypted' => FALSE,
     ],
 ];

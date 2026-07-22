@@ -70,8 +70,8 @@ class Cache_Redis extends Cache {
 
 		// Define a default settings array.
         $default_settings = [
-			'host' => 'localhost',
-			'port' => 6379
+            'host' => 'localhost',
+            'port' => 6379
         ];
 
 		// Merge the default settings with the user-defined settings.
@@ -122,7 +122,7 @@ class Cache_Redis extends Cache {
                 Log::ERROR,
                 'An error occurred retrieving corrupt or not exists cache name: [:name]',
                 [':name' => System::sanitize_id($this->config('prefix') . $id)]
-			);
+            );
 		}
 
 		// Cache not found, return default value
@@ -262,7 +262,7 @@ class Cache_Redis extends Cache {
                 Log::ERROR,
                 'An error occurred retrieving corrupt or not exists cache name: [:name]',
                 [':name' => System::sanitize_id($this->config('prefix') . $id)]
-			);
+            );
 		}
 
 		// Cache not found, return default value

@@ -137,10 +137,10 @@ class Assets {
 		}
 
         return self::$css[$handle] = [
-			'src'    => $src,
-			'deps'   => (array) $deps,
-			'attrs'  => (array) $attrs,
-			'weight' => (int) $weight,
+            'src' => $src,
+            'deps' => (array) $deps,
+            'attrs' => (array) $attrs,
+            'weight' => (int) $weight,
         ];
 	}
 
@@ -253,11 +253,11 @@ class Assets {
 		}
 
         return self::$js[$handle] = [
-			'src'    => $src,
-			'deps'   => (array) $deps,
-			'footer' => $footer,
-			'attrs'  => (array) $attrs,
-			'weight' => (int) $weight,
+            'src' => $src,
+            'deps' => (array) $deps,
+            'footer' => $footer,
+            'attrs' => (array) $attrs,
+            'weight' => (int) $weight,
         ];
 	}
 
@@ -373,11 +373,11 @@ class Assets {
 		}
 
         return self::$codes[$handle] = [
-			'code'   => $code,
-			'deps'   => (array) $deps,
-			'footer' => $footer,
-			'attrs'  => (array) $attrs,
-			'weight' => (int) $weight,
+            'code' => $code,
+            'deps' => (array) $deps,
+            'footer' => $footer,
+            'attrs' => (array) $attrs,
+            'weight' => (int) $weight,
         ];
 	}
 
@@ -485,10 +485,10 @@ class Assets {
 		}
 
         return self::$groups[$group][$handle] = [
-			'content' => $content,
-			'deps'    => (array) $deps,
-			'attrs'   => (array) $attrs,
-			'weight'  => (int) $weight,
+            'content' => $content,
+            'deps' => (array) $deps,
+            'attrs' => (array) $attrs,
+            'weight' => (int) $weight,
         ];
 	}
 

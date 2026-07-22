@@ -54,18 +54,18 @@ class Message {
             foreach ($message as $_message)
 			{
                 $messages[] = (object) [
-					'type'     => $type,
-					'text'     => $_message,
-					'options'  => (array) $options,
+                    'type' => $type,
+                    'text' => $_message,
+                    'options' => (array) $options,
                 ];
 			}
 		}
 		else
 		{
             $messages[] = (object) [
-				'type'     => $type,
-				'text'     => $message,
-				'options'  => (array) $options,
+                'type' => $type,
+                'text' => $message,
+                'options' => (array) $options,
             ];
 		}
 

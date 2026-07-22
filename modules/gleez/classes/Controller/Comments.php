@@ -15,10 +15,10 @@ class Controller_Comments extends Controller {
 	 * @var array
 	 */
     protected $supported_formats = [
-		'.xhtml',
-		'.json',
-		'.xml',
-		'.rss',
+        '.xhtml',
+        '.json',
+        '.xml',
+        '.rss',
     ];
 
 	/**
@@ -133,9 +133,9 @@ class Controller_Comments extends Controller {
 		// Create pagination
         $pagination = Pagination::factory([
             'current_page' => ['source' => 'cms', 'key' => 'page'],
-			'total_items'    => $total,
-			'items_per_page' => $this->per_page,
-			'uri'            => $uri,
+            'total_items' => $total,
+            'items_per_page' => $this->per_page,
+            'uri' => $uri,
         ]);
 
 		// Execute query

@@ -54,10 +54,9 @@ class Controller_Admin_Tag extends Controller_Admin {
 			foreach ($this->_datatables->result() as $tag)
 			{
                 $this->_datatables->add_row([
-                        HTML::chars($tag->name),
-						HTML::anchor($tag->url, $tag->url),
-                        HTML::chars($tag->type),
-
+                    HTML::chars($tag->name),
+                    HTML::anchor($tag->url, $tag->url),
+                    HTML::chars($tag->type),
                     HTML::icon($tag->edit_url, 'fa far fa-edit', [
                         'class' => 'btn btn-sm btn-default action-edit',
                         'title' => __('Edit Tag')

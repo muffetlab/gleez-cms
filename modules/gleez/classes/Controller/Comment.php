@@ -124,12 +124,12 @@ class Controller_Comment extends Template {
 		$post        = $this->request->post();
         $route = Route::get('comment')->uri(['action' => 'view', 'id' => $comment->id]);
 
-		$view = View::factory('form/confirm')
+        $view = View::factory('form/confirm')
             ->set('action', Route::get('comment')->uri([
                     'action' => 'delete',
                     'id' => $comment->id
                 ]) . URL::query($destination))
-				->set('title', $comment->title);
+            ->set('title', $comment->title);
 
 		// If deletion is not desired, redirect to post
         if (isset($post['no']) && $this->valid_post())

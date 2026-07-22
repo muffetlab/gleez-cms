@@ -291,13 +291,11 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 				foreach($this->tree as $node)
 				{
                     DB::update('menus')->set([
-							'pid'     => $node['pid'],
-							'active'  => $node['active'],
-							'lvl'     => $node['lvl'], 'lft' => $node['lft'],
-							'rgt'     => $node['rgt']
-                    ])
-					->where('id', '=', $node['id'])
-					->execute();
+                        'pid' => $node['pid'],
+                        'active' => $node['active'],
+                        'lvl' => $node['lvl'], 'lft' => $node['lft'],
+                        'rgt' => $node['rgt']
+                    ])->where('id', '=', $node['id'])->execute();
 				}
 
 				Message::success(__('Menu Items order has been saved.'));
@@ -372,12 +370,12 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			}
 
             $this->tree[] = [
-				'id'      => $id,
-				'pid'     => (int) $val['plid'],
-				'active'  => isset($val['hidden']) ? 1 : 0,
-				'lvl'     => $level,
-				'lft'     => $left,
-				'rgt'     => $right
+                'id' => $id,
+                'pid' => (int) $val['plid'],
+                'active' => isset($val['hidden']) ? 1 : 0,
+                'lvl' => $level,
+                'lft' => $left,
+                'rgt' => $right
             ];
 		}
 	}

@@ -68,8 +68,8 @@ class Post extends ORM_Versioned {
 	 * @var array
 	 */
     protected $_updated_column = [
-		'column' => 'updated',
-		'format' => TRUE
+        'column' => 'updated',
+        'format' => TRUE
     ];
 
 	/**
@@ -78,7 +78,7 @@ class Post extends ORM_Versioned {
 	 */
     protected $_belongs_to = [
         'user' => [
-			'foreign_key' => 'author'
+            'foreign_key' => 'author'
         ]
     ];
 
@@ -89,19 +89,19 @@ class Post extends ORM_Versioned {
     protected $_has_many = [
         'tags' => [
             'model' => 'Tag',
-			'through'     => 'posts_tags',
-			'foreign_key' => 'post_id',
-			'far_key'     => 'tag_id'
+            'through' => 'posts_tags',
+            'foreign_key' => 'post_id',
+            'far_key' => 'tag_id'
         ],
         'terms' => [
             'model' => 'Term',
-			'through'     => 'posts_terms',
-			'foreign_key' => 'post_id',
-			'far_key'     => 'term_id'
+            'through' => 'posts_terms',
+            'foreign_key' => 'post_id',
+            'far_key' => 'term_id'
         ],
         'comments' => [
             'model' => 'Comment',
-			'foreign_key' => 'post_id'
+            'foreign_key' => 'post_id'
         ]
     ];
 
@@ -110,13 +110,13 @@ class Post extends ORM_Versioned {
 	 * @var array
 	 */
     protected $_ignored_columns = [
-		'author_name',
-		'author_date',
-		'author_pubdate',
-		'path',
-		'categories',
+        'author_name',
+        'author_date',
+        'author_pubdate',
+        'path',
+        'categories',
         'form_tags',
-		'content'
+        'content'
     ];
 
 	/**
@@ -200,10 +200,10 @@ class Post extends ORM_Versioned {
     public function labels(): array
     {
         return [
-			'title'  => __('Title'),
-			'body'   => __('Body'),
-			'teaser' => __('Teaser'),
-			'image'  => __('Primary Image'),
+            'title' => __('Title'),
+            'body' => __('Body'),
+            'teaser' => __('Teaser'),
+            'image' => __('Primary Image'),
         ];
 	}
 
@@ -607,10 +607,10 @@ class Post extends ORM_Versioned {
     public static function status(): array
     {
         $states = [
-			'archive' => __('Archive'),
-			'draft'   => __('Draft'),
-			'private' => __('Private'),
-			'publish' => __('Published'),
+            'archive' => __('Archive'),
+            'draft' => __('Draft'),
+            'private' => __('Private'),
+            'publish' => __('Published'),
         ];
 
         return Module::action('post_status', $states);
@@ -656,52 +656,52 @@ class Post extends ORM_Versioned {
 	{
         $states = [
             'publish' => [
-				'label'     => __('Publish'),
-				'callback'  => 'Post::bulk_update',
+                'label' => __('Publish'),
+                'callback' => 'Post::bulk_update',
                 'arguments' => ['updates' => ['status' => 'publish']],
             ],
             'unpublish' => [
-				'label'     => __('Unpublish'),
-				'callback'  => 'Post::bulk_update',
+                'label' => __('Unpublish'),
+                'callback' => 'Post::bulk_update',
                 'arguments' => ['updates' => ['status' => 'draft']],
             ],
             'promote' => [
-				'label'     => __('Promote to front page'),
-				'callback'  => 'Post::bulk_update',
+                'label' => __('Promote to front page'),
+                'callback' => 'Post::bulk_update',
                 'arguments' => ['updates' => ['status' => 'publish', 'promote' => 1]],
             ],
             'demote' => [
-				'label'     => __('Demote from front page'),
-				'callback'  => 'Post::bulk_update',
+                'label' => __('Demote from front page'),
+                'callback' => 'Post::bulk_update',
                 'arguments' => ['updates' => ['promote' => 0]],
             ],
             'sticky' => [
-				'label'     => __('Make sticky'),
-				'callback'  => 'Post::bulk_update',
+                'label' => __('Make sticky'),
+                'callback' => 'Post::bulk_update',
                 'arguments' => ['updates' => ['sticky' => 1]],
             ],
             'unsticky' => [
-				'label'     => __('Remove stickiness'),
-				'callback'  => 'Post::bulk_update',
+                'label' => __('Remove stickiness'),
+                'callback' => 'Post::bulk_update',
                 'arguments' => ['updates' => ['sticky' => 0]],
             ],
             'delete' => [
-				'label'     => __('Delete'),
-				'callback'  => NULL,
+                'label' => __('Delete'),
+                'callback' => NULL,
             ],
             'ct_page' => [
                 'label' => __('Convert to @page', ['@page' => __('Page')]),
-				'callback'  => 'Post::bulk_convert',
+                'callback' => 'Post::bulk_convert',
                 'arguments' => ['actions' => ['page']],
             ],
             'ct_blog' => [
                 'label' => __('Convert to @blog', ['@blog' => __('Blog')]),
-				'callback'  => 'Post::bulk_convert',
+                'callback' => 'Post::bulk_convert',
                 'arguments' => ['actions' => ['blog']],
             ],
             'ct_forum' => [
                 'label' => __('Convert to @forum', ['@forum' => __('Forum')]),
-				'callback'  => 'Post::bulk_convert',
+                'callback' => 'Post::bulk_convert',
                 'arguments' => ['actions' => ['forum']],
             ],
         ];
@@ -811,10 +811,10 @@ class Post extends ORM_Versioned {
 			$post->remove('tags');
 
 			// Update the type column in comments
-			DB::update('comments')
+            DB::update('comments')
                 ->set(['type' => $new_type])
-				->where('post_id', '=', $post->id)
-				->execute();
+                ->where('post_id', '=', $post->id)
+                ->execute();
 
 			// Set the post type to new type
 			$post->type = $new_type;
@@ -953,14 +953,14 @@ class Post extends ORM_Versioned {
     public static function recent_posts(array $args = [])
 	{
         $default = [
-			'limit'     => 10,
-			'offset'    => 0,
-			'type'      => 'post',
+            'limit' => 10,
+            'offset' => 0,
+            'type' => 'post',
             'orderBy' => 'created',
-			'order'     => 'DESC',
+            'order' => 'DESC',
             'status' => implode(',', array_keys(Post::status())),
-			'use_cache' => TRUE,
-			'as_array'  => TRUE,
+            'use_cache' => TRUE,
+            'as_array' => TRUE,
         ];
 
 		$params = (object) System::parse_args($args, $default);

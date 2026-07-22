@@ -19,64 +19,64 @@ class HTMLFilter {
 	 * @var array
 	 */
     protected $allowed_tags = [
-		// http://www.w3.org/TR/html4/struct/global.html#h-7.5.4
-		'div', 'span',
-		// http://www.w3.org/TR/html4/struct/links.html#h-12.2
-		'a',
-		// http://www.w3.org/TR/html4/struct/text.html#h-9.2.1
-		'strong', 'em', 'code', 'kbd', 'dfn', 'samp', 'var', 'cite', 'abbr', 'acronym',
-		// http://www.w3.org/TR/html4/struct/text.html#h-9.2.2
-		'blockquote', 'q',
-		// http://www.w3.org/TR/html4/struct/text.html#h-9.2.3
-		'sub', 'sup',
-		// http://www.w3.org/TR/html4/struct/text.html#h-9.3.1
-		'p',
-		// http://www.w3.org/TR/html4/struct/text.html#h-9.3.2.1
-		'br',
-		// http://www.w3.org/TR/html4/struct/text.html#h-9.3.4
-		'pre',
-		// http://www.w3.org/TR/html4/struct/text.html#h-9.4
-		'ins', 'del',
-		// http://www.w3.org/TR/html4/struct/lists.html#h-10.2
-		'ol', 'ul', 'li',
-		// http://www.w3.org/TR/html4/struct/lists.html#h-10.3
-		'dl', 'dt', 'dd',
-		// http://www.w3.org/TR/html4/present/graphics.html#h-15.2.1
-		'b', 'i', 'u', 's', 'tt',
-		// http://www.w3.org/TR/html4/struct/global.html#h-7.5.5
-		'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-		// http://www.w3.org/TR/html4/struct/global.html#h-7.5.6
-		'address',
-		// http://www.w3.org/TR/html4/struct/dirlang.html#h-8.2.4
-		'bdo',
-		// http://www.w3.org/TR/html4/struct/tables.html#h-11.2.1
-		'table',
-		// http://www.w3.org/TR/html4/struct/tables.html#h-11.2.2
-		'caption',
-		// http://www.w3.org/TR/html4/struct/tables.html#h-11.2.3
-		'thead', 'tfoot', 'tbody',
-		// http://www.w3.org/TR/html4/struct/tables.html#h-11.2.4
-		'colgroup', 'col',
-		// http://www.w3.org/TR/html4/struct/tables.html#h-11.2.5
-		'tr',
-		// http://www.w3.org/TR/html4/struct/tables.html#h-11.2.6
-		'th', 'td',
-		// http://www.w3.org/TR/html4/struct/objects.html#h-13.2
-		'img',
-		// http://www.w3.org/TR/html4/struct/objects.html#h-13.6.1
-		'map', 'area',
-		// http://www.w3.org/TR/html4/present/graphics.html#h-15.2.1 (the non-deprecated ones)
-		'tt', 'i', 'b', 'big', 'small',
-		// http://www.w3.org/TR/html4/present/graphics.html#h-15.3
-		'hr',
-		// http://www.w3.org/TR/html4/present/frames.html#h-16.2.1
-		'frameset',
-		// http://www.w3.org/TR/html4/present/frames.html#h-16.2.2
-		'frame',
-		// http://www.w3.org/TR/html4/present/frames.html#h-16.4.1
-		'noframes',
-		// http://www.w3.org/TR/html4/present/frames.html#h-16.5
-		'iframe',
+        // http://www.w3.org/TR/html4/struct/global.html#h-7.5.4
+        'div', 'span',
+        // http://www.w3.org/TR/html4/struct/links.html#h-12.2
+        'a',
+        // http://www.w3.org/TR/html4/struct/text.html#h-9.2.1
+        'strong', 'em', 'code', 'kbd', 'dfn', 'samp', 'var', 'cite', 'abbr', 'acronym',
+        // http://www.w3.org/TR/html4/struct/text.html#h-9.2.2
+        'blockquote', 'q',
+        // http://www.w3.org/TR/html4/struct/text.html#h-9.2.3
+        'sub', 'sup',
+        // http://www.w3.org/TR/html4/struct/text.html#h-9.3.1
+        'p',
+        // http://www.w3.org/TR/html4/struct/text.html#h-9.3.2.1
+        'br',
+        // http://www.w3.org/TR/html4/struct/text.html#h-9.3.4
+        'pre',
+        // http://www.w3.org/TR/html4/struct/text.html#h-9.4
+        'ins', 'del',
+        // http://www.w3.org/TR/html4/struct/lists.html#h-10.2
+        'ol', 'ul', 'li',
+        // http://www.w3.org/TR/html4/struct/lists.html#h-10.3
+        'dl', 'dt', 'dd',
+        // http://www.w3.org/TR/html4/present/graphics.html#h-15.2.1
+        'b', 'i', 'u', 's', 'tt',
+        // http://www.w3.org/TR/html4/struct/global.html#h-7.5.5
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        // http://www.w3.org/TR/html4/struct/global.html#h-7.5.6
+        'address',
+        // http://www.w3.org/TR/html4/struct/dirlang.html#h-8.2.4
+        'bdo',
+        // http://www.w3.org/TR/html4/struct/tables.html#h-11.2.1
+        'table',
+        // http://www.w3.org/TR/html4/struct/tables.html#h-11.2.2
+        'caption',
+        // http://www.w3.org/TR/html4/struct/tables.html#h-11.2.3
+        'thead', 'tfoot', 'tbody',
+        // http://www.w3.org/TR/html4/struct/tables.html#h-11.2.4
+        'colgroup', 'col',
+        // http://www.w3.org/TR/html4/struct/tables.html#h-11.2.5
+        'tr',
+        // http://www.w3.org/TR/html4/struct/tables.html#h-11.2.6
+        'th', 'td',
+        // http://www.w3.org/TR/html4/struct/objects.html#h-13.2
+        'img',
+        // http://www.w3.org/TR/html4/struct/objects.html#h-13.6.1
+        'map', 'area',
+        // http://www.w3.org/TR/html4/present/graphics.html#h-15.2.1 (the non-deprecated ones)
+        'tt', 'i', 'b', 'big', 'small',
+        // http://www.w3.org/TR/html4/present/graphics.html#h-15.3
+        'hr',
+        // http://www.w3.org/TR/html4/present/frames.html#h-16.2.1
+        'frameset',
+        // http://www.w3.org/TR/html4/present/frames.html#h-16.2.2
+        'frame',
+        // http://www.w3.org/TR/html4/present/frames.html#h-16.4.1
+        'noframes',
+        // http://www.w3.org/TR/html4/present/frames.html#h-16.5
+        'iframe',
     ];
 
 	/**
@@ -84,22 +84,22 @@ class HTMLFilter {
 	 * @var array
 	 */
     protected $allowed_protocols = [
-		'http',
-		'https',
-		'ftp',
-		'mailto',
-		'irc',
-		'news',
-		'nntp',
-		'callto',
-		'rtsp',
-		'mms',
-		'svn',
-		'sftp',
-		'ssh',
-		'telnet',
-		'webcal',
-		'git',
+        'http',
+        'https',
+        'ftp',
+        'mailto',
+        'irc',
+        'news',
+        'nntp',
+        'callto',
+        'rtsp',
+        'mms',
+        'svn',
+        'sftp',
+        'ssh',
+        'telnet',
+        'webcal',
+        'git',
     ];
 
 	/**

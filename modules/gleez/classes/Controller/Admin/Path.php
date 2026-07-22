@@ -53,8 +53,8 @@ class Controller_Admin_Path extends Controller_Admin {
 			foreach ($this->_datatables->result() as $path)
 			{
                 $this->_datatables->add_row([
-                        HTML::chars($path->source),
-                        HTML::chars($path->alias),
+                    HTML::chars($path->source),
+                    HTML::chars($path->alias),
                     HTML::icon($path->edit_url, 'fa far fa-edit', [
                         'class' => 'btn btn-sm btn-default action-edit',
                         'title' => __('Edit Alias')

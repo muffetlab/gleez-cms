@@ -149,11 +149,11 @@ class Controller_Admin_Page extends Controller_Admin {
 			foreach ($this->_datatables->result() as $page)
 			{
                 $this->_datatables->add_row([
-						Form::checkbox('posts['.$page->id.']', $page->id, isset($_POST['posts'][$page->id])),
-						HTML::anchor($page->url, $page->title),
-						HTML::anchor($page->user->url, $page->user->nick),
-						HTML::label(__($page->status), $page->status),
-						Date::formatted_time($page->updated, 'M d, Y'),
+                    Form::checkbox('posts[' . $page->id . ']', $page->id, isset($_POST['posts'][$page->id])),
+                    HTML::anchor($page->url, $page->title),
+                    HTML::anchor($page->user->url, $page->user->nick),
+                    HTML::label(__($page->status), $page->status),
+                    Date::formatted_time($page->updated, 'M d, Y'),
                     HTML::icon($page->edit_url . $destination, 'fa far fa-edit', [
                         'class' => 'btn btn-sm btn-default action-edit',
                         'title' => __('Edit Page')

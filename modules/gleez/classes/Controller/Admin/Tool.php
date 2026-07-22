@@ -59,8 +59,8 @@ class Controller_Admin_Tool extends Controller_Admin {
 
             $tables_info[] = [
                 'name' => $table['Name'],
-									'rows' => $table['Rows'],
-									'space' => round (($tot_data + $tot_idx) / 1024,3),
+                'rows' => $table['Rows'],
+                'space' => round(($tot_data + $tot_idx) / 1024, 3),
             ];
 
 			$total_space += ($tot_data + $tot_idx) / 1024;
@@ -94,11 +94,10 @@ class Controller_Admin_Tool extends Controller_Admin {
 
 		//
         !empty($gleezEnv) and $gleezEnv['all'] = [
-			'Kohana::DEVELOPMENT' => Kohana::DEVELOPMENT,
-			'Kohana::TESTING'     => Kohana::TESTING,
-			'Kohana::STAGING'     => Kohana::STAGING,
-			'Kohana::PRODUCTION'  => Kohana::PRODUCTION
-
+            'Kohana::DEVELOPMENT' => Kohana::DEVELOPMENT,
+            'Kohana::TESTING' => Kohana::TESTING,
+            'Kohana::STAGING' => Kohana::STAGING,
+            'Kohana::PRODUCTION' => Kohana::PRODUCTION
         ];
 
 		$this->title = __('Gleez Environment');

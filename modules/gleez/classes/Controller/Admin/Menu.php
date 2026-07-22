@@ -56,7 +56,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 			foreach ($this->_datatables->result() as $menu)
 			{
                 $this->_datatables->add_row([
-                        HTML::chars($menu->title) . '<div class="description">' . HTML::chars($menu->descp) . '</div>',
+                    HTML::chars($menu->title) . '<div class="description">' . HTML::chars($menu->descp) . '</div>',
                     HTML::icon($menu->list_items_url, 'fas fa-th-list', [
                         'class' => 'action-list',
                         'title' => __('List Links')
@@ -119,7 +119,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 				$post->make_root();
                 DB::insert('widgets', ['name', 'title', 'module'])
                     ->values(['menu/' . $post->name, $post->title, 'gleez'])
-					->execute();
+                    ->execute();
 
                 Message::success(__('Menu %name created successful!', ['%name' => $post->title]));
                 Cache::instance()->delete('menus:' . $post->name);
@@ -278,8 +278,8 @@ class Controller_Admin_Menu extends Controller_Admin {
                         ':msg' => $e->getMessage()
                     ]);
                     $this->_errors = [__('An error occurred deleting menu %menu: :message', [
-							'%menu'    => $menu->name,
-							':message' => $e->getMessage()
+                        '%menu' => $menu->name,
+                        ':message' => $e->getMessage()
                     ])];
 				}
 			}

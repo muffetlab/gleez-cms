@@ -210,8 +210,8 @@ class Module
 		$installer_class = ucfirst($module_name).'_Installer';
         if (is_callable([$installer_class, "can_activate"])) {
             $messages = call_user_func([
-				$installer_class,
-				"can_activate"
+                $installer_class,
+                "can_activate"
             ]);
 		}
 
@@ -656,9 +656,9 @@ class Module
 			$task = ($dir == 'down') ? 'db:migrate:down' : 'db:migrate:up';
 
             $options = [
-					'task'  => $task,
-					'group' => $module_name,
-					'quiet' => 'quiet'
+                'task' => $task,
+                'group' => $module_name,
+                'quiet' => 'quiet'
             ];
 
 			//Call DB migrations for this module

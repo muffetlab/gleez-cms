@@ -16,7 +16,7 @@ class Model_Action extends ORM {
     protected $_has_many = [
         'roles' => [
             'model' => 'Role',
-			'through' => 'action_roles'
+            'through' => 'action_roles'
         ],
     ];
 }

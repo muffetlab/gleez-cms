@@ -69,13 +69,13 @@ class Menu {
 		else
 		{
             $this->items[$id] = [
-				'title'    => $title,
-				'url'      => $url,
-				'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
-				'access'   => TRUE, // @todo
-				'descp'	   => $descp,
-				'params'   => $params,
-				'image'    => $image
+                'title' => $title,
+                'url' => $url,
+                'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
+                'access' => TRUE, // @todo
+                'descp' => $descp,
+                'params' => $params,
+                'image' => $image
             ];
 		}
 
@@ -455,13 +455,13 @@ class Menu {
 			if ($key == $needle)
 			{
                 $array[$key]['children'][$id] = [
-					'title'    => $title,
-					'url'      => $url,
-					'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
-					'access'   => TRUE, // @todo
-					'descp'	   => $descp,
-					'params'   => $params,
-					'image'    => $image
+                    'title' => $title,
+                    'url' => $url,
+                    'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
+                    'access' => TRUE, // @todo
+                    'descp' => $descp,
+                    'params' => $params,
+                    'image' => $image
                 ];
 
 				return $array;

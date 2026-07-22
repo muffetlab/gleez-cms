@@ -112,9 +112,9 @@ class Controller_Page extends Template {
         $rss_link = Route::get('rss')->uri(['controller' => 'page']);
         $pagination = Pagination::factory([
             'current_page' => ['source' => 'cms', 'key' => 'page'],
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $url,
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $url,
         ]);
 
 		$posts = $posts->order_by('sticky', 'DESC')
@@ -131,9 +131,9 @@ class Controller_Page extends Template {
             Meta::links(URL::canonical($url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('page', [], TRUE), ['rel' => 'shortlink']);
             Meta::links(URL::site('rss/page', TRUE), [
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . __('Pages'),
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . __('Pages'),
             ]);
 		}
 	}
@@ -536,10 +536,10 @@ class Controller_Page extends Template {
 		}
         $rss_link = Route::get('rss')->uri(['controller' => 'page', 'action' => 'term', 'id' => $term->id]);
         $pagination = Pagination::factory([
-			'current_page'   => ['source'=>'cms', 'key'=>'page'],
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $term->url,
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $term->url,
         ]);
 
 		$posts = $posts->order_by('sticky', 'DESC')
@@ -555,12 +555,12 @@ class Controller_Page extends Template {
 		{
             Meta::links(URL::canonical($term->url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('page', ['action' => 'term', 'id' => $term->id], TRUE), [
-				'rel' => 'shortlink'
+                'rel' => 'shortlink'
             ]);
             Meta::links(Route::url('rss', ['controller' => 'page', 'action' => 'term', 'id' => $term->id], TRUE), [
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . $term->name,
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . $term->name,
             ]);
 		}
 	}
@@ -619,9 +619,9 @@ class Controller_Page extends Template {
         $rss_link = Route::get('rss')->uri(['controller' => 'page', 'action' => 'tag', 'id' => $tag->id]);
         $pagination = Pagination::factory([
             'current_page' => ['source' => 'cms', 'key' => 'page'],
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $tag->url,
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $tag->url,
         ]);
 
         $posts = $posts->order_by('post.created', 'DESC')
@@ -636,12 +636,12 @@ class Controller_Page extends Template {
 		{
             Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('page', ['action' => 'tag', 'id' => $tag->id], TRUE), [
-				'rel' => 'shortlink'
+                'rel' => 'shortlink'
             ]);
             Meta::links(Route::url('rss', ['controller' => 'page', 'action' => 'tag', 'id' => $tag->id], TRUE), [
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . $tag->name,
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . $tag->name,
             ]);
 		}
 	}

@@ -115,8 +115,8 @@ class Widget_Blog extends Widget {
 				$items[$blog->id]['title'] = $blog->title;
 				$items[$blog->id]['url']   = $blog->url;
 
-				$image = is_null($blog->image)
-                        ? '<div class="empty-photo"><i class="fas fa-camera-retro fa-2x"></i></div>'
+                $image = is_null($blog->image)
+                    ? '<div class="empty-photo"><i class="fas fa-camera-retro fa-2x"></i></div>'
                     : HTML::resize($blog->image, [
                         'alt' => $blog->title,
                         'height' => 140,

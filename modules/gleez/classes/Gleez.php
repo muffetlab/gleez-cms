@@ -144,19 +144,19 @@ class Gleez {
 
 			// Static file serving (CSS, JS, images)
             Route::set('install/media', 'media(/<file>)', [
-				'file' => '.+'
+                'file' => '.+'
             ])->defaults([
-				'controller' => 'install',
-				'action'     => 'media',
-				'file'       => NULL,
-				'directory'  => 'install'
+                'controller' => 'install',
+                'action' => 'media',
+                'file' => NULL,
+                'directory' => 'install'
             ]);
 
             Route::set('install', '(install(/<action>))', [
-				'action' => 'index|systemcheck|database|install|finalize'
+                'action' => 'index|systemcheck|database|install|finalize'
             ])->defaults([
-				'controller' => 'install',
-				'directory'  => 'install'
+                'controller' => 'install',
+                'directory' => 'install'
             ]);
 
 			return;
@@ -183,9 +183,9 @@ class Gleez {
     public static function types(): array
     {
         $states = [
-			'blog'  => __('Blog'),
-			'page'  => __('Page'),
-			'user'  => __('User')
+            'blog' => __('Blog'),
+            'page' => __('Page'),
+            'user' => __('User')
         ];
 
         return Module::action('gleez_types', $states);
@@ -284,7 +284,7 @@ class Gleez {
 		}
 
         throw new Kohana_Exception('Unable to locate file `:file`. No file exists with the specified file name.', [
-			':file' => $file
+            ':file' => $file
         ]);
 	}
 

@@ -168,14 +168,14 @@ abstract class Template extends Controller {
 	 * @var array
 	 */
     protected $_accept_formats = [
-		'text/html'             => 'html',
-		'application/xhtml+xml' => 'xhtml',
-		'application/xml'       => 'xml',
-		'application/json'      => 'json',
-		'application/csv'       => 'csv',
-		'text/plain'            => 'php',
-		'text/javascript'       => 'jsonp',
-		'*/*'                   => 'xhtml' //ie7 ie8
+        'text/html' => 'html',
+        'application/xhtml+xml' => 'xhtml',
+        'application/xml' => 'xml',
+        'application/json' => 'json',
+        'application/csv' => 'csv',
+        'text/plain' => 'php',
+        'text/javascript' => 'jsonp',
+        '*/*' => 'xhtml' //ie7 ie8
     ];
 
 	/**
@@ -331,24 +331,24 @@ abstract class Template extends Controller {
 
 			// Bind the generic page variables
             $this->template
-				->set('site_slogan',   $this->_config->get('site_slogan', __('Innovate IT')))
-				->set('site_logo',     $this->_config->get('site_logo', FALSE))
+                ->set('site_slogan', $this->_config->get('site_slogan', __('Innovate IT')))
+                ->set('site_logo', $this->_config->get('site_logo', FALSE))
                 ->set('sidebar_left', [])
                 ->set('sidebar_right', [])
-				->set('column_class',  '')
-				->set('main_column',   12)
-				->set('head_title',    $this->title)
-				->set('title',         $this->title)
-				->set('subtitle',      $this->subtitle)
-				->set('icon',          $this->icon)
-				->set('schemaType',    $this->schemaType)
-				->set('front',         FALSE)
-				->set('mission',       FALSE)
-				->set('tabs',          FALSE)
-				->set('subtabs',       FALSE)
-				->set('actions',       FALSE)
-				->set('_user',         $this->_auth->get_user())
-				->bind('datatables',   $this->_datatables);
+                ->set('column_class', '')
+                ->set('main_column', 12)
+                ->set('head_title', $this->title)
+                ->set('title', $this->title)
+                ->set('subtitle', $this->subtitle)
+                ->set('icon', $this->icon)
+                ->set('schemaType', $this->schemaType)
+                ->set('front', FALSE)
+                ->set('mission', FALSE)
+                ->set('tabs', FALSE)
+                ->set('subtabs', FALSE)
+                ->set('actions', FALSE)
+                ->set('_user', $this->_auth->get_user())
+                ->bind('datatables', $this->_datatables);
 
 			// Page Title
 			$this->title = ucwords($this->request->controller());
@@ -376,8 +376,8 @@ abstract class Template extends Controller {
 		if (Kohana::$environment === Kohana::DEVELOPMENT)
 		{
             Kohana::$log->add(Log::DEBUG, 'Executing Controller [:controller] action [:action]', [
-					':controller' => $this->request->controller(),
-					':action'     => $this->request->action(),
+                ':controller' => $this->request->controller(),
+                ':action' => $this->request->action(),
             ]);
 		}
 	}
@@ -403,13 +403,13 @@ abstract class Template extends Controller {
 
 			// Do some CSS magic to page class
             $classes = [
-				I18n::$lang,
-				$this->request->controller(),
-				$this->request->action(),
-				$this->request->controller() . '-' . $this->request->action(),
-				$this->template->column_class,
-				$this->_page_class,
-				($this->_auth->logged_in()) ? 'logged-in' : 'not-logged-in'
+                I18n::$lang,
+                $this->request->controller(),
+                $this->request->action(),
+                $this->request->controller() . '-' . $this->request->action(),
+                $this->template->column_class,
+                $this->_page_class,
+                ($this->_auth->logged_in()) ? 'logged-in' : 'not-logged-in'
             ];
 
 			// Special check for frontpage and frontpage title
@@ -426,8 +426,8 @@ abstract class Template extends Controller {
 			}
 
             View::set_global([
-				'is_front' => $this->template->front,
-				'is_admin' => $this->template->_admin
+                'is_front' => $this->template->front,
+                'is_admin' => $this->template->_admin
             ]);
 
 			$classes[]  = $this->template->_admin ? 'backend' : 'frontend';
@@ -442,7 +442,7 @@ abstract class Template extends Controller {
 
 			// Set primary menu
             $primary_menu = Menu::links('main-menu', [
-				'class' => 'menus nav navbar-nav'
+                'class' => 'menus nav navbar-nav'
             ]);
 
 			// Bind the generic page variables
@@ -526,10 +526,7 @@ abstract class Template extends Controller {
 	{
 		if ($this->title)
 		{
-            $head_title = [
-				strip_tags($this->title),
-				$this->template->site_name
-            ];
+            $head_title = [strip_tags($this->title), $this->template->site_name];
 		}
 		else
 		{
@@ -839,10 +836,10 @@ abstract class Template extends Controller {
 		// Get the total memory and execution time
         $total = [
             '{memory_usage}' => number_format((memory_get_peak_usage($realMemoryUsage) - KOHANA_START_MEMORY) / 1024 / 1024, 2) . '&nbsp;' . __('MB'),
-			'{gleez_version}'    => Gleez::VERSION,
+            '{gleez_version}' => Gleez::VERSION,
             '{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 3) . '&nbsp;' . __('seconds'),
-			'{included_files}'   => count(get_included_files()),
-			'{database_queries}' => $queries
+            '{included_files}' => count(get_included_files()),
+            '{database_queries}' => $queries
         ];
 
 		// Insert the totals into the response

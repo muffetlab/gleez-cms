@@ -64,9 +64,9 @@ class Model_Menu extends ORM_MPTT {
 	public function labels(): array
     {
         return [
-			'title'  => __('Title'),
-			'name'   => __('Slug'),
-			'url'    => __('Link'),
+            'title' => __('Title'),
+            'name' => __('Slug'),
+            'url' => __('Link'),
         ];
 	}
 
