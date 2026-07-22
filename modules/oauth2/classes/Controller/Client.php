@@ -24,30 +24,37 @@ class Controller_Client extends Template {
 				$user = Auth::instance()->get_user();
 				$posts->where('user_id', '=', $user->id);
 			}
-			
-			$this->_datatables = $posts->dataTables( array('title', 'client_id', 'user_id', 'created') );
+
+            $this->_datatables = $posts->dataTables(['title', 'client_id', 'user_id', 'created']);
 		
 			foreach ($this->_datatables->result() as $oaclient)
 			{
-			    
-				$this->_datatables->add_row(array
-				(
+                $this->_datatables->add_row([
                     HTML::anchor($oaclient->url, HTML::chars($oaclient->title)),
-				    $oaclient->client_id,
-				    $oaclient->user->nick,
-				    System::date('M d, Y',$oaclient->created),
-                    HTML::icon($oaclient->edit_url, 'far fa-edit', array('class' => 'action-edit', 'data-toggle' => 'popup1', 'title' => __('Edit'))) . '&nbsp;' .
-                    HTML::icon($oaclient->delete_url, 'fas fa-trash-can', array('class' => 'action-delete', 'data-toggle' => 'popup', 'title' => __('Delete')))
-				));
+                    $oaclient->client_id,
+                    $oaclient->user->nick,
+                    System::date('M d, Y', $oaclient->created),
+                    HTML::icon($oaclient->edit_url, 'far fa-edit', [
+                        'class' => 'action-edit',
+                        'data-toggle' => 'popup1',
+                        'title' => __('Edit')
+                    ])
+                    . '&nbsp;'
+                    . HTML::icon($oaclient->delete_url, 'fas fa-trash-can', [
+                        'class' => 'action-delete',
+                        'data-toggle' => 'popup',
+                        'title' => __('Delete')
+                    ])
+                ]);
 			}
 		}
 
 		$this->title = __('Oauth Clients');
 
-		$view = View::factory('client/list')
-				->bind('datatables', $this->_datatables)
-				->set('url', Route::url('oauth2/client', array('action' => 'list'), TRUE))
-				->set('show', TRUE);
+        $view = View::factory('client/list')
+            ->bind('datatables', $this->_datatables)
+            ->set('url', Route::url('oauth2/client', ['action' => 'list'], TRUE))
+            ->set('show', TRUE);
 		
 		$this->response->body($view);
 	}
@@ -74,7 +81,7 @@ class Controller_Client extends Template {
 
         if (isset($_POST['cancel']) && $this->valid_post())
 		{
-		    $this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
+            $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 		
 		if ($this->valid_post('save'))
@@ -100,8 +107,8 @@ class Controller_Client extends Template {
 			    }
 			
 				$oaclient->save();
-				Message::success( __('Client registered :title ', array(':title' => $oaclient->title)) );
-				$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
+                Message::success(__('Client registered :title ', [':title' => $oaclient->title]));
+                $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		    }
 		    catch(ORM_Validation_Exception $e)
 		    {
@@ -133,13 +140,13 @@ class Controller_Client extends Template {
 		{
             Message::error(__("Client: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to edit non-existent client');
-				
-			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
+
+            $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 
         if (isset($_POST['cancel']) && $this->valid_post())
 		{
-		    $this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
+            $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 		
 		if ($this->valid_post('save'))
@@ -166,8 +173,8 @@ class Controller_Client extends Template {
 			    }
 
 				$oaclient->save();
-				Message::success( __('Client :title updated successfully', array(':title' => $oaclient->title)) );
-				$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
+                Message::success(__('Client :title updated successfully', [':title' => $oaclient->title]));
+                $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		    }
 		    catch(ORM_Validation_Exception $e)
 		    {
@@ -206,8 +213,8 @@ class Controller_Client extends Template {
 		{
             Message::error(__("Client: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to edit non-existent client');
-				
-			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
+
+            $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 		
 		$this->title    = __('Client info');
@@ -228,15 +235,15 @@ class Controller_Client extends Template {
 		}
 		
 		$id       = (int) $this->request->param('id');
-		$redirect = empty($this->redirect) ? Route::get('oauth2/client')->uri(array('action' => 'list')) : $this->redirect;
+        $redirect = empty($this->redirect) ? Route::get('oauth2/client')->uri(['action' => 'list']) : $this->redirect;
         $oaclient = ORM::factory('OAClient', $id);
 		
 		if ( ! $oaclient->loaded() )
 		{
             Message::error(__("oaclient: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to delete non-existent oaclient');
-				
-			$this->request->redirect(Route::get('oauth2/client')->uri(array('action' => 'list')));
+
+            $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 		
 		$clone_oaclient = clone $oaclient;
@@ -262,12 +269,14 @@ class Controller_Client extends Template {
 			{
 				$oaclient->delete();
 
-				Message::success( __('oaclient: :title deleted successfully', array(':title' => $clone_oaclient->client_id)) );
+                Message::success(__('oaclient: :title deleted successfully', [':title' => $clone_oaclient->client_id]));
 				$this->request->redirect($redirect);
 			}
 			catch(Exception $e)
 			{
-				Message::error( __('oaclient: :title unable to delete the record', array(':title' => $clone_oaclient->client_id)) );
+                Message::error(__('oaclient: :title unable to delete the record', [
+                    ':title' => $clone_oaclient->client_id
+                ]));
 				$this->request->redirect($redirect);
 			}			
 		}

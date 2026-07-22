@@ -52,19 +52,19 @@ class Controller_Revoke extends Template {
                 Model::factory('oauth')->revoke_refresh($this->token);
 			}
 
-			$this->response->body( json_encode(array('Response' => "Status Code: 200")) );
+            $this->response->body(json_encode(['Response' => "Status Code: 200"]));
 			return;
 		}
 		catch(Oauth2_Exception $e) 
 		{
 			// Throw an exception because there was a problem with the client's request
-			$response = array(
-				'error'				=> $e->getError(),
-				'error_description' => $e->getMessage()
-			);
+            $response = [
+                'error' => $e->getError(),
+                'error_description' => $e->getMessage()
+            ];
 
 			$this->response->status($e->getCode());
-			$this->response->headers(array('Cache-Control' => 'no-store', 'Pragma' => 'no-cache'));
+            $this->response->headers(['Cache-Control' => 'no-store', 'Pragma' => 'no-cache']);
 			$this->response->body(json_encode($response));
 		}
 		catch(Exception $e) 

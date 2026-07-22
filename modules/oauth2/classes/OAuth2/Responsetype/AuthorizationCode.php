@@ -14,7 +14,7 @@ class Oauth2_ResponseType_AuthorizationCode
 	protected $request;
 	protected $response;
 
-	public function __construct(array $config = array())
+    public function __construct(array $config = [])
 	{
 		$this->config = $config;
 	}
@@ -22,9 +22,9 @@ class Oauth2_ResponseType_AuthorizationCode
 	public function getAuthorizeResponse($params, $user_id = null)
 	{
 		// build the URL to redirect to
-		$result = array('query' => array());
+        $result = ['query' => []];
 
-		$params += array('scope' => null, 'state' => null);
+        $params += ['scope' => null, 'state' => null];
 
 		$result["query"]["code"] = $this->createAuthorizationCode($params['client_id'], $user_id, $params['redirect_uri'], $params['scope']);
 
@@ -33,7 +33,7 @@ class Oauth2_ResponseType_AuthorizationCode
 			$result["query"]["state"] = $params['state'];
 		}
 
-		return array($params['redirect_uri'], $result);
+        return [$params['redirect_uri'], $result];
 	}
 
 	/**

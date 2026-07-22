@@ -17,7 +17,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 	protected $request;
 	protected $response;
 
-	public function __construct(array $config = array(), $is_grant = FALSE)
+    public function __construct(array $config = [], $is_grant = FALSE)
 	{
 		/** We use the same class for validating request for other grants
 		 *	make sure this is true only if the request grant_type is 'client_credentials'
@@ -140,7 +140,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 	{
 		if (isset($_SERVER['PHP_AUTH_USER']) && ! is_null($clientId = $_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && ! is_null($clientSecret = $_SERVER['PHP_AUTH_PW'])) 
 		{
-			return array('client_id' => $clientId, 'client_secret' => $clientSecret);
+            return ['client_id' => $clientId, 'client_secret' => $clientSecret];
 		} 
 
 		if ($this->config['allow_credentials_in_request_body']) {
@@ -150,7 +150,10 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 				 * client_secret can be null if the client's password is an empty string
 				 * @see http://tools.ietf.org/html/rfc6749#section-2.3.1
 				 */
-				return array('client_id' => $this->request->post('client_id'), 'client_secret' => $this->request->post('client_secret'));
+                return [
+                    'client_id' => $this->request->post('client_id'),
+                    'client_secret' => $this->request->post('client_secret')
+                ];
 			}
 		}
 

@@ -127,10 +127,10 @@ class Oauth2_Exception extends Exception
 
 	public function getJsonError()
 	{
-		return json_encode(array(
-			'error'				=> $this->getError(),
-			'error_description'	=> $this->getMessage(),
-		));
+        return json_encode([
+            'error' => $this->getError(),
+            'error_description' => $this->getMessage(),
+        ]);
 	}
 
     /**

@@ -36,12 +36,12 @@ class Controller_Token extends Controller
 		$this->config = Kohana::$config->load('oauth2')->as_array();
 
 		// create array of supported grant types
-		$this->grantTypes = array(
-			'authorization_code' => new Oauth2_GrantType_AuthorizationCode($this->config),
-			'client_credentials' => new Oauth2_GrantType_ClientCredentials($this->config, TRUE),
-			'refresh_token'		 => new Oauth2_GrantType_RefreshToken($this->config),
-			'password' 			 => new Oauth2_GrantType_UserCredentials($this->config),
-		);
+        $this->grantTypes = [
+            'authorization_code' => new Oauth2_GrantType_AuthorizationCode($this->config),
+            'client_credentials' => new Oauth2_GrantType_ClientCredentials($this->config, TRUE),
+            'refresh_token' => new Oauth2_GrantType_RefreshToken($this->config),
+            'password' => new Oauth2_GrantType_UserCredentials($this->config),
+        ];
 	}
 
     /**
@@ -56,7 +56,7 @@ class Controller_Token extends Controller
 				// @see http://tools.ietf.org/html/rfc6749#section-5.1
 				// server MUST disable caching in headers when tokens are involved
 				$this->response->status(200);
-				$this->response->headers(array('Cache-Control' => 'no-store', 'Pragma' => 'no-cache'));
+                $this->response->headers(['Cache-Control' => 'no-store', 'Pragma' => 'no-cache']);
 				$this->response->headers('content-type',  'application/json; charset='.Kohana::$charset);
 
 				$this->response->body( JSON::encode($token));
@@ -66,13 +66,13 @@ class Controller_Token extends Controller
 		catch(Oauth2_Exception $e) 
 		{
 			// Throw an exception because there was a problem with the client's request
-			$response = array(
-				'error'				=> $e->getError(),
-				'error_description' => $e->getMessage()
-			);
+            $response = [
+                'error' => $e->getError(),
+                'error_description' => $e->getMessage()
+            ];
 
 			$this->response->status($e->getCode());
-			$this->response->headers(array('Cache-Control' => 'no-store', 'Pragma' => 'no-cache'));
+            $this->response->headers(['Cache-Control' => 'no-store', 'Pragma' => 'no-cache']);
 			$this->response->headers('content-type',  'application/json; charset='.Kohana::$charset);
 
 			$this->response->body(json_encode($response));
@@ -108,7 +108,7 @@ class Controller_Token extends Controller
 	{
 		if (strtolower($this->request->method()) != 'post')
 		{
-			$this->response->headers(array('Allow' => 'POST'));
+            $this->response->headers(['Allow' => 'POST']);
 			throw Oauth2_Exception::factory(405, 'invalid_request', 'The request method must be POST when requesting an access token', NULL, '#section-3.2');
 		}
 

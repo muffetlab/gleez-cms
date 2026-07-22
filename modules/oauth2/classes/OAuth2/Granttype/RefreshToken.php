@@ -15,7 +15,7 @@ class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
 	protected $request;
 	protected $response;
 
-	public function __construct(array $config = array())
+    public function __construct(array $config = [])
 	{
 		$this->config = $config;
 	}

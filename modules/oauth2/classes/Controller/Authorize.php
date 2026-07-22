@@ -51,10 +51,10 @@ class Controller_Authorize extends Template {
 		$this->config = Kohana::$config->load('oauth2')->as_array();
 
 		// create array of supported response types
-		$this->responseTypes = array(
-			'code'	=> new Oauth2_ResponseType_AuthorizationCode($this->config),
-			'token'	=> new Oauth2_ResponseType_AccessToken($this->config),
-		);
+        $this->responseTypes = [
+            'code' => new Oauth2_ResponseType_AuthorizationCode($this->config),
+            'token' => new Oauth2_ResponseType_AccessToken($this->config),
+        ];
 
 		/**
 		 * Indicates if the user should be re-prompted for consent.
@@ -123,15 +123,15 @@ class Controller_Authorize extends Template {
 				$this->redirect_uri = $this->client['redirect_uri'];
 			}
 
-			$params = array(
-				'scope'				=> $this->scope,
-				'state'				=> $this->state,
-				'client_id'			=> $this->client['client_id'],
-				'redirect_uri'		=> $this->redirect_uri,
-				'response_type'		=> $this->response_type,
-				'approval_prompt'	=> $this->approval_prompt,
-				'access_type'		=> $this->access_type
-			);
+            $params = [
+                'scope' => $this->scope,
+                'state' => $this->state,
+                'client_id' => $this->client['client_id'],
+                'redirect_uri' => $this->redirect_uri,
+                'response_type' => $this->response_type,
+                'approval_prompt' => $this->approval_prompt,
+                'access_type' => $this->access_type
+            ];
 
 			if( $this->request->post('oauth2') )
 			{
@@ -151,13 +151,13 @@ class Controller_Authorize extends Template {
 		catch(Oauth2_Exception $e) 
 		{
 			// Throw an exception because there was a problem with the client's request
-			$response = array(
-				'error'				=> $e->getError(),
-				'error_description' => $e->getMessage()
-			);
+            $response = [
+                'error' => $e->getError(),
+                'error_description' => $e->getMessage()
+            ];
 
 			$this->response->status($e->getCode());
-			$this->response->headers(array('Cache-Control' => 'no-store', 'Pragma' => 'no-cache'));
+            $this->response->headers(['Cache-Control' => 'no-store', 'Pragma' => 'no-cache']);
 			$this->response->body(json_encode($response));
 		}
 		catch (Exception $e) 
@@ -206,9 +206,9 @@ class Controller_Authorize extends Template {
 
 		if ( ! Auth::instance()->logged_in())
 		{
-			$this->request->redirect( 
-				Route::get('user')->uri(array('action' => 'login')) . URL::query( array('destination' => $url) ) 
-			);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']) . URL::query([
+                    'destination' => $url
+                ]));
 		}
 
 		$user  = Auth::instance()->get_user();
@@ -306,8 +306,14 @@ class Controller_Authorize extends Template {
 		//}
 
 		// type and client_id are required
-		if (!$response_type || !in_array($response_type, array(self::RESPONSE_TYPE_AUTHORIZATION_CODE, self::RESPONSE_TYPE_ACCESS_TOKEN))) {
-		    $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'invalid_request', 'Invalid or missing response type');
+        if (!$response_type || !in_array($response_type, [self::RESPONSE_TYPE_AUTHORIZATION_CODE, self::RESPONSE_TYPE_ACCESS_TOKEN])) {
+            $this->setRedirect(
+                $this->config['redirect_status_code'],
+                $redirect_uri,
+                $state,
+                'invalid_request',
+                'Invalid or missing response type'
+            );
 
 		    return false;
 		}
@@ -416,10 +422,10 @@ class Controller_Authorize extends Template {
         $parameters = [];
 
 		if (!is_null($error)) {
-			$parameters = array(
-				'error' => $error,
-				'error_description' => $errorDescription,
-			);
+            $parameters = [
+                'error' => $error,
+                'error_description' => $errorDescription,
+            ];
 		}
 
 		if (!is_null($state)) {

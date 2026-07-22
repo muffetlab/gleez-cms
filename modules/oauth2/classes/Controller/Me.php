@@ -48,11 +48,11 @@ class Controller_Me extends Controller
 
 		if ($user)
 		{
-			$user_info = array('id' => $user->id, 'email' => $user->mail, 'name'  => $user->nick );
+            $user_info = ['id' => $user->id, 'email' => $user->mail, 'name' => $user->nick];
 		}
 		else
 		{
-			$user_info = array('message' => "User doesnt exists", 'Status code' => 400);   
+            $user_info = ['message' => "User doesnt exists", 'Status code' => 400];
 		}
 
 		$this->response->body(json_encode($user_info));

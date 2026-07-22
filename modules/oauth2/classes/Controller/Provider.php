@@ -124,7 +124,7 @@ class Controller_Provider extends Template {
 	{
 		try
 		{
-			$dest = Route::get('user')->uri(array('action' => 'profile'));
+            $dest = Route::get('user')->uri(['action' => 'profile']);
 
 			if ( ! is_null($this->request->query('destination')) )
 			{
@@ -134,10 +134,10 @@ class Controller_Provider extends Template {
 			$this->session->set('destination', $dest);
 
 			// Get the login URL from the provider
-			$url = $this->client->get_authentication_url($this->provider_config['callback'], array(
-				'scope' => $this->provider_config['scope'],
-				'state' => time(),
-			));
+            $url = $this->client->get_authentication_url($this->provider_config['callback'], [
+                'scope' => $this->provider_config['scope'],
+                'state' => time(),
+            ]);
 
 			// Redirect to the provider's login page
 			$this->request->redirect($url);
@@ -198,7 +198,9 @@ class Controller_Provider extends Template {
 		}
 
 		// Redirect to the profile page or destination url
-		$this->request->redirect( Session::instance()->get('destination', Route::get('user')->uri(array('action' => 'profile'))));
+        $this->request->redirect(Session::instance()->get('destination', Route::get('user')->uri([
+            'action' => 'profile'
+        ])));
 	}
 
     /**
@@ -248,12 +250,10 @@ class Controller_Provider extends Template {
 				// Log in as this user
 				Auth::instance()->force_login($user);
 
-				Message::success(__('Welcome back, :nick logged in via (:provider).',
-					array(
-						':nick' => $user->nick,
-						':provider' => $this->provider
-					))
-				);
+                Message::success(__('Welcome back, :nick logged in via (:provider).', [
+                    ':nick' => $user->nick,
+                    ':provider' => $this->provider
+                ]));
 
 				return true;
 			}
@@ -264,9 +264,10 @@ class Controller_Provider extends Template {
 			// @see Model_Auth_User::sso_signup for associate this provider
 			$account->sso_signup($data, $provider);
 
-			Message::success(__('Attached identity :nick (:provider) to your account.',
-					array(':nick' => $account->nick, ':provider' => $this->provider))
-				);
+            Message::success(__('Attached identity :nick (:provider) to your account.', [
+                ':nick' => $account->nick,
+                ':provider' => $this->provider
+            ]));
         } elseif (!$user && !Auth::instance()->logged_in()) {
             $account = ORM::factory('User')->where('mail', '=', $data['email'])->find();
 
@@ -277,15 +278,17 @@ class Controller_Provider extends Template {
 
 			if($creation)
 			{
-				Message::success(__('Thank you :nick for registering via (:provider).',
-					array(':nick' => $account->nick, ':provider' =>  $this->provider))
-				);
+                Message::success(__('Thank you :nick for registering via (:provider).', [
+                    ':nick' => $account->nick,
+                    ':provider' => $this->provider
+                ]));
 			}
 			else
 			{
-				Message::success(__('Attached identity :nick (:provider) to your account.',
-					array(':nick' => $account->nick, ':provider' => $this->provider))
-				);
+                Message::success(__('Attached identity :nick (:provider) to your account.', [
+                    ':nick' => $account->nick,
+                    ':provider' => $this->provider
+                ]));
 			}
 
 			// If yes, log the user in and give him a normal auth session.
