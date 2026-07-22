@@ -22,17 +22,16 @@ abstract class Captcha {
 	/**
 	 * @var array Default config values
 	 */
-	public static $config = array
-	(
-		'style'      	=> 'basic',
-		'width'      	=> 150,
-		'height'     	=> 50,
-		'complexity' 	=> 4,
-		'background' 	=> '',
+    public static $config = [
+        'style' => 'basic',
+        'width' => 150,
+        'height' => 50,
+        'complexity' => 4,
+        'background' => '',
         'fontPath' => '',
-		'fonts'      	=> array(),
-		'promote'    	=> FALSE,
-	);
+        'fonts' => [],
+        'promote' => FALSE,
+    ];
 
 	/**
 	 * @var string The correct Captcha challenge answer
@@ -70,7 +69,7 @@ abstract class Captcha {
             Captcha::$instance = new $class($group);
 
 			// Save captcha response at shutdown
-			//register_shutdown_function(array($captcha, 'update_response_session'));
+//            register_shutdown_function([$captcha, 'update_response_session']);
 		}
 
 		return Captcha::$instance;
@@ -96,16 +95,16 @@ abstract class Captcha {
 
 		// Load and validate config group
 		if ( ! is_array($config = Kohana::$config->load('captcha')->get($group)))
-			throw new Kohana_Exception('Captcha group not defined in :group configuration',
-					array(':group' => $group));
+            throw new Kohana_Exception('Captcha group not defined in :group configuration', [':group' => $group]);
 
 		// All captcha config groups inherit default config group
 		if ($group !== 'default')
 		{
 			// Load and validate default config group
 			if ( ! is_array($default = Kohana::$config->load('captcha')->get('default')))
-				throw new Kohana_Exception('Captcha group not defined in :group configuration',
-					array(':group' => 'default'));
+                throw new Kohana_Exception('Captcha group not defined in :group configuration', [
+                    ':group' => 'default'
+                ]);
 
 			// Merge config group with default config group
 			$config += $default;
@@ -129,8 +128,9 @@ abstract class Captcha {
 			Captcha::$config['background'] = str_replace('\\', '/', realpath($config['background']));
 
 			if ( ! is_file(Captcha::$config['background']))
-				throw new Kohana_Exception('The specified file, :file, was not found.',
-					array(':file' => Captcha::$config['background']));
+                throw new Kohana_Exception('The specified file, :file, was not found.', [
+                    ':file' => Captcha::$config['background']
+                ]);
 		}
 
 		// If using any fonts, check if they exist
@@ -141,8 +141,9 @@ abstract class Captcha {
 			foreach ($config['fonts'] as $font)
 			{
                 if (!is_file(Captcha::$config['fontPath'] . $font))
-					throw new Kohana_Exception('The specified file, :file, was not found.',
-                        array(':file' => Captcha::$config['fontPath'] . $font));
+                    throw new Kohana_Exception('The specified file, :file, was not found.', [
+                        ':file' => Captcha::$config['fontPath'] . $font
+                    ]);
 			}
 		}
 
@@ -373,7 +374,7 @@ abstract class Captcha {
 	 */
     public function image_gradient(int $color1, int $color2, string $direction = NULL)
 	{
-		$directions = array('horizontal', 'vertical');
+        $directions = ['horizontal', 'vertical'];
 
 		// Pick a random direction if needed
 		if ( ! in_array($direction, $directions))
