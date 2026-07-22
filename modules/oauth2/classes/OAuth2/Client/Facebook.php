@@ -13,8 +13,8 @@ class OAuth2_Client_Facebook extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_authorization_endpoint()
-	{
+    public function get_authorization_endpoint(): string
+    {
 		return 'https://graph.facebook.com/oauth/authorize';
 	}
 
@@ -23,8 +23,8 @@ class OAuth2_Client_Facebook extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_access_token_endpoint()
-	{
+    public function get_access_token_endpoint(): string
+    {
 		return 'https://graph.facebook.com/oauth/access_token';
 	}
 
@@ -33,8 +33,8 @@ class OAuth2_Client_Facebook extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_user_profile_service_url()
-	{
+    public function get_user_profile_service_url(): string
+    {
 		return 'https://graph.facebook.com/me';
 	}
 
@@ -44,16 +44,16 @@ class OAuth2_Client_Facebook extends OAuth2_Client {
      * @return array
      * @throws OAuth2_Client_Exception|Kohana_Exception
      */
-	public function get_user_data()
-	{
+    public function get_user_data(): array
+    {
 		$url = $this->get_user_profile_service_url();
 		$response = $this->fetch($url);
 
 		return $this->parseResponse($response['result']);
 	}
 
-	protected function parseResponse($response)
-	{
+    protected function parseResponse($response): array
+    {
         $data = [];
 
 		if( isset($response['email']) )

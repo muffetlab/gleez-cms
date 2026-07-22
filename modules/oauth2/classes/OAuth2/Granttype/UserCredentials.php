@@ -20,8 +20,8 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 		$this->config = $config;
 	}
 
-	public function getQuerystringIdentifier()
-	{
+    public function getQuerystringIdentifier(): string
+    {
 		return 'password';
 	}
 
@@ -29,8 +29,8 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
      * @throws Oauth2_Exception
      * @throws Kohana_Exception
      */
-    public function validateRequest(Request $request, Response $response)
-	{
+    public function validateRequest(Request $request, Response $response): bool
+    {
 		$this->request  = $request;
 		$this->response = $response;
 

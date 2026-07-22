@@ -118,28 +118,28 @@ abstract class OAuth2_Client {
      *
      * @return  string
      */
-    abstract function get_authorization_endpoint();
+    abstract function get_authorization_endpoint(): string;
 
     /**
      * Return the access token endpoint
      *
      * @return  string
      */
-    abstract function get_access_token_endpoint();
+    abstract function get_access_token_endpoint(): string;
 
     /**
      * Return the user profile service url
      *
      * @return  string
      */
-    abstract function get_user_profile_service_url();
+    abstract function get_user_profile_service_url(): string;
 
     /**
      * Return data about the user
      *
      * @return  array
      */
-    abstract function get_user_data();
+    abstract function get_user_data(): array;
 
     /**
      * Construct
@@ -181,7 +181,7 @@ abstract class OAuth2_Client {
      *
      * @return  string
      */
-    public function get_client_id()
+    public function get_client_id(): ?string
     {
         return $this->_client_id;
     }
@@ -191,7 +191,7 @@ abstract class OAuth2_Client {
      *
      * @return  string
      */
-    public function get_client_secret()
+    public function get_client_secret(): ?string
     {
         return $this->_client_secret;
     }
@@ -203,7 +203,7 @@ abstract class OAuth2_Client {
      * @param   array   $extra_parameters
      * @return  string  URL used for authentication
      */
-    public function get_authentication_url($redirect_uri, array $extra_parameters = [])
+    public function get_authentication_url($redirect_uri, array $extra_parameters = []): string
     {
         $parameters = array_merge([
             'response_type' => 'code',
@@ -222,7 +222,7 @@ abstract class OAuth2_Client {
      * @return  array                       The server response
      * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
-    public function request_access_token($grant_type, array $parameters)
+    public function request_access_token($grant_type, array $parameters): array
     {
         if ( ! $grant_type)
         {
@@ -280,7 +280,7 @@ abstract class OAuth2_Client {
      * @throws  OAuth2_Client_Exception
      * @throws Kohana_Exception
      */
-    public function get_access_token($grant_type, $parameters, $response = NULL)
+    public function get_access_token($grant_type, $parameters, $response = NULL): string
     {
         $response = $response ?: $this->request_access_token($grant_type, $parameters);
         $result   = $response['result'];
@@ -372,7 +372,7 @@ abstract class OAuth2_Client {
      * @return  array
      * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
-    public function fetch($protected_resource_url, $parameters = [], $http_method = self::HTTP_METHOD_GET, array $http_headers = [], $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART, $check_http_status = TRUE, $expected_http_status = 200)
+    public function fetch($protected_resource_url, $parameters = [], $http_method = self::HTTP_METHOD_GET, array $http_headers = [], $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART, $check_http_status = TRUE, $expected_http_status = 200): array
     {
         if ($this->_access_token)
         {
@@ -431,7 +431,7 @@ abstract class OAuth2_Client {
      * @param   string  $http_method
      * @return  string
      */
-    protected function _generate_mac_signature($url, $parameters, $http_method)
+    protected function _generate_mac_signature($url, $parameters, $http_method): string
     {
         $timestamp  = time();
         $nonce      = uniqid();
@@ -478,7 +478,7 @@ abstract class OAuth2_Client {
      * @throws Kohana_Exception
      * @throws OAuth2_Client_Exception
      */
-    protected function _execute_request($url, $parameters = [], $http_method = self::HTTP_METHOD_GET, array $http_headers = NULL, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
+    protected function _execute_request($url, $parameters = [], $http_method = self::HTTP_METHOD_GET, array $http_headers = NULL, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART): array
     {
         $curl_options = [
             CURLOPT_RETURNTRANSFER => TRUE,
@@ -595,7 +595,7 @@ abstract class OAuth2_Client {
      *
      * @return array
      */
-    public function get_last_response()
+    public function get_last_response(): array
     {
         return $this->_last_response;
     }

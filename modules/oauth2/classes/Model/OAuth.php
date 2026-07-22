@@ -12,8 +12,8 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function checkConsent($client_id, $user_id)
-	{
+    public function checkConsent($client_id, $user_id): bool
+    {
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
         $oatoken = DB::query(Database::SELECT, "SELECT * FROM $table WHERE client_id = :client_id AND user_id = :user_id LIMIT 1")
@@ -30,8 +30,8 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function checkClientCredentials($client_id, $client_secret = NULL)
-	{
+    public function checkClientCredentials($client_id, $client_secret = NULL): bool
+    {
 		$client = $this->getClientDetails($client_id);
 
         return $client && $client['client_secret'] == $client_secret;
@@ -57,8 +57,8 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function checkRestrictedGrantType($client_id, $grant_type)
-	{
+    public function checkRestrictedGrantType($client_id, $grant_type): bool
+    {
 		$details = $this->getClientDetails($client_id);
 
 		if ($details && ! empty($details['grant_types'])) {
@@ -173,8 +173,8 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope = null)
-	{
+    public function createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope = null): string
+    {
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
         $code_exists = DB::query(Database::SELECT, "SELECT * FROM $table WHERE client_id = :client_id AND user_id = :user_id LIMIT 1;")
@@ -300,8 +300,8 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = FALSE)
-	{
+    public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = FALSE): array
+    {
 		$refresh_token   = FALSE;
 		
 		/*

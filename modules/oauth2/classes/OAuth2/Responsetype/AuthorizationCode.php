@@ -19,8 +19,8 @@ class Oauth2_ResponseType_AuthorizationCode
 		$this->config = $config;
 	}
 
-	public function getAuthorizeResponse($params, $user_id = null)
-	{
+    public function getAuthorizeResponse($params, $user_id = null): array
+    {
 		// build the URL to redirect to
         $result = ['query' => []];
 

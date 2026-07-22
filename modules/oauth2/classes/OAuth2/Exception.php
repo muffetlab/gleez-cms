@@ -60,8 +60,8 @@ class Oauth2_Exception extends Exception
      * @param null $error_uri The Error URL [Optional]
      * @return Oauth2_Exception
      */
-	public static function factory($code, $error, $message = NULL, array $variables = NULL, $error_uri = NULL)
-	{
+    public static function factory($code, $error, $message = NULL, array $variables = NULL, $error_uri = NULL): Oauth2_Exception
+    {
 		return new self($code, $error, $message, $variables, $error_uri);
 	}
 
@@ -120,8 +120,8 @@ class Oauth2_Exception extends Exception
 	}
 
 
-	public function getError()
-	{
+    public function getError(): string
+    {
 		return $this->error;
 	}
 
@@ -136,8 +136,8 @@ class Oauth2_Exception extends Exception
     /**
      * @throws Kohana_Exception
      */
-    public function render()
-	{
+    public function render(): Response
+    {
 		try
 		{
 			// Instantiate the error view.

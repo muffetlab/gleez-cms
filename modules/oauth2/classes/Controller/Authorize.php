@@ -200,8 +200,8 @@ class Controller_Authorize extends Template {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    protected function showAuthorizeForm($params)
-	{
+    protected function showAuthorizeForm($params): bool
+    {
 		$url = Route::get('oauth2/auth')->uri().URL::query($params);
 
 		if ( ! Auth::instance()->logged_in())
@@ -252,8 +252,8 @@ class Controller_Authorize extends Template {
      * @see http://tools.ietf.org/html/rfc6749#section-10.12
      * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
      */
-	protected function validateAuthorizeRequest()
-	{
+    protected function validateAuthorizeRequest(): bool
+    {
 		// Make sure a valid client id was supplied (we can not redirect because we were unable to verify the URI)
 		if (!$client_id = $this->request->query("client_id")) {
 		    // We don't have a good URI to use
@@ -389,8 +389,8 @@ class Controller_Authorize extends Template {
 	 *
 	 * @see http://tools.ietf.org/html/rfc6749#section-3.1.2
 	 */
-	private function validateRedirectUri($inputUri, $registeredUriString)
-	{
+    private function validateRedirectUri($inputUri, $registeredUriString): bool
+    {
 		if (!$inputUri || !$registeredUriString) {
 		    return false; // if either one is missing, assume INVALID
 		}
@@ -457,8 +457,8 @@ class Controller_Authorize extends Template {
     /**
      * @throws Kohana_Exception
      */
-    public function checkRestrictedGrantType($client_id, $grant_type)
-	{
+    public function checkRestrictedGrantType($client_id, $grant_type): bool
+    {
 		$details = $this->getClientDetails($client_id);
 
 		if (! empty($details['grant_types'])) {
@@ -472,8 +472,8 @@ class Controller_Authorize extends Template {
 	}
 
 	// Checks whether user already approved client access or not
-	public function checkConsent($client_id, $user_id)
-	{
+    public function checkConsent($client_id, $user_id): bool
+    {
 		$oatoken = Model::factory('oauth')->checkConsent($client_id, $user_id);
 
         return !empty($oatoken);
@@ -487,8 +487,8 @@ class Controller_Authorize extends Template {
      * @return string An absolute URI with supplied parameters
      * @ingroup oauth2_section_4
      */
-	private function buildUri($uri, $params)
-	{
+    private function buildUri($uri, $params): string
+    {
 		$parse_url = parse_url($uri);
 
 		// Add our params to the parsed uri

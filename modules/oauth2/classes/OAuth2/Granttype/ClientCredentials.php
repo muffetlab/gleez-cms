@@ -36,16 +36,16 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		$this->config = $config;
 	}
 
-	public function getQuerystringIdentifier()
-	{
+    public function getQuerystringIdentifier(): string
+    {
 		return 'client_credentials';
 	}
 
     /**
      * @throws Oauth2_Exception
      */
-    public function validateRequest(Request $request, Response $response)
-	{
+    public function validateRequest(Request $request, Response $response): bool
+    {
 		$this->request  = $request;
 		$this->response = $response;
 

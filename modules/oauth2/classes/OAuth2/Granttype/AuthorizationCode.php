@@ -20,16 +20,16 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 		$this->config = $config;
 	}
 
-	public function getQuerystringIdentifier()
-	{
+    public function getQuerystringIdentifier(): string
+    {
 		return 'authorization_code';
 	}
 
     /**
      * @throws Oauth2_Exception
      */
-    public function validateRequest(Request $request, Response $response)
-	{
+    public function validateRequest(Request $request, Response $response): bool
+    {
 		$this->request  = $request;
 		$this->response = $response;
 

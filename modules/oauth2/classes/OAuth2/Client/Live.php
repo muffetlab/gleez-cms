@@ -13,8 +13,8 @@ class OAuth2_Client_Live extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_authorization_endpoint()
-	{
+    public function get_authorization_endpoint(): string
+    {
 		return 'https://oauth.live.com/authorize';
 	}
 
@@ -23,8 +23,8 @@ class OAuth2_Client_Live extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_access_token_endpoint()
-	{
+    public function get_access_token_endpoint(): string
+    {
 		return 'https://oauth.live.com/token';
 	}
 
@@ -33,8 +33,8 @@ class OAuth2_Client_Live extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_user_profile_service_url()
-	{
+    public function get_user_profile_service_url(): string
+    {
 		return "https://apis.live.net/v5.0/me";
 	}
 
@@ -44,16 +44,16 @@ class OAuth2_Client_Live extends OAuth2_Client {
      * @return array
      * @throws OAuth2_Client_Exception|Kohana_Exception
      */
-	public function get_user_data()
-	{
+    public function get_user_data(): array
+    {
 		$url = $this->get_user_profile_service_url();
 		$response = $this->fetch($url);
 
 		return $this->parseResponse($response['result']);
 	}
 
-	protected function parseResponse($response)
-	{
+    protected function parseResponse($response): array
+    {
         $data = [];
 
 		//make sure the response is valid

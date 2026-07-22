@@ -298,8 +298,8 @@ class Controller_Provider extends Template {
 		return;
 	}
 
-	public function key($name)
-	{
+    public function key($name): string
+    {
         return "api_{$this->provider}_$name";
 	}
 
