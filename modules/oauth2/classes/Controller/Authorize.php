@@ -220,10 +220,10 @@ class Controller_Authorize extends Template {
 		//$autoApprove = ($params['auto_approve'] === '1') ? TRUE : FALSE;
         $autoApprove = $params['approval_prompt'] !== 'force';
 
-		/*
-		 * Dispaly the "do you want to authorize?" form if previously not approved,
-		 * or, if approval_promt parameter is 'force'
-		 */ 
+        /*
+         * Display the "do you want to authorize?" form if previously not approved, or, if approval_promt parameter is
+         * 'force'.
+         */
 		if ( $consent === FALSE || $autoApprove === FALSE )
 		{
             $view = View::factory('oauth2/authorize')->set('client', $this->client)->set('action', $url);
