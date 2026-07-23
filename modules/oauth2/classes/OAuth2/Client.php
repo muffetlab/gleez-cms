@@ -144,13 +144,18 @@ abstract class OAuth2_Client {
     /**
      * Construct
      *
-     * @param   string  $client_id
-     * @param   string  $client_secret
-     * @param   int     $client_auth_type
-     * @param   string  $certificate_file
+     * @param string $client_id
+     * @param string $client_secret
+     * @param int $client_auth_type
+     * @param string|null $certificate_file
      * @throws  OAuth2_Client_Exception
      */
-    public function __construct($client_id, $client_secret, $client_auth_type = self::AUTH_TYPE_URI, $certificate_file = NULL)
+    public function __construct(
+        string $client_id,
+        string $client_secret,
+        int $client_auth_type = self::AUTH_TYPE_URI,
+        string $certificate_file = NULL
+    )
     {
         if ( ! extension_loaded('curl'))
         {
@@ -199,11 +204,11 @@ abstract class OAuth2_Client {
     /**
      * Get the authentication url
      *
-     * @param   string  $redirect_uri
+     * @param string $redirect_uri
      * @param   array   $extra_parameters
      * @return  string  URL used for authentication
      */
-    public function get_authentication_url($redirect_uri, array $extra_parameters = []): string
+    public function get_authentication_url(string $redirect_uri, array $extra_parameters = []): string
     {
         $parameters = array_merge([
             'response_type' => 'code',
@@ -217,12 +222,12 @@ abstract class OAuth2_Client {
     /**
      * Request the access token
      *
-     * @param   int     $grant_type         Grant Type ('authorization_code', 'password', 'client_credentials', 'refresh_token', or a custom code (@see GrantType Classes)
+     * @param int $grant_type Grant type ('authorization_code', 'password', 'client_credentials', 'refresh_token', or a custom code (@see GrantType Classes)
      * @param   array   $parameters         Array sent to the server (depend on which grant type you're using)
      * @return  array                       The server response
      * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
-    public function request_access_token($grant_type, array $parameters): array
+    public function request_access_token(int $grant_type, array $parameters): array
     {
         if ( ! $grant_type)
         {
@@ -275,12 +280,12 @@ abstract class OAuth2_Client {
      *
      * @param string $grant_type
      * @param array $parameters
-     * @param string $response
+     * @param string|null $response
      * @return  string
      * @throws  OAuth2_Client_Exception
      * @throws Kohana_Exception
      */
-    public function get_access_token($grant_type, $parameters, $response = NULL): string
+    public function get_access_token(string $grant_type, array $parameters, string $response = NULL): string
     {
         $response = $response ?: $this->request_access_token($grant_type, $parameters);
         $result   = $response['result'];
@@ -309,7 +314,7 @@ abstract class OAuth2_Client {
      *
      * @param string $token
      */
-    public function set_access_token($token)
+    public function set_access_token(string $token)
     {
         $this->_access_token = $token;
     }
@@ -317,9 +322,9 @@ abstract class OAuth2_Client {
     /**
      * Set the client authentication type
      *
-     * @param   string  $client_auth_type   (AUTH_TYPE_URI, AUTH_TYPE_AUTHORIZATION, AUTH_TYPE_FORM)
+     * @param string $client_auth_type (AUTH_TYPE_URI, AUTH_TYPE_AUTHORIZATION, AUTH_TYPE_FORM)
      */
-    public function set_client_auth_type($client_auth_type)
+    public function set_client_auth_type(string $client_auth_type)
     {
         $this->_client_auth_type = $client_auth_type;
     }
@@ -327,10 +332,10 @@ abstract class OAuth2_Client {
     /**
      * Set an option for the curl transfer
      *
-     * @param   int     $option
+     * @param int $option
      * @param   mixed   $value
      */
-    public function set_curl_option($option, $value)
+    public function set_curl_option(int $option, $value)
     {
         $this->_curl_options[$option] = $value;
     }
@@ -338,9 +343,9 @@ abstract class OAuth2_Client {
     /**
      * Set multiple options for a cURL transfer
      *
-     * @param   array   $options
+     * @param array $options
      */
-    public function set_curl_options($options)
+    public function set_curl_options(array $options)
     {
         $this->_curl_options = array_merge($this->_curl_options, $options);
     }
@@ -348,11 +353,11 @@ abstract class OAuth2_Client {
     /**
      * Set the access token type
      *
-     * @param   int     $type       Access token type (ACCESS_TOKEN_BEARER, ACCESS_TOKEN_MAC, ACCESS_TOKEN_URI)
-     * @param   string  $secret     The secret key used to encrypt the MAC header
-     * @param   string  $algorithm  Algorithm used to encrypt the signature
+     * @param int $type Access token type (ACCESS_TOKEN_BEARER, ACCESS_TOKEN_MAC, ACCESS_TOKEN_URI)
+     * @param string|null $secret The secret key used to encrypt the MAC header
+     * @param string|null $algorithm Algorithm used to encrypt the signature
      */
-    public function set_access_token_type($type, $secret = NULL, $algorithm = NULL)
+    public function set_access_token_type(int $type, string $secret = NULL, string $algorithm = NULL)
     {
         $this->_access_token_type = $type;
         $this->_access_token_secret = $secret;
@@ -362,17 +367,25 @@ abstract class OAuth2_Client {
     /**
      * Fetch a protected resource
      *
-     * @param   string  $protected_resource_url
-     * @param   array   $parameters
-     * @param   string  $http_method
+     * @param string $protected_resource_url
+     * @param array $parameters
+     * @param string $http_method
      * @param   array   $http_headers
-     * @param   int     $form_content_type
-     * @param   bool    $check_http_status
-     * @param   int     $expected_http_status
+     * @param int $form_content_type
+     * @param bool $check_http_status
+     * @param int $expected_http_status
      * @return  array
      * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
-    public function fetch($protected_resource_url, $parameters = [], $http_method = self::HTTP_METHOD_GET, array $http_headers = [], $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART, $check_http_status = TRUE, $expected_http_status = 200): array
+    public function fetch(
+        string $protected_resource_url,
+        array  $parameters = [],
+        string $http_method = self::HTTP_METHOD_GET,
+        array  $http_headers = [],
+        int    $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART,
+        bool   $check_http_status = TRUE,
+        int    $expected_http_status = 200
+    ): array
     {
         if ($this->_access_token)
         {
@@ -426,12 +439,12 @@ abstract class OAuth2_Client {
     /**
      * Generate the MAC signature
      *
-     * @param   string  $url
-     * @param   array   $parameters
-     * @param   string  $http_method
+     * @param string $url
+     * @param array $parameters
+     * @param string $http_method
      * @return  string
      */
-    protected function _generate_mac_signature($url, $parameters, $http_method): string
+    protected function _generate_mac_signature(string $url, array $parameters, string $http_method): string
     {
         $timestamp  = time();
         $nonce      = uniqid();
@@ -478,7 +491,13 @@ abstract class OAuth2_Client {
      * @throws Kohana_Exception
      * @throws OAuth2_Client_Exception
      */
-    protected function _execute_request($url, $parameters = [], $http_method = self::HTTP_METHOD_GET, array $http_headers = NULL, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART): array
+    protected function _execute_request(
+        string $url,
+        $parameters = [],
+        string $http_method = self::HTTP_METHOD_GET,
+        array  $http_headers = NULL,
+        int    $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART
+    ): array
     {
         $curl_options = [
             CURLOPT_RETURNTRANSFER => TRUE,
@@ -603,9 +622,9 @@ abstract class OAuth2_Client {
     /**
      * Set the name of the parameter that carry the access token
      *
-     * @param   string  $name
+     * @param string $name
      */
-    public function set_access_token_param_name($name)
+    public function set_access_token_param_name(string $name)
     {
         $this->_access_token_param_name = $name;
     }
@@ -613,14 +632,20 @@ abstract class OAuth2_Client {
     /**
      * OAuth2 client factory for different providers
      *
-     * @param   string  $provider
-     * @param   string  $client_id
-     * @param   string  $client_secret
-     * @param   int     $client_auth_type
-     * @param   string  $certificate_file
+     * @param string $provider
+     * @param string $client_id
+     * @param string $client_secret
+     * @param int $client_auth_type
+     * @param string|null $certificate_file
      * @return  mixed
      */
-    public static function factory($provider, $client_id, $client_secret, $client_auth_type = self::AUTH_TYPE_URI, $certificate_file = NULL)
+    public static function factory(
+        string $provider,
+        string $client_id,
+        string $client_secret,
+        int    $client_auth_type = self::AUTH_TYPE_URI,
+        string $certificate_file = NULL
+    )
     {
         $class_name = 'OAuth2_Client_'.$provider;
         return new $class_name($client_id, $client_secret, $client_auth_type, $certificate_file);
