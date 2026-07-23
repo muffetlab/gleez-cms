@@ -152,7 +152,7 @@ class Controller_Authorize extends Template {
                 );
 			}
 
-			return $this->authorizeFinish($params, $this->redirect_uri);
+            $this->authorizeFinish($params, $this->redirect_uri);
 		}
 		catch(Oauth2_Exception $e) 
 		{
