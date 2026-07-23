@@ -96,7 +96,7 @@ class Controller_Client extends Template {
 					$oaclient->grant_types = $grant_types_selected;
 			    }
 
-                if (isset($_FILES) && isset($_FILES['logo']))
+                if (isset($_FILES['logo']))
 			    {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
 
@@ -162,7 +162,7 @@ class Controller_Client extends Template {
 				$oaclient->grant_types = $grant_types_selected;
 			    }
 
-                if (isset($_FILES) && isset($_FILES['logo']))
+                if (isset($_FILES['logo']))
 			    {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
 
