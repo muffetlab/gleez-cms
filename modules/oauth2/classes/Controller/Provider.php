@@ -232,7 +232,7 @@ class Controller_Provider extends Template {
      *
      * @throws Kohana_Exception
      */
-	protected function sso_signup($data, $user = FALSE)
+    protected function sso_signup($data, $user = FALSE): void
 	{
 		//vars for processing stuff
 		$creation = FALSE;
@@ -254,9 +254,7 @@ class Controller_Provider extends Template {
                     ':nick' => $user->nick,
                     ':provider' => $this->provider
                 ]));
-
-				return true;
-			}
+            }
         } elseif (!$user && Auth::instance()->logged_in()) {
 			// Associate their new oAuth with their current account.
 			$account = Auth::instance()->get_user();
@@ -294,9 +292,7 @@ class Controller_Provider extends Template {
 			// If yes, log the user in and give him a normal auth session.
 			Auth::instance()->force_login($account);
 		}
-
-		return;
-	}
+    }
 
     public function key($name): string
     {
