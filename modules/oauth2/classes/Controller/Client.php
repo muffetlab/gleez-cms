@@ -86,7 +86,7 @@ class Controller_Client extends Template {
 		
 		if ($this->valid_post('save'))
 		{
-		    $oaclient->values($this->request->post());
+            $oaclient->values($this->request->post(), ['title', 'redirect_uri', 'description', 'status']);
 		    
 		    try
 		    {
@@ -151,7 +151,7 @@ class Controller_Client extends Template {
 		
 		if ($this->valid_post('save'))
 		{
-		    $oaclient->values($this->request->post());
+            $oaclient->values($this->request->post(), ['title', 'redirect_uri', 'description', 'status']);
 		    
 		    try
 		    {
