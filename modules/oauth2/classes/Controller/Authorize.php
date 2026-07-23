@@ -143,7 +143,13 @@ class Controller_Authorize extends Template {
 			}
 
 			if ($authorized === false) {
-				$this->setRedirect($this->config['redirect_status_code'], $this->redirect_uri, $this->state, 'access_denied', "The user denied access to your application");
+                $this->setRedirect(
+                    $this->redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $this->state,
+                    'access_denied',
+                    "The user denied access to your application"
+                );
 			}
 
 			return $this->authorizeFinish($params, $this->redirect_uri);
@@ -193,7 +199,7 @@ class Controller_Authorize extends Template {
 		$uri = $this->buildUri($redirect_uri, $uri_params);
 
 		// return redirect response
-		$this->setRedirect($this->config['redirect_status_code'], $uri);
+        $this->setRedirect($uri, $this->config['redirect_status_code']);
 	}
 
     /**
@@ -308,8 +314,8 @@ class Controller_Authorize extends Template {
 		// type and client_id are required
         if (!$response_type || !in_array($response_type, [self::RESPONSE_TYPE_AUTHORIZATION_CODE, self::RESPONSE_TYPE_ACCESS_TOKEN])) {
             $this->setRedirect(
-                $this->config['redirect_status_code'],
                 $redirect_uri,
+                $this->config['redirect_status_code'],
                 $state,
                 'invalid_request',
                 'Invalid or missing response type'
@@ -320,12 +326,24 @@ class Controller_Authorize extends Template {
 
 		if ($response_type == self::RESPONSE_TYPE_AUTHORIZATION_CODE) {
 		    if (!isset($this->responseTypes['code'])) {
-		        $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unsupported_response_type', 'authorization code grant type not supported');
+                $this->setRedirect(
+                    $redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $state,
+                    'unsupported_response_type',
+                    'authorization code grant type not supported'
+                );
 
 		        return false;
 		    }
 		    if (!$this->checkRestrictedGrantType($client_id, 'authorization_code')) {
-		        $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unauthorized_client', 'The grant type is unauthorized for this client_id');
+                $this->setRedirect(
+                    $redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $state,
+                    'unauthorized_client',
+                    'The grant type is unauthorized for this client_id'
+                );
 
 		        return false;
 		    }
@@ -336,12 +354,24 @@ class Controller_Authorize extends Template {
 
 		if ($response_type == self::RESPONSE_TYPE_ACCESS_TOKEN) {
 		    if (!$this->config['allow_implicit']) {
-		        $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unsupported_response_type', 'implicit grant type not supported');
+                $this->setRedirect(
+                    $redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $state,
+                    'unsupported_response_type',
+                    'implicit grant type not supported'
+                );
 
 		        return false;
 		    }
 		    if (!$this->checkRestrictedGrantType($client_id, 'implicit')) {
-		        $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unauthorized_client', 'The grant type is unauthorized for this client_id');
+                $this->setRedirect(
+                    $redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $state,
+                    'unauthorized_client',
+                    'The grant type is unauthorized for this client_id'
+                );
 
 		        return false;
 		    }
@@ -349,20 +379,38 @@ class Controller_Authorize extends Template {
 
 		// Validate that the requested scope is supported
 /*		if (false === $scope) {
-		    $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'invalid_client', 'This application requires you specify a scope parameter');
+            $this->setRedirect(
+                $redirect_uri,
+                $this->config['redirect_status_code'],
+                $state,
+                'invalid_client',
+                'This application requires you specify a scope parameter'
+            );
 
 		    return false;
 		}
 
 		if (!is_null($scope) && !$this->scopeExists($scope, $client_id)) {
-		    $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'invalid_scope', 'An unsupported scope was requested');
+            $this->setRedirect(
+                $redirect_uri,
+                $this->config['redirect_status_code'],
+                $state,
+                'invalid_scope',
+                'An unsupported scope was requested'
+            );
 
 		    return false;
 		}*/
 
 		// Validate state parameter exists (if configured to enforce this)
 		if ($this->config['enforce_state'] && !$state) {
-		    $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, null, 'invalid_request', 'The state parameter is required');
+            $this->setRedirect(
+                $redirect_uri,
+                $this->config['redirect_status_code'],
+                null,
+                'invalid_request',
+                'The state parameter is required'
+            );
 
 		    return false;
 		}
@@ -413,7 +461,13 @@ class Controller_Authorize extends Template {
     /**
      * @throws Kohana_Exception
      */
-    protected function setRedirect($statusCode = 302, $url, $state = null, $error = null, $errorDescription = null)
+    protected function setRedirect(
+        string  $url,
+        int     $statusCode = 302,
+        ?string $state = null,
+        ?string $error = null,
+        ?string $errorDescription = null
+    )
 	{
         $parameters = [];
 
