@@ -381,15 +381,11 @@ class Controller_Authorize extends Template {
 	/**
 	 * Internal method for validating redirect URI supplied
 	 *
-	 * @param string $inputUri
-	 * The submitted URI to be validated
-	 * @param string $registeredUriString
-	 * The allowed URI(s) to validate against.  Can be a space-delimited string of URIs to
-	 * allow for multiple URIs
-	 *
+	 * @param string $inputUri The submitted URI to be validated
+	 * @param string $registeredUriString The allowed URI(s) to validate against. Can be a space-delimited string of URIs to allow for multiple URIs.
 	 * @see http://tools.ietf.org/html/rfc6749#section-3.1.2
 	 */
-    private function validateRedirectUri($inputUri, $registeredUriString): bool
+    private function validateRedirectUri(string $inputUri, string $registeredUriString): bool
     {
 		if (!$inputUri || !$registeredUriString) {
 		    return false; // if either one is missing, assume INVALID
@@ -487,7 +483,7 @@ class Controller_Authorize extends Template {
      * @return string An absolute URI with supplied parameters
      * @ingroup oauth2_section_4
      */
-    private function buildUri($uri, $params): string
+    private function buildUri(string $uri, array $params): string
     {
 		$parse_url = parse_url($uri);
 
