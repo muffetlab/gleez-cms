@@ -42,15 +42,16 @@ class Oauth2_ResponseType_AccessToken
     /**
      * Handle the creation of access token, also issue refresh token if supported / desirable.
      *
-     * @param $client_id Client identifier related to the authorization code
-     * @param $user_id User ID associated with the authorization code
-     * @param $redirect_uri An absolute URI to which the authorization server will redirect the user-agent to when the end-user authorization step is completed.
-     * @param $scope (optional) Scopes to be stored in space-separated string.
+     * @param string $client_id Client identifier related to the authorization code
+     * @param string|null $user_id User ID associated with the authorization code
+     * @param string|null $redirect_uri An absolute URI to which the authorization server will redirect the user-agent to when the end-user authorization step is completed
+     * @param string|null $scope (optional) Scopes to be stored in space-separated string
+     * @return array
      * @throws Oauth2_Exception
      * @see http://tools.ietf.org/html/rfc6749#section-5
      * @ingroup oauth2_section_5
      */
-	protected function createAccessToken($client_id, $user_id, $redirect_uri, $scope = NULL)
+    protected function createAccessToken(string $client_id, ?string $user_id, ?string $redirect_uri, ?string $scope = null): array
 	{
 		try
 		{
