@@ -35,16 +35,16 @@ class Controller_Me extends Controller
 			//return Oauth::$exceptions['invalid_request'];
 			throw new Exception('Access token is missing');
 		}
-		
-		$oatoken = Model::factory('oauth')->getAccessToken($accessToken);
 
-		if ($oatoken['access_expires'] < time())
+        $token = Model::factory('oauth')->getAccessToken($accessToken);
+
+        if ($token['access_expires'] < time())
 		{
 			//return Oauth::$exceptions['invalid_grant'];
 			throw new Exception('Access token is expired');
 		}
-		
-		$user = User::lookup($oatoken['user_id']);
+
+        $user = User::lookup($token['user_id']);
 
 		if ($user)
 		{
