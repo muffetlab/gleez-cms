@@ -27,7 +27,7 @@ if ( ! Route::cache())
         'action' => 'index',
     ]);
 
-    //oAuth2 Frontend routes
+    // OAuth2 frontend routes
     Route::set('oauth2/auth', 'oauth2/auth')->defaults([
         'controller' => 'authorize',
         'action' => 'index',
@@ -76,34 +76,34 @@ if ( ! ACL::cache() )
 {
     ACL::set('oauth2', [
         'administer oauth2' => [
-            'title' => __('Administer oAuth2'),
+            'title' => __('Administer OAuth2'),
             'restrict access' => TRUE,
             'description' => __('oAUth Management'),
         ],
         'access oaclient2' => [
             'title' => __('Access Clients'),
             'restrict access' => FALSE,
-            'description' => __('Access to all oAuth2 Clients'),
+            'description' => __('Access to all OAuth2 Clients'),
         ],
         'edit oaclient2' => [
             'title' => __('Edit Client'),
             'restrict access' => FALSE,
-            'description' => __('The ability to change oAuth2 Client'),
+            'description' => __('The ability to change OAuth2 Client'),
         ],
         'edit own oaclient2' => [
             'title' => __('Change own Client'),
             'restrict access' => TRUE,
-            'description' => __('The ability to change own oAuth2 Client'),
+            'description' => __('The ability to change own OAuth2 Client'),
         ],
         'delete oaclient2' => [
             'title' => __('Delete Client'),
             'restrict access' => FALSE,
-            'description' => __('The ability to delete oAuth2 Client'),
+            'description' => __('The ability to delete OAuth2 Client'),
         ],
         'delete own oaclient2' => [
             'title' => __('Delete own Client'),
             'restrict access' => TRUE,
-            'description' => __('The ability to delete own oAuth2 Client'),
+            'description' => __('The ability to delete own OAuth2 Client'),
         ]
     ]);
 

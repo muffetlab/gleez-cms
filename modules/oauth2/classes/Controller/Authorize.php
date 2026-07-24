@@ -1,8 +1,8 @@
 <?php
 /**
- * Controller oAuth2 Authorize
+ * Controller OAuth2 Authorize
  *
- * @package    Gleez\oAuth2
+ * @package    Gleez\OAuth2
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2014 Gleez Technologies

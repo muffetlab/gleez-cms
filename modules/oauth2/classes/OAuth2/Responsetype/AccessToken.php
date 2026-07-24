@@ -2,7 +2,7 @@
 /**
  * Helper OAuth2 Token Response Type (implicit grant type)
  *
- * @package    Gleez\oAuth2
+ * @package    Gleez\OAuth2
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2013 Gleez Technologies

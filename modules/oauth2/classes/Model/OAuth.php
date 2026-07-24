@@ -2,7 +2,7 @@
 /**
  * Oauth2 Model
  *
- * @package    Gleez\oAuth2
+ * @package    Gleez\OAuth2
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2015 Gleez Technologies
