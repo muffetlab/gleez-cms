@@ -155,7 +155,7 @@ class Controller_Provider extends Template {
 	{
 		try
 		{
-			// Attempt to complete signin
+            // Attempt to complete sign-in
 			if ($code = Arr::get($_REQUEST, 'code'))
 			{
 				$params['code']           = $code;
@@ -180,7 +180,7 @@ class Controller_Provider extends Template {
 			Message::error(__("Couldn't login. Contact administer for error!"));
 			Kohana::$log->add(Log::ERROR,  (string) $e);
 		} catch (Database_Exception $e) {
-			// Skiping duplicate record entry exception.
+            // Handle duplicate record entry exception.
 			Kohana::$log->add(Log::ERROR,  (string) $e);
 		}
 		catch(Exception $e)
@@ -208,7 +208,7 @@ class Controller_Provider extends Template {
      */
     protected function oauthComplete()
 	{
-		// Login succesful
+        // Login successful
 		$response = $this->client->get_user_data();
 
 		//make sure the response is valid by checking id
@@ -256,7 +256,7 @@ class Controller_Provider extends Template {
                 ]));
             }
         } elseif (!$user && Auth::instance()->logged_in()) {
-			// Associate their new oAuth with their current account.
+            // Associate their new OAuth with their current account.
 			$account = Auth::instance()->get_user();
 
 			// @see Model_Auth_User::sso_signup for associate this provider
