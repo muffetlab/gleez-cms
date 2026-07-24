@@ -43,11 +43,6 @@ if ( ! Route::cache())
         'action' => 'index',
     ]);
 
-    Route::set('oauth2/test', 'oauth2/test(/<action>)')->defaults([
-        'controller' => 'oauthtest',
-        'action' => 'coderequest',
-    ]);
-
     Route::set('oauth2/me', 'oauth2/me(/<action>)')->defaults([
         'controller' => 'me',
         'action' => 'index',
