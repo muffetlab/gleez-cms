@@ -1,8 +1,8 @@
 <?php include Kohana::find_file('views', 'errors/partial');?>
 <?php
-if (isset($oaclient->id) && Valid::digit($oaclient->id))
+if (isset($client->id) && Valid::digit($client->id))
     {
-        $parms = ['id' => $oaclient->id, 'action' => 'edit'];
+        $parms = ['id' => $client->id, 'action' => 'edit'];
 		$btntxt    = __("Save Changes");
     }
     else
@@ -19,21 +19,21 @@ if (isset($oaclient->id) && Valid::digit($oaclient->id))
 		<div class="form-group <?php echo isset($errors['title']) ? 'error' : ''; ?>">
             <?php echo Form::label('title', __('Title'), ['class' => 'control-label1']) ?>
 			<div class="controls ">
-                <?php echo Form::input('title', $oaclient->title, ['class' => 'col-sm-5']); ?>
+                <?php echo Form::input('title', $client->title, ['class' => 'col-sm-5']); ?>
 			</div>
 		</div>
 		
 		<div class="form-group <?php echo isset($errors['redirect_uri']) ? 'error' : ''; ?>">
             <?php echo Form::label('redirect_uri', __('Redirect URL'), ['class' => 'control-label1']) ?>
 			<div class="controls ">
-                <?php echo Form::input('redirect_uri', $oaclient->redirect_uri, ['class' => 'col-sm-5']); ?>
+                <?php echo Form::input('redirect_uri', $client->redirect_uri, ['class' => 'col-sm-5']); ?>
 			</div>
 		</div>
 		
 		<div class="form-group <?php echo isset($errors['description']) ? 'error' : ''; ?>">
             <?php echo Form::label('description', __('Description'), ['class' => 'control-label1']) ?>
 			<div class="controls ">
-                <?php echo Form::textarea('description', $oaclient->description, ['class' => 'col-sm-5', 'rows' => 3]); ?>
+                <?php echo Form::textarea('description', $client->description, ['class' => 'col-sm-5', 'rows' => 3]); ?>
 			</div>
 		</div>
 		
@@ -41,9 +41,7 @@ if (isset($oaclient->id) && Valid::digit($oaclient->id))
 			<div class="form-group <?php //echo isset($errors['grant_types']) ? 'error' : ''; ?>">
                 <?php echo Form::label('grant_types', __('Grant Types'), ['class' => 'control-label1']) ?>
 				<div class="controls ">
-					<?php
-						$selected = explode(" ", $oaclient->grant_types);
-					?>
+                    <?php $selected = explode(" ", $client->grant_types); ?>
 					<?php foreach ($grant_types as $k => $v) : ?>
 					<label for="grant_types[<?php echo $k?>]" class=" checkbox">
 						<input type="checkbox" <?php echo in_array($k, $selected) ? "checked='checked'" : "";?> value="<?php echo $k?>" name="grant_types[<?php echo $k?>]" id="form-grant_types_<?php echo $k?>">
@@ -59,9 +57,9 @@ if (isset($oaclient->id) && Valid::digit($oaclient->id))
                 <?php echo Form::file('logo', ['class' => 'span12', 'title' => 'Upload']); ?>
 			</div>
 		</div>
-		<?php if ($oaclient->logo): ?>
+        <?php if ($client->logo): ?>
 			<div class="thumbnail">
-				<?php echo HTML::resize("media/logos/".$oaclient->logo); ?>
+                <?php echo HTML::resize("media/logos/" . $client->logo); ?>
 			</div>
 		<?php endif; ?>
 		

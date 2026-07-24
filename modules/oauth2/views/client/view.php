@@ -5,7 +5,7 @@
 				<?php echo __('Title'); ?>
 			</th>
 			<td>
-                <?php echo HTML::chars($oaclient->title); ?>
+                <?php echo HTML::chars($client->title); ?>
 			</td>
 		</tr>
                 
@@ -14,7 +14,7 @@
 				<?php echo __('Logo'); ?>
 			</th>
 			<td>
-				<?php echo HTML::resize("media/logos/".$oaclient->logo); ?>
+                <?php echo HTML::resize("media/logos/" . $client->logo); ?>
 			</td>
 		</tr>
 		
@@ -23,7 +23,7 @@
 				<?php echo __('Client Id'); ?>
 			</th>
 			<td>
-                <?php echo HTML::chars($oaclient->client_id); ?>
+                <?php echo HTML::chars($client->client_id); ?>
 			</td>
 		</tr>
                 
@@ -32,7 +32,7 @@
 				<?php echo __('Client Secret'); ?>
 			</th>
 			<td>
-                <?php echo HTML::chars($oaclient->client_secret); ?>
+                <?php echo HTML::chars($client->client_secret); ?>
 			</td>
 		</tr>
                 
@@ -41,7 +41,7 @@
 				<?php echo __('Redirect URI'); ?>
 			</th>
 			<td>
-                <?php echo HTML::chars($oaclient->redirect_uri); ?>
+                <?php echo HTML::chars($client->redirect_uri); ?>
 			</td>
 		</tr>
 		
@@ -50,7 +50,7 @@
 				<?php echo __('Status'); ?>
 			</th>
 			<td>
-                <?php echo HTML::chars($oaclient->status); ?>
+                <?php echo HTML::chars($client->status); ?>
 			</td>
 		</tr>
 		
@@ -59,7 +59,7 @@
 				<?php echo __('Description'); ?>
 			</th>
 			<td>
-				<?php echo Text::markup($oaclient->description); ?>
+                <?php echo Text::markup($client->description); ?>
 			</td>
 		</tr>
 		
@@ -68,7 +68,7 @@
 				<?php echo __('Created By'); ?>
 			</th>
 			<td>
-                <?php echo HTML::chars($oaclient->user->nick) ?>
+                <?php echo HTML::chars($client->user->nick) ?>
 			</td>
 		</tr>
 		
@@ -78,7 +78,7 @@
 				<?php echo __('Created On'); ?>
 			</th>
 			<td>
-				<?php echo System::date('M d, Y',$oaclient->created) ?>
+                <?php echo System::date('M d, Y', $client->created) ?>
 			</td>
 		</tr>
 

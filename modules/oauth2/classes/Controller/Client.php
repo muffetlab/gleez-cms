@@ -116,7 +116,7 @@ class Controller_Client extends Template {
         $grant_types = Kohana::$config->load('oauth2')->get('grant_types');
         $view = View::factory('client/form')
             ->set('grant_types', $grant_types)
-            ->bind('oaclient', $client)
+            ->bind('client', $client)
             ->bind('errors', $this->_errors);
 
 		$this->response->body($view);
@@ -190,7 +190,7 @@ class Controller_Client extends Template {
         $this->subtitle = HTML::chars($client->title);
         $view = View::factory('client/form')
             ->set('grant_types', $grant_types)
-            ->bind('oaclient', $client)
+            ->bind('client', $client)
             ->bind('errors', $this->_errors);
 		
 		$this->response->body($view);
@@ -221,7 +221,7 @@ class Controller_Client extends Template {
 		}
 		
 		$this->title    = __('Client info');
-        $this->response->body(View::factory('client/view')->set('oaclient', $client));
+        $this->response->body(View::factory('client/view')->set('client', $client));
 	}
 
     /**
