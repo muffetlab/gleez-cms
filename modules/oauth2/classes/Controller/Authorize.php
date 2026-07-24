@@ -524,7 +524,7 @@ class Controller_Authorize extends Template {
 	// Checks whether user already approved client access or not
     public function checkConsent($client_id, $user_id): bool
     {
-        return Model::factory('oauth')->checkConsent($client_id, $user_id);
+        return Model::factory('OAuth')->checkConsent($client_id, $user_id);
 	}
 
     /**

@@ -54,7 +54,6 @@ class Oauth2_ResponseType_AuthorizationCode
 	 */
 	protected function createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope = null)
 	{
-		return Model::factory('oauth')->createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope);
-		
+        return Model::factory('OAuth')->createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope);
 	}
 }

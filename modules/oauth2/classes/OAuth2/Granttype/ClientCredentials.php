@@ -111,7 +111,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 			 *
 			 * @see http://tools.ietf.org/html/rfc6749#section-4.4.3
 			 */
-            return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope);
+            return Model::factory('OAuth')->createAccessToken($client_id, $user_id, $scope);
 		}
 		catch (Exception $e)
 		{
@@ -167,16 +167,16 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 
 	public function getClientDetails($id)
 	{
-		return Model::factory('oauth')->getClientDetails($id);
+        return Model::factory('OAuth')->getClientDetails($id);
 	}
 
 	public function checkClientCredentials($id, $secret)
 	{
-		return Model::factory('oauth')->checkClientCredentials($id, $secret);
+        return Model::factory('OAuth')->checkClientCredentials($id, $secret);
 	}
 
 	public function checkRestrictedGrantType($client_id, $grant_type)
 	{
-		return Model::factory('oauth')->checkRestrictedGrantType($client_id, $grant_type);
+        return Model::factory('OAuth')->checkRestrictedGrantType($client_id, $grant_type);
 	}
 }

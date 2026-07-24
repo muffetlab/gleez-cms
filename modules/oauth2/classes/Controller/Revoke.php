@@ -41,15 +41,15 @@ class Controller_Revoke extends Template {
 			
 			if ($this->token_info['access_token'] == $this->token && ! empty($this->token_info['refresh_token']))
 			{
-                Model::factory('oauth')->revoke_access_refresh($this->token);
+                Model::factory('OAuth')->revoke_access_refresh($this->token);
 			}
 			elseif ($this->token_info['access_token'] == $this->token && empty($this->token_info['refresh_token']))
 			{
-                Model::factory('oauth')->revoke_access($this->token);
+                Model::factory('OAuth')->revoke_access($this->token);
 			}
 			elseif ($this->token_info['refresh_token'] == $this->token)
 			{
-                Model::factory('oauth')->revoke_refresh($this->token);
+                Model::factory('OAuth')->revoke_refresh($this->token);
 			}
 
             $this->response->body(json_encode(['Response' => "Status Code: 200"]));
@@ -93,8 +93,8 @@ class Controller_Revoke extends Template {
 		}
 		
 		$this->token = $token;
-		
-		if (!$result = Model::factory('oauth')->isValidRevoke($token)) {
+
+        if (!$result = Model::factory('OAuth')->isValidRevoke($token)) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', "Token invalid");
 		}
 		

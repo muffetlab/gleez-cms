@@ -36,7 +36,7 @@ class Controller_Me extends Controller
 			throw new Exception('Access token is missing');
 		}
 
-        $token = Model::factory('oauth')->getAccessToken($accessToken);
+        $token = Model::factory('OAuth')->getAccessToken($accessToken);
 
         if ($token['access_expires'] < time())
 		{

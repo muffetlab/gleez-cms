@@ -60,7 +60,7 @@ class Oauth2_ResponseType_AccessToken
 			 *
 			 * @see http://tools.ietf.org/html/rfc6749#section-4.4.3
 			 */
-            return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope);
+            return Model::factory('OAuth')->createAccessToken($client_id, $user_id, $scope);
 		}
 		catch (Exception $e)
 		{
