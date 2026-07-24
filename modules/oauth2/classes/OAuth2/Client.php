@@ -457,14 +457,7 @@ abstract class OAuth2_Client {
 
         if ($http_method == self::HTTP_METHOD_GET)
         {
-            if (is_array($parameters))
-            {
-                $parsed_url['path'] .= '?'.http_build_query($parameters, NULL, '&');
-            }
-            elseif ($parameters)
-            {
-                $parsed_url['path'] .= '?'.$parameters;
-            }
+            $parsed_url['path'] .= '?' . http_build_query($parameters, NULL, '&');
         }
 
         $signature = base64_encode(hash_hmac($this->_access_token_algorithm,
