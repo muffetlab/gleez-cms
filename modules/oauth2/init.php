@@ -73,7 +73,7 @@ if ( ! ACL::cache() )
         'administer oauth2' => [
             'title' => __('Administer OAuth2'),
             'restrict access' => TRUE,
-            'description' => __('oAUth Management'),
+            'description' => __('OAuth Management'),
         ],
         'access oauth2 client' => [
             'title' => __('Access Clients'),
