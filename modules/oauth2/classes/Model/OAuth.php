@@ -16,7 +16,7 @@ class Model_OAuth extends Model_Database {
     {
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
-        $oatoken = DB::query(Database::SELECT, "SELECT * FROM $table WHERE client_id = :client_id AND user_id = :user_id LIMIT 1")
+        $token = DB::query(Database::SELECT, "SELECT * FROM $table WHERE client_id = :client_id AND user_id = :user_id LIMIT 1")
             ->parameters([
                 ':client_id' => $client_id,
                 ':user_id' => $user_id,
@@ -24,7 +24,7 @@ class Model_OAuth extends Model_Database {
             ->execute()
             ->as_array();
 
-        return !empty($oatoken);
+        return !empty($token);
 	}
 
     /**
