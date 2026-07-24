@@ -88,10 +88,10 @@ class Oauth2_Exception extends Exception
 	public function __construct($code, $error, $message = NULL, array $variables = NULL, $error_uri = NULL)
 	{
 		// Set the message
-		$pmessage = is_null($message) ? $error : __($message, $variables);
+        $msg = is_null($message) ? $error : __($message, $variables);
 
 		// Pass the message and integer code to the parent
-		parent::__construct($pmessage, (int) $code);
+        parent::__construct($msg, (int) $code);
 
 		// Save the unmodified code
 		// @link http://bugs.php.net/39615
