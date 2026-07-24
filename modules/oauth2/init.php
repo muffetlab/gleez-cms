@@ -80,27 +80,27 @@ if ( ! ACL::cache() )
             'restrict access' => TRUE,
             'description' => __('oAUth Management'),
         ],
-        'access oaclient2' => [
+        'access oauth2 client' => [
             'title' => __('Access Clients'),
             'restrict access' => FALSE,
             'description' => __('Access to all OAuth2 Clients'),
         ],
-        'edit oaclient2' => [
+        'edit oauth2 client' => [
             'title' => __('Edit Client'),
             'restrict access' => FALSE,
             'description' => __('The ability to change OAuth2 Client'),
         ],
-        'edit own oaclient2' => [
+        'edit own oauth2 client' => [
             'title' => __('Change own Client'),
             'restrict access' => TRUE,
             'description' => __('The ability to change own OAuth2 Client'),
         ],
-        'delete oaclient2' => [
+        'delete oauth2 client' => [
             'title' => __('Delete Client'),
             'restrict access' => FALSE,
             'description' => __('The ability to delete OAuth2 Client'),
         ],
-        'delete own oaclient2' => [
+        'delete own oauth2 client' => [
             'title' => __('Delete own Client'),
             'restrict access' => TRUE,
             'description' => __('The ability to delete own OAuth2 Client'),

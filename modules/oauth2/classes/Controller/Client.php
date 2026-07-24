@@ -12,7 +12,7 @@ class Controller_Client extends Template {
 	{ 
 		if ( Request::is_datatables() )
 		{
-			if ( ! ACL::check('access oaclient2'))
+            if (!ACL::check('access oauth2 client'))
 			{
 				throw new HTTP_Exception_404('You have no permission to access oauth2 clients.');
 			}
@@ -131,7 +131,7 @@ class Controller_Client extends Template {
      */
     public function action_edit()
 	{
-		if ( ! ACL::check('edit oaclient2'))
+        if (!ACL::check('edit oauth2 client'))
 		{
 			throw new HTTP_Exception_404('You have no permission to edit oauth2 clients.');
 		}
@@ -204,7 +204,7 @@ class Controller_Client extends Template {
      */
     public function action_view()
 	{
-		if ( ! ACL::check('access oaclient2'))
+        if (!ACL::check('access oauth2 client'))
 		{
 			throw new HTTP_Exception_404('You have no permission to access oauth2 clients.');
 		}
@@ -232,7 +232,7 @@ class Controller_Client extends Template {
      */
     public function action_delete()
 	{
-		if ( ! ACL::check('delete oaclient2'))
+        if (!ACL::check('delete oauth2 client'))
 		{
 			throw new HTTP_Exception_404('You have no permission to delete oauth2 clients.');
 		}
