@@ -3,12 +3,12 @@
 if (isset($client->id) && Valid::digit($client->id))
     {
         $parms = ['id' => $client->id, 'action' => 'edit'];
-		$btntxt    = __("Save Changes");
+        $buttonText = __("Save Changes");
     }
     else
     {
         $parms = ['action' => 'register'];
-		$btntxt    = __("Register");
+        $buttonText = __("Register");
     }
 ?>
 <?php echo Form::open(Route::get('oauth2/client')->uri($parms), [
@@ -65,7 +65,7 @@ if (isset($client->id) && Valid::digit($client->id))
 		
 		<div class="form-group">
 		    <div class="form-actions-left">
-                <?php echo Form::submit('save', $btntxt, ['class' => 'btn btn-success']); ?>
+                <?php echo Form::submit('save', $buttonText, ['class' => 'btn btn-success']); ?>
                 <?php echo Form::submit('cancel', __('Cancel'), ['class' => 'btn btn-default']); ?>
 		    </div>
 		</div>
