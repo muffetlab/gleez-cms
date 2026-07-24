@@ -227,7 +227,7 @@ class Controller_Authorize extends Template {
         $autoApprove = $params['approval_prompt'] !== 'force';
 
         /*
-         * Display the "do you want to authorize?" form if previously not approved, or, if approval_promt parameter is
+         * Display the "do you want to authorize?" form if previously not approved, or, if approval_prompt parameter is
          * 'force'.
          */
 		if ( $consent === FALSE || $autoApprove === FALSE )
