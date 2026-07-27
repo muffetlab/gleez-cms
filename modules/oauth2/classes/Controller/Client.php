@@ -112,7 +112,7 @@ class Controller_Client extends Template {
 		    }
 		}
 
-        $this->title = __('Oaclient Registration');
+        $this->title = __('Client Registration');
         $grant_types = Kohana::$config->load('oauth2')->get('grant_types');
         $view = View::factory('client/form')
             ->set('grant_types', $grant_types)
@@ -186,7 +186,7 @@ class Controller_Client extends Template {
 		}
 		
 		$grant_types    = Kohana::$config->load('oauth2')->get('grant_types');
-		$this->title    = __('Edit oaclient');
+        $this->title = __('Edit Client');
         $this->subtitle = HTML::chars($client->title);
         $view = View::factory('client/form')
             ->set('grant_types', $grant_types)
@@ -243,8 +243,8 @@ class Controller_Client extends Template {
 
         if (!$client->loaded())
 		{
-            Message::error(__("oaclient: doesn't exists!"));
-			Kohana::$log->add(Log::ERROR, 'Attempt to delete non-existent oaclient');
+            Message::error(__("Client doesn't exists!"));
+            Kohana::$log->add(Log::ERROR, 'Attempt to delete non-existent client');
 
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
@@ -252,10 +252,10 @@ class Controller_Client extends Template {
         if (!Access::oaclient('delete', $client))
 		{
 			// If the lead was not loaded, we return access denied.
-			throw new HTTP_Exception_404('Attempt to non-existent oaclient.');
+            throw new HTTP_Exception_404('Attempt to non-existent client.');
 		}
-		
-		$this->title    = __('Delete oaclient');
+
+        $this->title = __('Delete Client');
         $this->subtitle = HTML::chars($client->client_id);
         $form = View::factory('form/confirm')->set('action', $client->delete_url)->set('title', $client->client_id);
 
@@ -272,12 +272,12 @@ class Controller_Client extends Template {
 			{
                 $client->delete();
 
-                Message::success(__('oaclient: :title deleted successfully', [':title' => $clonedClient->client_id]));
+                Message::success(__('Client: :title deleted successfully', [':title' => $clonedClient->client_id]));
 				$this->request->redirect($redirect);
 			}
 			catch(Exception $e)
 			{
-                Message::error(__('oaclient: :title unable to delete the record', [
+                Message::error(__('Client: :title unable to delete the record', [
                     ':title' => $clonedClient->client_id
                 ]));
 				$this->request->redirect($redirect);

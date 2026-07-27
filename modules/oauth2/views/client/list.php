@@ -4,7 +4,8 @@
 	<?php Assets::datatables(); ?>
 	
 	<div class="wellact">
-	<table id="datatable-oaclient" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["3", "desc"]]'>
+        <table class="table table-striped table-bordered table-highlight" data-toggle="datatable"
+               data-ajax="<?php echo $url ?>" data-order='[["3", "desc"]]'>
 		<thead>
 			<tr>
 				<th width="20%"><?php echo __("Title"); ?></th>
