@@ -131,12 +131,18 @@ class Oauth2_Exception extends Exception
 		return $this->error;
 	}
 
-	public function getJsonError()
+    public function getJsonError(): string
 	{
-        return json_encode([
+        $error = [
             'error' => $this->getError(),
             'error_description' => $this->getMessage(),
-        ]);
+        ];
+
+        if (!is_null($this->error_uri)) {
+            $error['error_uri'] = $this->error_uri;
+        }
+
+        return json_encode($error);
 	}
 
     /**
@@ -162,7 +168,7 @@ class Oauth2_Exception extends Exception
 
 			// Set the response body
 			//$response->body($view->render());
-			$response->body($this->error);
+            $response->body($this->getJsonError());
 		}
 		catch (Exception $e)
 		{
@@ -172,8 +178,8 @@ class Oauth2_Exception extends Exception
 			 */
 			$response = Response::factory();
 			$response->status($this->code);
-			$response->headers('Content-Type', 'text/plain');
-			$response->body($this->error);
+            $response->headers('Content-Type', 'application/json;charset=utf-8');
+            $response->body($this->getJsonError());
 		}
 
 		return $response;
