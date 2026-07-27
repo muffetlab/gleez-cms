@@ -12,25 +12,25 @@ return [
     'use_captcha' => FALSE,
 
     // Enable to set page author?
-    'use_authors' => TRUE,
+    'use_authors' => true,
 
     // Enable teaser?
     'use_excerpt' => FALSE,
 
     // Enable comment?
-    'use_comment' => TRUE,
+    'use_comment' => true,
 
     // Enable tags?
     'use_tags' => FALSE,
 
     // Show submitted info in views?
-    'use_submitted' => TRUE,
+    'use_submitted' => true,
 
     // Enable terms?
     'use_category' => FALSE,
 
     // Enable login buttons above comment form?
-    'use_provider_buttons' => TRUE,
+    'use_provider_buttons' => true,
 
     // Enable per page caching for performance
     'use_cache' => FALSE,
@@ -51,5 +51,5 @@ return [
     'comment_order' => 'asc',
 
     // Use primary image?
-    'primary_image' => TRUE,
+    'primary_image' => true,
 ];

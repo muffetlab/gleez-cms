@@ -73,7 +73,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 		}
 
 		$this->title = __('Tags');
-        $url = Route::url('admin/tag', ['action' => 'list'], TRUE);
+        $url = Route::url('admin/tag', ['action' => 'list'], true);
 
 		$view = View::factory('admin/tag/list')
 				->bind('datatables',   $this->_datatables)

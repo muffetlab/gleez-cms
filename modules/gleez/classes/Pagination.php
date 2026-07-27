@@ -18,7 +18,7 @@ class Pagination {
         'total_items' => 0,
         'items_per_page' => 10,
         'view' => 'pagination/basic',
-        'auto_hide' => TRUE,
+        'auto_hide' => true,
         'first_page_in_url' => FALSE,
         'uri' => NULL
     ];
@@ -336,7 +336,7 @@ class Pagination {
     public function render($view = NULL): string
     {
 		// Automatically hide pagination whenever it is superfluous
-        if ($this->config['auto_hide'] === TRUE && $this->total_pages <= 1)
+        if ($this->config['auto_hide'] === true && $this->total_pages <= 1)
 		{
 			return '';
 		}

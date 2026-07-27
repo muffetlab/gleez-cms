@@ -22,7 +22,7 @@ class File extends Kohana_File
 	 * @uses    Text::random
 	 * @uses    UTF8::strtolower
 	 */
-    public static function getUnique(string $name = NULL, int $length = 20, bool $remove_spaces = TRUE, string $replacement = '_'): string
+    public static function getUnique(string $name = NULL, int $length = 20, bool $remove_spaces = true, string $replacement = '_'): string
     {
 		if (is_null($name))
 		{

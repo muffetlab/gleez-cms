@@ -71,7 +71,7 @@ class Tags {
      * This method has been refactored to automatically look for existing tags and run
      * adds/updates/deletes as appropriate.
      *
-     * Returns TRUE if successful, FALSE otherwise.
+     * Returns true if successful, FALSE otherwise.
      *
      * @param string $tags The raw string form of the tag to delete. See above for notes.
      * @param Model $object The Model Object
@@ -81,7 +81,7 @@ class Tags {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function tagging(string $tags, Model $object, $user_id = FALSE, bool $skip_updates = TRUE): bool
+    public function tagging(string $tags, Model $object, $user_id = FALSE, bool $skip_updates = true): bool
     {
 		if ( ! $user_id)  return FALSE;
 
@@ -117,7 +117,7 @@ class Tags {
 
 		$this->_tag_object_array($user_id, $object, $new_tags);
 
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -188,7 +188,7 @@ class Tags {
 
         if ($result->find()->loaded())
 		{
-			return TRUE;
+            return true;
 		}
 
 		// Then see if a tag in this form exists.
@@ -223,7 +223,7 @@ class Tags {
 		$new_tagging->{$this->config['object_foreign_key']} = $object_id;
 		$new_tagging->save();
 
-		return TRUE;
+        return true;
 	}
 
 	/**

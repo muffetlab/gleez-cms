@@ -80,15 +80,15 @@ class Controller_Comment extends Template {
         $action = Route::get('comment')->uri(['id' => $id, 'action' => 'edit']) . URL::query($destination);
 
 		$this->title = __('Edit Comment');
-		$view = View::factory('comment/form')
-					->set('use_captcha',  FALSE)
-					->set('is_edit',      TRUE)
-					->set('auth',         Auth::instance())
-					->set('item',         $comment)
-					->set('action',       $action)
-					->set('destination',  $destination)
-					->bind('errors',      $this->_errors)
-					->bind('post',        $comment);
+        $view = View::factory('comment/form')
+            ->set('use_captcha', FALSE)
+            ->set('is_edit', true)
+            ->set('auth', Auth::instance())
+            ->set('item', $comment)
+            ->set('action', $action)
+            ->set('destination', $destination)
+            ->bind('errors', $this->_errors)
+            ->bind('post', $comment);
 
 		if ($this->valid_post('comment'))
 		{

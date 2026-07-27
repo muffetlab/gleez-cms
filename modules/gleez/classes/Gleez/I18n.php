@@ -105,7 +105,7 @@ class Gleez_I18n extends I18n
      * Test if $lang exists in the list of available languages in config.
 	 *
      * @param string $lang
-	 * @return bool returns TRUE if $lang is available, otherwise FALSE
+     * @return bool Returns true if $lang is available, otherwise FALSE
 	 */
     public static function isAvailable(string $lang): bool
     {

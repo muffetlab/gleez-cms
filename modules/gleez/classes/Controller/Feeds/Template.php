@@ -120,7 +120,7 @@ class Controller_Feeds_Template extends Controller {
 		$this->_config = Kohana::$config->load('site');
 
 		// Getting site URL
-        $this->_site_url = $this->_config->get('site_url', URL::site('', TRUE));
+        $this->_site_url = $this->_config->get('site_url', URL::site('', true));
 
 		// Getting TTL
 		$this->_ttl = $this->_config->get('feed_ttl', Date::HOUR * 60);

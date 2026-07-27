@@ -20,7 +20,7 @@
  *
  * Assets::js('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', NULL, FALSE, array('weight' => -10));
  * Assets::js('global', 'assets/js/global.js', array('jquery'));
- * Assets::js('stats', 'assets/js/stats.js', NULL, TRUE);
+ * Assets::js('stats', 'assets/js/stats.js', NULL, true);
  *
  * Assets::codes('alert', 'alert(\'test\')', NULL, FALSE, array('weight' => -10));
  *
@@ -38,7 +38,7 @@
  *   </head>
  *   <body>
  *     <!-- Content -->
- *     <?php echo Assets::js(TRUE) ?>
+ *     <?php echo Assets::js(true) ?>
  *   </body>
  * </html>
  * ~~~
@@ -234,7 +234,7 @@ class Assets {
 			$format = self::FORMAT_FILENAME;
 		}
 
-        if ($handle === TRUE || $handle === FALSE)
+        if ($handle === true || $handle === FALSE)
 		{
 			return self::all_js($handle, $format);
 		}
@@ -294,7 +294,7 @@ class Assets {
 	/**
      * Get all JavaScript assets of section (header or footer).
 	 *
-     * @param boolean $footer FALSE for head, TRUE for footer
+     * @param boolean $footer FALSE for head, true for footer
      * @param string $format Format that be returned [Optional]
      * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
@@ -354,7 +354,7 @@ class Assets {
      */
     public static function codes($handle, string $code = NULL, $deps = NULL, bool $footer = FALSE, array $attrs = NULL)
 	{
-        if ($handle === TRUE || $handle === FALSE)
+        if ($handle === true || $handle === FALSE)
 		{
 			return self::all_codes($handle, $code);
 		}
@@ -405,7 +405,7 @@ class Assets {
     /**
      * Get all JavaScript codes of section (header or footer).
      *
-     * @param boolean $footer FALSE for head, TRUE for footer [Optional]
+     * @param boolean $footer FALSE for head, true for footer [Optional]
      * @param string|null $nonce CSP nonce [Optional]
      * @return  string   Asset HTML
      * @throws Kohana_Exception
@@ -594,7 +594,7 @@ class Assets {
             self::js('jquery', 'media/js/jquery-2.2.4.min.js', null, false, ['weight' => -20]);
             self::js('gleez', 'media/js/gleez.js', ['jquery'], FALSE, ['weight' => -5]);
 
-            $data = Arr::merge([['basePath' => URL::base(TRUE)]], self::$settings);
+            $data = Arr::merge([['basePath' => URL::base(true)]], self::$settings);
 
 			$code = 'jQuery.extend(Gleez.settings, ' . JSON::encode(call_user_func_array('array_merge_recursive', $data)) . ');';
 

@@ -102,12 +102,12 @@ class Controller_Blog extends Template {
 
 		$config = Kohana::$config->load('blog');
 
-		$view = View::factory('blog/list')
-			->set('teaser',      TRUE)
-			->set('config',      $config)
-			->bind('rss_link',   $rss_link)
-			->bind('pagination', $pagination)
-			->bind('posts',      $posts);
+        $view = View::factory('blog/list')
+            ->set('teaser', true)
+            ->set('config', $config)
+            ->bind('rss_link', $rss_link)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 		$url        = Route::get('blog')->uri();
         $rss_link = Route::get('rss')->uri(['controller' => 'blog']);
@@ -130,8 +130,8 @@ class Controller_Blog extends Template {
 		if ($this->auto_render)
 		{
             Meta::links(URL::canonical($url, $pagination), ['rel' => 'canonical']);
-            Meta::links(Route::url('blog', [], TRUE), ['rel' => 'shortlink']);
-            Meta::links(URL::site('rss/blog', TRUE), [
+            Meta::links(Route::url('blog', [], true), ['rel' => 'shortlink']);
+            Meta::links(URL::site('rss/blog', true), [
                 'rel' => 'alternate',
                 'type' => 'application/rss+xml',
                 'title' => Template::getSiteName() . ' : ' . __('Blogs'),
@@ -524,12 +524,12 @@ class Controller_Blog extends Template {
 		}
 
         $this->title = __(':term', [':term' => $term->name]);
-		$view = View::factory('blog/list')
-			->set('teaser',      TRUE)
-			->set('config',      $config)
-			->bind('rss_link',   $rss_link)
-			->bind('pagination', $pagination)
-			->bind('posts',       $posts);
+        $view = View::factory('blog/list')
+            ->set('teaser', true)
+            ->set('config', $config)
+            ->bind('rss_link', $rss_link)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 		$posts = $term->posts;
 
@@ -567,10 +567,10 @@ class Controller_Blog extends Template {
 		if ($this->auto_render)
 		{
             Meta::links(URL::canonical($term->url, $pagination), ['rel' => 'canonical']);
-            Meta::links(Route::url('blog', ['action' => 'term', 'id' => $term->id], TRUE), [
+            Meta::links(Route::url('blog', ['action' => 'term', 'id' => $term->id], true), [
                 'rel' => 'shortlink'
             ]);
-            Meta::links(Route::url('rss', ['controller' => 'blog', 'action' => 'term', 'id' => $term->id], TRUE), [
+            Meta::links(Route::url('rss', ['controller' => 'blog', 'action' => 'term', 'id' => $term->id], true), [
                 'rel' => 'alternate',
                 'type' => 'application/rss+xml',
                 'title' => Template::getSiteName() . ' : ' . $term->name,
@@ -596,12 +596,12 @@ class Controller_Blog extends Template {
 		}
 
         $this->title = __(':title', [':title' => Text::ucfirst($tag->name)]);
-		$view = View::factory('blog/list')
-			->set('teaser',      TRUE)
-			->set('config',      $config)
-			->bind('rss_link',   $rss_link)
-			->bind('pagination', $pagination)
-			->bind('posts',      $posts);
+        $view = View::factory('blog/list')
+            ->set('teaser', true)
+            ->set('config', $config)
+            ->bind('rss_link', $rss_link)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 		$posts = $tag->posts;
 
@@ -638,10 +638,10 @@ class Controller_Blog extends Template {
 		if ($this->auto_render)
 		{
             Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
-            Meta::links(Route::url('blog', ['action' => 'tag', 'id' => $tag->id], TRUE), [
+            Meta::links(Route::url('blog', ['action' => 'tag', 'id' => $tag->id], true), [
                 'rel' => 'shortlink'
             ]);
-            Meta::links(Route::url('rss', ['controller' => 'blog', 'action' => 'tag', 'id' => $tag->id], TRUE), [
+            Meta::links(Route::url('rss', ['controller' => 'blog', 'action' => 'tag', 'id' => $tag->id], true), [
                 'rel' => 'alternate',
                 'type' => 'application/rss+xml',
                 'title' => Template::getSiteName() . ' : ' . $tag->name,

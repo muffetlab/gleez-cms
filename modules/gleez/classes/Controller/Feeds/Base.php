@@ -95,7 +95,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
                 'controller' => $this->_type,
                 'action' => 'tag',
                 'id' => (int) $this->request->param('id')
-            ], TRUE);
+            ], true);
 			$this->_info['pubDate'] = $this->_items[0]['pubDate'];
 		}
 	}
@@ -181,7 +181,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
                 'controller' => $this->_type,
                 'action' => 'term',
                 'id' => (int) $this->request->param('id')
-            ], TRUE);
+            ], true);
 			$this->_info['pubDate'] = $this->_items[0]['pubDate'];
 		}
 	}

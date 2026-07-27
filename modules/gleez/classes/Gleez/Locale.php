@@ -69,7 +69,7 @@ class Gleez_Locale {
 	 * Default locale
 	 * @var array
 	 */
-    protected static $_framework = ['en' => TRUE];
+    protected static $_framework = ['en' => true];
 
 	/**
 	 * Gleez_Locale instance

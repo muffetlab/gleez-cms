@@ -69,7 +69,7 @@ class Post extends ORM_Versioned {
 	 */
     protected $_updated_column = [
         'column' => 'updated',
-        'format' => TRUE
+        'format' => true
     ];
 
 	/**
@@ -645,7 +645,7 @@ class Post extends ORM_Versioned {
 	/**
 	 * Bulk actions
 	 *
-     * @param boolean $list TRUE for dropdown for bulk actions [Optional]
+     * @param boolean $list true for dropdown for bulk actions [Optional]
      * @param string $type Type of post [Optional]
 	 * @return  mixed    States
 	 * @uses    Post::bulk_update
@@ -959,8 +959,8 @@ class Post extends ORM_Versioned {
             'orderBy' => 'created',
             'order' => 'DESC',
             'status' => implode(',', array_keys(Post::status())),
-            'use_cache' => TRUE,
-            'as_array' => TRUE,
+            'use_cache' => true,
+            'as_array' => true,
         ];
 
 		$params = (object) System::parse_args($args, $default);

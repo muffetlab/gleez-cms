@@ -18,9 +18,9 @@
 						<tr class="<?php echo ($module_info->active) ? 'info' : 'active' ?>">
 							<td class="check-column">
 								<?php if ($module_info->locked): ?>
-                                    <?php echo Form::checkbox($module_name, TRUE, $module_info->active, ['disabled']); ?>
+                                    <?php echo Form::checkbox($module_name, true, $module_info->active, ['disabled']); ?>
 								<?php else: ?>
-									<?php echo Form::checkbox($module_name, TRUE, $module_info->active); ?>
+                                    <?php echo Form::checkbox($module_name, true, $module_info->active); ?>
 								<?php endif ?>
 							</td>
 							<td class="module-description-column">

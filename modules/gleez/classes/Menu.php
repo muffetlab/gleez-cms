@@ -72,7 +72,7 @@ class Menu {
                 'title' => $title,
                 'url' => $url,
                 'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
-                'access' => TRUE, // @todo
+                'access' => true, // @todo
                 'descp' => $descp,
                 'params' => $params,
                 'image' => $image
@@ -458,7 +458,7 @@ class Menu {
                     'title' => $title,
                     'url' => $url,
                     'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
-                    'access' => TRUE, // @todo
+                    'access' => true, // @todo
                     'descp' => $descp,
                     'params' => $params,
                     'image' => $image

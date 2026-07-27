@@ -48,10 +48,10 @@ class Controller_Taxonomy extends Template {
 		}
 
         $this->title = __(':title', [':title' => $term->name]);
-			$view = View::factory('taxonomy/term')
-					->set('teaser', TRUE)
-					->bind('pagination', $pagination)
-					->bind('posts', $posts);
+        $view = View::factory('taxonomy/term')
+            ->set('teaser', true)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 			$posts = $term->posts;
 
@@ -84,7 +84,7 @@ class Controller_Taxonomy extends Template {
 		$this->response->body($view);
 
 		//Set the canonical and shortlink for search engines
-		if ($this->auto_render === TRUE)
+        if ($this->auto_render === true)
 		{
             Meta::links(URL::canonical($term->url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('taxonomy', ['action' => 'term', 'id' => $term->id]), ['rel' => 'shortlink']);

@@ -29,7 +29,7 @@ class ACL {
 	const DENY = FALSE;
 
 	/** Rule type: allow */
-	const ALLOW = TRUE;
+    const ALLOW = true;
 
 	/** Rule type: deny */
 	const PERM_DENY = 2;
@@ -147,7 +147,7 @@ class ACL {
      *  if ( ! ACL::cache())
      *  {
      *    // Set perms here
-     *    ACL::cache(TRUE);
+     *    ACL::cache(true);
      *  }
      * ~~~
      *
@@ -185,7 +185,7 @@ class ACL {
 				}
 
 				// perms were cached
-				return self::$cache = TRUE;
+                return self::$cache = true;
 			}
 			else
 			{
@@ -441,7 +441,7 @@ class ACL {
     /**
      * Make sure the user has permission to do certain action on this object
      *
-     * Similar to [Post::access] but this return TRUE/FALSE instead of exception
+     * Similar to [Post::access] but this return true/FALSE instead of exception.
      *
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $post The post object
@@ -455,7 +455,7 @@ class ACL {
      */
     public static function post(string $action, ORM $post, Model_User $user = NULL): bool
     {
-        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], TRUE))
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
             Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
@@ -478,7 +478,7 @@ class ACL {
 
 		if (self::check('bypass post access', $user))
 		{
-			return TRUE;
+            return true;
 		}
 
 		// Allow other modules to interact with access
@@ -488,7 +488,7 @@ class ACL {
 		{
             if ($post->status === 'publish' && self::check('access content', $user))
 			{
-				return TRUE;
+                return true;
 			}
 			// Check if authors can view their own unpublished posts.
             elseif (
@@ -498,7 +498,7 @@ class ACL {
                 && $user->id != 1
             )
 			{
-				return TRUE;
+                return true;
 			}
 			else
 			{
@@ -514,7 +514,7 @@ class ACL {
                 && $user->id != 1
             )
 			{
-				return TRUE;
+                return true;
 			}
 			else
 			{
@@ -530,7 +530,7 @@ class ACL {
                 && $user->id != 1
             )
 			{
-				return TRUE;
+                return true;
 			}
 			else
 			{
@@ -538,13 +538,13 @@ class ACL {
 			}
 		}
 
-		return TRUE;
+        return true;
 	}
 
     /**
      * Make sure the user has permission to do the action on this object
      *
-     * Similar to [Comment::access] but this return TRUE/FALSE instead of exception
+     * Similar to [Comment::access] but this return true/FALSE instead of exception.
      *
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $comment The comment object
@@ -558,7 +558,7 @@ class ACL {
      */
     public static function comment(string $action, ORM $comment, Model_User $user = NULL): bool
     {
-        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], TRUE))
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
             Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
@@ -581,7 +581,7 @@ class ACL {
 
 		if (self::check('bypass comment access', $user))
 		{
-			return TRUE;
+            return true;
 		}
 
 		// Allow other modules to interact with access
@@ -591,16 +591,16 @@ class ACL {
 		{
             if ($comment->status === 'publish' && self::check('access comment', $user))
 			{
-				return TRUE;
+                return true;
 			}
 			// Check if commenters can view their own unpublished comments.
             elseif ($comment->status != 'publish' && $comment->author == (int) $user->id && $user->id != 1)
 			{
-				return TRUE;
+                return true;
 			}
 			elseif (self::check('administer comment', $user))
 			{
-				return TRUE;
+                return true;
 			}
 			else
 			{
@@ -612,11 +612,11 @@ class ACL {
 		{
             if (self::check('edit own comment') && $comment->author == (int) $user->id && $user->id != 1)
 			{
-				return TRUE;
+                return true;
 			}
 			elseif (self::check('administer comment', $user))
 			{
-				return TRUE;
+                return true;
 			}
 			else
 			{
@@ -632,11 +632,11 @@ class ACL {
                 && $user->id != 1
             )
 			{
-				return TRUE;
+                return true;
 			}
 			elseif (self::check('administer comment', $user))
 			{
-				return TRUE;
+                return true;
 			}
 			else
 			{
@@ -644,7 +644,7 @@ class ACL {
 			}
 		}
 
-		return TRUE;
+        return true;
 	}
 
 }

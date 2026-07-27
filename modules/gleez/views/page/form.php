@@ -105,10 +105,10 @@ echo Form::open($action, ['id' => 'page-form', 'class' => 'post-form form', 'enc
 									echo Form::hidden('promote', 0);
 								?>
 								<div class="controls checkbox">
-									<?php echo Form::label('sticky', Form::checkbox('sticky', TRUE, $sticky).__('Sticky this Post')) ?>
+                                    <?php echo Form::label('sticky', Form::checkbox('sticky', true, $sticky) . __('Sticky this Post')) ?>
 								</div>
 								<div class="controls checkbox">
-									<?php echo Form::label('promote', Form::checkbox('promote', TRUE, $promote).__('Promote this Post')) ?>
+                                    <?php echo Form::label('promote', Form::checkbox('promote', true, $promote) . __('Promote this Post')) ?>
 								</div>
 							</div>
 

@@ -9,7 +9,7 @@ return [
         'items_per_page' => 10,
         //'view'              => 'pagination/basic',
         'view' => 'pagination/custom',
-        'auto_hide' => TRUE,
+        'auto_hide' => true,
         'first_page_in_url' => FALSE,
     ],
 

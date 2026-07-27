@@ -35,39 +35,39 @@
 		?>
 		<div class="controls set-check">
 			<div class="checkbox">
-                <?php echo Form::label('use_excerpt', Form::checkbox('use_excerpt', TRUE, $config['use_excerpt'] ?? false) . __('Enable excerpt')); ?>
+                <?php echo Form::label('use_excerpt', Form::checkbox('use_excerpt', true, $config['use_excerpt'] ?? false) . __('Enable excerpt')); ?>
 			</div>
 			
 			<div class="checkbox">
-                <?php echo Form::label('use_comment', Form::checkbox('use_comment', TRUE, $config['use_comment'] ?? false) . __('Enable comments')); ?>
+                <?php echo Form::label('use_comment', Form::checkbox('use_comment', true, $config['use_comment'] ?? false) . __('Enable comments')); ?>
 			</div>
 			
 			<div class="checkbox">
-                <?php echo Form::label('use_authors', Form::checkbox('use_authors', TRUE, $config['use_authors'] ?? false) . __('Enable authors')); ?>
+                <?php echo Form::label('use_authors', Form::checkbox('use_authors', true, $config['use_authors'] ?? false) . __('Enable authors')); ?>
 			</div>
 			
 			<div class="checkbox">
-                <?php echo Form::label('use_captcha', Form::checkbox('use_captcha', TRUE, $config['use_captcha'] ?? false) . __('Enable captcha')); ?>
+                <?php echo Form::label('use_captcha', Form::checkbox('use_captcha', true, $config['use_captcha'] ?? false) . __('Enable captcha')); ?>
 			</div>
 			
 			<div class="checkbox">
-                <?php echo Form::label('use_category', Form::checkbox('use_category', TRUE, $config['use_category'] ?? false) . __('Enable Category')); ?>
+                <?php echo Form::label('use_category', Form::checkbox('use_category', true, $config['use_category'] ?? false) . __('Enable Category')); ?>
 			</div>
 			
 			<div class="checkbox">
-                <?php echo Form::label('use_tags', Form::checkbox('use_tags', TRUE, $config['use_tags'] ?? false) . __('Enable tag cloud')); ?>
+                <?php echo Form::label('use_tags', Form::checkbox('use_tags', true, $config['use_tags'] ?? false) . __('Enable tag cloud')); ?>
 			</div>
 			
 			<div class="checkbox">
-                <?php echo Form::label('use_submitted', Form::checkbox('use_submitted', TRUE, $config['use_submitted'] ?? false) . __('Show Submitted Info')); ?>
+                <?php echo Form::label('use_submitted', Form::checkbox('use_submitted', true, $config['use_submitted'] ?? false) . __('Show Submitted Info')); ?>
 			</div>
 			
 			<div class="checkbox">
-                <?php echo Form::label('use_cache', Form::checkbox('use_cache', TRUE, $config['use_cache'] ?? false) . __('Enable Page Cache')); ?>
+                <?php echo Form::label('use_cache', Form::checkbox('use_cache', true, $config['use_cache'] ?? false) . __('Enable Page Cache')); ?>
 			</div>
 			
 			<div class="checkbox">
-                <?php echo Form::label('comment_anonymous', Form::checkbox('comment_anonymous', TRUE, $config['comment_anonymous'] ?? false) . __('Allow anonymous commenting (with contact information)')); ?>
+                <?php echo Form::label('comment_anonymous', Form::checkbox('comment_anonymous', true, $config['comment_anonymous'] ?? false) . __('Allow anonymous commenting (with contact information)')); ?>
 			</div>
 		</div>
 	</div>

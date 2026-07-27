@@ -262,110 +262,110 @@ if ( ! ACL::cache())
 {
     ACL::set('comment', [
         'administer comment' => [
-			'title' => __('Administer Comments'),
-			'restrict access' => TRUE,
-			'description' => __('Administer comments and comments settings'),
+            'title' => __('Administer Comments'),
+            'restrict access' => true,
+            'description' => __('Administer comments and comments settings'),
         ],
         'access comment' => [
-			'title' => __('Access comments'),
-			'restrict access' => FALSE,
-			'description' => __('Access to any published comments'),
+            'title' => __('Access comments'),
+            'restrict access' => FALSE,
+            'description' => __('Access to any published comments'),
         ],
         'post comment' => [
-			'title' => __('Post comments'),
-			'restrict access' => FALSE,
-			'description' => __('Ability to publish comments'),
+            'title' => __('Post comments'),
+            'restrict access' => FALSE,
+            'description' => __('Ability to publish comments'),
         ],
         'skip comment approval' => [
-			'title' => __('Skip comment approval'),
-			'restrict access' => FALSE,
-			'description' => __('Ability to publish comments without approval by the moderator'),
+            'title' => __('Skip comment approval'),
+            'restrict access' => FALSE,
+            'description' => __('Ability to publish comments without approval by the moderator'),
         ],
         'edit own comment' => [
-			'title' => __('Edit own comments'),
-			'restrict access' => FALSE,
-			'description' => __('Ability to editing own comments'),
+            'title' => __('Edit own comments'),
+            'restrict access' => FALSE,
+            'description' => __('Ability to editing own comments'),
         ],
     ]);
 
     ACL::set('content', [
         'administer content' => [
-			'title' => __('Administer content'),
-			'restrict access' => TRUE,
-			'description' => __('Most of the tasks associated with the administration of the contents of this website associated with this permission'),
+            'title' => __('Administer content'),
+            'restrict access' => true,
+            'description' => __('Most of the tasks associated with the administration of the contents of this website associated with this permission'),
         ],
         'access content' => [
-			'title' => __('Access content'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('Access content'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
         'view own unpublished content' => [
-			'title' => __('View own unpublished content'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('View own unpublished content'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
         'administer page' => [
-			'title' => __('Administer pages'),
-			'restrict access' => TRUE,
-			'description' => __(''),
+            'title' => __('Administer pages'),
+            'restrict access' => true,
+            'description' => __(''),
         ],
         'create page' => [
-			'title' => __('Create pages'),
-			'restrict access' => FALSE,
-			'description' => __('The ability to create pages'),
+            'title' => __('Create pages'),
+            'restrict access' => FALSE,
+            'description' => __('The ability to create pages'),
         ],
         'edit own page' => [
-			'title' => __('Edit own pages'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('Edit own pages'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
         'edit any page' => [
-			'title' => __('Edit any pages'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('Edit any pages'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
         'delete own page' => [
-			'title' => __('Delete own pages'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('Delete own pages'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
         'delete any page' => [
-			'title' => __('Delete any pages'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('Delete any pages'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
     ]);
 
     ACL::set('site', [
         'administer menu' => [
-			'title' => __('Administer Menus'),
-			'restrict access' => TRUE,
-			'description' => __(''),
+            'title' => __('Administer Menus'),
+            'restrict access' => true,
+            'description' => __(''),
         ],
         'administer paths' => [
-			'title' => __('Administer Paths'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('Administer Paths'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
         'administer site' => [
-			'title' => __('Administer Site'),
-			'restrict access' => TRUE,
-			'description' => __(''),
+            'title' => __('Administer Site'),
+            'restrict access' => true,
+            'description' => __(''),
         ],
         'administer tags' => [
-			'title' => __('Administer Tags'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('Administer Tags'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
         'administer terms' => [
-			'title' => __('Administer Terms'),
-			'restrict access' => FALSE,
-			'description' => __(''),
+            'title' => __('Administer Terms'),
+            'restrict access' => FALSE,
+            'description' => __(''),
         ],
         'administer formats' => [
-			'title' => __('Administer Formats'),
-			'restrict access' => TRUE,
-			'description' => __('Managing the text formats of editor'),
+            'title' => __('Administer Formats'),
+            'restrict access' => true,
+            'description' => __('Managing the text formats of editor'),
         ],
     ]);
 
@@ -379,34 +379,34 @@ if ( ! ACL::cache())
 
     ACL::set('blog', [
         'administer blog' => [
-			'title' => __('Administer Blog'),
-			'restrict access' => TRUE,
-			'description' => __('Administer Blog and Blog settings'),
+            'title' => __('Administer Blog'),
+            'restrict access' => true,
+            'description' => __('Administer Blog and Blog settings'),
         ],
         'create blog' => [
-			'title' => __('Create Blog post'),
-			'restrict access' => FALSE,
-			'description' => '',
+            'title' => __('Create Blog post'),
+            'restrict access' => FALSE,
+            'description' => '',
         ],
         'edit own blog' => [
-			'title' => __('Edit own Blog post'),
-			'restrict access' => FALSE,
-			'description' => '',
+            'title' => __('Edit own Blog post'),
+            'restrict access' => FALSE,
+            'description' => '',
         ],
         'edit any blog' => [
-			'title' => __('Edit any Blog posts'),
-			'restrict access' => FALSE,
-			'description' => '',
+            'title' => __('Edit any Blog posts'),
+            'restrict access' => FALSE,
+            'description' => '',
         ],
         'delete own blog' => [
-			'title' => __('Delete own Blog post'),
-			'restrict access' => FALSE,
-			'description' => '',
+            'title' => __('Delete own Blog post'),
+            'restrict access' => FALSE,
+            'description' => '',
         ],
         'delete any blog' => [
-			'title' => __('Delete any Blog posts'),
-			'restrict access' => FALSE,
-			'description' => '',
+            'title' => __('Delete any Blog posts'),
+            'restrict access' => FALSE,
+            'description' => '',
         ],
     ]);
 
@@ -429,15 +429,12 @@ if ( ! ACL::cache())
  */
 if ( ! Filter::cache())
 {
-    Filter::set('html', [
-			'prepare callback' => FALSE,
-			'process callback' => 'Text::html'
-    ])
-		->title(__('Limit allowed HTML tags'))
-		->description(__('Limit Allowed HTML tags'))
+    Filter::set('html', ['prepare callback' => FALSE, 'process callback' => 'Text::html'])
+        ->title(__('Limit allowed HTML tags'))
+        ->description(__('Limit Allowed HTML tags'))
         ->settings([
-			'html_nofollow' => TRUE,
-			'allowed_html'  => '<a> <em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd>'
+            'html_nofollow' => true,
+            'allowed_html' => '<a> <em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd>'
         ]);
 
     Filter::set('html_corrector', [

@@ -122,7 +122,7 @@ class Comment {
 	/**
 	 * List of actions
 	 *
-     * @param boolean $list TRUE for dropdown for bult actions
+     * @param boolean $list true for dropdown for bult actions
 	 * @return  array
 	 */
     public static function bulk_actions(bool $list = FALSE): array

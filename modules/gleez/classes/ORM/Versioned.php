@@ -177,7 +177,7 @@ class ORM_Versioned extends Gleez_Model
 				$column = $this->_deleted_column['column'];
 				$format = $this->_deleted_column['format'];
 
-				$data[$column] = $this->_object[$column] = ($format === TRUE) ? time() : date($format);
+                $data[$column] = $this->_object[$column] = ($format === true) ? time() : date($format);
 				
 				// Update a single record mark as soft deleted
 				DB::update($this->version_table())

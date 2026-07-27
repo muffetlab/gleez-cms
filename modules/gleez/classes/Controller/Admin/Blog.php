@@ -151,7 +151,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 
 		$this->title = __('Blog List');
 
-        $url = Route::url('admin/blog', ['action' => 'list'], TRUE);
+        $url = Route::url('admin/blog', ['action' => 'list'], true);
         $redirect = Route::get('admin/blog')->uri(['action' => 'list']);
         $action = Route::get('admin/blog')->uri(['action' => 'bulk']);
 		$destination = '?destination='.$redirect;
@@ -184,12 +184,12 @@ class Controller_Admin_Blog extends Controller_Admin {
 			}
 		}
 
-		$view = View::factory('admin/blog/list')
-			->bind('datatables',   $this->_datatables)
-			->set('is_datatables', $is_datatables)
-			->set('action',        $action)
-			->set('actions',       Post::bulk_actions(TRUE, 'blog'))
-			->set('url',           $url);
+        $view = View::factory('admin/blog/list')
+            ->bind('datatables', $this->_datatables)
+            ->set('is_datatables', $is_datatables)
+            ->set('action', $action)
+            ->set('actions', Post::bulk_actions(true, 'blog'))
+            ->set('url', $url);
 
 		$this->response->body($view);
 	}

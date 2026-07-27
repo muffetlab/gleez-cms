@@ -22,7 +22,7 @@ abstract class Template extends Controller {
 	 * Auto render template?
 	 * @var boolean
 	 */
-	public $auto_render = TRUE;
+    public $auto_render = true;
 
 	/**
 	 * Turn debugging on?
@@ -183,7 +183,7 @@ abstract class Template extends Controller {
      * For example, adding or editing pages don't require sidebars.
 	 * @var boolean
 	 */
-	protected $_sidebars = TRUE;
+    protected $_sidebars = true;
 
 	/**
 	 * Datatable Object.
@@ -252,14 +252,14 @@ abstract class Template extends Controller {
 			// Test whether the current request is the first request
 			if ( ! $this->request->is_initial())
 			{
-				$this->_internal   = TRUE;
+                $this->_internal = true;
 				$this->auto_render = FALSE;
 			}
 
 			// Test whether the current request is ajax request
 			if ($this->request->is_ajax())
 			{
-				$this->_ajax       = TRUE;
+                $this->_ajax = true;
 				$this->auto_render = FALSE;
 			}
 
@@ -267,25 +267,25 @@ abstract class Template extends Controller {
 			if (isset($_SERVER['HTTP_X_THEME']) && $_SERVER['HTTP_X_THEME'] == 'mobile' && $this->_config->get('mobile_theme', FALSE))
 			{
 				$this->_ajax       = FALSE;
-				$this->auto_render = TRUE;
+                $this->auto_render = true;
 			}
 
 			// Test whether the current request is mobile request. ugly hack
 			if (Request::is_mobile() && $this->_config->get('mobile_theme', FALSE))
 			{
 				$this->_ajax       = FALSE;
-				$this->auto_render = TRUE;
+                $this->auto_render = true;
 			}
 
 			// Test whether the current request is datatables request
 			if (Request::is_datatables())
 			{
-				$this->_ajax       = TRUE;
+                $this->_ajax = true;
 				$this->auto_render = FALSE;
                 $this->response->headers('Content-Type', 'application/json; charset=' . Kohana::$charset);
 			}
 
-			$this->response->headers('X-Powered-By', Gleez::getVersion(TRUE, TRUE) . ' (' . Gleez::CODENAME . ')');
+            $this->response->headers('X-Powered-By', Gleez::getVersion(true, true) . ' (' . Gleez::CODENAME . ')');
 
 			$this->_auth   = Auth::instance();
 
@@ -302,7 +302,7 @@ abstract class Template extends Controller {
 			$this->_response_format = $this->request->headers()->preferred_accept(array_keys($this->_accept_formats));
 
 			$site_name = Template::getSiteName();
-            $url = URL::site('', TRUE);
+            $url = URL::site('', true);
 
 			View::bind_global('site_name', $site_name);
 			View::bind_global('site_url',  $url);
@@ -416,7 +416,7 @@ abstract class Template extends Controller {
 			if ($this->is_frontpage())
 			{
 				// Set front variable true for themers
-				$this->template->front = TRUE;
+                $this->template->front = true;
 				// Don't show title on homepage
 				$this->template->title = FALSE;
 				// Don't show title on homepage
@@ -549,13 +549,13 @@ abstract class Template extends Controller {
 	protected function _set_default_server_headers()
 	{
         $headers = $this->_config->get('headers', []);
-		$headers['X-Gleez-Version'] = Gleez::getVersion(TRUE, TRUE) . ' ('.Gleez::CODENAME.')';
+        $headers['X-Gleez-Version'] = Gleez::getVersion(true, true) . ' (' . Gleez::CODENAME . ')';
 
         $xmlRpc = $this->_config->get('xml_rpc');
 
         if (!is_null($xmlRpc))
 		{
-            $headers['X-Pingback'] = URL::site($xmlRpc, TRUE);
+            $headers['X-Pingback'] = URL::site($xmlRpc, true);
 		}
 
 		// replace nonce variable
@@ -730,7 +730,7 @@ abstract class Template extends Controller {
 	}
 
     /**
-     * Returns TRUE if the POST has a valid CSRF
+     * Returns true if the POST has a valid CSRF.
      *
      * Usage:<br>
      * <code>
@@ -738,7 +738,7 @@ abstract class Template extends Controller {
      * </code>
      *
      * @param string|NULL $submit Submit value [Optional]
-     * @return  boolean  Return TRUE if it's valid $_POST
+     * @return boolean Return true if it's valid $_POST
      * @throws Kohana_Exception
      * @uses    Request::is_post
      * @uses    Request::post_max_size_exceeded
@@ -837,7 +837,7 @@ abstract class Template extends Controller {
         $total = [
             '{memory_usage}' => number_format((memory_get_peak_usage($realMemoryUsage) - KOHANA_START_MEMORY) / 1024 / 1024, 2) . '&nbsp;' . __('MB'),
             '{gleez_version}' => Gleez::VERSION,
-            '{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 3) . '&nbsp;' . __('seconds'),
+            '{execution_time}' => number_format(microtime(true) - KOHANA_START_TIME, 3) . '&nbsp;' . __('seconds'),
             '{included_files}' => count(get_included_files()),
             '{database_queries}' => $queries
         ];
@@ -901,7 +901,7 @@ abstract class Template extends Controller {
             $styles = Assets::css(null, NULL, NULL, null, Assets::FORMAT_AJAX);
 
             $this->SetJson('formSaved', $this->formSaved);
-			$this->SetJson('messages',   Message::get(NULL, NULL, TRUE));
+            $this->SetJson('messages', Message::get(NULL, NULL, true));
 			$this->SetJson('errors',     $this->_errors);
 			$this->SetJson('redirect',   Request::$redirect_url);
 			$this->SetJson('title',      $this->title);
@@ -935,7 +935,7 @@ abstract class Template extends Controller {
 	 *
 	 * @param bool $Saved Whether form data was successfully saved.
 	 */
-    public function SetFormSaved(bool $Saved = TRUE)
+    public function SetFormSaved(bool $Saved = true)
 	{
         $this->formSaved = $Saved;
 	}

@@ -119,7 +119,7 @@ class Filter {
      * if ( ! Filter::cache())
      * {
      *     // Set filters here
-     *     Filter::cache(TRUE);
+     *     Filter::cache(true);
      * }
      *
      * @param boolean $save Cache the current filters [Optional]
@@ -155,7 +155,7 @@ class Filter {
 				}
 
 				// Filters were cached
-				return Filter::$cache = TRUE;
+                return Filter::$cache = true;
 			}
 			else
 			{

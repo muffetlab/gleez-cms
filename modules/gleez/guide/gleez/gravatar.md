@@ -169,13 +169,13 @@ $avatar->setRating('PG');
 
 ### force_default
 
-If for some reason you wanted to force the default image to always load, you can set it to TRUE
+If for some reason you wanted to force the default image to always load, you can set it to true.
 
 Example:
 ~~~
 $avatar->setForceDefault();
 // Is the same as
-$avatar->setForceDefault(TRUE);
+$avatar->setForceDefault(true);
 
 // Disable
 $avatar->setForceDefault(FALSE);

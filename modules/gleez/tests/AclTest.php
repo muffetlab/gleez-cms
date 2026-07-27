@@ -37,8 +37,8 @@ class Gleez_AclTest extends Unittest_TestCase
 	}
 	
 	/**
-	 * If Route::cache() was able to restore routes from the cache then
-	 * it should return TRUE and load the cached routes
+     * If Route::cache() was able to restore routes from the cache then it should return true and load the cached
+     * routes.
 	 *
 	 * @test
 	 * @covers Route::cache
@@ -49,7 +49,7 @@ class Gleez_AclTest extends Unittest_TestCase
         $aclList = ACL::all();
 
 		// First we create the cache
-		ACL::cache(TRUE);
+        ACL::cache(true);
 
         // Now let's modify the "current" routes
         ACL::set('contact', [

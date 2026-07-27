@@ -7,7 +7,7 @@
 	<?php
 		foreach ($styles as $style => $media)
 		{
-            echo HTML::style($style, ['media' => $media], TRUE) . PHP_EOL;
+            echo HTML::style($style, ['media' => $media], true) . PHP_EOL;
 		}
 	?>
 	<link rel="shortcut icon" href="<?php echo URL::site($link); ?>" type="image/x-icon">

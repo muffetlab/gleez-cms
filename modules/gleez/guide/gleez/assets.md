@@ -24,7 +24,7 @@ assets according to what is needed for the respective action.
 
 			Assets::js('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js');
 			Assets::js('global', 'assets/js/global.js', array('jquery'));
-			Assets::js('stats', 'assets/js/stats.js', NULL, TRUE);
+            Assets::js('stats', 'assets/js/stats.js', NULL, true);
 		}
 
 	}
@@ -57,7 +57,7 @@ Then you would output the assets in your template somewhere
 		</head>
 		<body>
 			<!-- Content -->
-			<?php echo Assets::js(TRUE) ?>
+            <?php echo Assets::js(true) ?>
 			<?php echo Assets::group('footer') ?>
 		</body>
 	</html>

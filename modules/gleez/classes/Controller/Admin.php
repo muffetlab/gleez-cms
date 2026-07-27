@@ -48,7 +48,7 @@ class Controller_Admin extends Template {
 	public function before()
 	{
 		// Inform tht we're in admin section for themers/developers
-		Theme::$is_admin = TRUE;
+        Theme::$is_admin = true;
 
 		if($this->request->action() != 'login')
 		{

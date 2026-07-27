@@ -72,7 +72,7 @@ class Controller_Admin_Path extends Controller_Admin {
 
 		$this->title = __('Path Aliases');
         $add_url = Route::get('admin/path')->uri(['action' => 'add']);
-        $url = Route::url('admin/path', ['action' => 'list'], TRUE);
+        $url = Route::url('admin/path', ['action' => 'list'], true);
 
 		$view = View::factory('admin/path/list')
 				->bind('datatables',   $this->_datatables)
@@ -97,11 +97,11 @@ class Controller_Admin_Path extends Controller_Admin {
 		$this->title = __('Creating an Alias');
         $action = Route::get('admin/path')->uri(['action' => 'add']);
 
-		$view = View::factory('admin/path/form')
-			->bind('errors', $this->_errors)
-			->bind('post',   $post)
-            ->set('url', URL::site('', TRUE))
-			->set('action',  $action);
+        $view = View::factory('admin/path/form')
+            ->bind('errors', $this->_errors)
+            ->bind('post', $post)
+            ->set('url', URL::site('', true))
+            ->set('action', $action);
 
         $post = ORM::factory('Path');
 
@@ -152,11 +152,11 @@ class Controller_Admin_Path extends Controller_Admin {
         $this->title = __('Edit Alias %name', ['%name' => $post->source]);
         $action = Route::get('admin/path')->uri(['id' => $post->id, 'action' => 'edit']);
 
-		$view = View::factory('admin/path/form')
-				->bind('errors', $this->_errors)
-				->bind('post',   $post)
-            ->set('url', URL::site('', TRUE))
-				->set('action',  $action);
+        $view = View::factory('admin/path/form')
+            ->bind('errors', $this->_errors)
+            ->bind('post', $post)
+            ->set('url', URL::site('', true))
+            ->set('action', $action);
 
 		if ($this->valid_post('add_path'))
 		{

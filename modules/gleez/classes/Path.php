@@ -144,7 +144,7 @@ class Path {
 			return FALSE;
 		}
 
-		return TRUE;
+        return true;
 	}
 
 	/**
@@ -261,7 +261,7 @@ class Path {
      *
      * @param string $path The path to match
      * @param string $patterns String containing a set of patterns separated by \n, \r or \r\n.
-     * @return  boolean  TRUE if the path matches a pattern, FALSE otherwise
+     * @return boolean Returns true if the path matches a pattern, FALSE otherwise
      * @throws Kohana_Exception
      */
     public static function match_path(string $path, string $patterns): bool

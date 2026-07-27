@@ -306,7 +306,7 @@ class Model_Comment extends Gleez_Model
 			$action = 'view';
 		}
 
-        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], TRUE))
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
             throw HTTP_Exception::factory(404, 'Unauthorized attempt to access non-existent action :act.', [
@@ -418,7 +418,7 @@ class Model_Comment extends Gleez_Model
 	{
 		if( ! $action) $action = 'view';
 
-        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], TRUE))
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true))
 		{
 			// If the $action was not one of the supported ones, we return access denied.
             Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to access non-existent action :act.', [
@@ -438,7 +438,7 @@ class Model_Comment extends Gleez_Model
 
 		if (ACL::check('bypass comment access', $user))
 		{
-			return TRUE;
+            return true;
 		}
 
 		//allow other modules to interact with access
@@ -513,6 +513,6 @@ class Model_Comment extends Gleez_Model
 			}
 		}
 
-		return TRUE;
+        return true;
 	}
 }

@@ -194,7 +194,7 @@ class Message {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public static function render($type = NULL, bool $delete = TRUE, $view = NULL): string
+    public static function render($type = NULL, bool $delete = true, $view = NULL): string
     {
 		return self::display($type, $delete, $view);
 	}
@@ -263,7 +263,7 @@ class Message {
 			$messages = $return;
 		}
 
-		if ($delete === TRUE)
+        if ($delete === true)
 		{
             if ($type === NULL || empty($remainder))
 			{
@@ -307,7 +307,7 @@ class Message {
 		else
 		{
 			// Deletion by type happens in get(), too weird?
-			self::get($type, NULL, TRUE);
+            self::get($type, NULL, true);
 		}
 	}
 
@@ -320,7 +320,7 @@ class Message {
      * @return   string   Message to string
      * @throws View_Exception|Kohana_Exception
      */
-    public static function display($type = NULL, bool $delete = TRUE, $view = NULL): string
+    public static function display($type = NULL, bool $delete = true, $view = NULL): string
     {
 		$messages = self::get($type, NULL, $delete);
 

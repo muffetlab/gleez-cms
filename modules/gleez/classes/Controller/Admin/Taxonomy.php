@@ -84,7 +84,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 
 		$this->title = __('Category Groups');
         $add_url = Route::get('admin/taxonomy')->uri(['action' => 'add']);
-        $url = Route::url('admin/taxonomy', ['action' => 'list'], TRUE);
+        $url = Route::url('admin/taxonomy', ['action' => 'list'], true);
 
 		$view = View::factory('admin/taxonomy/list')
 				->bind('datatables',   $this->_datatables)

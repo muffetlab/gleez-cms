@@ -15,7 +15,7 @@
 	<?php include Kohana::find_file('views', 'errors/partial')?>
 
 	<?php // @todo Move to controller ?>
-    <?php $post['site_url'] = ($post['site_url'] === 'www.example.com') ? URL::site('', TRUE) : $post['site_url']; ?>
+<?php $post['site_url'] = ($post['site_url'] === 'www.example.com') ? URL::site('', true) : $post['site_url']; ?>
 
 <div class="tab-content col-sm-12">
 
@@ -111,7 +111,7 @@
 						<?php
 							// @important the hidden filed should be before checkbox
 							echo Form::hidden('use_gravatars', 0);
-                        echo Form::label('use_gravatars', Form::checkbox('use_gravatars', TRUE, isset($post['use_gravatars']) && $post['use_gravatars'] == 1));
+                        echo Form::label('use_gravatars', Form::checkbox('use_gravatars', true, isset($post['use_gravatars']) && $post['use_gravatars'] == 1));
 						?>
 					</div>
 				</div>

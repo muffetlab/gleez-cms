@@ -21,7 +21,7 @@ class URL extends Kohana_URL
      * @throws Kohana_Exception
      * @uses    Request::uri
      */
-    public static function canonical($url, $pagination = NULL, array $query = NULL, $protocol = TRUE): string
+    public static function canonical($url, $pagination = NULL, array $query = NULL, $protocol = true): string
     {
 		if ($url instanceof Request)
 		{
@@ -60,7 +60,7 @@ class URL extends Kohana_URL
     {
 		if((strpos($url, '://') !== FALSE))
 		{
-			$base = URL::base(TRUE);
+            $base = URL::base(true);
 
 			$host1 = str_replace('www.', '', parse_url($base, PHP_URL_HOST));
 			$host2 = str_replace('www.', '', parse_url($url, PHP_URL_HOST));
@@ -114,7 +114,7 @@ class URL extends Kohana_URL
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function current($protocol = NULL, bool $index = FALSE, bool $with_query_params = TRUE): string
+    public static function current($protocol = NULL, bool $index = FALSE, bool $with_query_params = true): string
     {
 		static $uri;
 		$query = null;
@@ -153,7 +153,7 @@ class URL extends Kohana_URL
 
 		if (0 == count(array_diff($url, $current)))
 		{
-			return TRUE;
+            return true;
 		}
 
 		$result = FALSE;

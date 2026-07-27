@@ -2,9 +2,8 @@
 
 <p><?php echo __(':name sent a message using the contact form at :site.', [
         ':name' => HTML::chars($name),
-		':site' => URL::site('contact', TRUE)
-    ]);
-?></p>
+        ':site' => URL::site('contact', true)
+    ]); ?></p>
 
 <?php echo Text::markup($body); ?>
 <br>

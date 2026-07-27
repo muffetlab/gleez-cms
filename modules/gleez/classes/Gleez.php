@@ -66,7 +66,7 @@ class Gleez {
 	 * @todo  May be set by [Gleez::init or Gleez::ready]
 	 * @var boolean
 	 */
-	public static $profiling = TRUE;
+    public static $profiling = true;
 
 	/**
 	 * Character set of input and output
@@ -100,7 +100,7 @@ class Gleez {
 		}
 
 		// Gleez is now initialized?
-		self::$_init = TRUE;
+        self::$_init = true;
 
 		// Set default cookie salt and lifetime
 		self::_set_cookie();
@@ -295,7 +295,7 @@ class Gleez {
      * @param boolean $full If set, return the full version with `Gleez CMS` prefix [Optional]
 	 * @return  string   The version of Gleez
 	 */
-    public static function getVersion(bool $with_v = TRUE, bool $full = FALSE): string
+    public static function getVersion(bool $with_v = true, bool $full = FALSE): string
     {
 		$version = $with_v ? 'v' . Gleez::VERSION : Gleez::VERSION;
 

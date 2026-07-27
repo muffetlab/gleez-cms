@@ -79,11 +79,11 @@ class System {
      * @param string $path The directory path
      * @param integer $mode Set permission mode (as in chmod) [Optional]
      * @param boolean $recursive Create directories recursively if necessary [Optional]
-	 * @return  boolean             Returns TRUE on success or FALSE on failure
+     * @return boolean Returns true on success or FALSE on failure
 	 *
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
-    public static function mkdir(string $path, int $mode = 0777, bool $recursive = TRUE): bool
+    public static function mkdir(string $path, int $mode = 0777, bool $recursive = true): bool
     {
 		$out = FALSE;
         $oldUmask = umask(0);

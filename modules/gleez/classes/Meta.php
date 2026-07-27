@@ -42,7 +42,7 @@ class Meta {
 			return self::all_links();
 		}
 
-		$attrs['href'] = URL::is_absolute($handle) ? $handle : URL::site($handle, TRUE);
+        $attrs['href'] = URL::is_absolute($handle) ? $handle : URL::site($handle, true);
 
 		// Make sure have only one 'canonical' link per request
         if (isset($attrs['rel']) && $attrs['rel'] == 'canonical')

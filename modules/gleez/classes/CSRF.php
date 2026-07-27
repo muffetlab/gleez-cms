@@ -85,7 +85,7 @@ class CSRF {
 
 		if ( !($key = $config->get('gleez_private_key')) )
 		{
-			$key = sha1(uniqid(mt_rand(), TRUE)) . md5(uniqid(mt_rand(), TRUE));
+            $key = sha1(uniqid(mt_rand(), true)) . md5(uniqid(mt_rand(), true));
 			$config->set('gleez_private_key', $key);
 		}
 

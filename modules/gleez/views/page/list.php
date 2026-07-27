@@ -16,12 +16,10 @@
 				<?php if ($post->promote): ?>
 				<i class="post-bookmark clearfix"></i>
 				<?php endif; ?>
-				<?php
-				echo View::factory('page/teaser')
-					->set('post',       $post)
-					->set('config',     $config)
-					->set('page_title', TRUE);
-				?>
+            <?php echo View::factory('page/teaser')
+                ->set('post', $post)
+                ->set('config', $config)
+                ->set('page_title', true); ?>
 		</article>
 	<?php endforeach; ?>
 

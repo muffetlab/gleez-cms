@@ -380,7 +380,7 @@ class Controller_Install_Install extends Controller_Template {
 
         if (mysqli_select_db($link, $database))
 		{
-			return TRUE;
+            return true;
 		}
 		else 
 		{
@@ -392,7 +392,7 @@ class Controller_Install_Install extends Controller_Template {
 			}
 		}
 
-		return TRUE;
+        return true;
 	}
 
     /**

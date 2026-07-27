@@ -55,13 +55,13 @@ class JSON {
 	 * ~~~
 	 *
      * @param string $json The JSON string to be decoded
-     * @param boolean $assoc When TRUE, returned objects will be converted into associative arrays [Optional]
+     * @param boolean $assoc When true, returned objects will be converted into associative arrays [Optional]
      * @param integer $depth User specified recursion depth [Optional]
      * @param integer $options Bitmask of JSON decode options. PHP 5.4 or higher [Optional]
 	 * @return  mixed
 	 * @throws Kohana_Exception
 	 */
-    public static function decode(string $json, bool $assoc = TRUE, int $depth = 512, int $options = 0)
+    public static function decode(string $json, bool $assoc = true, int $depth = 512, int $options = 0)
 	{
 		if (version_compare(PHP_VERSION, '5.4.0', '>='))
 		{

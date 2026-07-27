@@ -120,7 +120,7 @@ class Shortcode {
      * if ( ! Shortcode::cache())
      * {
      *     // Set Shortcodes here
-     *     Shortcode::cache(TRUE);
+     *     Shortcode::cache(true);
      * }
      * ~~~
      *
@@ -135,7 +135,7 @@ class Shortcode {
     {
 		$cache = Cache::instance();
 
-		if ($save === TRUE)
+        if ($save === true)
 		{
 			// Cache all defined shortcodes
 			return $cache->set('Shortcode::cache()', self::$_tags);
@@ -156,7 +156,7 @@ class Shortcode {
 				}
 
 				// Shortcodes were cached
-				return self::$_cache = TRUE;
+                return self::$_cache = true;
 			}
 			else
 			{

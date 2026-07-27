@@ -81,7 +81,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 
 		$this->title = __('Menus');
         $add_url = Route::get('admin/menu')->uri(['action' => 'add']);
-        $url = Route::url('admin/menu', ['action' => 'list'], TRUE);
+        $url = Route::url('admin/menu', ['action' => 'list'], true);
 
 		$view = View::factory('admin/menu/list')
 				->bind('datatables',   $this->_datatables)

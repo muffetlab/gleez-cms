@@ -58,10 +58,10 @@ class Controller_Tag extends Template {
 
         $this->title = __(':title', [':title' => Text::ucfirst($tag->name)]);
 
-		$view = View::factory('tag/view')
-				->set('teaser',      TRUE)
-				->bind('pagination', $pagination)
-				->bind('posts',      $posts);
+        $view = View::factory('tag/view')
+            ->set('teaser', true)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 		$posts = $tag->posts;
 
@@ -94,7 +94,7 @@ class Controller_Tag extends Template {
 		$this->response->body($view);
 
 		// Set the canonical and shortlink for search engines
-		if ($this->auto_render === TRUE)
+        if ($this->auto_render === true)
 		{
             Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('tag', ['action' => 'view', 'id' => $tag->id]), ['rel' => 'shortlink']);

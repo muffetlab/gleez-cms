@@ -134,7 +134,7 @@ class Controller_Admin_Page extends Controller_Admin {
 	{
 		Assets::popup();
 
-        $url = Route::url('admin/page', ['action' => 'list'], TRUE);
+        $url = Route::url('admin/page', ['action' => 'list'], true);
         $redirect = Route::get('admin/page')->uri(['action' => 'list']);
         $form_action = Route::get('admin/page')->uri(['action' => 'bulk']);
 		$destination = '?destination='.$redirect;
@@ -170,13 +170,13 @@ class Controller_Admin_Page extends Controller_Admin {
 		}
 
 		$this->title = __('Page List');
-		
-		$view = View::factory('admin/page/list')
-				->bind('datatables',   $this->_datatables)
-				->set('is_datatables', $is_datatables)
-				->set('action',        $form_action)
-				->set('actions',       Post::bulk_actions(TRUE, 'page'))
-				->set('url',           $url);
+
+        $view = View::factory('admin/page/list')
+            ->bind('datatables', $this->_datatables)
+            ->set('is_datatables', $is_datatables)
+            ->set('action', $form_action)
+            ->set('actions', Post::bulk_actions(true, 'page'))
+            ->set('url', $url);
 
 		$this->response->body($view);
 	}

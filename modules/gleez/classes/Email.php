@@ -33,7 +33,7 @@ class Email {
      * @throws Kohana_Exception
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public static function factory(bool $exceptions = TRUE): Email
+    public static function factory(bool $exceptions = true): Email
     {
 		return new Email($exceptions);
 	}
@@ -44,7 +44,7 @@ class Email {
      * @param boolean $exceptions PHPMailer should throw external exceptions? [Optional]
      * @throws \PHPMailer\PHPMailer\Exception|Kohana_Exception
      */
-    public function __construct(bool $exceptions = TRUE)
+    public function __construct(bool $exceptions = true)
 	{
         // Create PHPMailer object
 		$this->_mail = new PHPMailer($exceptions);
@@ -53,7 +53,7 @@ class Email {
 		$this->_mail->setFrom(Kohana::$config->load('site')->get('site_email','webmaster@example.com'), Template::getSiteName());
 		$this->_mail->WordWrap = 70;
 		$this->_mail->CharSet  = Kohana::$charset;
-		$this->_mail->XMailer  = Gleez::getVersion(FALSE, TRUE);
+        $this->_mail->XMailer = Gleez::getVersion(FALSE, true);
 		$this->_mail->setLanguage(I18n::$lang);
 		$this->_mail->Debugoutput = 'error_log';
 	}
@@ -206,7 +206,7 @@ class Email {
 		try
 		{
 			//@todo insert into mailqueue table
-			$this->queue = TRUE;
+            $this->queue = true;
 		}
 		catch(Exception $e)
 		{
@@ -230,8 +230,8 @@ class Email {
 			{
 				$this->_mail->send();
 			}
-	
-			return TRUE;
+
+            return true;
 		}
 		catch(Exception $e)
 		{

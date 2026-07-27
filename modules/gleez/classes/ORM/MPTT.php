@@ -449,7 +449,8 @@ class ORM_MPTT extends Gleez_Model
     public function move_to_first_child($target): ORM_MPTT
     {
 		$target = $this->parent_from($target, $this->primary_key());
-		return $this->move($target, TRUE, 1, 1, TRUE);
+
+        return $this->move($target, true, 1, 1, true);
 	}
 
     /**
@@ -460,7 +461,8 @@ class ORM_MPTT extends Gleez_Model
     public function move_to_last_child($target): ORM_MPTT
     {
 		$target = $this->parent_from($target, $this->primary_key());
-		return $this->move($target, FALSE, 0, 1, TRUE);
+
+        return $this->move($target, FALSE, 0, 1, true);
 	}
 
     /**
@@ -471,7 +473,8 @@ class ORM_MPTT extends Gleez_Model
     public function move_to_prev_sibling($target): ORM_MPTT
     {
 		$target = $this->parent_from($target, $this->parent_column);
-		return $this->move($target, TRUE, 0, 0, FALSE);
+
+        return $this->move($target, true, 0, 0, FALSE);
 	}
 
     /**
@@ -535,11 +538,11 @@ class ORM_MPTT extends Gleez_Model
 			if ($level_offset > 0)
 			{
 				// We're moving to a child node so add 1 to left offset.
-				$left_offset = ($left_column === TRUE) ? ($target->left() + 1) : ($target->right() + $left_offset);
+                $left_offset = ($left_column === true) ? ($target->left() + 1) : ($target->right() + $left_offset);
 			}
 			else
 			{
-				$left_offset = ($left_column === TRUE) ? $target->left() : ($target->right() + $left_offset);
+                $left_offset = ($left_column === true) ? $target->left() : ($target->right() + $left_offset);
 			}
 			
 			$level_offset = $target->level() - $this->level() + $level_offset;
@@ -558,7 +561,7 @@ class ORM_MPTT extends Gleez_Model
 				. $level_offset.', `'.$this->scope_column.'` = '.$target->scope()
 				. ' WHERE `'.$this->left_column.'` >= '.$this->left().' AND `'
 				. $this->right_column.'` <= '.$this->right().' AND `'
-				. $this->scope_column.'` = '.$this->scope(), TRUE);
+				. $this->scope_column.'` = '.$this->scope(), true);
 			
 			$this->delete_space($this->left(), $size);
 		}
@@ -658,7 +661,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function parents(bool $root = TRUE, bool $with_self = FALSE, string $direction = 'ASC', bool $direct_parent_only = FALSE)
+    public function parents(bool $root = true, bool $with_self = FALSE, string $direction = 'ASC', bool $direct_parent_only = FALSE)
 	{
 		$suffix = $with_self ? '=' : '';
 
@@ -694,7 +697,7 @@ class ORM_MPTT extends Gleez_Model
      */
     public function children(bool $self = FALSE, string $direction = 'ASC', $limit = FALSE)
 	{
-		return $this->descendants($self, $direction, TRUE, FALSE, $limit);
+        return $this->descendants($self, $direction, true, FALSE, $limit);
 	}
 
     /**
@@ -756,7 +759,7 @@ class ORM_MPTT extends Gleez_Model
      */
     public function leaves(bool $self = FALSE, string $direction = 'ASC')
 	{
-		return $this->descendants($self, $direction, TRUE, TRUE);
+        return $this->descendants($self, $direction, true, true);
 	}
 
     /**
@@ -819,9 +822,9 @@ class ORM_MPTT extends Gleez_Model
      */
     public function get_levels(int $scope = NULL): Database_Result
     {
-		$result = DB::select($this->level_column)
-			->distinct(TRUE)
-			->from($this->_table_name);
+        $result = DB::select($this->level_column)
+            ->distinct(true)
+            ->from($this->_table_name);
 		
 		if ( ! empty($scope))
 		{
@@ -883,7 +886,11 @@ class ORM_MPTT extends Gleez_Model
      */
 	protected function lock()
 	{
-        $this->_db->query(Database::UPDATE, 'LOCK TABLE ' . $this->_db->quote_table($this->_table_name) . ' WRITE', TRUE);
+        $this->_db->query(
+            Database::UPDATE,
+            'LOCK TABLE ' . $this->_db->quote_table($this->_table_name) . ' WRITE',
+            true
+        );
 	}
 
 	/**
@@ -891,7 +898,7 @@ class ORM_MPTT extends Gleez_Model
 	 */
 	protected function unlock()
 	{
-        $this->_db->query(Database::UPDATE, 'UNLOCK TABLES', TRUE);
+        $this->_db->query(Database::UPDATE, 'UNLOCK TABLES', true);
 	}
 
 	/**

@@ -9,7 +9,7 @@ return [
         'gleez' => [
 
             // Whether this module's user guide pages should be shown
-            'enabled' => TRUE,
+            'enabled' => true,
 
             // The name that should show up on the user guide index page
             'name' => 'Gleez',

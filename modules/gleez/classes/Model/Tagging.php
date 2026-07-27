@@ -50,7 +50,7 @@ class Model_Tagging extends ORM {
 	 */
     protected $_created_column = [
         'column' => 'created',
-        'format' => TRUE
+        'format' => true
     ];
 
 }

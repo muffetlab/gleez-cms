@@ -14,9 +14,9 @@ return [
                 'html' => [
                     'name' => 'html',
                     'weight' => 0,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => [
-                        'html_nofollow' => TRUE,
+                        'html_nofollow' => true,
                         'allowed_html' => '<h2> <h3> <h4> <h5> <h6> <a> <abbr> <address> <em> <strong> <b> <i> <br> <hr> <p> <cite> <blockquote> <q> <code> <ul> <ol> <li> <dl> <dt> <dd> <img> <sub> <sup> <s>',
                         'url_length' => 72,
                     ]
@@ -24,19 +24,19 @@ return [
                 'html_corrector' => [
                     'name' => 'html_corrector',
                     'weight' => 3,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => []
                 ],
                 'url' => [
                     'name' => 'url',
                     'weight' => -2,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => ['url_length' => 72]
                 ],
                 'auto_p' => [
                     'name' => 'auto_p',
                     'weight' => 1,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => []
                 ],
             ],
@@ -51,7 +51,7 @@ return [
                 'plain' => [
                     'name' => 'plain',
                     'weight' => 0,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => []
                 ],
             ],
@@ -66,19 +66,19 @@ return [
                 'html_corrector' => [
                     'name' => 'html_corrector',
                     'weight' => 0,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => []
                 ],
                 'url' => [
                     'name' => 'url',
                     'weight' => 0,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => []
                 ],
                 'auto_p' => [
                     'name' => 'auto_p',
                     'weight' => 10,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => []
                 ],
             ],
@@ -93,7 +93,7 @@ return [
                 'markdown' => [
                     'name' => 'markdown',
                     'weight' => 0,
-                    'status' => TRUE,
+                    'status' => true,
                     'settings' => []
                 ],
             ],

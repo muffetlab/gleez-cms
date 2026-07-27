@@ -135,13 +135,13 @@ class Request extends Kohana_Request
 
 		if (strpos($referrer, '://') === FALSE)
 		{
-			$referrer = URL::site($referrer, TRUE, Kohana::$index_file);
+            $referrer = URL::site($referrer, true, Kohana::$index_file);
 		}
 
 		if (strpos($url, '://') === FALSE)
 		{
 			// Make the URI into a URL
-			$url = URL::site($url, TRUE, Kohana::$index_file);
+            $url = URL::site($url, true, Kohana::$index_file);
 		}
 
 		// Check whether the current request is ajax request
@@ -245,7 +245,7 @@ class Request extends Kohana_Request
 	 * @return  Response
 	 * @since   3.1.0
 	 */
-    public function create_response(bool $bind = TRUE): Response
+    public function create_response(bool $bind = true): Response
     {
         $response = new Response(['_protocol' => $this->protocol()]);
 

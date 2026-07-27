@@ -86,16 +86,16 @@ return [
     // Meta defaults
     'meta' => [
         'links' => [
-            URL::site('media/icons/favicon.ico', TRUE) => [
+            URL::site('media/icons/favicon.ico', true) => [
                 'rel' => 'shortcut icon',
                 'type' => 'image/x-icon'
             ],
-            URL::site('rss', TRUE) => [
+            URL::site('rss', true) => [
                 'rel' => 'alternate',
                 'type' => 'application/rss+xml',
                 'title' => 'Gleez RSS 2.0'
             ],
-            URL::site('', TRUE) => [
+            URL::site('', true) => [
                 'rel' => 'index',
                 'title' => 'Gleez CMS'
             ],

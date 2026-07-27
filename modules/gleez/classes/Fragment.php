@@ -48,7 +48,7 @@ class Fragment {
 	 *
 	 * Example:
 	 * ~~~
-	 * $key = Fragment::_cache_key('footer', TRUE);
+     * $key = Fragment::_cache_key('footer', true);
 	 * ~~~
 	 *
      * @param string $name Fragment name
@@ -67,7 +67,7 @@ class Fragment {
 		}
 
 		// Language prefix for cache key
-		$i18n = ($i18n === TRUE) ? I18n::lang() : '';
+        $i18n = ($i18n === true) ? I18n::lang() : '';
 
 		$separator = Cache::SEPARATOR;
 
@@ -107,7 +107,7 @@ class Fragment {
 			// Display the cached fragment now
 			echo $fragment;
 
-			return TRUE;
+            return true;
 		}
 		else
 		{

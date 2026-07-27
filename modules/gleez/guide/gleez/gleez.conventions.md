@@ -104,7 +104,7 @@ Gleez just provides an interface that wraps around your Kohana 3 Module.
    ACL::set('content', array(
        'administer content' =>  array(
            'title' => __('Administer content'),
-           'restrict access' => TRUE,
+           'restrict access' => true,
            'description' => '',
        ),
        'access content' =>  array(

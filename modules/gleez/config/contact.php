@@ -8,7 +8,7 @@ return [
     'body_length' => 400,
 
     // Use captcha?
-    'use_captcha' => TRUE,
+    'use_captcha' => true,
 
     // Mail type
     'types' => [

@@ -131,7 +131,7 @@ class Session_Redis extends Session {
 	protected function _regenerate(): ?string
     {
 		// Create a new session id
-		$id = str_replace('.', '-', uniqid(NULL, TRUE));
+        $id = str_replace('.', '-', uniqid(NULL, true));
 
 		return $this->_session_id = $id;
 	}
@@ -150,7 +150,7 @@ class Session_Redis extends Session {
 		// Update the cookie with the new session id
 		Cookie::set($this->_name, $this->_session_id, $this->_lifetime);
 
-		return TRUE;
+        return true;
 	}
 
 	/**
@@ -173,7 +173,7 @@ class Session_Redis extends Session {
 			return FALSE;
 		}
 
-		return TRUE;
+        return true;
 	}
 
 	/**
@@ -185,7 +185,7 @@ class Session_Redis extends Session {
     {
 		$this->_regenerate();
 
-		return TRUE;
+        return true;
 	}
 
 }

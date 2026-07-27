@@ -65,12 +65,12 @@ class Controller_Admin_Comment extends Controller_Admin {
 
 		$this->title = __('Comments');
 
-		$view = View::factory('admin/comment/list')
-				->bind('datatables',   $this->_datatables)
-				->set('is_datatables', Request::is_datatables())
-				->set('bulk_actions',  Comment::bulk_actions(TRUE))
-				->set('action',        $this->_form_action)
-            ->set('url', Route::url('admin/comment', ['action' => 'list'], TRUE));
+        $view = View::factory('admin/comment/list')
+            ->bind('datatables', $this->_datatables)
+            ->set('is_datatables', Request::is_datatables())
+            ->set('bulk_actions', Comment::bulk_actions(true))
+            ->set('action', $this->_form_action)
+            ->set('url', Route::url('admin/comment', ['action' => 'list'], true));
 
 		$this->response->body($view);
 	}
@@ -114,12 +114,12 @@ class Controller_Admin_Comment extends Controller_Admin {
 
 		$this->title = __('Pending Comments');
 
-		$view = View::factory('admin/comment/list')
-			->bind('datatables',   $this->_datatables)
-			->set('is_datatables', Request::is_datatables())
-			->set('bulk_actions',  Comment::bulk_actions(TRUE))
-			->set('action',        $this->_form_action)
-            ->set('url', Route::url('admin/comment', ['action' => 'pending'], TRUE));
+        $view = View::factory('admin/comment/list')
+            ->bind('datatables', $this->_datatables)
+            ->set('is_datatables', Request::is_datatables())
+            ->set('bulk_actions', Comment::bulk_actions(true))
+            ->set('action', $this->_form_action)
+            ->set('url', Route::url('admin/comment', ['action' => 'pending'], true));
 
 		$this->response->body($view);
 	}
@@ -138,12 +138,12 @@ class Controller_Admin_Comment extends Controller_Admin {
 
 		$this->title = __('Spam Comments');
 
-		$view = View::factory('admin/comment/list')
-			->bind('datatables',   $this->_datatables)
-			->set('is_datatables', Request::is_datatables())
-			->set('bulk_actions',  Comment::bulk_actions(TRUE))
-			->set('action',        $this->_form_action)
-            ->set('url', Route::url('admin/comment', ['action' => 'pending'], TRUE));
+        $view = View::factory('admin/comment/list')
+            ->bind('datatables', $this->_datatables)
+            ->set('is_datatables', Request::is_datatables())
+            ->set('bulk_actions', Comment::bulk_actions(true))
+            ->set('action', $this->_form_action)
+            ->set('url', Route::url('admin/comment', ['action' => 'pending'], true));
 
 		$this->response->body($view);
 	}

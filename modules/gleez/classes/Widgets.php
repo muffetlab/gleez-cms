@@ -122,7 +122,7 @@ class Widgets {
 		// set default widget members
 		$widget->config = FALSE;
 		$widget->content = FALSE;
-		$widget->visible = TRUE;
+        $widget->visible = true;
 
 		$this->_widgets[$name] = $widget;
 
@@ -280,7 +280,7 @@ class Widgets {
 
         foreach ($this->_regions[$this->_region] as $name)
 		{
-            $response[] = $this->get_widget($name, TRUE, $this->_format);
+            $response[] = $this->get_widget($name, true, $this->_format);
 		}
 
 		return trim(implode(PHP_EOL.PHP_EOL, $response));
@@ -305,7 +305,7 @@ class Widgets {
         if ($visible) {
             $widget = $this->is_visible($widget);
         } else {
-            $widget->visible = TRUE;
+            $widget->visible = true;
         }
 
 		// Enable developers to override widget
@@ -439,7 +439,7 @@ class Widgets {
 			$this->add($widget->region, $widget->name, $widget);
 		}
 
-		$this->_loaded = TRUE;
+        $this->_loaded = true;
 
 		return $this;
 	}
@@ -450,7 +450,7 @@ class Widgets {
     protected function is_visible($widget)
 	{
 		static $current_route;
-		$widget->visible = TRUE;
+        $widget->visible = true;
 
 		if (is_null($current_route))
 		{

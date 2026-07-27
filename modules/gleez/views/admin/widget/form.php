@@ -8,7 +8,7 @@ if (isset($widget->id) && Valid::digit($widget->id))
 	else
 	{
         $parms = ['action' => 'add'];
-		$static = TRUE;
+        $static = true;
 	}
 
 echo Form::open(Route::get('admin/widget')->uri($parms), ['id' => 'widget-form', 'class' => 'form']);

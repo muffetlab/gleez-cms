@@ -68,7 +68,7 @@ class Upload extends Kohana_Upload
 
         $picture_path  = APPPATH . $upload_dir;
         $valid_formats = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'gif', 'png']);
-        $save          = TRUE;
+        $save = true;
 
         if ( ! is_dir($picture_path))
         {

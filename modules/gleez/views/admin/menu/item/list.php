@@ -29,7 +29,7 @@
 				</td>
 
 				<td>
-                    <?php echo Form::checkbox('mlid:' . $item['id'] . '[hidden]', TRUE, (bool) $item['active']); ?>
+                    <?php echo Form::checkbox('mlid:' . $item['id'] . '[hidden]', true, (bool) $item['active']); ?>
 				</td>
 
                 <td class="table-drag-hide">
