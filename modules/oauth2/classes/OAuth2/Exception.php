@@ -105,7 +105,7 @@ class Oauth2_Exception extends Exception
 			if (strlen($error_uri) > 0 && $error_uri[0] == '#')
 			{
 				// we are referencing an oauth bookmark (for brevity)
-				$this->error_uri = 'http://tools.ietf.org/html/rfc6749' . $error_uri;
+                $this->error_uri = 'https://datatracker.ietf.org/doc/html/rfc6749' . $error_uri;
 			}
 		}
 	}
