@@ -17,7 +17,7 @@ class Controller_Client extends Template {
 				throw new HTTP_Exception_404('You have no permission to access oauth2 clients.');
 			}
 
-            $posts = ORM::factory('OAClient');
+            $posts = ORM::factory('Client');
 			
 			if ( ! User::is_admin())
 			{
@@ -73,7 +73,7 @@ class Controller_Client extends Template {
 			throw new HTTP_Exception_404('You have no permission to add oauth2 clients.');
 		}
 
-        $client = ORM::factory('OAClient');
+        $client = ORM::factory('Client');
 
         if (isset($_POST['cancel']) && $this->valid_post())
 		{
@@ -137,7 +137,7 @@ class Controller_Client extends Template {
 		}
 		
 		$id       = (int) $this->request->param('id');
-        $client = ORM::factory('OAClient', $id);
+        $client = ORM::factory('Client', $id);
 
         if (!$client->loaded())
 		{
@@ -210,7 +210,7 @@ class Controller_Client extends Template {
 		}
 		
 		$id       = (int) $this->request->param('id');
-        $client = ORM::factory('OAClient', $id);
+        $client = ORM::factory('Client', $id);
 
         if (!$client->loaded())
 		{
@@ -239,7 +239,7 @@ class Controller_Client extends Template {
 		
 		$id       = (int) $this->request->param('id');
         $redirect = empty($this->redirect) ? Route::get('oauth2/client')->uri(['action' => 'list']) : $this->redirect;
-        $client = ORM::factory('OAClient', $id);
+        $client = ORM::factory('Client', $id);
 
         if (!$client->loaded())
 		{

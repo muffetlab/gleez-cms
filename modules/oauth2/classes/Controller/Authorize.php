@@ -497,7 +497,7 @@ class Controller_Authorize extends Template {
      */
     protected function getClientDetails($id)
 	{
-        $client = ORM::factory('OAClient')->where('client_id', '=', $id)->find();
+        $client = ORM::factory('Client')->where('client_id', '=', $id)->find();
 
 		if( $client->loaded() ) return $client->as_array();
 
