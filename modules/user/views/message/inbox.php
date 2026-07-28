@@ -11,7 +11,7 @@
 						<div class="row">
 							<div class="form-group col-xs-7 col-sm-3 col-md-3">
 								<div class="control-group <?php echo isset($errors['operation']) ? 'has-error': ''; ?>">
-                                    <?php echo Form::select('operation', PM::bulk_actions(TRUE), '', [
+                                    <?php echo Form::select('operation', PM::bulk_actions(true), '', [
                                         'class' => 'form-control col-md-5'
                                     ]); ?>
 								</div>

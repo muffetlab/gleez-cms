@@ -88,13 +88,13 @@ class Gravatar {
 	 * @var array
 	 */
     protected static $_default_gravatar = [
-        '404' => TRUE,
-        'mm' => TRUE,
-        'identicon' => TRUE,
-        'monsterid' => TRUE,
-        'wavatar' => TRUE,
-        'retro' => TRUE,
-        'blank' => TRUE
+        '404' => true,
+        'mm' => true,
+        'identicon' => true,
+        'monsterid' => true,
+        'wavatar' => true,
+        'retro' => true,
+        'blank' => true
     ];
 
 	/**
@@ -102,10 +102,10 @@ class Gravatar {
 	 * @var array
 	 */
     protected static $_ratings = [
-        'g' => TRUE,
-        'pg' => TRUE,
-        'r' => TRUE,
-        'x' => TRUE
+        'g' => true,
+        'pg' => true,
+        'r' => true,
+        'x' => true
     ];
 
 	/**
@@ -558,7 +558,7 @@ class Gravatar {
 	 * @return  Gravatar
      * @since   1.2.0
 	 */
-    public function setForceDefault(bool $force = TRUE): Gravatar
+    public function setForceDefault(bool $force = true): Gravatar
     {
         $this->_default_force = $force;
 
@@ -635,7 +635,7 @@ class Gravatar {
 	 */
     public function enableSecureURL(): Gravatar
     {
-		$this->_secure_url = TRUE;
+        $this->_secure_url = true;
 
 		return $this;
 	}

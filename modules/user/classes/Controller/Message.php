@@ -94,7 +94,7 @@ class Controller_Message extends Template {
 	{
 		Assets::popup();
 
-        $url = Route::url('user/message', ['action' => 'inbox'], TRUE);
+        $url = Route::url('user/message', ['action' => 'inbox'], true);
         $redirect = Route::get('user/message')->uri(['action' => 'inbox']);
         $form_action = Route::get('user/message')->uri(['action' => 'bulk', 'id' => PM::INBOX]);
 		$destination = '?destination='.$redirect;

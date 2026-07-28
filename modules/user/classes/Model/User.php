@@ -46,13 +46,13 @@ class Model_User extends Gleez_Model
      * Autofill create column
 	 * @var array
 	 */
-    protected $_created_column = ['column' => 'created', 'format' => TRUE];
+    protected $_created_column = ['column' => 'created', 'format' => true];
 
 	/**
 	 * Auto fill update column
 	 * @var array
 	 */
-    protected $_updated_column = ['column' => 'updated', 'format' => TRUE];
+    protected $_updated_column = ['column' => 'updated', 'format' => true];
 
 	/**
 	 * A user has many tokens and roles
@@ -721,13 +721,11 @@ class Model_User extends Gleez_Model
 		$token = Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login);
 
         $body = View::factory('email/confirm_signup', $this->as_array())
-            ->set('url', URL::site(
-                Route::get('user')->uri(['action' => 'confirm',
-                    'id' => $this->id,
-                    'token' => $token,
-                ]),
-                TRUE // Add protocol to URL
-            ));
+            ->set('url', URL::site(Route::get('user')->uri([
+                'action' => 'confirm',
+                'id' => $this->id,
+                'token' => $token,
+            ]), true));
 
 		// Create an email message
         $email = Email::factory()
@@ -741,7 +739,7 @@ class Model_User extends Gleez_Model
 		// Send the message
 		$email->send();
 
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -782,12 +780,12 @@ class Model_User extends Gleez_Model
 		// User is already confirmed.
 		// We're not showing an error message.
         if ($this->has('roles', ORM::factory('Role', ['name' => 'user'])))
-			return TRUE;
+            return true;
 
 		// Give the user the "user" role
         $this->add('roles', ORM::factory('Role', ['name' => 'user']));
 
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -808,13 +806,10 @@ class Model_User extends Gleez_Model
 		if ($this->_loaded)
 		{
             $body = View::factory('email/welcome_signup', $this->as_array())
-                ->set('url', URL::site('', TRUE))
-                ->set('uri_brief', URL::site(
-                    Route::get('user')->uri([
-                        'action' => 'login'
-                    ]),
-                    TRUE // Protocol
-                ));
+                ->set('url', URL::site('', true))
+                ->set('uri_brief', URL::site(Route::get('user')->uri([
+                    'action' => 'login'
+                ]), true));
 
 			// Create an email message
             $email = Email::factory()
@@ -829,7 +824,7 @@ class Model_User extends Gleez_Model
 			$email->send();
 		}
 
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -888,15 +883,12 @@ class Model_User extends Gleez_Model
 		// So as soon as the user logs in again, the reset link expires automatically
 		$time = time();
 		$token = Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login);
-        $url = URL::site(
-            Route::get('user/reset')->uri([
-                'action' => 'confirm_password',
-                'id' => $this->id,
-                'token' => $token,
-                'time' => $time
-            ]),
-            TRUE // Protocol
-        );
+        $url = URL::site(Route::get('user/reset')->uri([
+            'action' => 'confirm_password',
+            'id' => $this->id,
+            'token' => $token,
+            'time' => $time
+        ]), true);
 
 		// Create e-mail body with reset password link
 		$body = View::factory('email/confirm_reset_password', $this->as_array())
@@ -916,7 +908,7 @@ class Model_User extends Gleez_Model
 		// Send the message
 		$email->send();
 
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -960,7 +952,7 @@ class Model_User extends Gleez_Model
 		if ($token !== Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login))
             return false;
 
-		return TRUE;
+        return true;
 	}
 
 
@@ -1011,7 +1003,7 @@ class Model_User extends Gleez_Model
 			$this->add('roles', User::USER_ROLE_ID);
 		}
 
-		return TRUE;
+        return true;
 	}
 
 	/**

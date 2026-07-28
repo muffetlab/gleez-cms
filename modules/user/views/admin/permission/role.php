@@ -21,7 +21,7 @@
 		<?php
 			foreach ($perms as $row)
 			{
-				$role_perms[$row->rid][$row->permission] = TRUE;
+                $role_perms[$row->rid][$row->permission] = true;
 			}
 		?>
 

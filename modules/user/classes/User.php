@@ -67,7 +67,7 @@ class User {
     /**
      * Check if current user is guest
      *
-     * @return boolean TRUE if current user is guest
+     * @return boolean true if current user is guest
      * @throws Kohana_Exception
      */
     public static function is_guest(): bool
@@ -78,7 +78,7 @@ class User {
     /**
      * Check if current user is admin
      *
-     * @return boolean TRUE if current user is admin
+     * @return boolean true if current user is admin
      * @throws Kohana_Exception
      */
     public static function is_admin(): bool
@@ -138,14 +138,14 @@ class User {
      * Checks if user belongs to group(s)
      *
      * @param mixed $groups Group(s)
-     * @return boolean TRUE if user belongs to group(s)
+     * @return boolean true if user belongs to group(s)
      * @throws Kohana_Exception
      */
     public static function belongsTo($groups): bool
     {
 		if ($groups == 'all' OR is_null($groups))
 		{
-			return TRUE;
+            return true;
 		}
 
 		if ( ! is_array($groups))
@@ -167,7 +167,7 @@ class User {
 			// array_diff is not safe
 			if (array_intersect(array_values($groups), array_keys(User::$roles[$user->id])))
 			{
-				return TRUE;
+                return true;
 			}
 
             return false;
@@ -175,7 +175,7 @@ class User {
 
 		if (in_array('guest', $groups) OR array_key_exists(1, $groups))
 		{
-			return TRUE;
+            return true;
 		}
 
         return false;
@@ -269,7 +269,7 @@ class User {
      *
      * @param ORM $user User
      * @param string $password A plaintext password
-     * @return boolean TRUE if the password is correct
+     * @return boolean true if the password is correct
      * @throws Kohana_Exception
      * @uses   Auth_ORM::hash
      */
@@ -399,7 +399,7 @@ class User {
             'size' => 32,
             'type' => 'resize',
             'itemprop' => 'image',
-            'default_image' => URL::site($avatar, TRUE),
+            'default_image' => URL::site($avatar, true),
         ];
 
 		// Merge attributes

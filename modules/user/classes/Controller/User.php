@@ -292,7 +292,7 @@ class Controller_User extends Template {
 
         if ($this->_user->id == $user->id && $enable_buddy)
 		{
-			$is_owner = TRUE;
+            $is_owner = true;
 		}
 
         if ($enable_buddy)
@@ -646,7 +646,7 @@ class Controller_User extends Template {
         if ($this->_auth->logged_in() && $id != $this->_user->id)
 		{
 			// Cover your ears, we're blowing up the whole session!
-			$this->_auth->logout(TRUE);
+            $this->_auth->logout(true);
 
 			// Also, override the user object with a new one
             $this->_user = ORM::factory('User');

@@ -17,4 +17,4 @@
 <?php echo __('Best regards, :site team', [
         ':site' => Kohana::$config->load('site')->get('site_name', 'Gleez CMS')
     ]) . PHP_EOL ?>
-<?php echo URL::site('', TRUE) ?>
+<?php echo URL::site('', true) ?>

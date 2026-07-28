@@ -37,7 +37,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 
 		foreach($config as $name => $provider)
 		{
-			if ($provider['enable'] === TRUE)
+            if ($provider['enable'] === true)
 			{
                 $providers[$name] = [
                     'name' => $name,
@@ -66,7 +66,7 @@ class Auth_ORM extends Kohana_Auth_ORM
             return false;
 
 		// Get the user from the session.
-		// Because parent::logged_in returned TRUE, we know this is a valid user ORM object.
+        // Because parent::logged_in returned true, we know this is a valid user ORM object.
 		$user = $this->get_user();
 
 		if ($provider !== NULL)
@@ -162,10 +162,10 @@ class Auth_ORM extends Kohana_Auth_ORM
      */
     public function force_sso_login(ORM $user, bool $mark_session_as_forced = false): bool
     {
-		if ($mark_session_as_forced === TRUE)
+        if ($mark_session_as_forced === true)
 		{
 			// Mark the session as forced, to prevent users from changing account information
-			$this->_session->set('auth_forced', TRUE);
+            $this->_session->set('auth_forced', true);
 		}
 
 		// Token data
@@ -250,7 +250,7 @@ class Auth_ORM extends Kohana_Auth_ORM
                 $cache->delete($failedAttemptsKey . ':time');
             }
 
-			if ($remember === TRUE)
+            if ($remember === true)
 			{
 				// Token data
                 $data = [
@@ -273,7 +273,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 			// Finish the login
 			$this->complete_login($user);
 
-			return TRUE;
+            return true;
 		}
 
 		// Login failed

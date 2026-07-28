@@ -52,7 +52,7 @@ class PM {
 	/**
 	 * Bulk Actions
 	 *
-     * @param boolean $list TRUE for dropdown for bulk actions
+     * @param boolean $list true for dropdown for bulk actions
 	 * @return  mixed
 	 * @uses    Module::action
 	 */

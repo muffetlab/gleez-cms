@@ -73,7 +73,7 @@ class Model_User_Token extends ORM {
     {
 		do
 		{
-			$token = sha1(uniqid(Text::random('alnum', 32), TRUE));
+            $token = sha1(uniqid(Text::random('alnum', 32), true));
         } while (ORM::factory('User_token', ['token' => $token])->loaded());
 
 		return $token;

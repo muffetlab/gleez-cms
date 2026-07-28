@@ -16,7 +16,7 @@ return [
     // The default image if Gravatar is not found, false uses Gravatar default. Possible values: 404, mm, identicon, monsterid, wavatar, retro, blank.
     'default_image' => false,
 
-    // If for some reason you wanted to force the default image to always load, set it to TRUE.
+    // If for some reason you wanted to force the default image to always load, set it to true.
     'force_default' => false,
 
     // Valid picture formats for downloading

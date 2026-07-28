@@ -52,7 +52,7 @@
 					echo Form::hidden('draft', 0);
 				?>
 				<div class="controls checkbox">
-					<?php echo Form::label('draft', Form::checkbox('draft', TRUE, $draft).__("Don't send, save as draft")) ?>
+                    <?php echo Form::label('draft', Form::checkbox('draft', true, $draft) . __("Don't send, save as draft")) ?>
 				</div>
 			</div>
 		</div>

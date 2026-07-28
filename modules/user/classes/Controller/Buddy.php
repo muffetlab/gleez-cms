@@ -51,7 +51,7 @@ class Controller_Buddy extends Template {
 
         if ($account && $user->id === $account->id)
 		{
-			$is_owner = TRUE;
+            $is_owner = true;
 		}
 
 		$model 	  = Model::factory('buddy');
@@ -103,7 +103,7 @@ class Controller_Buddy extends Template {
 
         if ($account && $user->id === $account->id)
 		{
-			$is_owner = TRUE;
+            $is_owner = true;
 		}
 		else
 		{

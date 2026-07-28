@@ -98,12 +98,12 @@ if ( ! ACL::cache() )
     ACL::set('user', [
         'administer permissions' => [
             'title' => __('Administer permissions'),
-            'restrict access' => TRUE,
+            'restrict access' => true,
             'description' => __('Managing user authority'),
         ],
         'administer users' => [
             'title' => __('Administer users'),
-            'restrict access' => TRUE,
+            'restrict access' => true,
             'description' => __('Users management'),
         ],
         'access profiles' => [
@@ -118,7 +118,7 @@ if ( ! ACL::cache() )
         ],
         'change own username' => [
             'title' => __('Change own username'),
-            'restrict access' => TRUE,
+            'restrict access' => true,
             'description' => __('The ability to change own username'),
         ]
     ]);

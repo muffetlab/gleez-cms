@@ -62,7 +62,7 @@ class Controller_Admin_Role extends Controller_Admin {
 
 		$this->title = __('Roles');
         $add_url = Route::get('admin/role')->uri(['action' => 'add']);
-        $url = Route::url('admin/role', ['action' => 'list'], TRUE);
+        $url = Route::url('admin/role', ['action' => 'list'], true);
 
 		$view = View::factory('admin/role/list')
 				->bind('datatables',   $this->_datatables)

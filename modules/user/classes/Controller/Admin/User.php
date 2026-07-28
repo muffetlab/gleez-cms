@@ -85,7 +85,7 @@ class Controller_Admin_User extends Controller_Admin {
 		Assets::popup();
 
 		$this->title = __('Users');
-        $url = Route::url('admin/user', ['action' => 'list'], TRUE);
+        $url = Route::url('admin/user', ['action' => 'list'], true);
 
 		$view = View::factory('admin/user/list')
 				->bind('datatables',   $this->_datatables)

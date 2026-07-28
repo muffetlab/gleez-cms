@@ -61,7 +61,7 @@ echo Form::open(Route::get('admin/user')->uri($params) . URL::query([$destinatio
 	<?php endforeach; ?>
 </table>
 
-<?php echo Form::hidden('site_url', URL::site('', TRUE), ['id' => 'site_url']) ?>
+<?php echo Form::hidden('site_url', URL::site('', true), ['id' => 'site_url']) ?>
 
 <div class="form-group">
 	<div class="col-sm-12 form-actions-right">

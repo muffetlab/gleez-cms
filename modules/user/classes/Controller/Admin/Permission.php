@@ -83,7 +83,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 			catch(ORM_Validation_Exception $e)
 			{
 				Message::error(__('Permissions save failed!'));
-                $this->_errors = ['models', TRUE];
+                $this->_errors = ['models', true];
 			}
 		}
 

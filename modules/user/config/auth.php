@@ -25,11 +25,11 @@ return [
     // Set the session key that will be used to store the current user.
     'session_key' => 'auth_user',
 
-    // Use username for login and registration (TRUE) or use email as username (false)?
-    'username' => TRUE,
+    // Use username for login and registration (true) or use email as username (false)?
+    'username' => true,
 
     // Allow user registration?
-    'register' => TRUE,
+    'register' => true,
 
     // Username rules for validation
     'name' => [
@@ -49,13 +49,13 @@ return [
     ],
 
     // Use confirm password field in registration?
-    'confirm_pass' => TRUE,
+    'confirm_pass' => true,
 
-    // Use nickname for registration (TRUE) or use username (false)?
-    'use_nick' => TRUE,
+    // Use nickname for registration (true) or use username (false)?
+    'use_nick' => true,
 
-    // Use captcha for registration (TRUE)?
-    'use_captcha' => TRUE,
+    // Use captcha for registration (true)?
+    'use_captcha' => true,
 
     /**
      * The number of failed logins allowed can be specified here:

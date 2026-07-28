@@ -46,7 +46,7 @@ class Model_Message extends Gleez_Model
 	 */
     protected $_created_column = [
         'column' => 'created',
-        'format' => TRUE
+        'format' => true
     ];
 
 	/**
