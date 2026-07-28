@@ -567,7 +567,7 @@ abstract class OAuth2_Client {
         else
         {
             // Bypass SSL verification
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         }
 

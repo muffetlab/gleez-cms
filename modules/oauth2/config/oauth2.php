@@ -41,7 +41,7 @@ return [
          * Facebook
          */
         'facebook' => [
-            'enable' => FALSE,
+            'enable' => false,
             'id' => 'your client id',
             'secret' => 'your client secret',
             'callback' => URL::site('/oauth2/facebook/callback', 'http'),
@@ -52,7 +52,7 @@ return [
          * Github
          */
         'github' => [
-            'enable' => FALSE,
+            'enable' => false,
             'id' => 'your client id',
             'secret' => 'your client secret',
             'callback' => URL::site('/oauth2/github/callback', 'http'),
@@ -63,7 +63,7 @@ return [
          * Gleez
          */
         'gleez' => [
-            'enable' => FALSE,
+            'enable' => false,
             'id' => 'your client id',
             'secret' => 'your client secret',
             'callback' => URL::site('/oauth2/gleez/callback', 'http'),
@@ -74,7 +74,7 @@ return [
          * Google
          */
         'google' => [
-            'enable' => FALSE,
+            'enable' => false,
             'id' => 'your client id',
             'secret' => 'your client secret',
             'callback' => URL::site('/oauth2/google/callback', 'http'),
@@ -85,7 +85,7 @@ return [
          * Windows Live
          */
         'live' => [
-            'enable' => FALSE,
+            'enable' => false,
             'id' => 'your client id',
             'secret' => 'your client secret',
             'callback' => URL::site('/oauth2/live/callback', 'http'),

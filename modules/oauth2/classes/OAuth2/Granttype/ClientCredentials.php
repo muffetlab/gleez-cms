@@ -17,7 +17,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 	protected $request;
 	protected $response;
 
-    public function __construct(array $config = [], $is_grant = FALSE)
+    public function __construct(array $config = [], $is_grant = false)
 	{
 		/** We use the same class for validating request for other grants
 		 *	make sure this is true only if the request grant_type is 'client_credentials'
@@ -162,7 +162,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 	        $this->setError(400, 'invalid_client', 'Client credentials were not found in the headers'.$message);
 	    }*/
 
-	    return FALSE;
+        return false;
 	}
 
 	public function getClientDetails($id)

@@ -30,7 +30,7 @@ class Controller_Token extends Controller
 	{
 		parent::before();
 
-		$this->auto_render = FALSE;
+        $this->auto_render = false;
 
 		// Load the oauth2 config
 		$this->config = Kohana::$config->load('oauth2')->as_array();
@@ -134,7 +134,7 @@ class Controller_Token extends Controller
 		 */
 		if (!$grantType instanceof Oauth2_GrantType_ClientCredentials) 
 		{
-			$check = new Oauth2_GrantType_ClientCredentials($this->config, FALSE);
+            $check = new Oauth2_GrantType_ClientCredentials($this->config, false);
 
 			if ( ! $check->validateRequest($this->request, $this->response) ) {
 				return null;

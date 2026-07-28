@@ -51,7 +51,7 @@ class Model_OAuth extends Model_Database {
             ->execute()
             ->as_array();
 
-		return $result ? $result[0] : FALSE;
+        return $result ? $result[0] : false;
 	}
 
     /**
@@ -85,7 +85,7 @@ class Model_OAuth extends Model_Database {
             ->execute()
             ->as_array();
 
-		return $result ? $result[0] : FALSE;
+        return $result ? $result[0] : false;
 	}
 
     /**
@@ -127,7 +127,7 @@ class Model_OAuth extends Model_Database {
             ->execute()
             ->as_array();
 
-		return $result ? $result[0] : FALSE;
+        return $result ? $result[0] : false;
 	}
 
     /**
@@ -239,7 +239,7 @@ class Model_OAuth extends Model_Database {
             ->execute()
             ->as_array();
 
-        return $result ? ['user_id' => $result[0]['name'], 'id' => $result[0]['id']] : FALSE;
+        return $result ? ['user_id' => $result[0]['name'], 'id' => $result[0]['id']] : false;
 	}
 
     /**
@@ -255,9 +255,8 @@ class Model_OAuth extends Model_Database {
             ])
             ->execute()
             ->as_array();
-					
 
-		return $result ? $result[0] : FALSE;
+        return $result ? $result[0] : false;
 	}
 
     /**
@@ -300,9 +299,9 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = FALSE): array
+    public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = false): array
     {
-		$refresh_token   = FALSE;
+        $refresh_token = false;
 		
 		/*
 		 * It is optional to force a new refresh token when a refresh token is used.
@@ -430,7 +429,7 @@ class Model_OAuth extends Model_Database {
             ->execute()
             ->as_array();
 
-        return $result ?: FALSE;
+        return $result ?: false;
 	}
 
     /**

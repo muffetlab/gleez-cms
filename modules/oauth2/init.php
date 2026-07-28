@@ -77,12 +77,12 @@ if ( ! ACL::cache() )
         ],
         'access oauth2 client' => [
             'title' => __('Access Clients'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('Access to all OAuth2 Clients'),
         ],
         'edit oauth2 client' => [
             'title' => __('Edit Client'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('The ability to change OAuth2 Client'),
         ],
         'edit own oauth2 client' => [
@@ -92,7 +92,7 @@ if ( ! ACL::cache() )
         ],
         'delete oauth2 client' => [
             'title' => __('Delete Client'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('The ability to delete OAuth2 Client'),
         ],
         'delete own oauth2 client' => [
@@ -103,6 +103,6 @@ if ( ! ACL::cache() )
     ]);
 
     /** Cache the module specific permissions in production */
-    ACL::cache(FALSE, Kohana::$environment === Kohana::PRODUCTION);
+    ACL::cache(false, Kohana::$environment === Kohana::PRODUCTION);
 }
  

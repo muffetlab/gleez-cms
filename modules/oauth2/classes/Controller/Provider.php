@@ -75,7 +75,7 @@ class Controller_Provider extends Template {
 		parent::before();
 
 		// Disable sidebars on user pages
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		// Load the session
 		$this->session = Session::instance();
@@ -232,10 +232,10 @@ class Controller_Provider extends Template {
      *
      * @throws Kohana_Exception
      */
-    protected function sso_signup($data, $user = FALSE): void
+    protected function sso_signup($data, $user = false): void
 	{
 		//vars for processing stuff
-		$creation = FALSE;
+        $creation = false;
 
         $provider = [];
 		$provider['provider']      = $this->provider;

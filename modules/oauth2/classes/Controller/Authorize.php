@@ -26,7 +26,8 @@ class Controller_Authorize extends Template {
 	private $client_id;
 	private $redirect_uri;
 	private $response_type;
-	private $is_authorized   = FALSE;
+
+    private $is_authorized = false;
 
 	// These 2 vars are not part of oauth2
 	private $approval_prompt = 'auto';
@@ -82,7 +83,7 @@ class Controller_Authorize extends Template {
 		$this->display			= $this->request->query('display');
 
 		// Disable sidebars on oauth2
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 	}
 
     /**
@@ -223,21 +224,21 @@ class Controller_Authorize extends Template {
 		$consent = $this->checkConsent($params['client_id'], $user->id);
 
 		// Check if the client should be automatically approved
-        //$autoApprove = ($params['auto_approve'] === '1') ? true : FALSE;
+        //$autoApprove = ($params['auto_approve'] === '1') ? true : false;
         $autoApprove = $params['approval_prompt'] !== 'force';
 
         /*
          * Display the "do you want to authorize?" form if previously not approved, or, if approval_prompt parameter is
          * 'force'.
          */
-		if ( $consent === FALSE || $autoApprove === FALSE )
+        if ($consent === false || $autoApprove === false)
 		{
             $view = View::factory('oauth2/authorize')->set('client', $this->client)->set('action', $url);
 
 			$this->title = __('Welcome to the OAuth2.0 Server!');
 			$this->response->body($view);
 
-			return FALSE;
+            return false;
 		}
 
         return true;
@@ -501,7 +502,7 @@ class Controller_Authorize extends Template {
 
 		if( $client->loaded() ) return $client->as_array();
 
-		return FALSE;
+        return false;
 	}
 
     /**
