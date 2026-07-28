@@ -53,8 +53,8 @@ class Controller_Client extends Template {
 
         $view = View::factory('client/list')
             ->bind('datatables', $this->_datatables)
-            ->set('url', Route::url('oauth2/client', ['action' => 'list'], TRUE))
-            ->set('show', TRUE);
+            ->set('url', Route::url('oauth2/client', ['action' => 'list'], true))
+            ->set('show', true);
 		
 		$this->response->body($view);
 	}

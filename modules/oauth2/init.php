@@ -72,7 +72,7 @@ if ( ! ACL::cache() )
     ACL::set('oauth2', [
         'administer oauth2' => [
             'title' => __('Administer OAuth2'),
-            'restrict access' => TRUE,
+            'restrict access' => true,
             'description' => __('OAuth Management'),
         ],
         'access oauth2 client' => [
@@ -87,7 +87,7 @@ if ( ! ACL::cache() )
         ],
         'edit own oauth2 client' => [
             'title' => __('Change own Client'),
-            'restrict access' => TRUE,
+            'restrict access' => true,
             'description' => __('The ability to change own OAuth2 Client'),
         ],
         'delete oauth2 client' => [
@@ -97,7 +97,7 @@ if ( ! ACL::cache() )
         ],
         'delete own oauth2 client' => [
             'title' => __('Delete own Client'),
-            'restrict access' => TRUE,
+            'restrict access' => true,
             'description' => __('The ability to delete own OAuth2 Client'),
         ]
     ]);

@@ -22,9 +22,9 @@ class Model_Client extends Gleez_Model
 	/**
      * Autofill create and update columns
 	 */
-    protected $_created_column = ['column' => 'created', 'format' => TRUE];
+    protected $_created_column = ['column' => 'created', 'format' => true];
 
-    protected $_updated_column = ['column' => 'updated', 'format' => TRUE];
+    protected $_updated_column = ['column' => 'updated', 'format' => true];
 
     protected $_belongs_to = [
         'user' => ['model' => 'User', 'foreign_key' => 'user_id'],

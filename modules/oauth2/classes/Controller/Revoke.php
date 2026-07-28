@@ -99,6 +99,7 @@ class Controller_Revoke extends Template {
 		}
 		
 		$this->token_info = $result[0];
-		return TRUE;
+
+        return true;
 	}
 }

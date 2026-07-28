@@ -223,7 +223,7 @@ class Controller_Authorize extends Template {
 		$consent = $this->checkConsent($params['client_id'], $user->id);
 
 		// Check if the client should be automatically approved
-		//$autoApprove = ($params['auto_approve'] === '1') ? TRUE : FALSE;
+        //$autoApprove = ($params['auto_approve'] === '1') ? true : FALSE;
         $autoApprove = $params['approval_prompt'] !== 'force';
 
         /*
@@ -240,7 +240,7 @@ class Controller_Authorize extends Template {
 			return FALSE;
 		}
 
-		return TRUE;
+        return true;
 	}
 
     /**

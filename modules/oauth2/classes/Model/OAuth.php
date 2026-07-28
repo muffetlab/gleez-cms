@@ -68,7 +68,7 @@ class Model_OAuth extends Model_Database {
 		}
 
 		// if grant_types are not defined, then none are restricted
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -184,8 +184,8 @@ class Model_OAuth extends Model_Database {
             ])
             ->execute()
             ->as_array();
-					
-		$code    = Auth::instance()->hash( uniqid($client_id . mt_rand() . microtime() . $user_id, TRUE));
+
+        $code = Auth::instance()->hash(uniqid($client_id . mt_rand() . microtime() . $user_id, true));
 		$expires = time() + Kohana::$config->load('oauth2')->get('access_lifetime', 30);
 	
 		if ($code_exists)
@@ -310,8 +310,8 @@ class Model_OAuth extends Model_Database {
 		 * @see http://tools.ietf.org/html/rfc6749#section-6
 		 */
 		$issueNewRefreshToken = Kohana::$config->load('oauth2')->get('always_issue_new_refresh_token', false);
-		
-		$access_token    = Auth::instance()->hash( uniqid($client_id . mt_rand() . microtime() . $user_id, TRUE));
+
+        $access_token = Auth::instance()->hash(uniqid($client_id . mt_rand() . microtime() . $user_id, true));
 		$access_expires  = time() + Kohana::$config->load('oauth2')->get('access_token_ttl', 3600);
 		
 		//$this->setAccessToken($access_token, $client_id, $user_id, $access_expires, $scope);
@@ -332,7 +332,7 @@ class Model_OAuth extends Model_Database {
 			// previously refresh is null, and need to include this time.
 			if ( $issueNewRefreshToken || ($includeRefreshToken && $token_exists[0]['refresh_token'] == NULL) )
 			{
-				$refresh_token    = Auth::instance()->hash( uniqid($client_id . mt_rand() . microtime() . $user_id, TRUE));
+                $refresh_token = Auth::instance()->hash(uniqid($client_id . mt_rand() . microtime() . $user_id, true));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
 
                 DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, refresh_token = :refresh_token, refresh_expires = :refresh_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id")
@@ -367,7 +367,7 @@ class Model_OAuth extends Model_Database {
 			// include refresh token
 			if ($issueNewRefreshToken || $includeRefreshToken)
 			{
-				$refresh_token    = Auth::instance()->hash( uniqid($client_id . mt_rand() . microtime() . $user_id, TRUE));
+                $refresh_token = Auth::instance()->hash(uniqid($client_id . mt_rand() . microtime() . $user_id, true));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
 
                 DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, refresh_token, refresh_expires, scope, created) VALUES(:access_token, :client_id, :access_expires, :user_id, :refresh_token, :refresh_expires, :scope, :created);")

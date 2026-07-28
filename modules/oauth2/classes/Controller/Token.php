@@ -38,7 +38,7 @@ class Controller_Token extends Controller
 		// create array of supported grant types
         $this->grantTypes = [
             'authorization_code' => new Oauth2_GrantType_AuthorizationCode($this->config),
-            'client_credentials' => new Oauth2_GrantType_ClientCredentials($this->config, TRUE),
+            'client_credentials' => new Oauth2_GrantType_ClientCredentials($this->config, true),
             'refresh_token' => new Oauth2_GrantType_RefreshToken($this->config),
             'password' => new Oauth2_GrantType_UserCredentials($this->config),
         ];

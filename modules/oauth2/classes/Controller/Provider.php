@@ -269,7 +269,8 @@ class Controller_Provider extends Template {
         } elseif (!$user && !Auth::instance()->logged_in()) {
             $account = ORM::factory('User')->where('mail', '=', $data['email'])->find();
 
-			if(!$account->loaded()) $creation = TRUE;
+            if (!$account->loaded())
+                $creation = true;
 
 			// @see Model_Auth_User::sso_signup for create new account/associate this OAuth
 			$account->sso_signup($data, $provider);

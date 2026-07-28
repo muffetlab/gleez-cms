@@ -53,7 +53,7 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 
 		$this->userInfo = $userInfo;
 
-		return TRUE;
+        return true;
 	}
 
 	public function getClientId()

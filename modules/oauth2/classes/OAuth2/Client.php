@@ -383,7 +383,7 @@ abstract class OAuth2_Client {
         string $http_method = self::HTTP_METHOD_GET,
         array  $http_headers = [],
         int    $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART,
-        bool   $check_http_status = TRUE,
+        bool   $check_http_status = true,
         int    $expected_http_status = 200
     ): array
     {
@@ -460,14 +460,13 @@ abstract class OAuth2_Client {
             $parsed_url['path'] .= '?' . http_build_query($parameters, NULL, '&');
         }
 
-        $signature = base64_encode(hash_hmac($this->_access_token_algorithm,
-            $timestamp."\n" .
-            $nonce."\n" .
-            $http_method."\n" .
-            $parsed_url['path']."\n" .
-            $parsed_url['host']."\n" .
-            $parsed_url['port']."\n\n" .
-            $this->_access_token_secret, TRUE));
+        $signature = base64_encode(hash_hmac($this->_access_token_algorithm, $timestamp . "\n"
+            . $nonce . "\n"
+            . $http_method . "\n"
+            . $parsed_url['path'] . "\n"
+            . $parsed_url['host'] . "\n"
+            . $parsed_url['port'] . "\n\n"
+            . $this->_access_token_secret, true));
 
         return 'id="'.$this->_access_token.'", ts="'.$timestamp.'", nonce="'.$nonce.'", mac="'.$signature.'"';
     }
@@ -493,15 +492,15 @@ abstract class OAuth2_Client {
     ): array
     {
         $curl_options = [
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_SSL_VERIFYPEER => TRUE,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_CUSTOMREQUEST => $http_method
         ];
 
         switch ($http_method)
         {
             case self::HTTP_METHOD_POST:
-                $curl_options[CURLOPT_POST] = TRUE;
+                $curl_options[CURLOPT_POST] = true;
                 /* No break */
 
             case self::HTTP_METHOD_PUT:
@@ -521,7 +520,7 @@ abstract class OAuth2_Client {
                 break;
 
             case self::HTTP_METHOD_HEAD:
-                $curl_options[CURLOPT_NOBODY] = TRUE;
+                $curl_options[CURLOPT_NOBODY] = true;
                 /* No break */
 
             case self::HTTP_METHOD_DELETE:
@@ -561,7 +560,7 @@ abstract class OAuth2_Client {
         // Https handling
         if ( ! empty($this->certificate_file))
         {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             curl_setopt($ch, CURLOPT_CAINFO, $this->certificate_file);
         }
@@ -590,7 +589,7 @@ abstract class OAuth2_Client {
         }
         else
         {
-            $json_decode = json_decode($result, TRUE);
+            $json_decode = json_decode($result, true);
         }
 
         curl_close($ch);
