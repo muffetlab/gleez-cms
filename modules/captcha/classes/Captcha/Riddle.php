@@ -44,7 +44,7 @@ class Captcha_Riddle extends Captcha
      * @param string|null $type Image type override
      * @return string
      */
-    public function render(bool $html = TRUE, string $type = null): string
+    public function render(bool $html = true, string $type = null): string
     {
 		return $this->riddle;
 	}

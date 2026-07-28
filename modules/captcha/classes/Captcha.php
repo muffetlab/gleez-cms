@@ -178,20 +178,20 @@ abstract class Captcha {
 		// Maximum one count per page load
 		static $counted;
 
-		// User has been promoted, always TRUE and don't count anymore
+        // User has been promoted, always true and don't count anymore
 		if (Captcha::instance()->promoted())
-			return TRUE;
+            return true;
 
 		// Challenge result
         $result = sha1(strtoupper($response)) === Session::instance()->get('captcha_response');
 
 		// Increment response counter
-		if ($counted !== TRUE)
+        if ($counted !== true)
 		{
-			$counted = TRUE;
+            $counted = true;
 
 			// Valid response
-			if ($result === TRUE)
+            if ($result === true)
 			{
 				Captcha::instance()->valid_count(Session::instance()->get('captcha_valid_count') + 1);
 			}
@@ -216,7 +216,7 @@ abstract class Captcha {
     public function valid_count(int $new_count = NULL, bool $invalid = false): int
     {
 		// Pick the right session to use
-		$session = ($invalid === TRUE) ? 'captcha_invalid_count' : 'captcha_valid_count';
+        $session = ($invalid === true) ? 'captcha_invalid_count' : 'captcha_valid_count';
 
 		// Update counter
 		if ($new_count !== NULL)
@@ -249,7 +249,7 @@ abstract class Captcha {
      */
     public function invalid_count(int $new_count = NULL): int
     {
-		return $this->valid_count($new_count, TRUE);
+        return $this->valid_count($new_count, true);
 	}
 
     /**
@@ -261,7 +261,7 @@ abstract class Captcha {
 	public function reset_count()
 	{
 		$this->valid_count(0);
-		$this->valid_count(0, TRUE);
+        $this->valid_count(0, true);
 	}
 
     /**
@@ -439,7 +439,7 @@ abstract class Captcha {
     public function image_render(bool $html, string $type = null)
 	{
 		// Output html element
-		if ($html === TRUE)
+        if ($html === true)
 			return '<img src="'.URL::site('captcha/'.Captcha::$config['group']).'" width="'.Captcha::$config['width'].'" height="'.Captcha::$config['height'].'" alt="Captcha" class="captcha" />';
 
         if (in_array($type, ['png', 'gif', 'jpeg'])) {
@@ -470,6 +470,6 @@ abstract class Captcha {
      * @param string|null $type Image type override
 	 * @return mixed
 	 */
-    abstract public function render(bool $html = TRUE, string $type = null);
+    abstract public function render(bool $html = true, string $type = null);
 
 } // End Captcha Class
