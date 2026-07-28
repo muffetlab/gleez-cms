@@ -108,12 +108,12 @@ if ( ! ACL::cache() )
         ],
         'access profiles' => [
             'title' => __('Access profiles'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('Access to all profiles'),
         ],
         'edit profile' => [
             'title' => __('Editing profile'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('The ability to change profile'),
         ],
         'change own username' => [
@@ -124,5 +124,5 @@ if ( ! ACL::cache() )
     ]);
 
 	/** Cache the module specific permissions in production */
-	ACL::cache(FALSE, Kohana::$environment === Kohana::PRODUCTION);
+    ACL::cache(false, Kohana::$environment === Kohana::PRODUCTION);
 }

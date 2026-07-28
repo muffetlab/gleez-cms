@@ -85,7 +85,7 @@ class User {
     {
 		if(User::is_guest())
 		{
-			return FALSE;
+            return false;
 		}
 
 		$user = Auth_ORM::instance()->get_user();
@@ -170,7 +170,7 @@ class User {
 				return TRUE;
 			}
 
-			return FALSE;
+            return false;
 		}
 
 		if (in_array('guest', $groups) OR array_key_exists(1, $groups))
@@ -178,7 +178,7 @@ class User {
 			return TRUE;
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -233,17 +233,17 @@ class User {
 		}
 		catch (Exception $e)
 		{
-			return FALSE;
+            return false;
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
 	 * Get role by ID.
 	 *
      * @param int $id Role ID
-     * @return ORM|bool The Role object, or FALSE if ID is invalid or not found
+     * @return ORM|bool The Role object, or false if ID is invalid or not found
      * @since  1.2.0
 	 */
     public static function getRoleById(int $id)
@@ -258,10 +258,10 @@ class User {
 		}
 		catch (Exception $e)
 		{
-			return FALSE;
+            return false;
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**
@@ -389,7 +389,7 @@ class User {
      * @uses URL::site
      * @uses Arr::merge
      */
-    public static function getAvatar(ORM $user, array $attrs = [], $protocol = NULL, bool $index = FALSE): string
+    public static function getAvatar(ORM $user, array $attrs = [], $protocol = NULL, bool $index = false): string
     {
 		// Default user pic
 		$avatar = 'media/images/avatar-user-400.png';
@@ -405,7 +405,7 @@ class User {
 		// Merge attributes
 		$attrs = Arr::merge($attrs_default, $attrs);
 
-		$use_gravatar = Kohana::$config->load('site')->get('use_gravatars', FALSE);
+        $use_gravatar = Kohana::$config->load('site')->get('use_gravatars', false);
 
 		if ($use_gravatar)
 		{

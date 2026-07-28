@@ -25,7 +25,7 @@ class Controller_Message extends Template {
 			throw HTTP_Exception::factory(403, 'Permission denied! You must login!');
 		}
 
-		$id = $this->request->param('id', FALSE);
+        $id = $this->request->param('id', false);
 
         if ($id && 'index' == $this->request->action())
 		{
@@ -68,7 +68,7 @@ class Controller_Message extends Template {
             ];
 
 			// Disable sidebars on message pages except compose and edit
-			$this->_sidebars = FALSE;
+            $this->_sidebars = false;
 		}
 
 		parent::after();
@@ -221,12 +221,12 @@ class Controller_Message extends Template {
 		// Set form action
         $action = Route::get('user/message')->uri(['action' => 'compose']) . URL::query($destination);
 
-		$view = View::factory('message/form')
-				->bind('message',    $message)
-				->bind('errors',     $this->_errors)
-				->set('destination', $destination)
-				->set('action',      $action)
-				->set('recipient',   FALSE);
+        $view = View::factory('message/form')
+            ->bind('message', $message)
+            ->bind('errors', $this->_errors)
+            ->set('destination', $destination)
+            ->set('action', $action)
+            ->set('recipient', false);
 
         $message = ORM::factory('Message');
 

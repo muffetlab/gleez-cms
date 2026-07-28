@@ -63,7 +63,7 @@ class Auth_ORM extends Kohana_Auth_ORM
     {
 		// For starters, the user needs to be logged in
 		if ( ! parent::logged_in())
-			return FALSE;
+            return false;
 
 		// Get the user from the session.
 		// Because parent::logged_in returned TRUE, we know this is a valid user ORM object.
@@ -143,7 +143,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 
 		if ( ! $user)
 		{
-			return FALSE;
+            return false;
 		}
 
 		//Avoid Timing attacks
@@ -160,7 +160,7 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-    public function force_sso_login(ORM $user, bool $mark_session_as_forced = FALSE): bool
+    public function force_sso_login(ORM $user, bool $mark_session_as_forced = false): bool
     {
 		if ($mark_session_as_forced === TRUE)
 		{
@@ -282,6 +282,6 @@ class Auth_ORM extends Kohana_Auth_ORM
             $cache->set($failedAttemptsKey . ':time', time(), $loginJailTime);
         }
 
-		return FALSE;
+        return false;
 	}
 }

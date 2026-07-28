@@ -21,7 +21,7 @@ class Controller_Buddy extends Template {
 			$this->request->redirect('user/login');
 		}
 
-        if (!Kohana::$config->load('auth')->get('enable_buddy', FALSE))
+        if (!Kohana::$config->load('auth')->get('enable_buddy', false))
 		{
             // If user buddy disabled, we return not found.
 			throw HTTP_Exception::factory(404, __('Buddy not allowed'));
@@ -38,7 +38,7 @@ class Controller_Buddy extends Template {
 	{
 		$account  = Auth_ORM::instance()->get_user();
 		$id 	  = (int) $this->request->param('id', $account->id);
-		$is_owner = FALSE;
+        $is_owner = false;
 
         $user = ORM::factory('User', $id);
 
@@ -87,7 +87,7 @@ class Controller_Buddy extends Template {
 	{
 		$id       = (int) $this->request->param('id');
         $user = ORM::factory('User', $id);
-		$account  = FALSE;
+        $account = false;
 
 		if ( ! $user->loaded())
 		{
@@ -142,7 +142,7 @@ class Controller_Buddy extends Template {
 	{
 		$id 	  = (int) $this->request->param('id');
         $user = ORM::factory('User', $id);
-		$account  = FALSE;
+        $account = false;
 		
 		if ( ! $user->loaded())
 			{

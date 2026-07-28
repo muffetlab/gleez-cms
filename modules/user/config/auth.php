@@ -25,7 +25,7 @@ return [
     // Set the session key that will be used to store the current user.
     'session_key' => 'auth_user',
 
-    // Use username for login and registration (TRUE) or use email as username (FALSE)?
+    // Use username for login and registration (TRUE) or use email as username (false)?
     'username' => TRUE,
 
     // Allow user registration?
@@ -51,7 +51,7 @@ return [
     // Use confirm password field in registration?
     'confirm_pass' => TRUE,
 
-    // Use nickname for registration (TRUE) or use username (FALSE)?
+    // Use nickname for registration (TRUE) or use username (false)?
     'use_nick' => TRUE,
 
     // Use captcha for registration (TRUE)?
@@ -72,6 +72,6 @@ return [
         'login_jail_time' => 900,
     ],
 
-    // Enable buddy relationship (FALSE)?
-    'enable_buddy' => FALSE,
+    // Enable buddy relationship (false)?
+    'enable_buddy' => false,
 ];

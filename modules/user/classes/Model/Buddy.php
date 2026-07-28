@@ -34,7 +34,7 @@ class Model_Buddy extends Model
     /**
      * @throws Kohana_Exception
      */
-    public function friends($user_id, $limit = 15, $offset = FALSE): array
+    public function friends($user_id, $limit = 15, $offset = false): array
     {
 		$sql = DB::select('request_from', 'request_to')
 						->from('buddies')
@@ -81,7 +81,7 @@ class Model_Buddy extends Model
             ->where_close()
             ->where('accepted', '=', '1')
             ->execute()
-            ->get('total', FALSE);
+            ->get('total', false);
 	}
 
     /**
@@ -105,7 +105,7 @@ class Model_Buddy extends Model
 					->execute()
 					->current();
 
-        return $result ? $result->request_from : FALSE;
+        return $result ? $result->request_from : false;
 	}
 
     /**
@@ -163,7 +163,7 @@ class Model_Buddy extends Model
     /**
      * @throws Kohana_Exception
      */
-    public function sentRequests($user_id, $limit = 15, $offset = FALSE)
+    public function sentRequests($user_id, $limit = 15, $offset = false)
 	{
 		$query = DB::select()
 					->from('buddies')->where('request_from', '=', $user_id)
@@ -181,7 +181,7 @@ class Model_Buddy extends Model
     /**
      * @throws Kohana_Exception
      */
-    public function pendingRequests($user_id, $limit = 15, $offset = FALSE)
+    public function pendingRequests($user_id, $limit = 15, $offset = false)
 	{
 		$query = DB::select()
 					->from('buddies')->where('request_to', '=', $user_id)
@@ -206,7 +206,7 @@ class Model_Buddy extends Model
             ->where('request_to', '=', $user_id)
             ->where('accepted', '=', '0')
             ->execute()
-            ->get('total', FALSE);
+            ->get('total', false);
 	}
 
     /**
@@ -219,6 +219,6 @@ class Model_Buddy extends Model
             ->where('request_from', '=', $user_id)
             ->where('accepted', '=', '0')
             ->execute()
-            ->get('total', FALSE);
+            ->get('total', false);
 	}
 }

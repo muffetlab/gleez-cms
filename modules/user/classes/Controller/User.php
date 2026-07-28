@@ -33,18 +33,18 @@ class Controller_User extends Template {
 
         // Get the currently logged-in user or set up a new one.
 		// Note that get_user will also do an auto_login check.
-		if (($this->_user = $this->_auth->get_user()) === FALSE)
+        if (($this->_user = $this->_auth->get_user()) === false)
 		{
             $this->_user = ORM::factory('User');
 		}
 
-        if (strpos($this->request->uri(), 'user/reset/') !== FALSE)
+        if (strpos($this->request->uri(), 'user/reset/') !== false)
 		{
 			$this->request->action('reset_'.$this->request->action());
 		}
 
 		// Disable sidebars on user pages
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 	}
 
     /**
@@ -103,7 +103,7 @@ class Controller_User extends Template {
 			->bind('female', $female)
 			->bind('errors', $this->_errors);
 
-		if ($config->get('use_captcha', FALSE))
+        if ($config->get('use_captcha', false))
 		{
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
@@ -158,7 +158,7 @@ class Controller_User extends Template {
         $user = ORM::factory('User');
 
 		// Disable sidebars on login page
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		// Create form action
         $destination = $_GET['destination'] ?? Request::initial()->uri();
@@ -208,7 +208,7 @@ class Controller_User extends Template {
 	public function action_logout()
 	{
 		// Disable template on logout
-		$this->auto_render = FALSE;
+        $this->auto_render = false;
 
 		// Sign out the user
 		Auth_ORM::instance()->logout();
@@ -258,11 +258,11 @@ class Controller_User extends Template {
 
 		$id       = (int) $this->request->param('id', 0);
         $user = ORM::factory('User', $id);
-		$is_owner = FALSE;
-		$request  = FALSE;
-		$isFriend = FALSE;
+        $is_owner = false;
+        $request = false;
+        $isFriend = false;
         $friends = [];
-        $enable_buddy = (bool) Kohana::$config->load('auth')->get('enable_buddy', FALSE);
+        $enable_buddy = (bool) Kohana::$config->load('auth')->get('enable_buddy', false);
 
 		// Add Schema.org support
 		$this->schemaType = 'ProfilePage';

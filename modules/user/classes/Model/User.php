@@ -498,7 +498,7 @@ class Model_User extends Gleez_Model
      * @uses Request::initial
      * @uses Request::redirect
      */
-    public function login(array $array, $redirect = FALSE): Model_User
+    public function login(array $array, $redirect = false): Model_User
     {
 		$labels = $this->labels();
 		$rules  = $this->rules();
@@ -763,18 +763,18 @@ class Model_User extends Gleez_Model
     {
 		// Don't even bother, save us the user lookup query
 		if (empty($id) OR empty($token))
-			return FALSE;
+            return false;
 
 		// Load user by id and status is active
 		$this->where('id', '=', $id)->where('status', '=', 1)->find();
 
 		// Invalid user id or account blocked
 		if ( ! $this->loaded())
-			return FALSE;
+            return false;
 
 		// Invalid confirmation token
 		if ($token !== Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.(int)$this->login))
-			return FALSE;
+            return false;
 
 		//send welcome mail
 		$this->welcome_mail();
@@ -936,11 +936,11 @@ class Model_User extends Gleez_Model
     {
 		// Don't even bother, save us the user lookup query
 		if (empty($id) OR empty($token) OR empty($time))
-			return FALSE;
+            return false;
 
 		// Confirmation link expired
 		if ($time + Kohana::$config->load('site')->get('reset_password_expiration', 86400) < time())
-			return FALSE;
+            return false;
 
 		//clear any loaded object in memory
 		$this->clear();
@@ -950,14 +950,15 @@ class Model_User extends Gleez_Model
 
 		// Invalid user id
 		if ( ! $this->loaded())
-			return FALSE;
+            return false;
 
 		// Used onetime login link
-		if ( $time < $this->login ) return FALSE;
+        if ($time < $this->login)
+            return false;
 
 		// Invalid confirmation token
 		if ($token !== Auth_ORM::instance()->hash($this->mail.'+'.$this->pass.'+'.$time.'+'.(int)$this->login))
-			return FALSE;
+            return false;
 
 		return TRUE;
 	}

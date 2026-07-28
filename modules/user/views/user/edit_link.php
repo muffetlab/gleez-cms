@@ -7,7 +7,7 @@
 	<li>
         <?php echo HTML::anchor('user/password', '<i class="fas fa-fw fa-lock"></i> ' . __('Change Password')); ?>
 	</li>
-	<?php if (! Kohana::$config->load('site')->get('use_gravatars', FALSE)): ?>
+    <?php if (!Kohana::$config->load('site')->get('use_gravatars', false)): ?>
 		<li>
             <?php echo HTML::anchor('user/photo', '<i class="fas fa-fw fa-upload"></i> ' . __('Change Avatar'), [
                 'id' => 'add-pic1',

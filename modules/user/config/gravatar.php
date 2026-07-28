@@ -5,7 +5,7 @@
 return [
 
     // Should we use the secure (HTTPS) URL base?
-    'secure_url' => FALSE,
+    'secure_url' => false,
 
     // The size of the returned gravatar
     'size' => 250,
@@ -13,11 +13,11 @@ return [
     // The maximum rating to allow for the avatar. Possible values: G, PG, R, X.
     'rating' => 'G',
 
-    // The default image if Gravatar is not found, FALSE uses Gravatar default. Possible values: 404, mm, identicon, monsterid, wavatar, retro, blank.
-    'default_image' => FALSE,
+    // The default image if Gravatar is not found, false uses Gravatar default. Possible values: 404, mm, identicon, monsterid, wavatar, retro, blank.
+    'default_image' => false,
 
     // If for some reason you wanted to force the default image to always load, set it to TRUE.
-    'force_default' => FALSE,
+    'force_default' => false,
 
     // Valid picture formats for downloading
     'valid_formats' => [

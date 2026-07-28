@@ -35,11 +35,11 @@ class Gravatar {
 
 	/**
 	 * The default image to use:
-	 * String of the gravatar-recognized default image "type" to use,
-	 * URL or FALSE if using the default gravatar default image.
+     * String of the gravatar-recognized default image "type" to use, URL or false if using the default gravatar default
+     * image.
 	 * @var string
 	 */
-	protected $_default_image = FALSE;
+    protected $_default_image = false;
 
 	/**
 	 * Default size of the returned gravatar
@@ -57,7 +57,7 @@ class Gravatar {
 	 * Should we use the secure (HTTPS) URL base?
 	 * @var boolean
 	 */
-	protected $_secure_url = FALSE;
+    protected $_secure_url = false;
 
 	/**
 	 * The email address of the user
@@ -69,7 +69,7 @@ class Gravatar {
      * If default image shall be shown even if user the has a gravatar profile.
 	 * @var boolean
 	 */
-	protected $_default_force = FALSE;
+    protected $_default_force = false;
 
 	/**
 	 * List of valid picture formats for downloading
@@ -210,7 +210,7 @@ class Gravatar {
             $query = Arr::merge($query, ['f' => 'y']);
 		}
 
-		$url .= URL::query($query, FALSE);
+        $url .= URL::query($query, false);
 
 		return $url;
 	}
@@ -270,10 +270,9 @@ class Gravatar {
 	/**
 	 * Get the current default image
 	 *
-	 * @since   1.2.0
-	 *
 	 * @return  string   If one is set
-	 * @return  boolean  FALSE if no default image set
+     * @return  boolean  false if no default image set
+     * @since   1.2.0
 	 */
 	public function getDefaultImage()
 	{
@@ -297,7 +296,7 @@ class Gravatar {
      * @uses HTML::resize
      * @since 1.3.0
      */
-    public function getImage(array $attrs = [], $protocol = NULL, bool $index = FALSE): string
+    public function getImage(array $attrs = [], $protocol = NULL, bool $index = false): string
     {
 		// Set auto attributes
         $attributes = [
@@ -488,25 +487,21 @@ class Gravatar {
 	 * Set the default image to use for avatars
 	 *
 	 * Possible $image formats:
-	 * + boolean FALSE for the gravatar default
+     * + boolean false for the gravatar default
 	 * + string containing a valid image URL
 	 * + a string specifying a recognized gravatar "default"
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   mixed  $image  The default image to use
-	 *
 	 * @return  Gravatar
-	 *
 	 * @throws  Kohana_Exception
-	 *
+     * @since   1.2.0
 	 * @uses    Valid::url
 	 */
     public function setDefaultImage($image): Gravatar
     {
-		if($image === FALSE)
+        if ($image === false)
 		{
-			$this->default_image = FALSE;
+            $this->default_image = false;
 
 			return $this;
 		}
@@ -654,7 +649,7 @@ class Gravatar {
 	 */
     public function disableSecureURL(): Gravatar
     {
-		$this->_secure_url = FALSE;
+        $this->_secure_url = false;
 
 		return $this;
 	}

@@ -56,7 +56,7 @@ class PM {
 	 * @return  mixed
 	 * @uses    Module::action
 	 */
-    public static function bulk_actions(bool $list = FALSE)
+    public static function bulk_actions(bool $list = false)
 	{
         $states = [
             'read' => [
