@@ -14,7 +14,7 @@
  *  background  Path to background image file
  *  fontPath    Path to font folder
  *  fonts       Font files
- *  promote     Valid response count threshold to promote user (FALSE to disable)
+ *  promote     Valid response count threshold to promote user (false to disable)
  */
 
 return [
@@ -26,7 +26,7 @@ return [
         'background' => '',
         'fontPath' => MODPATH . 'captcha/fonts/',
         'fonts' => ['DejaVuSerif.ttf'],
-        'promote' => FALSE,
+        'promote' => false,
     ],
     // Words of varying length for Captcha_Word to pick from
     // Note: use only alphanumeric characters

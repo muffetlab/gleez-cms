@@ -30,7 +30,7 @@ abstract class Captcha {
         'background' => '',
         'fontPath' => '',
         'fonts' => [],
-        'promote' => FALSE,
+        'promote' => false,
     ];
 
 	/**
@@ -213,7 +213,7 @@ abstract class Captcha {
      * @return integer Counter value
      * @throws Kohana_Exception
      */
-    public function valid_count(int $new_count = NULL, bool $invalid = FALSE): int
+    public function valid_count(int $new_count = NULL, bool $invalid = false): int
     {
 		// Pick the right session to use
 		$session = ($invalid === TRUE) ? 'captcha_invalid_count' : 'captcha_valid_count';
@@ -274,8 +274,8 @@ abstract class Captcha {
     public function promoted(int $threshold = NULL): bool
     {
 		// Promotion has been disabled
-		if (Captcha::$config['promote'] === FALSE)
-			return FALSE;
+        if (Captcha::$config['promote'] === false)
+            return false;
 
 		// Use the config threshold
 		if ($threshold === NULL)
@@ -319,7 +319,7 @@ abstract class Captcha {
 				return 'jpeg';
 
 			default:
-				return FALSE;
+                return false;
 		}
 	}
 

@@ -24,9 +24,9 @@ Validate the CAPTCHA:
 
 > Captcha::valid($_POST['captcha']);
 
-By default, image-based CAPTCHAs are rendered with HTML, the HTML is a very simple <img> tag. If you want to handle your own rendering of the CAPTCHA simply set the first parameter for render() to FALSE:
+By default, image-based CAPTCHAs are rendered with HTML, the HTML is a very simple <img> tag. If you want to handle your own rendering of the CAPTCHA simply set the first parameter for render() to false:
 
-> $captcha->render(FALSE);
+> $captcha->render(false);
 
 ##CAPTCHA Styles
 
