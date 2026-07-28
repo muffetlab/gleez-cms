@@ -58,7 +58,7 @@ for ($i = $n7; $i <= $n8; $i++)
 
 <div>
 	<ul class="pagination pagination-centered">
-		<?php if ($previous_page !== FALSE): ?>
+        <?php if ($previous_page !== false): ?>
 			<li><a href="<?php echo HTML::chars($page->url($previous_page)) ?>" class="prev" rel="prev">&larr;</a></li>
 		<?php else: ?>
 			<li class="disabled"><a href="" class="disabled">&larr;</a></li>
@@ -72,7 +72,7 @@ for ($i = $n7; $i <= $n8; $i++)
 			<?php endif ?>
 		<?php endforeach ?>
 
-		<?php if ($next_page !== FALSE): ?>
+        <?php if ($next_page !== false): ?>
 			<li><a href="<?php echo HTML::chars($page->url($next_page)) ?>" class="next" rel="next">&rarr;</a></li>
 		<?php else: ?>
 			<li class="disabled"><a href="" class="disabled">&rarr;</a></li>

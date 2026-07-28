@@ -222,7 +222,7 @@ class Message {
      * @return    mixed    array or NULL
      * @throws Kohana_Exception
      */
-    public static function get($type = NULL, $default = NULL, bool $delete = FALSE)
+    public static function get($type = NULL, $default = NULL, bool $delete = false)
 	{
 		// Get the messages
         $messages = Session::instance()->get(self::$session_key, []);

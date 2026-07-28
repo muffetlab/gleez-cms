@@ -89,7 +89,7 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
-    public function remove(string $target_id, bool $parent_id = FALSE): Menu
+    public function remove(string $target_id, bool $parent_id = false): Menu
     {
 		if ($parent_id)
 		{
@@ -109,7 +109,7 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
-    public function set_title(string $target_id, string $title, bool $parent_id = FALSE): Menu
+    public function set_title(string $target_id, string $title, bool $parent_id = false): Menu
     {
 		if ( $parent_id )
 		{
@@ -129,7 +129,7 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  MENU
 	 */
-    public function set_url(string $target_id, string $url, bool $parent_id = FALSE): Menu
+    public function set_url(string $target_id, string $url, bool $parent_id = false): Menu
     {
 		if ( $parent_id )
 		{
@@ -448,7 +448,7 @@ class Menu {
      * @param Menu|null $children The new children [Optional]
      * @return array
      */
-    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = FALSE, array $params = NULL, string $image = NULL, Menu $children = NULL): array
+    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = false, array $params = NULL, string $image = NULL, Menu $children = NULL): array
     {
 		foreach ($array as $key => $value)
 		{

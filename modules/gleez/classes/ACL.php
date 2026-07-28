@@ -26,7 +26,7 @@
 class ACL {
 
 	/** Rule type: deny */
-	const DENY = FALSE;
+    const DENY = false;
 
 	/** Rule type: allow */
     const ALLOW = true;
@@ -40,7 +40,7 @@ class ACL {
 	/**
 	 * @var boolean Indicates whether perms are cached
 	 */
-	public static $cache = FALSE;
+    public static $cache = false;
 
 	/**
 	 * @var array All permissions
@@ -160,7 +160,7 @@ class ACL {
      * @uses    Cache::get
      * @uses    Arr::merge
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    public static function cache(bool $save = false, bool $append = false): bool
     {
 		$cache = Cache::instance();
 
@@ -190,7 +190,7 @@ class ACL {
 			else
 			{
 				// perms were not cached
-				return self::$cache = FALSE;
+                return self::$cache = false;
 			}
 		}
 	}
@@ -441,7 +441,7 @@ class ACL {
     /**
      * Make sure the user has permission to do certain action on this object
      *
-     * Similar to [Post::access] but this return true/FALSE instead of exception.
+     * Similar to [Post::access] but this return true/false instead of exception.
      *
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $post The post object
@@ -461,7 +461,8 @@ class ACL {
             Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
                 ':act' => $action
             ]);
-			return FALSE;
+
+            return false;
 		}
 
         if (!$post->loaded())
@@ -544,7 +545,7 @@ class ACL {
     /**
      * Make sure the user has permission to do the action on this object
      *
-     * Similar to [Comment::access] but this return true/FALSE instead of exception.
+     * Similar to [Comment::access] but this return true/false instead of exception.
      *
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $comment The comment object
@@ -564,7 +565,8 @@ class ACL {
             Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
                 ':act' => $action
             ]);
-			return FALSE;
+
+            return false;
 		}
 
 		if ( ! $comment->loaded())
@@ -604,7 +606,7 @@ class ACL {
 			}
 			else
 			{
-				return FALSE;
+                return false;
 			}
 		}
 
@@ -620,7 +622,7 @@ class ACL {
 			}
 			else
 			{
-				return FALSE;
+                return false;
 			}
 		}
 
@@ -640,7 +642,7 @@ class ACL {
 			}
 			else
 			{
-				return FALSE;
+                return false;
 			}
 		}
 

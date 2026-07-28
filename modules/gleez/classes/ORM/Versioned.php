@@ -18,7 +18,7 @@ class ORM_Versioned extends Gleez_Model
 	 * The version state
 	 * @var boolean
 	 */
-	protected $_restore =  FALSE;
+    protected $_restore = false;
 
     /**
      * Overload `ORM::update` to support versioned data
@@ -162,7 +162,7 @@ class ORM_Versioned extends Gleez_Model
      * @return  ORM
      * @throws Kohana_Exception
      */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
 		// Use primary key value
 		$id = $this->pk();

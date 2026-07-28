@@ -40,7 +40,7 @@ class Widgets {
 	 * Status of Widgets, if it's already loaded from the database
      * @var bool
 	 */
-	protected $_loaded = FALSE;
+    protected $_loaded = false;
 
 	/**
 	 * Region name right|left etc
@@ -120,8 +120,8 @@ class Widgets {
         $this->_regions[$region][] = $name;
 
 		// set default widget members
-		$widget->config = FALSE;
-		$widget->content = FALSE;
+        $widget->config = false;
+        $widget->content = false;
         $widget->visible = true;
 
 		$this->_widgets[$name] = $widget;
@@ -159,7 +159,7 @@ class Widgets {
 	 * $widget = $region->remove('right');
 	 *
 	 * // Removes login widget
-	 * $widget = $region->remove(FALSE, 'login');
+     * $widget = $region->remove(false, 'login');
 	 * ~~~
 	 *
      * @param string|null $region Region name [Optional]
@@ -290,12 +290,12 @@ class Widgets {
      * Returns the named widget
      *
      * @param string $name Name of the widget
-     * @param boolean $visible Visibility permission from widget or FALSE to skip
-     * @param mixed $format The format of the output ex:xhtml, html or FALSE for object
+     * @param boolean $visible Visibility permission from widget or false to skip
+     * @param mixed $format The format of the output ex:xhtml, html or false for object
      * @return  object|string|null Widget object, HTML string, or null
      * @throws Kohana_Exception
      */
-    public function get_widget(string $name, bool $visible = FALSE, $format = FALSE)
+    public function get_widget(string $name, bool $visible = false, $format = false)
 	{
 		if ( ! $widget = $this->get($name))
 		{
@@ -319,7 +319,7 @@ class Widgets {
 			try
 			{
                 $widget->content = Widget::factory($name, $widget)->render();
-				$response = ($format === FALSE) ? $widget : trim($this->_html($widget, $this->_region, $this->_format));
+                $response = ($format === false) ? $widget : trim($this->_html($widget, $this->_region, $this->_format));
 			}
 			catch (Exception $e)
 			{
@@ -461,7 +461,7 @@ class Widgets {
 		// role based widget access
         if (!User::belongsTo($widget->roles))
 		{
-			$widget->visible = FALSE;
+            $widget->visible = false;
 		}
 
 		if ($widget->pages)
@@ -480,7 +480,7 @@ class Widgets {
      */
     private function _html($widget, $region, $format): string
     {
-		$zebra = $id = FALSE;
+        $zebra = $id = false;
 
 		// Remove empty strings if content is string instead of view object
 		if (is_string($widget->content))

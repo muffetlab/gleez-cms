@@ -10,7 +10,7 @@ return [
         //'view'              => 'pagination/basic',
         'view' => 'pagination/custom',
         'auto_hide' => true,
-        'first_page_in_url' => FALSE,
+        'first_page_in_url' => false,
     ],
 
 ];

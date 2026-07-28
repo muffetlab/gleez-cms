@@ -87,8 +87,7 @@ class Cache_Redis extends Cache {
 	/**
 	 * Retrieve a cached value entry by id
 	 *
-	 * Return the stored variable or array of variables on success
-	 * or $default FALSE on failure
+     * Return the stored variable or array of variables on success or $default false on failure.
 	 *
 	 * Examples:
 	 * ~~~
@@ -168,7 +167,7 @@ class Cache_Redis extends Cache {
 		}
 
 		// Failed to write cache
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -266,6 +265,6 @@ class Cache_Redis extends Cache {
 		}
 
 		// Cache not found, return default value
-		return FALSE;
+        return false;
 	}
 }

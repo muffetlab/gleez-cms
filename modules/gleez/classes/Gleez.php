@@ -38,7 +38,7 @@ class Gleez {
 	 * Gleez installed?
 	 * @var boolean
 	 */
-	public static $installed = FALSE;
+    public static $installed = false;
 
 	/**
 	 * Public [Gleez_Locale] instance
@@ -53,13 +53,13 @@ class Gleez {
 	 * Has [Gleez::ready] been called?
 	 * @var boolean
 	 */
-	protected static $_init = FALSE;
+    protected static $_init = false;
 
 	/**
 	 * Set the X-Powered-By header?
 	 * @var  boolean
 	 */
-	public static $expose = FALSE;
+    public static $expose = false;
 
 	/**
 	 * Whether to enable [profiling](gleez/profiling)
@@ -131,7 +131,7 @@ class Gleez {
 
 		// Disable the kohana powered headers
 		// @todo Remove it, use Gleez::$expose
-		Kohana::$expose = FALSE;
+        Kohana::$expose = false;
 
 		/**
 		 * If database.php doesn't exist, then we assume that the Gleez is not
@@ -166,7 +166,7 @@ class Gleez {
 		Session::$default = Kohana::$config->load('site')->get('session_type');
 
 		// Initialize Gleez modules
-		Module::load_modules(FALSE);
+        Module::load_modules(false);
 
 		// Load the active theme(s)
 		Theme::load_themes();
@@ -208,8 +208,8 @@ class Gleez {
      */
 	public static function maintenance_mode()
 	{
-		$maintenance_mode = Kohana::$config->load('site')->get('maintenance_mode', FALSE);
-		$message          = Kohana::$config->load('site')->get('offline_message', FALSE);
+        $maintenance_mode = Kohana::$config->load('site')->get('maintenance_mode', false);
+        $message = Kohana::$config->load('site')->get('offline_message', false);
         $message = empty($message) ? Gleez::MAINTENANCE_MESSAGE : $message;
 		$request          = Request::initial();
 
@@ -295,7 +295,7 @@ class Gleez {
      * @param boolean $full If set, return the full version with `Gleez CMS` prefix [Optional]
 	 * @return  string   The version of Gleez
 	 */
-    public static function getVersion(bool $with_v = true, bool $full = FALSE): string
+    public static function getVersion(bool $with_v = true, bool $full = false): string
     {
 		$version = $with_v ? 'v' . Gleez::VERSION : Gleez::VERSION;
 

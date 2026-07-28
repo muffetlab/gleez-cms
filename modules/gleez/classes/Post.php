@@ -365,7 +365,7 @@ class Post extends ORM_Versioned {
 		$this->updated = empty($this->updated) ? time() : $this->updated;
 
 		//Ugly existing image check, not sure why empty behaves strange on $this->rawimage
-        $image = $this->_original_values['image'] ?? FALSE;
+        $image = $this->_original_values['image'] ?? false;
 
 		$this->image   = empty($image) 		? NULL : $image;
 		$this->type    = empty($this->type)     ? $this->_post_type : $this->type;
@@ -410,13 +410,13 @@ class Post extends ORM_Versioned {
 		$delimiter = strpos($this->rawbody, self::TEASER_TAG);
 
 		// If the size is zero, and there is no delimiter, the entire body is teaser.
-        if ($size == 0 && $delimiter === FALSE)
+        if ($size == 0 && $delimiter === false)
 		{
 			return $this->rawbody;
 		}
 
 		// If a valid delimiter has been specified, use it to chop off the teaser.
-		if ($delimiter !== FALSE)
+        if ($delimiter !== false)
 		{
 			return substr($this->rawbody, 0, $delimiter);
 		}
@@ -463,7 +463,7 @@ class Post extends ORM_Versioned {
 	{
         if (isset($this->formTags))
 		{
-            Tags::factory()->tagging($this->formTags, $this, $this->author, FALSE);
+            Tags::factory()->tagging($this->formTags, $this, $this->author, false);
 		}
 	}
 
@@ -509,7 +509,7 @@ class Post extends ORM_Versioned {
 	 * @uses    Cache::delete
 	 * @uses    Path::delete
 	 */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
         if (is_array($this->_deleted_column) && $soft)
 		{
@@ -652,7 +652,7 @@ class Post extends ORM_Versioned {
 	 * @uses    Post::bulk_convert
 	 * @uses    Module::action
 	 */
-    public static function bulk_actions(bool $list = FALSE, string $type = 'post')
+    public static function bulk_actions(bool $list = false, string $type = 'post')
 	{
         $states = [
             'publish' => [
@@ -849,7 +849,7 @@ class Post extends ORM_Versioned {
 
 		// We found special tag, so don't set widgets!
 		// Just return the content
-		if (strpos($content, self::NO_WIDGETS_TAG) !== FALSE)
+        if (strpos($content, self::NO_WIDGETS_TAG) !== false)
 		{
 			return $content;
 		}
@@ -859,12 +859,12 @@ class Post extends ORM_Versioned {
         $repChar = "<p";
 
 		// if we didn't find a p tag, try br tag
-		if (strpos($content, "<p") === FALSE)
+        if (strpos($content, "<p") === false)
 		{
             $repChar = "<br";
 		}
 
-        while (strpos($content, $repChar, $lastPos + 1) !== FALSE)
+        while (strpos($content, $repChar, $lastPos + 1) !== false)
 		{
             $lastPos = strpos($content, $repChar, $lastPos + 1);
             $poses[] = $lastPos;
@@ -898,8 +898,8 @@ class Post extends ORM_Versioned {
     public static function dynamicCache(int $id, string $type, $config): ORM
 	{
         $cache = Cache::instance();
-		$use_cache = (bool) $config->get('use_cache', FALSE);
-        $post = ($use_cache) ? $cache->get($type . ':' . $type . '-' . $id, FALSE) : FALSE;
+        $use_cache = (bool) $config->get('use_cache', false);
+        $post = ($use_cache) ? $cache->get($type . ':' . $type . '-' . $id, false) : false;
 
 		if (empty($post))
 		{
@@ -938,7 +938,7 @@ class Post extends ORM_Versioned {
     /**
      * Gets recent articles (post, page, blog, etc.)
      *
-     * Return FALSE if articles not found
+     * Return false if articles not found
      *
      * @param array $args Array of arguments. Overrides defaults [Optional]
      * @return  mixed
@@ -987,7 +987,7 @@ class Post extends ORM_Versioned {
 			}
 		}
 
-		return ( ! empty($post)) ? $post : FALSE;
+        return (!empty($post)) ? $post : false;
 	}
 
 	/**

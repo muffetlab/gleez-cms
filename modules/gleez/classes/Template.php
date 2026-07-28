@@ -28,7 +28,7 @@ abstract class Template extends Controller {
 	 * Turn debugging on?
 	 * @var boolean
 	 */
-	public $debug = FALSE;
+    public $debug = false;
 
 	/**
 	 * The site name
@@ -46,13 +46,13 @@ abstract class Template extends Controller {
      * The page subtitle
 	 * @var string
 	 */
-	public $subtitle = FALSE;
+    public $subtitle = false;
 
 	/**
 	 * The Schema Type
 	 * @var string
 	 */
-	public $schemaType = FALSE;
+    public $schemaType = false;
 
 	/**
 	 * The delimiter page header and site name
@@ -64,13 +64,13 @@ abstract class Template extends Controller {
 	 * The page title icon
 	 * @var string
 	 */
-	public $icon = FALSE;
+    public $icon = false;
 
 	/**
 	 * Turn bare template on?
 	 * @var boolean
 	 */
-	public $bare = FALSE;
+    public $bare = false;
 
 	/**
 	 * The sidebar content
@@ -82,13 +82,13 @@ abstract class Template extends Controller {
 	 * Is ajax request?
 	 * @var boolean
 	 */
-	protected $_ajax = FALSE;
+    protected $_ajax = false;
 
 	/**
 	 * is internal request?
 	 * @var boolean
 	 */
-	protected $_internal = FALSE;
+    protected $_internal = false;
 
 	/**
 	 * The configuration settings
@@ -208,7 +208,7 @@ abstract class Template extends Controller {
 	 * Allows overriding 'FormSaved' property to send with JSON.
 	 * @var boolean
 	 */
-    protected $formSaved = FALSE;
+    protected $formSaved = false;
 
 	/** @var String|null */
 	protected $nonce;
@@ -245,35 +245,35 @@ abstract class Template extends Controller {
 
 			// Test whether the current request is command line request
             if (PHP_SAPI === 'cli') {
-				$this->_ajax       = FALSE;
-				$this->auto_render = FALSE;
+                $this->_ajax = false;
+                $this->auto_render = false;
 			}
 
 			// Test whether the current request is the first request
 			if ( ! $this->request->is_initial())
 			{
                 $this->_internal = true;
-				$this->auto_render = FALSE;
+                $this->auto_render = false;
 			}
 
 			// Test whether the current request is ajax request
 			if ($this->request->is_ajax())
 			{
                 $this->_ajax = true;
-				$this->auto_render = FALSE;
+                $this->auto_render = false;
 			}
 
 			// Test whether the current request is jquery mobile request. ugly hack
-			if (isset($_SERVER['HTTP_X_THEME']) && $_SERVER['HTTP_X_THEME'] == 'mobile' && $this->_config->get('mobile_theme', FALSE))
+            if (isset($_SERVER['HTTP_X_THEME']) && $_SERVER['HTTP_X_THEME'] == 'mobile' && $this->_config->get('mobile_theme', false))
 			{
-				$this->_ajax       = FALSE;
+                $this->_ajax = false;
                 $this->auto_render = true;
 			}
 
 			// Test whether the current request is mobile request. ugly hack
-			if (Request::is_mobile() && $this->_config->get('mobile_theme', FALSE))
+            if (Request::is_mobile() && $this->_config->get('mobile_theme', false))
 			{
-				$this->_ajax       = FALSE;
+                $this->_ajax = false;
                 $this->auto_render = true;
 			}
 
@@ -281,7 +281,7 @@ abstract class Template extends Controller {
 			if (Request::is_datatables())
 			{
                 $this->_ajax = true;
-				$this->auto_render = FALSE;
+                $this->auto_render = false;
                 $this->response->headers('Content-Type', 'application/json; charset=' . Kohana::$charset);
 			}
 
@@ -332,7 +332,7 @@ abstract class Template extends Controller {
 			// Bind the generic page variables
             $this->template
                 ->set('site_slogan', $this->_config->get('site_slogan', __('Innovate IT')))
-                ->set('site_logo', $this->_config->get('site_logo', FALSE))
+                ->set('site_logo', $this->_config->get('site_logo', false))
                 ->set('sidebar_left', [])
                 ->set('sidebar_right', [])
                 ->set('column_class', '')
@@ -342,11 +342,11 @@ abstract class Template extends Controller {
                 ->set('subtitle', $this->subtitle)
                 ->set('icon', $this->icon)
                 ->set('schemaType', $this->schemaType)
-                ->set('front', FALSE)
-                ->set('mission', FALSE)
-                ->set('tabs', FALSE)
-                ->set('subtabs', FALSE)
-                ->set('actions', FALSE)
+                ->set('front', false)
+                ->set('mission', false)
+                ->set('tabs', false)
+                ->set('subtabs', false)
+                ->set('actions', false)
                 ->set('_user', $this->_auth->get_user())
                 ->bind('datatables', $this->_datatables);
 
@@ -418,9 +418,9 @@ abstract class Template extends Controller {
 				// Set front variable true for themers
                 $this->template->front = true;
 				// Don't show title on homepage
-				$this->template->title = FALSE;
+                $this->template->title = false;
 				// Don't show title on homepage
-				$this->title           = FALSE;
+                $this->title = false;
 
 				$this->template->mission = __($this->_config->get('site_mission', ''));
 			}
@@ -446,19 +446,20 @@ abstract class Template extends Controller {
             ]);
 
 			// Bind the generic page variables
-			$this->template->set('lang', I18n::$lang)
-				->set('page_id',      $this->_page_id)
-				->set('page_class',   $page_class)
-				->set('primary_menu', $primary_menu)
-				->set('title',        $this->title)
-				->set('subtitle',     $this->subtitle)
-				->set('icon',         $this->icon)
-				->set('schemaType',   $this->schemaType)
-				->set('mission',      $this->template->mission)
-				->set('content',      $this->response->body())
-				->set('messages',     Message::display())
-				->set('getNonce',     $this->nonce)
-				->set('profiler',     FALSE);
+            $this->template
+                ->set('lang', I18n::$lang)
+                ->set('page_id', $this->_page_id)
+                ->set('page_class', $page_class)
+                ->set('primary_menu', $primary_menu)
+                ->set('title', $this->title)
+                ->set('subtitle', $this->subtitle)
+                ->set('icon', $this->icon)
+                ->set('schemaType', $this->schemaType)
+                ->set('mission', $this->template->mission)
+                ->set('content', $this->response->body())
+                ->set('messages', Message::display())
+                ->set('getNonce', $this->nonce)
+                ->set('profiler', false);
 
 			if (count($this->_tabs) > 0)
 			{
@@ -649,7 +650,7 @@ abstract class Template extends Controller {
 	 */
     protected function _set_sidebars(): Template
     {
-		if ($this->_sidebars !== FALSE)
+        if ($this->_sidebars !== false)
 		{
 			$this->template->sidebar_left  = $this->_widgets->render('left');
 			$this->template->sidebar_right = $this->_widgets->render('right');
@@ -715,10 +716,10 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_js()
 	{
-        Assets::js('bootstrap', 'media/js/bootstrap.min.js', ['jquery'], FALSE, ['weight' => -8]);
+        Assets::js('bootstrap', 'media/js/bootstrap.min.js', ['jquery'], false, ['weight' => -8]);
 
 		// Google js only in production and not in admin section
-        if (Kohana::PRODUCTION === Kohana::$environment && Theme::$is_admin === FALSE)
+        if (Kohana::PRODUCTION === Kohana::$environment && Theme::$is_admin === false)
 		{
             $ua = $this->_config->get('google_ua');
 
@@ -752,7 +753,7 @@ abstract class Template extends Controller {
     {
 		if ( ! $this->request->is_post())
 		{
-			return FALSE;
+            return false;
 		}
 
 		if (Request::post_max_size_exceeded())
@@ -760,7 +761,8 @@ abstract class Template extends Controller {
             $this->_errors = [
                 '_action' => __('Max file size of :max Bytes exceeded!', [':max' => Request::get_post_max_size()])
             ];
-			return FALSE;
+
+            return false;
 		}
 
 		if ( ! is_null($submit) )
@@ -768,7 +770,8 @@ abstract class Template extends Controller {
 			if ( ! isset($_POST[$submit]))
 			{
                 $this->_errors = ['_action' => __('This form has altered. Please try submitting it again.')];
-				return FALSE;
+
+                return false;
 			}
 		}
 
@@ -782,7 +785,8 @@ abstract class Template extends Controller {
 		{
 			// CSRF was submitted but expired
             $this->_errors = ['_token' => __('This form has expired. Please try submitting it again.')];
-			return FALSE;
+
+            return false;
 		}
 
 		if (isset($_POST['_captcha']))
@@ -792,12 +796,14 @@ abstract class Template extends Controller {
 			{
 				// CSRF was not entered
                 $this->_errors = ['_captcha' => __('The security code can\'t be empty.')];
-				return FALSE;
+
+                return false;
 			}
 			elseif ( ! Captcha::valid($captcha))
 			{
                 $this->_errors = ['_captcha' => __('The security answer was wrong.')];
-				return FALSE;
+
+                return false;
 			}
 		}
 
@@ -877,12 +883,12 @@ abstract class Template extends Controller {
 			}
 			else
 			{
-				$this->SetFormSaved(FALSE);
+                $this->SetFormSaved(false);
 			}
 
 			if ($this->_response_format === 'application/json')
 			{
-				$this->SetJson('Body', FALSE);
+                $this->SetJson('Body', false);
 			}
 		}
 		else
@@ -897,7 +903,7 @@ abstract class Template extends Controller {
 		{
 			if ($this->request->query('draw') !== NULL) return;
 
-			$scripts = Assets::js(FALSE, NULL, NULL, FALSE, NULL, Assets::FORMAT_AJAX);
+            $scripts = Assets::js(false, NULL, NULL, false, NULL, Assets::FORMAT_AJAX);
             $styles = Assets::css(null, NULL, NULL, null, Assets::FORMAT_AJAX);
 
             $this->SetJson('formSaved', $this->formSaved);

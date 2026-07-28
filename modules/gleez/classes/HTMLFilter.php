@@ -351,7 +351,7 @@ class HTMLFilter {
         $attrarr = [];
 		$mode     = 0;
 		$attrname = '';
-		$skip     = FALSE;
+        $skip = false;
 
 		while (strlen($attr) != 0)
 		{

@@ -60,7 +60,7 @@ class Gleez_I18n extends I18n
         self::$_languages = Kohana::$config->load('site')->get('installed_locales', []);
 
 		// Allow the user or browser to override the default locale
-		$locale_override  = Kohana::$config->load('site')->get('locale_override', FALSE);
+        $locale_override = Kohana::$config->load('site')->get('locale_override', false);
 
 		// 1. Check the session specific preference (cookie)
 		$locale = Gleez_I18n::cookieLocale();
@@ -105,7 +105,7 @@ class Gleez_I18n extends I18n
      * Test if $lang exists in the list of available languages in config.
 	 *
      * @param string $lang
-     * @return bool Returns true if $lang is available, otherwise FALSE
+     * @return bool Returns true if $lang is available, otherwise false
 	 */
     public static function isAvailable(string $lang): bool
     {
@@ -168,7 +168,7 @@ class Gleez_I18n extends I18n
 			return $locale;
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**
@@ -195,7 +195,7 @@ class Gleez_I18n extends I18n
 			}
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**
@@ -217,7 +217,7 @@ class Gleez_I18n extends I18n
 			return $matches[1];
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -235,7 +235,7 @@ class Gleez_I18n extends I18n
 			return $matches[1];
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**

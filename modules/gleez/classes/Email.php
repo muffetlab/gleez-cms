@@ -17,7 +17,7 @@ class Email {
 	/**
 	 * Mail queue bool
 	 */
-	protected $queue = FALSE;
+    protected $queue = false;
 
 	/**
 	 * Mail object
@@ -53,7 +53,7 @@ class Email {
 		$this->_mail->setFrom(Kohana::$config->load('site')->get('site_email','webmaster@example.com'), Template::getSiteName());
 		$this->_mail->WordWrap = 70;
 		$this->_mail->CharSet  = Kohana::$charset;
-        $this->_mail->XMailer = Gleez::getVersion(FALSE, true);
+        $this->_mail->XMailer = Gleez::getVersion(false, true);
 		$this->_mail->setLanguage(I18n::$lang);
 		$this->_mail->Debugoutput = 'error_log';
 	}
@@ -201,7 +201,7 @@ class Email {
      * @param array|null $params Additional params for unique
 	 * @return  Email
 	 */
-    public function queue(int $timestamp = NULL, bool $unique = FALSE, array $params = NULL): Email
+    public function queue(int $timestamp = NULL, bool $unique = false, array $params = NULL): Email
     {
 		try
 		{
@@ -236,7 +236,8 @@ class Email {
 		catch(Exception $e)
 		{
             Kohana::$log->add(Log::ERROR, 'Error sending mail error: :e', [':e' => $e->getMessage()]);
-			return FALSE;
+
+            return false;
 		}
 	}
 

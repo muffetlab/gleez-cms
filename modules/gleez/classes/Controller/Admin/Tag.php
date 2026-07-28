@@ -113,11 +113,11 @@ class Controller_Admin_Tag extends Controller_Admin {
 			}
 		}
 
-		$view = View::factory('admin/tag/form')
-				->set('post',   $post)
-				->set('action', $action)
-				->set('errors', $this->_errors)
-				->set('path', 	FALSE);
+        $view = View::factory('admin/tag/form')
+            ->set('post', $post)
+            ->set('action', $action)
+            ->set('errors', $this->_errors)
+            ->set('path', false);
 		
 		$this->response->body($view);
 	}

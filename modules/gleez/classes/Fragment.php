@@ -33,7 +33,7 @@ class Fragment {
 	 * Use multilingual fragment support?
 	 * @var boolean
 	 */
-	public static $i18n = FALSE;
+    public static $i18n = false;
 
 	/**
 	 * List of buffer => cache key
@@ -117,7 +117,7 @@ class Fragment {
 			// Store the cache key by the buffer level
 			Fragment::$_caches[ob_get_level()] = $cache_key;
 
-			return FALSE;
+            return false;
 		}
 	}
 

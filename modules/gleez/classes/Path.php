@@ -108,7 +108,8 @@ class Path {
 		{
 			// log error and return, to avoid breaking process
             Kohana::$log->add(Log::ERROR, 'Error: :error creating path alias.', [':error' => $e->getMessage()]);
-			return FALSE;
+
+            return false;
 		}
 
 		return $path;
@@ -141,7 +142,8 @@ class Path {
 		catch (Exception $e)
 		{
             Kohana::$log->add(Log::ERROR, 'Error: :error deleting path alias.', [':error' => $e->getMessage()]);
-			return FALSE;
+
+            return false;
 		}
 
         return true;
@@ -151,7 +153,7 @@ class Path {
 	 * Fetch a specific URL alias from the database
 	 *
 	 * @param   mixed  $conditions  A string representing the source, a number representing the id, or an array of query conditions
-	 * @return  mixed  FALSE if no alias was found or MySQL result set
+     * @return  mixed  Returns false if no alias was found or MySQL result set
 	 */
 	public static function load($conditions)
 	{
@@ -176,7 +178,7 @@ class Path {
 			}
 			else
 			{
-				return FALSE;
+                return false;
 			}
 
 			$path = $path->execute()->current();
@@ -184,7 +186,8 @@ class Path {
 		catch(Exception $e)
 		{
             Kohana::$log->add(Log::ERROR, 'Error: :error lookup path alias.', [':error' => $e->getMessage()]);
-			return FALSE;
+
+            return false;
 		}
 
 		return $path;
@@ -261,7 +264,7 @@ class Path {
      *
      * @param string $path The path to match
      * @param string $patterns String containing a set of patterns separated by \n, \r or \r\n.
-     * @return boolean Returns true if the path matches a pattern, FALSE otherwise
+     * @return boolean Returns true if the path matches a pattern, false otherwise
      * @throws Kohana_Exception
      */
     public static function match_path(string $path, string $patterns): bool

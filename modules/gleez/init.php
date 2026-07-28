@@ -268,22 +268,22 @@ if ( ! ACL::cache())
         ],
         'access comment' => [
             'title' => __('Access comments'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('Access to any published comments'),
         ],
         'post comment' => [
             'title' => __('Post comments'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('Ability to publish comments'),
         ],
         'skip comment approval' => [
             'title' => __('Skip comment approval'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('Ability to publish comments without approval by the moderator'),
         ],
         'edit own comment' => [
             'title' => __('Edit own comments'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('Ability to editing own comments'),
         ],
     ]);
@@ -296,12 +296,12 @@ if ( ! ACL::cache())
         ],
         'access content' => [
             'title' => __('Access content'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
         'view own unpublished content' => [
             'title' => __('View own unpublished content'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
         'administer page' => [
@@ -311,27 +311,27 @@ if ( ! ACL::cache())
         ],
         'create page' => [
             'title' => __('Create pages'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __('The ability to create pages'),
         ],
         'edit own page' => [
             'title' => __('Edit own pages'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
         'edit any page' => [
             'title' => __('Edit any pages'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
         'delete own page' => [
             'title' => __('Delete own pages'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
         'delete any page' => [
             'title' => __('Delete any pages'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
     ]);
@@ -344,7 +344,7 @@ if ( ! ACL::cache())
         ],
         'administer paths' => [
             'title' => __('Administer Paths'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
         'administer site' => [
@@ -354,12 +354,12 @@ if ( ! ACL::cache())
         ],
         'administer tags' => [
             'title' => __('Administer Tags'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
         'administer terms' => [
             'title' => __('Administer Terms'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => __(''),
         ],
         'administer formats' => [
@@ -371,9 +371,9 @@ if ( ! ACL::cache())
 
     ACL::set('contact', [
         'sending mail' => [
-			'title' => __('Sending Mails'),
-			'restrict access' => FALSE,
-			'description' => __('Ability to send messages for administrators from your site'),
+            'title' => __('Sending Mails'),
+            'restrict access' => false,
+            'description' => __('Ability to send messages for administrators from your site'),
         ],
     ]);
 
@@ -385,27 +385,27 @@ if ( ! ACL::cache())
         ],
         'create blog' => [
             'title' => __('Create Blog post'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => '',
         ],
         'edit own blog' => [
             'title' => __('Edit own Blog post'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => '',
         ],
         'edit any blog' => [
             'title' => __('Edit any Blog posts'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => '',
         ],
         'delete own blog' => [
             'title' => __('Delete own Blog post'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => '',
         ],
         'delete any blog' => [
             'title' => __('Delete any Blog posts'),
-            'restrict access' => FALSE,
+            'restrict access' => false,
             'description' => '',
         ],
     ]);
@@ -429,7 +429,7 @@ if ( ! ACL::cache())
  */
 if ( ! Filter::cache())
 {
-    Filter::set('html', ['prepare callback' => FALSE, 'process callback' => 'Text::html'])
+    Filter::set('html', ['prepare callback' => false, 'process callback' => 'Text::html'])
         ->title(__('Limit allowed HTML tags'))
         ->description(__('Limit Allowed HTML tags'))
         ->settings([
@@ -437,49 +437,31 @@ if ( ! Filter::cache())
             'allowed_html' => '<a> <em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd>'
         ]);
 
-    Filter::set('html_corrector', [
-			'prepare callback' => FALSE,
-        'process callback' => 'Text::htmlCorrector'
-    ])
-		->title(__('Correct faulty and chopped off HTML'));
+    Filter::set('html_corrector', ['prepare callback' => false, 'process callback' => 'Text::htmlCorrector'])
+        ->title(__('Correct faulty and chopped off HTML'));
 
-    Filter::set('auto_p', [
-			'prepare callback' => FALSE,
-			'process callback' => 'Text::auto_p'
-    ])
-		->title(__('Convert line breaks into HTML'))
-		->description(__('Lines and paragraphs break automatically.'));
+    Filter::set('auto_p', ['prepare callback' => false, 'process callback' => 'Text::auto_p'])
+        ->title(__('Convert line breaks into HTML'))
+        ->description(__('Lines and paragraphs break automatically.'));
 
-    Filter::set('plain', [
-			'prepare callback' => FALSE,
-            'process callback' => 'HTML::chars'
-    ])
-		->title(__('Display any HTML as plain text'))
-		->description(__('No HTML tags allowed.'));
+    Filter::set('plain', ['prepare callback' => false, 'process callback' => 'HTML::chars'])
+        ->title(__('Display any HTML as plain text'))
+        ->description(__('No HTML tags allowed.'));
 
-    Filter::set('url', [
-			'prepare callback' => FALSE,
-			'process callback' => 'Text::autolink'
-    ])
-		->title(__('Convert URLs into links'))
-		->description(__('Web page addresses and e-mail addresses turn into links automatically.'))
+    Filter::set('url', ['prepare callback' => false, 'process callback' => 'Text::autolink'])
+        ->title(__('Convert URLs into links'))
+        ->description(__('Web page addresses and e-mail addresses turn into links automatically.'))
         ->settings([
-			'url_length' => 72
+            'url_length' => 72
         ]);
 
-    Filter::set('initial_caps', [
-			'prepare callback' => FALSE,
-        'process callback' => 'Text::initialCaps'
-    ])
-		->title(__('Adds Initialcaps'))
-		->description(__('Adds <span class="initial"> tag around the initial letter of each paragraph'));
+    Filter::set('initial_caps', ['prepare callback' => false, 'process callback' => 'Text::initialCaps'])
+        ->title(__('Adds Initialcaps'))
+        ->description(__('Adds <span class="initial"> tag around the initial letter of each paragraph'));
 
-    Filter::set('markdown', [
-			'prepare callback' => FALSE,
-			'process callback' => 'Text::markdown'
-    ])
-		->title(__('Markdown'))
-		->description(__('Allows content to be submitted using Markdown, a simple plain-text syntax that is filtered into valid HTML.'));
+    Filter::set('markdown', ['prepare callback' => false, 'process callback' => 'Text::markdown'])
+        ->title(__('Markdown'))
+        ->description(__('Allows content to be submitted using Markdown, a simple plain-text syntax that is filtered into valid HTML.'));
 
 	// Cache the Filters in production
 	Filter::cache(Kohana::$environment === Kohana::PRODUCTION);

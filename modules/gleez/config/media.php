@@ -11,8 +11,8 @@ return [
     // Write the files to the public directory?
     'cache' => Kohana::$environment === Kohana::PRODUCTION,
 
-    // Combine multiple css/js files into single file. Defaults to FALSE
-    'combine' => FALSE,
+    // Combine multiple css/js files into single file. Defaults to false
+    'combine' => false,
 
     // Supported image formats
     'supported_image_formats' => [

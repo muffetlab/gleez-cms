@@ -25,7 +25,7 @@ class Theme {
 	 * Admin?
 	 * @var boolean
 	 */
-	public static $is_admin = FALSE;
+    public static $is_admin = false;
 
 	/**
 	 * Available themes?
@@ -45,7 +45,7 @@ class Theme {
 	public static function load_themes()
 	{
 		$config       = Kohana::$config->load('site');
-		self::$themes = self::available(FALSE);
+        self::$themes = self::available(false);
 
 		//set admin theme based on path info
 		$path = ltrim(Request::detect_uri(), '/');
@@ -63,7 +63,7 @@ class Theme {
 		}
 
 		//Set mobile theme, if enabled and mobile request
-        if (Request::is_mobile() && $config->get('mobile_theme', FALSE))
+        if (Request::is_mobile() && $config->get('mobile_theme', false))
 		{
 			// Load the mobile theme
 			Theme::$active = $config->get('mobile_theme', 'cerber');
@@ -85,7 +85,7 @@ class Theme {
      * @param boolean|string $theme Theme name [Optional]
      * @throws Kohana_Exception
      */
-	public static function set_theme($theme = FALSE)
+    public static function set_theme($theme = false)
 	{
 		if( !empty($theme)) Theme::$active = $theme;
 		$modules = Kohana::modules();

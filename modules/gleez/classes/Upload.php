@@ -80,7 +80,7 @@ class Upload extends Kohana_Upload
                     ':dir' => $picture_path
                 ]);
 
-                $save = FALSE;
+                $save = false;
             }
         }
         // Check if there is an uploaded file and valid type

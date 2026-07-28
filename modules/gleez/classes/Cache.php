@@ -32,10 +32,10 @@
  *             array(
  *                 'host'       => 'localhost',
  *                 'port'       => 11211,
- *                 'persistent' => FALSE
+ *                 'persistent' => false
  *             )
  *         ),
- *         'compression' => FALSE,  // Use compression?
+ *         'compression' => false,  // Use compression?
  *     ),
  * )
  * ~~~

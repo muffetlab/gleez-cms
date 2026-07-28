@@ -32,7 +32,7 @@ class Shortcode {
 	 * Indicates whether shortcodes are cached
 	 * @var  boolean
 	 */
-	protected static $_cache = FALSE;
+    protected static $_cache = false;
 
 	/**
 	 * Add hook for shortcode tag
@@ -50,7 +50,7 @@ class Shortcode {
 	 * @uses    Assets::css
 	 * @uses    Assets::js
 	 */
-    public static function set(string $tag, callable $callback, $asset = FALSE): array
+    public static function set(string $tag, callable $callback, $asset = false): array
     {
 		if ( ! is_callable($callback) )
 		{
@@ -131,7 +131,7 @@ class Shortcode {
      * @throws Kohana_Exception
      * @uses    Kohana::cache
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    public static function cache(bool $save = false, bool $append = false): bool
     {
 		$cache = Cache::instance();
 
@@ -161,7 +161,7 @@ class Shortcode {
 			else
 			{
 				// Shortcodes were not cached
-				return self::$_cache = FALSE;
+                return self::$_cache = false;
 			}
 		}
 	}

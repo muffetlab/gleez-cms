@@ -24,7 +24,7 @@ class System {
 
 	/**
 	 * Minimum amount of memory allocated to php-script.
-	 * Can be used if ini_get('memory_limit') returns 0, -1, NULL or FALSE.
+     * Can be used if ini_get('memory_limit') returns 0, -1, NULL or false.
 	 * This amount is used by default since PHP 5.3
 	 * @type integer
 	 */
@@ -79,13 +79,13 @@ class System {
      * @param string $path The directory path
      * @param integer $mode Set permission mode (as in chmod) [Optional]
      * @param boolean $recursive Create directories recursively if necessary [Optional]
-     * @return boolean Returns true on success or FALSE on failure
+     * @return boolean Returns true on success or false on failure
 	 *
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
     public static function mkdir(string $path, int $mode = 0777, bool $recursive = true): bool
     {
-		$out = FALSE;
+        $out = false;
         $oldUmask = umask(0);
 		if (! is_dir($path))
 		{
@@ -269,8 +269,7 @@ class System {
      * It can be used to obtain a human-readable form
      * of a PHP memory_limit.
      *
-     * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or FALSE
-     *      returns [System::MIN_MEMORY_LIMIT]
+     * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or false, returns [System::MIN_MEMORY_LIMIT]
      *
      * @return string
      * @throws Kohana_Exception

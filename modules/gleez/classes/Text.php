@@ -132,7 +132,7 @@ class Text extends Kohana_Text
      * @param string $text The text to be filtered
      * @param integer|null $format_id The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
      * @param string|null $langCode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
-     * @param boolean $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to FALSE when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
+     * @param boolean $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to false when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
      * @return  mixed
      * @throws Kohana_Exception
      * @uses    Config::load
@@ -143,7 +143,7 @@ class Text extends Kohana_Text
      * @uses    Filter::process
      * @todo    Make @params description shorter
      */
-    public static function markup(string $text, int $format_id = NULL, string $langCode = NULL, bool $cache = FALSE)
+    public static function markup(string $text, int $format_id = NULL, string $langCode = NULL, bool $cache = false)
 	{
 		// Save some cpu cycles if text is empty or null
 		if(empty($text))

@@ -167,7 +167,7 @@ class Model_Path extends Gleez_Model
 			}
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**

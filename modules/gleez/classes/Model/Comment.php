@@ -299,7 +299,7 @@ class Model_Comment extends Gleez_Model
      * @uses    ACL::check
      * @uses    Module::event
      */
-    public function access($action = FALSE, Model_User $user = NULL): Model_Comment
+    public function access($action = false, Model_User $user = NULL): Model_Comment
     {
 		if ( ! $action)
 		{
@@ -414,7 +414,7 @@ class Model_Comment extends Gleez_Model
      * @uses    ACL::check
      * @uses    Module::event
      */
-    public function user_can($action = FALSE, Model_User $user = NULL)
+    public function user_can($action = false, Model_User $user = NULL)
 	{
 		if( ! $action) $action = 'view';
 
@@ -424,7 +424,8 @@ class Model_Comment extends Gleez_Model
             Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to access non-existent action :act.', [
                 ':act' => $action
             ]);
-			return FALSE;
+
+            return false;
 		}
 
 		if ( ! $this->loaded())
@@ -465,7 +466,8 @@ class Model_Comment extends Gleez_Model
                 Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to view comment :post.', [
                     ':post' => $this->id
                 ]);
-				return FALSE;
+
+                return false;
 			}
 		}
 
@@ -485,7 +487,8 @@ class Model_Comment extends Gleez_Model
                 Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to edit comment :post.', [
                     ':post' => $this->id
                 ]);
-				return FALSE;
+
+                return false;
 			}
 		}
 
@@ -509,7 +512,8 @@ class Model_Comment extends Gleez_Model
                 Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to delete comment :post.', [
                     ':post' => $this->id
                 ]);
-				return FALSE;
+
+                return false;
 			}
 		}
 

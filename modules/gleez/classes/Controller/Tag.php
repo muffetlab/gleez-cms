@@ -70,7 +70,7 @@ class Controller_Tag extends Template {
 			$posts->where('status', '=', 'publish');
 		}
 
-		$total = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
 		if ($total == 0)
 		{

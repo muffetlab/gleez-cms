@@ -39,6 +39,6 @@ return [
         'prefix' => 'session'
     ],
     'cookie' => [
-        'encrypted' => FALSE,
+        'encrypted' => false,
     ],
 ];

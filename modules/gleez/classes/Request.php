@@ -48,7 +48,7 @@ class Request extends Kohana_Request
 			return (preg_match("/$devices/i", $_SERVER['HTTP_USER_AGENT']) > 0);
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -133,12 +133,12 @@ class Request extends Kohana_Request
 	{
 		$referrer = $this->uri();
 
-		if (strpos($referrer, '://') === FALSE)
+        if (strpos($referrer, '://') === false)
 		{
             $referrer = URL::site($referrer, true, Kohana::$index_file);
 		}
 
-		if (strpos($url, '://') === FALSE)
+        if (strpos($url, '://') === false)
 		{
 			// Make the URI into a URL
             $url = URL::site($url, true, Kohana::$index_file);

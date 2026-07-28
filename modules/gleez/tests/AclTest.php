@@ -55,7 +55,7 @@ class Gleez_AclTest extends Unittest_TestCase
         ACL::set('contact', [
             'sending mail' => [
                 'title' => __('Sending Mails'),
-                'restrict access' => FALSE,
+                'restrict access' => false,
                 'description' => __('Ability to send messages for administrators from your site'),
             ],
         ]);

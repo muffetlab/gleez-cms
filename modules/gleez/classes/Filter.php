@@ -24,7 +24,7 @@ class Filter {
 	 * Indicates whether filters are cached
 	 * @var boolean
 	 */
-	public static $cache = FALSE;
+    public static $cache = false;
 
 	/**
 	 * Stores a named filter and returns it
@@ -33,7 +33,7 @@ class Filter {
 	 *
 	 * Example:
 	 * ~~~
-	 * Filter::set('html', array('prepare callback' => FALSE, 'process callback' => 'Text::html' ) )
+     * Filter::set('html', array('prepare callback' => false, 'process callback' => 'Text::html'))
 	 *          ->settings(array(
 	 *                  'html_nofollow' => true,
 	 *                  'allowed_html'  => '<a> <em> <strong> <cite> <blockquote>'
@@ -130,7 +130,7 @@ class Filter {
      * @uses    Cache::get
      * @uses    Cache::set
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    public static function cache(bool $save = false, bool $append = false): bool
     {
 		$cache = Cache::instance();
 
@@ -160,7 +160,7 @@ class Filter {
 			else
 			{
 				// Filters were not cached
-				return Filter::$cache = FALSE;
+                return Filter::$cache = false;
 			}
 		}
 	}
@@ -224,7 +224,7 @@ class Filter {
 		$args = func_get_args();
 		array_shift($args);
 
-        if (is_string($callback) && strpos($callback, '::') !== FALSE)
+        if (is_string($callback) && strpos($callback, '::') !== false)
 		{
 			// Make the static callback into an array
 			$callback = explode('::', $callback, 2);
@@ -264,7 +264,7 @@ class Filter {
 	 * The prepare and process callbacks for filter
 	 * @var array
 	 */
-    protected $_callbacks = ['prepare callback' => FALSE, 'process callback' => FALSE];
+    protected $_callbacks = ['prepare callback' => false, 'process callback' => false];
 
 	/**
 	 * Filter Settings
@@ -321,7 +321,7 @@ class Filter {
      * Example:
      * ~~~
      * $filter->callbacks(array(
-     *     'prepare callback'  => FALSE,
+     *     'prepare callback'  => false,
      *     'process callback'  => 'Text::html'
      * ));
      * ~~~

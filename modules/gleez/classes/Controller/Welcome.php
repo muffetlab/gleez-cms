@@ -56,7 +56,7 @@ class Controller_Welcome extends Template {
 		$content = View::factory('welcome');
 
 		// Disable sidebars on welcome page
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		$this->response->body($content);
 	}

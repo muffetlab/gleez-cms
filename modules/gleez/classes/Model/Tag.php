@@ -91,7 +91,7 @@ class Model_Tag extends Gleez_Model
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
         if (is_array($this->_deleted_column) && $soft)
 		{
@@ -134,7 +134,7 @@ class Model_Tag extends Gleez_Model
 		$alias  = empty($this->path) ? 'tags/'.$this->name : $this->path;
 		$values['source'] = $this->rawurl;
 		$values['alias']  = Path::clean($alias);
-		$values['type']   = empty($this->type) ? FALSE : $this->type ;
+        $values['type'] = empty($this->type) ? false : $this->type;
 		$values['action'] = empty($this->action) ? 'tag' : $this->action;
 
 		$values = Module::action('tag_aliases', $values, $this);

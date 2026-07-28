@@ -19,7 +19,7 @@ class Pagination {
         'items_per_page' => 10,
         'view' => 'pagination/basic',
         'auto_hide' => true,
-        'first_page_in_url' => FALSE,
+        'first_page_in_url' => false,
         'uri' => NULL
     ];
 
@@ -57,25 +57,25 @@ class Pagination {
 	protected $current_last_item;
 
 	/**
-	 * Previous page number; FALSE if the current page is the first one
+     * Previous page number; false if the current page is the first one
 	 * @var mixed
 	 */
 	protected $previous_page;
 
 	/**
-	 * Next page number; FALSE if the current page is the last one
+     * Next page number; false if the current page is the last one
 	 * @var mixed
 	 */
 	protected $next_page;
 
 	/**
-	 * First page number; FALSE if the current page is the first one
+     * First page number; false if the current page is the first one
 	 * @var mixed
 	 */
 	protected $first_page;
 
 	/**
-	 * Last page number; FALSE if the current page is the last one
+     * Last page number; false if the current page is the last one
 	 * @var mixed
 	 */
 	protected $last_page;
@@ -257,10 +257,10 @@ class Pagination {
 			$this->current_page       = (int) min(max(1, $this->current_page), max(1, $this->total_pages));
 			$this->current_first_item = (int) min((($this->current_page - 1) * $this->items_per_page) + 1, $this->total_items);
 			$this->current_last_item  = (int) min($this->current_first_item + $this->items_per_page - 1, $this->total_items);
-			$this->previous_page      = ($this->current_page > 1) ? $this->current_page - 1 : FALSE;
-			$this->next_page          = ($this->current_page < $this->total_pages) ? $this->current_page + 1 : FALSE;
-			$this->first_page         = ($this->current_page === 1) ? FALSE : 1;
-			$this->last_page          = ($this->current_page >= $this->total_pages) ? FALSE : $this->total_pages;
+            $this->previous_page = ($this->current_page > 1) ? $this->current_page - 1 : false;
+            $this->next_page = ($this->current_page < $this->total_pages) ? $this->current_page + 1 : false;
+            $this->first_page = ($this->current_page === 1) ? false : 1;
+            $this->last_page = ($this->current_page >= $this->total_pages) ? false : $this->total_pages;
 			$this->offset            = (int) (($this->current_page - 1) * $this->items_per_page);
 		}
 
@@ -320,7 +320,7 @@ class Pagination {
 		// Page number has to be a clean integer
 		if ( ! Valid::digit($page))
 		{
-			return FALSE;
+            return false;
 		}
 
         return $page > 0 && $page <= $this->total_pages;

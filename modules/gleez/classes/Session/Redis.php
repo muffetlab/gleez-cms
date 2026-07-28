@@ -170,7 +170,7 @@ class Session_Redis extends Session {
 			Cookie::delete($this->_name);
 		} catch (Exception $e) {
 			// An error occurred, the session has not been deleted
-			return FALSE;
+            return false;
 		}
 
         return true;

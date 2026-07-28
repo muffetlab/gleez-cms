@@ -63,8 +63,8 @@
 	</footer>
 	<!-- ########## Footer end ########## -->
 
-	<?php echo Assets::js(FALSE); ?>
-	<?php echo Assets::codes(FALSE, $getNonce); ?>
+    <?php echo Assets::js(false); ?>
+    <?php echo Assets::codes(false, $getNonce); ?>
 	<?php echo $profiler; ?>
 </body>
 </html>

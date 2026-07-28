@@ -53,10 +53,10 @@ class Controller_Contact extends Template {
 
 		$config = Kohana::$config->load('contact');
 
-        Assets::js('textareaCounter', 'media/js/jquery.textareaCounter.plugin.js', ['jquery'], FALSE, [
+        Assets::js('textareaCounter', 'media/js/jquery.textareaCounter.plugin.js', ['jquery'], false, [
             'weight' => 10
         ]);
-        Assets::js('greet/form', 'media/js/greet.form.js', ['textareaCounter'], FALSE, ['weight' => 15]);
+        Assets::js('greet/form', 'media/js/greet.form.js', ['textareaCounter'], false, ['weight' => 15]);
 
 		//Add schema.org support
 		$this->schemaType = 'ContactPage';
@@ -85,7 +85,7 @@ class Controller_Contact extends Template {
 					->bind('errors',     $this->_errors);
 
 		// Initiate Captcha
-        if ($config->get('use_captcha', FALSE) && !$this->_auth->logged_in())
+        if ($config->get('use_captcha', false) && !$this->_auth->logged_in())
 		{
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);

@@ -19,7 +19,7 @@ class Controller_Media extends Controller {
      */
 	public function before()
 	{
-		if ($theme = $this->request->param('theme', FALSE))
+        if ($theme = $this->request->param('theme', false))
 		{
 			Theme::set_theme($theme);
 		}
@@ -48,7 +48,7 @@ class Controller_Media extends Controller {
 	public function action_serve()
 	{
 		// Get file theme from the request
-		$theme = $this->request->param('theme', FALSE);
+        $theme = $this->request->param('theme', false);
 
 		// Get the file path from the request
         $originalFile = $this->request->param('file');
@@ -73,8 +73,8 @@ class Controller_Media extends Controller {
 
 			// This is ignored by check_cache
 			$this->response->headers('cache-control', 'public, max-age=2592000');
-			
-			if (Kohana::$config->load('media')->get('cache', FALSE))
+
+            if (Kohana::$config->load('media')->get('cache', false))
 			{
 				// Set base path
 				$path = Kohana::$config->load('media')->get('public_dir', 'media');

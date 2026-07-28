@@ -18,11 +18,11 @@
  * Assets::css('reset', 'assets/css/reset.css', NULL, array('weight' => -10));
  * Assets::css('grid', 'assets/css/grid.css', 'reset');
  *
- * Assets::js('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', NULL, FALSE, array('weight' => -10));
+ * Assets::js('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', NULL, false, array('weight' => -10));
  * Assets::js('global', 'assets/js/global.js', array('jquery'));
  * Assets::js('stats', 'assets/js/stats.js', NULL, true);
  *
- * Assets::codes('alert', 'alert(\'test\')', NULL, FALSE, array('weight' => -10));
+ * Assets::codes('alert', 'alert(\'test\')', NULL, false, array('weight' => -10));
  *
  * Assets::settings('settings', 'settings');
  * ~~~
@@ -105,7 +105,7 @@ class Assets {
 	{
 		$config = Kohana::$config->load('media');
 
-        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', FALSE))
+        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', false))
 		{
 			$format = self::FORMAT_FILENAME;
 		}
@@ -225,16 +225,16 @@ class Assets {
      * @throws Kohana_Exception
      * @throws Exception
      */
-    public static function js($handle, string $src = NULL, $deps = NULL, bool $footer = FALSE, array $attrs = NULL, string $format = Assets::FORMAT_TAG)
+    public static function js($handle, string $src = NULL, $deps = NULL, bool $footer = false, array $attrs = NULL, string $format = Assets::FORMAT_TAG)
 	{
 		$config = Kohana::$config->load('media');
 
-        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', FALSE))
+        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', false))
 		{
 			$format = self::FORMAT_FILENAME;
 		}
 
-        if ($handle === true || $handle === FALSE)
+        if ($handle === true || $handle === false)
 		{
 			return self::all_js($handle, $format);
 		}
@@ -294,12 +294,12 @@ class Assets {
 	/**
      * Get all JavaScript assets of section (header or footer).
 	 *
-     * @param boolean $footer FALSE for head, true for footer
+     * @param boolean $footer false for head, true for footer
      * @param string $format Format that be returned [Optional]
      * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
 	 */
-    public static function all_js(bool $footer = FALSE, string $format = self::FORMAT_TAG)
+    public static function all_js(bool $footer = false, string $format = self::FORMAT_TAG)
 	{
 		if (empty(self::$js))
 		{
@@ -352,9 +352,9 @@ class Assets {
      * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      */
-    public static function codes($handle, string $code = NULL, $deps = NULL, bool $footer = FALSE, array $attrs = NULL)
+    public static function codes($handle, string $code = NULL, $deps = NULL, bool $footer = false, array $attrs = NULL)
 	{
-        if ($handle === true || $handle === FALSE)
+        if ($handle === true || $handle === false)
 		{
 			return self::all_codes($handle, $code);
 		}
@@ -405,12 +405,12 @@ class Assets {
     /**
      * Get all JavaScript codes of section (header or footer).
      *
-     * @param boolean $footer FALSE for head, true for footer [Optional]
+     * @param boolean $footer false for head, true for footer [Optional]
      * @param string|null $nonce CSP nonce [Optional]
      * @return  string   Asset HTML
      * @throws Kohana_Exception
      */
-    public static function all_codes(bool $footer = FALSE, string $nonce = NULL): string
+    public static function all_codes(bool $footer = false, string $nonce = NULL): string
     {
 		if (empty(self::$codes))
 		{
@@ -575,7 +575,7 @@ class Assets {
      */
     public static function tableDrag()
 	{
-        self::js('jquery_once', 'media/js/jquery.once.min.js', ['jquery'], FALSE, ['weight' => -10]);
+        self::js('jquery_once', 'media/js/jquery.once.min.js', ['jquery'], false, ['weight' => -10]);
         self::js('table-drag', 'media/js/greet.tableDrag.js');
         self::css('table-drag', 'media/css/greet.tableDrag.css');
 	}
@@ -592,7 +592,7 @@ class Assets {
         if (isset(self::$js) || isset(self::$codes) || isset(self::$settings))
 		{
             self::js('jquery', 'media/js/jquery-2.2.4.min.js', null, false, ['weight' => -20]);
-            self::js('gleez', 'media/js/gleez.js', ['jquery'], FALSE, ['weight' => -5]);
+            self::js('gleez', 'media/js/gleez.js', ['jquery'], false, ['weight' => -5]);
 
             $data = Arr::merge([['basePath' => URL::base(true)]], self::$settings);
 
@@ -710,7 +710,7 @@ class Assets {
 	public static function datatables()
 	{
         self::js('datatables', 'media/js/datatables.min.js', ['jquery'], false, ['weight' => -10]);
-        self::js('greet.dataTables', 'media/js/greet.dataTables.js', ['bootstrap'], FALSE, ['weight' => -6]);
+        self::js('greet.dataTables', 'media/js/greet.dataTables.js', ['bootstrap'], false, ['weight' => -6]);
         self::css('datatables.bootstrap', 'media/css/dataTables.bootstrap.min.css', null, ['weight' => -2]);
 	}
 
@@ -724,10 +724,10 @@ class Assets {
         self::css('form', 'media/css/form.css', ['weight' => 2]);
         self::css('greet.popup', 'media/css/greet.popup.css', ['bootstrap'], ['media' => 'screen', 'weight' => 15]);
 
-        self::js('form', 'media/js/jquery.form.min.js', ['jquery'], FALSE, ['weight' => 15]);
-        self::js('greet.ajaxform', 'media/js/greet.ajaxform.js', NULL, FALSE, ['weight' => 17]);
+        self::js('form', 'media/js/jquery.form.min.js', ['jquery'], false, ['weight' => 15]);
+        self::js('greet.ajaxform', 'media/js/greet.ajaxform.js', NULL, false, ['weight' => 17]);
 		self::js('greet.typeahead', 'media/js/greet.typeahead.js', 'gleez');
-        self::js('greet.popup', 'media/js/greet.popup.js', ['bootstrap'], FALSE, ['weight' => 20]);
+        self::js('greet.popup', 'media/js/greet.popup.js', ['bootstrap'], false, ['weight' => 20]);
 	}
 
 	/**

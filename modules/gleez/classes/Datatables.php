@@ -172,7 +172,7 @@ class Datatables {
 	 */
     protected function _count_total(): int
     {
-		return $this->_object->reset(FALSE)->count_all();
+        return $this->_object->reset(false)->count_all();
 	}
 
 	/**

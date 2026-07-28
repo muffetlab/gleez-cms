@@ -9,40 +9,40 @@ return [
     'items_per_page' => 15,
 
     // Enable captcha?
-    'use_captcha' => FALSE,
+    'use_captcha' => false,
 
     // Enable to set page author?
     'use_authors' => true,
 
     // Enable teaser?
-    'use_excerpt' => FALSE,
+    'use_excerpt' => false,
 
     // Enable comment?
     'use_comment' => true,
 
     // Enable tags?
-    'use_tags' => FALSE,
+    'use_tags' => false,
 
     // Show submitted info in views?
     'use_submitted' => true,
 
     // Enable terms?
-    'use_category' => FALSE,
+    'use_category' => false,
 
     // Enable login buttons above comment form?
     'use_provider_buttons' => true,
 
     // Enable per page caching for performance
-    'use_cache' => FALSE,
+    'use_cache' => false,
 
     // Allow people to post Comments (0: disabled, 1: read, 2: read/write)
     'comment' => 1,
 
     // Comment display mode
-    'comment_default_mode' => FALSE,
+    'comment_default_mode' => false,
 
     // Allow anonymous commenting (with contact information)?
-    'comment_anonymous' => FALSE,
+    'comment_anonymous' => false,
 
     // Comments per page
     'comments_per_page' => 20,

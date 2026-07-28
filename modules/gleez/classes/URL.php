@@ -44,7 +44,7 @@ class URL extends Kohana_URL
 	 */
     public static function is_absolute(string $url): bool
     {
-		return (strpos($url, '://') === FALSE);
+        return (strpos($url, '://') === false);
 	}
 
     /**
@@ -58,7 +58,7 @@ class URL extends Kohana_URL
      */
     public static function is_remote(string $url): bool
     {
-		if((strpos($url, '://') !== FALSE))
+        if ((strpos($url, '://') !== false))
 		{
             $base = URL::base(true);
 
@@ -68,7 +68,7 @@ class URL extends Kohana_URL
 			return trim($host1) === trim($host2);
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -85,7 +85,7 @@ class URL extends Kohana_URL
 		$url = parse_url($url);
         $url['query_params'] = [];
 
-		// On seriously malformed URLs, parse_url() may return FALSE.
+        // On seriously malformed URLs, parse_url() may return false.
 		if (isset($url['query']))
 		{
 			$pairs = explode('&', $url['query']);
@@ -114,7 +114,7 @@ class URL extends Kohana_URL
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function current($protocol = NULL, bool $index = FALSE, bool $with_query_params = true): string
+    public static function current($protocol = NULL, bool $index = false, bool $with_query_params = true): string
     {
 		static $uri;
 		$query = null;
@@ -143,7 +143,7 @@ class URL extends Kohana_URL
 		if (preg_match('#^[A-Z][A-Z0-9+.\-]+://#i', $url))
 		{
 			// Don't check URIs with a scheme ... not really a URI is it?
-			return FALSE;
+            return false;
 		}
 
 		$current = explode('/', trim(str_replace(self::base(), '', self::current()), '/'));
@@ -156,7 +156,7 @@ class URL extends Kohana_URL
             return true;
 		}
 
-		$result = FALSE;
+        $result = false;
 
 		if (count($url) < count($current))
 		{

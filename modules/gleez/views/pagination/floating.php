@@ -57,13 +57,13 @@ for ($i = $n7; $i <= $n8; $i++)
 ?>
 <p class="pagination">
 
-	<?php if ($first_page !== FALSE): ?>
+    <?php if ($first_page !== false): ?>
 		<a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo __('First') ?></a>
 	<?php else: ?>
 		<?php echo __('First') ?>
 	<?php endif ?>
 
-	<?php if ($previous_page !== FALSE): ?>
+    <?php if ($previous_page !== false): ?>
 		<a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo __('Previous') ?></a>
 	<?php else: ?>
 		<?php echo __('Previous') ?>
@@ -79,13 +79,13 @@ for ($i = $n7; $i <= $n8; $i++)
 
 	<?php endforeach ?>
 
-	<?php if ($next_page !== FALSE): ?>
+    <?php if ($next_page !== false): ?>
 		<a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo __('Next') ?></a>
 	<?php else: ?>
 		<?php echo __('Next') ?>
 	<?php endif ?>
 
-	<?php if ($last_page !== FALSE): ?>
+    <?php if ($last_page !== false): ?>
 		<a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo __('Last') ?></a>
 	<?php else: ?>
 		<?php echo __('Last') ?>

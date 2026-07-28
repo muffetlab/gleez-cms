@@ -71,7 +71,7 @@ class Controller_Admin extends Template {
 		}
 
 		// Disable sidebars on login page
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		$this->title = __('Sign In');
         $user = ORM::factory('User');

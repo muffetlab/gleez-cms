@@ -42,7 +42,7 @@ class Widget_Comment extends Widget {
 		// Don't show the widget on edit or delete actions.
         if (Request::current()->action() == 'edit' || Request::current()->action() == 'delete')
 		{
-			return FALSE;
+            return false;
 		}
 
         $cache = Cache::instance();

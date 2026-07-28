@@ -32,7 +32,7 @@ class HTML extends Kohana_HTML
     public static function script(string $file, array $attributes = null, $protocol = null, bool $index = false): string
     {
 		// Allow theme to serve its own media assets
-        if (strpos($file, 'media/js') !== FALSE && Gleez::$installed && strpos($file, 'guide-media') === FALSE)
+        if (strpos($file, 'media/js') !== false && Gleez::$installed && strpos($file, 'guide-media') === false)
 		{
 			$theme = Theme::$active;
             $file = str_replace(['media/js'], "media/$theme/js", $file);
@@ -60,7 +60,7 @@ class HTML extends Kohana_HTML
     public static function style(string $file, array $attributes = null, $protocol = null, bool $index = false): string
     {
 		// Allow theme to serve its own media assets
-        if (strpos($file, 'media/css') !== FALSE && Gleez::$installed && strpos($file, 'guide-media') === FALSE)
+        if (strpos($file, 'media/css') !== false && Gleez::$installed && strpos($file, 'guide-media') === false)
 		{
 			$theme = Theme::$active;
             $file = str_replace(['media/css'], "media/$theme/css", $file);
@@ -87,7 +87,7 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    URL::base
      */
-    public static function resize(string $file, array $attributes = NULL, $protocol = NULL, bool $index = FALSE): string
+    public static function resize(string $file, array $attributes = NULL, $protocol = NULL, bool $index = false): string
     {
 		if (strlen($file) <= 1)
 		{
@@ -114,11 +114,11 @@ class HTML extends Kohana_HTML
 			$type = 'crop';
 		}
 
-		if (strpos($file, '://') === FALSE)
+        if (strpos($file, '://') === false)
 		{
             if (isset($width) && isset($height))
 			{
-				$file = (strpos($file, 'media/') === FALSE) ? $file : str_replace('media/', '', $file);
+                $file = (strpos($file, 'media/') === false) ? $file : str_replace('media/', '', $file);
                 $file = "media/imagecache/$type/{$width}x$height/$file";
 			}
 

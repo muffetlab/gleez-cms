@@ -240,7 +240,7 @@ class Gleez_Locale {
 			throw new Kohana_Exception('Failed to autodetect of Locale!');
 		}
 
-		if (strpos($locale, '-') !== FALSE)
+        if (strpos($locale, '-') !== false)
 		{
 			$locale = strtr($locale, '-', '_');
 		}
@@ -385,7 +385,7 @@ class Gleez_Locale {
 
 		foreach ($languages as $locale)
 		{
-			if (strpos($locale, '=') !== FALSE)
+            if (strpos($locale, '=') !== false)
 			{
 				$language = substr($locale, strpos($locale, '='));
 				$language = substr($language, 1);
@@ -393,12 +393,10 @@ class Gleez_Locale {
 
 			if ($language !== 'C')
 			{
-				if (strpos($language, '.') !== FALSE)
+                if (strpos($language, '.') !== false)
 				{
 					$language = substr($language, 0, strpos($language, '.'));
-				}
-				elseif (strpos($language, '@') !== FALSE)
-				{
+                } elseif (strpos($language, '@') !== false) {
 					$language = substr($language, 0, strpos($language, '@'));
 				}
 
@@ -420,7 +418,7 @@ class Gleez_Locale {
 				{
                     $languageArray[$language] = 1;
 
-					if (strpos($language, '_') !== FALSE)
+                    if (strpos($language, '_') !== false)
 					{
                         $languageArray[substr($language, 0, strpos($language, '_'))] = 1;
 					}
@@ -495,7 +493,7 @@ class Gleez_Locale {
 			return $locale[1];
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -525,8 +523,7 @@ class Gleez_Locale {
 	 * ~~~
 	 *
 	 * @return  string   Region part of the locale if available
-	 *
-	 * @return  boolean  FALSE if not available
+     * @return  boolean  false if not available
 	 */
 	public function get_region()
 	{
@@ -537,7 +534,7 @@ class Gleez_Locale {
 			return $locale[1];
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**

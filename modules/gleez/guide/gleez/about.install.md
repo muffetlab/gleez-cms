@@ -110,7 +110,7 @@ There are a few things you'll want to do with your application before moving int
 		 */
 		Kohana::init(array(
 			'base_url'   => '/',
-			'index_file' => FALSE,
+            'index_file' => false,
 			'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
 			'caching'    => Kohana::$environment === Kohana::PRODUCTION,
 		));

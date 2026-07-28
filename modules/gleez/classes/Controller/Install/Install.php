@@ -41,7 +41,7 @@ class Controller_Install_Install extends Controller_Template {
 		if ($this->request->action() === 'media')
 		{
 			// Do not template media files
-			$this->auto_render = FALSE;
+            $this->auto_render = false;
 		}
 		else
 		{

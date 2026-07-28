@@ -25,7 +25,7 @@ class Controller_Comment extends Template {
 		ACL::required('access comment');
 
 		// Disable sidebars on comments page
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		parent::before();
 	}
@@ -81,7 +81,7 @@ class Controller_Comment extends Template {
 
 		$this->title = __('Edit Comment');
         $view = View::factory('comment/form')
-            ->set('use_captcha', FALSE)
+            ->set('use_captcha', false)
             ->set('is_edit', true)
             ->set('auth', Auth::instance())
             ->set('item', $comment)

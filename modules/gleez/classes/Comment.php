@@ -29,7 +29,7 @@ class Comment {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public static function form($controller, $item, $captcha = FALSE)
+    public static function form($controller, $item, $captcha = false)
 	{
 		// Set default comment form action
 		$action = Request::current()->uri();
@@ -37,7 +37,7 @@ class Comment {
         $view = View::factory('comment/form')
             ->set('use_captcha', $captcha)
             ->set('action', $action)
-            ->set('is_edit', FALSE)
+            ->set('is_edit', false)
             ->set('auth', Auth::instance())
             ->set('destination', [])
             ->set('item', $item)
@@ -125,7 +125,7 @@ class Comment {
      * @param boolean $list true for dropdown for bult actions
 	 * @return  array
 	 */
-    public static function bulk_actions(bool $list = FALSE): array
+    public static function bulk_actions(bool $list = false): array
     {
         $states = [
             'publish' => [

@@ -117,7 +117,7 @@ class Controller_Comments extends Controller {
 		}
 
 		// Get total number of comments
-		$total  = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
 		// Check if there are any comments to display
 		if ($total == 0)

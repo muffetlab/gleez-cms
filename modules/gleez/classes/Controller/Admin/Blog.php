@@ -285,7 +285,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 	 */
     private function _bulk_update(array $post)
 	{
-		$operations = Post::bulk_actions(FALSE, 'blog');
+        $operations = Post::bulk_actions(false, 'blog');
 		$operation  = $operations[$post['operation']];
 		$blogs = array_filter($post['blogs']); // Filter out unchecked pages
 

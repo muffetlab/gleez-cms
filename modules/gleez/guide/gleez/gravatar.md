@@ -110,7 +110,7 @@ $avatar->setSize(64);
 
 ### default_image
 
-The default image if gravatar is not found, FALSE uses gravatar default.
+The default image if gravatar is not found, false uses gravatar default.
 Possible values:
 
 + __404__ &mdash; do not load any image if none is associated with the email, instead return an HTTP 404 (File Not Found) response
@@ -178,7 +178,7 @@ $avatar->setForceDefault();
 $avatar->setForceDefault(true);
 
 // Disable
-$avatar->setForceDefault(FALSE);
+$avatar->setForceDefault(false);
 ~~~
 
 ### valid_formats

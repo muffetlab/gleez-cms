@@ -128,14 +128,14 @@ class Controller_Admin_Term extends Controller_Admin {
         $action = Route::get('admin/term')->uri(['action' => 'add', 'id' => $vocab->id]);
         $allowed_types = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
 
-		$view = View::factory('admin/term/form')
-					->bind('vocab',  $vocab)
-					->bind('post',   $post)
-					->set('action',  $action)
-					->set('terms',   $terms)
-					->set('path',    FALSE)
-					->bind('errors', $this->_errors)
-					->set('allowed_types', $allowed_types);
+        $view = View::factory('admin/term/form')
+            ->bind('vocab', $vocab)
+            ->bind('post', $post)
+            ->set('action', $action)
+            ->set('terms', $terms)
+            ->set('path', false)
+            ->bind('errors', $this->_errors)
+            ->set('allowed_types', $allowed_types);
 
 		/** @var $post Model_Term */
         $post = ORM::factory('Term');

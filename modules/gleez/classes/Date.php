@@ -23,7 +23,7 @@ class Date extends Kohana_Date
     public static function formatted_time(string $datetime_str = 'now', string $timestamp_format = null, string $timezone = null): string
     {
 		//Display Dates in site defined timezone format
-        if (Kohana::$config->load('site')->get('timezone_override', FALSE) && $timezone === NULL)
+        if (Kohana::$config->load('site')->get('timezone_override', false) && $timezone === NULL)
 		{
 			// Default timezone from config
             $timezone = Kohana::$config->load('site')->get('timezone', 'UTC');
@@ -201,7 +201,7 @@ class Date extends Kohana_Date
 	 *
 	 * @todo   Need add i18n ability
 	 */
-    public static function date_time_formats(bool $timestamp = FALSE): array
+    public static function date_time_formats(bool $timestamp = false): array
     {
         $date_time_format = [
             'l, F j, Y - H:i',
@@ -262,7 +262,7 @@ class Date extends Kohana_Date
 	 *
 	 * @todo   Need add i18n ability
 	 */
-    public static function date_formats(bool $timestamp = FALSE): array
+    public static function date_formats(bool $timestamp = false): array
     {
         $date_format = [
             'l, F j, Y',
@@ -312,7 +312,7 @@ class Date extends Kohana_Date
 	 *
 	 * @todo   Need add i18n ability
 	 */
-    public static function time_formats(bool $timestamp = FALSE): array
+    public static function time_formats(bool $timestamp = false): array
     {
         $time_format = [
             'g:i:s a',

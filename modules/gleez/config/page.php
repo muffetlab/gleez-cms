@@ -8,13 +8,13 @@ return [
     'items_per_page' => 15,
 
     // Enable captcha
-    'use_captcha' => FALSE,
+    'use_captcha' => false,
 
     // Enable to set page author
     'use_authors' => true,
 
     // Enable teaser
-    'use_excerpt' => FALSE,
+    'use_excerpt' => false,
 
     // Enable comments
     'use_comment' => true,
@@ -22,8 +22,8 @@ return [
     // View submitted info in views
     'use_submitted' => true,
 
-    // Enable taxonomy. Array of term id's for sets or FALSE to disable
-    'use_category' => FALSE,
+    // Enable taxonomy. Array of term id's for sets or false to disable
+    'use_category' => false,
 
     // Enable tags
     'use_tags' => true,
@@ -32,7 +32,7 @@ return [
     'use_provider_buttons' => true,
 
     // Enable per page caching for performance
-    'use_cache' => FALSE,
+    'use_cache' => false,
 
     // Allow people to post Comment(s): 0 - disabled, 1 - read, 2 - read/write
     'comment' => 0,
@@ -41,7 +41,7 @@ return [
     'comment_default_mode' => 0,
 
     // Allow anonymous commenting (with contact information)
-    'comment_anonymous' => FALSE,
+    'comment_anonymous' => false,
 
     // Comments per page
     'comments_per_page' => 20,

@@ -46,7 +46,7 @@ class Model_Blog extends Post {
 
 		if( ! $config->use_excerpt)
 		{
-			$this->teaser = FALSE;
+            $this->teaser = false;
 		}
 
         Cache::instance()->delete($this->type . ':recent_blogs');
@@ -116,7 +116,7 @@ class Model_Blog extends Post {
      * @return  Post
      * @throws Kohana_Exception
      */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 

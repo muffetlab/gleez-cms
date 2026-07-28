@@ -47,7 +47,7 @@ class Form extends Kohana_Form
 			// Properly parse the path and query
 			$url = URL::explode($action);
 
-			//On seriously malformed URLs, parse_url() may return FALSE.
+            // On seriously malformed URLs, parse_url() may return false.
             if (isset($url['path']) && is_array($url['query_params']))
 			{
 				//add destination param
@@ -66,7 +66,7 @@ class Form extends Kohana_Form
             Assets::css('form', 'media/css/form.css', ['weight' => 2]);
 
 			$action  = md5($action . CSRF::key());
-			$out 	.= self::hidden('_token', CSRF::token(FALSE, $action)).PHP_EOL;
+            $out .= self::hidden('_token', CSRF::token(false, $action)) . PHP_EOL;
 			$out 	.= self::hidden('_action', $action).PHP_EOL;
 		}
 

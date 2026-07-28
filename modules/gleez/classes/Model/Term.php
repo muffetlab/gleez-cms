@@ -128,7 +128,7 @@ class Model_Term extends ORM_MPTT {
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
         if (is_array($this->_deleted_column) && $soft)
 		{

@@ -71,19 +71,18 @@ class Tags {
      * This method has been refactored to automatically look for existing tags and run
      * adds/updates/deletes as appropriate.
      *
-     * Returns true if successful, FALSE otherwise.
-     *
      * @param string $tags The raw string form of the tag to delete. See above for notes.
      * @param Model $object The Model Object
      * @param boolean|integer $user_id The User id [Optional]
      * @param boolean $skip_updates Whether to skip the update portion for objects that haven't been tagged [Optional]
-     * @return    boolean
+     * @return boolean Returns true if successful, false otherwise.
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function tagging(string $tags, Model $object, $user_id = FALSE, bool $skip_updates = true): bool
+    public function tagging(string $tags, Model $object, $user_id = false, bool $skip_updates = true): bool
     {
-		if ( ! $user_id)  return FALSE;
+        if (!$user_id)
+            return false;
 
 		$tags = self::explode($tags);
 		$old_tags = $object->tags->find_all();
@@ -165,7 +164,7 @@ class Tags {
 
         if (!$user_id || !$object_id || empty($tag))
 		{
-			return FALSE;
+            return false;
 		}
 
         if (!empty($this->config['append_to_integer']) && is_numeric($tag) && intval($tag) == $tag)
@@ -195,7 +194,7 @@ class Tags {
 		$result = ORM::factory(Inflector::singular($this->config['tag_table']))
 			->where('name', '=', $tag)->where('type', '=', $object->type);
 
-		if ($result->reset(FALSE)->count_all() > 0)
+        if ($result->reset(false)->count_all() > 0)
 		{
 			$result = $result->find();
 			$tag_id = $result->id;
@@ -213,7 +212,7 @@ class Tags {
 
 		if ( ! ($tag_id > 0))
 		{
-			return FALSE;
+            return false;
 		}
 
 		$new_tagging = ORM::factory(Inflector::singular($this->config['tagging_model']));
@@ -306,7 +305,7 @@ class Tags {
 		foreach ($tags as $tag)
 		{
 			// Commas and quotes in tag names are special cases, so encode them.
-            if (strpos($tag, ',') !== FALSE || strpos($tag, '"') !== FALSE)
+            if (strpos($tag, ',') !== false || strpos($tag, '"') !== false)
 			{
 				$tag = '"' . str_replace('"', '""', $tag) . '"';
 			}

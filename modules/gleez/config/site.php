@@ -39,10 +39,10 @@ return [
     'admin_theme' => 'cerber',
 
     // Mobile Theme or false
-    'mobile_theme' => FALSE,
+    'mobile_theme' => false,
 
     // Maintenance Mode
-    'maintenance_mode' => FALSE,
+    'maintenance_mode' => false,
 
     // The module search paths. They are searched in the order given.
     'module_paths' => [MODPATH],
@@ -81,7 +81,7 @@ return [
     'feed_ttl' => 60,
 
     // Use Gravatar service?
-    'use_gravatars' => FALSE,
+    'use_gravatars' => false,
 
     // Meta defaults
     'meta' => [
@@ -118,9 +118,9 @@ return [
 
     /**
      * Allow locale override.
-     * Change the default locale, accepted values: FALSE|ALL|USER|CLIENT|URL|DOMAIN
+     * Change the default locale, accepted values: false|ALL|USER|CLIENT|URL|DOMAIN
      */
-    'locale_override' => FALSE,
+    'locale_override' => false,
 
     /**
      * Locale cookie key.
@@ -178,7 +178,7 @@ return [
     'timezone' => 'Asia/Kolkata',
 
     // Allow timezone override.
-    'timezone_override' => FALSE,
+    'timezone_override' => false,
 
     /**
      * Blocked ips.

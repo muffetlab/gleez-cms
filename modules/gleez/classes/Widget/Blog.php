@@ -52,7 +52,7 @@ class Widget_Blog extends Widget {
 		// Don't show the widget on edit or delete actions
         if ($action == 'edit' || $action == 'delete')
 		{
-			return FALSE;
+            return false;
 		}
 
         $cache = Cache::instance();
@@ -99,7 +99,7 @@ class Widget_Blog extends Widget {
 		// Don't show the widget on edit or delete actions
         if ($action == 'edit' || $action == 'delete')
 		{
-			return FALSE;
+            return false;
 		}
 
         $cache = Cache::instance();

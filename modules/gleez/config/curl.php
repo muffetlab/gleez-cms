@@ -4,5 +4,5 @@ return [
     CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; Gleez v' . Gleez::VERSION . ' https://gleezcms.org/)',
     CURLOPT_CONNECTTIMEOUT => 5,
     CURLOPT_TIMEOUT => 5,
-    CURLOPT_HEADER => FALSE,
+    CURLOPT_HEADER => false,
 ];

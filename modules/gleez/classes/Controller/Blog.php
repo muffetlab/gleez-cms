@@ -24,7 +24,7 @@ class Controller_Blog extends Template {
      */
 	public function before()
 	{
-		$id = $this->request->param('id', FALSE);
+        $id = $this->request->param('id', false);
 
         if ($id && $this->request->action() == 'index')
 		{
@@ -54,7 +54,7 @@ class Controller_Blog extends Template {
 			Assets::editor('.textarea', I18n::$lang);
 
 			// Flag to disable left/right sidebars
-			$this->_sidebars = FALSE;
+            $this->_sidebars = false;
 		}
 
 		parent::after();
@@ -91,7 +91,7 @@ class Controller_Blog extends Template {
 		 * Bug in ORM to repeat the `where()` methods after using `count_all()`
 		 * @link http://forum.kohanaframework.org/discussion/7736 Solved
 		 */
-		$total = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
 		if ($total == 0)
 		{
@@ -191,7 +191,7 @@ class Controller_Blog extends Template {
         )
 		{
 			// Determine pagination offset
-			$p = ((int) $this->request->param('page', 0)) ? '/p'.$this->request->param('page', 0) : FALSE;
+            $p = ((int) $this->request->param('page', 0)) ? '/p' . $this->request->param('page', 0) : false;
 
 			// Handle comment listing
 			$comments = Request::factory('comments/blog/public/'.$id.$p)->execute()->body();
@@ -265,29 +265,29 @@ class Controller_Blog extends Template {
 		// Set form action
         $action = Route::get('blog')->uri(['action' => 'add']) . URL::query($destination);
 
-		$view = View::factory('blog/form')
-			->set('destination', $destination)
-			->set('action',      $action)
-			->set('config',      $config)
-			->set('created',     FALSE)
-			->set('author',      FALSE)
-			->set('path',        FALSE)
-            ->set('tags', $_POST['form_tags'] ?? FALSE)
-			->set('image',        FALSE)
-			->bind('errors',     $this->_errors)
-			->bind('terms',      $terms)
-			->bind('blog',       $post);
+        $view = View::factory('blog/form')
+            ->set('destination', $destination)
+            ->set('action', $action)
+            ->set('config', $config)
+            ->set('created', false)
+            ->set('author', false)
+            ->set('path', false)
+            ->set('tags', $_POST['form_tags'] ?? false)
+            ->set('image', false)
+            ->bind('errors', $this->_errors)
+            ->bind('terms', $terms)
+            ->bind('blog', $post);
 
 
         $post = ORM::factory('Blog');
 		$post->status = $config->get('default_status', 'draft');
 
-		if ($config->get('use_category', FALSE))
+        if ($config->get('use_category', false))
 		{
             $terms = ORM::factory('Term', ['type' => 'blog', 'lvl' => 1])->select_list('id', 'name', '--');
 		}
 
-		if ($config->get('use_captcha', FALSE))
+        if ($config->get('use_captcha', false))
 		{
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
@@ -356,20 +356,20 @@ class Controller_Blog extends Template {
 		// Set form action
         $action = Route::get('blog')->uri(['id' => $id, 'action' => 'edit']) . URL::query($destination);
 
-		$view = View::factory('blog/form')
-			->set('destination',  $destination)
-			->set('action',       $action)
-			->set('config',       $config)
-			->set('path',         FALSE)
-			->set('created',      $post->created)
-			->set('author',       $post->user->name)
-			->set('tags',         Tags::implode($post->tags_form))
-			->set('image',        FALSE)
-			->bind('errors',      $this->_errors)
-			->bind('terms',       $terms)
-			->bind('blog',        $post);
+        $view = View::factory('blog/form')
+            ->set('destination', $destination)
+            ->set('action', $action)
+            ->set('config', $config)
+            ->set('path', false)
+            ->set('created', $post->created)
+            ->set('author', $post->user->name)
+            ->set('tags', Tags::implode($post->tags_form))
+            ->set('image', false)
+            ->bind('errors', $this->_errors)
+            ->bind('terms', $terms)
+            ->bind('blog', $post);
 
-		if ($config->get('use_captcha', FALSE))
+        if ($config->get('use_captcha', false))
 		{
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
@@ -380,7 +380,7 @@ class Controller_Blog extends Template {
 			$view->set('path', $path['alias']);
 		}
 
-		if ($config->get('use_category', FALSE))
+        if ($config->get('use_category', false))
 		{
             $terms = ORM::factory('Term', ['type' => 'blog', 'lvl' => 1])
 				->select_list('id', 'name', '--');
@@ -538,7 +538,7 @@ class Controller_Blog extends Template {
 			$posts->where('status', '=', 'publish');
 		}
 
-		$total = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
 		if ($total == 0)
 		{
@@ -610,7 +610,7 @@ class Controller_Blog extends Template {
 			$posts->where('status', '=', 'publish');
 		}
 
-		$total = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
 		if ($total == 0)
 		{

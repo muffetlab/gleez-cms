@@ -155,7 +155,7 @@ class ORM_MPTT extends Gleez_Model
 		}
 		
 		if ((int) $this->pk() === (int) $target->pk())
-			return FALSE;
+            return false;
 
 		return ((int) $this->{$this->parent_column} === (int) $target->{$target->parent_column});
 	}
@@ -414,7 +414,7 @@ class ORM_MPTT extends Gleez_Model
      * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
 	 * @throws  Kohana_Exception
 	 */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
 		// Start the transaction
 		$this->_db->begin();
@@ -462,7 +462,7 @@ class ORM_MPTT extends Gleez_Model
     {
 		$target = $this->parent_from($target, $this->primary_key());
 
-        return $this->move($target, FALSE, 0, 1, true);
+        return $this->move($target, false, 0, 1, true);
 	}
 
     /**
@@ -474,7 +474,7 @@ class ORM_MPTT extends Gleez_Model
     {
 		$target = $this->parent_from($target, $this->parent_column);
 
-        return $this->move($target, true, 0, 0, FALSE);
+        return $this->move($target, true, 0, 0, false);
 	}
 
     /**
@@ -485,7 +485,8 @@ class ORM_MPTT extends Gleez_Model
     public function move_to_next_sibling($target): ORM_MPTT
     {
 		$target = $this->parent_from($target, $this->parent_column);
-		return $this->move($target, FALSE, 1, 0, FALSE);
+
+        return $this->move($target, false, 1, 0, false);
 	}
 
     /**
@@ -528,7 +529,7 @@ class ORM_MPTT extends Gleez_Model
             if (
                 $target->is_descendant($this)
                 || $this->{$this->primary_key()} === $target->{$this->primary_key()}
-                || $allow_root_target === FALSE && $target->is_root()
+                || $allow_root_target === false && $target->is_root()
             )
 			{
 				$this->_db->rollback();
@@ -661,7 +662,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function parents(bool $root = true, bool $with_self = FALSE, string $direction = 'ASC', bool $direct_parent_only = FALSE)
+    public function parents(bool $root = true, bool $with_self = false, string $direction = 'ASC', bool $direct_parent_only = false)
 	{
 		$suffix = $with_self ? '=' : '';
 
@@ -695,9 +696,9 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function children(bool $self = FALSE, string $direction = 'ASC', $limit = FALSE)
+    public function children(bool $self = false, string $direction = 'ASC', $limit = false)
 	{
-        return $this->descendants($self, $direction, true, FALSE, $limit);
+        return $this->descendants($self, $direction, true, false, $limit);
 	}
 
     /**
@@ -732,7 +733,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function siblings(bool $self = FALSE, string $direction = 'ASC')
+    public function siblings(bool $self = false, string $direction = 'ASC')
 	{
 		$query = self::factory($this->object_name())
 			->where($this->left_column, '>', $this->parent->left())
@@ -757,7 +758,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function leaves(bool $self = FALSE, string $direction = 'ASC')
+    public function leaves(bool $self = false, string $direction = 'ASC')
 	{
         return $this->descendants($self, $direction, true, true);
 	}
@@ -773,7 +774,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function descendants(bool $self = FALSE, string $direction = 'ASC', bool $direct_children_only = FALSE, bool $leaves_only = FALSE, $limit = FALSE)
+    public function descendants(bool $self = false, string $direction = 'ASC', bool $direct_children_only = false, bool $leaves_only = false, $limit = false)
 	{
 		$left_operator = $self ? '>=' : '>';
 		$right_operator = $self ? '<=' : '<';
@@ -804,8 +805,8 @@ class ORM_MPTT extends Gleez_Model
 		{
 			$query->where($this->right_column, '=', DB::expr($this->left_column.' + 1'));
 		}
-		
-		if ($limit !== FALSE)
+
+        if ($limit !== false)
 		{
 			$query->limit($limit);
 		}
@@ -1053,9 +1054,9 @@ class ORM_MPTT extends Gleez_Model
 			case 'children':
 				return $this->children();
 			case 'first_child':
-				return $this->children(FALSE, 'ASC', 1);
+                return $this->children(false, 'ASC', 1);
 			case 'last_child':
-				return $this->children(FALSE, 'DESC', 1);
+                return $this->children(false, 'DESC', 1);
 			case 'siblings':
 				return $this->siblings();
 			case 'root':
