@@ -20,7 +20,7 @@ class Pagination {
         'view' => 'pagination/basic',
         'auto_hide' => true,
         'first_page_in_url' => false,
-        'uri' => NULL
+        'uri' => null
     ];
 
 	// Current page number
@@ -118,7 +118,7 @@ class Pagination {
      * @return  Pagination
      * @throws Kohana_Exception
      */
-    public static function factory(array $config = [], Request $request = NULL): Pagination
+    public static function factory(array $config = [], Request $request = null): Pagination
     {
 		return new self($config, $request);
 	}
@@ -130,7 +130,7 @@ class Pagination {
      * @param Request|null $request Request [Optional]
      * @throws Kohana_Exception
      */
-    public function __construct(array $config = [], Request $request = NULL)
+    public function __construct(array $config = [], Request $request = null)
 	{
 		// Overwrite system defaults with application defaults
 		$this->config = $this->config_group() + $this->config;
@@ -286,8 +286,8 @@ class Pagination {
 		// No page number in URLs to first page
         if ($page === 1 && !$this->config['first_page_in_url'])
 		{
-			$page = NULL;
-			$pager = NULL;
+            $page = null;
+            $pager = null;
 		}
 
 		switch ($this->config['current_page']['source'])
@@ -333,7 +333,7 @@ class Pagination {
      * @return  string  pagination output (HTML)
      * @throws View_Exception
      */
-    public function render($view = NULL): string
+    public function render($view = null): string
     {
 		// Automatically hide pagination whenever it is superfluous
         if ($this->config['auto_hide'] === true && $this->total_pages <= 1)
@@ -366,7 +366,7 @@ class Pagination {
      * @param Request|null $request Request [Optional]
      * @return Request|Pagination Route if used as getter, chainable as setter
      */
-	public function request(Request $request = NULL)
+    public function request(Request $request = null)
 	{
 		if (is_null($request))
 		{
@@ -386,7 +386,7 @@ class Pagination {
      * @throws Kohana_Exception
      * @uses    Route::get
      */
-	public function route($route = NULL)
+    public function route($route = null)
 	{
 		if (is_null($route))
 		{
@@ -409,7 +409,7 @@ class Pagination {
      * @param array|null $route_params Route parameters to set [Optional]
      * @return array|Pagination Route parameters if used as getter, chainable as setter
      */
-	public function route_params(array $route_params = NULL)
+    public function route_params(array $route_params = null)
 	{
 		if (is_null($route_params))
 		{
@@ -427,7 +427,7 @@ class Pagination {
      * @param string|null $uri Route uri to set [Optional]
      * @return string|Pagination Route uri if used as getter, chainable as setter
 	 */
-    public function uri(string $uri = NULL)
+    public function uri(string $uri = null)
 	{
 		if (is_null($uri))
 		{
@@ -445,7 +445,7 @@ class Pagination {
      * @param array|null $params Parameters to override [Optional]
      * @return string
      */
-    public function query(array $params = NULL): string
+    public function query(array $params = null): string
     {
 		if (is_null($params))
 		{
@@ -464,7 +464,7 @@ class Pagination {
 			return '';
 		}
 
-		// Note: http_build_query returns an empty string for a params array with only NULL values
+        // Note: http_build_query returns an empty string for a params array with only null values
 		$query = http_build_query($params, '', '&');
 
 		// Don't prepend '?' to an empty string
@@ -514,11 +514,11 @@ class Pagination {
 	 * Returns a Pagination property
 	 *
      * @param string $key Property name
-	 * @return  mixed   Pagination property; NULL if not found
+     * @return mixed Pagination property; null if not found
 	 */
     public function __get(string $key)
 	{
-        return $this->$key ?? NULL;
+        return $this->$key ?? null;
 	}
 
     /**

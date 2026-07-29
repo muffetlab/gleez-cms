@@ -15,14 +15,14 @@
  * Call this anywhere in your application, most likely in a template controller:
  * ~~~
  * Assets::css('global', 'assets/css/global.css', array('grid', 'reset'), array('media' => 'screen', 'weight' => -10));
- * Assets::css('reset', 'assets/css/reset.css', NULL, array('weight' => -10));
+ * Assets::css('reset', 'assets/css/reset.css', null, array('weight' => -10));
  * Assets::css('grid', 'assets/css/grid.css', 'reset');
  *
- * Assets::js('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', NULL, false, array('weight' => -10));
+ * Assets::js('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', null, false, array('weight' => -10));
  * Assets::js('global', 'assets/js/global.js', array('jquery'));
- * Assets::js('stats', 'assets/js/stats.js', NULL, true);
+ * Assets::js('stats', 'assets/js/stats.js', null, true);
  *
- * Assets::codes('alert', 'alert(\'test\')', NULL, false, array('weight' => -10));
+ * Assets::codes('alert', 'alert(\'test\')', null, false, array('weight' => -10));
  *
  * Assets::settings('settings', 'settings');
  * ~~~
@@ -101,7 +101,7 @@ class Assets {
      * @throws Kohana_Exception
      * @throws Exception
      */
-    public static function css(string $handle = NULL, string $src = NULL, $deps = NULL, array $attrs = NULL, string $format = self::FORMAT_TAG)
+    public static function css(string $handle = null, string $src = null, $deps = null, array $attrs = null, string $format = self::FORMAT_TAG)
 	{
 		$config = Kohana::$config->load('media');
 
@@ -225,7 +225,7 @@ class Assets {
      * @throws Kohana_Exception
      * @throws Exception
      */
-    public static function js($handle, string $src = NULL, $deps = NULL, bool $footer = false, array $attrs = NULL, string $format = Assets::FORMAT_TAG)
+    public static function js($handle, string $src = null, $deps = null, bool $footer = false, array $attrs = null, string $format = Assets::FORMAT_TAG)
 	{
 		$config = Kohana::$config->load('media');
 
@@ -352,14 +352,14 @@ class Assets {
      * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      */
-    public static function codes($handle, string $code = NULL, $deps = NULL, bool $footer = false, array $attrs = NULL)
+    public static function codes($handle, string $code = null, $deps = null, bool $footer = false, array $attrs = null)
 	{
         if ($handle === true || $handle === false)
 		{
 			return self::all_codes($handle, $code);
 		}
 
-		if ($code === NULL)
+        if ($code === null)
 		{
 			return self::get_codes($handle);
 		}
@@ -389,7 +389,7 @@ class Assets {
      * @return string|null Asset HTML or null if not found
 	 * @uses    HTML::attributes
 	 */
-    public static function get_codes(string $handle, string $nonce = NULL): ?string
+    public static function get_codes(string $handle, string $nonce = null): ?string
     {
 		if ( ! isset(self::$codes[$handle]))
 		{
@@ -410,7 +410,7 @@ class Assets {
      * @return  string   Asset HTML
      * @throws Kohana_Exception
      */
-    public static function all_codes(bool $footer = false, string $nonce = NULL): string
+    public static function all_codes(bool $footer = false, string $nonce = null): string
     {
 		if (empty(self::$codes))
 		{
@@ -449,7 +449,7 @@ class Assets {
      * @param string|null $code Asset code [Optional]
      * @return string|null Setting returns asset array, getting returns asset HTML
 	 */
-    public static function settings($handle, string $code = NULL): ?string
+    public static function settings($handle, string $code = null): ?string
     {
 		return self::$settings[$handle] = $code;
 	}
@@ -464,7 +464,7 @@ class Assets {
      * @param array|null $attrs An array of attributes [Optional]
      * @return array|string|null Setting returns asset array, getting returns asset content
 	 */
-    public static function group(string $group, string $handle = NULL, string $content = NULL, $deps = NULL, array $attrs = NULL)
+    public static function group(string $group, string $handle = null, string $content = null, $deps = null, array $attrs = null)
 	{
 		if (is_null($handle))
 		{
@@ -725,7 +725,7 @@ class Assets {
         self::css('greet.popup', 'media/css/greet.popup.css', ['bootstrap'], ['media' => 'screen', 'weight' => 15]);
 
         self::js('form', 'media/js/jquery.form.min.js', ['jquery'], false, ['weight' => 15]);
-        self::js('greet.ajaxform', 'media/js/greet.ajaxform.js', NULL, false, ['weight' => 17]);
+        self::js('greet.ajaxform', 'media/js/greet.ajaxform.js', null, false, ['weight' => 17]);
 		self::js('greet.typeahead', 'media/js/greet.typeahead.js', 'gleez');
         self::js('greet.popup', 'media/js/greet.popup.js', ['bootstrap'], false, ['weight' => 20]);
 	}

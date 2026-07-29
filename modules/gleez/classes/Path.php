@@ -28,7 +28,7 @@ class Path {
     {
 		$regex 	= "#(/p(?P<page>\d+))+$#uD";  // preg_match()
 		$reg_ex = "#(/p\d+)+$#uD";            // preg_replace()
-		$page 	= NULL;                       // default pager id is null
+        $page = null;                       // default pager id is null
 
         // Determine alias from route URI to support transformed parameters
         $alias = $route->uri($params);
@@ -48,7 +48,7 @@ class Path {
         $alias = preg_replace($reg_ex, '', $alias);
 
 		// Check if it's a front page request and set <front> tag
-        if (empty($alias) && $alias == NULL)
+        if (empty($alias) && $alias == null)
 		{
 			$alias = self::FRONT_ALIAS;
 		}

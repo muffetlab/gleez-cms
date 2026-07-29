@@ -43,7 +43,7 @@ class Message {
      * @return  void
      * @throws Kohana_Exception
      */
-    public static function set(string $type, $message, ?array $options = NULL)
+    public static function set(string $type, $message, ?array $options = null)
 	{
 		// Load existing messages
 		$messages = (array) self::get();
@@ -80,7 +80,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function error($message, array $options = NULL)
+    public static function error($message, array $options = null)
 	{
 		self::set(self::ERROR, $message, $options);
 	}
@@ -92,7 +92,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function alert($message, array $options = NULL)
+    public static function alert($message, array $options = null)
 	{
 		self::set(self::ALERT, $message, $options);
 	}
@@ -104,7 +104,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function critical($message, array $options = NULL)
+    public static function critical($message, array $options = null)
 	{
 		self::set(self::CRITICAL, $message, $options);
 	}
@@ -116,7 +116,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function notice($message, array $options = NULL)
+    public static function notice($message, array $options = null)
 	{
 		self::set(self::NOTICE, $message, $options);
 	}
@@ -128,7 +128,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function success($message, array $options = NULL)
+    public static function success($message, array $options = null)
 	{
 		self::set(self::SUCCESS, $message, $options);
 	}
@@ -140,7 +140,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function warn($message, array $options = NULL)
+    public static function warn($message, array $options = null)
 	{
 		self::set(self::WARN, $message, $options);
 	}
@@ -152,7 +152,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function info($message, array $options = NULL)
+    public static function info($message, array $options = null)
 	{
 		self::set(self::INFO, $message, $options);
 	}
@@ -164,7 +164,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function access($message, array $options = NULL)
+    public static function access($message, array $options = null)
 	{
 		self::set(self::ACCESS, $message, $options);
 	}
@@ -176,7 +176,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function debug($message, array $options = NULL)
+    public static function debug($message, array $options = null)
 	{
 		if (Kohana::$environment !== Kohana::PRODUCTION)
 		{
@@ -194,7 +194,7 @@ class Message {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public static function render($type = NULL, bool $delete = true, $view = NULL): string
+    public static function render($type = null, bool $delete = true, $view = null): string
     {
 		return self::display($type, $delete, $view);
 	}
@@ -219,21 +219,21 @@ class Message {
      * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
      * @param mixed $default Default value to return [Optional]
      * @param bool $delete Delete the messages?
-     * @return    mixed    array or NULL
+     * @return mixed Returns messages array or null
      * @throws Kohana_Exception
      */
-    public static function get($type = NULL, $default = NULL, bool $delete = false)
+    public static function get($type = null, $default = null, bool $delete = false)
 	{
 		// Get the messages
         $messages = Session::instance()->get(self::$session_key, []);
 
-		if ($messages === NULL)
+        if ($messages === null)
 		{
 			// No messages to return
 			return $default;
 		}
 
-		if ($type !== NULL)
+        if ($type !== null)
 		{
 			// Will hold the filtered set of messages to return
             $return = [];
@@ -265,7 +265,7 @@ class Message {
 
         if ($delete === true)
 		{
-            if ($type === NULL || empty($remainder))
+            if ($type === null || empty($remainder))
 			{
 				// Nothing to save, delete the key from memory
 				self::clear();
@@ -297,9 +297,9 @@ class Message {
      * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
      * @throws Kohana_Exception
      */
-	public static function clear($type = NULL)
+    public static function clear($type = null)
 	{
-		if ($type === NULL)
+        if ($type === null)
 		{
 			// Delete everything!
 			Session::instance()->delete(self::$session_key);
@@ -307,7 +307,7 @@ class Message {
 		else
 		{
 			// Deletion by type happens in get(), too weird?
-            self::get($type, NULL, true);
+            self::get($type, null, true);
 		}
 	}
 
@@ -320,9 +320,9 @@ class Message {
      * @return   string   Message to string
      * @throws View_Exception|Kohana_Exception
      */
-    public static function display($type = NULL, bool $delete = true, $view = NULL): string
+    public static function display($type = null, bool $delete = true, $view = null): string
     {
-		$messages = self::get($type, NULL, $delete);
+        $messages = self::get($type, null, $delete);
 
 		if (empty($messages))
 		{

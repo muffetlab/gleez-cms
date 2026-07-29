@@ -29,7 +29,7 @@ class Model_Page extends Post {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		$config = Kohana::$config->load('page');
 		$this->status = empty($this->status) ? $config->get('default_status', 'draft') : $this->status;

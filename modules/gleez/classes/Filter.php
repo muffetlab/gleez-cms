@@ -331,9 +331,9 @@ class Filter {
      * @param array|null $callbacks key values
      * @return array|Filter
      */
-	public function callbacks(array $callbacks = NULL)
+    public function callbacks(array $callbacks = null)
 	{
-		if ($callbacks === NULL)
+        if ($callbacks === null)
 		{
 			return $this->_callbacks;
 		}
@@ -359,9 +359,9 @@ class Filter {
      * @param array|null $settings key values
      * @return array|Filter
      */
-	public function settings(array $settings = NULL)
+    public function settings(array $settings = null)
 	{
-		if ($settings === NULL)
+        if ($settings === null)
 		{
 			return $this->_settings;
 		}
@@ -384,9 +384,9 @@ class Filter {
      * @param string|null $title Title
      * @return Filter|string
 	 */
-    public function title(string $title = NULL)
+    public function title(string $title = null)
 	{
-		if ($title === NULL)
+        if ($title === null)
 		{
 			return $this->_title;
 		}
@@ -409,9 +409,9 @@ class Filter {
      * @param string|null $description Description
 	 * @return  string|Filter
 	 */
-    public function description(string $description = NULL)
+    public function description(string $description = null)
 	{
-		if ($description === NULL)
+        if ($description === null)
 		{
 			return $this->_description;
 		}

@@ -24,7 +24,7 @@ assets according to what is needed for the respective action.
 
 			Assets::js('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js');
 			Assets::js('global', 'assets/js/global.js', array('jquery'));
-            Assets::js('stats', 'assets/js/stats.js', NULL, true);
+            Assets::js('stats', 'assets/js/stats.js', null, true);
 		}
 
 	}

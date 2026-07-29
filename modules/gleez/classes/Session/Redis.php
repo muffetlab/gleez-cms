@@ -50,7 +50,7 @@ class Session_Redis extends Session {
      * @throws Kohana_Exception
      * @throws Session_Exception
      */
-    public function __construct(array $config = NULL, string $id = NULL)
+    public function __construct(array $config = null, string $id = null)
     {
 
 		// Check that the PhpRedis extension is loaded.
@@ -120,7 +120,7 @@ class Session_Redis extends Session {
 		// Create a new session id
 		$this->_regenerate();
 
-		return NULL;
+        return null;
 	}
 
 	/**
@@ -131,7 +131,7 @@ class Session_Redis extends Session {
 	protected function _regenerate(): ?string
     {
 		// Create a new session id
-        $id = str_replace('.', '-', uniqid(NULL, true));
+        $id = str_replace('.', '-', uniqid(null, true));
 
 		return $this->_session_id = $id;
 	}

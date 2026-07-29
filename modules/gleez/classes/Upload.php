@@ -48,7 +48,7 @@ class Upload extends Kohana_Upload
      * $filepath = Upload::uploadImage($_FILES);
      * ~~~
      *
-     * @return  NULL|string          NULL when filed, otherwise file path
+     * @return null|string Returns null when failed, otherwise file path
      * @throws Kohana_Exception
      * @since   1.2.0
      * @uses    System::mkdir
@@ -59,7 +59,7 @@ class Upload extends Kohana_Upload
      * @uses    Config::get
      * @uses    File::getUnique
      */
-    public static function uploadImage(array $file, string $upload_dir = NULL): ?string
+    public static function uploadImage(array $file, string $upload_dir = null): ?string
     {
     	if (is_null($upload_dir))
     	{
@@ -100,6 +100,6 @@ class Upload extends Kohana_Upload
             }
         }
 
-        return NULL;
+        return null;
     }
 }

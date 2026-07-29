@@ -55,7 +55,7 @@ class Model_Widget extends ORM {
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
         if (is_array($this->roles) && count($this->roles) > 0)
 		{
@@ -63,7 +63,7 @@ class Model_Widget extends ORM {
 		}
 		else
 		{
-			$this->roles = NULL;
+            $this->roles = null;
 		}
 
 		return parent::save($validation);

@@ -14,10 +14,10 @@ class Format {
 	const FALLBACK_FORMAT = 1;
 
 	/** @var Format Format instance */
-	public static $instance = NULL;
+    public static $instance = null;
 
 	/** @var array Formats set */
-	public static $formats = NULL;
+    public static $formats = null;
 
 	/** @var integer Fallback format */
 	public static $fallback_format;
@@ -144,7 +144,7 @@ class Format {
 	 * @return  mixed
 	 * @uses    Arr::get
 	 */
-    public function get(int $id, $default = NULL)
+    public function get(int $id, $default = null)
 	{
 		return Arr::get(Format::$formats, $id, $default);
 	}

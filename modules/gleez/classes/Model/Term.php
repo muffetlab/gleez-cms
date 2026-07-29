@@ -106,7 +106,7 @@ class Model_Term extends ORM_MPTT {
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		$this->type  = empty($this->type) ? 'post' : $this->type;
 
@@ -292,7 +292,7 @@ class Model_Term extends ORM_MPTT {
      * Upload image and return file path.
      *
      * @param array $file Uploaded file
-     * @return  NULL|string   NULL when filed, otherwise file path
+     * @return null|string Returns null when failed, otherwise file path
      * @throws Kohana_Exception
      */
     public function uploadImage(array $file): ?string

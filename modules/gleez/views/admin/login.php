@@ -26,7 +26,7 @@ Assets::css('user', 'media/css/user.css', ['weight' => 2]);
 				<div class="form-group <?php echo isset($errors['password']) ? 'has-error': ''; ?>">
 					<div class="col-sm-10 col-sm-offset-1">
                         <?php echo Form::label('name', __('Password'), ['class' => 'sr-only control-label']) ?>
-                        <?php echo Form::password('password', NULL, ['class' => 'form-control', 'placeholder' => __('Password')]); ?>
+                        <?php echo Form::password('password', null, ['class' => 'form-control', 'placeholder' => __('Password')]); ?>
 					</div>
 				</div>
 				<div class="form-group">

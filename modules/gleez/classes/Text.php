@@ -143,7 +143,7 @@ class Text extends Kohana_Text
      * @uses    Filter::process
      * @todo    Make @params description shorter
      */
-    public static function markup(string $text, int $format_id = NULL, string $langCode = NULL, bool $cache = false)
+    public static function markup(string $text, int $format_id = null, string $langCode = null, bool $cache = false)
 	{
 		// Save some cpu cycles if text is empty or null
 		if(empty($text))

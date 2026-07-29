@@ -40,7 +40,7 @@ abstract class Template extends Controller {
 	 * The page title
 	 * @var string
 	 */
-	public $title = NULL;
+    public $title = null;
 
 	/**
      * The page subtitle
@@ -327,7 +327,7 @@ abstract class Template extends Controller {
 			$this->template->_admin = Theme::$is_admin;
 
             // Set the redirect URL
-            $this->redirect = ($this->request->query('destination') !== NULL) ? $this->request->query('destination') : [];
+            $this->redirect = ($this->request->query('destination') !== null) ? $this->request->query('destination') : [];
 
 			// Bind the generic page variables
             $this->template
@@ -494,7 +494,8 @@ abstract class Template extends Controller {
             if ($this->_response_format === 'application/json')
 			{
 				// Check for dataTables request
-				if ($this->request->query('draw') !== NULL) return;
+                if ($this->request->query('draw') !== null)
+                    return;
 
 				$output = $this->_json['Data'];
 			}
@@ -623,7 +624,7 @@ abstract class Template extends Controller {
 		{
 			foreach ($tags as $handle => $value)
 			{
-				$conditional = NULL;
+                $conditional = null;
 
 				if (is_array($value))
 				{
@@ -699,12 +700,12 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_css()
 	{
-        Assets::css('bootstrap', 'media/css/bootstrap.min.css', NULL, ['weight' => -15]);
+        Assets::css('bootstrap', 'media/css/bootstrap.min.css', null, ['weight' => -15]);
         Assets::css('fontawesome-all', 'media/fontawesome/css/all.min.css', null, ['weight' => -13]);
         Assets::css('fontawesome-solid', 'media/fontawesome/css/solid.min.css', ['fontawesome-all'], ['weight' => -12]);
         Assets::css('fontawesome-regular', 'media/fontawesome/css/regular.min.css', ['fontawesome-all'], ['weight' => -12]);
         Assets::css('fontawesome-brands', 'media/fontawesome/css/brands.min.css', ['fontawesome-all'], ['weight' => -12]);
-        Assets::css('default', 'media/css/default.css', NULL, ['weight' => 0]);
+        Assets::css('default', 'media/css/default.css', null, ['weight' => 0]);
         Assets::css('theme', "media/css/theme.css", ['default'], ['weight' => 50]);
 	}
 
@@ -738,7 +739,7 @@ abstract class Template extends Controller {
      *    if ($this->valid_post('upload_photo')) { ... }
      * </code>
      *
-     * @param string|NULL $submit Submit value [Optional]
+     * @param string|null $submit Submit value [Optional]
      * @return boolean Return true if it's valid $_POST
      * @throws Kohana_Exception
      * @uses    Request::is_post
@@ -749,7 +750,7 @@ abstract class Template extends Controller {
      * @uses    CSRF::valid
      * @uses    Captcha::valid
      */
-    public function valid_post(string $submit = NULL): bool
+    public function valid_post(string $submit = null): bool
     {
 		if ( ! $this->request->is_post())
 		{
@@ -901,13 +902,14 @@ abstract class Template extends Controller {
 
 		if ($this->_response_format === 'application/json')
 		{
-			if ($this->request->query('draw') !== NULL) return;
+            if ($this->request->query('draw') !== null)
+                return;
 
-            $scripts = Assets::js(false, NULL, NULL, false, NULL, Assets::FORMAT_AJAX);
-            $styles = Assets::css(null, NULL, NULL, null, Assets::FORMAT_AJAX);
+            $scripts = Assets::js(false, null, null, false, null, Assets::FORMAT_AJAX);
+            $styles = Assets::css(null, null, null, null, Assets::FORMAT_AJAX);
 
             $this->SetJson('formSaved', $this->formSaved);
-            $this->SetJson('messages', Message::get(NULL, NULL, true));
+            $this->SetJson('messages', Message::get(null, null, true));
 			$this->SetJson('errors',     $this->_errors);
 			$this->SetJson('redirect',   Request::$redirect_url);
 			$this->SetJson('title',      $this->title);

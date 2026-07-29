@@ -58,7 +58,7 @@ class Fragment {
 	 *
 	 * @uses    I18n::lang
 	 */
-    protected static function _cache_key(string $name, bool $i18n = NULL): string
+    protected static function _cache_key(string $name, bool $i18n = null): string
     {
 		if (is_null($i18n))
 		{
@@ -95,7 +95,7 @@ class Fragment {
      * @throws Kohana_Exception
      * @uses    Cache::get
      */
-    public static function getCache(string $name, $i18n = NULL): bool
+    public static function getCache(string $name, $i18n = null): bool
     {
 		$cache = Cache::instance();
 
@@ -133,7 +133,7 @@ class Fragment {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-	public static function setCache($lifetime = NULL)
+    public static function setCache($lifetime = null)
 	{
 		$cache = Cache::instance();
 
@@ -169,7 +169,7 @@ class Fragment {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-    public static function delete(string $name, $i18n = NULL)
+    public static function delete(string $name, $i18n = null)
 	{
 		Cache::instance()->delete(Fragment::_cache_key($name, $i18n));
 	}

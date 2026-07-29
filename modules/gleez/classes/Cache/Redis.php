@@ -150,7 +150,7 @@ class Cache_Redis extends Cache {
      */
     public function set(string $id, $data, int $lifetime = null): bool
     {
-		if ($lifetime === NULL)
+        if ($lifetime === null)
 		{
 			$lifetime = Arr::get($this->_config, 'default_expire', Cache::DEFAULT_EXPIRE);
 		}

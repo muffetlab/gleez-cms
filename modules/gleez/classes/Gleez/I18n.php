@@ -548,7 +548,7 @@ if ( ! function_exists('__'))
      * @uses Gleez_I18n::get
      * @uses HTML::chars
      */
-    function __(string $string, array $values = NULL, string $lang = 'en-us'): string
+    function __(string $string, array $values = null, string $lang = 'en-us'): string
     {
 		if ($lang !== Gleez_I18n::$lang)
 		{
@@ -603,7 +603,7 @@ if ( ! function_exists('__'))
  * @param array|null $values Values to replace in the translated text. [Optional]
  * @param string $lang Source language [Optional]
  */
-function _e(string $string, array $values = NULL, string $lang = 'en-us')
+function _e(string $string, array $values = null, string $lang = 'en-us')
 {
 	echo __($string, $values, $lang);
 }

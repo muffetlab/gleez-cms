@@ -23,7 +23,7 @@ class Date extends Kohana_Date
     public static function formatted_time(string $datetime_str = 'now', string $timestamp_format = null, string $timezone = null): string
     {
 		//Display Dates in site defined timezone format
-        if (Kohana::$config->load('site')->get('timezone_override', false) && $timezone === NULL)
+        if (Kohana::$config->load('site')->get('timezone_override', false) && $timezone === null)
 		{
 			// Default timezone from config
             $timezone = Kohana::$config->load('site')->get('timezone', 'UTC');
@@ -345,7 +345,7 @@ class Date extends Kohana_Date
      * @throws Exception
      * @uses   Config::get
      */
-    public static function date_time(int $timestamp, string $format = NULL): string
+    public static function date_time(int $timestamp, string $format = null): string
     {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site')->get('date_time_format') : $format);
 	}
@@ -359,7 +359,7 @@ class Date extends Kohana_Date
      * @throws Exception
      * @uses   Config::get
      */
-    public static function date_format(int $timestamp, string $format = NULL): string
+    public static function date_format(int $timestamp, string $format = null): string
     {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.date_format') : $format);
 	}
@@ -374,7 +374,7 @@ class Date extends Kohana_Date
      * @throws Exception
      * @uses   Config::get
      */
-    public static function time(int $timestamp, ?string $format = NULL): string
+    public static function time(int $timestamp, ?string $format = null): string
     {
 		return self::formatted_time($timestamp, is_null($format) ? Kohana::$config->load('site.time_format') : $format);
 	}

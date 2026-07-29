@@ -34,7 +34,7 @@ class Meta {
      * @uses    URL::site
      * @uses    URL::is_absolute
      */
-    public static function links(string $handle = NULL, array $attrs = [])
+    public static function links(string $handle = null, array $attrs = [])
 	{
 		// Return all meta links
 		if (is_null($handle))
@@ -126,7 +126,7 @@ class Meta {
      * @param array $attrs An associative array of tag settings [Optional]
      * @return array|string Setting returns asset array, getting returns asset HTML
 	 */
-    public static function tags(string $handle = NULL, string $value = NULL, array $attrs = [])
+    public static function tags(string $handle = null, string $value = null, array $attrs = [])
 	{
 		// Return all meta links
 		if (is_null($handle))

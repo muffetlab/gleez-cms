@@ -87,7 +87,7 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    URL::base
      */
-    public static function resize(string $file, array $attributes = NULL, $protocol = NULL, bool $index = false): string
+    public static function resize(string $file, array $attributes = null, $protocol = null, bool $index = false): string
     {
 		if (strlen($file) <= 1)
 		{

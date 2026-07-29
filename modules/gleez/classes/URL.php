@@ -21,7 +21,7 @@ class URL extends Kohana_URL
      * @throws Kohana_Exception
      * @uses    Request::uri
      */
-    public static function canonical($url, $pagination = NULL, array $query = NULL, $protocol = true): string
+    public static function canonical($url, $pagination = null, array $query = null, $protocol = true): string
     {
 		if ($url instanceof Request)
 		{
@@ -114,7 +114,7 @@ class URL extends Kohana_URL
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function current($protocol = NULL, bool $index = false, bool $with_query_params = true): string
+    public static function current($protocol = null, bool $index = false, bool $with_query_params = true): string
     {
 		static $uri;
 		$query = null;

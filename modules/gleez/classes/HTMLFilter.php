@@ -130,7 +130,7 @@ class HTMLFilter {
      * @used   Config::get
      * @used   Profiler::start
      */
-    public function __construct(string $text, array $filter = NULL)
+    public function __construct(string $text, array $filter = null)
 	{
 		// Be sure to only profile if it's enabled
 		if (Gleez::$profiling)
@@ -203,7 +203,7 @@ class HTMLFilter {
      * @return  HTMLFilter
      * @throws Kohana_Exception
      */
-    public static function factory(string $text, array $filter = NULL): HTMLFilter
+    public static function factory(string $text, array $filter = null): HTMLFilter
     {
         return new HTMLFilter($text, $filter);
 	}
@@ -235,7 +235,7 @@ class HTMLFilter {
 			return '';
 		}
 
-		// Remove NULL characters (ignored by some browsers)
+        // Remove null characters (ignored by some browsers)
 		$string = str_replace(chr(0), '', $string);
 
 		// Remove Netscape 4 JS entities

@@ -22,7 +22,7 @@ class Datatables {
      * @param ORM|null $object
      * @return Datatables
      */
-    public static function factory(ORM $object = NULL): Datatables
+    public static function factory(ORM $object = null): Datatables
     {
 		return new Datatables($object);
 	}
@@ -248,9 +248,9 @@ class Datatables {
      * @param array|null $columns Columns for setting [Optional]
      * @return array|Datatables
      */
-	public function columns(array $columns = NULL)
+    public function columns(array $columns = null)
 	{
-		if ($columns === NULL)
+        if ($columns === null)
 		{
 			return $this->_columns;
 		}
@@ -320,7 +320,7 @@ class Datatables {
 		}
 
 		// Searching/Filtering
-		if ($requestSearch !== NULL && $requestSearch['value'] != '')
+        if ($requestSearch !== null && $requestSearch['value'] != '')
 		{
 			$str = $requestSearch['value'];
 			for ($i = 0, $ien = count($requestColumns); $i < $ien ; $i++)
@@ -353,7 +353,7 @@ class Datatables {
 		$this->_count  = $this->_count();
 
 		// Count should always match total unless search is being applied
-		if ($requestSearch !== NULL && $requestSearch['value'] != '')
+        if ($requestSearch !== null && $requestSearch['value'] != '')
 		{
 			$this->_count = $this->count();
 		}
@@ -371,9 +371,9 @@ class Datatables {
      * @param string|null $path
      * @return Datatables|string
 	 */
-    public function view(string $path = NULL)
+    public function view(string $path = null)
 	{
-		if ($path === NULL)
+        if ($path === null)
 		{
 			return $this->_view;
 		}
@@ -390,9 +390,9 @@ class Datatables {
      * @param Request|null $request
      * @return Datatables|Request
      */
-	public function request(Request $request = NULL)
+    public function request(Request $request = null)
 	{
-		if ($request === NULL)
+        if ($request === null)
 		{
 			if ($this->_request instanceof Request)
 			{
@@ -439,7 +439,7 @@ class Datatables {
      */
     public function render(): string
     {
-		if ($this->_render === NULL)
+        if ($this->_render === null)
 		{
 			if ($this->_view)
 			{

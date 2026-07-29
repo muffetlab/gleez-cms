@@ -255,7 +255,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 		$handler     = Widget::factory($widget->name, $widget);
         $this->title = __('Delete :title', [':title' => $widget->title]);
-        $destination = $this->request->query('destination') !== NULL
+        $destination = $this->request->query('destination') !== null
             ? ['destination' => $this->request->query('destination')]
             : [];
 

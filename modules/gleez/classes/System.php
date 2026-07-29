@@ -24,7 +24,7 @@ class System {
 
 	/**
 	 * Minimum amount of memory allocated to php-script.
-     * Can be used if ini_get('memory_limit') returns 0, -1, NULL or false.
+     * Can be used if ini_get('memory_limit') returns 0, -1, null or false.
 	 * This amount is used by default since PHP 5.3
 	 * @type integer
 	 */
@@ -269,7 +269,7 @@ class System {
      * It can be used to obtain a human-readable form
      * of a PHP memory_limit.
      *
-     * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or false, returns [System::MIN_MEMORY_LIMIT]
+     * [!!] Note: If ini_get('memory_limit') returns 0, -1, null or false, returns [System::MIN_MEMORY_LIMIT]
      *
      * @return string
      * @throws Kohana_Exception

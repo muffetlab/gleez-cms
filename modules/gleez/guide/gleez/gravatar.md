@@ -196,7 +196,7 @@ $avatar->setValidFormats(array('jpg', 'png'));
 
 Set store location for downloading pictures
 
-[!!] Note: If `store_location` is NULL, or not string, or not param exists, by default use `'media/pictures'`
+[!!] Note: If `store_location` is null, or not string, or not param exists, by default use `'media/pictures'`
      from APPPATH. If dir not exists and fails create it used sys_get_temp_dir().
      See [sys_get_temp_dir](http://www.php.net/manual/en/function.sys-get-temp-dir.php)
 

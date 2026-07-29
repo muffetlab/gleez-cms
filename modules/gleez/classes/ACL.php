@@ -206,7 +206,7 @@ class ACL {
      * // Example with a callable function
      * ACL::required(
      *    'administer site',
-     *    NULL,
+     *    null,
      *    $this->request->redirect(Route::get('user')->uri(array('action' => 'login')))
      * );
      *
@@ -223,7 +223,7 @@ class ACL {
      * @throws Kohana_Exception
      * @since     2.0
      */
-    public static function required(string $perm_name, Model_User $user = NULL, callable $callback = NULL, array $args = [])
+    public static function required(string $perm_name, Model_User $user = null, callable $callback = null, array $args = [])
 	{
 		if ( ! self::check($perm_name, $user))
 		{
@@ -261,7 +261,7 @@ class ACL {
      * @uses   Request::redirect()
      * @uses   Route::get()
      */
-    public static function redirect(string $perm_name, $route = NULL, array $uri = [])
+    public static function redirect(string $perm_name, $route = null, array $uri = [])
 	{
 		if ( ! self::check($perm_name))
 		{
@@ -291,7 +291,7 @@ class ACL {
      * @throws Kohana_Exception
      * @uses    User::active_user
      */
-    public static function check(string $perm_name, ORM $user = NULL): bool
+    public static function check(string $perm_name, ORM $user = null): bool
     {
 		// If we weren't given an auth object
 		if (is_null($user))
@@ -453,7 +453,7 @@ class ACL {
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function post(string $action, ORM $post, Model_User $user = NULL): bool
+    public static function post(string $action, ORM $post, Model_User $user = null): bool
     {
         if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true))
 		{
@@ -557,7 +557,7 @@ class ACL {
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function comment(string $action, ORM $comment, Model_User $user = NULL): bool
+    public static function comment(string $action, ORM $comment, Model_User $user = null): bool
     {
         if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true))
 		{

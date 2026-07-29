@@ -117,7 +117,7 @@ class Model_Comment extends Gleez_Model
      * @uses    Request::$client_ip
      * @uses    User::active_user
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		// Set some defaults
 		$this->updated = time();
@@ -299,7 +299,7 @@ class Model_Comment extends Gleez_Model
      * @uses    ACL::check
      * @uses    Module::event
      */
-    public function access($action = false, Model_User $user = NULL): Model_Comment
+    public function access($action = false, Model_User $user = null): Model_Comment
     {
 		if ( ! $action)
 		{
@@ -414,7 +414,7 @@ class Model_Comment extends Gleez_Model
      * @uses    ACL::check
      * @uses    Module::event
      */
-    public function user_can($action = false, Model_User $user = NULL)
+    public function user_can($action = false, Model_User $user = null)
 	{
 		if( ! $action) $action = 'view';
 

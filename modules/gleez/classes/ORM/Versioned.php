@@ -11,8 +11,7 @@
  */
 class ORM_Versioned extends Gleez_Model
 {
-
-	protected $_last_version = NULL;
+    protected $_last_version = null;
 
 	/**
 	 * The version state
@@ -29,13 +28,13 @@ class ORM_Versioned extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function update(Validation $validation = NULL): Kohana_ORM
+    public function update(Validation $validation = null): Kohana_ORM
     {
         $object = null;
 
 		if ( ! $this->_restore)
 		{
-			$this->_last_version = 1 + ($this->_last_version === NULL ? $this->_object['version'] : $this->_last_version);
+            $this->_last_version = 1 + ($this->_last_version === null ? $this->_object['version'] : $this->_last_version);
 			$this->__set('version', $this->_last_version);
 
 			$object = DB::select()->from($this->_table_name)

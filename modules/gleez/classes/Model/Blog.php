@@ -34,7 +34,7 @@ class Model_Blog extends Post {
      * @uses    Cache::delete
      * @uses    Config::load
      */
-    public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		$config = Kohana::$config->load('blog');
 		$this->status = empty($this->status) ? $config->get('default_status', 'draft') : $this->status;

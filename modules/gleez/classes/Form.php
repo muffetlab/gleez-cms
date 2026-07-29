@@ -22,7 +22,7 @@ class Form extends Kohana_Form
      * echo Form::open('search', array('method' => 'get'));
      *
      * // When "file" inputs are present, you must include the "enctype"
-     * echo Form::open(NULL, array('enctype' => 'multipart/form-data'));
+     * echo Form::open(null, array('enctype' => 'multipart/form-data'));
      * ~~~
      *
      * @param mixed $action Form action, defaults to the current request URI, or Request class to use
@@ -213,7 +213,7 @@ class Form extends Kohana_Form
      * @throws Kohana_Exception
      * @uses    Form::select
      */
-    public static function weight(string $name, int $selected = 0, array $attrs = NULL, int $delta = 15): string
+    public static function weight(string $name, int $selected = 0, array $attrs = null, int $delta = 15): string
     {
         $options = [];
 
@@ -260,7 +260,7 @@ class Form extends Kohana_Form
      * @link    https://getdatepicker.com/4/
      * @uses    Form::input
      */
-    public static function date(string $name, string $value = NULL, array $attrs = NULL): string
+    public static function date(string $name, string $value = null, array $attrs = null): string
     {
 		$out = '';
 

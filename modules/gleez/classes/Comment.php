@@ -151,7 +151,7 @@ class Comment {
             ],
             'delete' => [
                 'label' => __('Delete the selected comments'),
-                'callback' => NULL,
+                'callback' => null,
             ]
         ];
 

@@ -90,7 +90,7 @@ class Gleez_Locale {
      * @return  Gleez_Locale
      * @throws Kohana_Exception
      */
-    public static function instance($locale = NULL): Gleez_Locale
+    public static function instance($locale = null): Gleez_Locale
     {
 		if ( ! isset(Gleez_Locale::$_instance))
 		{
@@ -137,7 +137,7 @@ class Gleez_Locale {
 	 *
 	 * @throws  Kohana_Exception
 	 */
-	public function __construct($locale = NULL)
+    public function __construct($locale = null)
 	{
 		$this->set_locale($locale);
 	}
@@ -313,7 +313,7 @@ class Gleez_Locale {
 
 		foreach ($accepted as $accept)
 		{
-			$match = NULL;
+            $match = null;
 
 			$result = preg_match('/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
 
@@ -544,7 +544,7 @@ class Gleez_Locale {
      * @throws Kohana_Exception
      * @uses   Locale_Data::getLocaleData
      */
-	public function set_locale($locale = NULL)
+    public function set_locale($locale = null)
 	{
 		$locale      = self::_prepare_locale($locale);
 		$locale_data = Locale_Data::getLocaleData();

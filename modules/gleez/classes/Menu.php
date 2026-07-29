@@ -32,7 +32,7 @@ class Menu {
      * @param array|null $items Array of list items (instead of using add() method) [Optional]
      * @return Menu
      */
-    public static function factory(array $items = NULL): Menu
+    public static function factory(array $items = null): Menu
     {
 		return new static($items);
 	}
@@ -42,7 +42,7 @@ class Menu {
      *
      * @param array|null $items Array of list items (instead of using add() method) [Optional]
      */
-	public function __construct(array $items = NULL)
+    public function __construct(array $items = null)
 	{
 		$this->items   = $items;
 	}
@@ -60,7 +60,7 @@ class Menu {
      * @param Menu|null $children Instance of class that contain children [Optional]
      * @return Menu
      */
-    public function add(string $id, string $title, string $url, string $descp = '', array $params = NULL, string $image = NULL, string $parent_id = NULL, Menu $children = NULL): Menu
+    public function add(string $id, string $title, string $url, string $descp = '', array $params = null, string $image = null, string $parent_id = null, Menu $children = null): Menu
     {
 		if( $parent_id )
 		{
@@ -71,7 +71,7 @@ class Menu {
             $this->items[$id] = [
                 'title' => $title,
                 'url' => $url,
-                'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
+                'children' => ($children instanceof Menu) ? $children->get_items() : null,
                 'access' => true, // @todo
                 'descp' => $descp,
                 'params' => $params,
@@ -149,7 +149,7 @@ class Menu {
      * @return  string  HTML unordered list
      * @throws Kohana_Exception
      */
-    public function render(array $attributes = NULL, array $items = NULL): string
+    public function render(array $attributes = null, array $items = null): string
     {
 		static $i;
 
@@ -174,9 +174,9 @@ class Menu {
 		foreach ($items as $key => $item)
 		{
             $has_children = count($item['children'] ?? []);
-			$classes = NULL;
+            $classes = null;
             $attributes = [];
-			$caret = NULL;
+            $caret = null;
 
 			// Add first, last and parent classes to the list of links to help out themers.
 			if ($_i == 1)          $classes[] = 'first';
@@ -448,7 +448,7 @@ class Menu {
      * @param Menu|null $children The new children [Optional]
      * @return array
      */
-    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = false, array $params = NULL, string $image = NULL, Menu $children = NULL): array
+    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = false, array $params = null, string $image = null, Menu $children = null): array
     {
 		foreach ($array as $key => $value)
 		{
@@ -457,7 +457,7 @@ class Menu {
                 $array[$key]['children'][$id] = [
                     'title' => $title,
                     'url' => $url,
-                    'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
+                    'children' => ($children instanceof Menu) ? $children->get_items() : null,
                     'access' => true, // @todo
                     'descp' => $descp,
                     'params' => $params,

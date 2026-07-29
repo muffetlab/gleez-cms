@@ -83,7 +83,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function message(string $body, string $type = NULL): Email
+    public function message(string $body, string $type = null): Email
     {
         if (!$type || $type === 'text/plain')
 		{
@@ -113,7 +113,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function to(string $email, string $name = NULL): Email
+    public function to(string $email, string $name = null): Email
     {
 		$this->_mail->addAddress($email, $name);
 
@@ -128,7 +128,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function cc(string $email, string $name = NULL): Email
+    public function cc(string $email, string $name = null): Email
     {
 		$this->_mail->addCC($email, $name);
 
@@ -143,7 +143,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function bcc(string $email, string $name = NULL): Email
+    public function bcc(string $email, string $name = null): Email
     {
 		$this->_mail->addBCC($email, $name);
 
@@ -158,7 +158,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function from(string $email, string $name = NULL): Email
+    public function from(string $email, string $name = null): Email
     {
 		$this->_mail->setFrom($email, $name);
 
@@ -173,7 +173,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function reply_to(string $email, string $name = NULL): Email
+    public function reply_to(string $email, string $name = null): Email
     {
 		$this->_mail->addReplyTo($email, $name);
 
@@ -201,7 +201,7 @@ class Email {
      * @param array|null $params Additional params for unique
 	 * @return  Email
 	 */
-    public function queue(int $timestamp = NULL, bool $unique = false, array $params = NULL): Email
+    public function queue(int $timestamp = null, bool $unique = false, array $params = null): Email
     {
 		try
 		{

@@ -165,7 +165,7 @@ class Widgets {
      * @param string|null $region Region name [Optional]
      * @param string|null $widget Widget name [Optional]
 	 */
-    public function remove(string $region = NULL, string $widget = NULL)
+    public function remove(string $region = null, string $widget = null)
 	{
 		if ( ! is_null($region))
 		{
@@ -196,7 +196,7 @@ class Widgets {
      * @param string|null $region Region name [Optional]
 	 * @return  $this|string
 	 */
-    public function region(string $region = NULL)
+    public function region(string $region = null)
 	{
 		if (is_null($region))
 		{
@@ -220,7 +220,7 @@ class Widgets {
      * @param string|null $format Format name [Optional]
 	 * @return  $this|string
 	 */
-    public function format(string $format = NULL)
+    public function format(string $format = null)
 	{
 		if (is_null($format))
 		{
@@ -257,7 +257,7 @@ class Widgets {
      * @return  string  HTML widgets
      * @throws Kohana_Exception
      */
-    public function render(string $region = NULL, string $format = NULL): string
+    public function render(string $region = null, string $format = null): string
     {
 		//set region, respect $this->region();
 		if ( ! is_null($region))

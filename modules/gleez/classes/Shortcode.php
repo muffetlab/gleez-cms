@@ -210,7 +210,7 @@ class Shortcode {
 		else
 		{
 			// self-closing tag
-            return $m[1] . call_user_func(self::$_tags[$tag], $attrs, NULL, $tag) . $m[6];
+            return $m[1] . call_user_func(self::$_tags[$tag], $attrs, null, $tag) . $m[6];
 		}
 	}
 

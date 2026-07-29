@@ -45,7 +45,7 @@ class CSRF {
      * @return  boolean
      * @throws Kohana_Exception
      */
-    public static function valid(string $token = NULL, string $action = '', string $id = ''): bool
+    public static function valid(string $token = null, string $action = '', string $id = ''): bool
     {
 		// get token and action from Form POST
 		if (empty($token))  $token  = Arr::get($_REQUEST, '_token');

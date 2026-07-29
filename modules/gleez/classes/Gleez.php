@@ -47,7 +47,7 @@ class Gleez {
 	 *
 	 * @var Gleez_Locale
 	 */
-	public static $locale = NULL;
+    public static $locale = null;
 
 	/**
 	 * Has [Gleez::ready] been called?
@@ -148,7 +148,7 @@ class Gleez {
             ])->defaults([
                 'controller' => 'install',
                 'action' => 'media',
-                'file' => NULL,
+                'file' => null,
                 'directory' => 'install'
             ]);
 

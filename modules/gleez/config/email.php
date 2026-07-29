@@ -26,5 +26,5 @@ return [
      * - sendmail: executable path, with -bs or equivalent attached
      * - smtp: hostname, (username), (password), (port), (encryption)
      */
-    'options' => NULL
+    'options' => null
 ];

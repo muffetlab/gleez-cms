@@ -43,13 +43,13 @@ class Controller_Comments extends Controller {
 	 * Group name
 	 * @var string
 	 */
-	protected $group = NULL;
+    protected $group = null;
 
 	/**
 	 * Config object
 	 * @var Config
 	 */
-	protected $config = NULL;
+    protected $config = null;
 
     /**
      * Perform format check

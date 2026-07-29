@@ -70,7 +70,7 @@ class Model_Tag extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		parent::save( $validation );
 

@@ -449,8 +449,9 @@ class Controller_Blog extends Template {
 
         $this->title = __('Delete :title', [':title' => $post->title]);
 
-		$destination = ($this->request->query('destination') !== NULL) ?
-            ['destination' => $this->request->query('destination')] : [];
+        $destination = ($this->request->query('destination') !== null)
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 
         $view = View::factory('form/confirm')
             ->set('action', Route::get('blog')->uri([

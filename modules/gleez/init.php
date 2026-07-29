@@ -27,9 +27,9 @@ if ( ! Route::cache())
         'file' => '.+',
         'theme' => Theme::route_list()
     ])->defaults([
-		'controller' => 'media',
-		'action'     => 'serve',
-		'file'       => NULL,
+        'controller' => 'media',
+        'action' => 'serve',
+        'file' => null,
     ]);
 
 // -- Gleez backend routes -----------------------------------------------------

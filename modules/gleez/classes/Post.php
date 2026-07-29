@@ -149,7 +149,7 @@ class Post extends ORM_Versioned {
      * @param mixed $id Parameter for find or object to load [Optional]
      * @throws Kohana_Exception
      */
-	public function __construct($id = NULL)
+    public function __construct($id = null)
 	{
 		// Set primary image defaults
 		$this->_image_path = APPPATH.'media/posts/';
@@ -352,7 +352,7 @@ class Post extends ORM_Versioned {
      * @uses    Cache::delete
      * @uses    URL::site
      */
-    public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		// Set some defaults
 		$this->status  = empty($this->status)  ? 'draft' : $this->status;
@@ -367,7 +367,7 @@ class Post extends ORM_Versioned {
 		//Ugly existing image check, not sure why empty behaves strange on $this->rawimage
         $image = $this->_original_values['image'] ?? false;
 
-		$this->image   = empty($image) 		? NULL : $image;
+        $this->image = empty($image) ? null : $image;
 		$this->type    = empty($this->type)     ? $this->_post_type : $this->type;
 		$this->author  = empty($this->author)   ? User::active_user()->id : $this->author;
         $this->format = empty($this->format) ? Kohana::$config->load('input_filter')->get('default_format', 1) : $this->format;
@@ -489,7 +489,7 @@ class Post extends ORM_Versioned {
 		$alias = empty($this->path) ? $this->_object_plural.'/'.$this->title : $this->path;
 		$values['source'] = $this->rawurl;
 		$values['alias']  = Path::clean( $alias );
-		$values['type']   = NULL;
+        $values['type'] = null;
 		$values['action'] = empty($this->action) ? $this->type : $this->action;
 
 		$values = Module::action('post_aliases', $values, $this);
@@ -585,7 +585,7 @@ class Post extends ORM_Versioned {
             case 'delete_url':
                 return Route::get($this->type)->uri(['id' => $this->id, 'action' => 'delete']);
             case 'image':
-				return $this->rawimage ? $this->_image_url.$this->rawimage : NULL;
+                return $this->rawimage ? $this->_image_url . $this->rawimage : null;
             case 'count_comments':
                 return (int) DB::select([DB::expr('COUNT(*)'), 'count_comments'])
 					->from('comments')
@@ -687,7 +687,7 @@ class Post extends ORM_Versioned {
             ],
             'delete' => [
                 'label' => __('Delete'),
-                'callback' => NULL,
+                'callback' => null,
             ],
             'ct_page' => [
                 'label' => __('Convert to @page', ['@page' => __('Page')]),
@@ -874,7 +874,7 @@ class Post extends ORM_Versioned {
         $pickMe = $poses[ceil(sizeof($poses) / 2) - 1];
 
 		$widgets     = Widgets::instance()->render($region);
-        $replaceWith = ($widgets) ? '<div id="' . $region . '" class="clear-block">' . $widgets . '</div>' : NULL;
+        $replaceWith = ($widgets) ? '<div id="' . $region . '" class="clear-block">' . $widgets . '</div>' : null;
         $content = substr_replace($content, $replaceWith . $repChar, $pickMe, 2);
 
 		// save some memory
@@ -965,7 +965,7 @@ class Post extends ORM_Versioned {
 
 		$params = (object) System::parse_args($args, $default);
         $cache = Cache::instance();
-        $post = $params->use_cache ? $cache->get('post:recent_' . $params->type) : NULL;
+        $post = $params->use_cache ? $cache->get('post:recent_' . $params->type) : null;
 
 		if (empty($post))
 		{

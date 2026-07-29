@@ -58,7 +58,7 @@ class Request extends Kohana_Request
 	 * @return  boolean
 	 * @uses    Request::current
 	 */
-    public static function is_datatables(Request $request = NULL): bool
+    public static function is_datatables(Request $request = null): bool
     {
         $request = $request ?: Request::current();
 
@@ -152,7 +152,7 @@ class Request extends Kohana_Request
 			return;
 		}
 
-		if (($response = $this->response()) === NULL)
+        if (($response = $this->response()) === null)
 		{
 			$response = $this->create_response();
 		}
@@ -217,9 +217,9 @@ class Request extends Kohana_Request
      * @param Response|null $response Response to apply to this request
      * @return Request|Response
      */
-	public function response(Response $response = NULL)
+    public function response(Response $response = null)
 	{
-		if ($response === NULL)
+        if ($response === null)
 		{
 			// Act as a getter
 			return $this->_response;

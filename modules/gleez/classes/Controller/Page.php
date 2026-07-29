@@ -435,7 +435,7 @@ class Controller_Page extends Template {
 
         $this->title = __('Delete :title', [':title' => $post->title]);
 
-        $destination = $this->request->query('destination') !== NULL
+        $destination = $this->request->query('destination') !== null
             ? ['destination' => $this->request->query('destination')]
             : [];
 

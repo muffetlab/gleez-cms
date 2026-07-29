@@ -125,9 +125,9 @@ class Model_Menu extends ORM_MPTT {
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
-		$this->params = empty($this->params) ? NULL : serialize($this->params);
+        $this->params = empty($this->params) ? null : serialize($this->params);
 
 		return parent::save( $validation );
 	}

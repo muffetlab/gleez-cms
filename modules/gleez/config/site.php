@@ -193,7 +193,7 @@ return [
      * Site Private Key
      * Default to null, generate a random key on installation
      */
-    'gleez_private_key' => NULL,
+    'gleez_private_key' => null,
 
     // Number of seconds before password reset confirmation links expire
     'reset_password_expiration' => 86400,
@@ -202,5 +202,5 @@ return [
     'session_type' => 'database',
 
     // Define Google Analytics ID
-    'google_ua' => NULL,
+    'google_ua' => null,
 ];

@@ -55,7 +55,7 @@ class ORM_MPTT extends Gleez_Model
      * @throws Kohana_Exception
      * @uses    Arr::unshift
      */
-	public function __construct($id = NULL)
+    public function __construct($id = null)
 	{
 		if (empty($this->_sorting))
 		{
@@ -195,7 +195,7 @@ class ORM_MPTT extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		if ( ! $this->loaded())
 		{
@@ -214,7 +214,7 @@ class ORM_MPTT extends Gleez_Model
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function make_root(Validation $validation = NULL, int $scope = NULL): ORM_MPTT
+    public function make_root(Validation $validation = null, int $scope = null): ORM_MPTT
     {
 		// If node already exists, and already root, exit
         if ($this->loaded() && $this->is_root())
@@ -262,14 +262,14 @@ class ORM_MPTT extends Gleez_Model
      * @param string|null $column name of the targets nodes column to use [Optional]
 	 * @return  ORM_MPTT
 	 */
-    protected function parent_from($target, string $column = NULL)
+    protected function parent_from($target, string $column = null)
 	{
 		if ( ! $target instanceof $this)
 		{
             $target = self::factory($this->object_name(), [$this->primary_key() => $target]);
 		}
 
-		if ($column === NULL)
+        if ($column === null)
 		{
 			$column = $target->primary_key();
 		}
@@ -280,7 +280,7 @@ class ORM_MPTT extends Gleez_Model
 		}
 		else
 		{
-			$this->{$this->parent_column} = NULL;
+            $this->{$this->parent_column} = null;
 		}
 
 		return $target;
@@ -612,7 +612,7 @@ class ORM_MPTT extends Gleez_Model
      * @return  Model|ORM
 	 * @throws  Kohana_Exception
 	 */
-    public function root(int $scope = NULL)
+    public function root(int $scope = null)
 	{
         if (is_null($scope) && $this->loaded())
 		{
@@ -647,7 +647,7 @@ class ORM_MPTT extends Gleez_Model
 	public function parent()
 	{
 		if ($this->is_root())
-			return NULL;
+            return null;
 
 		return self::factory($this->object_name(), $this->{$this->parent_column});
 	}
@@ -708,7 +708,7 @@ class ORM_MPTT extends Gleez_Model
      * @return  object
      * @throws Kohana_Exception
      */
-    public function fullTree(bool $scope = NULL)
+    public function fullTree(bool $scope = null)
 	{
 		$result = self::factory($this->object_name());
 
@@ -821,7 +821,7 @@ class ORM_MPTT extends Gleez_Model
      * @return    Database_Result
      * @throws Kohana_Exception
      */
-    public function get_levels(int $scope = NULL): Database_Result
+    public function get_levels(int $scope = null): Database_Result
     {
         $result = DB::select($this->level_column)
             ->distinct(true)
@@ -989,7 +989,7 @@ class ORM_MPTT extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-    public function rebuild_tree(int $left = 1, $target = NULL): int
+    public function rebuild_tree(int $left = 1, $target = null): int
     {
 		// check if using target or self as root and load if not loaded
         if (is_null($target) && !$this->loaded())
@@ -1083,15 +1083,15 @@ class ORM_MPTT extends Gleez_Model
      * @return  array
      * @throws Kohana_Exception
      */
-    public function select_list(string $key = NULL, string $value = NULL, string $indent = NULL): array
+    public function select_list(string $key = null, string $value = null, string $indent = null): array
     {
-		if ($key === NULL)
+        if ($key === null)
 		{
 			// Use the default key
 			$key = $this->_primary_key;
 		}
 
-		if ($value === NULL)
+        if ($value === null)
 		{
 			// Use the default value
 			$value = $this->pk();

@@ -24,7 +24,7 @@ class Gleez_Model extends ORM
      * @return Datatables
      * @throws Kohana_Exception
      */
-    public function dataTables(array $columns = NULL): Datatables
+    public function dataTables(array $columns = null): Datatables
     {
         if (!empty($columns)) {
             $this->_datatables = Datatables::factory($this)->columns($columns)->execute();
