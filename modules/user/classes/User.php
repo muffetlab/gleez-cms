@@ -312,7 +312,7 @@ class User {
      *
      * @param string $provider_id The provider user id
      * @param string $provider_name The provider name (facebook, google, live etc)
-     * @return ORM|null User object or NULL
+     * @return ORM|null User object or null
      * @throws Kohana_Exception
      */
     public static function check_identity(string $provider_id, string $provider_name): ?ORM
@@ -389,7 +389,7 @@ class User {
      * @uses URL::site
      * @uses Arr::merge
      */
-    public static function getAvatar(ORM $user, array $attrs = [], $protocol = NULL, bool $index = false): string
+    public static function getAvatar(ORM $user, array $attrs = [], $protocol = null, bool $index = false): string
     {
 		// Default user pic
 		$avatar = 'media/images/avatar-user-400.png';

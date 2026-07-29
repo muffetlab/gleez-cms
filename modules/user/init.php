@@ -46,7 +46,7 @@ if ( ! Route::cache())
     ])->defaults([
         'controller' => 'user',
         'action' => 'view',
-        'token' => NULL,
+        'token' => null,
     ]);
 
     Route::set('user/oauth', 'oauth/<controller>(/<action>)')->defaults([
@@ -61,8 +61,8 @@ if ( ! Route::cache())
     ])->defaults([
         'controller' => 'user',
         'action' => 'confirm_password',
-        'token' => NULL,
-        'time' => NULL,
+        'token' => null,
+        'time' => null,
     ]);
 
     Route::set('user/buddy', 'buddy(/<action>)(/<id>)(/p<page>)', [

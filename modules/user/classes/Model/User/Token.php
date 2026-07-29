@@ -15,7 +15,7 @@ class Model_User_Token extends ORM {
         'user_id' => ['type' => 'int'],
         'user_agent' => ['type' => 'string'],
         'token' => ['type' => 'string'],
-        'type' => ['type' => 'string', "column_default" => NULL],
+        'type' => ['type' => 'string', "column_default" => null],
         'created' => ['type' => 'int'],
         'expires' => ['type' => 'int'],
     ];
@@ -29,7 +29,7 @@ class Model_User_Token extends ORM {
      * @return void
      * @throws Kohana_Exception
      */
-	public function __construct($id = NULL)
+    public function __construct($id = null)
 	{
 		parent::__construct($id);
 
@@ -62,7 +62,7 @@ class Model_User_Token extends ORM {
 		return $this;
 	}
 
-	public function create(Validation $validation = NULL): Kohana_ORM
+    public function create(Validation $validation = null): Kohana_ORM
     {
 		$this->token = $this->create_token();
 

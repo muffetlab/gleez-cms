@@ -290,7 +290,7 @@ class Controller_Message extends Template {
 
 		$this->title = __('Delete Message');
 
-        $destination = $this->request->query('destination') !== NULL
+        $destination = $this->request->query('destination') !== null
             ? ['destination' => $this->request->query('destination')]
             : [];
 

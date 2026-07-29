@@ -71,7 +71,7 @@ class PM {
             ],
             'delete' => [
                 'label' => __('Delete'),
-                'callback' => NULL,
+                'callback' => null,
             ]
         ];
 

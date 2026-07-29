@@ -39,7 +39,7 @@
 				<div class="form-group <?php echo isset($errors['pass']) ? 'has-error': ''; ?>">
                     <?php echo Form::label('pass', __('Password'), ['class' => 'col-sm-3 control-label']); ?>
 					<div class="col-xs-12 col-sm-8">
-                        <?php echo Form::password('pass', NULL, [
+                        <?php echo Form::password('pass', null, [
                             'class' => 'form-control',
                             'rel' => 'tooltip',
                             'data-placement' => 'right',
@@ -54,7 +54,7 @@
                             'class' => 'col-sm-3 control-label'
                         ]); ?>
 						<div class="col-xs-12 col-sm-8">
-                            <?php echo Form::password('pass_confirm', NULL, [
+                            <?php echo Form::password('pass_confirm', null, [
                                 'class' => 'form-control',
                                 'rel' => 'tooltip',
                                 'data-placement' => 'right',

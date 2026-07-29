@@ -17,7 +17,7 @@
 					<div class="controls">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                            <?php echo Form::password('old_pass', NULL, [
+                            <?php echo Form::password('old_pass', null, [
                                 'class' => 'form-control',
                                 'placeholder' => __('************')
                             ]); ?>
@@ -30,7 +30,7 @@
 					<div class="controls">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                            <?php echo Form::password('pass', NULL, ['class' => 'form-control']); ?>
+                            <?php echo Form::password('pass', null, ['class' => 'form-control']); ?>
 						</div>
                         <span class="help-block">
                             <?php
@@ -61,7 +61,7 @@
 					<div class="controls">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                            <?php echo Form::password('pass_confirm', NULL, ['class' => 'form-control']); ?>
+                            <?php echo Form::password('pass_confirm', null, ['class' => 'form-control']); ?>
 						</div>
 						<span class="help-block"><?php echo __('Confirm new password') ?></span>
 					</div>

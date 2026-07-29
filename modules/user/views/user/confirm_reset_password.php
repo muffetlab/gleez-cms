@@ -14,7 +14,7 @@
 					<div class="col-sm-8">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                            <?php echo Form::password('pass', NULL, ['class' => 'form-control']); ?>
+                            <?php echo Form::password('pass', null, ['class' => 'form-control']); ?>
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,7 @@
 					<div class="col-sm-8">
 						<div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                            <?php echo Form::password('pass_confirm', NULL, ['class' => 'form-control']); ?>
+                            <?php echo Form::password('pass_confirm', null, ['class' => 'form-control']); ?>
 						</div>
 					</div>
 				</div>

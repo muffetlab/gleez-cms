@@ -59,7 +59,7 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-    public function logged_in_oauth($provider = NULL): bool
+    public function logged_in_oauth($provider = null): bool
     {
 		// For starters, the user needs to be logged in
 		if ( ! parent::logged_in())
@@ -69,7 +69,7 @@ class Auth_ORM extends Kohana_Auth_ORM
         // Because parent::logged_in returned true, we know this is a valid user ORM object.
 		$user = $this->get_user();
 
-		if ($provider !== NULL)
+        if ($provider !== null)
 		{
 			// Check for one specific OAuth provider
 			$provider = $provider.'_id';

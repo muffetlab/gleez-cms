@@ -123,7 +123,7 @@ class Gravatar {
      * @throws Kohana_Exception
      * @uses Config::get
      */
-    public static function instance(string $email, array $config = NULL): Gravatar
+    public static function instance(string $email, array $config = null): Gravatar
     {
 		if ( ! isset(self::$_instances[$email]))
 		{
@@ -296,7 +296,7 @@ class Gravatar {
      * @uses HTML::resize
      * @since 1.3.0
      */
-    public function getImage(array $attrs = [], $protocol = NULL, bool $index = false): string
+    public function getImage(array $attrs = [], $protocol = null, bool $index = false): string
     {
 		// Set auto attributes
         $attributes = [
@@ -370,7 +370,7 @@ class Gravatar {
 	 * @return  string
      * @since   1.4.0
 	 */
-    public function getStoreLocation(string $filename = NULL): string
+    public function getStoreLocation(string $filename = null): string
     {
 		return $this->_store_location . $filename;
 	}
@@ -416,7 +416,7 @@ class Gravatar {
 	/**
 	 * Set store location for downloading pictures
 	 *
-	 * [!!] Note: If `$location` is NULL, by default used `APPPATH . 'media/pictures'`.
+     * [!!] Note: If `$location` is null, by default used `APPPATH . 'media/pictures'`.
 	 *      If dir not exists and fails create it used sys_get_temp_dir()
 	 *
      * @param string|null $location Store location
@@ -427,7 +427,7 @@ class Gravatar {
 	 * @uses    Text::reduce_slashes
 	 * @uses    System::mkdir
 	 */
-    public function setStoreLocation(string $location = NULL): Gravatar
+    public function setStoreLocation(string $location = null): Gravatar
     {
 		$location = Text::reduce_slashes(trim($location));
 		// Set default picture location for downloading

@@ -17,7 +17,7 @@
 
 		<div class="input-group">
             <span class="input-group-addon"><i class="fas fa-key"></i></span>
-            <?php echo Form::password('password', NULL, [
+            <?php echo Form::password('password', null, [
                 'class' => 'form-control',
                 'placeholder' => __('Password')
             ]); ?>

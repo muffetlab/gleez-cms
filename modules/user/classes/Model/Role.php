@@ -71,7 +71,7 @@ class Model_Role extends Gleez_Model
      *
      * @throws Kohana_Exception|ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		parent::save( $validation );
 

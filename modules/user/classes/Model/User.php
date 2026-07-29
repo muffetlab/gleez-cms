@@ -223,7 +223,7 @@ class Model_User extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function create(Validation $validation = NULL): Kohana_ORM
+    public function create(Validation $validation = null): Kohana_ORM
     {
 		if ($this->_loaded)
 		{
@@ -244,7 +244,7 @@ class Model_User extends Gleez_Model
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-	public function update(Validation $validation = NULL): Kohana_ORM
+    public function update(Validation $validation = null): Kohana_ORM
     {
 		if ( ! $this->_loaded)
 		{
@@ -398,9 +398,9 @@ class Model_User extends Gleez_Model
      * @return boolean
      * @throws Kohana_Exception
      */
-    public function unique_key_exists($value, string $field = NULL): bool
+    public function unique_key_exists($value, string $field = null): bool
     {
-		if ($field === NULL)
+        if ($field === null)
 		{
 			// Automatically determine field by looking at the value
 			$field = $this->unique_key($value);
@@ -470,7 +470,7 @@ class Model_User extends Gleez_Model
      * Upload photo and return file path
      *
      * @param array $file Uploaded file
-     * @return NULL|string NULL when filed, otherwise file path
+     * @return null|string null when filed, otherwise file path
      * @throws Kohana_Exception
      */
     public function uploadPhoto(array $file): ?string
@@ -1017,12 +1017,12 @@ class Model_User extends Gleez_Model
 
         if (empty($data) or !$oldData)
 		{
-            return empty($this->data) ? NULL : serialize($newData);
+            return empty($this->data) ? null : serialize($newData);
 		}
 
         foreach ($newData as $key => $value)
 		{
-			if ($value === NULL)
+            if ($value === null)
 			{
                 unset($oldData[$key]);
 			}
@@ -1032,7 +1032,7 @@ class Model_User extends Gleez_Model
 			}
 		}
 
-        return empty($oldData) ? NULL : serialize($oldData);
+        return empty($oldData) ? null : serialize($oldData);
 	}
 
     /**
