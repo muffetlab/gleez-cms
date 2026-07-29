@@ -109,7 +109,13 @@ class Controller_Token extends Controller
 		if (strtolower($this->request->method()) != 'post')
 		{
             $this->response->headers(['Allow' => 'POST']);
-			throw Oauth2_Exception::factory(405, 'invalid_request', 'The request method must be POST when requesting an access token', NULL, '#section-3.2');
+            throw Oauth2_Exception::factory(
+                405,
+                'invalid_request',
+                'The request method must be POST when requesting an access token',
+                null,
+                '#section-3.2'
+            );
 		}
 
 		/* Determine grant type from request
@@ -164,7 +170,7 @@ class Controller_Token extends Controller
 			}
 		}
 
-		$requestedScope = NULL;
+        $requestedScope = null;
 		/*
 		 * Validate the scope of the token
 		 * If the grant type returns a value for the scope,

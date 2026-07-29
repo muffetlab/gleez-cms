@@ -51,12 +51,12 @@ abstract class OAuth2_Client {
     /**
      * @var string  Client id
      */
-    protected $_client_id = NULL;
+    protected $_client_id = null;
 
     /**
      * @var string  Client secret
      */
-    protected $_client_secret = NULL;
+    protected $_client_secret = null;
 
     /**
      * @var int     Client authentication type
@@ -66,7 +66,7 @@ abstract class OAuth2_Client {
     /**
      * @var string  Access token
      */
-    protected $_access_token = NULL;
+    protected $_access_token = null;
 
     /**
      * @var int     Access token type
@@ -76,12 +76,12 @@ abstract class OAuth2_Client {
     /**
      * @var string  Access token secret
      */
-    protected $_access_token_secret = NULL;
+    protected $_access_token_secret = null;
 
     /**
      * @var string  Access token crypt algorithm
      */
-    protected $_access_token_algorithm = NULL;
+    protected $_access_token_algorithm = null;
 
     /**
      * @var string  Access token parameter name
@@ -91,7 +91,7 @@ abstract class OAuth2_Client {
     /**
      * @var string  The path to the certificate file to use for https connections
      */
-    protected $_certificate_file = NULL;
+    protected $_certificate_file = null;
 
     /**
      * @var array   cURL options
@@ -154,7 +154,7 @@ abstract class OAuth2_Client {
         string $client_id,
         string $client_secret,
         int $client_auth_type = self::AUTH_TYPE_URI,
-        string $certificate_file = NULL
+        string $certificate_file = null
     )
     {
         if ( ! extension_loaded('curl'))
@@ -216,7 +216,7 @@ abstract class OAuth2_Client {
             'redirect_uri' => $redirect_uri
         ], $extra_parameters);
 
-        return $this->get_authorization_endpoint().'?'.http_build_query($parameters, NULL, '&');
+        return $this->get_authorization_endpoint() . '?' . http_build_query($parameters, null, '&');
     }
 
     /**
@@ -285,7 +285,7 @@ abstract class OAuth2_Client {
      * @throws  OAuth2_Client_Exception
      * @throws Kohana_Exception
      */
-    public function get_access_token(string $grant_type, array $parameters, string $response = NULL): string
+    public function get_access_token(string $grant_type, array $parameters, string $response = null): string
     {
         $response = $response ?: $this->request_access_token($grant_type, $parameters);
         $result   = $response['result'];
@@ -357,7 +357,7 @@ abstract class OAuth2_Client {
      * @param string|null $secret The secret key used to encrypt the MAC header
      * @param string|null $algorithm Algorithm used to encrypt the signature
      */
-    public function set_access_token_type(int $type, string $secret = NULL, string $algorithm = NULL)
+    public function set_access_token_type(int $type, string $secret = null, string $algorithm = null)
     {
         $this->_access_token_type = $type;
         $this->_access_token_secret = $secret;
@@ -457,7 +457,7 @@ abstract class OAuth2_Client {
 
         if ($http_method == self::HTTP_METHOD_GET)
         {
-            $parsed_url['path'] .= '?' . http_build_query($parameters, NULL, '&');
+            $parsed_url['path'] .= '?' . http_build_query($parameters, null, '&');
         }
 
         $signature = base64_encode(hash_hmac($this->_access_token_algorithm, $timestamp . "\n"
@@ -487,7 +487,7 @@ abstract class OAuth2_Client {
         string $url,
         $parameters = [],
         string $http_method = self::HTTP_METHOD_GET,
-        array  $http_headers = NULL,
+        array  $http_headers = null,
         int    $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART
     ): array
     {
@@ -513,7 +513,7 @@ abstract class OAuth2_Client {
                  */
                 if (is_array($parameters) && self::HTTP_FORM_CONTENT_TYPE_APPLICATION === $form_content_type)
                 {
-                    $parameters = http_build_query($parameters, NULL, '&');
+                    $parameters = http_build_query($parameters, null, '&');
                 }
 
                 $curl_options[CURLOPT_POSTFIELDS] = $parameters;
@@ -527,7 +527,7 @@ abstract class OAuth2_Client {
             case self::HTTP_METHOD_GET:
                 if (is_array($parameters))
                 {
-                    $url .= '?'.http_build_query($parameters, NULL, '&');
+                    $url .= '?' . http_build_query($parameters, null, '&');
                 }
                 elseif ($parameters)
                 {
@@ -595,7 +595,7 @@ abstract class OAuth2_Client {
         curl_close($ch);
 
         return $this->_last_response = [
-            'result' => ($json_decode === NULL) ? $result : $json_decode,
+            'result' => ($json_decode === null) ? $result : $json_decode,
             'code' => $http_code,
             'content_type' => $content_type
         ];
@@ -636,7 +636,7 @@ abstract class OAuth2_Client {
         string $client_id,
         string $client_secret,
         int    $client_auth_type = self::AUTH_TYPE_URI,
-        string $certificate_file = NULL
+        string $certificate_file = null
     )
     {
         $class_name = 'OAuth2_Client_'.$provider;

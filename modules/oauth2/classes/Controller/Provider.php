@@ -87,7 +87,7 @@ class Controller_Provider extends Template {
 		// Throw exception if the provider is disabled
 		if( ! array_key_exists($this->provider, array_filter($providers)))
 		{
-			throw new Http_Exception_404('Unsupported provider', NULL);
+            throw new Http_Exception_404('Unsupported provider', null);
 		}
 
 		$this->route = $this->request->route();

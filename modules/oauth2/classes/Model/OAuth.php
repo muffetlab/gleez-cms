@@ -30,7 +30,7 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function checkClientCredentials($client_id, $client_secret = NULL): bool
+    public function checkClientCredentials($client_id, $client_secret = null): bool
     {
 		$client = $this->getClientDetails($client_id);
 
@@ -91,7 +91,7 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function setAccessToken($access_token, $client_id, $user_id, $expires, $scope = NULL)
+    public function setAccessToken($access_token, $client_id, $user_id, $expires, $scope = null)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
@@ -133,7 +133,7 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = NULL)
+    public function setAuthorizationCode($code, $client_id, $user_id, $redirect_uri, $expires, $scope = null)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
@@ -262,7 +262,7 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = NULL)
+    public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = null)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 		
@@ -299,7 +299,7 @@ class Model_OAuth extends Model_Database {
     /**
      * @throws Kohana_Exception
      */
-    public function createAccessToken($client_id, $user_id, $scope = NULL, $includeRefreshToken = false): array
+    public function createAccessToken($client_id, $user_id, $scope = null, $includeRefreshToken = false): array
     {
         $refresh_token = false;
 		
@@ -329,7 +329,7 @@ class Model_OAuth extends Model_Database {
 		{
 			// Need to generate refresh token every time or,
 			// previously refresh is null, and need to include this time.
-			if ( $issueNewRefreshToken || ($includeRefreshToken && $token_exists[0]['refresh_token'] == NULL) )
+            if ($issueNewRefreshToken || ($includeRefreshToken && $token_exists[0]['refresh_token'] == null))
 			{
                 $refresh_token = Auth::instance()->hash(uniqid($client_id . mt_rand() . microtime() . $user_id, true));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);

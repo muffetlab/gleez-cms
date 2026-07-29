@@ -64,8 +64,8 @@ class OAuth2_Client_Live extends OAuth2_Client {
 				$data['id'] = $response['id'];
 				$data['email'] = $response['emails']['account']; //only account email is used
 				$data['nick'] = $response['name'];
-				$data['link']   = (isset($response['link']) && $response['link'] != NULL) ? $response['link'] : '';
-				$data['gender'] = (isset($response['gender']) && $response['gender'] != NULL) ? $response['gender'] : '';
+                $data['link'] = (isset($response['link']) && $response['link'] != null) ? $response['link'] : '';
+                $data['gender'] = (isset($response['gender']) && $response['gender'] != null) ? $response['gender'] : '';
 			}
 		}
 

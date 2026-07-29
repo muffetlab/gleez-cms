@@ -63,9 +63,9 @@ class Oauth2_Exception extends Exception
     public static function factory(
         int    $code,
         string $error,
-               $message = NULL,
-        array  $variables = NULL,
-               $error_uri = NULL
+               $message = null,
+        array  $variables = null,
+               $error_uri = null
     ): Oauth2_Exception
     {
 		return new self($code, $error, $message, $variables, $error_uri);
@@ -85,7 +85,7 @@ class Oauth2_Exception extends Exception
      * @param array|null $variables Translation variables [Optional]
      * @param null $error_uri The Error URL [Optional]
      */
-	public function __construct($code, $error, $message = NULL, array $variables = NULL, $error_uri = NULL)
+    public function __construct($code, $error, $message = null, array $variables = null, $error_uri = null)
 	{
 		// Set the message
         $msg = is_null($message) ? $error : __($message, $variables);

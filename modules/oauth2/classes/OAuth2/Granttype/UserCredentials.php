@@ -58,24 +58,24 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 
 	public function getClientId()
 	{
-		return NULL;
+        return null;
 	}
 
 	public function getUserId()
 	{
-		//return isset($this->userInfo['user_id']) ? $this->userInfo['user_id'] : NULL;
-        return $this->userInfo['id'] ?? NULL;
+        //return isset($this->userInfo['user_id']) ? $this->userInfo['user_id'] : null;
+        return $this->userInfo['id'] ?? null;
 	}
 
 	public function getScope()
 	{
-        return $this->userInfo['scope'] ?? NULL;
+        return $this->userInfo['scope'] ?? null;
 	}
 
     /**
      * @throws Oauth2_Exception
      */
-    public function createAccessToken($client_id, $user_id, $scope = NULL)
+    public function createAccessToken($client_id, $user_id, $scope = null)
 	{
 		try
 		{

@@ -56,7 +56,7 @@ class Model_Client extends Gleez_Model
         return parent::__get($column);
 	}
 
-    public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		$this->user_id   		= User::active_user()->id;
 		$this->client_id 		= sha1($this->user_id.uniqid().microtime());
