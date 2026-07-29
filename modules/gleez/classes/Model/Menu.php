@@ -144,7 +144,7 @@ class Model_Menu extends ORM_MPTT {
 		$original = $str;
         $post = ORM::factory('Menu', ['name' => $str]);
 
-        while ($post && $post->loaded() && $post->id !== $this->id)
+        while ($post->loaded() && $post->id !== $this->id)
 		{
 			$str = $original . '-' . $i;
 			$i++;
