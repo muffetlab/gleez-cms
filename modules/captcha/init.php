@@ -6,6 +6,6 @@ if ( ! Route::cache())
     Route::set('captcha', 'captcha(/<group>)')->defaults([
         'controller' => 'captcha',
         'action' => 'index',
-        'group' => NULL
+        'group' => null
     ]);
 }

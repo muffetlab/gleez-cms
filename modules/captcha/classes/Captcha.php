@@ -82,7 +82,7 @@ abstract class Captcha {
      * @return void
      * @throws Kohana_Exception
 	 */
-    public function __construct(string $group = NULL)
+    public function __construct(string $group = null)
 	{
 		// Create a singleton instance once
 		empty(Captcha::$instance) and Captcha::$instance = $this;
@@ -213,13 +213,13 @@ abstract class Captcha {
      * @return integer Counter value
      * @throws Kohana_Exception
      */
-    public function valid_count(int $new_count = NULL, bool $invalid = false): int
+    public function valid_count(int $new_count = null, bool $invalid = false): int
     {
 		// Pick the right session to use
         $session = ($invalid === true) ? 'captcha_invalid_count' : 'captcha_valid_count';
 
 		// Update counter
-		if ($new_count !== NULL)
+        if ($new_count !== null)
 		{
 			// Reset counter = delete session
 			if ($new_count < 1)
@@ -247,7 +247,7 @@ abstract class Captcha {
      * @return integer Counter value
      * @throws Kohana_Exception
      */
-    public function invalid_count(int $new_count = NULL): int
+    public function invalid_count(int $new_count = null): int
     {
         return $this->valid_count($new_count, true);
 	}
@@ -271,14 +271,14 @@ abstract class Captcha {
      * @return boolean
      * @throws Kohana_Exception
      */
-    public function promoted(int $threshold = NULL): bool
+    public function promoted(int $threshold = null): bool
     {
 		// Promotion has been disabled
         if (Captcha::$config['promote'] === false)
             return false;
 
 		// Use the config threshold
-		if ($threshold === NULL)
+        if ($threshold === null)
 		{
 			$threshold = Captcha::$config['promote'];
 		}
@@ -331,7 +331,7 @@ abstract class Captcha {
      * @return void
      * @throws Kohana_Exception If no GD2 support
 	 */
-    public function image_create(string $background = NULL)
+    public function image_create(string $background = null)
 	{
 		// Check for GD2 support
 		if ( ! function_exists('imagegd2'))
@@ -372,7 +372,7 @@ abstract class Captcha {
      * @param string|null $direction Direction: 'horizontal' or 'vertical', 'random' by default
 	 * @return void
 	 */
-    public function image_gradient(int $color1, int $color2, string $direction = NULL)
+    public function image_gradient(int $color1, int $color2, string $direction = null)
 	{
         $directions = ['horizontal', 'vertical'];
 
