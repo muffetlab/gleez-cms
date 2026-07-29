@@ -289,6 +289,7 @@ class ACL {
      * @return  boolean
      * @throws Cache_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    User::active_user
      */
     public static function check(string $perm_name, Model_User $user = null): bool
