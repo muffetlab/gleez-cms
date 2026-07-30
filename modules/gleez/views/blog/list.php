@@ -5,7 +5,7 @@
 </div>
 <?php foreach($posts as $i => $post): ?>
     <article id="blog-<?php echo $post->id; ?>"
-             class="blog-list <?php echo ($post->sticky) ? ' sticky' : ' blog-' . $post->status; ?>" itemscope
+             class="blog-list <?php echo $post->sticky ? ' sticky' : ' blog-' . $post->status; ?>" itemscope
              itemtype="https://schema.org/Article">
 		<header>
 			<h2 class="post-title" itemprop="name">

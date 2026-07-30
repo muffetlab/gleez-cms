@@ -874,7 +874,7 @@ class Post extends ORM_Versioned {
         $pickMe = $poses[ceil(sizeof($poses) / 2) - 1];
 
 		$widgets     = Widgets::instance()->render($region);
-        $replaceWith = ($widgets) ? '<div id="' . $region . '" class="clear-block">' . $widgets . '</div>' : null;
+        $replaceWith = $widgets ? '<div id="' . $region . '" class="clear-block">' . $widgets . '</div>' : null;
         $content = substr_replace($content, $replaceWith . $repChar, $pickMe, 2);
 
 		// save some memory
@@ -899,7 +899,7 @@ class Post extends ORM_Versioned {
 	{
         $cache = Cache::instance();
         $use_cache = (bool) $config->get('use_cache', false);
-        $post = ($use_cache) ? $cache->get($type . ':' . $type . '-' . $id, false) : false;
+        $post = $use_cache ? $cache->get($type . ':' . $type . '-' . $id, false) : false;
 
 		if (empty($post))
 		{
@@ -987,7 +987,7 @@ class Post extends ORM_Versioned {
 			}
 		}
 
-        return (!empty($post)) ? $post : false;
+        return !empty($post) ? $post : false;
 	}
 
 	/**

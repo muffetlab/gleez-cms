@@ -4,9 +4,9 @@
 */
 
 // Number of page links at the start and end of the whole range
-$count_out = ( ! empty($config['count_out'])) ? (int) $config['count_out'] : 3;
+$count_out = !empty($config['count_out']) ? (int) $config['count_out'] : 3;
 // Number of page links on each side of current page
-$count_in = ( ! empty($config['count_in'])) ? (int) $config['count_in'] : 5;
+$count_in = !empty($config['count_in']) ? (int) $config['count_in'] : 5;
 
 // Beginning group of pages: $n1...$n2
 $n1 = 1;

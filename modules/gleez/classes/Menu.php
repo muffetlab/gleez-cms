@@ -228,7 +228,7 @@ class Menu {
 			}
 
 			//set title
-            $title = (isset($item['image'])) ? '<i class="fa fa-fw ' . $item['image'] . '"></i>' : '';
+            $title = isset($item['image']) ? '<i class="fa fa-fw ' . $item['image'] . '"></i>' : '';
 			// localize item menu
             $title .= '<span>' . HTML::chars(__($item['title'])) . $caret . '</span>';
 

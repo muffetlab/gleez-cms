@@ -130,7 +130,7 @@ class Datatables {
     protected function _search(string $query)
 	{
 		// Use search columns if specified; otherwise, search across all columns
-		$columns = ( ! empty($this->_search_columns)) ? $this->_search_columns : $this->_columns;
+        $columns = !empty($this->_search_columns) ? $this->_search_columns : $this->_columns;
 
 
 		if (count($columns) > 0)
