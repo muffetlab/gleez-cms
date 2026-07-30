@@ -56,4 +56,4 @@ class Controller_Captcha extends Controller {
 		Captcha::instance($this->group)->update_response_session();
 	}
 
-} // End Captcha_Controller
+}

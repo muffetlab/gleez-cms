@@ -472,4 +472,4 @@ abstract class Captcha {
 	 */
     abstract public function render(bool $html = true, string $type = null);
 
-} // End Captcha Class
+}
