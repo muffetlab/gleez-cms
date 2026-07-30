@@ -216,7 +216,7 @@ abstract class Captcha {
     public function valid_count(int $new_count = null, bool $invalid = false): int
     {
 		// Pick the right session to use
-        $session = ($invalid === true) ? 'captcha_invalid_count' : 'captcha_valid_count';
+        $session = $invalid === true ? 'captcha_invalid_count' : 'captcha_valid_count';
 
 		// Update counter
         if ($new_count !== null)
@@ -395,7 +395,7 @@ abstract class Captcha {
 		$color2 = imagecolorsforindex($this->image, $color2);
 
 		// Preparations for the gradient loop
-		$steps = ($direction === 'horizontal') ? Captcha::$config['width'] : Captcha::$config['height'];
+        $steps = $direction === 'horizontal' ? Captcha::$config['width'] : Captcha::$config['height'];
 
 		$r1 = ($color1['red'] - $color2['red']) / $steps;
 		$g1 = ($color1['green'] - $color2['green']) / $steps;
