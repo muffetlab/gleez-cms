@@ -61,7 +61,7 @@ class User {
 	public static function active_user()
 	{
 		// @todo (maybe) cache this object so we're not always doing session lookups.
-		return (! (Auth_ORM::instance()->get_user()) ? self::guest() : Auth_ORM::instance()->get_user());
+        return !Auth_ORM::instance()->get_user() ? self::guest() : Auth_ORM::instance()->get_user();
 	}
 
     /**

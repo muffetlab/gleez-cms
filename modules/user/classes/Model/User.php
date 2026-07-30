@@ -634,7 +634,7 @@ class Model_User extends Gleez_Model
 			// Set gender if it's available via OAuth provider
 			if (isset($data['gender']))
 			{
-				$this->gender = ($data['gender'] === 'male') ? 1 : 2;
+                $this->gender = $data['gender'] === 'male' ? 1 : 2;
 			}
 
 			// Save user

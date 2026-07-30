@@ -38,7 +38,7 @@
                     <br>
                     <?php echo HTML::anchor("#", $accept->mail, ['title' => __('mail')]); ?>
                     <br>
-                    <?php echo ($accept->dob != 0) ? $accept->dob : '__'; ?>
+                    <?php echo $accept->dob != 0 ? $accept->dob : '__'; ?>
                     <br>
                     <?php echo HTML::anchor("$accept->homepage", $accept->homepage); ?>
 				</div>
