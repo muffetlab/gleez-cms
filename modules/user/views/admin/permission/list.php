@@ -43,7 +43,7 @@
 			</tr>
 	
 			<?php foreach ($access_names as $perm => $name): ?>
-				<tr class="<?php echo Text::alternate("odd", "even") ?>">
+                <tr class="<?php echo Text::alternate('odd', 'even') ?>">
 					<td class="permission" >
 						<div class="permission-item" id="permission-<?php echo str_replace(' ', '-', $perm) ?>" >
 							<strong><?php echo ucwords($name['title']) ?></strong>

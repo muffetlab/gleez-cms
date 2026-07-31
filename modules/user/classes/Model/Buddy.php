@@ -55,13 +55,13 @@ class Model_Buddy extends Model
         $friends = [];
 		foreach($results as $friend)
 		{
-			if($friend["request_from"] == $user_id)
+            if ($friend['request_from'] == $user_id)
 			{
-				$friends[] = $friend["request_to"];
+                $friends[] = $friend['request_to'];
 			}
 			else
 			{
-				$friends[] = $friend["request_from"];
+                $friends[] = $friend['request_from'];
 			}
 		}
 

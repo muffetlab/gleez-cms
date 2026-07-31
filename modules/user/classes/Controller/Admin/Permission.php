@@ -117,7 +117,7 @@ class Controller_Admin_Permission extends Controller_Admin {
             $this->request->redirect(Route::get('admin/user')->uri(['action' => 'list']), 404);
 		}
 
-        $this->title = __(':user Permissions', [":user" => $post->name]);
+        $this->title = __(':user Permissions', [':user' => $post->name]);
         $action = Route::get('admin/permission')->uri(['action' => 'user', 'id' => isset($post->id) ? $post->id : 0]);
 
 		$view = View::factory('admin/permission/user')

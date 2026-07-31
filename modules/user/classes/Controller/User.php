@@ -363,7 +363,7 @@ class Controller_User extends Template {
                 $user->values($post, ['nick', 'homepage', 'mail', 'bio', 'dob'])->save();
 
 				// If the post data validates using the rules setup in the user model
-                Message::success(__("%title successfully updated!", ['%title' => $user->nick]));
+                Message::success(__('%title successfully updated!', ['%title' => $user->nick]));
 
 				// redirect to the user account
                 $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);

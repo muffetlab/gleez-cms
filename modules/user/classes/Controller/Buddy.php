@@ -201,7 +201,7 @@ class Controller_Buddy extends Template {
 
 		$model = Model::factory('buddy')->addFriend($account->id, $invitee->id);
 
-        Message::success(__("Buddy request sent to %title", ['%title' => $invitee->nick]));
+        Message::success(__('Buddy request sent to %title', ['%title' => $invitee->nick]));
         $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $id]));
 	}
 
@@ -231,7 +231,7 @@ class Controller_Buddy extends Template {
 		if ( $model->isRequest($this->user->id, $friend->id))
 		{
             $model->accept($this->user->id);
-            Message::success(__("Buddy request: %title accepted", ['%title' => $friend->nick]));
+            Message::success(__('Buddy request: %title accepted', ['%title' => $friend->nick]));
 		}
 
         $this->request->redirect(Route::get('user')->uri(['action' => 'view', 'id' => $id]));
@@ -263,7 +263,7 @@ class Controller_Buddy extends Template {
 		if ( $model->isRequest($this->user->id, $friend->id))
 		{
 			$model->reject($id);
-            Message::success(__("Buddy %title rejected", ['%title' => $friend->nick]));
+            Message::success(__('Buddy %title rejected', ['%title' => $friend->nick]));
 		}
 
         $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $id]));
@@ -286,7 +286,7 @@ class Controller_Buddy extends Template {
 		}
 
 		Model::factory('buddy')->delete($id, $account->id);
-        Message::success(__("Buddy %title deleted", ['%title' => $friend->nick]));
+        Message::success(__('Buddy %title deleted', ['%title' => $friend->nick]));
 
         $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $this->user->id]));
 	}

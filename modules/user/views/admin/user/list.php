@@ -17,18 +17,19 @@
 	<table id = "admin-list-users" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["2", "desc"]]'>
 		<thead>
 			<tr>
-				<th width="20%" class="sorting_desc"><?php echo __("Username"); ?></th>
-				<th width="22%" class="sorting_desc"><?php echo __("Email"); ?></th>
-				<th width="15%" data-columns='{"searchable":false}'><?php echo __("First Visit"); ?></th>
-				<th width="15%" data-columns='{"searchable":false}'><?php echo __("Last Visit"); ?></th>
+                <th width="20%" class="sorting_desc"><?php echo __('Username'); ?></th>
+                <th width="22%" class="sorting_desc"><?php echo __('Email'); ?></th>
+                <th width="15%" data-columns='{"searchable":false}'><?php echo __('First Visit'); ?></th>
+                <th width="15%" data-columns='{"searchable":false}'><?php echo __('Last Visit'); ?></th>
 				<th width="12%" data-columns='{"orderable":false, "searchable":false}'><?php echo __('Roles') ?></th>
-				<th width="8%" data-columns='{"searchable":false, "className": "status"}'><?php echo __("Status"); ?></th>
+                <th width="8%"
+                    data-columns='{"searchable":false, "className": "status"}'><?php echo __('Status'); ?></th>
 				<th width="8%" data-columns='{"orderable":false, "searchable":false}'></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="7" class="dt-empty"><?php echo __("Loading data from server"); ?></td>
+                <td colspan="7" class="dt-empty"><?php echo __('Loading data from server'); ?></td>
 			</tr>
 		</tbody>
 	</table>

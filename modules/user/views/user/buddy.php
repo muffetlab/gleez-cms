@@ -9,11 +9,11 @@
 				</h3>
 			</div>
 			<div class="col-md-6">
-                <?php echo HTML::anchor("buddy/sent/" . $id, __('Sent'), [
+                <?php echo HTML::anchor('buddy/sent/' . $id, __('Sent'), [
                     'class' => 'buddy btn btn-default pull-right',
                     'title' => __('View sent items')
                 ]); ?>
-                <?php echo HTML::anchor("buddy/pending/" . $id, __('Pending'), [
+                <?php echo HTML::anchor('buddy/pending/' . $id, __('Pending'), [
                     'class' => 'buddy btn btn-default pull-right',
                     'title' => __('View pending items')
                 ]); ?>
@@ -25,18 +25,18 @@
             <div class="list-group-item friend-item panel-body">
 				<?php $accept = User::lookup($id); ?>
 				<div class="col-md-5">
-                    <?php echo HTML::anchor("user/view/" . $accept->id, User::getAvatar($accept, ['size' => 80]), [
+                    <?php echo HTML::anchor('user/view/' . $accept->id, User::getAvatar($accept, ['size' => 80]), [
                         'class' => 'action-view',
                         'title' => __('View profile')
                     ]); ?>
 				</div>
 				<div class="col-md-6">
-                    <?php echo HTML::anchor("user/view/" . $accept->id, $accept->nick, [
+                    <?php echo HTML::anchor('user/view/' . $accept->id, $accept->nick, [
                         'class' => 'action-view',
                         'title' => __('View profile')
                     ]); ?>
                     <br>
-                    <?php echo HTML::anchor("#", $accept->mail, ['title' => __('mail')]); ?>
+                    <?php echo HTML::anchor('#', $accept->mail, ['title' => __('mail')]); ?>
                     <br>
                     <?php echo $accept->dob != 0 ? $accept->dob : '__'; ?>
                     <br>
@@ -44,7 +44,7 @@
 				</div>
 				
 				<?php if($is_owner): ?>
-                    <?php echo HTML::anchor("buddy/delete/" . $accept->id, '<i class="fas fa-trash-can"></i>', [
+                    <?php echo HTML::anchor('buddy/delete/' . $accept->id, '<i class="fas fa-trash-can"></i>', [
                         'class' => 'action-delete col-md-1',
                         'title' => __('Delete')
                     ]); ?>

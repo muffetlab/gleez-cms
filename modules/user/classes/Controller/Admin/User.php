@@ -164,7 +164,7 @@ class Controller_Admin_User extends Controller_Admin {
                         $post->add('roles', ORM::factory('Role', ['name' => $role]));
 					}
 
-                    Message::success(__("User %name saved successful!", ['%name' => $post->name]));
+                    Message::success(__('User %name saved successful!', ['%name' => $post->name]));
 
 					$this->request->redirect(Route::get('admin/user')->uri(), 200);
 				}
@@ -272,7 +272,7 @@ class Controller_Admin_User extends Controller_Admin {
                         $post->add('roles', ORM::factory('Role', ['name' => $role]));
 					}
 
-                    Message::success(__("User %name saved successful!", ['%name' => $post->name]));
+                    Message::success(__('User %name saved successful!', ['%name' => $post->name]));
 
 					$this->request->redirect(Route::get('admin/user')->uri(), 200);
 				}

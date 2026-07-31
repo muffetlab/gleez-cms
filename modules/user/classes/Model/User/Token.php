@@ -15,7 +15,7 @@ class Model_User_Token extends ORM {
         'user_id' => ['type' => 'int'],
         'user_agent' => ['type' => 'string'],
         'token' => ['type' => 'string'],
-        'type' => ['type' => 'string', "column_default" => null],
+        'type' => ['type' => 'string', 'column_default' => null],
         'created' => ['type' => 'int'],
         'expires' => ['type' => 'int'],
     ];
