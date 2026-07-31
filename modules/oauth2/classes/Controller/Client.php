@@ -88,7 +88,7 @@ class Controller_Client extends Template {
 		    {
                 if (!empty($_POST['grant_types']))
 			    {
-					$grant_types_selected = implode(" ", $_POST['grant_types']);
+                    $grant_types_selected = implode(' ', $_POST['grant_types']);
                     $client->grant_types = $grant_types_selected;
 			    }
 
@@ -161,7 +161,7 @@ class Controller_Client extends Template {
 			    //$grant_types_selected = 'authorization_code';
                 if (!empty($_POST['grant_types']))
 			    {
-				$grant_types_selected = implode(" ", $_POST['grant_types']);
+                    $grant_types_selected = implode(' ', $_POST['grant_types']);
                     $client->grant_types = $grant_types_selected;
 			    }
 

@@ -49,13 +49,13 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 		 */
 		if (isset($authCode['redirect_uri']) && $authCode['redirect_uri']) {
 			if (!$request->post('redirect_uri') || urldecode($request->post('redirect_uri')) != $authCode['redirect_uri']) {
-				throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', "The redirect URI is missing or do not match");
+                throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', 'The redirect URI is missing or do not match');
 			}
 		}
 
-		if ($authCode["expires"] < time()) {
-			throw Oauth2_Exception::factory(400, 'invalid_grant', "The authorization code has expired");
-			//throw new Oauth2_Exception(400, 'invalid_grant', "The authorization code has expired");
+        if ($authCode['expires'] < time()) {
+            throw Oauth2_Exception::factory(400, 'invalid_grant', 'The authorization code has expired');
+            //throw new Oauth2_Exception(400, 'invalid_grant', 'The authorization code has expired');
 		}
 
 		if (!isset($authCode['code'])) {

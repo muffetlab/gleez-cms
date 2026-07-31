@@ -52,7 +52,7 @@ class Controller_Revoke extends Template {
                 Model::factory('OAuth')->revoke_refresh($this->token);
 			}
 
-            $this->response->body(json_encode(['Response' => "Status Code: 200"]));
+            $this->response->body(json_encode(['Response' => 'Status Code: 200']));
 			return;
 		}
 		catch(Oauth2_Exception $e) 
@@ -87,15 +87,15 @@ class Controller_Revoke extends Template {
      */
     protected function validateRevokeRequest(): bool
     {
-		if (!$token = $this->request->query("token")) {
+        if (!$token = $this->request->query('token')) {
 			// We don't have a good URI to use
-			throw Oauth2_Exception::factory(400, 'invalid_request', "No Token supplied");
+            throw Oauth2_Exception::factory(400, 'invalid_request', 'No Token supplied');
 		}
 		
 		$this->token = $token;
 
         if (!$result = Model::factory('OAuth')->isValidRevoke($token)) {
-			throw Oauth2_Exception::factory(400, 'invalid_grant', "Token invalid");
+            throw Oauth2_Exception::factory(400, 'invalid_grant', 'Token invalid');
 		}
 		
 		$this->token_info = $result[0];

@@ -26,11 +26,11 @@ class Oauth2_ResponseType_AuthorizationCode
 
         $params += ['scope' => null, 'state' => null];
 
-		$result["query"]["code"] = $this->createAuthorizationCode($params['client_id'], $user_id, $params['redirect_uri'], $params['scope']);
+        $result['query']['code'] = $this->createAuthorizationCode($params['client_id'], $user_id, $params['redirect_uri'], $params['scope']);
 
 		if (isset($params['state'])) 
 		{
-			$result["query"]["state"] = $params['state'];
+            $result['query']['state'] = $params['state'];
 		}
 
         return [$params['redirect_uri'], $result];

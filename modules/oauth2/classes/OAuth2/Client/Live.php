@@ -35,7 +35,7 @@ class OAuth2_Client_Live extends OAuth2_Client {
 	 */
     public function get_user_profile_service_url(): string
     {
-		return "https://apis.live.net/v5.0/me";
+        return 'https://apis.live.net/v5.0/me';
 	}
 
     /**

@@ -149,7 +149,7 @@ class Controller_Authorize extends Template {
                     $this->config['redirect_status_code'],
                     $this->state,
                     'access_denied',
-                    "The user denied access to your application"
+                    'The user denied access to your application'
                 );
 			}
 
@@ -262,9 +262,9 @@ class Controller_Authorize extends Template {
     protected function validateAuthorizeRequest(): bool
     {
 		// Make sure a valid client id was supplied (we can not redirect because we were unable to verify the URI)
-		if (!$client_id = $this->request->query("client_id")) {
+        if (!$client_id = $this->request->query('client_id')) {
 		    // We don't have a good URI to use
-		   	throw Oauth2_Exception::factory(400, 'invalid_client', "No client id supplied");
+            throw Oauth2_Exception::factory(400, 'invalid_client', 'No client id supplied');
 		}
 
 		// Get client details
@@ -543,21 +543,21 @@ class Controller_Authorize extends Template {
 		// Add our params to the parsed uri
 		foreach ($params as $k => $v) {
 			if (isset($parse_url[$k])) {
-				$parse_url[$k] .= "&" . http_build_query($v);
+                $parse_url[$k] .= '&' . http_build_query($v);
 			} else {
 				$parse_url[$k] = http_build_query($v);
 			}
 		}
 
         // Put Humpty Dumpty back together
-        return (isset($parse_url["scheme"]) ? $parse_url["scheme"] . "://" : "")
-            . (isset($parse_url["user"])
-                ? $parse_url["user"] . (isset($parse_url["pass"]) ? ":" . $parse_url["pass"] : "") . "@"
-                : "")
-            . ($parse_url["host"] ?? "")
-            . (isset($parse_url["port"]) ? ":" . $parse_url["port"] : "")
-            . ($parse_url["path"] ?? "")
-            . (!empty($parse_url['query']) ? "?" . $parse_url["query"] : "")
-            . (isset($parse_url["fragment"]) ? "#" . $parse_url["fragment"] : "");
+        return (isset($parse_url['scheme']) ? $parse_url['scheme'] . '://' : '')
+            . (isset($parse_url['user'])
+                ? $parse_url['user'] . (isset($parse_url['pass']) ? ':' . $parse_url['pass'] : '') . '@'
+                : '')
+            . ($parse_url['host'] ?? '')
+            . (isset($parse_url['port']) ? ':' . $parse_url['port'] : '')
+            . ($parse_url['path'] ?? '')
+            . (!empty($parse_url['query']) ? '?' . $parse_url['query'] : '')
+            . (isset($parse_url['fragment']) ? '#' . $parse_url['fragment'] : '');
 	}
 }

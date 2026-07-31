@@ -29,11 +29,11 @@ class Oauth2_ResponseType_AccessToken
 
         $params += ['scope' => null, 'state' => null];
 
-		$result["fragment"] = $this->createAccessToken($params['client_id'], $user_id, $params['redirect_uri'], $params['scope']);
+        $result['fragment'] = $this->createAccessToken($params['client_id'], $user_id, $params['redirect_uri'], $params['scope']);
 
 		if (isset($params['state'])) 
 		{
-			$result["fragment"]["state"] = $params['state'];
+            $result['fragment']['state'] = $params['state'];
 		}
 
         return [$params['redirect_uri'], $result];

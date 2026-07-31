@@ -2,7 +2,7 @@
 
 class Model_Client extends Gleez_Model
 {
-	protected $_table_name = "oauth_clients";
+    protected $_table_name = 'oauth_clients';
 
     protected $_table_columns = [
         'id' => ['type' => 'int'],

@@ -43,7 +43,7 @@ class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Invalid refresh token');
 		}
 
-		if ($refreshToken["refresh_expires"] < time()) {
+        if ($refreshToken['refresh_expires'] < time()) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Refresh token has expired');
 		}
 

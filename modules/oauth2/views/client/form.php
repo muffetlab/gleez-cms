@@ -3,12 +3,12 @@
 if (isset($client->id) && Valid::digit($client->id))
     {
         $parms = ['id' => $client->id, 'action' => 'edit'];
-        $buttonText = __("Save Changes");
+        $buttonText = __('Save Changes');
     }
     else
     {
         $parms = ['action' => 'register'];
-        $buttonText = __("Register");
+        $buttonText = __('Register');
     }
 ?>
 <?php echo Form::open(Route::get('oauth2/client')->uri($parms), [
@@ -41,7 +41,7 @@ if (isset($client->id) && Valid::digit($client->id))
 			<div class="form-group <?php //echo isset($errors['grant_types']) ? 'error' : ''; ?>">
                 <?php echo Form::label('grant_types', __('Grant Types'), ['class' => 'control-label1']) ?>
 				<div class="controls ">
-                    <?php $selected = explode(" ", $client->grant_types); ?>
+                    <?php $selected = explode(' ', $client->grant_types); ?>
 					<?php foreach ($grant_types as $k => $v) : ?>
 					<label for="grant_types[<?php echo $k?>]" class=" checkbox">
 						<input type="checkbox" <?php echo in_array($k, $selected) ? "checked='checked'" : "";?> value="<?php echo $k?>" name="grant_types[<?php echo $k?>]" id="form-grant_types_<?php echo $k?>">
@@ -59,7 +59,7 @@ if (isset($client->id) && Valid::digit($client->id))
 		</div>
         <?php if ($client->logo): ?>
 			<div class="thumbnail">
-                <?php echo HTML::resize("media/logos/" . $client->logo); ?>
+                <?php echo HTML::resize('media/logos/' . $client->logo); ?>
 			</div>
 		<?php endif; ?>
 		

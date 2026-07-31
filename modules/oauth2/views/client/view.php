@@ -14,7 +14,7 @@
 				<?php echo __('Logo'); ?>
 			</th>
 			<td>
-                <?php echo HTML::resize("media/logos/" . $client->logo); ?>
+                <?php echo HTML::resize('media/logos/' . $client->logo); ?>
 			</td>
 		</tr>
 		

@@ -34,11 +34,11 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 		$this->request  = $request;
 		$this->response = $response;
 
-		if (!$request->post("password") || !$request->post("username")) {
+        if (!$request->post('password') || !$request->post('username')) {
 			throw Oauth2_Exception::factory(400, 'invalid_request', 'Missing parameters: "username" and "password" required');
 		}
 
-		if (! $userInfo = $this->checkUserCredentials($request->post("username"), $request->post("password"))) {
+        if (!$userInfo = $this->checkUserCredentials($request->post('username'), $request->post('password'))) {
 			throw Oauth2_Exception::factory(400, 'invalid_grant', 'Invalid username and password combination');
 		}
 
@@ -47,7 +47,7 @@ class Oauth2_GrantType_UserCredentials implements Oauth2_GrantType_Interface
 		}
 
 		if (!isset($userInfo['id'])) {
-			throw new Kohana_Exception("you must set the user_id on the array returned by checkUserCredentials");
+            throw new Kohana_Exception('you must set the user_id on the array returned by checkUserCredentials');
 			//$this->setError(500, 'server_error', 'you must set the user_id on the array returned by checkUserCredentials');
 		}
 

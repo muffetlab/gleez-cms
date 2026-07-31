@@ -52,7 +52,7 @@ class Controller_Me extends Controller
 		}
 		else
 		{
-            $user_info = ['message' => "User doesnt exists", 'Status code' => 400];
+            $user_info = ['message' => 'User doesnt exists', 'Status code' => 400];
 		}
 
 		$this->response->body(json_encode($user_info));
