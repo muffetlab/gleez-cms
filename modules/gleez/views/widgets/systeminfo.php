@@ -17,7 +17,7 @@
 		</tr>
 		<tr>
 			<th><?php _e('Host Name') ?></th>
-			<td><?php echo HTML::chars(php_uname("n")); ?></td>
+            <td><?php echo HTML::chars(php_uname('n')); ?></td>
 		</tr>
 		<tr>
 			<th><?php _e('Server Software') ?></th>

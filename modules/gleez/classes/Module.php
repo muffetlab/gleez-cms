@@ -138,7 +138,7 @@ class Module
 
 			// Iterate over each config path
 			foreach ($paths as $path) {
-				foreach (glob($path . "*/module.info") as $file) {
+                foreach (glob($path . '*/module.info') as $file) {
 					$name           = basename(dirname($file));
 					$modules->$name = new ArrayObject(parse_ini_file($file), ArrayObject::ARRAY_AS_PROPS);
 
@@ -208,11 +208,8 @@ class Module
         $messages = [];
 
 		$installer_class = ucfirst($module_name).'_Installer';
-        if (is_callable([$installer_class, "can_activate"])) {
-            $messages = call_user_func([
-                $installer_class,
-                "can_activate"
-            ]);
+        if (is_callable([$installer_class, 'can_activate'])) {
+            $messages = call_user_func([$installer_class, 'can_activate']);
 		}
 
 		// Remove it from the active path
@@ -227,8 +224,8 @@ class Module
 	 */
     public static function can_deactivate(string $module_name): array
     {
-        $data = (object) ["module" => $module_name, "messages" => []];
-		self::event("pre_deactivate", $data);
+        $data = (object) ['module' => $module_name, 'messages' => []];
+        self::event('pre_deactivate', $data);
 
 		return $data->messages;
 	}
@@ -249,8 +246,8 @@ class Module
         self::migrate($module_name);
 
 		$installer_class = ucfirst($module_name).'_Installer';
-        if (is_callable([$installer_class, "install"])) {
-            call_user_func_array([$installer_class, "install"], []);
+        if (is_callable([$installer_class, 'install'])) {
+            call_user_func_array([$installer_class, 'install'], []);
 		} else {
 			self::set_version($module_name, 1);
 		}
@@ -338,8 +335,8 @@ class Module
 
 		$version_before  = self::get_version($module_name);
 		$installer_class = ucfirst($module_name).'_Installer';
-        if (is_callable([$installer_class, "upgrade"])) {
-            call_user_func_array([$installer_class, "upgrade"], [$version_before]);
+        if (is_callable([$installer_class, 'upgrade'])) {
+            call_user_func_array([$installer_class, 'upgrade'], [$version_before]);
 		} else {
 			$available = self::available();
 			if (isset($available->$module_name->code_version)) {
@@ -390,8 +387,8 @@ class Module
 
 			$installer_class = ucfirst($module_name).'_Installer';
 
-            if (is_callable([$installer_class, "activate"])) {
-                call_user_func_array([$installer_class, "activate"], []);
+            if (is_callable([$installer_class, 'activate'])) {
+                call_user_func_array([$installer_class, 'activate'], []);
 			}
 
             $activeModule = self::get($module->name);
@@ -431,8 +428,8 @@ class Module
     static function deactivate(string $module_name)
 	{
 		$installer_class = ucfirst($module_name).'_Installer';
-        if (is_callable([$installer_class, "deactivate"])) {
-            call_user_func_array([$installer_class, "deactivate"], []);
+        if (is_callable([$installer_class, 'deactivate'])) {
+            call_user_func_array([$installer_class, 'deactivate'], []);
 		}
 
 		$module = self::get($module_name);
@@ -462,8 +459,8 @@ class Module
 		self::migrate($module_name, 'down');
 
 		$installer_class = ucfirst($module_name).'_Installer';
-        if (is_callable([$installer_class, "uninstall"])) {
-            call_user_func([$installer_class, "uninstall"]);
+        if (is_callable([$installer_class, 'uninstall'])) {
+            call_user_func([$installer_class, 'uninstall']);
 		}
 
 		$module = self::get($module_name);
@@ -567,7 +564,7 @@ class Module
 	 */
     public static function event(string $name, ...$args)
 	{
-		$function = str_replace(".", "_", $name);
+        $function = str_replace('.', '_', $name);
 
 		if (method_exists('Gleez_Event', $function)) {
 			switch (count($args)) {
@@ -613,7 +610,7 @@ class Module
 	 */
     public static function action(string $action, $return, ...$filterArgs)
 	{
-		$function = str_replace(".", "_", $action);
+        $function = str_replace('.', '_', $action);
 
 		foreach (self::$active as $name => $module) {
 			$class = ucfirst($name).'_Action';

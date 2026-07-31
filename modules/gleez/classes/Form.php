@@ -109,7 +109,7 @@ class Form extends Kohana_Form
 		{
             $attributes['class'] = isset($attributes['class']) ? $attributes['class'] . ' form-autocomplete' : 'form-autocomplete';
             $attributes['id'] = $name;
-            $attributes['autocomplete'] = "off";
+            $attributes['autocomplete'] = 'off';
             $attributes['data-url'] = URL::site($url, true);
             $attributes['data-provide'] = 'typeahead';
 

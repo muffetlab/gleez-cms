@@ -853,7 +853,16 @@ class Assets {
 		}
 
         // Set unique filename based on criteria
-		$filename  = $path.DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR.$type.'-'.md5(implode("|", $files)).$last_modified.'.'.$type;
+        $filename = $path
+            . DIRECTORY_SEPARATOR
+            . $type
+            . DIRECTORY_SEPARATOR
+            . $type
+            . '-'
+            . md5(implode('|', $files))
+            . $last_modified
+            . '.'
+            . $type;
 		$directory = dirname($filename);
 
 		if ( ! is_dir($directory))

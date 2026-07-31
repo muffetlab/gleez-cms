@@ -706,7 +706,7 @@ abstract class Template extends Controller {
         Assets::css('fontawesome-regular', 'media/fontawesome/css/regular.min.css', ['fontawesome-all'], ['weight' => -12]);
         Assets::css('fontawesome-brands', 'media/fontawesome/css/brands.min.css', ['fontawesome-all'], ['weight' => -12]);
         Assets::css('default', 'media/css/default.css', null, ['weight' => 0]);
-        Assets::css('theme', "media/css/theme.css", ['default'], ['weight' => 50]);
+        Assets::css('theme', 'media/css/theme.css', ['default'], ['weight' => 50]);
 	}
 
     /**

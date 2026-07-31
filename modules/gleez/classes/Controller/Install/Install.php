@@ -427,11 +427,11 @@ class Controller_Install_Install extends Controller_Template {
      */
     private function unpack_sql($config): void
     {
-		$prefix = $config["table_prefix"];
+        $prefix = $config['table_prefix'];
 		$buf = null;
 
-		$link = mysqli_connect($config["hostname"], $config["user"], $config["pass"]);
-		mysqli_select_db($link, $config["database"]);
+        $link = mysqli_connect($config['hostname'], $config['user'], $config['pass']);
+        mysqli_select_db($link, $config['database']);
 
 		$sql_file = MODPATH . "gleez/views/install/install.sql";
 
@@ -460,11 +460,11 @@ class Controller_Install_Install extends Controller_Template {
     private function add_user(): string
     {
 		$config = $this->_session->get('database_data');
-		$link   = mysqli_connect($config["hostname"], $config["user"], $config["pass"]);
+        $link = mysqli_connect($config['hostname'], $config['user'], $config['pass']);
 
-		mysqli_select_db($link, $config["database"]);
+        mysqli_select_db($link, $config['database']);
 
-		$prefix = trim($config["table_prefix"]);
+        $prefix = trim($config['table_prefix']);
 		$time   = time();
 
 		// Gleez Private Key
