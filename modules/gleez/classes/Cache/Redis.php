@@ -40,7 +40,8 @@
  * @license    https://gleezcms.org/license Gleez CMS License
  * @link 	   https://github.com/nicolasff/phpredis
  */
-class Cache_Redis extends Cache {
+class Cache_Redis extends Cache
+{
 
 	const CACHE_TYPE = 'user';
 

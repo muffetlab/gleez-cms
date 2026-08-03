@@ -12,7 +12,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Menu {
+class Menu
+{
 
 	/**
 	 * Associative array of list items

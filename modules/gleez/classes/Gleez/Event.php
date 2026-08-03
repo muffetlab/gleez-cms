@@ -8,7 +8,8 @@
  * @license    https://gleezcms.org/license  Gleez CMS License
  * 
  */
-class Gleez_Event {
+class Gleez_Event
+{
         
 	public static function Post_Save($post)
 	{

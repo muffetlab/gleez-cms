@@ -9,7 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license	   https://gleezcms.org/license  Gleez CMS License
  */
-class Message {
+class Message
+{
 
 	// Constants to use for the types of messages that can be set.
 	const ERROR   	= 'error';

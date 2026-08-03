@@ -9,7 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin extends Template {
+class Controller_Admin extends Template
+{
 
 	/**
 	 * Page template
@@ -61,7 +62,8 @@ class Controller_Admin extends Template {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public function action_login(){
+    public function action_login()
+    {
 
         if ($this->_auth->logged_in()) {
 			// redirect to the user account

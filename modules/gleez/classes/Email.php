@@ -12,7 +12,8 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @license    https://gleezcms.org/license Gleez CMS License
  * @link       https://github.com/Synchro/PHPMailer
  */
-class Email {
+class Email
+{
 
 	/**
 	 * Mail queue bool

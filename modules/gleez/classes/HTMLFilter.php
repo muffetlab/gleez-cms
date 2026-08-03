@@ -13,7 +13,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class HTMLFilter {
+class HTMLFilter
+{
 	/**
 	 * Allowed elements
 	 * @var array

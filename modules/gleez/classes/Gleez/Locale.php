@@ -16,7 +16,8 @@
  * @copyright  (c) 2011-2013 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Gleez_Locale {
+class Gleez_Locale
+{
 
 	/**
 	 * The user's Web browser provides information with each request,

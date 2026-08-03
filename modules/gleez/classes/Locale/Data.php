@@ -21,7 +21,8 @@
  * @link       http://msdn.microsoft.com/en-us/goglobal/bb895996.aspx MSDN: Locale IDs, Input Locales, and Language Collections for Windows XP and Windows Server 2003
  * @link       http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_territory_information.html Language-Territory Information
  */
-class Locale_Data {
+class Locale_Data
+{
 
 	/**
 	 * Locales for Full Named Locales

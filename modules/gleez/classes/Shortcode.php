@@ -20,7 +20,8 @@
  * @license    http://wordpress.org/about/license
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Shortcode {
+class Shortcode
+{
 
 	/**
 	 * Container for storing shortcode tags and their hook to call for the shortcode

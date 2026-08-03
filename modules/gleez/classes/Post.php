@@ -13,7 +13,8 @@
  *
  * @todo       This class does not do any permission checking
  */
-class Post extends ORM_Versioned {
+class Post extends ORM_Versioned
+{
 
     /**
      * Transient form field for comma-separated tags.

@@ -10,7 +10,8 @@
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
 
-class Session_Redis extends Session {
+class Session_Redis extends Session
+{
 
 	/**
 	 * Database instance

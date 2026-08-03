@@ -9,7 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Feeds_Page extends Controller_Feeds_Base {
+class Controller_Feeds_Page extends Controller_Feeds_Base
+{
 
     /**
      * The before() method is called before controller action

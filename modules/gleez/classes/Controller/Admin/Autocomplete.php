@@ -8,7 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Autocomplete extends Controller {
+class Controller_Admin_Autocomplete extends Controller
+{
 
 	/**
 	 * The before() method is called before controller action

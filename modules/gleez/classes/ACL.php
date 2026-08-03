@@ -23,7 +23,8 @@
  *
  * @todo       Implement their own exceptions (eg. ACL_Exception)
  */
-class ACL {
+class ACL
+{
 
 	/** Rule type: deny */
     const DENY = false;

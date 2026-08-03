@@ -9,7 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Term extends Controller_Admin {
+class Controller_Admin_Term extends Controller_Admin
+{
 
     /**
      * Tree used for bulk update (MPTT)

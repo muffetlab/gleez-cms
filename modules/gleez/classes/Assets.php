@@ -50,7 +50,8 @@
  * @copyright  (c) 2011-2018 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Assets {
+class Assets
+{
 
 	/** Formats that compile can return */
 	const FORMAT_TAG      = 'tag';

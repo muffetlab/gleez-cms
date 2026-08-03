@@ -8,7 +8,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Comment {
+class Comment
+{
 
 	// @todo our definitions for comment types and statuses
 	const STATUS_UNAPPROVED = 0;

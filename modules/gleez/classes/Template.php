@@ -9,7 +9,8 @@
  * @copyright  (c) 2011-2018 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-abstract class Template extends Controller {
+abstract class Template extends Controller
+{
 
 	/**
      * Page template: view path/name (string) until {@see before()} runs, then a {@see View} instance.

@@ -13,7 +13,8 @@
  *
  * @todo       This class does not do any permission checking
  */
-class Theme {
+class Theme
+{
 
 	/**
 	 * Active theme name

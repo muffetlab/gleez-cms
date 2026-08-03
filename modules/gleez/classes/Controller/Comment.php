@@ -9,7 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Comment extends Template {
+class Controller_Comment extends Template
+{
 
     /**
      * The before() method is called before controller action

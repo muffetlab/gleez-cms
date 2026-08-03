@@ -8,7 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Setting extends Controller_Admin {
+class Controller_Admin_Setting extends Controller_Admin
+{
 
     /**
      * General Settings
