@@ -9,26 +9,22 @@ class Controller_Client extends Template {
      * @throws Cache_Exception
      */
     public function action_list()
-	{ 
-		if ( Request::is_datatables() )
-		{
-            if (!ACL::check('access oauth2 client'))
-			{
+    {
+        if (Request::is_datatables()) {
+            if (!ACL::check('access oauth2 client')) {
 				throw new HTTP_Exception_404('You have no permission to access oauth2 clients.');
 			}
 
             $posts = ORM::factory('Client');
-			
-			if ( ! User::is_admin())
-			{
+
+            if (!User::is_admin()) {
 				$user = Auth::instance()->get_user();
 				$posts->where('user_id', '=', $user->id);
 			}
 
             $this->_datatables = $posts->dataTables(['title', 'client_id', 'user_id', 'created']);
 
-            foreach ($this->_datatables->result() as $client)
-			{
+            foreach ($this->_datatables->result() as $client) {
                 $this->_datatables->add_row([
                     HTML::anchor($client->url, HTML::chars($client->title)),
                     $client->client_id,
@@ -68,36 +64,29 @@ class Controller_Client extends Template {
      */
     public function action_Register()
 	{
-		if ( ! ACL::check('administer oauth2'))
-		{
+        if (!ACL::check('administer oauth2')) {
 			throw new HTTP_Exception_404('You have no permission to add oauth2 clients.');
 		}
 
         $client = ORM::factory('Client');
 
-        if (isset($_POST['cancel']) && $this->valid_post())
-		{
+        if (isset($_POST['cancel']) && $this->valid_post()) {
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
-		
-		if ($this->valid_post('save'))
-		{
+
+        if ($this->valid_post('save')) {
             $client->values($this->request->post(), ['title', 'redirect_uri', 'description', 'status']);
-		    
-		    try
-		    {
-                if (!empty($_POST['grant_types']))
-			    {
+
+            try {
+                if (!empty($_POST['grant_types'])) {
                     $grant_types_selected = implode(' ', $_POST['grant_types']);
                     $client->grant_types = $grant_types_selected;
 			    }
 
-                if (isset($_FILES['logo']))
-			    {
+                if (isset($_FILES['logo'])) {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
 
-                    if (Upload::save($_FILES['logo'], $filename, APPPATH . '/media/logos'))
-				    {
+                    if (Upload::save($_FILES['logo'], $filename, APPPATH . '/media/logos')) {
                         $client->logo = $filename;
 				    }
 			    }
@@ -105,9 +94,7 @@ class Controller_Client extends Template {
                 $client->save();
                 Message::success(__('Client registered :title ', [':title' => $client->title]));
                 $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
-		    }
-		    catch(ORM_Validation_Exception $e)
-		    {
+            } catch (ORM_Validation_Exception $e) {
 				$this->_errors = $e->errors('models');
 		    }
 		}
@@ -131,46 +118,38 @@ class Controller_Client extends Template {
      */
     public function action_edit()
 	{
-        if (!ACL::check('edit oauth2 client'))
-		{
+        if (!ACL::check('edit oauth2 client')) {
 			throw new HTTP_Exception_404('You have no permission to edit oauth2 clients.');
 		}
 		
 		$id       = (int) $this->request->param('id');
         $client = ORM::factory('Client', $id);
 
-        if (!$client->loaded())
-		{
+        if (!$client->loaded()) {
             Message::error(__("Client: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to edit non-existent client');
 
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 
-        if (isset($_POST['cancel']) && $this->valid_post())
-		{
+        if (isset($_POST['cancel']) && $this->valid_post()) {
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
-		
-		if ($this->valid_post('save'))
-		{
+
+        if ($this->valid_post('save')) {
             $client->values($this->request->post(), ['title', 'redirect_uri', 'description', 'status']);
-		    
-		    try
-		    {
+
+            try {
 			    //$grant_types_selected = 'authorization_code';
-                if (!empty($_POST['grant_types']))
-			    {
+                if (!empty($_POST['grant_types'])) {
                     $grant_types_selected = implode(' ', $_POST['grant_types']);
                     $client->grant_types = $grant_types_selected;
 			    }
 
-                if (isset($_FILES['logo']))
-			    {
+                if (isset($_FILES['logo'])) {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
 
-                    if (Upload::save($_FILES['logo'], $filename, APPPATH . '/media/logos'))
-				    {
+                    if (Upload::save($_FILES['logo'], $filename, APPPATH . '/media/logos')) {
                         $client->logo = $filename;
 				    }
 			    }
@@ -178,9 +157,7 @@ class Controller_Client extends Template {
                 $client->save();
                 Message::success(__('Client :title updated successfully', [':title' => $client->title]));
                 $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
-		    }
-		    catch(ORM_Validation_Exception $e)
-		    {
+            } catch (ORM_Validation_Exception $e) {
 				$this->_errors = $e->errors('models');
 		    }
 		}
@@ -204,16 +181,14 @@ class Controller_Client extends Template {
      */
     public function action_view()
 	{
-        if (!ACL::check('access oauth2 client'))
-		{
+        if (!ACL::check('access oauth2 client')) {
 			throw new HTTP_Exception_404('You have no permission to access oauth2 clients.');
 		}
 		
 		$id       = (int) $this->request->param('id');
         $client = ORM::factory('Client', $id);
 
-        if (!$client->loaded())
-		{
+        if (!$client->loaded()) {
             Message::error(__("Client: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to edit non-existent client');
 
@@ -232,8 +207,7 @@ class Controller_Client extends Template {
      */
     public function action_delete()
 	{
-        if (!ACL::check('delete oauth2 client'))
-		{
+        if (!ACL::check('delete oauth2 client')) {
 			throw new HTTP_Exception_404('You have no permission to delete oauth2 clients.');
 		}
 		
@@ -241,16 +215,14 @@ class Controller_Client extends Template {
         $redirect = empty($this->redirect) ? Route::get('oauth2/client')->uri(['action' => 'list']) : $this->redirect;
         $client = ORM::factory('Client', $id);
 
-        if (!$client->loaded())
-		{
+        if (!$client->loaded()) {
             Message::error(__("Client doesn't exists!"));
             Kohana::$log->add(Log::ERROR, 'Attempt to delete non-existent client');
 
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 
-        if (!Access::oaclient('delete', $client))
-		{
+        if (!Access::oaclient('delete', $client)) {
 			// If the lead was not loaded, we return access denied.
             throw new HTTP_Exception_404('Attempt to non-existent client.');
 		}
@@ -264,19 +236,15 @@ class Controller_Client extends Template {
 			$this->request->redirect( 'oauth2/client' );
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
+        if (isset($_POST['yes']) && $this->valid_post()) {
             $clonedClient = clone $client;
 
-			try
-			{
+            try {
                 $client->delete();
 
                 Message::success(__('Client: :title deleted successfully', [':title' => $clonedClient->client_id]));
 				$this->request->redirect($redirect);
-			}
-			catch(Exception $e)
-			{
+            } catch (Exception $e) {
                 Message::error(__('Client: :title unable to delete the record', [
                     ':title' => $clonedClient->client_id
                 ]));

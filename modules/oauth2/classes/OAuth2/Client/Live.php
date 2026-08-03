@@ -57,10 +57,8 @@ class OAuth2_Client_Live extends OAuth2_Client {
         $data = [];
 
 		//make sure the response is valid
-        if ($response && !array_key_exists('error', $response))
-		{
-			if( $response['emails'] )
-			{
+        if ($response && !array_key_exists('error', $response)) {
+            if ($response['emails']) {
 				$data['id'] = $response['id'];
 				$data['email'] = $response['emails']['account']; //only account email is used
 				$data['nick'] = $response['name'];

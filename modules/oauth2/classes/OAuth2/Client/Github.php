@@ -56,8 +56,7 @@ class OAuth2_Client_Github extends OAuth2_Client {
     {
         $data = [];
 
-		if( isset($response['email']) )
-		{
+        if (isset($response['email'])) {
 			$data['id']     = $response['id'];
 			$data['email']  = $response['email'];
 			$data['nick']   = $response['name'];

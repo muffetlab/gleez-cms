@@ -50,8 +50,7 @@ class Controller_Token extends Controller
      */
     public function action_index()
 	{
-		try
-		{
+        try {
 			if ($token = $this->grantAccessToken()) {
 				// @see http://tools.ietf.org/html/rfc6749#section-5.1
 				// server MUST disable caching in headers when tokens are involved
@@ -62,9 +61,7 @@ class Controller_Token extends Controller
 				$this->response->body( JSON::encode($token));
 				return;
 			}
-		}
-		catch(Oauth2_Exception $e) 
-		{
+        } catch (Oauth2_Exception $e) {
 			// Throw an exception because there was a problem with the client's request
             $response = [
                 'error' => $e->getError(),
@@ -77,9 +74,7 @@ class Controller_Token extends Controller
 
 			$this->response->body(json_encode($response));
 			return;
-		}
-		catch (Exception $e) 
-		{
+        } catch (Exception $e) {
 			/**
 			 * Something went wrong!
 			 *
@@ -106,8 +101,7 @@ class Controller_Token extends Controller
      */
 	protected function grantAccessToken()
 	{
-		if (strtolower($this->request->method()) != 'post')
-		{
+        if (strtolower($this->request->method()) != 'post') {
             $this->response->headers(['Allow' => 'POST']);
             throw Oauth2_Exception::factory(
                 405,
@@ -138,8 +132,7 @@ class Controller_Token extends Controller
 		 *
 		 * @see OAuth2\GrantType\ClientCredentials
 		 */
-		if (!$grantType instanceof Oauth2_GrantType_ClientCredentials) 
-		{
+        if (!$grantType instanceof Oauth2_GrantType_ClientCredentials) {
             $check = new Oauth2_GrantType_ClientCredentials($this->config, false);
 
 			if ( ! $check->validateRequest($this->request, $this->response) ) {
@@ -158,12 +151,9 @@ class Controller_Token extends Controller
 			return null;
 		}
 
-		if ($grantType instanceof Oauth2_GrantType_ClientCredentials) 
-		{
+        if ($grantType instanceof Oauth2_GrantType_ClientCredentials) {
 			$clientId = $grantType->getClientId();
-		}
-		else
-		{
+        } else {
 			// validate the Client ID (if applicable)
 			if (!is_null($storedClientId = $grantType->getClientId()) && $storedClientId != $clientId) {
                 throw Oauth2_Exception::factory(400, 'invalid_grant', sprintf("%s doesn't exist or is invalid for the client", $grantTypeIdentifier));

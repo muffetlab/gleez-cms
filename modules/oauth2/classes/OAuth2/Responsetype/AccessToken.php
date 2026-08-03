@@ -31,8 +31,7 @@ class Oauth2_ResponseType_AccessToken
 
         $result['fragment'] = $this->createAccessToken($params['client_id'], $user_id, $params['redirect_uri'], $params['scope']);
 
-		if (isset($params['state'])) 
-		{
+        if (isset($params['state'])) {
             $result['fragment']['state'] = $params['state'];
 		}
 
@@ -53,17 +52,14 @@ class Oauth2_ResponseType_AccessToken
      */
     protected function createAccessToken(string $client_id, ?string $user_id, ?string $redirect_uri, ?string $scope = null): array
 	{
-		try
-		{
+        try {
 			/**
 			 * Client Credentials Grant does NOT include a refresh token
 			 *
 			 * @see http://tools.ietf.org/html/rfc6749#section-4.4.3
 			 */
             return Model::factory('OAuth')->createAccessToken($client_id, $user_id, $scope);
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			throw Oauth2_Exception::factory(500, 'server_error', 'The Token server encountered an unexpected condition which prevented it from fulfilling the request.');
 		}
 	}

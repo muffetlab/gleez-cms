@@ -7,8 +7,7 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-if ( ! Route::cache())
-{
+if (!Route::cache()) {
     //User Backend routes
     Route::set('admin/oauth2', 'admin/oauth2(/<action>(/<id>))(/p<page>)', [
         'id' => '\d+',
@@ -67,8 +66,7 @@ if ( ! Route::cache())
  *
  * @uses ACL Used to define the privileges
  */
-if ( ! ACL::cache() )
-{
+if (!ACL::cache()) {
     ACL::set('oauth2', [
         'administer oauth2' => [
             'title' => __('Administer OAuth2'),

@@ -113,8 +113,7 @@ class Controller_Authorize extends Template {
      */
 	public function action_index()
 	{
-		try
-		{
+        try {
             // We repeat this, because we need to re-validate. The request could be POSTed by a 3rd-party (because we
             // are not internally enforcing NONCEs, etc.)
 			$this->validateAuthorizeRequest();
@@ -134,8 +133,7 @@ class Controller_Authorize extends Template {
                 'access_type' => $this->access_type
             ];
 
-			if( $this->request->post('oauth2') )
-			{
+            if ($this->request->post('oauth2')) {
 				// check the form data to see if the user authorized the request
 				$authorized = (bool) $this->request->post('authorize');
             } elseif (!$authorized = $this->showAuthorizeForm($params)) {
@@ -154,9 +152,7 @@ class Controller_Authorize extends Template {
 			}
 
             $this->authorizeFinish($params, $this->redirect_uri);
-		}
-		catch(Oauth2_Exception $e) 
-		{
+        } catch (Oauth2_Exception $e) {
 			// Throw an exception because there was a problem with the client's request
             $response = [
                 'error' => $e->getError(),
@@ -166,9 +162,7 @@ class Controller_Authorize extends Template {
 			$this->response->status($e->getCode());
             $this->response->headers(['Cache-Control' => 'no-store', 'Pragma' => 'no-cache']);
 			$this->response->body(json_encode($response));
-		}
-		catch (Exception $e) 
-		{
+        } catch (Exception $e) {
 			/**
 			 * Something went wrong!
 			 *
@@ -211,8 +205,7 @@ class Controller_Authorize extends Template {
     {
 		$url = Route::get('oauth2/auth')->uri().URL::query($params);
 
-		if ( ! Auth::instance()->logged_in())
-		{
+        if (!Auth::instance()->logged_in()) {
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']) . URL::query([
                     'destination' => $url
                 ]));
@@ -231,8 +224,7 @@ class Controller_Authorize extends Template {
          * Display the "do you want to authorize?" form if previously not approved, or, if approval_prompt parameter is
          * 'force'.
          */
-        if ($consent === false || $autoApprove === false)
-		{
+        if ($consent === false || $autoApprove === false) {
             $view = View::factory('oauth2/authorize')->set('client', $this->client)->set('action', $url);
 
 			$this->title = __('Welcome to the OAuth2.0 Server!');

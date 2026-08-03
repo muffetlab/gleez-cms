@@ -87,14 +87,11 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
      */
     public function createAccessToken($client_id, $user_id, $scope = null)
 	{
-		try
-		{
+        try {
 			$issueRefreshToken = Kohana::$config->load('oauth2')->get('includeRefreshToken', true);
 
             return Model::factory('OAuth')->createAccessToken($client_id, $user_id, $scope, $issueRefreshToken);
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			throw Oauth2_Exception::factory(500, 'server_error', 'The Token server encountered an unexpected condition which prevented it from fulfilling the request.');
 		}
 	}

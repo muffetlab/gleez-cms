@@ -100,10 +100,8 @@ class Oauth2_Exception extends Exception
 		$this->error_description 	= $message;
 		$this->error_uri			= $error_uri;
 
-		if (!is_null($error_uri)) 
-		{
-			if (strlen($error_uri) > 0 && $error_uri[0] == '#')
-			{
+        if (!is_null($error_uri)) {
+            if (strlen($error_uri) > 0 && $error_uri[0] == '#') {
 				// we are referencing an oauth bookmark (for brevity)
                 $this->error_uri = 'https://datatracker.ietf.org/doc/html/rfc6749' . $error_uri;
 			}
@@ -150,8 +148,7 @@ class Oauth2_Exception extends Exception
      */
     public function render(): Response
     {
-		try
-		{
+        try {
 			// Instantiate the error view.
 			//$view = View::factory(self::$error_view, get_defined_vars());
 
@@ -169,9 +166,7 @@ class Oauth2_Exception extends Exception
 			// Set the response body
 			//$response->body($view->render());
             $response->body($this->getJsonError());
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			/**
 			 * Things are going badly for us, Lets try to keep things under control by
 			 * generating a simpler response object.

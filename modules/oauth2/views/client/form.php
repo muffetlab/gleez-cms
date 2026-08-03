@@ -1,15 +1,12 @@
 <?php include Kohana::find_file('views', 'errors/partial');?>
 <?php
-if (isset($client->id) && Valid::digit($client->id))
-    {
-        $parms = ['id' => $client->id, 'action' => 'edit'];
-        $buttonText = __('Save Changes');
-    }
-    else
-    {
-        $parms = ['action' => 'register'];
-        $buttonText = __('Register');
-    }
+if (isset($client->id) && Valid::digit($client->id)) {
+    $parms = ['id' => $client->id, 'action' => 'edit'];
+    $buttonText = __('Save Changes');
+} else {
+    $parms = ['action' => 'register'];
+    $buttonText = __('Register');
+}
 ?>
 <?php echo Form::open(Route::get('oauth2/client')->uri($parms), [
     'class' => 'form form-horizontal',

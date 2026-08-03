@@ -22,8 +22,7 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		/** We use the same class for validating request for other grants
 		 *	make sure this is true only if the request grant_type is 'client_credentials'
 		 */
-        if ($is_grant)
-		{
+        if ($is_grant) {
 			/**
 			 * The client credentials grant type MUST only be used by confidential clients
 			 *
@@ -53,25 +52,20 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'Client credentials are required');
 		}
 
-		if (!isset($clientData['client_id'])) 
-		{
+        if (!isset($clientData['client_id'])) {
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'Missing parameter: "client_id" is required');
 		}
 
-        if (empty($clientData['client_secret']))
-		{
-			if (!$this->config['allow_public_clients']) 
-			{
+        if (empty($clientData['client_secret'])) {
+            if (!$this->config['allow_public_clients']) {
 				throw Oauth2_Exception::factory(400, 'invalid_client', 'Client credentials are required');
 			}
 
 			// Is this a public client?
-			if ( ! $this->getClientDetails($clientData['client_id']))
-			{
+            if (!$this->getClientDetails($clientData['client_id'])) {
 				throw Oauth2_Exception::factory(400, 'invalid_client', 'This client is invalid or must authenticate using a client secret');
 			}
-		}
-		elseif ($this->checkClientCredentials($clientData['client_id'], $clientData['client_secret']) === false) {
+        } elseif ($this->checkClientCredentials($clientData['client_id'], $clientData['client_secret']) === false) {
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'The client credentials are invalid');
 		}
 
@@ -104,17 +98,14 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
      */
     public function createAccessToken($client_id, $user_id, $scope = null)
 	{
-		try
-		{
+        try {
 			/**
 			 * Client Credentials Grant does NOT include a refresh token
 			 *
 			 * @see http://tools.ietf.org/html/rfc6749#section-4.4.3
 			 */
             return Model::factory('OAuth')->createAccessToken($client_id, $user_id, $scope);
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			throw Oauth2_Exception::factory(500, 'server_error', 'The Token server encountered an unexpected condition which prevented it from fulfilling the request.');
 		}
 	}
@@ -138,8 +129,12 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
      */
 	protected function getClientCredentials()
 	{
-		if (isset($_SERVER['PHP_AUTH_USER']) && ! is_null($clientId = $_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && ! is_null($clientSecret = $_SERVER['PHP_AUTH_PW'])) 
-		{
+        if (
+            isset($_SERVER['PHP_AUTH_USER'])
+            && !is_null($clientId = $_SERVER['PHP_AUTH_USER'])
+            && isset($_SERVER['PHP_AUTH_PW'])
+            && !is_null($clientSecret = $_SERVER['PHP_AUTH_PW'])
+        ) {
             return ['client_id' => $clientId, 'client_secret' => $clientSecret];
 		} 
 

@@ -95,12 +95,9 @@ class Model_OAuth extends Model_Database {
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
 
-		if ($this->getAccessToken($access_token))
-		{
+        if ($this->getAccessToken($access_token)) {
 			$result = DB::query(Database::UPDATE, "UPDATE $table SET client_id = :client_id, access_expires = :expires, user_id = :user_id, scope = :scope WHERE access_token = :access_token;");
-		}
-		else
-		{
+        } else {
 			$result = DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, scope) VALUES(:access_token, :client_id, :expires, :user_id, :scope);");
 		}
 
@@ -137,12 +134,9 @@ class Model_OAuth extends Model_Database {
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.code_table');
 
-		if ($this->getAuthorizationCode($code))
-		{
+        if ($this->getAuthorizationCode($code)) {
 			$result = DB::query(Database::UPDATE, "UPDATE $table SET client_id = :client_id, user_id = :user_id, redirect_uri = :redirect_uri, expires = :expires, scope = :scope WHERE code = :code;");
-		}
-		else
-		{
+        } else {
 			$result = DB::query(Database::INSERT, "INSERT INTO $table(code, client_id, user_id, redirect_uri, expires, scope) VALUES(:code, :client_id, :user_id, :redirect_uri, :expires, :scope);");
 		}
 
@@ -187,9 +181,8 @@ class Model_OAuth extends Model_Database {
 
         $code = Auth::instance()->hash(uniqid($client_id . mt_rand() . microtime() . $user_id, true));
 		$expires = time() + Kohana::$config->load('oauth2')->get('access_lifetime', 30);
-	
-		if ($code_exists)
-		{
+
+        if ($code_exists) {
             DB::query(Database::UPDATE, "UPDATE $table SET code = :code, redirect_uri = :redirect_uri, expires = :expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id;")
                 ->parameters([
                     ':client_id' => $client_id,
@@ -200,9 +193,7 @@ class Model_OAuth extends Model_Database {
                     ':code' => $code,
                 ])
                 ->execute();
-		}
-		else
-		{
+        } else {
 			$created = time();
             DB::query(Database::INSERT, "INSERT INTO $table(code, client_id, user_id, redirect_uri, expires, scope, created) VALUES(:code, :client_id, :user_id, :redirect_uri, :expires, :scope, :created);")
                 ->parameters([
@@ -265,17 +256,14 @@ class Model_OAuth extends Model_Database {
     public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = null)
 	{
 		$table = Kohana::$config->load('oauth2')->get('storage.token_table');
-		
-		if ($this->getRefreshToken($refresh_token))
-		{
+
+        if ($this->getRefreshToken($refresh_token)) {
 			$result = DB::query(Database::UPDATE, "UPDATE $table SET refresh_token = :refresh_token, refresh_expires = :expires WHERE refresh_token = :refresh_token;");
             $result = $result->parameters([
                 ':refresh_token' => $refresh_token,
                 ':expires' => $expires,
             ]);
-		}
-		else
-		{
+        } else {
 			$result = DB::query(Database::UPDATE, "UPDATE $table SET refresh_token = :refresh_token, refresh_expires = :expires WHERE client_id = :client_id AND user_id = :user_id;");
             $result = $result->parameters([
                 ':client_id' => $client_id,
@@ -325,12 +313,10 @@ class Model_OAuth extends Model_Database {
         ])->execute()->as_array();
 		
 		// If token exists
-		if ($token_exists)
-		{
+        if ($token_exists) {
 			// Need to generate refresh token every time or,
 			// previously refresh is null, and need to include this time.
-            if ($issueNewRefreshToken || ($includeRefreshToken && $token_exists[0]['refresh_token'] == null))
-			{
+            if ($issueNewRefreshToken || ($includeRefreshToken && $token_exists[0]['refresh_token'] == null)) {
                 $refresh_token = Auth::instance()->hash(uniqid($client_id . mt_rand() . microtime() . $user_id, true));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
 
@@ -345,9 +331,7 @@ class Model_OAuth extends Model_Database {
                         ':scope' => $scope,
                     ])
                     ->execute();
-			}
-			else
-			{
+            } else {
                 DB::query(Database::UPDATE, "UPDATE $table SET access_token = :access_token, access_expires = :access_expires, scope = :scope WHERE client_id = :client_id AND user_id = :user_id")
                     ->parameters([
                         ':client_id' => $client_id,
@@ -358,14 +342,11 @@ class Model_OAuth extends Model_Database {
                     ])
                     ->execute();
 			}
-		}
-		else
-		{
+        } else {
 			$created = time();
 			// Need to generate refresh token every time or,
 			// include refresh token
-			if ($issueNewRefreshToken || $includeRefreshToken)
-			{
+            if ($issueNewRefreshToken || $includeRefreshToken) {
                 $refresh_token = Auth::instance()->hash(uniqid($client_id . mt_rand() . microtime() . $user_id, true));
 				$refresh_expires  = time() + Kohana::$config->load('oauth2')->get('refresh_token_ttl', 1209600);
 
@@ -381,9 +362,7 @@ class Model_OAuth extends Model_Database {
                         ':created' => $created,
                     ])
                     ->execute();
-			}
-			else
-			{
+            } else {
                 DB::query(Database::INSERT, "INSERT INTO $table(access_token, client_id, access_expires, user_id, scope) VALUES(:access_token, :client_id, :access_expires, :user_id, :scope);")
                     ->parameters([
                         ':client_id' => $client_id,
@@ -407,8 +386,7 @@ class Model_OAuth extends Model_Database {
 		/*
 		 * Issue a refresh token also, if we support them
 		 */
-		if ($includeRefreshToken)
-		{
+        if ($includeRefreshToken) {
             $token['refresh_token'] = $refresh_token ?: $token_exists[0]['refresh_token'];
 		}
 
