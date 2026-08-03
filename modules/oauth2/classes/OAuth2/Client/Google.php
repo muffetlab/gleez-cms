@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Gleez\OAuth\Client\Google
  * @author     Gleez team

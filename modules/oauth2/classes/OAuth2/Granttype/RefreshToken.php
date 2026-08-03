@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Helper OAuth2 Refresh Token Grant Type
  *

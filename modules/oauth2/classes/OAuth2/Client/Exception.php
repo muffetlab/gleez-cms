@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Gleez\OAuth\Client\Exception
  * @author     Gleez Team

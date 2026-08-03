@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Helper OAuth2 Token Response Type (implicit grant type)
  *

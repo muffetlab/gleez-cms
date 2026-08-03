@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The OAuth Client Controller
  *

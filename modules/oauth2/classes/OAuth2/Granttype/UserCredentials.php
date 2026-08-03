@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Helper OAuth2 Password Grant Type
  *

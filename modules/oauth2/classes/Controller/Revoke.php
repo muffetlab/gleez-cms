@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller OAuth2 Revoke
  *

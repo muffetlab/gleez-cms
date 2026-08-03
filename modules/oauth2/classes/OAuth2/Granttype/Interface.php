@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Interface for all OAuth2 Grant Types
  *

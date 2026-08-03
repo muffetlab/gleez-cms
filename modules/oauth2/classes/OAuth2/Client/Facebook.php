@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Gleez\OAuth\Client\Facebook
  * @author     Gleez Team

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Helper OAuth2 Code Response Type
  *

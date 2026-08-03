@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Oauth2 Model
  *
