@@ -20,8 +20,7 @@ class Widget_Admin extends Widget {
      */
     public function render(): string
     {
-		switch($this->name)
-		{
+        switch ($this->name) {
 			case 'donate':
 				return $this->donate();
             case 'welcome':

@@ -62,12 +62,9 @@ class Menu {
      */
     public function add(string $id, string $title, string $url, string $descp = '', array $params = null, string $image = null, string $parent_id = null, Menu $children = null): Menu
     {
-		if( $parent_id )
-		{
+        if ($parent_id) {
 			$this->items = static::add_child($parent_id, $this->items, $id, $title, $url, $descp, $params, $image, $children);
-		}
-		else
-		{
+        } else {
             $this->items[$id] = [
                 'title' => $title,
                 'url' => $url,
@@ -91,8 +88,7 @@ class Menu {
 	 */
     public function remove(string $target_id, bool $parent_id = false): Menu
     {
-		if ($parent_id)
-		{
+        if ($parent_id) {
 			$this->items = static::remove_child($target_id, $this->items);
         } elseif (isset($this->items[$target_id])) {
 			unset($this->items[$target_id]);
@@ -111,8 +107,7 @@ class Menu {
 	 */
     public function set_title(string $target_id, string $title, bool $parent_id = false): Menu
     {
-		if ( $parent_id )
-		{
+        if ($parent_id) {
 			$this->items = static::change_title_url($target_id, $this->items, $title);
         } elseif (isset($this->items[$target_id])) {
             $this->items[$target_id]['title'] = $title;
@@ -131,8 +126,7 @@ class Menu {
 	 */
     public function set_url(string $target_id, string $url, bool $parent_id = false): Menu
     {
-		if ( $parent_id )
-		{
+        if ($parent_id) {
 			$this->items = static::change_title_url($target_id, $this->items, $url, 'url');
         } elseif (isset($this->items[$target_id])) {
             $this->items[$target_id]['url'] = $url;
@@ -171,8 +165,7 @@ class Menu {
 		$num_items = count($items);
 		$_i = 1;
 
-		foreach ($items as $key => $item)
-		{
+        foreach ($items as $key => $item) {
             $has_children = count($item['children'] ?? []);
             $classes = null;
             $attributes = [];
@@ -181,27 +174,23 @@ class Menu {
 			// Add first, last and parent classes to the list of links to help out themers.
 			if ($_i == 1)          $classes[] = 'first';
 			if ($_i == $num_items) $classes[] = 'last';
-			if ( $has_children )
-			{
+            if ($has_children) {
 				$classes[] = 'parent dropdown';
 				$attributes[] = 'dropdown-toggle collapsed';
 				if($i == 2) $classes[] = 'dropdown-submenu';
 			}
 
 			// Check if the menu item URI is or contains the current URI
-			if (HTML::is_active($item['url']))
-			{
+            if (HTML::is_active($item['url'])) {
 				$classes[] = 'active';
 				$attributes[] = 'active';
 			}
 
-			if ( ! empty($classes))
-			{
+            if (!empty($classes)) {
                 $classes = HTML::attributes(['class' => implode(' ', $classes)]);
 			}
 
-			if ( ! empty($attributes))
-			{
+            if (!empty($attributes)) {
                 $attributes = ['class' => implode(' ', $attributes)];
 			}
 
@@ -209,8 +198,7 @@ class Menu {
 
 			//Twitter bootstrap attributes
             $class = '';
-			if ($has_children)
-			{
+            if ($has_children) {
 				$attributes['data-toggle'] = 'dropdown';
 				$item['url'] = '#';
 				$caret = ($i == 2) ? '': '<b class="caret"></b>';
@@ -218,8 +206,7 @@ class Menu {
 			}
 
             // Twitter bootstrap use collapse for widget menu children.
-			if($has_children && $is_widget)
-			{
+            if ($has_children && $is_widget) {
 				$attributes['data-toggle'] = 'collapse';
 				$attributes['data-parent'] = '#menu-'.$key;
 				$item['url'] ='#collapse-'.$key;
@@ -232,8 +219,7 @@ class Menu {
 			// localize item menu
             $title .= '<span>' . HTML::chars(__($item['title'])) . $caret . '</span>';
 
-            if (!empty($item['descp']))
-			{
+            if (!empty($item['descp'])) {
 				// localize item desc
                 $title .= '<span class="menu-descp">' . HTML::chars(__($item['descp'])) . '</span>';
 				
@@ -241,8 +227,7 @@ class Menu {
 
 			$menu .= '<li'.$classes.'  ' .$id. '>'.HTML::anchor($item['url'], $title, $attributes);
 
-			if ( $has_children )
-			{
+            if ($has_children) {
                 $menu .= $this->render(['class' => $class, 'id' => 'collapse-' . $key], $item['children']);
 			}
 
@@ -263,12 +248,9 @@ class Menu {
 	 */
 	public function __toString()
 	{
-		try
-		{
+        try {
 			return $this->render();
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			return $e->getMessage();
 		}
 	}
@@ -414,19 +396,16 @@ class Menu {
 	 */
     private static function change_title_url(string $needle, array $array, string $string, string $op = 'title'): array
     {
-		foreach ($array as $key => $value)
-		{
+        foreach ($array as $key => $value) {
 			# Check for val
-			if ($key == $needle)
-			{
+            if ($key == $needle) {
                 if ($op == 'title') $array[$key]['title'] = $string;
                 if ($op == 'url') $array[$key]['url'] = $string;
 
 				return $array;
 			}
 
-			if (isset($value['children']))
-			{
+            if (isset($value['children'])) {
 				$array[$key]['children'] = static::change_title_url($needle, $value['children'], $string, $op);
 			}
 		}
@@ -450,10 +429,8 @@ class Menu {
      */
     private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = false, array $params = null, string $image = null, Menu $children = null): array
     {
-		foreach ($array as $key => $value)
-		{
-			if ($key == $needle)
-			{
+        foreach ($array as $key => $value) {
+            if ($key == $needle) {
                 $array[$key]['children'][$id] = [
                     'title' => $title,
                     'url' => $url,
@@ -467,8 +444,7 @@ class Menu {
 				return $array;
 			}
 
-			if (isset($value['children']))
-			{
+            if (isset($value['children'])) {
 				$array[$key]['children'] = static::add_child($needle, $value['children'], $id, $title, $url, $descp, $params, $image, $children);
 			}
 		}
@@ -485,17 +461,14 @@ class Menu {
 	 */
     private static function remove_child(string $needle, array $array): array
     {
-		foreach ($array as $key => $value)
-		{
-			if ($key == $needle)
-			{
+        foreach ($array as $key => $value) {
+            if ($key == $needle) {
 				unset($array[$key]);
 
 				return $array;
 			}
 
-			if (isset($value['children']))
-			{
+            if (isset($value['children'])) {
 				$array[$key]['children'] = static::remove_child($needle, $value['children']);
 			}
 		}

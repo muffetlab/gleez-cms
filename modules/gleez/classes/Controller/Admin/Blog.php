@@ -99,19 +99,15 @@ class Controller_Admin_Blog extends Controller_Admin {
 
         $vocabs = Arr::merge($vocabs, ORM::factory('Term')->where('lft', '=', 1)->where('type', '=', 'blog')->find_all()->as_array('id', 'name'));
 
-		if ($this->valid_post('blog_settings'))
-		{
+        if ($this->valid_post('blog_settings')) {
 			unset($_POST['blog_settings'], $_POST['_token'], $_POST['_action']);
 
             $cats = $config->get('category', []);
 
-			foreach ($_POST as $key => $value)
-			{
-				if ($key == 'category')
-				{
+            foreach ($_POST as $key => $value) {
+                if ($key == 'category') {
 					$terms = array_diff($cats, $value);
-					if ($terms)
-					{
+                    if ($terms) {
 						DB::delete('posts_terms')
 							->where('parent_id', 'IN', array_values($terms))
 							->execute();
@@ -159,12 +155,10 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$is_datatables = Request::is_datatables();
         $blogs = ORM::factory('Blog');
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $this->_datatables = $blogs->dataTables(['id', 'title', 'author', 'status', 'updated']);
 
-			foreach ($this->_datatables->result() as $blog)
-			{
+            foreach ($this->_datatables->result() as $blog) {
                 $this->_datatables->add_row([
                     Form::checkbox('blogs[' . $blog->id . ']', $blog->id, isset($_POST['blogs'][$blog->id])),
                     HTML::anchor($blog->url, $blog->title),
@@ -214,14 +208,12 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$post = $this->request->post();
 
 		// If deletion is not desired, redirect to list
-        if (isset($post['no']) && $this->valid_post())
-		{
+        if (isset($post['no']) && $this->valid_post()) {
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-        if (isset($post['yes']) && $this->valid_post())
-		{
+        if (isset($post['yes']) && $this->valid_post()) {
 			$blogs = array_filter($post['items']);
 
 			Post::bulk_delete($blogs, 'blog');
@@ -231,24 +223,19 @@ class Controller_Admin_Blog extends Controller_Admin {
 			$this->request->redirect($redirect);
 		}
 
-		if ($this->valid_post('blog-bulk-actions'))
-		{
-            if (isset($post['operation']) && empty($post['operation']))
-			{
+        if ($this->valid_post('blog-bulk-actions')) {
+            if (isset($post['operation']) && empty($post['operation'])) {
 				Message::error(__('No bulk operation selected.'));
 				$this->request->redirect($redirect);
 			}
 
-            if (!isset($post['blogs']) || !is_array($post['blogs']) || !count(array_filter($post['blogs'])))
-			{
+            if (!isset($post['blogs']) || !is_array($post['blogs']) || !count(array_filter($post['blogs']))) {
 				Message::error(__('No blogs selected.'));
 				$this->request->redirect($redirect);
 			}
 
-			try
-			{
-				if ($post['operation'] == 'delete')
-				{
+            try {
+                if ($post['operation'] == 'delete') {
 					$blogs = array_filter($post['blogs']); // Filter out unchecked posts
 					$this->title = __('Delete Blogs');
 
@@ -266,9 +253,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 
 				Message::success(__('The update has been performed!'));
 				$this->request->redirect($redirect);
-			}
-			catch( Exception $e)
-			{
+            } catch (Exception $e) {
 				Message::error(__('The update has not been performed!'));
 			}
 		}
@@ -289,15 +274,11 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$operation  = $operations[$post['operation']];
 		$blogs = array_filter($post['blogs']); // Filter out unchecked pages
 
-		if ($operation['callback'])
-		{
+        if ($operation['callback']) {
             list($func) = Arr::callback($operation['callback']);
-			if (isset($operation['arguments']))
-			{
+            if (isset($operation['arguments'])) {
                 $args = array_merge([$blogs], $operation['arguments']);
-			}
-			else
-			{
+            } else {
                 $args = [$blogs];
 			}
 

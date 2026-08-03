@@ -20,8 +20,7 @@ class Controller_Admin_Autocomplete extends Controller {
 	public function before()
 	{
 		// Ajax request only!
-		if ( ! $this->request->is_ajax())
-		{
+        if (!$this->request->is_ajax()) {
             throw HTTP_Exception::factory(404, 'Accessing an ajax request :type externally', [
                 ':type' => '<small>' . $this->request->uri() . '</small>'
             ]);
@@ -38,8 +37,7 @@ class Controller_Admin_Autocomplete extends Controller {
 	 */
 	public function after()
 	{
-		if ($this->request->is_ajax())
-		{
+        if ($this->request->is_ajax()) {
 			$this->response->headers('content-type',  'application/json; charset='.Kohana::$charset);
 		}
 
@@ -62,16 +60,14 @@ class Controller_Admin_Autocomplete extends Controller {
         $string = $this->request->param('string', false);
         $matches = [];
 
-		if ($string)
-		{
+        if ($string) {
 			$result  = DB::select('alias')
 						->from('paths')
 						->where('alias', 'LIKE', $string.'%')
 						->limit('10')
 						->execute();
 
-			foreach ($result as $link)
-			{
+            foreach ($result as $link) {
                 $matches[$link['alias']] = HTML::chars($link['alias']);
 			}
 		}

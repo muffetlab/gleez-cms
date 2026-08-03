@@ -136,8 +136,7 @@ class Pagination {
 		$this->config = $this->config_group() + $this->config;
 
 		// Assign Request
-		if (is_null($request))
-		{
+        if (is_null($request)) {
 			$request = Request::current();
 		}
 
@@ -149,8 +148,7 @@ class Pagination {
 		// Assign default route params
 		$this->_route_params = $request->param();
 
-		if (isset($config['uri']))
-		{
+        if (isset($config['uri'])) {
 			$this->_uri = $config['uri'];
 		}
 
@@ -178,8 +176,7 @@ class Pagination {
         $config['group'] = $group;
 
 		// Recursively load requested config groups
-        while (isset($config['group']) && $config_file->offsetExists($config['group']))
-		{
+        while (isset($config['group']) && $config_file->offsetExists($config['group'])) {
 			// Temporarily store config group name
 			$group = $config['group'];
 			unset($config['group']);
@@ -208,8 +205,7 @@ class Pagination {
      */
     public function setup(array $config = [])
 	{
-		if (isset($config['group']))
-		{
+        if (isset($config['group'])) {
 			// Recursively load requested config groups
 			$config += $this->config_group($config['group']);
 		}
@@ -223,20 +219,15 @@ class Pagination {
             || isset($config['current_page'])
             || isset($config['total_items'])
             || isset($config['items_per_page'])
-        )
-		{
+        ) {
 			// Retrieve the current page number
-			if ( ! empty($this->config['current_page']['page']))
-			{
+            if (!empty($this->config['current_page']['page'])) {
 				// The current page number has been set manually
 				$this->current_page = (int) $this->config['current_page']['page'];
-			}
-			else
-			{
+            } else {
 				$query_key = $this->config['current_page']['key'];
 
-				switch ($this->config['current_page']['source'])
-				{
+                switch ($this->config['current_page']['source']) {
 					case 'query_string':
 						$this->current_page = ( ! is_null($this->_request->query($query_key)))
 							? (int) $this->_request->query($query_key)
@@ -284,14 +275,12 @@ class Pagination {
 		$pager = '/p'. $page;
 
 		// No page number in URLs to first page
-        if ($page === 1 && !$this->config['first_page_in_url'])
-		{
+        if ($page === 1 && !$this->config['first_page_in_url']) {
             $page = null;
             $pager = null;
 		}
 
-		switch ($this->config['current_page']['source'])
-		{
+        switch ($this->config['current_page']['source']) {
 			case 'query_string':
 
                 return URL::site($this->_route->uri($this->_route_params)
@@ -318,8 +307,7 @@ class Pagination {
     public function valid_page(int $page): bool
     {
 		// Page number has to be a clean integer
-		if ( ! Valid::digit($page))
-		{
+        if (!Valid::digit($page)) {
             return false;
 		}
 
@@ -336,19 +324,16 @@ class Pagination {
     public function render($view = null): string
     {
 		// Automatically hide pagination whenever it is superfluous
-        if ($this->config['auto_hide'] === true && $this->total_pages <= 1)
-		{
+        if ($this->config['auto_hide'] === true && $this->total_pages <= 1) {
 			return '';
 		}
 
-		if (is_null($view))
-		{
+        if (is_null($view)) {
 			// Use the view from config
 			$view = $this->config['view'];
 		}
 
-		if ( ! $view instanceof View)
-		{
+        if (!$view instanceof View) {
 			// Load the view file
 			$view = View::factory($view);
 		}
@@ -368,8 +353,7 @@ class Pagination {
      */
     public function request(Request $request = null)
 	{
-		if (is_null($request))
-		{
+        if (is_null($request)) {
 			return $this->_request;
 		}
 
@@ -388,13 +372,11 @@ class Pagination {
      */
     public function route($route = null)
 	{
-		if (is_null($route))
-		{
+        if (is_null($route)) {
 			return $this->_route;
 		}
 
-		if ($route instanceof Route)
-		{
+        if ($route instanceof Route) {
 			$this->_route = $route;
         } elseif (is_string($route)) {
 			$this->_route = Route::get($route);
@@ -411,8 +393,7 @@ class Pagination {
      */
     public function route_params(array $route_params = null)
 	{
-		if (is_null($route_params))
-		{
+        if (is_null($route_params)) {
 			return $this->_route_params;
 		}
 
@@ -429,8 +410,7 @@ class Pagination {
 	 */
     public function uri(string $uri = null)
 	{
-		if (is_null($uri))
-		{
+        if (is_null($uri)) {
 			return $this->_uri;
 		}
 
@@ -447,19 +427,15 @@ class Pagination {
      */
     public function query(array $params = null): string
     {
-		if (is_null($params))
-		{
+        if (is_null($params)) {
 			// Use only the current parameters
 			$params = $this->_request->query();
-		}
-		else
-		{
+        } else {
 			// Merge the current and new parameters
 			$params = array_merge($this->_request->query(), $params);
 		}
 
-		if (empty($params))
-		{
+        if (empty($params)) {
 			// No query parameters
 			return '';
 		}
@@ -480,12 +456,9 @@ class Pagination {
      */
 	public function __toString()
 	{
-		try
-		{
+        try {
 			return $this->render();
-		}
-		catch(Exception $e)
-		{
+        } catch (Exception $e) {
 			Kohana_Exception::handler($e);
 		}
 	}

@@ -48,8 +48,7 @@ class Form extends Kohana_Form
 			$url = URL::explode($action);
 
             // On seriously malformed URLs, parse_url() may return false.
-            if (isset($url['path']) && is_array($url['query_params']))
-			{
+            if (isset($url['path']) && is_array($url['query_params'])) {
 				//add destination param
                 $url['query_params']['destination'] = $destination;
 
@@ -60,8 +59,7 @@ class Form extends Kohana_Form
 
         $out = parent::open($action, $attributes) . PHP_EOL;
 
-		if (Gleez::$installed)
-		{
+        if (Gleez::$installed) {
 			// Assign the global form css file
             Assets::css('form', 'media/css/form.css', ['weight' => 2]);
 
@@ -100,13 +98,11 @@ class Form extends Kohana_Form
             $attributes['type'] = 'text';
         }
 
-        if (!isset($attributes['id']) && $attributes['type'] != 'hidden')
-		{
+        if (!isset($attributes['id']) && $attributes['type'] != 'hidden') {
             $attributes['id'] = self::_get_id_by_name($name);
 		}
 
-        if ($attributes['type'] === 'text' && !empty($url))
-		{
+        if ($attributes['type'] === 'text' && !empty($url)) {
             $attributes['class'] = isset($attributes['class']) ? $attributes['class'] . ' form-autocomplete' : 'form-autocomplete';
             $attributes['id'] = $name;
             $attributes['autocomplete'] = 'off';
@@ -138,8 +134,7 @@ class Form extends Kohana_Form
      */
     public static function textarea(string $name, string $body = '', array $attributes = null, bool $double_encode = true): string
     {
-		if ( ! isset($attributes['id']))
-		{
+        if (!isset($attributes['id'])) {
 			$attributes['id'] = self::_get_id_by_name($name);
 		}
 
@@ -164,8 +159,7 @@ class Form extends Kohana_Form
      */
     public static function select(string $name, array $options = null, $selected = null, array $attributes = null): string
     {
-		if (! isset($attributes['id']))
-		{
+        if (!isset($attributes['id'])) {
 			$attributes['id'] = self::_get_id_by_name($name);
 		}
 
@@ -194,8 +188,7 @@ class Form extends Kohana_Form
      */
     public static function button(string $name, string $body, array $attributes = null): string
     {
-        if (!isset($attributes['id']))
-		{
+        if (!isset($attributes['id'])) {
             $attributes['id'] = self::_get_id_by_name($name);
 		}
 
@@ -217,8 +210,7 @@ class Form extends Kohana_Form
     {
         $options = [];
 
-		for ($n = (-1 * $delta); $n <= $delta; $n++)
-		{
+        for ($n = (-1 * $delta); $n <= $delta; $n++) {
 			$options[$n] = $n;
 		}
 
@@ -237,8 +229,7 @@ class Form extends Kohana_Form
      */
     public static function filter(string $column, array $vals, array $attrs = []): string
     {
-		if ( ! isset($attrs['style']))
-		{
+        if (!isset($attrs['style'])) {
 			// Default type is text
 			$attrs['style'] = 'width: 100%';
 		}
@@ -269,8 +260,7 @@ class Form extends Kohana_Form
         Assets::js('bs.mm', 'media/js/moment/moment.min.js', ['bootstrap']);
         Assets::js('bs.dt', 'media/js/bootstrap-datetimepicker.min.js', ['bootstrap']);
 
-		if ( ! isset($attrs['id']))
-		{
+        if (!isset($attrs['id'])) {
 			$attrs['id'] = Form::_get_id_by_name($name);
 		}  
 
@@ -289,34 +279,29 @@ class Form extends Kohana_Form
         ];
 
 		// Add locale support to datepicker. @todo CH and latin support
-        if (Gleez_I18n::$lang !== 'en-us')
-		{
+        if (Gleez_I18n::$lang !== 'en-us') {
 			$lang                                   = I18n::$lang;
             $options['locale'] = $lang;
             Assets::js('bs.mm.locale', "media/js/moment/locale/$lang.js", ['bs.mm']);
 		}
 
-        if (isset($attrs['format']))
-		{
+        if (isset($attrs['format'])) {
             $options['format'] = $attrs['format'];
             unset($attrs['format']);
 		}
 
-        if (isset($attrs['showTodayButton']))
-		{
+        if (isset($attrs['showTodayButton'])) {
             $options['showTodayButton'] = $attrs['showTodayButton'];
             unset($attrs['showTodayButton']);
 		}
 
-        if (isset($attrs['viewMode']))
-		{
+        if (isset($attrs['viewMode'])) {
             $options['viewMode'] = $attrs['viewMode'];
             unset($attrs['viewMode']);
 		}
 
 		// Set the input value
-        if (!$value)
-		{
+        if (!$value) {
             $attrs['value'] = Date::formatted_time(time(), 'd-m-Y h:i:s');
         } elseif (is_numeric($value)) {
             $attrs['value'] = Date::formatted_time($value, 'd-m-Y h:i:s');

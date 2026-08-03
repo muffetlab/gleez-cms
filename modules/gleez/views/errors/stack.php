@@ -4,8 +4,7 @@
       $error_id = uniqid('error');
 
 $code = $code ?? 500;
-      switch($code)
-      {
+switch ($code) {
 	    case 403:
 		  echo View::factory('errors/403')->set('url', URL::site( Request::initial()->uri(), true ) );
 	    break;

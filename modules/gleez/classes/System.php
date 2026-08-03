@@ -41,14 +41,11 @@ class System {
 		// Default return
 		$not_available = __('Not available');
 
-		if (function_exists('sys_getloadavg') && is_array(sys_getloadavg()))
-		{
+        if (function_exists('sys_getloadavg') && is_array(sys_getloadavg())) {
 			$load_averages = sys_getloadavg();
 			array_walk($load_averages, create_function('&$v', '$v = round($v, 3);'));
 			$server_load = $load_averages[0] . ' ' . $load_averages[1] . ' ' . $load_averages[2];
-		}
-		elseif (@is_readable('/proc/loadavg'))
-		{
+        } elseif (@is_readable('/proc/loadavg')) {
 			// We use @ just in case
 			$fh            = @fopen('/proc/loadavg', 'r');
 			$load_averages = @fread($fh, 64);
@@ -60,12 +57,11 @@ class System {
         } elseif (
             !in_array(PHP_OS, ['WINNT', 'WIN32'])
             && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages)
-        )
-		{
+        ) {
 			$server_load = $load_averages[1] . ' ' . $load_averages[2] . ' ' . $load_averages[3];
-		}
-		else
-			$server_load = $not_available;
+        } else {
+            $server_load = $not_available;
+        }
 
 		return $server_load;
 	}
@@ -87,8 +83,7 @@ class System {
     {
         $out = false;
         $oldUmask = umask(0);
-		if (! is_dir($path))
-		{
+        if (!is_dir($path)) {
 			$out = @mkdir($path, $mode, $recursive);
 		}
         umask($oldUmask);
@@ -195,21 +190,15 @@ class System {
 	 */
     public static function parse_args($args, array $defaults = []): array
     {
-		if (is_object($args))
-		{
+        if (is_object($args)) {
 			$result = get_object_vars($args);
-		}
-		elseif (is_array($args))
-		{
+        } elseif (is_array($args)) {
 			$result = &$args;
-		}
-		else
-		{
+        } else {
 			parse_str($args, $result);
 		}
 
-		if ( ! empty($defaults))
-		{
+        if (!empty($defaults)) {
 			return Arr::merge($defaults, $result);
 		}
 
@@ -309,8 +298,7 @@ class System {
     public static function hashEquals(string $known_string, string $user_string): bool
     {
 		// Available only in php >= 5.6.0
-		if ( function_exists('hash_equals') )
-		{
+        if (function_exists('hash_equals')) {
 			return hash_equals($known_string, $user_string);
 		}
 

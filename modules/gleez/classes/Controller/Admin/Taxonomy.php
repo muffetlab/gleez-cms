@@ -49,12 +49,10 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		$is_datatables = Request::is_datatables();
         $terms = ORM::factory('Term')->where('lft', '=', 1);
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $this->_datatables = $terms->dataTables(['name', 'description']);
 
-			foreach ($this->_datatables->result() as $term)
-			{
+            foreach ($this->_datatables->result() as $term) {
                 $this->_datatables->add_row([
                     HTML::chars($term->name) . '<div class="description">' . HTML::chars($term->description) . '</div>',
                     HTML::icon(Route::get('admin/term')->uri([
@@ -116,20 +114,16 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		/** @var $post Model_Term */
         $post = ORM::factory('Term');
 
-		if ($this->valid_post('vocab'))
-		{
+        if ($this->valid_post('vocab')) {
             $post->values($_POST, ['name', 'type', 'description']);
-			try
-			{
+            try {
 				$post->make_root();
 
                 Message::success(__('New Category Group %name saved successful!', ['%name' => $post->name]));
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/taxonomy')->uri());
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -150,8 +144,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		$id   = (int) $this->request->param('id', 0);
         $post = ORM::factory('Term', $id);
 
-		if ( ! $post->loaded())
-		{
+        if (!$post->loaded()) {
 			Message::error(__("Category Group doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent Category Group.');
 
@@ -163,20 +156,16 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 				->bind('post', $post)
 				->bind('errors', $this->_errors);
 
-		if ($this->valid_post('vocab'))
-		{
+        if ($this->valid_post('vocab')) {
             $post->values($_POST, ['name', 'type', 'description']);
-			try
-			{
+            try {
 				$post->save();
 
                 Message::success(__('Category Group %name saved successful!', ['%name' => $post->name]));
 
 				// Redirect to listing
 				$this->request->redirect( Route::get('admin/taxonomy')->uri() );
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -200,8 +189,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
 		$id   = (int) $this->request->param('id', 0);
         $term = ORM::factory('Term', $id);
 
-		if ( ! $term->loaded())
-		{
+        if (!$term->loaded()) {
 			Message::error(__("Category doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent category group.');
 
@@ -215,23 +203,18 @@ class Controller_Admin_Taxonomy extends Controller_Admin {
             ->set('title', $term->name);
 
 		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
 		}
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$term->delete();
                 Message::success(__('Category Group %name deleted successful!', ['%name' => $term->name]));
 
                 $this->request->redirect(Route::get('admin/taxonomy')->uri(['action' => 'list']));
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting category group id: :id, :message', [
                     ':id' => $term->id,
                     ':message' => $e->getMessage()

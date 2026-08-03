@@ -51,27 +51,22 @@ class Theme {
 		$path = ltrim(Request::detect_uri(), '/');
 		Theme::$is_admin = ( $path == "admin" || !strncmp($path, "admin/", 6) );
 
-		if (Theme::$is_admin)
-		{
+        if (Theme::$is_admin) {
 			// Load the admin theme
 			Theme::$active  = $config->get('admin_theme', 'cerber');
-		}
-		else
-		{
+        } else {
 			// Load the site theme
 			Theme::$active  = $config->get('theme', 'cerber');
 		}
 
 		//Set mobile theme, if enabled and mobile request
-        if (Request::is_mobile() && $config->get('mobile_theme', false))
-		{
+        if (Request::is_mobile() && $config->get('mobile_theme', false)) {
 			// Load the mobile theme
 			Theme::$active = $config->get('mobile_theme', 'cerber');
 		}
 
 		// Admins can override the site theme, temporarily. This lets us preview themes.
-        if (User::is_admin() && isset($_GET['theme']) && ($override = HTML::chars($_GET['theme'])))
-		{
+        if (User::is_admin() && isset($_GET['theme']) && ($override = HTML::chars($_GET['theme']))) {
 			Theme::$active = $override;
 		}
 
@@ -91,16 +86,12 @@ class Theme {
 		$modules = Kohana::modules();
 
 		// Check if the active theme is not loaded already
-        if (!empty(Theme::$active) && !in_array(Theme::$active, array_keys($modules)))
-		{
+        if (!empty(Theme::$active) && !in_array(Theme::$active, array_keys($modules))) {
 			// Make sure the theme is available
-			if( $theme = self::getTheme() )
-			{
+            if ($theme = self::getTheme()) {
 				//set absolute theme path and load the request theme as kohana module
                 Kohana::modules(['theme' => $theme->path] + $modules);
-			}
-			else
-			{
+            } else {
                 Kohana::$log->add(Log::ERROR, 'Missing site theme: :theme', [':theme' => Theme::$active]);
 			}
 		}
@@ -119,8 +110,7 @@ class Theme {
 		if(empty($name)) $name = Theme::$active;
 
 		// Make sure the theme is available
-		if( in_array($name, array_keys(self::$themes) ) )
-		{
+        if (in_array($name, array_keys(self::$themes))) {
 			// Get the active theme object
 			return self::$themes[$name];
 		}
@@ -143,10 +133,8 @@ class Theme {
 		$theme->description = __($theme->description);
 
 		// Add i18n support
-        if (!empty($theme->regions))
-		{
-			foreach ($theme->regions as $name => $title)
-			{
+        if (!empty($theme->regions)) {
+            foreach ($theme->regions as $name => $title) {
 				$theme->regions[$name] = __($title);
 			}
 		}
@@ -174,16 +162,13 @@ class Theme {
 
         if (!$themes) {
 			// Make sure THEMEPATH is set else add last
-			if (!in_array(THEMEPATH, $paths))
-			{
+            if (!in_array(THEMEPATH, $paths)) {
                 $paths[] = THEMEPATH;
 			}
 
 			// Iterate over each config path
-            foreach ($paths as $path)
-			{
-				foreach (glob($path . "*/theme.info") as $file)
-				{
+            foreach ($paths as $path) {
+                foreach (glob($path . "*/theme.info") as $file) {
 					$name          = basename(dirname($file));
 					$themes[$name] = Theme::get_info($file);
 				}
@@ -194,10 +179,8 @@ class Theme {
             $cache->set('themes:themes', $themes, Date::DAY);
         }
 
-		if ($title === true && $themes)
-		{
-			foreach ($themes as $name => $theme)
-			{
+        if ($title === true && $themes) {
+            foreach ($themes as $name => $theme) {
 				$themes[$name] = $theme->title;
 			}
 		}

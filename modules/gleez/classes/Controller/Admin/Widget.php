@@ -64,8 +64,7 @@ class Controller_Admin_Widget extends Controller_Admin {
         // makes sure all blocks in the same region get a unique weight.
 		$weight_delta = round(count($widgets) / 2);
 
-		foreach ($widget_regions as $key => $value)
-		{
+        foreach ($widget_regions as $key => $value) {
 			// Initialize an empty array for the region.
             $widget_listing[$key] = [];
 		}
@@ -74,17 +73,14 @@ class Controller_Admin_Widget extends Controller_Admin {
         $widget_listing[self::$WIDGET_REGION_NONE] = [];
 
 		// Add each block in the form to the appropriate place in the widget listing.
-		foreach ($widgets as $widget)
-		{
+        foreach ($widgets as $widget) {
 			// Fetch the region for the current widget.
             $region = ($widget->region ?? self::$WIDGET_REGION_NONE);
 			$widget_listing[$region][] = $widget;
 		}
 
-		if ($this->valid_post('widget-list'))
-		{
-			foreach ($_POST['widgets'] as $widget)
-			{
+        if ($this->valid_post('widget-list')) {
+            foreach ($_POST['widgets'] as $widget) {
 				$widget['status'] = (int) ($widget['region'] != self::$WIDGET_REGION_NONE);
 				$widget['region'] = $widget['status'] ? $widget['region'] : self::$WIDGET_REGION_NONE;
 
@@ -130,8 +126,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 					->set('roles', $all_roles)
 					->set('regions', $widget_regions);
 
-		if ($this->valid_post('widget'))
-		{
+        if ($this->valid_post('widget')) {
             $widget->values($_POST, [
                 'title',
                 'region',
@@ -143,8 +138,7 @@ class Controller_Admin_Widget extends Controller_Admin {
                 'body',
                 'format'
             ]);
-			try
-			{
+            try {
 				$widget->name = 'static/'. Text::random('alnum', 6);
 				$widget->module = 'gleez';
 				$widget->save();
@@ -154,9 +148,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/widget')->uri());
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
 				$view->errors = $e->errors('models');
 			}
 		}
@@ -174,8 +166,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$id     = (int) $this->request->param('id', 0);
         $widget = ORM::factory('Widget', $id);
 
-		if ( ! $widget->loaded())
-		{
+        if (!$widget->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
             Message::error(__("Widget doesn't exists!"));
 
@@ -199,14 +190,11 @@ class Controller_Admin_Widget extends Controller_Admin {
 					->set('roles',  $all_roles)
 					->set('regions', $widget_regions);
 
-		if ($this->valid_post('widget'))
-		{
+        if ($this->valid_post('widget')) {
             $widget->values($_POST, ['title', 'region', 'status', 'icon', 'show_title', 'visibility', 'pages']);
-			try
-			{
+            try {
 				$widget->save();
-				if(isset($_POST['widget']))
-				{
+                if (isset($_POST['widget'])) {
 					unset($_POST['widget'], $_POST['_token'], $_POST['_action']);
 				}
 
@@ -216,9 +204,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/widget')->uri());
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
 				$view->errors = $e->errors('models');
 			}
 		}
@@ -236,8 +222,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$id = (int) $this->request->param('id', 0);
         $widget = ORM::factory('Widget', $id);
 
-		if ( ! $widget->loaded())
-		{
+        if (!$widget->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
             Message::error(__("Widget doesn't exists!"));
 
@@ -248,8 +233,7 @@ class Controller_Admin_Widget extends Controller_Admin {
         $static = $split_name && $split_name[0] == 'static';
 
         // We can only delete if it's a custom widget
-		if( ! $static)
-		{
+        if (!$static) {
 			$this->request->redirect(Route::get('admin/widget')->uri());
 		}
 
@@ -267,25 +251,20 @@ class Controller_Admin_Widget extends Controller_Admin {
             ->set('title', $widget->title);
 
 		// If deletion is not desired, redirect to post
-        if (isset($_POST['no']) && $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
             $this->request->redirect(Route::get('admin/widget')->uri(['id' => $widget->id]));
 		}
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$title = $widget->title;
 				$widget->delete();
 				$handler->delete($_POST);
 
                 Message::success(__('Widget :title deleted successful!', [':title' => $title]));
                 Cache::instance()->delete_all();
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting widget id: :id, :msg', [
                     ':id' => $widget->id,
                     ':msg' => $e->getMessage()

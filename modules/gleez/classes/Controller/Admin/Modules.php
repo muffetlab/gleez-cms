@@ -93,29 +93,22 @@ class Controller_Admin_Modules extends Controller_Admin {
         $activated_names = [];
         $deactivated_names = [];
 
-		foreach (Module::available() as $module_name => $info)
-		{
-			if ($info->locked)
-			{
+        foreach (Module::available() as $module_name => $info) {
+            if ($info->locked) {
 				continue;
 			}
 
-			try
-			{
+            try {
 				$desired = Arr::get($_POST, $module_name) == 1;
 
-                if ($info->active && !$desired && Module::is_active($module_name))
-				{
+                if ($info->active && !$desired && Module::is_active($module_name)) {
 					Module::deactivate($module_name);
 					$changes->deactivate[] = $module_name;
 					$deactivated_names[] = __($info->name);
                 } elseif (!$info->active && $desired && !Module::is_active($module_name)) {
-					if (Module::is_installed($module_name))
-					{
+                    if (Module::is_installed($module_name)) {
 						Module::upgrade($module_name);
-					}
-					else
-					{
+                    } else {
 						Module::install($module_name);
 					}
 
@@ -124,9 +117,7 @@ class Controller_Admin_Modules extends Controller_Admin {
 					$changes->activate[] = $module_name;
 					$activated_names[] = __($info->name);
 				}
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
 				Kohana::$log->add(Log::ERROR, Kohana_Exception::text($e));
 			}
 		}
@@ -134,12 +125,10 @@ class Controller_Admin_Modules extends Controller_Admin {
 		Module::event('module_change', $changes);
 
 		// @todo This type of collation is questionable from an i18n perspective
-		if ($activated_names)
-		{
+        if ($activated_names) {
             Message::success(__('Activated: %names', ['%names' => join(", ", $activated_names)]));
 		}
-		if ($deactivated_names)
-		{
+        if ($deactivated_names) {
             Message::success(__('Deactivated: %names', ['%names' => join(", ", $deactivated_names)]));
 		}
 

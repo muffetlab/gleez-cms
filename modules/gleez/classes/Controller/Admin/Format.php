@@ -42,8 +42,7 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		$total = $this->_format->count_all();
 
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			Kohana::$log->add(Log::INFO, 'No formats found.');
 			$this->response->body(View::factory('admin/format/none'));
 
@@ -55,8 +54,7 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		$this->response->body($view);
 
-		if ( ! $this->_internal)
-		{
+        if (!$this->_internal) {
             Assets::tableDrag();
 		}
 	}
@@ -77,8 +75,7 @@ class Controller_Admin_Format extends Controller_Admin {
 		// Get required format
 		$format = $this->_format->get($id);
 
-		if (is_null($format))
-		{
+        if (is_null($format)) {
             Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent format id :id', [':id' => $id]);
             Message::error(__("Text Format doesn't exists!"));
 
@@ -104,8 +101,7 @@ class Controller_Admin_Format extends Controller_Admin {
 			->set('format', $format)
 			->set('params', $params);
 
-		if ($this->valid_post('filter'))
-		{
+        if ($this->valid_post('filter')) {
 			unset($_POST['filter'], $_POST['_token'], $_POST['_action']);
 			Message::info(__('Not implemented yet!'));
 		}

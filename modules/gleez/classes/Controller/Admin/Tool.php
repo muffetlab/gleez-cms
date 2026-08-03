@@ -52,8 +52,7 @@ class Controller_Admin_Tool extends Controller_Admin {
 
         $tables = DB::query(Database::SELECT, 'SHOW TABLE STATUS')->execute()->as_array();
 
-		foreach ($tables as $table)
-		{
+        foreach ($tables as $table) {
 			$tot_data = $table['Data_length'];
 			$tot_idx  = $table['Index_length'];
 

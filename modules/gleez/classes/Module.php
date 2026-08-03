@@ -125,8 +125,7 @@ class Module
      */
 	public static function available()
 	{
-		if (empty(self::$available))
-		{
+        if (empty(self::$available)) {
 			$upgrade = false;
             $modules = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
             $paths = (array) Kohana::$config->load('site')->get('module_paths', [MODPATH]);
@@ -154,14 +153,12 @@ class Module
 					$m->path 		 = realpath( dirname($file) ).DIRECTORY_SEPARATOR;
 
 					// Skip this module in list if the module is hidden
-					if($m->visible === false && isset($modules[$name]))
-					{
+                    if ($m->visible === false && isset($modules[$name])) {
 						unset($modules[$name]);
 					}
 
 					// Check installed and available version and set message
-					if ($m->active && $m->version != $m->code_version)
-					{
+                    if ($m->active && $m->version != $m->code_version) {
 						$upgrade = true;
 					}
 				}
@@ -594,8 +591,8 @@ class Module
             if ($name != 'gleez' && is_callable([$class, $function])) {
 				try {
                     call_user_func_array([$class, $function], $args);
-				}
-				catch(Exception $e){}
+                } catch (Exception $e) {
+                }
 			}
 		}
 
@@ -620,8 +617,8 @@ class Module
             if (is_callable([$class, $function])) {
 				try {
                     $return = call_user_func_array([$class, $function], $args);
-				}
-				catch(Exception $e){}
+                } catch (Exception $e) {
+                }
 			}
 		}
 
@@ -660,7 +657,7 @@ class Module
 
 			//Call DB migrations for this module
 			Minion_Task::factory($options)->execute();
-		}
-		catch(Exception $e){}
+        } catch (Exception $e) {
+        }
 	}
 }

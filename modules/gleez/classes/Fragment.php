@@ -60,8 +60,7 @@ class Fragment {
 	 */
     protected static function _cache_key(string $name, bool $i18n = null): string
     {
-		if (is_null($i18n))
-		{
+        if (is_null($i18n)) {
 			// Use the default setting
 			$i18n = Fragment::$i18n;
 		}
@@ -102,15 +101,12 @@ class Fragment {
 		// Get the cache key name
 		$cache_key = Fragment::_cache_key($name, $i18n);
 
-		if ($fragment = $cache->get($cache_key))
-		{
+        if ($fragment = $cache->get($cache_key)) {
 			// Display the cached fragment now
 			echo $fragment;
 
             return true;
-		}
-		else
-		{
+        } else {
 			// Start the output buffer
 			ob_start();
 
@@ -140,8 +136,7 @@ class Fragment {
 		// Get the buffer level
 		$level = ob_get_level();
 
-		if (isset(Fragment::$_caches[$level]))
-		{
+        if (isset(Fragment::$_caches[$level])) {
 			// Get the cache key based on the level
 			$cache_key = Fragment::$_caches[$level];
 

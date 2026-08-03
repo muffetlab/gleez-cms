@@ -19,8 +19,7 @@
 				<td id="term-<?php echo $item['id'] ?>">
 					<?php
 						$c = 2;
-						while ($c < $item['lvl'])
-						{
+                    while ($c < $item['lvl']) {
 							echo '<div class="indentation">&nbsp;</div>';
 							$c++;
 						}

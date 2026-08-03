@@ -18,8 +18,7 @@ class Controller_Autocomplete extends Controller {
     public function before()
 	{
 		// Ajax request only!
-		if ( ! $this->request->is_ajax())
-		{
+        if (!$this->request->is_ajax()) {
             throw HTTP_Exception::factory(404, 'Accessing an ajax request :type externally', [
                 ':type' => '<small>' . $this->request->uri() . '</small>'
             ]);
@@ -39,16 +38,14 @@ class Controller_Autocomplete extends Controller {
         $string = $this->request->param('string', false);
         $matches = [];
 
-		if ($string)
-		{
+        if ($string) {
 			$result  = DB::select('name')
 				->from('users')
 				->where('name', 'LIKE', $string.'%')
 				->limit('10')
 				->execute();
 
-			foreach ($result as $user)
-			{
+            foreach ($result as $user) {
                 $matches[$user['name']] = HTML::chars($user['name']);
 			}
 		}
@@ -66,16 +63,14 @@ class Controller_Autocomplete extends Controller {
         $string = $this->request->param('string', false);
         $matches = [];
 
-		if ($string)
-		{
+        if ($string) {
 			$result  = DB::select('name')
 				->from('users')
 				->where('nick', 'LIKE', $string.'%')
 				->limit('10')
 				->execute();
 
-			foreach ($result as $user)
-			{
+            foreach ($result as $user) {
                 $matches[$user['name']] = HTML::chars($user['name']);
 			}
 		}
@@ -98,16 +93,14 @@ class Controller_Autocomplete extends Controller {
         $tag_last = UTF8::strtolower(array_pop($tags_typed) ?? '');
         $matches = [];
 
-		if ( ! empty($tag_last))
-		{
+        if (!empty($tag_last)) {
 			$query  = DB::select('name')->from('tags')
 				->where('name', 'LIKE', $tag_last.'%')
 				->where('type', '=', $type);
 
 			$result = $query->limit('10')->execute();
 
-			foreach ($result as $tag)
-			{
+            foreach ($result as $tag) {
                 $matches[$tag['name']] = $tag['name'];
 			}
 		}
@@ -117,8 +110,7 @@ class Controller_Autocomplete extends Controller {
 
 	public function after()
 	{
-		if ($this->request->is_ajax())
-		{
+        if ($this->request->is_ajax()) {
 			$this->response->headers('content-type',  'application/json; charset='.Kohana::$charset);
 		}
 

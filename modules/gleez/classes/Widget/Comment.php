@@ -23,8 +23,7 @@ class Widget_Comment extends Widget {
      */
     public function render()
 	{
-		switch($this->name)
-		{
+        switch ($this->name) {
 			case 'recent':
                 return $this->recent();
             default:
@@ -40,8 +39,7 @@ class Widget_Comment extends Widget {
     public function recent()
 	{
 		// Don't show the widget on edit or delete actions.
-        if (Request::current()->action() == 'edit' || Request::current()->action() == 'delete')
-		{
+        if (Request::current()->action() == 'edit' || Request::current()->action() == 'delete') {
             return false;
 		}
 
@@ -58,8 +56,7 @@ class Widget_Comment extends Widget {
 					->find_all();
 
             $comments = [];
-			foreach($blogs as $blog)
-			{
+            foreach ($blogs as $blog) {
 				$comments[$blog->id]['id'] = $blog->id;
 				$comments[$blog->id]['type'] = $blog->type;
 				$comments[$blog->id]['title'] = $blog->title;

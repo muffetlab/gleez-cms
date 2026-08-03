@@ -85,14 +85,12 @@ class Controller_Contact extends Template {
 					->bind('errors',     $this->_errors);
 
 		// Initiate Captcha
-        if ($config->get('use_captcha', false) && !$this->_auth->logged_in())
-		{
+        if ($config->get('use_captcha', false) && !$this->_auth->logged_in()) {
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
 		}
 
-		if ($this->valid_post('contact'))
-		{
+        if ($this->valid_post('contact')) {
             $post = Validation::factory($this->request->post())
                 ->rule('name', 'not_empty')
                 ->rule('name', 'min_length', [':value', 4])
@@ -115,8 +113,7 @@ class Controller_Contact extends Template {
                     'body' => __('Body')
                 ]);
 
-			if ($post->check())
-			{
+            if ($post->check()) {
 				// Create the email subject
                 $subject = __('[:category] :subject', [
                     ':category' => $types[$post['category']],
@@ -151,9 +148,7 @@ class Controller_Contact extends Template {
 
 				// Always redirect after a successful POST to prevent refresh warnings
 				$this->request->redirect(Route::get('contact')->uri(), 200);
-			}
-			else
-			{
+            } else {
                 $this->_errors = $post->errors('contact');
 			}
 		}

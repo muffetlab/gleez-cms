@@ -1,12 +1,9 @@
 <?php
-if (isset($widget->id) && Valid::digit($widget->id))
-	{
+if (isset($widget->id) && Valid::digit($widget->id)) {
         $parms = ['id' => $widget->id, 'action' => 'edit'];
 		$split_name = explode('/', $widget->name);
         $static = $split_name && $split_name[0] == 'static';
-	}
-	else
-	{
+} else {
         $parms = ['action' => 'add'];
         $static = true;
 	}

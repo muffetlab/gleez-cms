@@ -22,8 +22,7 @@ class Widget_Blog extends Widget {
      */
     public function render()
 	{
-		switch($this->name)
-		{
+        switch ($this->name) {
 			case 'recent':
 				return $this->recent_blogs();
             case 'announce':
@@ -50,8 +49,7 @@ class Widget_Blog extends Widget {
 		$action = Request::current()->action();
 
 		// Don't show the widget on edit or delete actions
-        if ($action == 'edit' || $action == 'delete')
-		{
+        if ($action == 'edit' || $action == 'delete') {
             return false;
 		}
 
@@ -62,8 +60,7 @@ class Widget_Blog extends Widget {
             $blogs = ORM::factory('Blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
             $items = [];
-			foreach($blogs as $blog)
-			{
+            foreach ($blogs as $blog) {
 				$items[$blog->id]['id']       = $blog->id;
 				$items[$blog->id]['title']    = $blog->title;
 				$items[$blog->id]['url']      = $blog->url;
@@ -97,8 +94,7 @@ class Widget_Blog extends Widget {
 		$action = Request::current()->action();
 
 		// Don't show the widget on edit or delete actions
-        if ($action == 'edit' || $action == 'delete')
-		{
+        if ($action == 'edit' || $action == 'delete') {
             return false;
 		}
 
@@ -109,8 +105,7 @@ class Widget_Blog extends Widget {
             $blogs = ORM::factory('Blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
             $items = [];
-			foreach($blogs as $blog)
-			{
+            foreach ($blogs as $blog) {
 				$items[$blog->id]['id']    = $blog->id;
 				$items[$blog->id]['title'] = $blog->title;
 				$items[$blog->id]['url']   = $blog->url;

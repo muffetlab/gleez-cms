@@ -39,14 +39,12 @@ class Format {
      */
     public static function instance(array $config = []): ?Format
     {
-		if ( ! is_null(Format::$instance))
-		{
+        if (!is_null(Format::$instance)) {
 			// Return the current instance if initiated already
 			return Format::$instance;
 		}
 
-		if (empty($config))
-		{
+        if (empty($config)) {
 			// Load the configuration
             $config = Kohana::$config->load('input_filter');
 		}
@@ -85,23 +83,19 @@ class Format {
 	 */
     protected function _prepare(array $config): Format
     {
-		if (isset(Format::$formats))
-		{
+        if (isset(Format::$formats)) {
 			// Return the current format set if initiated already
 			return $this;
 		}
-		foreach ($config['formats'] as $id => $format)
-		{
+
+        foreach ($config['formats'] as $id => $format) {
 			Format::$formats[$id]['#is_fallback'] = ($id == Format::$fallback_format);
 			Format::$formats[$id]['name']         = HTML::chars($format['name']);
 			Format::$formats[$id]['weight']       = HTML::chars($format['weight']);
 
-			if ($id == Format::$fallback_format)
-			{
+            if ($id == Format::$fallback_format) {
 				$roles_markup = __('All roles may use this format');
-			}
-			else
-			{
+            } else {
 				$roles = $format['roles'];
 				$roles_markup = $roles ? implode(',', $roles) : __('No roles may use this format');
 			}

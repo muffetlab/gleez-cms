@@ -19,8 +19,7 @@ class Controller_Media extends Controller {
      */
 	public function before()
 	{
-        if ($theme = $this->request->param('theme', false))
-		{
+        if ($theme = $this->request->param('theme', false)) {
 			Theme::set_theme($theme);
 		}
 		
@@ -58,9 +57,8 @@ class Controller_Media extends Controller {
 		
 		// Remove the extension from the filename
         $file = substr($originalFile, 0, -(strlen($ext) + 1));
-		
-		if ($file_name = Kohana::find_file('media', $file, $ext))
-		{
+
+        if ($file_name = Kohana::find_file('media', $file, $ext)) {
 			// Check if the browser sent an "if-none-match: <etag>" header, and tell if the file hasn't changed
             $this->check_cache(sha1($this->request->uri()) . filemtime($file_name));
 			
@@ -74,32 +72,27 @@ class Controller_Media extends Controller {
 			// This is ignored by check_cache
 			$this->response->headers('cache-control', 'public, max-age=2592000');
 
-            if (Kohana::$config->load('media')->get('cache', false))
-			{
+            if (Kohana::$config->load('media')->get('cache', false)) {
 				// Set base path
 				$path = Kohana::$config->load('media')->get('public_dir', 'media');
 			
 				// Override path if we're in admin
-				if ($theme)
-				{
+                if ($theme) {
 					$path = $path . DIRECTORY_SEPARATOR . $theme;
 				}
 				
 				// Save the contents to the public directory for future requests
 				$public_path = $path . DIRECTORY_SEPARATOR . $file . '.' . $ext;
 				$directory   = dirname($public_path);
-				
-				if ( ! is_dir($directory))
-				{
+
+                if (!is_dir($directory)) {
 					// Recursively create the directories needed for the file
                     System::mkdir($directory);
 				}
 				
 				file_put_contents($public_path, $this->response->body());
 			}
-		}
-		else
-		{
+        } else {
             Kohana::$log->add(Log::ERROR, 'Media controller error while loading file: :file', [
                 ':file' => $originalFile
             ]);

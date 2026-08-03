@@ -5,8 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?php echo $title; ?> | Gleez CMS</title>
 	<?php
-		foreach ($styles as $style => $media)
-		{
+    foreach ($styles as $style => $media) {
             echo HTML::style($style, ['media' => $media], true) . PHP_EOL;
 		}
 	?>

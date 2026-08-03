@@ -85,8 +85,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 		$id      = (int) $this->request->param('id', 0);
         $comment = ORM::factory('Comment', $id)->access();
 
-		if( ! $comment->loaded())
-		{
+        if (!$comment->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent comment.');
             Message::error(__("Comment doesn't exists!"));
 
@@ -160,14 +159,12 @@ class Controller_Admin_Comment extends Controller_Admin {
 		$post     = $this->request->post();
 
 		// If deletion is not desired, redirect to list
-        if (isset($post['no']) && $this->valid_post())
-		{
+        if (isset($post['no']) && $this->valid_post()) {
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-        if (isset($post['yes']) && $this->valid_post())
-		{
+        if (isset($post['yes']) && $this->valid_post()) {
 			$comments = array_filter($post['items']);
 
             DB::delete('comments')->where('id', 'IN', $comments)->execute();
@@ -178,19 +175,15 @@ class Controller_Admin_Comment extends Controller_Admin {
 			$this->request->redirect($redirect);
 		}
 
-		if ($this->valid_post('comment-bulk-actions'))
-		{
-            if (!isset($post['comments']) || !is_array($post['comments']) || !count(array_filter($post['comments'])))
-			{
+        if ($this->valid_post('comment-bulk-actions')) {
+            if (!isset($post['comments']) || !is_array($post['comments']) || !count(array_filter($post['comments']))) {
                 $this->_errors = [__('No items selected.')];
 
 				$this->request->redirect($redirect);
 			}
 
-			try
-			{
-				if($post['operation'] == 'delete')
-				{
+            try {
+                if ($post['operation'] == 'delete') {
 					// Filter out unchecked comments
 					$comments = array_filter($post['comments']);
 					$this->title = __('Delete Comments');
@@ -214,9 +207,7 @@ class Controller_Admin_Comment extends Controller_Admin {
 				Message::success(__('The update has been performed!'));
 
 				$this->request->redirect($redirect);
-			}
-			catch( Exception $e)
-			{
+            } catch (Exception $e) {
 				Message::error(__('The update has not been performed!'));
 			}
 		}
@@ -240,15 +231,11 @@ class Controller_Admin_Comment extends Controller_Admin {
         $operations = Comment::bulk_actions();
 		$operation  = $operations[$post['operation']];
 
-		if ($operation['callback'])
-		{
+        if ($operation['callback']) {
             list($func) = Arr::callback($operation['callback']);
-			if (isset($operation['arguments']))
-			{
+            if (isset($operation['arguments'])) {
                 $args = Arr::merge([$comments], $operation['arguments']);
-			}
-			else
-			{
+            } else {
                 $args = [$comments];
 			}
 
@@ -278,18 +265,13 @@ class Controller_Admin_Comment extends Controller_Admin {
      */
 	private function _prepare_list(ORM $posts)
 	{
-		if (Request::is_datatables())
-		{
+        if (Request::is_datatables()) {
             $this->_datatables = $posts->dataTables(['id', 'title', 'author', 'guest_name', 'created']);
 
-			foreach ($this->_datatables->result() as $post)
-			{
-                if ($post->author == 1 && !is_null($post->guest_name))
-				{
+            foreach ($this->_datatables->result() as $post) {
+                if ($post->author == 1 && !is_null($post->guest_name)) {
                     $author = HTML::anchor($post->guest_url, $post->guest_name, []) . __(' (not verified)');
-				}
-				else
-				{
+                } else {
                     $author = HTML::anchor(Route::get('user')->uri([
                         'action' => 'profile',
                         'id' => $post->author

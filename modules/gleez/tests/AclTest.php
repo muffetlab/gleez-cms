@@ -25,12 +25,9 @@ class Gleez_AclTest extends Unittest_TestCase
 	{
         $user = ORM::factory('User', $user_id);
 
-		if ($user_id == 1)
-		{
+        if ($user_id == 1) {
 			$this->assertFalse(ACL::check($perm, $user));
-		}
-		else
-		{
+        } else {
 			$this->assertTrue(ACL::check($perm, $user));
 		}
 		

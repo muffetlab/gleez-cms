@@ -219,60 +219,41 @@ class Post extends ORM_Versioned {
     public function is_valid(string $name, Validation $validation, string $field)
 	{
 		// Make sure we have a valid term id set
-		if ($name == 'category')
-		{
-            if (isset($this->categories) && is_array($this->categories))
-			{
-                foreach ($this->categories as $term)
-				{
-                    if ($term == 'last' || !Valid::numeric($term))
-					{
+        if ($name == 'category') {
+            if (isset($this->categories) && is_array($this->categories)) {
+                foreach ($this->categories as $term) {
+                    if ($term == 'last' || !Valid::numeric($term)) {
                         $validation->error('categories', 'invalid', [$validation[$field]]);
 					}
 				}
 			}
 		}
         // Make sure we have a valid date is set, or current time
-		elseif ($name == 'created')
-		{
-            if (!empty($this->author_date) && !($date = strtotime($this->author_date)))
-			{
+        elseif ($name == 'created') {
+            if (!empty($this->author_date) && !($date = strtotime($this->author_date))) {
                 $validation->error($field, 'invalid', [$this->author_date]);
-			}
-			else
-			{
-				if (isset($date))
-				{
+            } else {
+                if (isset($date)) {
 					$this->created = $date;
 				}
 			}
 		}
         // Make sure we have a valid author id set, or a guest id
-		elseif ($name == 'author')
-		{
-            if (!empty($this->author_name) && !($account = User::lookup_by_name($this->author_name)))
-			{
+        elseif ($name == 'author') {
+            if (!empty($this->author_name) && !($account = User::lookup_by_name($this->author_name))) {
                 $validation->error($field, 'invalid', [$this->author_name]);
-			}
-			else
-			{
-				if (isset($account))
-				{
+            } else {
+                if (isset($account)) {
 					$this->author = $account->id;
 				}
 			}
 		}
         // Make sure we have a valid date is set, or current time
-		elseif ($name == 'pubdate')
-		{
-            if (!empty($this->author_pubdate) && !($date = strtotime($this->author_pubdate)))
-			{
+        elseif ($name == 'pubdate') {
+            if (!empty($this->author_pubdate) && !($date = strtotime($this->author_pubdate))) {
                 $validation->error($field, 'invalid', [$validation[$field]]);
-			}
-			else
-			{
-				if (isset($date))
-				{
+            } else {
+                if (isset($date)) {
 					$this->pubdate = $date;
 				}
 			}
@@ -303,8 +284,7 @@ class Post extends ORM_Versioned {
      */
 	protected function before_save()
 	{
-        if (!empty($_FILES['image']['name']))
-		{
+        if (!empty($_FILES['image']['name'])) {
             // Validate image before saving
             $allowedTypes = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
             $validation = Validation::factory($_FILES)
@@ -331,8 +311,7 @@ class Post extends ORM_Versioned {
 			// generate a unique filename to avoid conflicts
 			$filename = File::getUnique($_FILES['image']['name']);
 
-            if (Upload::save($_FILES['image'], $filename, $this->_image_path))
-			{
+            if (Upload::save($_FILES['image'], $filename, $this->_image_path)) {
 				$this->image = $filename;
 			}
 		}
@@ -380,8 +359,7 @@ class Post extends ORM_Versioned {
 
 		parent::save($validation);
 
-		if ( $this->loaded())
-		{
+        if ($this->loaded()) {
 			// Add or remove terms
 			$this->_terms();
 
@@ -410,14 +388,12 @@ class Post extends ORM_Versioned {
 		$delimiter = strpos($this->rawbody, self::TEASER_TAG);
 
 		// If the size is zero, and there is no delimiter, the entire body is teaser.
-        if ($size == 0 && $delimiter === false)
-		{
+        if ($size == 0 && $delimiter === false) {
 			return $this->rawbody;
 		}
 
 		// If a valid delimiter has been specified, use it to chop off the teaser.
-        if ($delimiter !== false)
-		{
+        if ($delimiter !== false) {
 			return substr($this->rawbody, 0, $delimiter);
 		}
 
@@ -431,22 +407,18 @@ class Post extends ORM_Versioned {
      */
 	private function _terms()
 	{
-		if ( !empty($this->categories))
-		{
+        if (!empty($this->categories)) {
 			// Filter out empty terms
 			$this->categories = array_filter($this->categories);
 		}
 
-        if (isset($this->categories) && is_array($this->categories))
-		{
+        if (isset($this->categories) && is_array($this->categories)) {
 			// Remove the previous terms relationship
 			$this->remove('terms');
 
-            foreach ($this->categories as $term)
-			{
+            foreach ($this->categories as $term) {
 				// Add the term relationship
-                if (!empty($term) && $term != 'last')
-				{
+                if (!empty($term) && $term != 'last') {
                     $this->add('terms', (int) $term);
 				}
 			}
@@ -461,8 +433,7 @@ class Post extends ORM_Versioned {
      */
 	private function _tags()
 	{
-        if (isset($this->formTags))
-		{
+        if (isset($this->formTags)) {
             Tags::factory()->tagging($this->formTags, $this, $this->author, false);
 		}
 	}
@@ -481,8 +452,7 @@ class Post extends ORM_Versioned {
 
 		$path = Path::load($this->rawurl);
 
-		if ($path)
-		{
+        if ($path) {
 			$values['id'] = (int) $path['id'];
 		}
 
@@ -511,12 +481,9 @@ class Post extends ORM_Versioned {
 	 */
     public function delete(bool $soft = false): Kohana_ORM
     {
-        if (is_array($this->_deleted_column) && $soft)
-		{
+        if (is_array($this->_deleted_column) && $soft) {
 
-		}
-		else
-		{
+        } else {
             // Delete image if exists, to clean up stale images
 			$this->_delete_image();
 
@@ -634,8 +601,7 @@ class Post extends ORM_Versioned {
         ];
 
 		// Unset read more link on full page view
-		if (Request::current()->uri() == $this->url)
-		{
+        if (Request::current()->uri() == $this->url) {
 			unset($links['more']);
 		}
 
@@ -709,11 +675,9 @@ class Post extends ORM_Versioned {
 		// Allow module developers to override
 		$values = Module::action('post_bulk_actions', $states);
 
-		if ($list)
-		{
+        if ($list) {
             $options = ['' => __('Bulk Options')];
-			foreach ($values as $operation => $array)
-			{
+            foreach ($values as $operation => $array) {
                 if ($operation == "ct_$type") continue;
 				$options[$operation] = $array['label'];
 			}
@@ -743,10 +707,8 @@ class Post extends ORM_Versioned {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($posts as $post)
-		{
-			foreach ($actions as $name => $value)
-			{
+        foreach ($posts as $post) {
+            foreach ($actions as $name => $value) {
 				$post->$name = $value;
 			}
 			$post->save();
@@ -771,8 +733,7 @@ class Post extends ORM_Versioned {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($posts as $post)
-		{
+        foreach ($posts as $post) {
 			$post->delete();
 		}
 	}
@@ -799,8 +760,7 @@ class Post extends ORM_Versioned {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($posts as $post)
-		{
+        foreach ($posts as $post) {
 			// Delete the path aliases associated with this object
             Path::delete(['source' => $post->rawurl]);
 
@@ -842,15 +802,13 @@ class Post extends ORM_Versioned {
     public static function widgets(string $content, string $region = 'post_inline'): string
     {
 		// Save some cpu cycles, when the content is empty
-        if (empty($content))
-		{
+        if (empty($content)) {
 			return $content;
 		}
 
 		// We found special tag, so don't set widgets!
 		// Just return the content
-        if (strpos($content, self::NO_WIDGETS_TAG) !== false)
-		{
+        if (strpos($content, self::NO_WIDGETS_TAG) !== false) {
 			return $content;
 		}
 
@@ -859,13 +817,11 @@ class Post extends ORM_Versioned {
         $repChar = "<p";
 
 		// if we didn't find a p tag, try br tag
-        if (strpos($content, "<p") === false)
-		{
+        if (strpos($content, "<p") === false) {
             $repChar = "<br";
 		}
 
-        while (strpos($content, $repChar, $lastPos + 1) !== false)
-		{
+        while (strpos($content, $repChar, $lastPos + 1) !== false) {
             $lastPos = strpos($content, $repChar, $lastPos + 1);
             $poses[] = $lastPos;
 		}
@@ -901,19 +857,16 @@ class Post extends ORM_Versioned {
         $use_cache = (bool) $config->get('use_cache', false);
         $post = $use_cache ? $cache->get($type . ':' . $type . '-' . $id, false) : false;
 
-		if (empty($post))
-		{
+        if (empty($post)) {
             $post = ORM::factory(ucfirst($type), $id);
 
-			if ( ! $post->loaded())
-			{
+            if (!$post->loaded()) {
 				throw HTTP_Exception::factory(404, 'Attempt to access non-existent post.');
 			}
 
 			$post->content = View::factory($type."/body")->set('config', $config)->bind('post', $post)->render();
 
-			if ($use_cache)
-			{
+            if ($use_cache) {
                 $data = [];
 				$data['author']     = (int)$post->author;
 				$data['status']     = $post->status;
@@ -967,8 +920,7 @@ class Post extends ORM_Versioned {
         $cache = Cache::instance();
         $post = $params->use_cache ? $cache->get('post:recent_' . $params->type) : null;
 
-		if (empty($post))
-		{
+        if (empty($post)) {
             $post = ORM::factory(ucfirst($params->type))
 						->where('status', 'IN', $params->status)
                 ->order_by($params->orderBy, $params->order)
@@ -976,13 +928,11 @@ class Post extends ORM_Versioned {
 						->offset($params->offset)
 						->find_all();
 
-			if ($params->as_array)
-			{
+            if ($params->as_array) {
 				$post->as_array();
 			}
 
-			if ($params->use_cache)
-			{
+            if ($params->use_cache) {
                 $cache->set('post:recent_' . $params->type, $post, Date::HOUR);
 			}
 		}
@@ -997,8 +947,7 @@ class Post extends ORM_Versioned {
 	 */
     protected function _delete_image(): Post
     {
-        if ($this->rawimage && file_exists($this->_image_path . $this->rawimage))
-		{
+        if ($this->rawimage && file_exists($this->_image_path . $this->rawimage)) {
 			@unlink($this->_image_path.$this->rawimage);
 		}
 

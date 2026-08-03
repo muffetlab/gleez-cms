@@ -7,8 +7,7 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-if ( ! Route::cache())
-{
+if (!Route::cache()) {
 // -- Gleez media routes -------------------------------------------------------
 
 	// Image resize
@@ -258,8 +257,7 @@ if ( ! Route::cache())
  * @uses  ACL::cache
  * @uses  ACL::set
  */
-if ( ! ACL::cache())
-{
+if (!ACL::cache()) {
     ACL::set('comment', [
         'administer comment' => [
             'title' => __('Administer Comments'),
@@ -427,8 +425,7 @@ if ( ! ACL::cache())
  * @uses  Text::initialCaps
  * @uses  Text::markdown
  */
-if ( ! Filter::cache())
-{
+if (!Filter::cache()) {
     Filter::set('html', ['prepare callback' => false, 'process callback' => 'Text::html'])
         ->title(__('Limit allowed HTML tags'))
         ->description(__('Limit Allowed HTML tags'))

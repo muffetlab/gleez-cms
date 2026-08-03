@@ -40,8 +40,7 @@ class Controller_Comment extends Template {
         $comment = ORM::factory('Comment', $id)->access();
         $route = Route::get('comment')->uri(['action' => 'list']);
 
-		if ( ! $comment->loaded())
-		{
+        if (!$comment->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent comment.');
             Message::error(__("Comment doesn't exists!"));
 
@@ -90,10 +89,8 @@ class Controller_Comment extends Template {
             ->bind('errors', $this->_errors)
             ->bind('post', $comment);
 
-		if ($this->valid_post('comment'))
-		{
-			try
-			{
+        if ($this->valid_post('comment')) {
+            try {
 				/** @var $comment ORM */
                 $comment->values($_POST, ['status', 'body'])->save();
 
@@ -101,9 +98,7 @@ class Controller_Comment extends Template {
                 Message::success(__('Comment %title has been updated.', ['%title' => $comment->title]));
 
 				$this->request->redirect(empty($destination) ? $comment->url : $this->request->query('destination'));
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -132,26 +127,21 @@ class Controller_Comment extends Template {
             ->set('title', $comment->title);
 
 		// If deletion is not desired, redirect to post
-        if (isset($post['no']) && $this->valid_post())
-		{
+        if (isset($post['no']) && $this->valid_post()) {
 			$this->request->redirect(empty($this->redirect) ? $route : $this->redirect);
 		}
 
 		// If deletion is confirmed
-        if (isset($post['yes']) && $this->valid_post())
-		{
+        if (isset($post['yes']) && $this->valid_post()) {
 			$redirect = $comment->post->url;
 			$title = $comment->title;
 
-			try
-			{
+            try {
 				$comment->delete();
 
                 Kohana::$log->add(Log::INFO, 'Comment: :title deleted.', [':title' => $title]);
                 Message::success(__('Comment %title deleted successful!', ['%title' => $title]));
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting comment id: :id, :msg', [
                     ':id' => $comment->id,
                     ':msg' => $e->getMessage()

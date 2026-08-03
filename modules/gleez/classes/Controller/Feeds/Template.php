@@ -136,8 +136,7 @@ class Controller_Feeds_Template extends Controller {
 
 		$this->response->headers('Content-Type', 'text/xml');
 
-		if (Kohana::$environment === Kohana::DEVELOPMENT)
-		{
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
             Kohana::$log->add(Log::DEBUG, 'Executing Controller: :controller, action: :action', [
                 ':controller' => $this->request->controller(),
                 ':action' => $this->request->action()
@@ -155,8 +154,7 @@ class Controller_Feeds_Template extends Controller {
 	{
 		parent::after();
 
-		if (isset($this->_items['title']))
-		{
+        if (isset($this->_items['title'])) {
 			unset($this->_items['title']);
 		}
 

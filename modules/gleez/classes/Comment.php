@@ -45,8 +45,7 @@ class Comment {
             ->bind('post', $post);
 
 		// Set if captcha necessary
-		if ($captcha)
-		{
+        if ($captcha) {
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
 		}
@@ -54,24 +53,18 @@ class Comment {
 		// Load the comment model
         $post = ORM::factory('Comment');
 
-		if ($controller->valid_post('comment'))
-		{
+        if ($controller->valid_post('comment')) {
             $values = Arr::merge(['post_id' => $item->id, 'type' => $item->type], $_POST);
-			try
-			{
+            try {
                 $post->values($values, ['post_id', 'type', 'body'])->save();
-				if($post->status != 'publish')
-				{
+                if ($post->status != 'publish') {
 					Message::success(__('Your comment has been queued for review by site administrators and will be published after approval.') );
-				}
-				else
-				{
+                } else {
                     Message::success(__('Your comment has been posted.', [':title' => $post->title]));
 				}
 
 				// Save the anonymous user information to a cookie for reuse.
-				if (User::is_guest())
-				{
+                if (User::is_guest()) {
                     User::cookie_save([
                         'name' => $post->guest_name,
                         'email' => $post->guest_email,
@@ -83,9 +76,7 @@ class Comment {
 
 				// Redirect to post page
 				$controller->request->redirect(Request::current()->uri());
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
 				// @todo Add messages
                 $errors = $e->errors('models');
 			}
@@ -158,8 +149,7 @@ class Comment {
 		// Allow module developers to override
 		$values = Module::action('comment_bulk_actions', $states);
 
-		if ($list)
-		{
+        if ($list) {
             return array_map(function ($array) {
                 return $array['label'];
             }, $values);
@@ -175,10 +165,8 @@ class Comment {
 	{
         $posts = ORM::factory('Comment')->where('id', 'IN', $ids)->find_all();
 
-		foreach ($posts as $post)
-		{
-			foreach ($actions as $name => $value)
-			{
+        foreach ($posts as $post) {
+            foreach ($actions as $name => $value) {
 				$post->$name = $value;
 			}
 			$post->save();

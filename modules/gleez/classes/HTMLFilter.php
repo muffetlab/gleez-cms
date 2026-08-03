@@ -133,42 +133,36 @@ class HTMLFilter {
     public function __construct(string $text, array $filter = null)
 	{
 		// Be sure to only profile if it's enabled
-		if (Gleez::$profiling)
-		{
+        if (Gleez::$profiling) {
 			// Start a new benchmark
             $this->_benchmark = Profiler::start('Gleez Filter', __FUNCTION__);
 		}
 		// Load the configuration for this type
         $config = Kohana::$config->load('input_filter');
 
-        if ($config->allowed_protocols && is_array($config->allowed_protocols))
-		{
+        if ($config->allowed_protocols && is_array($config->allowed_protocols)) {
 			$this->allowed_protocols = $config->allowed_protocols;
 		}
 
-        if ($config->allowed_tags && is_array($config->allowed_tags))
-		{
+        if ($config->allowed_tags && is_array($config->allowed_tags)) {
 			$this->allowed_tags = $config->allowed_tags;
 		}
 
-		if (isset($filter['settings']['allowed_html']))
-		{
+        if (isset($filter['settings']['allowed_html'])) {
 			$this->allowed_tags = preg_split('/\s+|<|>/', $filter['settings']['allowed_html'], -1, PREG_SPLIT_NO_EMPTY);
 		}
 
         $this->_text = $text;
 		$this->_config = $config;
 
-		if (Kohana::PRODUCTION !== Kohana::$environment)
-		{
+        if (Kohana::PRODUCTION !== Kohana::$environment) {
 			Kohana::$log->add(Log::DEBUG, 'HTML Filter Library initialized');
 		}
 	}
 
 	public function __destruct()
 	{
-		if (isset($this->_benchmark))
-		{
+        if (isset($this->_benchmark)) {
 			// Stop the benchmark
 			Profiler::stop($this->_benchmark);
 		}
@@ -230,8 +224,7 @@ class HTMLFilter {
     {
 		// Only operate on valid UTF-8 strings. This is necessary to prevent cross
 		// site scripting issues on Internet Explorer 6.
-		if ( ! Valid::utf8($string))
-		{
+        if (!Valid::utf8($string)) {
 			return '';
 		}
 
@@ -263,19 +256,15 @@ class HTMLFilter {
 
 		$string = $m[1];
 
-		if (substr($string, 0, 1) != '<')
-		{
+        if (substr($string, 0, 1) != '<') {
 			// We matched a lone ">" character
 			return '&gt;';
-		}
-		elseif (strlen($string) == 1)
-		{
+        } elseif (strlen($string) == 1) {
 			// We matched a lone "<" character
 			return '&lt;';
 		}
 
-		if ( ! preg_match('%^<\s*(/\s*)?([a-zA-Z0-9]+)([^>]*)>?|(<!--.*?-->)$%', $string, $matches))
-		{
+        if (!preg_match('%^<\s*(/\s*)?([a-zA-Z0-9]+)([^>]*)>?|(<!--.*?-->)$%', $string, $matches)) {
 			// Seriously malformed
 			return '';
 		}
@@ -286,24 +275,20 @@ class HTMLFilter {
 		$attrlist = & $matches[3];
 		$comment  = & $matches[4];
 
-		if ($comment)
-		{
+        if ($comment) {
 			$elem = '!--';
 		}
 
-		if ( ! isset($allowed_html[strtolower($elem)]))
-		{
+        if (!isset($allowed_html[strtolower($elem)])) {
 			// Disallowed HTML element
 			return '';
 		}
 
-		if ($comment)
-		{
+        if ($comment) {
 			return $comment;
 		}
 
-		if ($slash != '')
-		{
+        if ($slash != '') {
 			return "</$elem>";
 		}
 
@@ -353,17 +338,14 @@ class HTMLFilter {
 		$attrname = '';
         $skip = false;
 
-		while (strlen($attr) != 0)
-		{
+        while (strlen($attr) != 0) {
 			// Was the last operation successful?
 			$working = 0;
 
-			switch ($mode)
-			{
+            switch ($mode) {
 				case 0:
 					// Attribute name, href for instance
-					if (preg_match('/^([-a-zA-Z]+)/', $attr, $match))
-					{
+                    if (preg_match('/^([-a-zA-Z]+)/', $attr, $match)) {
 						$attrname = strtolower($match[1]);
                         $skip = $attrname == 'style' || substr($attrname, 0, 2) == 'on';
 						$working  = $mode = 1;
@@ -373,21 +355,18 @@ class HTMLFilter {
 
 				case 1:
 					// Equals sign or valueless ("selected")
-					if (preg_match('/^\s*=\s*/', $attr))
-					{
+                    if (preg_match('/^\s*=\s*/', $attr)) {
 						$working = 1;
 						$mode    = 2;
 						$attr    = preg_replace('/^\s*=\s*/', '', $attr);
 						break;
 					}
 
-					if (preg_match('/^\s+/', $attr))
-					{
+                    if (preg_match('/^\s+/', $attr)) {
 						$working = 1;
 						$mode    = 0;
 
-						if ( ! $skip)
-						{
+                        if (!$skip) {
 							$attrarr[] = $attrname;
 						}
 
@@ -397,12 +376,10 @@ class HTMLFilter {
 
 				case 2:
 					// Attribute value, a URL after href= for instance
-					if (preg_match('/^"([^"]*)"(\s+|$)/', $attr, $match))
-					{
+                    if (preg_match('/^"([^"]*)"(\s+|$)/', $attr, $match)) {
 						$thisval = $this->xss_bad_protocol($match[1]);
 
-						if ( ! $skip)
-						{
+                        if (!$skip) {
 							$attrarr[] = "$attrname=\"$thisval\"";
 						}
 
@@ -413,12 +390,10 @@ class HTMLFilter {
 						break;
 					}
 
-					if (preg_match("/^'([^']*)'(\s+|$)/", $attr, $match))
-					{
+                    if (preg_match("/^'([^']*)'(\s+|$)/", $attr, $match)) {
 						$thisval = $this->xss_bad_protocol($match[1]);
 
-						if ( ! $skip)
-						{
+                        if (!$skip) {
 							$attrarr[] = "$attrname='$thisval'";
 						}
 
@@ -429,12 +404,10 @@ class HTMLFilter {
 						break;
 					}
 
-					if (preg_match("%^([^\s\"']+)(\s+|$)%", $attr, $match))
-					{
+                    if (preg_match("%^([^\s\"']+)(\s+|$)%", $attr, $match)) {
 						$thisval = $this->xss_bad_protocol($match[1]);
 
-						if ( ! $skip)
-						{
+                        if (!$skip) {
 							$attrarr[] = "$attrname=\"$thisval\"";
 						}
 
@@ -445,8 +418,7 @@ class HTMLFilter {
 					break;
 			}
 
-			if ($working == 0)
-			{
+            if ($working == 0) {
                 // Not well-formed, remove and try again
 				$attr = preg_replace('/
 					^(
@@ -462,8 +434,7 @@ class HTMLFilter {
 		}
 
 		// The attribute list ends with a valueless attribute like "selected".
-        if ($mode == 1 && !$skip)
-		{
+        if ($mode == 1 && !$skip) {
 			$attrarr[] = $attrname;
 		}
 
@@ -501,34 +472,29 @@ class HTMLFilter {
     {
 		static $allowed_protocols;
 
-		if ( ! isset($allowed_protocols))
-		{
+        if (!isset($allowed_protocols)) {
 			$allowed_protocols = array_flip($this->allowed_protocols);
 		}
 
 		// Iteratively remove any invalid protocol found.
-		do
-		{
+        do {
 			$before   = $uri;
 			$colonpos = strpos($uri, ':');
 
-			if ($colonpos > 0)
-			{
+            if ($colonpos > 0) {
 				// We found a colon, possibly a protocol. Verify.
 				$protocol = substr($uri, 0, $colonpos);
 
 				// If a colon is preceded by a slash, question mark or hash, it cannot
 				// possibly be part of the URL scheme. This must be a relative URL, which
 				// inherits the (safe) protocol of the base document.
-				if (preg_match('![/?#]!', $protocol))
-				{
+                if (preg_match('![/?#]!', $protocol)) {
 					break;
 				}
 
 				// Check if this is a disallowed protocol. Per RFC2616, section 3.2.3
 				// (URI Comparison) scheme comparison must be case-insensitive.
-				if ( ! isset($allowed_protocols[strtolower($protocol)]))
-				{
+                if (!isset($allowed_protocols[strtolower($protocol)])) {
 					$uri = substr($uri, $colonpos + 1);
 				}
 			}

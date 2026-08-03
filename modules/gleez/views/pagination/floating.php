@@ -33,24 +33,19 @@ $use_n6 = ($use_middle && (($n7 - $n5) > 1));
 $links = [];
 
 // Generate links data in accordance with calculated numbers
-for ($i = $n1; $i <= $n2; $i++)
-{
+for ($i = $n1; $i <= $n2; $i++) {
 	$links[$i] = $i;
 }
-if ($use_n3)
-{
+if ($use_n3) {
 	$links[$n3] = '&hellip;';
 }
-for ($i = $n4; $i <= $n5; $i++)
-{
+for ($i = $n4; $i <= $n5; $i++) {
 	$links[$i] = $i;
 }
-if ($use_n6)
-{
+if ($use_n6) {
 	$links[$n6] = '&hellip;';
 }
-for ($i = $n7; $i <= $n8; $i++)
-{
+for ($i = $n7; $i <= $n8; $i++) {
 	$links[$i] = $i;
 }
 

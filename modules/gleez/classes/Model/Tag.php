@@ -74,8 +74,7 @@ class Model_Tag extends Gleez_Model
     {
 		parent::save( $validation );
 
-		if ( $this->loaded())
-		{
+        if ($this->loaded()) {
 			// Add or remove path aliases
 			$this->_aliases();
 		}
@@ -93,12 +92,9 @@ class Model_Tag extends Gleez_Model
 	 */
     public function delete(bool $soft = false): Kohana_ORM
     {
-        if (is_array($this->_deleted_column) && $soft)
-		{
+        if (is_array($this->_deleted_column) && $soft) {
 
-		}
-		else
-		{
+        } else {
 			$source = $this->rawurl;
 
             parent::delete();
@@ -126,8 +122,7 @@ class Model_Tag extends Gleez_Model
 
 		$path = Path::load($this->rawurl);
 
-		if ($path)
-		{
+        if ($path) {
 			$values['id'] = (int) $path['id'];
 		}
 
@@ -196,8 +191,7 @@ class Model_Tag extends Gleez_Model
 				->execute($this->_db)
 				->get('total_count');
 
-		if($result > 0)
-		{
+        if ($result > 0) {
             $validation->error($field, 'tag_available', [$validation[$field]]);
 		}
 	}

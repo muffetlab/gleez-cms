@@ -83,8 +83,7 @@ class CSRF {
     {
 		$config = Kohana::$config->load('site');
 
-		if ( !($key = $config->get('gleez_private_key')) )
-		{
+        if (!($key = $config->get('gleez_private_key'))) {
             $key = sha1(uniqid(mt_rand(), true)) . md5(uniqid(mt_rand(), true));
 			$config->set('gleez_private_key', $key);
 		}

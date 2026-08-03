@@ -63,8 +63,7 @@ class Cache_Redis extends Cache {
 	protected function __construct(array $config)
 	{
 		// Check that the PhpRedis extension is loaded.
-		if ( ! extension_loaded('redis'))
-		{
+        if (!extension_loaded('redis')) {
 			throw new Cache_Exception('You must have PhpRedis installed and enabled to use.');
 		}
 
@@ -109,13 +108,10 @@ class Cache_Redis extends Cache {
     public function get(string $id, $default = null)
 	{
 		//  Try to fetch a stored variable from the cache
-		try
-		{
+        try {
 			// Return the cache
 			return $this->_redis->get(System::sanitize_id($this->config('prefix').$id));
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			// Cache is corrupt or not exists, let return happen normally
             Kohana::$log->add(
                 Log::ERROR,
@@ -150,17 +146,13 @@ class Cache_Redis extends Cache {
      */
     public function set(string $id, $data, int $lifetime = null): bool
     {
-        if ($lifetime === null)
-		{
+        if ($lifetime === null) {
 			$lifetime = Arr::get($this->_config, 'default_expire', Cache::DEFAULT_EXPIRE);
 		}
 
-		try
-		{
+        try {
 			return $this->_redis->set(System::sanitize_id($this->config('prefix').$id), $data, $lifetime);
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
             Kohana::$log->add(Log::ERROR, 'An error occurred setting [:name] to cache.', [
                 ':name' => System::sanitize_id($this->config('prefix') . $id)
             ]);
@@ -250,12 +242,9 @@ class Cache_Redis extends Cache {
 	 */
     protected function exists(string $id): bool
     {
-		try
-		{
+        try {
 			return $this->_redis->exists(System::sanitize_id($this->config('prefix').$id));
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			// Cache is corrupt or not exists, let return happen normally
             Kohana::$log->add(
                 Log::ERROR,

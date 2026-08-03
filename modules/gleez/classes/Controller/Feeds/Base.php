@@ -22,8 +22,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
      */
 	public function action_list()
 	{
-		if (empty($this->_items))
-		{
+        if (empty($this->_items)) {
 			$config = Kohana::$config->load('page');
 
 			// Cache is Empty so Re-Cache
@@ -41,8 +40,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 			$this->_items = $items;
 		}
 
-		if (isset($this->_items[0]))
-		{
+        if (isset($this->_items[0])) {
 			$this->_info['pubDate'] = $this->_items[0]['pubDate'];
 		}
 	}
@@ -61,15 +59,13 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
      */
 	protected function _tag()
 	{
-		if (empty($this->_items))
-		{
+        if (empty($this->_items)) {
 			$config = Kohana::$config->load($this->_type);
 
 			$id  = $this->request->param('id', 0);
             $tag = ORM::factory('Tag', ['id' => $id, 'type' => $this->_type]);
 
-			if ( ! $tag->loaded())
-			{
+            if (!$tag->loaded()) {
                 throw HTTP_Exception::factory(404, 'Tag ":tag" Not Found', [':tag' => $id]);
 			}
 
@@ -88,8 +84,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 			$this->_cache->set($this->_cache_key, $this->_items, $this->_ttl);
 		}
 
-		if (isset($this->_items[0]))
-		{
+        if (isset($this->_items[0])) {
             $this->_info['title'] = __(':tag - Recent updates', [':tag' => ucfirst($this->_items['title'])]);
             $this->_info['link'] = Route::url('rss', [
                 'controller' => $this->_type,
@@ -143,8 +138,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
      */
 	protected function _term()
 	{
-		if (empty($this->_items))
-		{
+        if (empty($this->_items)) {
 			$config = Kohana::$config->load($this->_type);
 
 			$id   = $this->request->param('id', 0);
@@ -154,8 +148,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 						->where('lvl', '!=', 1)
 						->find();
 
-			if ( ! $term->loaded())
-			{
+            if (!$term->loaded()) {
                 throw HTTP_Exception::factory(404, 'Term ":term" Not Found', [':term' => $id]);
 			}
 
@@ -174,8 +167,7 @@ class Controller_Feeds_Base extends Controller_Feeds_Template {
 			$this->_cache->set($this->_cache_key, $this->_items, $this->_ttl);
 		}
 
-		if (isset($this->_items[0]))
-		{
+        if (isset($this->_items[0])) {
             $this->_info['title'] = __(':term - Recent updates', [':term' => ucfirst($this->_items['title'])]);
             $this->_info['link'] = Route::url('rss', [
                 'controller' => $this->_type,

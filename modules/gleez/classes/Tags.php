@@ -28,8 +28,7 @@ class Tags {
      */
     public static function factory(array $config = []): Tags
     {
-		if ( ! isset(self::$_instance))
-		{
+        if (!isset(self::$_instance)) {
 			// Create a new session instance
 			self::$_instance = new self($config);
 		}
@@ -54,8 +53,7 @@ class Tags {
 		$this->config = $config;
 
 		// Enable logging in DEVELOPMENT mode
-		if (Kohana::$environment === Kohana::DEVELOPMENT)
-		{
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
 			Kohana::$log->add(Log::DEBUG, 'Tags Library loaded');
 		}
 	}
@@ -90,24 +88,18 @@ class Tags {
         $preserve_tags = [];
         $remove_tags = [];
 
-        if (!$skip_updates && count($old_tags))
-		{
-			foreach ($old_tags as $tag)
-			{
-				if ( ! in_array($tag->name, $tags))
-				{
+        if (!$skip_updates && count($old_tags)) {
+            foreach ($old_tags as $tag) {
+                if (!in_array($tag->name, $tags)) {
 					$remove_tags[] = intval($tag->id);
-				}
-				else
-				{
+                } else {
 					// We need to preserve old tags that appear (to save timestamps)
 					$preserve_tags[] = $tag->name;
 				}
 			}
 		}
 
-		if( count($remove_tags) )
-		{
+        if (count($remove_tags)) {
 			// remove unexisting tags
 			$object->remove('tags', $remove_tags);
 		}
@@ -133,12 +125,10 @@ class Tags {
      */
     private function _tag_object_array(int $user_id, Model $object, array $tags): void
     {
-		foreach($tags as $tag)
-		{
+        foreach ($tags as $tag) {
 			$tag = trim($tag);
 
-            if (!empty($tag) && strlen($tag) <= $this->config['max_tag_length'])
-			{
+            if (!empty($tag) && strlen($tag) <= $this->config['max_tag_length']) {
 				$this->safe_tag($user_id, $object, $tag);
 			}
 		}
@@ -162,13 +152,11 @@ class Tags {
     {
         $object_id = (int) $object->id;
 
-        if (!$user_id || !$object_id || empty($tag))
-		{
+        if (!$user_id || !$object_id || empty($tag)) {
             return false;
 		}
 
-        if (!empty($this->config['append_to_integer']) && is_numeric($tag) && intval($tag) == $tag)
-		{
+        if (!empty($this->config['append_to_integer']) && is_numeric($tag) && intval($tag) == $tag) {
 			// Converts numeric tag "123" to "123_" to facilitate
 			// alphanumeric sorting (otherwise, PHP converts string to
 			// true integer).
@@ -185,8 +173,7 @@ class Tags {
 			->where($this->config['tag_table'].'.type', '=', $object->type)
 			->where('name', '=', $normalized_tag);
 
-        if ($result->find()->loaded())
-		{
+        if ($result->find()->loaded()) {
             return true;
 		}
 
@@ -194,13 +181,10 @@ class Tags {
 		$result = ORM::factory(Inflector::singular($this->config['tag_table']))
 			->where('name', '=', $tag)->where('type', '=', $object->type);
 
-        if ($result->reset(false)->count_all() > 0)
-		{
+        if ($result->reset(false)->count_all() > 0) {
 			$result = $result->find();
 			$tag_id = $result->id;
-		}
-		else
-		{
+        } else {
 			// Add new tag!
 			$new_tag = ORM::factory(Inflector::singular($this->config['tag_table']));
 			$new_tag->name = $normalized_tag;
@@ -210,8 +194,7 @@ class Tags {
 			$tag_id = $new_tag->id;
 		}
 
-		if ( ! ($tag_id > 0))
-		{
+        if (!($tag_id > 0)) {
             return false;
 		}
 
@@ -247,22 +230,16 @@ class Tags {
 	 */
     public function normalize_tag(string $tag): string
     {
-		if ($this->config['normalize_tags'] )
-		{
-			if ($this->config['use_gleez_normalization'])
-			{
+        if ($this->config['normalize_tags']) {
+            if ($this->config['use_gleez_normalization']) {
 				$tag = URL::title($tag);
-			}
-			else
-			{
+            } else {
 				$normalized_valid_chars = $this->config['custom_normalization'];
 				$tag = preg_replace("/[^$normalized_valid_chars]/", "", $tag);
 			}
 
 			return strtolower($tag);
-		}
-		else
-		{
+        } else {
 			return $tag;
 		}
 	}
@@ -280,11 +257,9 @@ class Tags {
         $typed_tags = array_unique(str_getcsv($tags));
 
         $tags = [];
-		foreach ($typed_tags as $tag)
-		{
+        foreach ($typed_tags as $tag) {
             $tag = trim($tag);
-			if ($tag != "")
-			{
+            if ($tag != "") {
 				$tags[] = $tag;
 			}
 		}
@@ -302,11 +277,9 @@ class Tags {
     public static function implode(array $tags): string
     {
         $encoded_tags = [];
-		foreach ($tags as $tag)
-		{
+        foreach ($tags as $tag) {
 			// Commas and quotes in tag names are special cases, so encode them.
-            if (strpos($tag, ',') !== false || strpos($tag, '"') !== false)
-			{
+            if (strpos($tag, ',') !== false || strpos($tag, '"') !== false) {
 				$tag = '"' . str_replace('"', '""', $tag) . '"';
 			}
 

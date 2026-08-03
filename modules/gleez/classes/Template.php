@@ -232,13 +232,11 @@ abstract class Template extends Controller {
 				$this->nonce = base64_encode(random_bytes(20));
 		}
 
-        if (!$this->bare)
-		{
+        if (!$this->bare) {
 			// Load the config
 			$this->_config = Kohana::$config->load('site');
 
-			if (Kohana::$profiling)
-			{
+            if (Kohana::$profiling) {
 				// Start a new benchmark token
 				$this->_benchmark = Profiler::start('Gleez', ucfirst($this->request->controller()) .' Controller');
 			}
@@ -250,36 +248,31 @@ abstract class Template extends Controller {
 			}
 
 			// Test whether the current request is the first request
-			if ( ! $this->request->is_initial())
-			{
+            if (!$this->request->is_initial()) {
                 $this->_internal = true;
                 $this->auto_render = false;
 			}
 
 			// Test whether the current request is ajax request
-			if ($this->request->is_ajax())
-			{
+            if ($this->request->is_ajax()) {
                 $this->_ajax = true;
                 $this->auto_render = false;
 			}
 
 			// Test whether the current request is jquery mobile request. ugly hack
-            if (isset($_SERVER['HTTP_X_THEME']) && $_SERVER['HTTP_X_THEME'] == 'mobile' && $this->_config->get('mobile_theme', false))
-			{
+            if (isset($_SERVER['HTTP_X_THEME']) && $_SERVER['HTTP_X_THEME'] == 'mobile' && $this->_config->get('mobile_theme', false)) {
                 $this->_ajax = false;
                 $this->auto_render = true;
 			}
 
 			// Test whether the current request is mobile request. ugly hack
-            if (Request::is_mobile() && $this->_config->get('mobile_theme', false))
-			{
+            if (Request::is_mobile() && $this->_config->get('mobile_theme', false)) {
                 $this->_ajax = false;
                 $this->auto_render = true;
 			}
 
 			// Test whether the current request is datatables request
-			if (Request::is_datatables())
-			{
+            if (Request::is_datatables()) {
                 $this->_ajax = true;
                 $this->auto_render = false;
                 $this->response->headers('Content-Type', 'application/json; charset=' . Kohana::$charset);
@@ -308,11 +301,9 @@ abstract class Template extends Controller {
 			View::bind_global('site_url',  $url);
 		}
 
-        if ($this->auto_render && !$this->bare)
-		{
+        if ($this->auto_render && !$this->bare) {
 			// Throw exception if none of the accept-types are supported
-            if (empty($accept_types))
-			{
+            if (empty($accept_types)) {
                 throw new Http_Exception_415('Unsupported accept-type');
 			}
 
@@ -373,8 +364,7 @@ abstract class Template extends Controller {
 			View::bind_global('template', $this->template);
 		}
 
-		if (Kohana::$environment === Kohana::DEVELOPMENT)
-		{
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
             Kohana::$log->add(Log::DEBUG, 'Executing Controller [:controller] action [:action]', [
                 ':controller' => $this->request->controller(),
                 ':action' => $this->request->action(),
@@ -390,8 +380,7 @@ abstract class Template extends Controller {
      */
 	public function after()
 	{
-        if ($this->auto_render && !$this->bare)
-		{
+        if ($this->auto_render && !$this->bare) {
 			// Controller name as the default page id if none set
             empty($this->_page_id) and $this->_page_id = $this->request->controller();
 
@@ -413,8 +402,7 @@ abstract class Template extends Controller {
             ];
 
 			// Special check for frontpage and frontpage title
-			if ($this->is_frontpage())
-			{
+            if ($this->is_frontpage()) {
 				// Set front variable true for themers
                 $this->template->front = true;
 				// Don't show title on homepage
@@ -461,24 +449,20 @@ abstract class Template extends Controller {
                 ->set('getNonce', $this->nonce)
                 ->set('profiler', false);
 
-			if (count($this->_tabs) > 0)
-			{
+            if (count($this->_tabs) > 0) {
 				$this->template->tabs = View::factory('tabs')->set('tabs', $this->_tabs);
 			}
 
-			if (count($this->_subtabs) > 0)
-			{
+            if (count($this->_subtabs) > 0) {
 				$this->template->subtabs = View::factory('tabs')->set('tabs', $this->_subtabs);
 			}
 
-			if (count($this->_actions) > 0)
-			{
+            if (count($this->_actions) > 0) {
 				$this->template->actions = View::factory('actions')->set('actions', $this->_actions);
 			}
 
 			// And profiler if debug is true
-            if (Kohana::$environment !== Kohana::PRODUCTION && $this->debug)
-			{
+            if (Kohana::$environment !== Kohana::PRODUCTION && $this->debug) {
 				$this->template->profiler = View::factory('profiler/stats');
 			}
 
@@ -491,8 +475,7 @@ abstract class Template extends Controller {
 			$output = $this->response->body();
 			$this->process_ajax();
 
-            if ($this->_response_format === 'application/json')
-			{
+            if ($this->_response_format === 'application/json') {
 				// Check for dataTables request
                 if ($this->request->query('draw') !== null)
                     return;
@@ -506,10 +489,8 @@ abstract class Template extends Controller {
 			$this->response->body($output);
 		}
 
-        if (!$this->bare)
-		{
-			if (isset($this->_benchmark))
-			{
+        if (!$this->bare) {
+            if (isset($this->_benchmark)) {
 				// Stop the benchmark
 				Profiler::stop($this->_benchmark);
 			}
@@ -526,16 +507,12 @@ abstract class Template extends Controller {
 	 */
 	protected function _set_head_title()
 	{
-		if ($this->title)
-		{
+        if ($this->title) {
             $head_title = [strip_tags($this->title), $this->template->site_name];
-		}
-		else
-		{
+        } else {
             $head_title = [$this->template->site_name];
 
-			if ($this->template->site_slogan)
-			{
+            if ($this->template->site_slogan) {
 				$head_title[] = $this->template->site_slogan;
 			}
 		}
@@ -555,8 +532,7 @@ abstract class Template extends Controller {
 
         $xmlRpc = $this->_config->get('xml_rpc');
 
-        if (!is_null($xmlRpc))
-		{
+        if (!is_null($xmlRpc)) {
             $headers['X-Pingback'] = URL::site($xmlRpc, true);
 		}
 
@@ -573,8 +549,7 @@ abstract class Template extends Controller {
 	 */
     protected function _set_server_headers(array $headers)
 	{
-        if (!empty($headers))
-		{
+        if (!empty($headers)) {
 			$this->response->headers($headers);
 		}
 	}
@@ -593,10 +568,8 @@ abstract class Template extends Controller {
         $meta = $this->_config->get('meta', []);
 		$links = Arr::get($meta, 'links');
 
-		if ($links)
-		{
-			foreach ($links as $url => $attributes)
-			{
+        if ($links) {
+            foreach ($links as $url => $attributes) {
 				Meta::links($url, $attributes);
 			}
 		}
@@ -620,22 +593,18 @@ abstract class Template extends Controller {
 		$tags = Arr::get($meta, 'tags');
         $tags = Arr::merge($tags, ['keywords' => $keywords], ['description' => $description]);
 
-		if ($tags)
-		{
-			foreach ($tags as $handle => $value)
-			{
+        if ($tags) {
+            foreach ($tags as $handle => $value) {
                 $conditional = null;
 
-				if (is_array($value))
-				{
+                if (is_array($value)) {
 					$conditional = Arr::get($value, 'conditional');
 					$value       = Arr::get($value, 'value', '');
 				}
 
                 $attrs = [];
 
-				if (isset($conditional))
-				{
+                if (isset($conditional)) {
 					$attrs['conditional'] = $conditional;
 				}
 
@@ -651,8 +620,7 @@ abstract class Template extends Controller {
 	 */
     protected function _set_sidebars(): Template
     {
-        if ($this->_sidebars !== false)
-		{
+        if ($this->_sidebars !== false) {
 			$this->template->sidebar_left  = $this->_widgets->render('left');
 			$this->template->sidebar_right = $this->_widgets->render('right');
 		}
@@ -670,20 +638,15 @@ abstract class Template extends Controller {
 		$sidebar_left  = $this->template->sidebar_left;
 		$sidebar_right = $this->template->sidebar_right;
 
-        if (!empty($sidebar_left) && !empty($sidebar_right))
-		{
+        if (!empty($sidebar_left) && !empty($sidebar_right)) {
 			$this->template->column_class = 'main-both';
 			$this->template->main_column  = 6;
-		}
-		else
-		{
-			if ( ! empty($sidebar_left))
-			{
+        } else {
+            if (!empty($sidebar_left)) {
 				$this->template->column_class = 'main-left';
 				$this->template->main_column  = 9;
 			}
-			if ( ! empty($sidebar_right))
-			{
+            if (!empty($sidebar_right)) {
 				$this->template->column_class = 'main-right';
 				$this->template->main_column  = 9;
 			}
@@ -720,12 +683,10 @@ abstract class Template extends Controller {
         Assets::js('bootstrap', 'media/js/bootstrap.min.js', ['jquery'], false, ['weight' => -8]);
 
 		// Google js only in production and not in admin section
-        if (Kohana::PRODUCTION === Kohana::$environment && Theme::$is_admin === false)
-		{
+        if (Kohana::PRODUCTION === Kohana::$environment && Theme::$is_admin === false) {
             $ua = $this->_config->get('google_ua');
 
-			if ( ! empty($ua) )
-			{
+            if (!empty($ua)) {
 				Assets::google_stats($ua, $this->_config->get('site_url'));
 			}
 		}
@@ -752,13 +713,11 @@ abstract class Template extends Controller {
      */
     public function valid_post(string $submit = null): bool
     {
-		if ( ! $this->request->is_post())
-		{
+        if (!$this->request->is_post()) {
             return false;
 		}
 
-		if (Request::post_max_size_exceeded())
-		{
+        if (Request::post_max_size_exceeded()) {
             $this->_errors = [
                 '_action' => __('Max file size of :max Bytes exceeded!', [':max' => Request::get_post_max_size()])
             ];
@@ -766,10 +725,8 @@ abstract class Template extends Controller {
             return false;
 		}
 
-		if ( ! is_null($submit) )
-		{
-			if ( ! isset($_POST[$submit]))
-			{
+        if (!is_null($submit)) {
+            if (!isset($_POST[$submit])) {
                 $this->_errors = ['_action' => __('This form has altered. Please try submitting it again.')];
 
                 return false;
@@ -782,26 +739,21 @@ abstract class Template extends Controller {
         $has_csrf = !empty($_token) && !empty($_action);
 		$valid_csrf = CSRF::valid($_token, $_action);
 
-        if ($has_csrf && !$valid_csrf)
-		{
+        if ($has_csrf && !$valid_csrf) {
 			// CSRF was submitted but expired
             $this->_errors = ['_token' => __('This form has expired. Please try submitting it again.')];
 
             return false;
 		}
 
-		if (isset($_POST['_captcha']))
-		{
+        if (isset($_POST['_captcha'])) {
 			$captcha = $this->request->post('_captcha');
-			if (empty($captcha))
-			{
+            if (empty($captcha)) {
 				// CSRF was not entered
                 $this->_errors = ['_captcha' => __('The security code can\'t be empty.')];
 
                 return false;
-			}
-			elseif ( ! Captcha::valid($captcha))
-			{
+            } elseif (!Captcha::valid($captcha)) {
                 $this->_errors = ['_captcha' => __('The security answer was wrong.')];
 
                 return false;
@@ -823,13 +775,10 @@ abstract class Template extends Controller {
 	{
 		$queries = 0;
 
-		if (Kohana::$profiling)
-		{
+        if (Kohana::$profiling) {
 			// DB queries
-			foreach (Profiler::groups() as $group => $benchmarks)
-			{
-				if (strpos($group, 'database') === 0)
-				{
+            foreach (Profiler::groups() as $group => $benchmarks) {
+                if (strpos($group, 'database') === 0) {
 					$queries += count($benchmarks);
 				}
 			}
@@ -875,33 +824,24 @@ abstract class Template extends Controller {
      */
 	protected function process_ajax()
 	{
-		if ( $this->request->method() == HTTP_Request::POST )
-		{
+        if ($this->request->method() == HTTP_Request::POST) {
 			// Allow for override. Set the form saved true for ajax request, if no errors
-			if (empty($this->_errors))
-			{
+            if (empty($this->_errors)) {
                 $this->SetFormSaved();
-			}
-			else
-			{
+            } else {
                 $this->SetFormSaved(false);
 			}
 
-			if ($this->_response_format === 'application/json')
-			{
+            if ($this->_response_format === 'application/json') {
                 $this->SetJson('Body', false);
 			}
-		}
-		else
-		{
-			if ($this->_response_format === 'application/json')
-			{
+        } else {
+            if ($this->_response_format === 'application/json') {
 				$this->SetJson('Body', base64_encode($this->response->body()));
 			}
 		}
 
-		if ($this->_response_format === 'application/json')
-		{
+        if ($this->_response_format === 'application/json') {
             if ($this->request->query('draw') !== null)
                 return;
 
@@ -917,8 +857,7 @@ abstract class Template extends Controller {
 			$this->SetJson('css',        $styles);
 			$this->SetJson('js',         $scripts);
 
-			if ( ! Valid::utf8($this->_json['Body']))
-			{
+            if (!Valid::utf8($this->_json['Body'])) {
 				$this->_json['Body'] = utf8_encode($this->_json['Body']);
 			}
 

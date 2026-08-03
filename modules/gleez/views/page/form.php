@@ -169,8 +169,7 @@ echo Form::open($action, ['id' => 'page-form', 'class' => 'post-form form', 'enc
 					<div class="panel-body">
 						<div class="form-group <?php echo isset($errors['comment']) ? 'has-error': ''; ?>">
 							<?php
-								if ( ! isset($post->comment))
-								{
+                            if (!isset($post->comment)) {
 									$post->comment = $config->comment;
 								}
 

@@ -27,8 +27,7 @@ class Controller_Welcome extends Template {
 	public function before()
 	{
 		// The action_index() is default
-		if ($this->request->action() == 'index')
-		{
+        if ($this->request->action() == 'index') {
 			$this->request->action('welcome');
 		}
 
@@ -43,8 +42,7 @@ class Controller_Welcome extends Template {
 	public function action_welcome()
 	{
 		// If Gleez CMS don't installed
-		if ( ! Gleez::$installed)
-		{
+        if (!Gleez::$installed) {
 			// Send to the installer with server status
             $this->request->redirect(Route::get('install')->uri(['action' => 'index']), 200);
 		}

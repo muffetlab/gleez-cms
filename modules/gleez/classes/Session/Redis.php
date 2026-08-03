@@ -161,8 +161,7 @@ class Session_Redis extends Session {
 	protected function _destroy(): bool
     {
 
-		try
-		{
+        try {
 			// Execute the query
             $this->_redis->del($this->_prefix . $this->_session_id);
 

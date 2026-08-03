@@ -49,19 +49,15 @@ class Message {
 		$messages = (array) self::get();
 
 		// Add new message
-		if (is_array($message))
-		{
-            foreach ($message as $_message)
-			{
+        if (is_array($message)) {
+            foreach ($message as $_message) {
                 $messages[] = (object) [
                     'type' => $type,
                     'text' => $_message,
                     'options' => (array) $options,
                 ];
 			}
-		}
-		else
-		{
+        } else {
             $messages[] = (object) [
                 'type' => $type,
                 'text' => $message,
@@ -178,8 +174,7 @@ class Message {
      */
     public static function debug($message, array $options = null)
 	{
-		if (Kohana::$environment !== Kohana::PRODUCTION)
-		{
+        if (Kohana::$environment !== Kohana::PRODUCTION) {
 			self::set(self::DEBUG, $message, $options);
 		}
 	}
@@ -227,31 +222,26 @@ class Message {
 		// Get the messages
         $messages = Session::instance()->get(self::$session_key, []);
 
-        if ($messages === null)
-		{
+        if ($messages === null) {
 			// No messages to return
 			return $default;
 		}
 
-        if ($type !== null)
-		{
+        if ($type !== null) {
 			// Will hold the filtered set of messages to return
             $return = [];
 
 			// Store the remainder in case delete or get_once is called
             $remainder = [];
 
-			foreach ($messages as $message)
-			{
+            foreach ($messages as $message) {
                 if (
                     $message['type'] === $type
                     || is_array($type) && in_array($message['type'], $type)
                     || is_array($type) && Arr::is_assoc($type) && !in_array($message['type'], $type[1])
                 ) {
 					$return[] = $message;
-				}
-				else
-				{
+                } else {
 					$remainder[] = $message;
 				}
 			}
@@ -263,15 +253,11 @@ class Message {
 			$messages = $return;
 		}
 
-        if ($delete === true)
-		{
-            if ($type === null || empty($remainder))
-			{
+        if ($delete === true) {
+            if ($type === null || empty($remainder)) {
 				// Nothing to save, delete the key from memory
 				self::clear();
-			}
-			else
-			{
+            } else {
 				// Override the messages with the remainder to simulate a deletion
 				Session::instance()->set(self::$session_key, $remainder);
 			}
@@ -299,13 +285,10 @@ class Message {
      */
     public static function clear($type = null)
 	{
-        if ($type === null)
-		{
+        if ($type === null) {
 			// Delete everything!
 			Session::instance()->delete(self::$session_key);
-		}
-		else
-		{
+        } else {
 			// Deletion by type happens in get(), too weird?
             self::get($type, null, true);
 		}
@@ -324,20 +307,17 @@ class Message {
     {
         $messages = self::get($type, null, $delete);
 
-		if (empty($messages))
-		{
+        if (empty($messages)) {
 			// No messages
 			return '';
 		}
 
-		if (is_null($view))
-		{
+        if (is_null($view)) {
 			// Use the default view
 			$view = self::$default_view;
 		}
 
-		if ( ! $view instanceof View)
-		{
+        if (!$view instanceof View) {
 			// Load the view file
 			$view = new View($view);
 		}

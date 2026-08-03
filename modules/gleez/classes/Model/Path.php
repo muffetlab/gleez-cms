@@ -89,8 +89,7 @@ class Model_Path extends Gleez_Model
 		$alias  = $this->_unique_slug(trim($this->alias));
 
 		// make sure only one alias exists for home page <front>
-		if ($this->alias === Path::FRONT_ALIAS)
-		{
+        if ($this->alias === Path::FRONT_ALIAS) {
 			$alias = Path::FRONT_ALIAS;
 		}
 
@@ -100,26 +99,20 @@ class Model_Path extends Gleez_Model
 		$source     = trim($this->source, '/');
 		$this->lang = empty($this->lang) ? $this->_language_none : $this->lang;
 
-		if ($params = $this->_process_uri($source))
-		{
-			if (isset($params['directory']))
-			{
+        if ($params = $this->_process_uri($source)) {
+            if (isset($params['directory'])) {
 				$this->route_directory  = $params['directory'];
 			}
-			if (isset($params['controller']))
-			{
+            if (isset($params['controller'])) {
 				$this->route_controller = $params['controller'];
 			}
-			if (isset($params['action']))
-			{
+            if (isset($params['action'])) {
 				$this->route_action = $params['action'];
 			}
-			if (isset($params['id']))
-			{
+            if (isset($params['id'])) {
 				$this->route_id  = $params['id'];
 			}
-			if (isset($params['route']))
-			{
+            if (isset($params['route'])) {
 				$this->route_name  = $params['route'];
 			}
 			$this->alias = $alias;
@@ -134,8 +127,7 @@ class Model_Path extends Gleez_Model
 		$suffix = 0;
         $path = ORM::factory('Path', ['alias' => $str]);
 
-        while ($path->loaded() && $path->source != $this->source)
-		{
+        while ($path->loaded() && $path->source != $this->source) {
 			$str = substr($slug, 0, 200 - (strlen($suffix) + 1)) . "-$suffix";
 			$suffix++;
 		}
@@ -157,11 +149,9 @@ class Model_Path extends Gleez_Model
 		// Load routes
 		$routes = Route::all();
 
-		foreach ($routes as $name => $route)
-		{
+        foreach ($routes as $name => $route) {
 			// We found something suitable
-			if ($params = $route->matches(Request::factory($uri)))
-			{
+            if ($params = $route->matches(Request::factory($uri))) {
 				$params['route'] = (string)$name;
 				return $params;
 			}

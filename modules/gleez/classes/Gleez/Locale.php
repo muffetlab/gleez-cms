@@ -92,8 +92,7 @@ class Gleez_Locale {
      */
     public static function instance($locale = null): Gleez_Locale
     {
-		if ( ! isset(Gleez_Locale::$_instance))
-		{
+        if (!isset(Gleez_Locale::$_instance)) {
 			// Create a new locale instance
 			Gleez_Locale::$_instance = new Gleez_Locale($locale);
 		}
@@ -192,56 +191,46 @@ class Gleez_Locale {
 	 */
     private static function _prepare_locale($locale): string
     {
-		if ($locale instanceof Gleez_Locale)
-		{
+        if ($locale instanceof Gleez_Locale) {
 			$locale = $locale->toString();
 		}
 
-		if (is_array($locale))
-		{
+        if (is_array($locale)) {
 			return '';
 		}
 
-		if (is_null(self::$_detected))
-		{
+        if (is_null(self::$_detected)) {
 			self::$_client_locales      = self::get_client_locales();
 			self::$_environment_locales = self::get_environment_locales();
 			self::$_detected            = self::$_client_locales + self::$_environment_locales + self::$_framework;
 		}
 
-        if ($locale === 'client')
-        {
+        if ($locale === 'client') {
             $locale = self::$_client_locales;
         }
 
-        if ($locale === 'environment')
-        {
+        if ($locale === 'environment') {
             $locale = self::$_environment_locales;
         }
 
-        if ($locale === 'framework')
-        {
+        if ($locale === 'framework') {
             $locale = self::$_framework;
         }
 
-        if ($locale === 'detected' || is_null($locale))
-        {
+        if ($locale === 'detected' || is_null($locale)) {
             $locale = self::$_detected;
         }
 
-        if (is_array($locale))
-        {
+        if (is_array($locale)) {
             $locale = key($locale);
         }
 
 		// This can only happen when someone extends Gleez_Locale and erases the `$_framework`
-		if (is_null($locale))
-		{
+        if (is_null($locale)) {
 			throw new Kohana_Exception('Failed to autodetect of Locale!');
 		}
 
-        if (strpos($locale, '-') !== false)
-		{
+        if (strpos($locale, '-') !== false) {
 			$locale = strtr($locale, '-', '_');
 		}
 
@@ -249,20 +238,16 @@ class Gleez_Locale {
 		$locale_data    = Locale_Data::getLocaleData();
 		$territory_data = Locale_Data::getTerritoryData();
 
-		if ( ! isset($locale_data[$parts[0]]))
-		{
-            if (count($parts) == 1 && array_key_exists($parts[0], $territory_data))
-			{
+        if (!isset($locale_data[$parts[0]])) {
+            if (count($parts) == 1 && array_key_exists($parts[0], $territory_data)) {
 				return $territory_data[$parts[0]];
 			}
 
 			return '';
 		}
 
-		foreach($parts as $key => $value)
-		{
-			if ((strlen($value) < 2) || (strlen($value) > 3))
-			{
+        foreach ($parts as $key => $value) {
+            if ((strlen($value) < 2) || (strlen($value) > 3)) {
 				unset($parts[$key]);
 			}
 		}
@@ -296,37 +281,32 @@ class Gleez_Locale {
 	 */
     public static function get_client_locales(): array
     {
-		if ( ! is_null(self::$_client_locales))
-		{
+        if (!is_null(self::$_client_locales)) {
 			return self::$_client_locales;
 		}
 
         $languages = [];
         $httpLanguages = getenv('HTTP_ACCEPT_LANGUAGE');
 
-        if (!$httpLanguages)
-		{
+        if (!$httpLanguages) {
 			return $languages;
 		}
 
         $accepted = preg_split('/,\s*/', $httpLanguages);
 
-		foreach ($accepted as $accept)
-		{
+        foreach ($accepted as $accept) {
             $match = null;
 
 			$result = preg_match('/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
 
-			if ($result < 1)
-			{
+            if ($result < 1) {
 				continue;
 			}
 
 			// The highest priority
 			$quality = 1.0;
 
-			if (isset($match[2]))
-			{
+            if (isset($match[2])) {
 				$quality = (float) $match[2];
 			}
 
@@ -336,18 +316,15 @@ class Gleez_Locale {
 			$country2 = explode('_', $region);
 			$region   = array_shift($country2);
 
-			foreach ($country1 as $country)
-			{
+            foreach ($country1 as $country) {
 				$languages[$region . '_' . strtoupper($country)] = $quality;
 			}
 
-			foreach ($country2 as $country)
-			{
+            foreach ($country2 as $country) {
 				$languages[$region . '_' . strtoupper($country)] = $quality;
 			}
 
-            if (!isset($languages[$region]) || $languages[$region] < $quality)
-			{
+            if (!isset($languages[$region]) || $languages[$region] < $quality) {
 				$languages[$region] = $quality;
 			}
 		}
@@ -373,8 +350,7 @@ class Gleez_Locale {
     public static function get_environment_locales(): array
     {
 		// Return cache
-		if ( ! is_null(self::$_environment_locales))
-		{
+        if (!is_null(self::$_environment_locales)) {
 			return self::$_environment_locales;
 		}
 
@@ -383,18 +359,14 @@ class Gleez_Locale {
         $languageArray = [];
 		$locale_data   = Locale_Data::getLocaleData();
 
-		foreach ($languages as $locale)
-		{
-            if (strpos($locale, '=') !== false)
-			{
+        foreach ($languages as $locale) {
+            if (strpos($locale, '=') !== false) {
 				$language = substr($locale, strpos($locale, '='));
 				$language = substr($language, 1);
 			}
 
-			if ($language !== 'C')
-			{
-                if (strpos($language, '.') !== false)
-				{
+            if ($language !== 'C') {
+                if (strpos($language, '.') !== false) {
 					$language = substr($language, 0, strpos($language, '.'));
                 } elseif (strpos($language, '@') !== false) {
 					$language = substr($language, 0, strpos($language, '@'));
@@ -414,12 +386,10 @@ class Gleez_Locale {
 					$language
 				);
 
-				if (isset($locale_data[$language]))
-				{
+                if (isset($locale_data[$language])) {
                     $languageArray[$language] = 1;
 
-                    if (strpos($language, '_') !== false)
-					{
+                    if (strpos($language, '_') !== false) {
                         $languageArray[substr($language, 0, strpos($language, '_'))] = 1;
 					}
 				}
@@ -488,8 +458,7 @@ class Gleez_Locale {
 	{
 		$locale = explode('_', $locale);
 
-		if (isset($locale[1]))
-		{
+        if (isset($locale[1])) {
 			return $locale[1];
 		}
 
@@ -529,8 +498,7 @@ class Gleez_Locale {
 	{
 		$locale = explode('_', $this->_locale);
 
-		if (isset($locale[1]))
-		{
+        if (isset($locale[1])) {
 			return $locale[1];
 		}
 
@@ -549,29 +517,21 @@ class Gleez_Locale {
 		$locale      = self::_prepare_locale($locale);
 		$locale_data = Locale_Data::getLocaleData();
 
-		if ( ! isset($locale_data[(string)$locale]))
-		{
+        if (!isset($locale_data[(string) $locale])) {
 			$region = substr((string) $locale, 0, 3);
 
-			if (isset($region[2]))
-			{
-                if ($region[2] === '_' || $region[2] === '-')
-				{
+            if (isset($region[2])) {
+                if ($region[2] === '_' || $region[2] === '-') {
 					$region = substr($region, 0, 2);
 				}
 			}
 
-			if (isset($locale_data[(string)$region]))
-			{
+            if (isset($locale_data[(string) $region])) {
 				$this->_locale = $region;
-			}
-			else
-			{
+            } else {
 				$this->_locale = 'root';
 			}
-		}
-		else
-		{
+        } else {
 			$this->_locale = $locale;
 		}
 	}
@@ -596,38 +556,29 @@ class Gleez_Locale {
 	 */
     public static function set_default($locale, int $quality = 1)
 	{
-        if (in_array($locale, ['detected', 'root', 'framework', 'environment', 'client']))
-		{
+        if (in_array($locale, ['detected', 'root', 'framework', 'environment', 'client'])) {
 			throw new Kohana_Exception('Only full qualified locales can be used as default!');
 		}
 
-        if ($quality < 0.1 || $quality > 100)
-		{
+        if ($quality < 0.1 || $quality > 100) {
 			throw new Kohana_Exception('Locale quality (priority) must be between 0.1 and 100');
 		}
 
-		if ($quality > 1)
-		{
+        if ($quality > 1) {
 			$quality /= 100;
 		}
 
 		$locale      = self::_prepare_locale($locale);
 		$locale_data = Locale_Data::getLocaleData();
 
-		if (isset($locale_data[(string)$locale]))
-		{
+        if (isset($locale_data[(string) $locale])) {
             self::$_framework = [(string) $locale => $quality];
-		}
-		else
-		{
+        } else {
             $explodedLocale = explode('_', (string) $locale);
 
-            if (isset($locale_data[$explodedLocale[0]]))
-			{
+            if (isset($locale_data[$explodedLocale[0]])) {
                 self::$_framework = [$explodedLocale[0] => $quality];
-			}
-			else
-			{
+            } else {
 				throw new Kohana_Exception("Can't set unknown locale as default!");
 			}
 		}

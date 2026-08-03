@@ -21,8 +21,7 @@ class Controller_Taxonomy extends Template {
     public function before()
 	{
 		// Internal request only!
-		if ($this->request->is_initial())
-		{
+        if ($this->request->is_initial()) {
             throw HTTP_Exception::factory(404, 'Access denied!', [
                 ':type' => '<small>' . $this->request->uri() . '</small>'
             ]);
@@ -42,8 +41,7 @@ class Controller_Taxonomy extends Template {
 		$id = (int) $this->request->param('id', 0);
         $term = ORM::factory('Term', $id);
 
-		if ( ! $term->loaded())
-		{
+        if (!$term->loaded()) {
             throw HTTP_Exception::factory(404, 'Term ":term" Not Found', [':term' => $id]);
 		}
 
@@ -55,15 +53,13 @@ class Controller_Taxonomy extends Template {
 
 			$posts = $term->posts;
 
-        if (!ACL::check('administer terms') && !ACL::check('administer content'))
-		{
+        if (!ACL::check('administer terms') && !ACL::check('administer content')) {
 			$posts->where('status', '=', 'publish');
 		}
 
         $total = $posts->reset(false)->count_all();
 
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			Kohana::$log->add(Log::ERROR, 'No posts found.');
 			$this->response->body( View::factory('page/none'));
 			return;
@@ -84,8 +80,7 @@ class Controller_Taxonomy extends Template {
 		$this->response->body($view);
 
 		//Set the canonical and shortlink for search engines
-        if ($this->auto_render === true)
-		{
+        if ($this->auto_render === true) {
             Meta::links(URL::canonical($term->url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('taxonomy', ['action' => 'term', 'id' => $term->id]), ['rel' => 'shortlink']);
 		}

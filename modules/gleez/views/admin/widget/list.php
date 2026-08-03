@@ -44,8 +44,7 @@
 							<?php
                             echo HTML::anchor($widget->edit_url, '<i class="fas fa-cog"></i>', ['class' => 'action-edit', 'title' => __('Configure')]);
 
-								if ($static)
-								{
+                            if ($static) {
                                     echo HTML::anchor(Route::get('admin/widget')->uri(['action' => 'delete', 'id' => $widget->id]), ' <i class="fas fa-trash-can"></i>', ['class' => 'action-delete', 'title' => __('Delete')]);
 								}
 

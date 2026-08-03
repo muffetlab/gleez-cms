@@ -56,13 +56,11 @@ class Controller_Resize extends Controller {
     private function cache(): void
     {
 		// is it a remote image?
-		if($this->is_remote())
-		{
+        if ($this->is_remote()) {
 			$path = $this->image_folder . '/imagecache/original';
 			$image_original_name = "$path/".preg_replace('/\W/i', '-', $this->image_src);
 
-			if(!file_exists($image_original_name))
-			{
+            if (!file_exists($image_original_name)) {
 				//make sure the directory(s) exist
 				System::mkdir($path);
 
@@ -71,9 +69,7 @@ class Controller_Resize extends Controller {
 			}
 
 			unset($path);
-		}
-		else
-		{
+        } else {
 			// $image_original_name = Route::get('media')->uri(array('file' => $this->image_src));
             $image_original_name = Kohana::find_file('media', $this->image_src, false);
 		}
@@ -84,8 +80,7 @@ class Controller_Resize extends Controller {
         }
         $this->resized_image = "$this->image_folder/imagecache/$this->resize_type/{$this->width}x$this->height/$this->image_src";
 
-		if(!file_exists($this->resized_image))
-		{
+        if (!file_exists($this->resized_image)) {
 			//make sure the directory(s) exist
 			$path = pathinfo($this->resized_image, PATHINFO_DIRNAME);
 			System::mkdir($path);
@@ -101,15 +96,14 @@ class Controller_Resize extends Controller {
      */
     private function is_valid($image_path): bool
     {
-		try
-		{
+        try {
 			// get the size and MIME type of the requested image
 			$size	= GetImageSize($image_path);
-		} catch(Exception $e) {}
+        } catch (Exception $e) {
+        }
 
 		// make sure that the requested file is actually an image
-        if (!isset($size) || !is_array($size) || substr($size['mime'], 0, 6) != 'image/')
-		{
+        if (!isset($size) || !is_array($size) || substr($size['mime'], 0, 6) != 'image/') {
 
 			if($this->is_remote()) unlink($image_path);
 

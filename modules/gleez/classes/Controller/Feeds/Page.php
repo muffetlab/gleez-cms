@@ -36,8 +36,7 @@ class Controller_Feeds_Page extends Controller_Feeds_Base {
      */
 	public function action_list()
 	{
-		if (empty($this->_items))
-		{
+        if (empty($this->_items)) {
 			$config = Kohana::$config->load('page');
 
 			// Cache is Empty so Re-Cache
@@ -54,8 +53,7 @@ class Controller_Feeds_Page extends Controller_Feeds_Base {
 			$this->_items = $items;
 		}
 
-		if (isset($this->_items[0]))
-		{
+        if (isset($this->_items[0])) {
 			$this->_info['title']   = __('Pages - Recent updates');
             $this->_info['link'] = Route::url('rss', ['controller' => 'page'], true);
 			$this->_info['pubDate'] = $this->_items[0]['pubDate'];

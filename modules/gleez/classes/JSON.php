@@ -29,12 +29,9 @@ class JSON {
 	 */
     public static function encode($value, int $options = 0, int $depth = 512): string
     {
-		if (version_compare(PHP_VERSION, '5.5.0', '>='))
-		{
+        if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
 			$raw = json_encode($value, $options, $depth);
-		}
-		else
-		{
+        } else {
 			$raw = json_encode($value, $options);
 		}
 
@@ -63,19 +60,15 @@ class JSON {
 	 */
     public static function decode(string $json, bool $assoc = true, int $depth = 512, int $options = 0)
 	{
-		if (version_compare(PHP_VERSION, '5.4.0', '>='))
-		{
+        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
 			$result = json_decode($json, $assoc, $depth, $options);
-		}
-		else
-		{
+        } else {
 			$result = json_decode($json, $assoc, $depth);
 		}
 
 		$error = '';
 
-		switch(json_last_error())
-		{
+        switch (json_last_error()) {
 			case JSON_ERROR_NONE:
 			break;
 			case JSON_ERROR_DEPTH:
@@ -97,8 +90,7 @@ class JSON {
 				$error = 'Unknown JSON decoding error';
 		}
 
-		if ( ! empty($error))
-		{
+        if (!empty($error)) {
             throw new Kohana_Exception('JSON DECODE: :error', [':error' => __($error)]);
 		}
 

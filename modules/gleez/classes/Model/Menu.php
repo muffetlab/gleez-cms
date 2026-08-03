@@ -105,12 +105,9 @@ class Model_Menu extends ORM_MPTT {
 	 */
 	public function is_valid(Validation $validation)
 	{
-        if (empty($this->name) && empty($this->title))
-		{
+        if (empty($this->name) && empty($this->title)) {
             $validation->error('title', 'not_empty', [$this->title]);
-		}
-		else
-		{
+        } else {
 			$text = empty($this->name) ? $this->title : $this->name;
 			$this->name = $this->_unique_slug(URL::title($text));
 		}
@@ -144,8 +141,7 @@ class Model_Menu extends ORM_MPTT {
 		$original = $str;
         $post = ORM::factory('Menu', ['name' => $str]);
 
-        while ($post->loaded() && $post->id !== $this->id)
-		{
+        while ($post->loaded() && $post->id !== $this->id) {
 			$str = $original . '-' . $i;
 			$i++;
 		}
@@ -168,18 +164,14 @@ class Model_Menu extends ORM_MPTT {
     public function create_at($parent, $location = 'last'): Model_Menu
     {
 		// Create the term as first child, last child, or as next sibling based on location
-		if ($location == 'first')
-		{
+        if ($location == 'first') {
 			$this->insert_as_first_child($parent);
         } elseif ($location == 'last') {
 			$this->insert_as_last_child($parent);
-		}
-		else
-		{
+        } else {
             $target = ORM::factory('Menu', (int) $location);
-			
-			if ( ! $target->loaded())
-			{
+
+            if (!$target->loaded()) {
 				throw new Kohana_Exception("Could not create menu, could not find target for
 							  insert_as_next_sibling id: " . (int) $location);
 			}
@@ -204,8 +196,7 @@ class Model_Menu extends ORM_MPTT {
         $target = ORM::factory('Menu', $target);
 
 		// Make sure it exists
-		if ( ! $target->loaded())
-		{
+        if (!$target->loaded()) {
 			throw new Kohana_Exception("Could not move item, target item did not exist." . (int) $target->id);
 		}
 

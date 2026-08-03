@@ -23,13 +23,11 @@ class URL extends Kohana_URL
      */
     public static function canonical($url, $pagination = null, array $query = null, $protocol = true): string
     {
-		if ($url instanceof Request)
-		{
+        if ($url instanceof Request) {
 			return self::site($url->uri(), $protocol);
 		}
 
-        if ($pagination && $pagination->current_page > 1)
-		{
+        if ($pagination && $pagination->current_page > 1) {
 			$url .= '/p' . $pagination->current_page;
 		}
 
@@ -58,8 +56,7 @@ class URL extends Kohana_URL
      */
     public static function is_remote(string $url): bool
     {
-        if ((strpos($url, '://') !== false))
-		{
+        if ((strpos($url, '://') !== false)) {
             $base = URL::base(true);
 
 			$host1 = str_replace('www.', '', parse_url($base, PHP_URL_HOST));
@@ -86,13 +83,10 @@ class URL extends Kohana_URL
         $url['query_params'] = [];
 
         // On seriously malformed URLs, parse_url() may return false.
-		if (isset($url['query']))
-		{
+        if (isset($url['query'])) {
 			$pairs = explode('&', $url['query']);
-			foreach($pairs as $pair)
-			{
-				if (trim($pair) == '')
-				{
+            foreach ($pairs as $pair) {
+                if (trim($pair) == '') {
 					continue;
 				}
 
@@ -118,13 +112,11 @@ class URL extends Kohana_URL
     {
 		static $uri;
 		$query = null;
-		if (!$with_query_params)
-		{
+        if (!$with_query_params) {
 			$query = self::query();
 		}
 
-		if (empty($uri))
-		{
+        if (empty($uri)) {
 			$uri = self::site(Request::current()->uri());
 		}
 
@@ -140,8 +132,7 @@ class URL extends Kohana_URL
      */
     public static function is_active(string $url): bool
     {
-		if (preg_match('#^[A-Z][A-Z0-9+.\-]+://#i', $url))
-		{
+        if (preg_match('#^[A-Z][A-Z0-9+.\-]+://#i', $url)) {
 			// Don't check URIs with a scheme ... not really a URI is it?
             return false;
 		}
@@ -151,17 +142,14 @@ class URL extends Kohana_URL
 		$url = explode('/', trim(str_replace(self::base(), '', $url), '/'));
 		ksort($url);
 
-		if (0 == count(array_diff($url, $current)))
-		{
+        if (0 == count(array_diff($url, $current))) {
             return true;
 		}
 
         $result = false;
 
-		if (count($url) < count($current))
-		{
-			for ($i = 0; $i == count($url); $i++)
-			{
+        if (count($url) < count($current)) {
+            for ($i = 0; $i == count($url); $i++) {
                 $result = $url[$i] == $current[$i];
 			}
 		}

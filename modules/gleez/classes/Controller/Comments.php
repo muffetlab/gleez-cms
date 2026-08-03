@@ -59,8 +59,7 @@ class Controller_Comments extends Controller {
 	public function before()
 	{
 		// Make sure request is an internal request
-		if ($this->request === Request::initial())
-		{
+        if ($this->request === Request::initial()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt was made to access comments controller externally.');
             $this->request->redirect();
 		}
@@ -86,12 +85,9 @@ class Controller_Comments extends Controller {
 		$id = $this->request->param('id', 0);
 
 		// Comment must have a parent
-		if ($id == 0)
-		{
+        if ($id == 0) {
 			Kohana::$log->add(Log::INFO, 'Attempt to load all public comments without a defined parent.');
-        }
-		else
-		{
+        } else {
             $this->create_list();
 		}
 	}
@@ -108,8 +104,7 @@ class Controller_Comments extends Controller {
 
         $posts = ORM::factory('Comment')->where('status', '=', $state);
 
-		if ($parent_id)
-		{
+        if ($parent_id) {
 			$posts->where('post_id', '=', $parent_id);
 
 			$source = $this->group.'/view/'.$parent_id;
@@ -120,8 +115,7 @@ class Controller_Comments extends Controller {
         $total = $posts->reset(false)->count_all();
 
 		// Check if there are any comments to display
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			// @todo
 			return;
 		}
@@ -145,8 +139,7 @@ class Controller_Comments extends Controller {
 						->find_all();
 
 		// If no comments found (bad offset/page)
-		if (count($comments) == 0)
-		{
+        if (count($comments) == 0) {
             Kohana::$log->add(Log::INFO, 'No comments found for state: :state, page: :page', [
                 ':state' => $state,
                 ':page' => $page

@@ -56,8 +56,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		$id    = (int) $this->request->param('id');
         $menu = ORM::factory('Menu', ['id' => $id, 'lft' => 1]);
 
-		if ( ! $menu->loaded())
-		{
+        if (!$menu->loaded()) {
             Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu id: :id', [':id' => $id]);
             Message::error(__("Menu: doesn't exists!"));
 
@@ -77,8 +76,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 						->execute()
 						->as_array();
 
-		if (count($items) == 0)
-		{
+        if (count($items) == 0) {
 			Message::info(__("Menu Items doesn't exists!"));
 			$this->response->body( View::factory('admin/menu/item/none')->set('id', $id) );
 		}
@@ -98,8 +96,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		$id   = (int) $this->request->param('id');
         $menu = ORM::factory('Menu', ['id' => $id, 'lft' => 1]);
 
-		if ( ! $menu->loaded())
-		{
+        if (!$menu->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu.');
 			Message::error(__("Menu doesn't exists!"));
 
@@ -114,18 +111,14 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 
         $post = ORM::factory('Menu')->values($_POST, ['title', 'url', 'image', 'descp']);
 
-		if ($this->valid_post('menu-item'))
-		{
-			try
-			{
+        if ($this->valid_post('menu-item')) {
+            try {
 				$post->create_at($id, Arr::get($_POST, 'parent', 'last'));
                 Message::success(__('Menu Item %name saved successful!', ['%name' => $post->title]));
                 Cache::instance()->delete('menus:' . $menu->name);
 
                 $this->request->redirect(Route::get('admin/menu/item')->uri(['action' => 'list', 'id' => $menu->id]));
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -150,8 +143,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		$id   = (int) $this->request->param('id', 0);
         $menu = ORM::factory('Menu', $id);
 
-		if ( ! $menu->loaded())
-		{
+        if (!$menu->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent Menu.');
 			Message::error(__("Menu doesn't exists!"));
 
@@ -167,10 +159,8 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
         $post = ORM::factory('Menu', $id)
             ->values($_POST, ['title', 'url', 'image', 'descp']);
 
-		if ($this->valid_post('menu-item'))
-		{
-			try
-			{
+        if ($this->valid_post('menu-item')) {
+            try {
 				$post->save();
                 Message::success(__('Menu Item %name updated successful!', ['%name' => $post->title]));
                 Cache::instance()->delete_all();
@@ -179,9 +169,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
                     'action' => 'list',
                     'id' => $menu->scp
                 ]), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -208,8 +196,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 		$id   = (int) $this->request->param('id', 0);
         $menu = ORM::factory('Menu', $id);
 
-		if ( ! $menu->loaded())
-		{
+        if (!$menu->loaded()) {
             Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu item :id', [':id' => $id]);
 			Message::error(__("Menu item doesn't exists!"));
 
@@ -223,25 +210,20 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 					->set('action', $action);
 
 		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
             $this->request->redirect(Route::get('admin/menu/item')->uri(['id' => $menu->pid]));
 		}
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$name = $menu->title;
 				$menu->delete();
                 Cache::instance()->delete_all();
                 Message::success(__('Menu Item %name deleted successful!', ['%name' => $name]));
 
                 $this->request->redirect(Route::get('admin/menu')->uri(['action' => 'list']), 200);
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting menu item id: :id, :msg', [
                     ':id' => $menu->id, ':msg' => $e->getMessage()
                 ]);
@@ -262,13 +244,10 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-        if ($this->valid_post('menu-item-list') && $id)
-		{
+        if ($this->valid_post('menu-item-list') && $id) {
             $updated_items = [];
-            foreach ($_POST as $val)
-			{
-                if (isset($val['mlid']) && is_array($val))
-				{
+            foreach ($_POST as $val) {
+                if (isset($val['mlid']) && is_array($val)) {
                     $updated_items[$val['mlid']] = $val;
 				}
 			}
@@ -278,18 +257,15 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 			$this->calculate_mptt( $this->generate_tree($updated_items) );
 			unset($updated_items);
 
-			if ($this->level_zero > 1)
-			{
+            if ($this->level_zero > 1) {
 				Kohana::$log->add(Log::ERROR, 'Menu Items order could not be saved.');
 				Message::error(__('Menu Items order could not be saved.'));
 
                 $this->request->redirect(Route::get('admin/menu/item')->uri(['action' => 'list', 'id' => $id]));
 			}
 
-			try
-			{
-				foreach($this->tree as $node)
-				{
+            try {
+                foreach ($this->tree as $node) {
                     DB::update('menus')->set([
                         'pid' => $node['pid'],
                         'active' => $node['active'],
@@ -299,9 +275,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 				}
 
 				Message::success(__('Menu Items order has been saved.'));
-			}
-			catch(Exception $e)
-			{
+            } catch (Exception $e) {
 				Message::error(__('Menu Items order could not be saved.'));
 			}
 
@@ -322,18 +296,14 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
         $menu = [];
         $ref = [];
 
-		foreach($tree as $d)
-		{
+        foreach ($tree as $d) {
             $d['children'] = [];
 
-			if(isset($ref[$d['plid']]))
-			{
+            if (isset($ref[$d['plid']])) {
 				// we have a reference on its parent
 				$ref[ $d['plid'] ]['children'][ $d['mlid'] ] = $d;
 				$ref[ $d['mlid'] ] =& $ref[ $d['plid'] ]['children'][ $d['mlid'] ];
-			}
-			else
-			{
+            } else {
 				// we don't have a reference on its parent => put it a root level
 				$menu[$d['mlid']] = $d;
 				$ref[$d['mlid']] =& $menu[$d['mlid']];
@@ -353,19 +323,16 @@ class Controller_Admin_Menu_Item extends Controller_Admin {
 	 */
     private function calculate_mptt(array $tree, int $parent = 0, int $level = 2)
 	{
-		foreach ($tree as $id => $val)
-		{
+        foreach ($tree as $id => $val) {
 			$left = ++$this->counter;
 
-			if (! empty($val['children']))
-			{
+            if (!empty($val['children'])) {
 				$this->calculate_mptt($val['children'], $id, $level+1);
 			}
 
 			$right = ++$this->counter;
 
-			if ($level === 1)
-			{
+            if ($level === 1) {
 				$this->level_zero++;
 			}
 

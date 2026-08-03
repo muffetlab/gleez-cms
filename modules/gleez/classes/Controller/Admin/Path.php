@@ -46,12 +46,10 @@ class Controller_Admin_Path extends Controller_Admin {
 		$is_datatables = Request::is_datatables();
         $paths = ORM::factory('Path');
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $this->_datatables = $paths->dataTables(['source', 'alias']);
 
-			foreach ($this->_datatables->result() as $path)
-			{
+            foreach ($this->_datatables->result() as $path) {
                 $this->_datatables->add_row([
                     HTML::chars($path->source),
                     HTML::chars($path->alias),
@@ -105,19 +103,15 @@ class Controller_Admin_Path extends Controller_Admin {
 
         $post = ORM::factory('Path');
 
-		if($this->valid_post('add_path'))
-		{
+        if ($this->valid_post('add_path')) {
             $post->values($_POST, ['source', 'alias']);
-			try
-			{
+            try {
 				$post->save();
 
                 Message::success(__('Alias %name saved successful!', ['%name' => $post->alias]));
 
                 $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -141,8 +135,7 @@ class Controller_Admin_Path extends Controller_Admin {
 
         $post = ORM::factory('Path', $id);
 
-		if ( ! $post->loaded())
-		{
+        if (!$post->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent alias.');
             Message::error(__("Alias doesn't exists!"));
 
@@ -158,20 +151,16 @@ class Controller_Admin_Path extends Controller_Admin {
             ->set('url', URL::site('', true))
             ->set('action', $action);
 
-		if ($this->valid_post('add_path'))
-		{
+        if ($this->valid_post('add_path')) {
             $post->values($_POST, ['source', 'alias']);
 
-			try
-			{
+            try {
 				$post->save();
 
                 Message::success(__('Alias %name saved successful!', ['%name' => $post->source]));
 
                 $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -193,8 +182,7 @@ class Controller_Admin_Path extends Controller_Admin {
 
         $path = ORM::factory('Path', $id);
 
-		if ( ! $path->loaded())
-		{
+        if (!$path->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent alias.');
             Message::error(__("Alias doesn't exists!"));
 
@@ -208,23 +196,18 @@ class Controller_Admin_Path extends Controller_Admin {
 			->set('title',   $path->alias);
 
 		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/path')->uri());
 		}
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$path->delete();
                 Message::success(__('Alias %name deleted successful!', ['%name' => $path->alias]));
 
                 $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 200);
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting alias id: :id, :msg', [
                     ':id' => $path->id, ':message' => $e->getMessage()
                 ]);

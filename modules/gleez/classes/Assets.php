@@ -105,34 +105,29 @@ class Assets {
 	{
 		$config = Kohana::$config->load('media');
 
-        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', false))
-		{
+        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', false)) {
 			$format = self::FORMAT_FILENAME;
 		}
 
 		// Return all CSS assets, sorted by dependencies
-		if (is_null($handle))
-		{
+        if (is_null($handle)) {
 			return self::all_css($format);
 		}
 
 		// Return individual asset
-		if (is_null($src))
-		{
+        if (is_null($src)) {
 			return self::get_css($handle, $format);
 		}
 
 		// Set default media attribute
-		if ( ! isset($attrs['media']))
-		{
+        if (!isset($attrs['media'])) {
 			$attrs['media'] = 'all';
 		}
 
         $weight = $attrs['weight'] ?? 0;
 
 		// Unset weight attribute if its set, we processed it already
-		if(isset($attrs['weight']))
-		{
+        if (isset($attrs['weight'])) {
 			unset($attrs['weight']);
 		}
 
@@ -155,15 +150,13 @@ class Assets {
 	 */
     public static function get_css(string $handle, string $format = self::FORMAT_TAG): ?string
     {
-		if ( ! isset(self::$css[$handle]))
-		{
+        if (!isset(self::$css[$handle])) {
             return null;
 		}
 
 		$asset = self::$css[$handle];
 
-		switch ($format)
-		{
+        switch ($format) {
 			case self::FORMAT_TAG:
 				return HTML::style($asset['src'], $asset['attrs']);
             case self::FORMAT_FILENAME:
@@ -183,22 +176,19 @@ class Assets {
 	 */
     public static function all_css(string $format = self::FORMAT_TAG)
 	{
-		if (empty(self::$css))
-		{
+        if (empty(self::$css)) {
             return $format === self::FORMAT_AJAX ? [] : '';
 		}
 
         $assets = [];
 
-		foreach (self::_sort(self::$css) as $handle => $data)
-		{
+        foreach (self::_sort(self::$css) as $handle => $data) {
 			$assets[] = self::get_css($handle, $format);
 		}
 
         $assets = array_filter($assets);
 
-		switch ($format)
-		{
+        switch ($format) {
 			case self::FORMAT_TAG:
                 return empty($assets) ? '' : implode(PHP_EOL, $assets) . PHP_EOL;
             case self::FORMAT_FILENAME:
@@ -229,26 +219,22 @@ class Assets {
 	{
 		$config = Kohana::$config->load('media');
 
-        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', false))
-		{
+        if (Kohana::$environment === Kohana::PRODUCTION && $config->get('combine', false)) {
 			$format = self::FORMAT_FILENAME;
 		}
 
-        if ($handle === true || $handle === false)
-		{
+        if ($handle === true || $handle === false) {
 			return self::all_js($handle, $format);
 		}
 
-		if (is_null($src))
-		{
+        if (is_null($src)) {
 			return self::get_js($handle, $format);
 		}
 
         $weight = $attrs['weight'] ?? 0;
 
 		// Unset weight attribute if its set, we processed it already
-		if(isset($attrs['weight']))
-		{
+        if (isset($attrs['weight'])) {
 			unset($attrs['weight']);
 		}
 
@@ -272,15 +258,13 @@ class Assets {
 	 */
     public static function get_js(string $handle, string $format = self::FORMAT_TAG): ?string
     {
-		if ( ! isset(self::$js[$handle]))
-		{
+        if (!isset(self::$js[$handle])) {
             return null;
 		}
 
 		$asset = self::$js[$handle];
 
-		switch ($format)
-		{
+        switch ($format) {
 			case self::FORMAT_TAG:
 				return HTML::script($asset['src']);
             case self::FORMAT_FILENAME:
@@ -301,8 +285,7 @@ class Assets {
 	 */
     public static function all_js(bool $footer = false, string $format = self::FORMAT_TAG)
 	{
-		if (empty(self::$js))
-		{
+        if (empty(self::$js)) {
             return $format === self::FORMAT_AJAX ? [] : '';
 		}
 
@@ -312,22 +295,19 @@ class Assets {
             return $data['footer'] === $footer;
         });
 
-		if (empty($assets))
-		{
+        if (empty($assets)) {
             return $format === self::FORMAT_AJAX ? [] : '';
 		}
 
         $sorted = [];
 
-		foreach (self::_sort($assets) as $handle => $data)
-		{
+        foreach (self::_sort($assets) as $handle => $data) {
 			$sorted[] = self::get_js($handle, $format);
 		}
 
         $sorted = array_filter($sorted);
 
-		switch ($format)
-		{
+        switch ($format) {
 			case self::FORMAT_TAG:
                 return empty($sorted) ? '' : implode(PHP_EOL, $sorted) . PHP_EOL;
             case self::FORMAT_FILENAME:
@@ -354,21 +334,18 @@ class Assets {
      */
     public static function codes($handle, string $code = null, $deps = null, bool $footer = false, array $attrs = null)
 	{
-        if ($handle === true || $handle === false)
-		{
+        if ($handle === true || $handle === false) {
 			return self::all_codes($handle, $code);
 		}
 
-        if ($code === null)
-		{
+        if ($code === null) {
 			return self::get_codes($handle);
 		}
 
         $weight = $attrs['weight'] ?? 0;
 
 		// Unset weight attribute if its set, we processed it already
-		if(isset($attrs['weight']))
-		{
+        if (isset($attrs['weight'])) {
 			unset($attrs['weight']);
 		}
 
@@ -391,8 +368,7 @@ class Assets {
 	 */
     public static function get_codes(string $handle, string $nonce = null): ?string
     {
-		if ( ! isset(self::$codes[$handle]))
-		{
+        if (!isset(self::$codes[$handle])) {
             return null;
 		}
 
@@ -412,8 +388,7 @@ class Assets {
      */
     public static function all_codes(bool $footer = false, string $nonce = null): string
     {
-		if (empty(self::$codes))
-		{
+        if (empty(self::$codes)) {
             return '';
 		}
 
@@ -423,15 +398,13 @@ class Assets {
             return $data['footer'] === $footer;
         });
 
-		if (empty($assets))
-		{
+        if (empty($assets)) {
             return '';
 		}
 
         $sorted = [];
 
-		foreach (self::_sort($assets) as $handle => $data)
-		{
+        foreach (self::_sort($assets) as $handle => $data) {
 			$sorted[] = self::get_codes($handle, $nonce);
 		}
 
@@ -466,21 +439,18 @@ class Assets {
 	 */
     public static function group(string $group, string $handle = null, string $content = null, $deps = null, array $attrs = null)
 	{
-		if (is_null($handle))
-		{
+        if (is_null($handle)) {
 			return self::all_groups($group);
 		}
 
-		if (is_null($content))
-		{
+        if (is_null($content)) {
 			return self::get_group($group, $handle);
 		}
 
         $weight = $attrs['weight'] ?? 0;
 
 		// Unset weight attribute if its set, we processed it already
-		if (isset($attrs['weight']))
-		{
+        if (isset($attrs['weight'])) {
 			unset($attrs['weight']);
 		}
 
@@ -501,8 +471,7 @@ class Assets {
 	 */
     public static function get_group(string $group, string $handle): ?string
     {
-        if (!isset(self::$groups[$group]) || !isset(self::$groups[$group][$handle]))
-		{
+        if (!isset(self::$groups[$group]) || !isset(self::$groups[$group][$handle])) {
 			return null;
 		}
 
@@ -517,15 +486,13 @@ class Assets {
 	 */
     public static function all_groups(string $group): string
     {
-		if ( ! isset(self::$groups[$group]))
-		{
+        if (!isset(self::$groups[$group])) {
 			return '';
 		}
 
         $assets = [];
 
-		foreach (self::_sort(self::$groups[$group]) as $handle => $data)
-		{
+        foreach (self::_sort(self::$groups[$group]) as $handle => $data) {
 			$assets[] = self::get_group($group, $handle);
 		}
 
@@ -562,8 +529,7 @@ class Assets {
         $a_weight = $a['weight'] ?? 0;
         $b_weight = $b['weight'] ?? 0;
 
-		if ($a_weight == $b_weight)
-		{
+        if ($a_weight == $b_weight) {
 			return 0;
 		}
 
@@ -589,8 +555,7 @@ class Assets {
      */
 	private static function _init_js()
 	{
-        if (isset(self::$js) || isset(self::$codes) || isset(self::$settings))
-		{
+        if (isset(self::$js) || isset(self::$codes) || isset(self::$settings)) {
             self::js('jquery', 'media/js/jquery-2.2.4.min.js', null, false, ['weight' => -20]);
             self::js('gleez', 'media/js/gleez.js', ['jquery'], false, ['weight' => -5]);
 
@@ -756,8 +721,7 @@ class Assets {
 		$config = Kohana::$config->load('media');
 
 		// If no files to compile, no tag necessary
-		if (empty($files))
-		{
+        if (empty($files)) {
             return '';
 		}
 
@@ -765,16 +729,13 @@ class Assets {
 		$compiled_filename = self::get_filename($files, $config['public_dir'], $type);
 
 		// If file doesn't exist already, files have changed, recompile them
-		if ( ! file_exists($compiled_filename))
-		{
+        if (!file_exists($compiled_filename)) {
 			// Loop through all files
-			foreach ($files as $file)
-			{
+            foreach ($files as $file) {
 				$file = self::_get_file_path( $file, $type);
 
 				// If file doesn't exist, log the fact and skip
-				if ( ! file_exists($file))
-				{
+                if (!file_exists($file)) {
                     Kohana::$log->add(Log::ERROR, 'Could not find file: [:file]', [':file' => $file]);
 					continue;
 				}
@@ -790,8 +751,7 @@ class Assets {
 			file_put_contents($compiled_filename, $compiled);
 		}
 
-		switch ($type)
-		{
+        switch ($type) {
 			case 'css':
 				$result = HTML::style($compiled_filename);
 				break;
@@ -839,16 +799,14 @@ class Assets {
 		// Most recently modified file
 		$last_modified = 0;
 
-		foreach($files as $file)
-		{
+        foreach ($files as $file) {
 			$raw_file = self::_get_file_path($file, $type);
 
 			// Check if this file was the most recently modified
 			$last_modified = max(filemtime($raw_file), $last_modified);
 		}
 
-        if (Theme::$is_admin)
-		{
+        if (Theme::$is_admin) {
 			$path = $path.DIRECTORY_SEPARATOR.'admin';
 		}
 
@@ -865,8 +823,7 @@ class Assets {
             . $type;
 		$directory = dirname($filename);
 
-		if ( ! is_dir($directory))
-		{
+        if (!is_dir($directory)) {
 			// Recursively create the directories needed for the file
             System::mkdir($directory);
 		}

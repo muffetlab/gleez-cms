@@ -49,12 +49,10 @@ class Controller_Admin_Menu extends Controller_Admin {
 		$is_datatables = Request::is_datatables();
         $menus = ORM::factory('Menu')->where('lft', '=', 1);
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $this->_datatables = $menus->dataTables(['title', 'descp']);
 
-			foreach ($this->_datatables->result() as $menu)
-			{
+            foreach ($this->_datatables->result() as $menu) {
                 $this->_datatables->add_row([
                     HTML::chars($menu->title) . '<div class="description">' . HTML::chars($menu->descp) . '</div>',
                     HTML::icon($menu->list_items_url, 'fas fa-th-list', [
@@ -111,11 +109,9 @@ class Controller_Admin_Menu extends Controller_Admin {
         $post = ORM::factory('Menu');
         $action = Route::get('admin/menu')->uri(['action' => 'add']);
 
-		if ($this->valid_post('menu'))
-		{
+        if ($this->valid_post('menu')) {
             $post->values($_POST, ['title', 'descp']);
-			try
-			{
+            try {
 				$post->make_root();
                 DB::insert('widgets', ['name', 'title', 'module'])
                     ->values(['menu/' . $post->name, $post->title, 'gleez'])
@@ -126,9 +122,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/menu')->uri(), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -160,8 +154,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 		$id = (int) $this->request->param('id', 0);
         $post = ORM::factory('Menu', $id);
 
-		if ( ! $post->loaded())
-		{
+        if (!$post->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent Menu.');
             Message::error(__("Menu doesn't exists!"));
 
@@ -172,20 +165,16 @@ class Controller_Admin_Menu extends Controller_Admin {
         $this->title = __('Edit %name menu', ['%name' => $post->title]);
         $action = Route::get('admin/menu')->uri(['action' => 'edit', 'id' => $id]);
 
-		if ($this->valid_post('menu'))
-		{
+        if ($this->valid_post('menu')) {
             $post->values($_POST, ['title', 'descp']);
-			try
-			{
+            try {
 				$post->save();
                 Message::success(__('Menu %name saved successful!', ['%name' => $post->title]));
                 Cache::instance()->delete('menus:' . $post->name);
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/menu')->uri(), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -219,8 +208,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 		$id = (int) $this->request->param('id', 0);
         $menu = ORM::factory('Menu', $id);
 
-		if ( ! $menu->loaded())
-		{
+        if (!$menu->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent menu.');
 			Message::error(__("Menu doesn't exists!"));
 
@@ -228,8 +216,7 @@ class Controller_Admin_Menu extends Controller_Admin {
 			$this->request->redirect(Route::get('admin/menu')->uri(), 404);
 		}
 		// If it is an external request and id == 2
-		elseif ($menu->id == 2)
-		{
+        elseif ($menu->id == 2) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to delete system menu.');
 			Message::error(__("You can't delete system menu!"));
 
@@ -245,33 +232,25 @@ class Controller_Admin_Menu extends Controller_Admin {
 
 
 		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/menu')->uri());
 		}
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
+        if (isset($_POST['yes']) && $this->valid_post()) {
             // If it is an internal request (e.g., popup dialog) and id < 3
-			if ($menu->id == 2)
-			{
+            if ($menu->id == 2) {
 				Kohana::$log->add(Log::ERROR, 'Attempt to delete system menu.');
                 $this->_errors = [__("You can't delete system menu!")];
-			}
-			else
-			{
-				try
-				{
+            } else {
+                try {
 					$name = $menu->title;
 					DB::delete('widgets')->where('name', '=', 'menu/'.$menu->name)->execute();
                     Cache::instance()->delete('menus:' . $menu->name);
 
 					$menu->delete();
                     Message::success(__('Menu %name deleted successful!', ['%name' => $name]));
-				}
-				catch (Exception $e)
-				{
+                } catch (Exception $e) {
                     Kohana::$log->add(Log::ERROR, 'Error occurred deleting menu :term, id: :id, :msg', [
                         ':id' => $menu->id,
                         ':term' => $menu->name,

@@ -51,8 +51,7 @@ class Controller_Tag extends Template {
 		$id = (int) $this->request->param('id', 0);
         $tag = ORM::factory('Tag', $id);
 
-		if ( ! $tag->loaded())
-		{
+        if (!$tag->loaded()) {
             throw HTTP_Exception::factory(404, 'Tag :tag not found!', [':tag' => $id]);
 		}
 
@@ -65,15 +64,13 @@ class Controller_Tag extends Template {
 
 		$posts = $tag->posts;
 
-        if (!ACL::check('administer tags') && !ACL::check('administer content'))
-		{
+        if (!ACL::check('administer tags') && !ACL::check('administer content')) {
 			$posts->where('status', '=', 'publish');
 		}
 
         $total = $posts->reset(false)->count_all();
 
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			Kohana::$log->add(Log::INFO, 'No posts found.');
 			$this->response->body(View::factory('page/none'));
 			return;
@@ -94,8 +91,7 @@ class Controller_Tag extends Template {
 		$this->response->body($view);
 
 		// Set the canonical and shortlink for search engines
-        if ($this->auto_render === true)
-		{
+        if ($this->auto_render === true) {
             Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
             Meta::links(Route::url('tag', ['action' => 'view', 'id' => $tag->id]), ['rel' => 'shortlink']);
 		}

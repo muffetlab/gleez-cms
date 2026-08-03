@@ -57,12 +57,9 @@ class Model_Widget extends ORM {
      */
     public function save(Validation $validation = null): Kohana_ORM
     {
-        if (is_array($this->roles) && count($this->roles) > 0)
-		{
+        if (is_array($this->roles) && count($this->roles) > 0) {
 			$this->roles = implode(',', $this->roles);
-		}
-		else
-		{
+        } else {
             $this->roles = null;
 		}
 

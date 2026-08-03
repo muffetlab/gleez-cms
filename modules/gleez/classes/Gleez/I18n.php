@@ -66,32 +66,27 @@ class Gleez_I18n extends I18n
 		$locale = Gleez_I18n::cookieLocale();
 
 		// 2. Check the user's preference
-        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'USER'))
-		{
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'USER')) {
 			$locale = Gleez_I18n::userLocale();
 		}
 
 		// 3. Check the request client/browser's preference
-        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'CLIENT'))
-		{
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'CLIENT')) {
 			$locale = Gleez_I18n::requestLocale();
 		}
 
 		// 4. Check the url preference and get the language from url
-        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'URL'))
-		{
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'URL')) {
 			$locale = Gleez_I18n::urlLocale();
 		}
 
         // 5. Check the subdomain preference and get the language form subdomain
-        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'DOMAIN'))
-		{
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'DOMAIN')) {
 			$locale = Gleez_I18n::domainLocale();
 		}
 
 		// 6. Default locale
-		if(!$locale)
-		{
+        if (!$locale) {
 			$locale = Kohana::$config->load('site')->get('locale', Gleez_I18n::$default);
 		}
 
@@ -153,18 +148,14 @@ class Gleez_I18n extends I18n
 	public static function userLocale()
 	{
 		// Can't set guest users locale, default's to site locale
-		if (User::is_guest())
-		{
+        if (User::is_guest()) {
 			// Respect cookie if its set already or use default
 			$locale = strtolower(Cookie::get(self::$_cookie, Gleez_I18n::$default));
-		}
-		else
-		{
+        } else {
 			$locale	= User::active_user()->language;
 		}
 
-		if (self::isAvailable($locale))
-		{
+        if (self::isAvailable($locale)) {
 			return $locale;
 		}
 
@@ -185,12 +176,10 @@ class Gleez_I18n extends I18n
 		$cookie_data = strtolower(Cookie::get(self::$_cookie));
 
 		//double check cookie data
-        if ($cookie_data && preg_match("/^([a-z]{2,3}(?:_[A-Z]{2})?)$/", trim($cookie_data), $matches))
-		{
+        if ($cookie_data && preg_match("/^([a-z]{2,3}(?:_[A-Z]{2})?)$/", trim($cookie_data), $matches)) {
 			$locale = $matches[1];
 
-			if( self::isAvailable($locale) )
-			{
+            if (self::isAvailable($locale)) {
 				return $locale;
 			}
 		}
@@ -210,8 +199,7 @@ class Gleez_I18n extends I18n
 	public static function urlLocale()
 	{
 		$uri = Request::detect_uri();
-		if (preg_match ('/^\/(' . join ('|', array_keys(self::$_languages)) . ')\/?$/', $uri, $matches))
-		{
+        if (preg_match('/^\/(' . join('|', array_keys(self::$_languages)) . ')\/?$/', $uri, $matches)) {
 			//'~^(?:' . implode('|', array_keys($installed_locales)) . ')(?=/|$)~i'
 			// matched /lang or /lang/
 			return $matches[1];
@@ -230,8 +218,7 @@ class Gleez_I18n extends I18n
 	 */
 	public static function domainLocale()
 	{
-		if (preg_match ('/^(' . join ('|', array_keys(self::$_languages)) . ')\./', $_SERVER['HTTP_HOST'], $matches))
-		{
+        if (preg_match('/^(' . join('|', array_keys(self::$_languages)) . ')\./', $_SERVER['HTTP_HOST'], $matches)) {
 			return $matches[1];
 		}
 
@@ -254,8 +241,7 @@ class Gleez_I18n extends I18n
      */
     public static function lang(string $lang = null): string
     {
-		if ($lang && self::isAvailable($lang) )
-		{
+        if ($lang && self::isAvailable($lang)) {
 			// Store target language in I18n
 			Gleez_I18n::$lang = self::$_languages[$lang]['i18n_code'];
 
@@ -266,8 +252,7 @@ class Gleez_I18n extends I18n
 			setlocale(LC_ALL, self::$_languages[$lang]['locale']);
 
 			// Update language in cookie
-			if (strtolower(Cookie::get(self::$_cookie)) !== $lang)
-			{
+            if (strtolower(Cookie::get(self::$_cookie)) !== $lang) {
 				// Trying to set language to cookies
 				Cookie::set(self::$_cookie, $lang, Date::YEAR);
 			}
@@ -520,8 +505,7 @@ class Gleez_I18n extends I18n
 	}
 }
 
-if ( ! function_exists('__'))
-{
+if (!function_exists('__')) {
     /**
      * Translate strings to the page language or a given language
      *
@@ -550,24 +534,18 @@ if ( ! function_exists('__'))
      */
     function __(string $string, array $values = null, string $lang = 'en-us'): string
     {
-		if ($lang !== Gleez_I18n::$lang)
-		{
+        if ($lang !== Gleez_I18n::$lang) {
 			// The message and target languages are different
 			// Get the translation for this message
 			$string = Gleez_I18n::get($string);
 		}
 
-		if (empty($values))
-		{
+        if (empty($values)) {
 			return $string;
-		}
-		else
-		{
+        } else {
 			// Transform arguments before inserting them.
-			foreach ($values as $key => $value)
-			{
-				switch ($key[0])
-				{
+            foreach ($values as $key => $value) {
+                switch ($key[0]) {
 					case '@':
 						// Escaped only
 						$values[$key] = HTML::chars($value);
@@ -610,8 +588,7 @@ function _e(string $string, array $values = null, string $lang = 'en-us')
 
 function __n($count, $singular, $plural, array $values = [], $lang = 'en-us'): string
 {
-	if ($lang !== Gleez_I18n::$lang)
-	{
+    if ($lang !== Gleez_I18n::$lang) {
 		$string = $count === 1 ? Gleez_I18n::get($singular) : Gleez_I18n::get_plural($plural, $count);
 	}
 	else

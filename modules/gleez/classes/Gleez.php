@@ -93,8 +93,7 @@ class Gleez {
      */
 	public static function ready()
 	{
-		if (self::$_init)
-		{
+        if (self::$_init) {
 			// Do not allow execution twice
 			return;
 		}
@@ -108,8 +107,7 @@ class Gleez {
 		// Check database config file exist or not
 		Gleez::$installed = file_exists(APPPATH.'config/database.php');
 
-		if (Gleez::$installed)
-		{
+        if (Gleez::$installed) {
 			// Database config reader and writer
 			Kohana::$config->attach(new Config_Database);
 		}
@@ -117,8 +115,7 @@ class Gleez {
         Kohana_Exception::$error_view = 'errors/stack';
 
 		// Turn off notices and strict errors in production
-		if (Kohana::$environment === Kohana::PRODUCTION)
-		{
+        if (Kohana::$environment === Kohana::PRODUCTION) {
 			// Turn off notices and strict errors
 			error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 		}
@@ -137,8 +134,7 @@ class Gleez {
 		 * If database.php doesn't exist, then we assume that the Gleez is not
 		 * properly installed and send to the installer.
 		 */
-		if ( ! Gleez::$installed)
-		{
+        if (!Gleez::$installed) {
 			Session::$default = 'cookie';
 			Kohana_Exception::$error_view = 'errors/error';
 
@@ -213,8 +209,7 @@ class Gleez {
         $message = empty($message) ? Gleez::MAINTENANCE_MESSAGE : $message;
 		$request          = Request::initial();
 
-        if ($maintenance_mode && $request->controller() != 'user' && $request->action() != 'login' && !ACL::check('administer site') && $request->controller() != 'media')
-		{
+        if ($maintenance_mode && $request->controller() != 'user' && $request->action() != 'login' && !ACL::check('administer site') && $request->controller() != 'media') {
 			throw HTTP_Exception::factory(503, __($message));
 		}
 	}
@@ -233,8 +228,7 @@ class Gleez {
         $blocked_ips = Kohana::$config->load('site')->get('blocked_ips');
 		$ip          = Request::$client_ip;
 
-        if (!empty($blocked_ips) && in_array($ip, preg_split("/[\s,]+/", $blocked_ips)))
-		{
+        if (!empty($blocked_ips) && in_array($ip, preg_split("/[\s,]+/", $blocked_ips))) {
             throw HTTP_Exception::factory(403, 'Sorry, your ip address (:ip) has been banned.', [':ip' => $ip]);
 		}
 	}
@@ -250,36 +244,30 @@ class Gleez {
 	 */
     protected static function find_file_custom(string $file): string
     {
-		if (file_exists($file))
-		{
+        if (file_exists($file)) {
 			return $file;
 		}
 
 		$uri = THEMEPATH . $file;
-		if (file_exists($uri))
-		{
+        if (file_exists($uri)) {
 			return $uri;
 		}
 
 		$uri = APPPATH . $file;
-		if (file_exists($uri))
-		{
+        if (file_exists($uri)) {
 			return $uri;
 		}
 
 		$modules = Kohana::modules();
-		foreach ($modules as $module)
-		{
+        foreach ($modules as $module) {
 			$uri = $module . $file;
-			if (file_exists($uri))
-			{
+            if (file_exists($uri)) {
 				return $uri;
 			}
 		}
 
 		$uri = SYSPATH . $file;
-		if (file_exists($uri))
-		{
+        if (file_exists($uri)) {
 			return $uri;
 		}
 

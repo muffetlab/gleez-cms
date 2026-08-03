@@ -133,20 +133,15 @@ class Datatables {
         $columns = !empty($this->_search_columns) ? $this->_search_columns : $this->_columns;
 
 
-		if (count($columns) > 0)
-		{
+        if (count($columns) > 0) {
             $query = '%' . HTML::chars($query) . '%';
 
 			$this->_object->where_open();
 
-			foreach ($columns as $key => $column)
-			{
-				if ($key === 0)
-				{
+            foreach ($columns as $key => $column) {
+                if ($key === 0) {
 					$this->_object->where($this->_object_name.'.'.$column, 'like', $query);
-				}
-				else
-				{
+                } else {
 					$this->_object->or_where($this->_object_name.'.'.$column, 'like', $query);
 				}
 			}
@@ -209,8 +204,7 @@ class Datatables {
      */
     public function sort(string $column, string $direction = self::SORT_ASC): Datatables
     {
-        if (!in_array($direction, [self::SORT_ASC, self::SORT_DESC]))
-		{
+        if (!in_array($direction, [self::SORT_ASC, self::SORT_DESC])) {
 			throw new Kohana_Exception('Invalid sort order of `' . $direction . '`.');
 		}
 
@@ -250,8 +244,7 @@ class Datatables {
      */
     public function columns(array $columns = null)
 	{
-        if ($columns === null)
-		{
+        if ($columns === null) {
 			return $this->_columns;
 		}
 
@@ -280,8 +273,7 @@ class Datatables {
     {
 		$request = $this->request();
 
-		if (!$request instanceof Request)
-		{
+        if (!$request instanceof Request) {
 			throw new Kohana_Exception('DataTables expecting valid Request. If within a sub-request, have controller pass `$this->request`.');
 		}
 
@@ -294,16 +286,13 @@ class Datatables {
 		$requestSearch  = $request->query('search');
 		$requestLength  = $request->query('length');
 
-        if (is_array($requestOrder) && count($requestOrder) > 0)
-		{
-			for ($i = 0; $i < count($requestOrder); $i++)
-			{
+        if (is_array($requestOrder) && count($requestOrder) > 0) {
+            for ($i = 0; $i < count($requestOrder); $i++) {
 				// Convert the column index into the column data property
 				$columnIdx     = intval($requestOrder[$i]['column']);
 				$requestColumn = $requestColumns[$columnIdx];
 
-				if ($requestColumn['orderable'] == 'true' && isset($columns[$columnIdx]))
-				{
+                if ($requestColumn['orderable'] == 'true' && isset($columns[$columnIdx])) {
 					$column  = $columns[$columnIdx];
 					$sort    = 'Datatables::SORT_' . strtoupper($requestOrder[$i]['dir']);
 
@@ -320,30 +309,25 @@ class Datatables {
 		}
 
 		// Searching/Filtering
-        if ($requestSearch !== null && $requestSearch['value'] != '')
-		{
+        if ($requestSearch !== null && $requestSearch['value'] != '') {
 			$str = $requestSearch['value'];
-			for ($i = 0, $ien = count($requestColumns); $i < $ien ; $i++)
-			{
+            for ($i = 0, $ien = count($requestColumns); $i < $ien; $i++) {
 				// Convert the column index into the column data property
 				$requestColumn = $requestColumns[$i];
 
 				// global search
-				if ($requestColumn['searchable'] == 'true')
-				{
+                if ($requestColumn['searchable'] == 'true') {
 					$this->search($str);
 				}
 			}
 		}
 
 		// @todo - Individual column filtering
-		for ($i = 0, $ien = count($requestColumns); $i < $ien ; $i++)
-		{
+        for ($i = 0, $ien = count($requestColumns); $i < $ien; $i++) {
 			$requestColumn = $requestColumns[$i];
 			$str = $requestColumn['search']['value'];
 
-			if ($requestColumn['searchable'] == 'true'  && $str != '')
-			{
+            if ($requestColumn['searchable'] == 'true' && $str != '') {
 				//$this->search($str);
 			}
 		}
@@ -353,12 +337,9 @@ class Datatables {
 		$this->_count  = $this->_count();
 
 		// Count should always match total unless search is being applied
-        if ($requestSearch !== null && $requestSearch['value'] != '')
-		{
+        if ($requestSearch !== null && $requestSearch['value'] != '') {
 			$this->_count = $this->count();
-		}
-		else
-		{
+        } else {
 			$this->_count = $this->_count_total;
 		}
 
@@ -373,8 +354,7 @@ class Datatables {
 	 */
     public function view(string $path = null)
 	{
-        if ($path === null)
-		{
+        if ($path === null) {
 			return $this->_view;
 		}
 
@@ -392,10 +372,8 @@ class Datatables {
      */
     public function request(Request $request = null)
 	{
-        if ($request === null)
-		{
-			if ($this->_request instanceof Request)
-			{
+        if ($request === null) {
+            if ($this->_request instanceof Request) {
 				return $this->_request;
 			}
 
@@ -439,10 +417,8 @@ class Datatables {
      */
     public function render(): string
     {
-        if ($this->_render === null)
-		{
-			if ($this->_view)
-			{
+        if ($this->_render === null) {
+            if ($this->_view) {
                 View::factory($this->_view, ['datatables' => $this])->render();
 			}
 

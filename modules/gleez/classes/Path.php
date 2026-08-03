@@ -35,10 +35,8 @@ class Path {
 
 		// Save this value for pagination
 		// @todo use preg_replace_callback to handle both set and replace
-		if (@preg_match($regex, $alias, $matches))
-		{
-			if (isset($matches['page']))
-			{
+        if (@preg_match($regex, $alias, $matches)) {
+            if (isset($matches['page'])) {
 				$page = $matches['page'];
 			}
 			unset($matches);
@@ -48,21 +46,18 @@ class Path {
         $alias = preg_replace($reg_ex, '', $alias);
 
 		// Check if it's a front page request and set <front> tag
-        if (empty($alias) && $alias == null)
-		{
+        if (empty($alias) && $alias == null) {
 			$alias = self::FRONT_ALIAS;
 		}
 
         $result = self::load(['alias' => $alias]);
-		if ( ! $result)
-		{
+        if (!$result) {
             // No alias found, return original params to allow normal routing
             return $params;
 		}
 
         // Reset the self::FRONT_ALIAS tag to '', or else the request fails.
-        if ($alias === self::FRONT_ALIAS)
-		{
+        if ($alias === self::FRONT_ALIAS) {
 			$result['alias'] = '';
 		}
 
@@ -89,23 +84,17 @@ class Path {
      */
 	public static function save(array $values)
 	{
-		try
-		{
-            if (isset($values['id']) && is_numeric($values['id']))
-			{
+        try {
+            if (isset($values['id']) && is_numeric($values['id'])) {
                 $path = ORM::factory('Path', $values['id'])
                     ->values($values, ['source', 'alias'])
 					->save();
-			}
-			else
-			{
+            } else {
                 $path = ORM::factory('Path')
                     ->values($values, ['source', 'alias'])
 					->save();
 			}
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			// log error and return, to avoid breaking process
             Kohana::$log->add(Log::ERROR, 'Error: :error creating path alias.', [':error' => $e->getMessage()]);
 
@@ -123,24 +112,19 @@ class Path {
 	 */
     public static function delete($criteria): bool
     {
-		try
-		{
+        try {
 			$query = DB::delete('paths');
 
-			if ( ! is_array($criteria))
-			{
+            if (!is_array($criteria)) {
                 $criteria = ['id' => $criteria];
 			}
 
-			foreach ($criteria as $field => $value)
-			{
+            foreach ($criteria as $field => $value) {
 				$query->where($field, '=', $value);
 			}
 
 			$query->execute();
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
             Kohana::$log->add(Log::ERROR, 'Error: :error deleting path alias.', [':error' => $e->getMessage()]);
 
             return false;
@@ -157,34 +141,23 @@ class Path {
 	 */
 	public static function load($conditions)
 	{
-		try
-		{
+        try {
 			$path = DB::select()->from('paths');
 
-			if (is_numeric($conditions))
-			{
+            if (is_numeric($conditions)) {
 				$path->where('id', '=', $conditions);
-			}
-			elseif (is_string($conditions))
-			{
+            } elseif (is_string($conditions)) {
 				$path->where('source', '=', $conditions);
-			}
-			elseif (is_array($conditions))
-			{
-				foreach($conditions as $field => $value)
-				{
+            } elseif (is_array($conditions)) {
+                foreach ($conditions as $field => $value) {
 					$path->where($field, '=', $value);
 				}
-			}
-			else
-			{
+            } else {
                 return false;
 			}
 
 			$path = $path->execute()->current();
-		}
-		catch(Exception $e)
-		{
+        } catch (Exception $e) {
             Kohana::$log->add(Log::ERROR, 'Error: :error lookup path alias.', [':error' => $e->getMessage()]);
 
             return false;
@@ -201,16 +174,13 @@ class Path {
 	 */
     public static function alias(string $source): string
     {
-		try
-		{
+        try {
 			return DB::select('alias')->from('paths')
 				->where('source', '=', $source)
 				->limit(1)
 				->execute()
 				->get('alias', $source);
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
             Kohana::$log->add(Log::ERROR, 'Error: :error getting alias.', [':error' => $e->getMessage()]);
 			return $source;
 		}
@@ -238,8 +208,7 @@ class Path {
 		$separator = '-';
 
         // Empty strings do not need any processing.
-        if ($string === '')
-		{
+        if ($string === '') {
 			return '';
 		}
 

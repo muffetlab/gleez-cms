@@ -67,18 +67,15 @@ class Text extends Kohana_Text
 		$body_node    = $dom_document->getElementsByTagName('body')->item(0);
 		$body_content = '';
 
-		foreach ($body_node->getElementsByTagName('script') as $node)
-		{
+        foreach ($body_node->getElementsByTagName('script') as $node) {
 			static::escape_cdata_element($dom_document, $node);
 		}
 
-		foreach ($body_node->getElementsByTagName('style') as $node)
-		{
+        foreach ($body_node->getElementsByTagName('style') as $node) {
 			static::escape_cdata_element($dom_document, $node, '/*', '*/');
 		}
 
-		foreach ($body_node->childNodes as $child_node)
-		{
+        foreach ($body_node->childNodes as $child_node) {
 			$body_content .= $dom_document->saveXML($child_node);
 		}
 
@@ -98,10 +95,8 @@ class Text extends Kohana_Text
 	*/
     private static function escape_cdata_element(DOMDocument $dom_document, DOMElement $dom_element, string $comment_start = '//', string $comment_end = '')
 	{
-		foreach ($dom_element->childNodes as $node)
-		{
-			if (get_class($node) == 'DOMCdataSection')
-			{
+        foreach ($dom_element->childNodes as $node) {
+            if (get_class($node) == 'DOMCdataSection') {
                 $embed_prefix = PHP_EOL . "<!--$comment_start--><![CDATA[$comment_start ><!--$comment_end" . PHP_EOL;
                 $embed_suffix = PHP_EOL . "$comment_start--><!]]>$comment_end" . PHP_EOL;
 
@@ -146,8 +141,7 @@ class Text extends Kohana_Text
     public static function markup(string $text, int $format_id = null, string $langCode = null, bool $cache = false)
 	{
 		// Save some cpu cycles if text is empty or null
-		if(empty($text))
-		{
+        if (empty($text)) {
 			return $text;
 		}
 
@@ -177,8 +171,7 @@ class Text extends Kohana_Text
 		$text = Filter::process($textObj); // run all filters
 
 		// Store in cache with a minimum expiration time of 1 day.
-		if ($cache)
-		{
+        if ($cache) {
             Cache::instance()->set('cache_filter:' . $cache_id, $text, time() + Date::DAY);
 		}
 
@@ -199,17 +192,14 @@ class Text extends Kohana_Text
     {
         $text = HTMLFilter::factory($text, $filter)->render();
 
-		if ($filter['settings']['html_nofollow'])
-		{
+        if ($filter['settings']['html_nofollow']) {
 			$html_dom = static::dom_load($text);
 			$links = $html_dom->getElementsByTagName('a');
-			foreach ($links as $link)
-			{
+            foreach ($links as $link) {
 				$link->setAttribute('rel', 'nofollow');
 
 				//Shortens long URLs to http://www.example.com/long/url...
-				if ($filter['settings']['url_length'])
-				{
+                if ($filter['settings']['url_length']) {
 					$link->nodeValue = static::limit_chars($link->nodeValue,
 										 (int) $filter['settings']['url_length'], '....');
 				}

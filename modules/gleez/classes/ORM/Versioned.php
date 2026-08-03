@@ -32,8 +32,7 @@ class ORM_Versioned extends Gleez_Model
     {
         $object = null;
 
-		if ( ! $this->_restore)
-		{
+        if (!$this->_restore) {
             $this->_last_version = 1 + ($this->_last_version === null ? $this->_object['version'] : $this->_last_version);
 			$this->__set('version', $this->_last_version);
 
@@ -45,25 +44,20 @@ class ORM_Versioned extends Gleez_Model
 		parent::update($validation);
 
 		// Create version only if its general update not version restore
-        if ($this->_saved && !$this->_restore && $object)
-		{
+        if ($this->_saved && !$this->_restore && $object) {
             $data = [];
-			foreach ($object as $key => $value)
-			{
-                if ($key === $this->_primary_key || array_key_exists($key, $this->_ignored_columns))
-				{
+            foreach ($object as $key => $value) {
+                if ($key === $this->_primary_key || array_key_exists($key, $this->_ignored_columns)) {
 					continue;
 				}
 
-				if ($key === 'version')
-				{
+                if ($key === 'version') {
 					// Always use the current version
 					$value = $this->_last_version;
 				}
 
 				//make sure only column names except primary key is stored in revision
-				if(array_key_exists($key, $this->_table_columns))
-				{
+                if (array_key_exists($key, $this->_table_columns)) {
 					$data[$key] = $value;
 				}
 			}
@@ -97,20 +91,16 @@ class ORM_Versioned extends Gleez_Model
 			->limit(1)
 			->execute($this->_db);
 
-		if (count($query))
-		{
+        if (count($query)) {
 			$row = $query->current();
 
-			foreach ($row as $key => $value)
-			{
-                if ($key === $this->_primary_key || $key === $this->foreign_key() || $key == 'version_log')
-				{
+            foreach ($row as $key => $value) {
+                if ($key === $this->_primary_key || $key === $this->foreign_key() || $key == 'version_log') {
 					// Do not overwrite the primary key
 					continue;
 				}
 
-				if ($key === 'version')
-				{
+                if ($key === 'version') {
 					// Always use the current version
 					//$value = $this->version;
 				}
@@ -145,8 +135,7 @@ class ORM_Versioned extends Gleez_Model
 					->limit(1)
 					->execute($this->_db);
 
-		if (count($query))
-		{
+        if (count($query)) {
             $this->_load_values($query->current());
 		}
 
@@ -166,10 +155,8 @@ class ORM_Versioned extends Gleez_Model
 		// Use primary key value
 		$id = $this->pk();
 
-        if ($status = parent::delete())
-		{
-            if (is_array($this->_deleted_column) && $soft)
-			{
+        if ($status = parent::delete()) {
+            if (is_array($this->_deleted_column) && $soft) {
                 $data = [];
 
 				// Fill the deleted column
@@ -183,9 +170,7 @@ class ORM_Versioned extends Gleez_Model
 					->set($data)
 					->where($this->foreign_key(), '=', $id)
 					->execute($this->_db);
-			}
-			else
-			{
+            } else {
 				// Delete the object
 				DB::delete($this->version_table())
 					->where($this->foreign_key(), '=', $id)

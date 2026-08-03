@@ -38,26 +38,21 @@ class Controller_Install_Install extends Controller_Template {
      */
 	public function before()
 	{
-		if ($this->request->action() === 'media')
-		{
+        if ($this->request->action() === 'media') {
 			// Do not template media files
             $this->auto_render = false;
-		}
-		else
-		{
+        } else {
 			// Grab the necessary routes
 			$this->_media = Route::get('install/media');
 		}
 
 		parent::before();
 
-		if ($this->request->action() === 'index')
-		{
+        if ($this->request->action() === 'index') {
 			Session::instance('cookie')->destroy();
 		}
 
-		if ($this->auto_render)
-		{
+        if ($this->auto_render) {
 			$this->_session = Session::instance('cookie');
             $this->template->menu = [
                 __('Welcome'),
@@ -77,8 +72,7 @@ class Controller_Install_Install extends Controller_Template {
      */
 	public function after()
 	{
-		if ($this->auto_render)
-		{
+        if ($this->auto_render) {
 			// Add styles
             $this->template->styles = [
                 $this->_media->uri(['file' => 'css/bootstrap.min.css']) => 'screen',
@@ -179,11 +173,10 @@ class Controller_Install_Install extends Controller_Template {
             && $view->ctype_digit
             && $view->uri_determination
             && $view->gd_info
-        )
+        ) {
             $this->request->redirect(Route::get('install')->uri(['action' => 'database']));
 
-		else
-		{
+        } else {
 			$this->template->error = __('Gleez may not work correctly with your environment.');
 		}
 
@@ -221,8 +214,7 @@ class Controller_Install_Install extends Controller_Template {
             'table_prefix' => 'gl_'
         ];
 
-		if (isset($_POST['db']))
-		{
+        if (isset($_POST['db'])) {
             $data = [
                 'user' => $username = $_POST['user'],
                 'pass' => $password = $_POST['pass'],
@@ -231,24 +223,20 @@ class Controller_Install_Install extends Controller_Template {
                 'table_prefix' => $_POST['table_prefix']
             ];
 
-			try
-			{
+            try {
 				$this->check_database($username, $password, $hostname, $database);
 
 				$this->_session->set('database_data', $data);
 
                 $this->request->redirect(Route::get('install')->uri(['action' => 'install']));
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
 				$form = Arr::overwrite($form, $_POST);
 				$error = $e->getMessage();
 
 				// TODO create better error messages
 				// Try to use mysql_errno.
 				// Error message of East Asian character sets will display garbled text on utf-8 web page
-				switch ($error)
-				{
+                switch ($error) {
 					case 'access':
 						$this->template->error = __('Wrong username or password');
 					break;
@@ -292,13 +280,10 @@ class Controller_Install_Install extends Controller_Template {
             __('Finish')
         ];
 
-		try
-		{
+        try {
 			$this->unpack_sql($config);
             $this->request->redirect(Route::get('install')->uri(['action' => 'finalize']));
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			$this->template->error = $e->getMessage();
 			$this->template->content = __('Please fix the errors!');
 		}
@@ -321,10 +306,8 @@ class Controller_Install_Install extends Controller_Template {
             HTML::anchor(Route::get('install')->uri(['action' => 'finalize']), __('Finish')),
         ];
 
-		if(isset($data))
-		{
-			if( ! $this->create_database_config($data['user'], $data['pass'], $data['hostname'], $data['database'], $data['table_prefix']))
-			{
+        if (isset($data)) {
+            if (!$this->create_database_config($data['user'], $data['pass'], $data['hostname'], $data['database'], $data['table_prefix'])) {
                 $this->template->error = __("Couldn't create application/config/database.php");
 			}
 
@@ -340,9 +323,7 @@ class Controller_Install_Install extends Controller_Template {
                 'password' => $password,
                 'admin_url' => $admin_url
             ]);
-		}
-		else
-		{
+        } else {
 			$this->request->redirect(Route::get('install')->uri());
 		}
 	}
@@ -353,41 +334,28 @@ class Controller_Install_Install extends Controller_Template {
     public function check_database($username, $password, $hostname, $database): bool
     {
 
-		if ( ! $link = mysqli_connect($hostname, $username, $password))
-		{
-			if (strpos(mysqli_error($link), 'Access denied'))
-			{
+        if (!$link = mysqli_connect($hostname, $username, $password)) {
+            if (strpos(mysqli_error($link), 'Access denied')) {
 				throw new Exception('access');
-			}
-			elseif (strpos(mysqli_error($link), 'server host'))
-			{
+            } elseif (strpos(mysqli_error($link), 'server host')) {
 				throw new Exception('unknown_host');
-			}
-			elseif (strpos(mysqli_error($link), 'connect to'))
-			{
+            } elseif (strpos(mysqli_error($link), 'connect to')) {
 				throw new Exception('connect_to_host');
-			}
-			else
-			{
+            } else {
 				throw new Exception(mysqli_error($link));
 			}
 		}
 
-		if (! version_compare($this->mysql_version($link), "5.0.0", ">=") ) 
-		{
+        if (!version_compare($this->mysql_version($link), "5.0.0", ">=")) {
 			throw new Exception('version');
 		}
 
-        if (mysqli_select_db($link, $database))
-		{
+        if (mysqli_select_db($link, $database)) {
             return true;
-		}
-		else 
-		{
+        } else {
             mysqli_query($link, "CREATE DATABASE `$database`");
 
-            if (!mysqli_select_db($link, $database))
-			{
+            if (!mysqli_select_db($link, $database)) {
 				throw new Exception('select');
 			}
 		}
@@ -435,13 +403,10 @@ class Controller_Install_Install extends Controller_Template {
 
 		$sql_file = MODPATH . "gleez/views/install/install.sql";
 
-		foreach (file($sql_file) as $line)
-		{
+        foreach (file($sql_file) as $line) {
 			$buf .= trim($line);
-			if (preg_match("/;$/", $buf))
-			{
-				if (!mysqli_query($link, $this->prepend_prefix($prefix, $buf)))
-				{
+            if (preg_match("/;$/", $buf)) {
+                if (!mysqli_query($link, $this->prepend_prefix($prefix, $buf))) {
 					throw new Exception(mysqli_error($link));
 				}
 				$buf = "";

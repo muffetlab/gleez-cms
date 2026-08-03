@@ -43,8 +43,7 @@ class Request extends Kohana_Request
     {
 		$devices = 'android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos';
 
-		if (isset($_SERVER['HTTP_USER_AGENT']))
-		{
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
 			return (preg_match("/$devices/i", $_SERVER['HTTP_USER_AGENT']) > 0);
 		}
 
@@ -89,18 +88,14 @@ class Request extends Kohana_Request
         $max_size = Kohana::$config->load('media')->get('post_max_size');
 
 		// Set post_max_size default value if it not exists
-		if (is_null($max_size))
-		{
+        if (is_null($max_size)) {
             Kohana::$config->load('media')->set('post_max_size', $max_size = static::DEFAULT_POST_MAX_SIZE);
 		}
 
-		if(static::isHHVM())
-		{
+        if (static::isHHVM()) {
 			//$php_settings = ini_get('post_max_size');
 			$php_settings = ini_get('hhvm.server.max_post_size');
-		}
-		else 
-		{
+        } else {
 			// Get the post_max_size in bytes from php.ini
 			$php_settings = Num::bytes(ini_get('post_max_size'));
 		}
@@ -133,27 +128,23 @@ class Request extends Kohana_Request
 	{
 		$referrer = $this->uri();
 
-        if (strpos($referrer, '://') === false)
-		{
+        if (strpos($referrer, '://') === false) {
             $referrer = URL::site($referrer, true, Kohana::$index_file);
 		}
 
-        if (strpos($url, '://') === false)
-		{
+        if (strpos($url, '://') === false) {
 			// Make the URI into a URL
             $url = URL::site($url, true, Kohana::$index_file);
 		}
 
 		// Check whether the current request is ajax request
-		if ($this->is_ajax())
-		{
+        if ($this->is_ajax()) {
 			self::$redirect_url = $url;
 			// Stop execution
 			return;
 		}
 
-        if (($response = $this->response()) === null)
-		{
+        if (($response = $this->response()) === null) {
 			$response = $this->create_response();
 		}
 
@@ -199,8 +190,7 @@ class Request extends Kohana_Request
     {
         $response = parent::execute();
 
-		if (Gleez::$installed)
-		{
+        if (Gleez::$installed) {
 			// Deny access to blocked IP addresses
 			Gleez::block_ips();
 
@@ -219,8 +209,7 @@ class Request extends Kohana_Request
      */
     public function response(Response $response = null)
 	{
-        if ($response === null)
-		{
+        if ($response === null) {
 			// Act as a getter
 			return $this->_response;
 		}
@@ -249,8 +238,7 @@ class Request extends Kohana_Request
     {
         $response = new Response(['_protocol' => $this->protocol()]);
 
-		if ($bind)
-		{
+        if ($bind) {
 			// Bind a new response to the request
 			$this->_response = $response;
 		}

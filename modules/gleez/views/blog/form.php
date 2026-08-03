@@ -165,8 +165,7 @@
 					<div class="panel-body">
 						<div class="form-group <?php echo isset($errors['comment']) ? 'has-error': ''; ?>">
 							<?php
-								if ( ! isset($blog->comment))
-								{
+                            if (!isset($blog->comment)) {
 									$blog->comment = $config->comment;
 								}
 

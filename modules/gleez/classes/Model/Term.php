@@ -112,8 +112,7 @@ class Model_Term extends ORM_MPTT {
 
 		parent::save($validation);
 
-		if ($this->loaded())
-		{
+        if ($this->loaded()) {
 			// Add or remove path aliases
 			$this->_aliases();
 		}
@@ -130,12 +129,9 @@ class Model_Term extends ORM_MPTT {
 	 */
     public function delete(bool $soft = false): Kohana_ORM
     {
-        if (is_array($this->_deleted_column) && $soft)
-		{
+        if (is_array($this->_deleted_column) && $soft) {
 
-		}
-		else
-		{
+        } else {
 			$source = $this->rawurl;
 
 			parent::delete($soft);
@@ -162,8 +158,7 @@ class Model_Term extends ORM_MPTT {
 
 		$path = Path::load($this->rawurl);
 
-		if ($path)
-		{
+        if ($path) {
 			$values['id'] = (int) $path['id'];
 		}
 
@@ -237,8 +232,7 @@ class Model_Term extends ORM_MPTT {
 				->execute($this->_db)
 				->get('total_count');
 
-		if ($query > 0)
-		{
+        if ($query > 0) {
             $validation->error($field, 'term_available', [$validation[$field]]);
 		}
 	}
@@ -258,20 +252,14 @@ class Model_Term extends ORM_MPTT {
 	public function create_at($parent, $location = 'last')
 	{
 		// Create the term as first child, last child, or as next sibling based on location
-		if ($location == 'first')
-		{
+        if ($location == 'first') {
 			$this->insert_as_first_child($parent);
-		}
-		elseif ($location == 'last')
-		{
+        } elseif ($location == 'last') {
 			$this->insert_as_last_child($parent);
-		}
-		else
-		{
+        } else {
             $target = ORM::factory('Term', (int) $location);
 
-			if ( ! $target->loaded())
-			{
+            if (!$target->loaded()) {
                 throw new Kohana_Exception(
                     'Could not create term, could not find target for insert_as_next_sibling id: :location ',
                     [':location' => (int) $location]
@@ -281,8 +269,7 @@ class Model_Term extends ORM_MPTT {
 			$this->insert_as_last_child($target);
 		}
 
-		if ($this->loaded())
-		{
+        if ($this->loaded()) {
 			// Add or remove path aliases
 			$this->_aliases();
 		}
@@ -297,8 +284,7 @@ class Model_Term extends ORM_MPTT {
      */
     public function uploadImage(array $file): ?string
     {
-        if (!empty($file['tmp_name']))
-		{
+        if (!empty($file['tmp_name'])) {
 			return Upload::uploadImage($file);
 		}
 

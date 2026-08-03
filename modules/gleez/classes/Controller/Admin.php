@@ -50,8 +50,7 @@ class Controller_Admin extends Template {
 		// Inform tht we're in admin section for themers/developers
         Theme::$is_admin = true;
 
-		if($this->request->action() != 'login')
-		{
+        if ($this->request->action() != 'login') {
 			ACL::redirect('administer site', 'admin/login');
 		}
 
@@ -63,9 +62,8 @@ class Controller_Admin extends Template {
      * @throws View_Exception
      */
     public function action_login(){
-		
-		if ($this->_auth->logged_in())
-		{
+
+        if ($this->_auth->logged_in()) {
 			// redirect to the user account
 			$this->request->redirect(Route::get('admin')->uri(), 200);
 		}
@@ -81,8 +79,7 @@ class Controller_Admin extends Template {
         $params = ['action' => 'login'];
         $action = Route::get('admin/login')->uri($params) . URL::query(['destination' => $destination]);
 
-        if (kohana::find_file('views', 'layouts/login'))
-		{
+        if (kohana::find_file('views', 'layouts/login')) {
 			$this->template->set_filename('layouts/login');
 		}			
 			
@@ -92,10 +89,8 @@ class Controller_Admin extends Template {
 			->set('action',       $action)
 			->bind('errors',      $this->_errors);
 
-		if ($this->valid_post('login'))
-		{
-			try
-			{
+        if ($this->valid_post('login')) {
+            try {
 				// Check Auth
 				$user->login($this->request->post());
 
@@ -105,9 +100,7 @@ class Controller_Admin extends Template {
 
 				// redirect to the user account
                 $this->request->redirect($_GET['destination'] ?? 'admin', 200);
-			}
-			catch (Validation_Exception $e)
-			{
+            } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('login');
 			}
 		}

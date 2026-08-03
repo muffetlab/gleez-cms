@@ -61,8 +61,7 @@ class Upload extends Kohana_Upload
      */
     public static function uploadImage(array $file, string $upload_dir = null): ?string
     {
-    	if (is_null($upload_dir))
-    	{
+        if (is_null($upload_dir)) {
     		$upload_dir = Kohana::$config->load('media')->get('upload_dir', 'media/pictures');
     	}
 
@@ -70,10 +69,8 @@ class Upload extends Kohana_Upload
         $valid_formats = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'gif', 'png']);
         $save = true;
 
-        if ( ! is_dir($picture_path))
-        {
-            if ( ! System::mkdir($picture_path))
-            {
+        if (!is_dir($picture_path)) {
+            if (!System::mkdir($picture_path)) {
                 Message::error(__('Failed to create directory %dir for uploading picture.'));
 
                 Kohana::$log->add(Log::ERROR, 'Failed to create directory :dir for uploading picture.', [
@@ -89,13 +86,11 @@ class Upload extends Kohana_Upload
             && self::valid($file)
             && self::type($file, $valid_formats)
             && self::size($file, self::getUploadMaxFilesize())
-        )
-        {
+        ) {
             $filename = File::getUnique($file['name']).'.'.pathinfo($file['name'], PATHINFO_EXTENSION);
             $path     = self::save($file, $filename, $picture_path);
 
-            if ($path)
-            {
+            if ($path) {
                 return $upload_dir.DIRECTORY_SEPARATOR.$filename;
             }
         }

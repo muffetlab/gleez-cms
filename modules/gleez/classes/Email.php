@@ -85,13 +85,10 @@ class Email {
      */
     public function message(string $body, string $type = null): Email
     {
-        if (!$type || $type === 'text/plain')
-		{
+        if (!$type || $type === 'text/plain') {
 			// Set the main text/plain body
 			$this->_mail->Body = $body;
-		}
-		else
-		{
+        } else {
 			// Add a custom mime type
 			$this->_mail->msgHTML($body);
 		}
@@ -203,13 +200,10 @@ class Email {
 	 */
     public function queue(int $timestamp = null, bool $unique = false, array $params = null): Email
     {
-		try
-		{
+        try {
 			//@todo insert into mailqueue table
             $this->queue = true;
-		}
-		catch(Exception $e)
-		{
+        } catch (Exception $e) {
             Kohana::$log->add(Log::ERROR, 'Error queuing mail error: :e', [':e' => $e->getMessage()]);
 		}
 
@@ -223,18 +217,14 @@ class Email {
 	 */
     public function send(): bool
     {
-		try
-		{
+        try {
             // Send mail if it's not queued
-            if (!$this->queue)
-			{
+            if (!$this->queue) {
 				$this->_mail->send();
 			}
 
             return true;
-		}
-		catch(Exception $e)
-		{
+        } catch (Exception $e) {
             Kohana::$log->add(Log::ERROR, 'Error sending mail error: :e', [':e' => $e->getMessage()]);
 
             return false;

@@ -34,13 +34,11 @@ class Model_Page extends Post {
 		$config = Kohana::$config->load('page');
 		$this->status = empty($this->status) ? $config->get('default_status', 'draft') : $this->status;
 
-		if( ! $config->use_comment)
-		{
+        if (!$config->use_comment) {
 			$this->comment = empty($this->comment) ? $config->get('comment', 0) : $this->comment;
 		}
 
-		if( ! $config->use_excerpt )
-		{
+        if (!$config->use_excerpt) {
             $this->teaser = false;
 		}
 

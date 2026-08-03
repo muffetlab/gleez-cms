@@ -23,15 +23,13 @@ class Date extends Kohana_Date
     public static function formatted_time(string $datetime_str = 'now', string $timestamp_format = null, string $timezone = null): string
     {
 		//Display Dates in site defined timezone format
-        if (Kohana::$config->load('site')->get('timezone_override', false) && $timezone === null)
-		{
+        if (Kohana::$config->load('site')->get('timezone_override', false) && $timezone === null) {
 			// Default timezone from config
             $timezone = Kohana::$config->load('site')->get('timezone', 'UTC');
 		}
 
 		//convert timestamp to support datetime class
-		if(is_numeric($datetime_str))
-		{
+        if (is_numeric($datetime_str)) {
 			$datetime_str = '@'.$datetime_str;
 		}
 
@@ -99,17 +97,14 @@ class Date extends Kohana_Date
 
         $locations = [];
 
-		foreach ($zones as $zone)
-		{
+        foreach ($zones as $zone) {
 			$zone = explode('/', $zone); // 0 => Continent, 1 => City
 
-			if (!in_array($zone[0], $continents))
-			{
+            if (!in_array($zone[0], $continents)) {
 				continue;
 			}
 
-			if (isset($zone[1]) != '')
-			{
+            if (isset($zone[1]) != '') {
 				// Creates array(DateTimeZone => 'Friendly name')
                 $locations[__($zone[0])]["$zone[0]/$zone[1]"] = __(str_replace('_', ' ', $zone[1]));
 			}
@@ -173,14 +168,10 @@ class Date extends Kohana_Date
             14
         ];
 
-		foreach ($offset_range as $offset)
-		{
-			if (0 <= $offset)
-			{
+        foreach ($offset_range as $offset) {
+            if (0 <= $offset) {
 				$offset_name = '+' . $offset;
-			}
-			else
-			{
+            } else {
 				$offset_name = (string) $offset;
 			}
 
@@ -241,10 +232,8 @@ class Date extends Kohana_Date
             'Y M j - g:ia'
         ];
 
-		if ($timestamp)
-		{
-			foreach ($date_time_format as $f)
-			{
+        if ($timestamp) {
+            foreach ($date_time_format as $f) {
 				$date_choices[$f] = date($f, time());
 			}
 
@@ -291,10 +280,8 @@ class Date extends Kohana_Date
             'Y M j'
         ];
 
-		if ($timestamp)
-		{
-			foreach ($date_format as $f)
-			{
+        if ($timestamp) {
+            foreach ($date_format as $f) {
 				$date_choices[$f] = date($f, time());
 			}
 
@@ -323,10 +310,8 @@ class Date extends Kohana_Date
             'G:i'
         ];
 
-		if ($timestamp)
-		{
-			foreach ($time_format as $f)
-			{
+        if ($timestamp) {
+            foreach ($time_format as $f) {
 				$time_choices[$f] = date($f, time());
 			}
 

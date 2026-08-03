@@ -46,13 +46,11 @@ class Controller_Admin_Tag extends Controller_Admin {
 
 		$is_datatables = Request::is_datatables();
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $tags = ORM::factory('Tag');
             $this->_datatables = $tags->dataTables(['name', 'id', 'type']);
 
-			foreach ($this->_datatables->result() as $tag)
-			{
+            foreach ($this->_datatables->result() as $tag) {
                 $this->_datatables->add_row([
                     HTML::chars($tag->name),
                     HTML::anchor($tag->url, $tag->url),
@@ -98,17 +96,13 @@ class Controller_Admin_Tag extends Controller_Admin {
         $post = ORM::factory('Tag');
         $action = Route::get('admin/tag')->uri(['action' => 'add']);
 
-		if ($this->valid_post('tag'))
-		{
+        if ($this->valid_post('tag')) {
             $post->values($_POST, ['name', 'type']);
-			try
-			{
+            try {
 				$post->save();
                 Message::success(__('Tag %name saved successful!', ['%name' => $post->name]));
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -138,8 +132,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 		$id   = (int) $this->request->param('id', 0);
         $post = ORM::factory('Tag', $id);
 
-		if ( ! $post->loaded())
-		{
+        if (!$post->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent tag.');
 			Message::error(__("Tag doesn't exists!"));
 
@@ -148,20 +141,16 @@ class Controller_Admin_Tag extends Controller_Admin {
 
         $this->title = __('Edit Tag %name', ['%name' => $post->name]);
 
-		if ($this->valid_post('tag'))
-		{
+        if ($this->valid_post('tag')) {
             $post->values($_POST, ['name', 'type']);
-			try
-			{
+            try {
 				$post->save();
 
                 Kohana::$log->add(Log::INFO, 'Tag :name saved successful.', [':name' => $post->name]);
                 Message::success(__('Tag %name saved successful!', ['%name' => $post->name]));
 
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -190,8 +179,7 @@ class Controller_Admin_Tag extends Controller_Admin {
 		$id  = (int) $this->request->param('id', 0);
         $tag = ORM::factory('Tag', $id);
 
-		if ( ! $tag->loaded())
-		{
+        if (!$tag->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent tag.');
 			Message::error(__("Tag doesn't exists!"));
 
@@ -205,22 +193,17 @@ class Controller_Admin_Tag extends Controller_Admin {
 				->set('title',  $tag->name);
 
 		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/tag')->uri());
 		}
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$tag->delete();
                 Message::success(__('Tag %name deleted successful!', ['%name' => $tag->name]));
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting tag id: :id, :msg', [
                     ':id' => $tag->id,
                     ':msg' => $e->getMessage()

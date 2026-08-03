@@ -93,19 +93,15 @@ class Controller_Admin_Page extends Controller_Admin {
                 ->set('config', $config)
 					->set('action',  $action);
 
-		if ($this->valid_post('page_settings'))
-		{
+        if ($this->valid_post('page_settings')) {
 			unset($_POST['page_settings'], $_POST['_token'], $_POST['_action']);
 
             $cats = $config->get('category', []);
 
-			foreach ($_POST as $key => $value)
-			{
-				if ($key == 'category')
-				{
+            foreach ($_POST as $key => $value) {
+                if ($key == 'category') {
 					$terms = array_diff($cats, $value);
-					if ($terms)
-					{
+                    if ($terms) {
 						DB::delete('posts_terms')
 							->where('parent_id', 'IN', array_values($terms))
 							->execute();
@@ -142,12 +138,10 @@ class Controller_Admin_Page extends Controller_Admin {
 		$is_datatables = Request::is_datatables();
         $pages = ORM::factory('Page');
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $this->_datatables = $pages->dataTables(['id', 'title', 'author', 'status', 'updated']);
 
-			foreach ($this->_datatables->result() as $page)
-			{
+            foreach ($this->_datatables->result() as $page) {
                 $this->_datatables->add_row([
                     Form::checkbox('posts[' . $page->id . ']', $page->id, isset($_POST['posts'][$page->id])),
                     HTML::anchor($page->url, $page->title),
@@ -201,14 +195,12 @@ class Controller_Admin_Page extends Controller_Admin {
 		$post = $this->request->post();
 
 		// If deletion is not desired, redirect to list
-        if (isset($post['no']) && $this->valid_post())
-		{
+        if (isset($post['no']) && $this->valid_post()) {
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-        if (isset($post['yes']) && $this->valid_post())
-		{
+        if (isset($post['yes']) && $this->valid_post()) {
 			$pages = array_filter($post['items']);
 
 			Post::bulk_delete($pages, 'page');
@@ -218,24 +210,19 @@ class Controller_Admin_Page extends Controller_Admin {
 			$this->request->redirect($redirect);
 		}
 
-		if ($this->valid_post('page-bulk-actions'))
-		{
-            if (isset($post['operation']) && empty($post['operation']))
-			{
+        if ($this->valid_post('page-bulk-actions')) {
+            if (isset($post['operation']) && empty($post['operation'])) {
 				Message::error(__('No bulk operation selected.'));
 				$this->request->redirect($redirect);
 			}
 
-            if (!isset($post['posts']) || !is_array($post['posts']) || !count(array_filter($post['posts'])))
-			{
+            if (!isset($post['posts']) || !is_array($post['posts']) || !count(array_filter($post['posts']))) {
 				Message::error(__('No pages selected.'));
 				$this->request->redirect($redirect);
 			}
 
-			try
-			{
-				if ($post['operation'] == 'delete')
-				{
+            try {
+                if ($post['operation'] == 'delete') {
 					$pages = array_filter($post['posts']); // Filter out unchecked posts
 					$this->title = __('Delete Pages');
 
@@ -257,9 +244,7 @@ class Controller_Admin_Page extends Controller_Admin {
 
 				Message::success(__('The update has been performed!'));
 				$this->request->redirect($redirect);
-			}
-			catch( Exception $e)
-			{
+            } catch (Exception $e) {
 				Message::error(__('The update has not been performed!'));
 			}
 		}
@@ -281,15 +266,11 @@ class Controller_Admin_Page extends Controller_Admin {
 		$operation  = $operations[$post['operation']];
 		$pages = array_filter($post['posts']); // Filter out unchecked pages
 
-		if ($operation['callback'])
-		{
+        if ($operation['callback']) {
             list($func) = Arr::callback($operation['callback']);
-			if (isset($operation['arguments']))
-			{
+            if (isset($operation['arguments'])) {
                 $args = array_merge([$pages], $operation['arguments']);
-			}
-			else
-			{
+            } else {
                 $args = [$pages];
 			}
 

@@ -31,8 +31,7 @@ class Controller_Admin_Setting extends Controller_Admin {
 		$this->title = __('Settings');
 		$config = Kohana::$config->load('site');
 
-        if (isset($config['maintenance_mode']) && $config['maintenance_mode'] == 1)
-		{
+        if (isset($config['maintenance_mode']) && $config['maintenance_mode'] == 1) {
 			Message::success(__('Site running in maintenance mode!'));
 		}
 
@@ -47,16 +46,13 @@ class Controller_Admin_Setting extends Controller_Admin {
 			->set('action',             $action)
 			->set('post',               $config);
 
-		if ($this->valid_post('settings'))
-		{
+        if ($this->valid_post('settings')) {
 			unset($_POST['settings'], $_POST['_token'], $_POST['_action']);
 
-			foreach($_POST as $key => $value)
-			{
+            foreach ($_POST as $key => $value) {
 				$config->set($key, $value);
 
-				if($key == 'front_page' )
-				{
+                if ($key == 'front_page') {
 					$this->_set_front_page($value);
 				}
 			}
