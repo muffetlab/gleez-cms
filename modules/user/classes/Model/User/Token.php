@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Default auth user token
  *
