@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Alpha captcha class.
  *

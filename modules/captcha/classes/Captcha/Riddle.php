@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Riddle captcha class.
  *

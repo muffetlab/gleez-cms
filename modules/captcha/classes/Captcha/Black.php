@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Black captcha class.
  *

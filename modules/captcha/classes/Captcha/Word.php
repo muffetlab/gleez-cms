@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Word captcha class.
  *

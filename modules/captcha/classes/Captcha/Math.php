@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Math captcha class.
  *
