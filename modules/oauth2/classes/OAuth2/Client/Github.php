@@ -6,7 +6,8 @@
  * @license    https://gleezcms.org/license  Gleez CMS License
  *
  */
-class OAuth2_Client_Github extends OAuth2_Client {
+class OAuth2_Client_Github extends OAuth2_Client
+{
 
 	/**
 	 * Return the authorization endpoint

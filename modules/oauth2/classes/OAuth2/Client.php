@@ -7,7 +7,8 @@
  * @license		http://opensource.org/licenses/MIT
  *
  */
-abstract class OAuth2_Client {
+abstract class OAuth2_Client
+{
 
     /**
      * Authorization types

@@ -1,6 +1,7 @@
 <?php
 
-class Controller_Client extends Template {
+class Controller_Client extends Template
+{
 
     /**
      * @throws HTTP_Exception_404

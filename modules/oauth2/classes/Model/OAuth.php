@@ -8,7 +8,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Model_OAuth extends Model_Database {
+class Model_OAuth extends Model_Database
+{
     /**
      * @throws Kohana_Exception
      */

@@ -8,7 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Controller_Authorize extends Template {
+class Controller_Authorize extends Template
+{
 	/**
 	 * List of possible authentication response types.
 	 * The "authorization_code" mechanism exclusively supports 'code'

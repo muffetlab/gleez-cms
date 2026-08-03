@@ -7,7 +7,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Provider extends Template {
+class Controller_Provider extends Template
+{
 
 	/**
 	 * Demo content
