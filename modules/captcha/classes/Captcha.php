@@ -57,8 +57,7 @@ abstract class Captcha {
      */
     public static function instance(string $group = 'default')
 	{
-		if ( ! isset(Captcha::$instance))
-		{
+        if (!isset(Captcha::$instance)) {
 			// Load the configuration for this group
 			$config = Kohana::$config->load('captcha.'.$group);
 
@@ -88,8 +87,7 @@ abstract class Captcha {
 		empty(Captcha::$instance) and Captcha::$instance = $this;
 
 		// No config group name given
-		if ( ! is_string($group))
-		{
+        if (!is_string($group)) {
 			$group = 'default';
 		}
 
@@ -98,8 +96,7 @@ abstract class Captcha {
             throw new Kohana_Exception('Captcha group not defined in :group configuration', [':group' => $group]);
 
 		// All captcha config groups inherit default config group
-		if ($group !== 'default')
-		{
+        if ($group !== 'default') {
 			// Load and validate default config group
 			if ( ! is_array($default = Kohana::$config->load('captcha')->get('default')))
                 throw new Kohana_Exception('Captcha group not defined in :group configuration', [
@@ -111,10 +108,8 @@ abstract class Captcha {
 		}
 
 		// Assign config values to the object
-		foreach ($config as $key => $value)
-		{
-			if (array_key_exists($key, Captcha::$config))
-			{
+        foreach ($config as $key => $value) {
+            if (array_key_exists($key, Captcha::$config)) {
 				Captcha::$config[$key] = $value;
 			}
 		}
@@ -123,8 +118,7 @@ abstract class Captcha {
 		Captcha::$config['group'] = $group;
 
 		// If using a background image, check if it exists
-		if ( ! empty($config['background']))
-		{
+        if (!empty($config['background'])) {
 			Captcha::$config['background'] = str_replace('\\', '/', realpath($config['background']));
 
 			if ( ! is_file(Captcha::$config['background']))
@@ -134,12 +128,10 @@ abstract class Captcha {
 		}
 
 		// If using any fonts, check if they exist
-		if ( ! empty($config['fonts']))
-		{
+        if (!empty($config['fonts'])) {
             Captcha::$config['fontPath'] = str_replace('\\', '/', realpath($config['fontPath'])) . '/';
 
-			foreach ($config['fonts'] as $font)
-			{
+            foreach ($config['fonts'] as $font) {
                 if (!is_file(Captcha::$config['fontPath'] . $font))
                     throw new Kohana_Exception('The specified file, :file, was not found.', [
                         ':file' => Captcha::$config['fontPath'] . $font
@@ -186,18 +178,15 @@ abstract class Captcha {
         $result = sha1(strtoupper($response)) === Session::instance()->get('captcha_response');
 
 		// Increment response counter
-        if ($counted !== true)
-		{
+        if ($counted !== true) {
             $counted = true;
 
 			// Valid response
-            if ($result === true)
-			{
+            if ($result === true) {
 				Captcha::instance()->valid_count(Session::instance()->get('captcha_valid_count') + 1);
 			}
 			// Invalid response
-			else
-			{
+            else {
 				Captcha::instance()->invalid_count(Session::instance()->get('captcha_invalid_count') + 1);
 			}
 		}
@@ -219,16 +208,13 @@ abstract class Captcha {
         $session = $invalid === true ? 'captcha_invalid_count' : 'captcha_valid_count';
 
 		// Update counter
-        if ($new_count !== null)
-		{
+        if ($new_count !== null) {
 			// Reset counter = delete session
-			if ($new_count < 1)
-			{
+            if ($new_count < 1) {
 				Session::instance()->delete($session);
 			}
 			// Set counter to new value
-			else
-			{
+            else {
                 Session::instance()->set($session, $new_count);
 			}
 
@@ -278,8 +264,7 @@ abstract class Captcha {
             return false;
 
 		// Use the config threshold
-        if ($threshold === null)
-		{
+        if ($threshold === null) {
 			$threshold = Captcha::$config['promote'];
 		}
 
@@ -305,8 +290,7 @@ abstract class Captcha {
 	 */
     public function image_type(string $filename)
 	{
-		switch (strtolower(substr(strrchr($filename, '.'), 1)))
-		{
+        switch (strtolower(substr(strrchr($filename, '.'), 1))) {
 			case 'png':
 				return 'png';
 
@@ -341,16 +325,16 @@ abstract class Captcha {
 		$this->image = imagecreatetruecolor(Captcha::$config['width'], Captcha::$config['height']);
 
 		// Use a background image
-		if ( ! empty($background))
-		{
+        if (!empty($background)) {
 			// Create the image using the right function for the filetype
 			$function = 'imagecreatefrom'.$this->image_type($background);
             $backgroundImage = $function($background);
 
 			// Resize the image if needed
-            if (imagesx($backgroundImage) !== Captcha::$config['width']
-                or imagesy($backgroundImage) !== Captcha::$config['height'])
-			{
+            if (
+                imagesx($backgroundImage) !== Captcha::$config['width']
+                or imagesy($backgroundImage) !== Captcha::$config['height']
+            ) {
 				imagecopyresampled
 				(
                     $this->image, $backgroundImage, 0, 0, 0, 0,
@@ -377,13 +361,11 @@ abstract class Captcha {
         $directions = ['horizontal', 'vertical'];
 
 		// Pick a random direction if needed
-		if ( ! in_array($direction, $directions))
-		{
+        if (!in_array($direction, $directions)) {
 			$direction = $directions[array_rand($directions)];
 
 			// Switch colors
-			if (mt_rand(0, 1) === 1)
-			{
+            if (mt_rand(0, 1) === 1) {
 				$temp = $color1;
 				$color1 = $color2;
 				$color2 = $temp;
@@ -401,15 +383,12 @@ abstract class Captcha {
 		$g1 = ($color1['green'] - $color2['green']) / $steps;
 		$b1 = ($color1['blue'] - $color2['blue']) / $steps;
 
-		if ($direction === 'horizontal')
-		{
+        if ($direction === 'horizontal') {
 			$x1 =& $i;
 			$y1 = 0;
 			$x2 =& $i;
 			$y2 = Captcha::$config['height'];
-		}
-		else
-		{
+        } else {
 			$x1 = 0;
 			$y1 =& $i;
 			$x2 = Captcha::$config['width'];
@@ -417,8 +396,7 @@ abstract class Captcha {
 		}
 
 		// Execute the gradient loop
-		for ($i = 0; $i <= $steps; $i++)
-		{
+        for ($i = 0; $i <= $steps; $i++) {
 			$r2 = $color1['red'] - floor($i * $r1);
 			$g2 = $color1['green'] - floor($i * $g1);
 			$b2 = $color1['blue'] - floor($i * $b1);

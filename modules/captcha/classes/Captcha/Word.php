@@ -24,8 +24,7 @@ class Captcha_Word extends Captcha_Basic
 		shuffle($words);
 
 		// Loop over each word...
-		foreach ($words as $word)
-		{
+        foreach ($words as $word) {
 			// ...until we find one of the desired length
 			if (abs(Captcha::$config['complexity'] - strlen($word)) < 2)
 				return strtoupper($word);
