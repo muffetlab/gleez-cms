@@ -45,22 +45,17 @@ class Model_Buddy extends Model
 						->where('accepted','=','1')
 						->limit($limit);
 
-		if($offset)
-		{
+        if ($offset) {
 			$sql->offset($offset);
 		}
 
 		$results = $sql->execute();
 
         $friends = [];
-		foreach($results as $friend)
-		{
-            if ($friend['request_from'] == $user_id)
-			{
+        foreach ($results as $friend) {
+            if ($friend['request_from'] == $user_id) {
                 $friends[] = $friend['request_to'];
-			}
-			else
-			{
+            } else {
                 $friends[] = $friend['request_from'];
 			}
 		}
@@ -170,8 +165,7 @@ class Model_Buddy extends Model
 					->where('accepted', '=', '0')
 					->limit($limit);
 
-		if($offset)
-		{
+        if ($offset) {
 			$query->offset($offset);
 		}
 
@@ -188,8 +182,7 @@ class Model_Buddy extends Model
 					->where('accepted', '=', '0')
 					->limit($limit);
 
-		if($offset)
-		{
+        if ($offset) {
 			$query->offset($offset);
 		}
 

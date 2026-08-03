@@ -193,8 +193,7 @@ class Model_User extends Gleez_Model
 	 */
     public function perms(): array
     {
-		if (empty($this->data))
-		{
+        if (empty($this->data)) {
             return [];
 		}
 
@@ -225,8 +224,7 @@ class Model_User extends Gleez_Model
      */
     public function create(Validation $validation = null): Kohana_ORM
     {
-		if ($this->_loaded)
-		{
+        if ($this->_loaded) {
             throw new Kohana_Exception('Cannot create :model model because it is already loaded.', [
                 ':model' => $this->_object_name
             ]);
@@ -246,8 +244,7 @@ class Model_User extends Gleez_Model
      */
     public function update(Validation $validation = null): Kohana_ORM
     {
-		if ( ! $this->_loaded)
-		{
+        if (!$this->_loaded) {
             throw new Kohana_Exception('Cannot Update :model model because it is not loaded.', [
                 ':model' => $this->_object_name
             ]);
@@ -326,8 +323,7 @@ class Model_User extends Gleez_Model
      */
 	public function complete_login()
 	{
-		if ($this->_loaded)
-		{
+        if ($this->_loaded) {
 			// Update the number of logins
 			$this->logins = DB::expr('logins + 1');
 
@@ -350,8 +346,7 @@ class Model_User extends Gleez_Model
      */
     public function username_available(Validation $validation, string $field)
 	{
-		if ($this->unique_key_exists($validation[$field], 'name'))
-		{
+        if ($this->unique_key_exists($validation[$field], 'name')) {
             $validation->error($field, 'username_available', [$validation[$field]]);
 		}
 	}
@@ -367,8 +362,7 @@ class Model_User extends Gleez_Model
      */
     public function email_available(Validation $validation, string $field)
 	{
-		if ($this->unique_key_exists($validation[$field], 'mail'))
-		{
+        if ($this->unique_key_exists($validation[$field], 'mail')) {
             $validation->error($field, 'email_available', [$validation[$field]]);
 		}
 	}
@@ -384,8 +378,7 @@ class Model_User extends Gleez_Model
      */
     public function email_not_available(Validation $validation, string $field)
 	{
-		if ( ! $this->unique_key_exists($validation[$field], 'mail'))
-		{
+        if (!$this->unique_key_exists($validation[$field], 'mail')) {
             $validation->error($field, 'email_not_available', [$validation[$field]]);
 		}
 	}
@@ -400,8 +393,7 @@ class Model_User extends Gleez_Model
      */
     public function unique_key_exists($value, string $field = null): bool
     {
-        if ($field === null)
-		{
+        if ($field === null) {
 			// Automatically determine field by looking at the value
 			$field = $this->unique_key($value);
 		}
@@ -475,8 +467,7 @@ class Model_User extends Gleez_Model
      */
     public function uploadPhoto(array $file): ?string
     {
-        if (!empty($file['tmp_name']))
-		{
+        if (!empty($file['tmp_name'])) {
 			return Upload::uploadImage($file);
 		}
 
@@ -506,13 +497,11 @@ class Model_User extends Gleez_Model
 		$array = Validation::factory($array);
 
 		// important to check isset to avoid unnecessary routing
-		if (isset( $array['name']))
-		{
+        if (isset($array['name'])) {
 			$login_name = $this->unique_key($array['name']);
 
 			// be sure remove the name/email_available rule during login
-			if (isset($rules[$login_name][4]))
-			{
+            if (isset($rules[$login_name][4])) {
 				unset($rules[$login_name][4]);
 			}
 
@@ -527,13 +516,11 @@ class Model_User extends Gleez_Model
 		$remember = isset($array['remember']);
 		Module::event('user_login_validate', $array);
 
-		if ($array->check())
-		{
+        if ($array->check()) {
 			// Attempt to load the user
 			$this->where($login_name, '=', $array['name'])->find();
 
-            if ($this->loaded() && $this->status != 1)
-			{
+            if ($this->loaded() && $this->status != 1) {
 				$array->error('name', 'blocked');
 				Module::event('user_blocked', $array);
 
@@ -541,15 +528,12 @@ class Model_User extends Gleez_Model
 				throw new Validation_Exception($array, 'Account Blocked');
             } elseif ($this->loaded() && Auth_ORM::instance()->login($array['name'], $array['password'], $remember)) {
 				// Redirect after a successful login
-				if (is_string($redirect))
-				{
+                if (is_string($redirect)) {
 					Request::initial()->redirect($redirect);
 				}
 
 				return $this;
-			}
-			else
-			{
+            } else {
                 if (Auth_ORM::$lastErrorKey) {
                     $array->error('name', Auth_ORM::$lastErrorKey);
                     Auth_ORM::$lastErrorKey = null;
@@ -561,9 +545,7 @@ class Model_User extends Gleez_Model
                 Kohana::$log->add(Log::ERROR, 'User: :name failed login.', [':name' => $array['name']]);
 				throw new Validation_Exception($array, 'Validation has failed for login');
 			}
-		}
-		else
-		{
+        } else {
 			Kohana::$log->add(Log::ERROR, 'User Login error.');
 			throw new Validation_Exception($array, 'Validation has failed for login');
 		}
@@ -616,8 +598,7 @@ class Model_User extends Gleez_Model
      */
     public function sso_signup(array $data, array $provider): Model_User
     {
-		if ( ! $this->_loaded)
-		{
+        if (!$this->_loaded) {
 			// Add user
 			$this->name 	 = $provider['provider'].'_'.$data['id'];
 			$this->pass 	 = $data['id']; //set id as pass( we can't save without password)
@@ -626,14 +607,12 @@ class Model_User extends Gleez_Model
 			$this->status  	 = 1;
 
 			// Set email if it's available via OAuth provider
-			if (isset($data['email']))
-			{
+            if (isset($data['email'])) {
 				$this->mail = $data['email'];
 			}
 
 			// Set gender if it's available via OAuth provider
-			if (isset($data['gender']))
-			{
+            if (isset($data['gender'])) {
                 $this->gender = $data['gender'] === 'male' ? 1 : 2;
 			}
 
@@ -650,9 +629,7 @@ class Model_User extends Gleez_Model
 
 			//send welcome mail
 			$this->welcome_mail();
-		}
-		else
-		{
+        } else {
 			// If user is found, but provider id is missing add it to details.
 			// We can do this merge, because this means user is found by email address,
 			// that is already confirmed by this OAuth provider, so it's considered trusted.
@@ -662,16 +639,14 @@ class Model_User extends Gleez_Model
 			$identity->save();
 
 			// Set email if it's available via OAuth provider and save
-			if (isset($data['email']))
-			{
+            if (isset($data['email'])) {
 				$this->status  = 1;
 				//$this->mail = $data['email'];
 				$this->save();
 			}
 		}
 
-		if ( ! $this->has('roles', User::USER_ROLE_ID))
-		{
+        if (!$this->has('roles', User::USER_ROLE_ID)) {
 			// Give the user the "user" role
 			$this->add('roles', User::USER_ROLE_ID);
 		}
@@ -709,8 +684,7 @@ class Model_User extends Gleez_Model
         $this->values($data, ['name', 'mail', 'pass', 'nick', 'gender', 'dob'])->save();
 
 		// Give user the "login" role
-		if ( ! $this->has('roles', User::LOGIN_ROLE_ID))
-		{
+        if (!$this->has('roles', User::LOGIN_ROLE_ID)) {
 			// Give the user the "user" role
 			$this->add('roles', User::LOGIN_ROLE_ID);
 		}
@@ -803,8 +777,7 @@ class Model_User extends Gleez_Model
      */
     public function welcome_mail(): bool
     {
-		if ($this->_loaded)
-		{
+        if ($this->_loaded) {
             $body = View::factory('email/welcome_signup', $this->as_array())
                 ->set('url', URL::site('', true))
                 ->set('uri_brief', URL::site(Route::get('user')->uri([
@@ -865,8 +838,7 @@ class Model_User extends Gleez_Model
             ->rule('mail', 'email')
             ->rule('mail', [$this, 'email_not_available'], [':validation', ':field']);
 
-		if ( ! $data->check())
-		{
+        if (!$data->check()) {
 			throw new Validation_Exception($data, 'Validation has failed for reset password');
 		}
 
@@ -874,8 +846,7 @@ class Model_User extends Gleez_Model
 		$this->where('mail', '=', $data['mail'])->find();
 
 		// Invalid user
-		if ( ! $this->_loaded)
-		{
+        if (!$this->_loaded) {
 			throw new Validation_Exception($data, 'Email not found');
 		}
 
@@ -982,8 +953,7 @@ class Model_User extends Gleez_Model
             ->rule('pass', 'min_length', [':value', 4])
             ->rule('pass_confirm', 'matches', [':validation', ':field', 'pass']);
 
-		if ( ! $data->check())
-		{
+        if (!$data->check()) {
 			throw new Validation_Exception($data, 'Reset form failed');
 		}
 
@@ -997,8 +967,7 @@ class Model_User extends Gleez_Model
         // could be used in case the original sign-up confirmation mail got lost.
 		// Since the user could only come to this point if he supplied a valid email address,
 		// we confirm his account right here.
-		if ( ! $this->has('roles', User::USER_ROLE_ID))
-		{
+        if (!$this->has('roles', User::USER_ROLE_ID)) {
 			// Give the user the "user" role
 			$this->add('roles', User::USER_ROLE_ID);
 		}
@@ -1015,19 +984,14 @@ class Model_User extends Gleez_Model
         $oldData = unserialize($data);
         $newData = is_array($this->data) ? $this->data : [];
 
-        if (empty($data) or !$oldData)
-		{
+        if (empty($data) or !$oldData) {
             return empty($this->data) ? null : serialize($newData);
 		}
 
-        foreach ($newData as $key => $value)
-		{
-            if ($value === null)
-			{
+        foreach ($newData as $key => $value) {
+            if ($value === null) {
                 unset($oldData[$key]);
-			}
-			elseif (!empty($key))
-			{
+            } elseif (!empty($key)) {
                 $oldData[$key] = $value;
 			}
 		}
@@ -1046,11 +1010,9 @@ class Model_User extends Gleez_Model
      */
 	protected function _roles()
 	{
-		if ($this->_loaded)
-		{
+        if ($this->_loaded) {
             $data = empty($this->data) ? [] : unserialize($this->data);
-            if (!empty($data['roles']))
-			{
+            if (!empty($data['roles'])) {
 				return $data['roles'];
 			}
 
@@ -1068,8 +1030,7 @@ class Model_User extends Gleez_Model
      */
     protected function _set_roles(): array
     {
-		if ($this->_loaded)
-		{
+        if ($this->_loaded) {
 			$roles = $this->roles->find_all()->as_array('id', 'name');
 
 			// save to data field for performance

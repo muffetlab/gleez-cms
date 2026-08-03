@@ -33,14 +33,12 @@ class Model_User_Token extends ORM {
 	{
 		parent::__construct($id);
 
-		if (mt_rand(1, 100) === 1)
-		{
+        if (mt_rand(1, 100) === 1) {
 			// Do garbage collection
 			$this->delete_expired();
 		}
 
-        if ($this->expires < time() && $this->_loaded)
-		{
+        if ($this->expires < time() && $this->_loaded) {
 			// This object has expired
 			$this->delete();
 		}

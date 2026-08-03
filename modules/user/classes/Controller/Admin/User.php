@@ -44,15 +44,13 @@ class Controller_Admin_User extends Controller_Admin {
 	{
 		$is_datatables = Request::is_datatables();
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $users = ORM::factory('User');
 
 			// @todo fix dummy id column for roles to match the column order
             $this->_datatables = $users->dataTables(['name', 'mail', 'created', 'login', 'id', 'status']);
 
-			foreach ($this->_datatables->result() as $user)
-			{
+            foreach ($this->_datatables->result() as $user) {
                 $this->_datatables->add_row([
                     HTML::anchor($user->url, HTML::chars($user->nick)),
                     Text::auto_link($user->mail),
@@ -126,8 +124,7 @@ class Controller_Admin_User extends Controller_Admin {
 					->find_all()
 					->as_array('name', 'description');
 
-		if ($this->valid_post('user'))
-		{
+        if ($this->valid_post('user')) {
             $data = Validation::factory($this->request->post())
                 ->rule('pass', 'not_empty')
                 ->rule('pass', 'min_length', [
@@ -136,10 +133,8 @@ class Controller_Admin_User extends Controller_Admin {
                 ])
                 ->label('pass', __('Password'));
 
-			if ($data->check())
-			{
-				try
-				{
+            if ($data->check()) {
+                try {
 					// Affects the sanitized vars to the user object
                     $post->values($this->request->post(), ['name', 'pass', 'nick', 'mail', 'status']);
 
@@ -147,19 +142,16 @@ class Controller_Admin_User extends Controller_Admin {
 					$post->save();
 
                     // Ensure $_POST['roles'] is set and is an array
-					if ( ! isset($_POST['roles']) OR ! is_array($_POST['roles']))
-					{
+                    if (!isset($_POST['roles']) or !is_array($_POST['roles'])) {
                         $_POST['roles'] = [];
 					}
 
 					// Make sure to add an empty if none of the roles checked to avoid errors
-                    if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login')))
-					{
+                    if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login'))) {
                         $_POST['roles'] = Arr::merge($_POST['roles'], ['login' => '']);
 					}
 
-					foreach(array_keys($_POST['roles']) as $role)
-					{
+                    foreach (array_keys($_POST['roles']) as $role) {
 						// add() executes the query immediately, and saves the data
                         $post->add('roles', ORM::factory('Role', ['name' => $role]));
 					}
@@ -167,14 +159,10 @@ class Controller_Admin_User extends Controller_Admin {
                     Message::success(__('User %name saved successful!', ['%name' => $post->name]));
 
 					$this->request->redirect(Route::get('admin/user')->uri(), 200);
-				}
-				catch (ORM_Validation_Exception $e)
-				{
+                } catch (ORM_Validation_Exception $e) {
                     $this->_errors = $e->errors('models');
 				}
-			}
-			else
-			{
+            } else {
                 $this->_errors = $data->errors('models');
 			}
 		}
@@ -204,8 +192,7 @@ class Controller_Admin_User extends Controller_Admin {
 
         $post = ORM::factory('User', $id);
 
-		if ( ! $post->loaded() OR $id === 1)
-		{
+        if (!$post->loaded() or $id === 1) {
 			Message::error(__("User doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user');
 
@@ -227,8 +214,7 @@ class Controller_Admin_User extends Controller_Admin {
 					->set('post',       $post)
 					->bind('errors',    $this->_errors);
 
-		if ($this->valid_post('user'))
-		{
+        if ($this->valid_post('user')) {
             $data = Validation::factory($this->request->post())
                 ->rule('pass', 'min_length', [
                     ':value',
@@ -236,13 +222,10 @@ class Controller_Admin_User extends Controller_Admin {
                 ])
                 ->label('pass', __('Password'));
 
-			if ($data->check())
-			{
-				try
-				{
+            if ($data->check()) {
+                try {
 					// password can be empty - it will be ignored in save.
-					if (empty($_POST['pass']) OR (trim($_POST['pass']) == ''))
-					{
+                    if (empty($_POST['pass']) or (trim($_POST['pass']) == '')) {
 						unset($_POST['pass']);
 					}
 
@@ -250,14 +233,12 @@ class Controller_Admin_User extends Controller_Admin {
 					$post->save();
 
                     // Ensure $_POST['roles'] is set and is an array
-					if ( ! isset($_POST['roles']) OR ! is_array($_POST['roles']))
-					{
+                    if (!isset($_POST['roles']) or !is_array($_POST['roles'])) {
                         $_POST['roles'] = [];
 					}
 
 					// Make sure to add an empty if none of the roles checked to avoid errors
-                    if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login')))
-					{
+                    if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login'))) {
                         $_POST['roles'] = Arr::merge($_POST['roles'], ['login' => '']);
 					}
 
@@ -266,8 +247,7 @@ class Controller_Admin_User extends Controller_Admin {
 					// could also use array_diff, but this is much simpler
 					DB::delete('roles_users')->where('user_id', '=', $id)->execute();
 
-					foreach(array_keys($_POST['roles']) as $role)
-					{
+                    foreach (array_keys($_POST['roles']) as $role) {
 						// add() executes the query immediately, and saves the data
                         $post->add('roles', ORM::factory('Role', ['name' => $role]));
 					}
@@ -275,14 +255,10 @@ class Controller_Admin_User extends Controller_Admin {
                     Message::success(__('User %name saved successful!', ['%name' => $post->name]));
 
 					$this->request->redirect(Route::get('admin/user')->uri(), 200);
-				}
-				catch (ORM_Validation_Exception $e)
-				{
+                } catch (ORM_Validation_Exception $e) {
                     $this->_errors = $e->errors('models');
 				}
-			}
-			else
-			{
+            } else {
                 $this->_errors = $data->errors('models');
 			}
 		}
@@ -301,16 +277,14 @@ class Controller_Admin_User extends Controller_Admin {
 
         $user = ORM::factory('User', $id);
 
-		if ( ! $user->loaded())
-		{
+        if (!$user->loaded()) {
 			Message::error(__("User doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 
 			$this->request->redirect(Route::get('admin/user')->uri());
 		}
 		// If it is an external request and id < 3
-		elseif ($user->id < 3)
-		{
+        elseif ($user->id < 3) {
 			Message::error(__("You can't delete system users!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to delete system user.');
 
@@ -324,23 +298,18 @@ class Controller_Admin_User extends Controller_Admin {
 				->set('title', $user->name);
 
 		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/user')->uri());
 		}
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$user->delete();
                 Message::success(__('User %name deleted successful!', ['%name' => $user->name]));
 
 				$this->request->redirect(Route::get('admin/user')->uri());
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting user id: :id, :message', [
                     ':id' => $user->id,
                     ':message' => $e->getMessage()

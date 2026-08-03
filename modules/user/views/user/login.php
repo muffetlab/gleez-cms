@@ -74,8 +74,7 @@ Assets::css('user', 'media/css/user.css', ['weight' => 2]);
 					<p><?php echo __('Sign in using social network:');?></p>
 					<div class="btn-group">
 						<?php
-						foreach ($providers as $name => $provider)
-						{
+                        foreach ($providers as $name => $provider) {
                             echo HTML::anchor($provider['url'], '<i class="fab fa-' . $provider['icon'] . '"></i>', [
                                 'class' => 'btn btn-default',
                                 'title' => __('Login with :provider', [':provider' => $name])

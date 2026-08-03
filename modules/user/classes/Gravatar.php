@@ -125,10 +125,8 @@ class Gravatar {
      */
     public static function instance(string $email, array $config = null): Gravatar
     {
-		if ( ! isset(self::$_instances[$email]))
-		{
-			if (is_null($config))
-			{
+        if (!isset(self::$_instances[$email])) {
+            if (is_null($config)) {
 				// Load the configuration
 				$config = Kohana::$config->load('gravatar');
 			}
@@ -188,8 +186,7 @@ class Gravatar {
 		$url = self::HTTP_URL;
 
 		// Building the URL
-		if ($this->useSecureURL() OR Request::current()->secure())
-		{
+        if ($this->useSecureURL() or Request::current()->secure()) {
 			$url = self::HTTPS_URL;
 		}
 
@@ -200,13 +197,11 @@ class Gravatar {
             'r' => $this->getRating(),
         ];
 
-		if ($this->getDefaultImage())
-		{
+        if ($this->getDefaultImage()) {
             $query = Arr::merge($query, ['d' => $this->getDefaultImage()]);
 		}
 
-		if ($this->isForceDefault())
-		{
+        if ($this->isForceDefault()) {
             $query = Arr::merge($query, ['f' => 'y']);
 		}
 
@@ -336,17 +331,14 @@ class Gravatar {
     {
         $valid_formats = [];
 
-		foreach($this->_valid_formats as $format)
-		{
+        foreach ($this->_valid_formats as $format) {
 			$valid_formats[$format] = Kohana::$config->load('mimes')->get($format);
 		}
 
         $valid_types = [];
 
-		foreach($valid_formats as $format => $types)
-		{
-			foreach ($types as $type)
-			{
+        foreach ($valid_formats as $format => $types) {
+            foreach ($types as $type) {
 				$valid_types[] = $type;
 			}
 		}
@@ -387,8 +379,7 @@ class Gravatar {
 	 */
     public function setSize(int $size): Gravatar
     {
-		if ($size > 2048 OR $size < 0)
-		{
+        if ($size > 2048 or $size < 0) {
 			throw new Kohana_Exception('Avatar size must be within 0 pixels and 2048 pixels');
 		}
 
@@ -434,10 +425,8 @@ class Gravatar {
 		$this->_store_location = empty($location) ?  APPPATH . 'media/pictures' : $location;
 
 		// Make sure destination is a directory
-		if ( ! is_dir($this->_store_location))
-		{
-			if ( ! System::mkdir($this->_store_location))
-			{
+        if (!is_dir($this->_store_location)) {
+            if (!System::mkdir($this->_store_location)) {
                 Kohana::$log->add(
                     Log::WARNING, "Can't create location :loc1 for picture downloading. Current location: :loc2",
                     [':loc1' => $this->_store_location, ':loc2' => sys_get_temp_dir()]
@@ -447,8 +436,7 @@ class Gravatar {
 		}
 
 		// Make sure destination is writable
-		if ( ! is_writable($this->_store_location))
-		{
+        if (!is_writable($this->_store_location)) {
             throw new Kohana_Exception('Gravatar download destination is not writable!', [], 105);
 		}
 
@@ -472,8 +460,7 @@ class Gravatar {
 		$email = trim($email);
 
 		// make sure passed email address is valid
-		if ( ! Valid::email($email))
-		{
+        if (!Valid::email($email)) {
 			throw new Kohana_Exception('E-mail must be a valid email address');
 		}
 
@@ -499,27 +486,20 @@ class Gravatar {
 	 */
     public function setDefaultImage($image): Gravatar
     {
-        if ($image === false)
-		{
+        if ($image === false) {
             $this->default_image = false;
 
 			return $this;
 		}
 
 		$image = strtolower(trim($image));
-		if ( ! isset(self::$_default_gravatar[$image]))
-		{
-			if ( ! Valid::url($image))
-			{
+        if (!isset(self::$_default_gravatar[$image])) {
+            if (!Valid::url($image)) {
 				throw new Kohana_Exception('The default image specified is not a recognized gravatar "default" and is not a valid URL');
-			}
-			else
-			{
+            } else {
 				$this->_default_image = $image;
 			}
-		}
-		else
-		{
+        } else {
 			$this->_default_image = $image;
 		}
 
@@ -538,8 +518,7 @@ class Gravatar {
     {
 		$rating = strtolower($rating);
 
-		if ( ! isset(self::$_ratings[$rating]))
-		{
+        if (!isset(self::$_ratings[$rating])) {
             throw new Kohana_Exception(
                 'Invalid rating :rating specified, only "G", "PG", "R", or "X" are allowed to be used.',
                 [':rating' => $rating]
@@ -576,38 +555,31 @@ class Gravatar {
      */
 	protected function _prepareConfig($config)
 	{
-        if (isset($config['secure_url']) && $config['secure_url'])
-		{
+        if (isset($config['secure_url']) && $config['secure_url']) {
 			$this->enableSecureURL();
 		}
 
-		if (isset($config['size']))
-		{
+        if (isset($config['size'])) {
 			$this->setSize($config['size']);
 		}
 
-		if (isset($config['rating']))
-		{
+        if (isset($config['rating'])) {
 			$this->setRating($config['rating']);
 		}
 
-		if (isset($config['default_image']))
-		{
+        if (isset($config['default_image'])) {
 			$this->setDefaultImage($config['default_image']);
 		}
 
-		if (isset($config['force_default']))
-		{
+        if (isset($config['force_default'])) {
 			$this->setForceDefault($config['force_default']);
 		}
 
-        if (isset($config['valid_formats']) && is_array($config['valid_formats']))
-		{
+        if (isset($config['valid_formats']) && is_array($config['valid_formats'])) {
 			$this->setValidFormats($config['valid_formats']);
 		}
 
-        if (isset($config['store_location']) && is_string($config['store_location']))
-		{
+        if (isset($config['store_location']) && is_string($config['store_location'])) {
 			$this->setStoreLocation($config['store_location']);
 		}
 
@@ -698,14 +670,12 @@ class Gravatar {
         $headers = get_headers($this, 1);
 
 		// Make sure content type exists
-		if ( ! isset($headers['Content-Type']))
-		{
+        if (!isset($headers['Content-Type'])) {
             throw new Kohana_Exception('Content-Type not found', [], 300);
 		}
 
 		// Make sure content type is valid
-		if ( ! in_array($headers['Content-Type'], $this->getValidTypes()))
-		{
+        if (!in_array($headers['Content-Type'], $this->getValidTypes())) {
             throw new Kohana_Exception('Content-Type :type is invalid', [':type' => $headers['Content-Type']], 305);
 		}
 

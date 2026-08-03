@@ -157,15 +157,14 @@
                     'data-placement' => 'right'
                 ]);
 
-					foreach($providers as $name => $provider)
-					{
-                        echo HTML::anchor($provider['url'], '<i class="fab fa-' . $provider['icon'] . '"></i>' . ucfirst($name), [
-                            'class' => 'btn btn-default',
-                            'title' => __('Login with :provider', [':provider' => $name]),
-                            'rel' => 'tooltip',
-                            'data-placement' => 'right'
-                        ]);
-					}
+                foreach ($providers as $name => $provider) {
+                    echo HTML::anchor($provider['url'], '<i class="fab fa-' . $provider['icon'] . '"></i>' . ucfirst($name), [
+                        'class' => 'btn btn-default',
+                        'title' => __('Login with :provider', [':provider' => $name]),
+                        'rel' => 'tooltip',
+                        'data-placement' => 'right'
+                    ]);
+                }
 				?>
 			</div>
             <p class="help-sign-up">

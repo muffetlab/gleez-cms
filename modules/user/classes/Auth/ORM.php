@@ -35,10 +35,8 @@ class Auth_ORM extends Kohana_Auth_ORM
         $config = Kohana::$config->load('oauth2')->get('providers', []);
         $providers = [];
 
-		foreach($config as $name => $provider)
-		{
-            if ($provider['enable'] === true)
-			{
+        foreach ($config as $name => $provider) {
+            if ($provider['enable'] === true) {
                 $providers[$name] = [
                     'name' => $name,
                     'url' => Route::get('oauth2/provider')->uri(['provider' => $name, 'action' => 'login']),
@@ -69,8 +67,7 @@ class Auth_ORM extends Kohana_Auth_ORM
         // Because parent::logged_in returned true, we know this is a valid user ORM object.
 		$user = $this->get_user();
 
-        if ($provider !== null)
-		{
+        if ($provider !== null) {
 			// Check for one specific OAuth provider
 			$provider = $provider.'_id';
 			//return ! empty($user->$provider);
@@ -115,8 +112,7 @@ class Auth_ORM extends Kohana_Auth_ORM
      */
 	public function password($user): string
     {
-		if ( ! is_object($user))
-		{
+        if (!is_object($user)) {
 			$username = $user;
 
 			// Load the user
@@ -141,8 +137,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 		$user_model = $this->get_user();
 		$user = $user_model->original_values();
 
-		if ( ! $user)
-		{
+        if (!$user) {
             return false;
 		}
 
@@ -162,8 +157,7 @@ class Auth_ORM extends Kohana_Auth_ORM
      */
     public function force_sso_login(ORM $user, bool $mark_session_as_forced = false): bool
     {
-        if ($mark_session_as_forced === true)
-		{
+        if ($mark_session_as_forced === true) {
 			// Mark the session as forced, to prevent users from changing account information
             $this->_session->set('auth_forced', true);
 		}
@@ -242,16 +236,14 @@ class Auth_ORM extends Kohana_Auth_ORM
         }
 
 		// If the passwords match, perform a login! role id: 2
-        if ($user->has('roles', 2) && User::check_pass($user, $password) && $user->id !== 1)
-		{
+        if ($user->has('roles', 2) && User::check_pass($user, $password) && $user->id !== 1) {
             // Successful login, reset failed attempts
             if ($maxFailedLogins > 0) {
                 $cache->delete($failedAttemptsKey);
                 $cache->delete($failedAttemptsKey . ':time');
             }
 
-            if ($remember === true)
-			{
+            if ($remember === true) {
 				// Token data
                 $data = [
                     'user_id' => $user->id,

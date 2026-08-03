@@ -54,13 +54,12 @@
 			<p><?php echo __('Sign in using social network:');?></p>
 			<div class="btn-group">
 				<?php
-					foreach ($providers as $name => $provider)
-					{
-                        echo HTML::anchor($provider['url'], '<i class="fab fa-lg fa-' . $provider['icon'] . '"></i>', [
-                            'class' => 'btn btn-default',
-                            'title' => __('Login with :provider', [':provider' => $name])
-                        ]);
-					}
+                foreach ($providers as $name => $provider) {
+                    echo HTML::anchor($provider['url'], '<i class="fab fa-lg fa-' . $provider['icon'] . '"></i>', [
+                        'class' => 'btn btn-default',
+                        'title' => __('Login with :provider', [':provider' => $name])
+                    ]);
+                }
 				?>
 			</div>
 		</div>

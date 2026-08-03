@@ -33,13 +33,11 @@ class Controller_User extends Template {
 
         // Get the currently logged-in user or set up a new one.
 		// Note that get_user will also do an auto_login check.
-        if (($this->_user = $this->_auth->get_user()) === false)
-		{
+        if (($this->_user = $this->_auth->get_user()) === false) {
             $this->_user = ORM::factory('User');
 		}
 
-        if (strpos($this->request->uri(), 'user/reset/') !== false)
-		{
+        if (strpos($this->request->uri(), 'user/reset/') !== false) {
 			$this->request->action('reset_'.$this->request->action());
 		}
 
@@ -72,8 +70,7 @@ class Controller_User extends Template {
 		$this->title = __('User Registration');
 
         // If user already signed in
-		if ($this->_auth->logged_in())
-		{
+        if ($this->_auth->logged_in()) {
 			// redirect to the user account
             $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 		}
@@ -83,8 +80,7 @@ class Controller_User extends Template {
 		/** @var $config Config_Group */
 		$config = Kohana::$config->load('auth');
 
-		if ( ! $config->register)
-		{
+        if (!$config->register) {
 			// If user registration disabled, we return access denied.
 			throw HTTP_Exception::factory(403, __('User registration not allowed'));
 		}
@@ -103,17 +99,14 @@ class Controller_User extends Template {
 			->bind('female', $female)
 			->bind('errors', $this->_errors);
 
-        if ($config->get('use_captcha', false))
-		{
+        if ($config->get('use_captcha', false)) {
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
 		}
 
 		// If there is a post and $_POST is not empty
-		if ($this->valid_post('register'))
-		{
-			try
-			{
+        if ($this->valid_post('register')) {
+            try {
 				// creating user, adding roles and sending verification mail
 				$form = $this->request->post();
 				$post->signup($form);
@@ -125,9 +118,7 @@ class Controller_User extends Template {
                 Message::success(__('Account %title created successful!', ['%title' => $post->nick]));
 
                 $this->request->redirect(Route::get('user')->uri(['action' => 'profile']));
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -148,8 +139,7 @@ class Controller_User extends Template {
 	public function action_login()
 	{
         // If user already signed in
-		if ($this->_auth->logged_in())
-		{
+        if ($this->_auth->logged_in()) {
 			// redirect to the user account
             $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 		}
@@ -173,10 +163,8 @@ class Controller_User extends Template {
 			->set('action',       $action)
 			->bind('errors',      $this->_errors);
 
-		if ($this->valid_post('login'))
-		{
-			try
-			{
+        if ($this->valid_post('login')) {
+            try {
 				// Check Auth
 				$user->login($this->request->post());
 
@@ -187,9 +175,7 @@ class Controller_User extends Template {
 				// redirect to the user account
                 $this->request->redirect($_GET['destination'] ?? '', 200);
 
-			}
-			catch (Validation_Exception $e)
-			{
+            } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('login');
 			}
 		}
@@ -226,13 +212,10 @@ class Controller_User extends Template {
      */
 	public function action_profile()
 	{
-		if ( ! $this->_auth->logged_in())
-		{
+        if (!$this->_auth->logged_in()) {
 			// No user is currently logged in
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
-		}
-		else
-		{
+        } else {
             $this->request->redirect(Route::get('user')->uri([
                 'action' => 'view',
                 'id' => $this->_auth->get_user()->id
@@ -274,29 +257,23 @@ class Controller_User extends Template {
             || $this->_user->id !== $user->id
             && !ACL::check('administer users')
             && !ACL::check('access profiles')
-        )
-		{
+        ) {
             throw HTTP_Exception::factory(403, 'Attempt to access without required privileges.');
 		}
 
-        if ($this->_user->id == $user->id)
-		{
+        if ($this->_user->id == $user->id) {
 			Assets::popup();
 
 			$this->title = __('My Account');
-		}
-		else
-		{
+        } else {
             $this->title = __('Profile %title', ['%title' => Text::ucfirst($user->nick)]);
 		}
 
-        if ($this->_user->id == $user->id && $enable_buddy)
-		{
+        if ($this->_user->id == $user->id && $enable_buddy) {
             $is_owner = true;
 		}
 
-        if ($enable_buddy)
-		{
+        if ($enable_buddy) {
             $request = Model::factory('buddy')->isRequest($this->_user->id, $user->id);
             $isFriend = Model::factory('buddy')->isFriend($this->_user->id, $user->id);
 			$friends   = Model::factory('buddy')->friends($user->id, 5);
@@ -328,8 +305,7 @@ class Controller_User extends Template {
 	public function action_edit()
 	{
 		// The user is not logged in
-		if ( ! $this->_auth->logged_in())
-		{
+        if (!$this->_auth->logged_in()) {
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
@@ -348,8 +324,7 @@ class Controller_User extends Template {
 				->bind('errors', $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('user_edit'))
-		{
+        if ($this->valid_post('user_edit')) {
 			// Creating user age
 			$dob = strtotime(Arr::get($_POST, 'days').'-'.Arr::get($_POST, 'month').'-'.Arr::get($_POST, 'years'));
 
@@ -358,8 +333,7 @@ class Controller_User extends Template {
 
             $post = Arr::merge($_POST, ['dob' => $dob]);
 
-			try
-			{
+            try {
                 $user->values($post, ['nick', 'homepage', 'mail', 'bio', 'dob'])->save();
 
 				// If the post data validates using the rules setup in the user model
@@ -367,9 +341,7 @@ class Controller_User extends Template {
 
 				// redirect to the user account
                 $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -389,8 +361,7 @@ class Controller_User extends Template {
 	public function action_password()
 	{
 		// The user is not logged in
-		if ( ! $this->_auth->logged_in())
-		{
+        if (!$this->_auth->logged_in()) {
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 200);
 		}
 
@@ -405,10 +376,8 @@ class Controller_User extends Template {
 				->bind('errors',     $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('change_pass'))
-		{
-			try
-			{
+        if ($this->valid_post('change_pass')) {
+            try {
 				// Change password
 				$user->change_pass($this->request->post());
 
@@ -418,9 +387,7 @@ class Controller_User extends Template {
 				// Redirect to the user account
                 $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -438,8 +405,7 @@ class Controller_User extends Template {
 	public function action_photo()
 	{
 		// The user is not logged in
-		if ( ! $this->_auth->logged_in())
-		{
+        if (!$this->_auth->logged_in()) {
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
@@ -453,10 +419,8 @@ class Controller_User extends Template {
 					->bind('errors',       $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('user_edit'))
-		{
-			try
-			{
+        if ($this->valid_post('user_edit')) {
+            try {
 				$post = Arr::merge($this->request->post(), $_FILES);
                 $user->values($post, ['picture'])->save();
 
@@ -465,9 +429,7 @@ class Controller_User extends Template {
 
 				// Redirect to the user account
                 $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
-			}
-			catch(ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -494,8 +456,7 @@ class Controller_User extends Template {
 		$this->_preventCollision($id);
 
 		// Confirm the user's sign-up
-		if ($this->_user->confirm_signup($id, $token))
-		{
+        if ($this->_user->confirm_signup($id, $token)) {
 			// @todo If logged in, redirect to profile page or something, otherwise to sign in form
 			// @todo If account already confirmed, show Message::NOTICE
 			Message::success(__('Congratulations! Your sign-up has been confirmed.'));
@@ -521,8 +482,7 @@ class Controller_User extends Template {
 	public function action_reset_password()
 	{
 		// The user is logged in, yet it is possible that he lost his password anyway
-		if ($this->_auth->logged_in())
-		{
+        if ($this->_auth->logged_in()) {
             $this->request->redirect(Route::get('user')->uri(['action' => 'password', 'id' => $this->_user->id]), 200);
 		}
 
@@ -537,10 +497,8 @@ class Controller_User extends Template {
 				->bind('errors', $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('reset_pass'))
-		{
-			try
-			{
+        if ($this->valid_post('reset_pass')) {
+            try {
 				// Try to reset the password
 				$this->_user->reset_password($_POST);
 
@@ -554,9 +512,7 @@ class Controller_User extends Template {
 
                 $this->request->redirect(Route::get('user')->uri(['action' => 'login']));
 
-			}
-			catch (Validation_Exception $e)
-			{
+            } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('models/mail');
 			}
 		}
@@ -582,8 +538,7 @@ class Controller_User extends Template {
      */
 	public function action_reset_confirm_password()
 	{
-		if ($this->_auth->logged_in())
-		{
+        if ($this->_auth->logged_in()) {
 			// redirect to the user account
 			$this->request->redirect('user/profile');
 		}
@@ -597,8 +552,7 @@ class Controller_User extends Template {
 		$this->_preventCollision($id);
 
 		// Validate the confirmation link first
-		if ( ! $this->_user->confirm_reset_password_link($id, $token, $time))
-		{
+        if (!$this->_user->confirm_reset_password_link($id, $token, $time)) {
 			Message::error(__('The confirmation link to reset your password has expired or is invalid. Please request a new one using the form below.'));
 			$this->request->redirect('user/reset/password');
 		}
@@ -611,18 +565,14 @@ class Controller_User extends Template {
 			->bind('errors', $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('password_confirm'))
-		{
-			try
-			{
+        if ($this->valid_post('password_confirm')) {
+            try {
 				$this->_user->confirm_reset_password_form($_POST);
 				
 				Message::success(__('You can now sign in with your new password.'));
                 $this->request->redirect(Route::get('user')->uri(['action' => 'login']));
 
-			}
-			catch (Validation_Exception $e)
-			{
+            } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('models/user');
 			}
 		}
@@ -643,8 +593,7 @@ class Controller_User extends Template {
     protected function _preventCollision(int $id)
 	{
 		// Another user (on the same browser) is still logged in
-        if ($this->_auth->logged_in() && $id != $this->_user->id)
-		{
+        if ($this->_auth->logged_in() && $id != $this->_user->id) {
 			// Cover your ears, we're blowing up the whole session!
             $this->_auth->logout(true);
 

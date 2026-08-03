@@ -163,14 +163,12 @@ class Model_Message extends Gleez_Model
      */
     public function load(int $type = 0, string $direction = self::DESC): Model_Message
     {
-		if ( ! $this->loaded())
-		{
+        if (!$this->loaded()) {
 			$this->order_by('created', $direction);
 
 			$user = User::active_user();
 
-			switch ($type)
-			{
+            switch ($type) {
 				case PM::INBOX:
 					$this->where_open()
 						->where('recipient', '=', $user->id)
@@ -276,8 +274,7 @@ class Model_Message extends Gleez_Model
 	 */
     public function getOne(): Model_Message
     {
-		if ( ! $this->loaded())
-		{
+        if (!$this->loaded()) {
 			throw new HTTP_Exception_404('Message not found!');
 		}
 
@@ -296,8 +293,7 @@ class Model_Message extends Gleez_Model
      */
     public function toExists(Validation $validation, string $field)
 	{
-        if ($this->status != PM::STATUS_DRAFT && empty($validation[$field]))
-		{
+        if ($this->status != PM::STATUS_DRAFT && empty($validation[$field])) {
             $validation->error($field, 'not_empty', [$validation[$field]]);
         } elseif ($this->status != PM::STATUS_DRAFT && $this->exists($validation[$field])) {
             $validation->error($field, 'exists', [$validation[$field]]);

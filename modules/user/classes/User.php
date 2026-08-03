@@ -83,16 +83,14 @@ class User {
      */
     public static function is_admin(): bool
     {
-		if(User::is_guest())
-		{
+        if (User::is_guest()) {
             return false;
 		}
 
 		$user = Auth_ORM::instance()->get_user();
 
 		// To reduce the number of SQL queries, we cache the user's roles in a static variable.
-		if ( ! isset(User::$roles[$user->id]))
-		{
+        if (!isset(User::$roles[$user->id])) {
 			// @todo fetch and save in session to avoid recursive lookups
 			User::$roles[$user->id] = $user->roles();
 		}
@@ -143,38 +141,32 @@ class User {
      */
     public static function belongsTo($groups): bool
     {
-		if ($groups == 'all' OR is_null($groups))
-		{
+        if ($groups == 'all' or is_null($groups)) {
             return true;
 		}
 
-		if ( ! is_array($groups))
-		{
+        if (!is_array($groups)) {
 			$groups = @explode(',', $groups);
 		}
 
-		if (Auth_ORM::instance()->logged_in())
-		{
+        if (Auth_ORM::instance()->logged_in()) {
 			$user = Auth_ORM::instance()->get_user();
 
 			// To reduce the number of SQL queries, we cache the user's roles in a static variable.
-			if ( ! isset(User::$roles[$user->id]))
-			{
+            if (!isset(User::$roles[$user->id])) {
 				// @todo fetch and save in session to avoid recursive lookups
 				User::$roles[$user->id] = $user->roles();
 			}
 
 			// array_diff is not safe
-			if (array_intersect(array_values($groups), array_keys(User::$roles[$user->id])))
-			{
+            if (array_intersect(array_values($groups), array_keys(User::$roles[$user->id]))) {
                 return true;
 			}
 
             return false;
 		}
 
-		if (in_array('guest', $groups) OR array_key_exists(1, $groups))
-		{
+        if (in_array('guest', $groups) or array_key_exists(1, $groups)) {
             return true;
 		}
 
@@ -223,16 +215,12 @@ class User {
 	 */
     private static function _lookup_by_field(string $field, string $value)
 	{
-		try
-		{
+        try {
             $user = ORM::factory('User')->where($field, '=', $value)->find();
-			if ($user->loaded())
-			{
+            if ($user->loaded()) {
 				return $user;
 			}
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
             return false;
 		}
 
@@ -248,16 +236,12 @@ class User {
 	 */
     public static function getRoleById(int $id)
 	{
-		try
-		{
+        try {
             $role = ORM::factory('Role', $id);
-			if ($role->loaded())
-			{
+            if ($role->loaded()) {
 				return $role;
 			}
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
             return false;
 		}
 
@@ -289,8 +273,7 @@ class User {
      */
 	public static function cookie_save(array $values)
 	{
-		foreach ($values as $field => $value)
-		{
+        foreach ($values as $field => $value) {
 			// Set cookie for 365 days.
 			Cookie::set('Gleez.visitor.' . $field, rawurlencode($value), time() + 31536000);
 		}
@@ -336,8 +319,7 @@ class User {
      */
     public static function providers(): string
     {
-		if(! Auth_ORM::instance()->logged_in())
-		{
+        if (!Auth_ORM::instance()->logged_in()) {
 			$providers = array_filter(Auth_ORM::providers());
 			return View::factory('oauth/providers')->set('providers', $providers);
 		}
@@ -354,8 +336,7 @@ class User {
     public static function roles(ORM $user): string
     {
 		$roles = '<div class="user-roles">';
-		foreach ($user->roles() as $role)
-		{
+        foreach ($user->roles() as $role) {
             $roles .= '<p><span class="label label-default">' . HTML::chars($role) . '</span></p>';
 		}
 		$roles .= '</div>';
@@ -407,8 +388,7 @@ class User {
 
         $use_gravatar = Kohana::$config->load('site')->get('use_gravatars', false);
 
-		if ($use_gravatar)
-		{
+        if ($use_gravatar) {
             $avatar = Gravatar::instance($user->mail)
                 ->setSize($attrs['size'])
                 ->setDefaultImage($attrs['default_image'])
@@ -418,11 +398,8 @@ class User {
                     'width' => $attrs['size'],
                     'height' => $attrs['size']
                 ], $protocol, $index);
-		}
-		else
-		{
-			if ( ! empty($user->picture))
-			{
+        } else {
+            if (!empty($user->picture)) {
 				$avatar = $user->picture;
 			}
 

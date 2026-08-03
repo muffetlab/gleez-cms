@@ -78,12 +78,10 @@ class PM {
 		// Allow module developers to override
 		$values = Module::action('message_bulk_actions', $states);
 
-		if ($list)
-		{
+        if ($list) {
             $options = ['' => __('Bulk Actions')];
 
-			foreach ($values as $operation => $array)
-			{
+            foreach ($values as $operation => $array) {
 				$options[$operation] = $array['label'];
 			}
 
@@ -111,12 +109,9 @@ class PM {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($messages as $message)
-		{
-			foreach ($actions as $name => $value)
-			{
-				if (property_exists($message, $name))
-				{
+        foreach ($messages as $message) {
+            foreach ($actions as $name => $value) {
+                if (property_exists($message, $name)) {
 					$message->$name = $value;
 				}
 			}
@@ -142,8 +137,7 @@ class PM {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($messages as $message)
-		{
+        foreach ($messages as $message) {
 			$message->delete();
 		}
 	}

@@ -37,8 +37,7 @@ class Widget_User extends Widget {
 		$request = Request::current();
 
 		// If user already signed-in / don't show the widget on user controller.
-		if ($auth->logged_in() OR $request->controller() === 'user')
-		{
+		if ($auth->logged_in() OR $request->controller() === 'user') {
             return null;
 		}
 

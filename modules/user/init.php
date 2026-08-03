@@ -7,8 +7,7 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-if ( ! Route::cache())
-{
+if (!Route::cache()) {
     //User Backend routes
     Route::set('admin/permission', 'admin/permissions(/<action>)(/<id>)', [
         'id' => '\d+',
@@ -93,8 +92,7 @@ if ( ! Route::cache())
  *
  * @uses ACL Used to define the privileges
  */
-if ( ! ACL::cache() )
-{
+if (!ACL::cache()) {
     ACL::set('user', [
         'administer permissions' => [
             'title' => __('Administer permissions'),

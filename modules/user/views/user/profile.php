@@ -12,22 +12,19 @@
                         <i class="fas fa-chevron-right list-group-chevron"></i>
 					</a>
 					<?php
-						if ($is_owner)
-						{
-                            echo HTML::anchor(
-                                'message/inbox',
-                                '<i class="fas fa-fw fa-envelope"></i> ' . __('Messages') . '<i class="fas fa-chevron-right list-group-chevron"></i>',
-                                ['class' => 'list-group-item']
-                            );
-						}
-						elseif ( ! User::is_guest())
-						{
-                            echo HTML::anchor(
-                                'message/compose',
-                                '<i class="fas fa-fw fa-envelope"></i> ' . __('Send Message') . '<i class="fas fa-chevron-right list-group-chevron"></i>',
-                                ['class' => 'list-group-item']
-                            );
-						}
+                    if ($is_owner) {
+                        echo HTML::anchor(
+                            'message/inbox',
+                            '<i class="fas fa-fw fa-envelope"></i> ' . __('Messages') . '<i class="fas fa-chevron-right list-group-chevron"></i>',
+                            ['class' => 'list-group-item']
+                        );
+                    } elseif (!User::is_guest()) {
+                        echo HTML::anchor(
+                            'message/compose',
+                            '<i class="fas fa-fw fa-envelope"></i> ' . __('Send Message') . '<i class="fas fa-chevron-right list-group-chevron"></i>',
+                            ['class' => 'list-group-item']
+                        );
+                    }
 					?>
 					<?php if($enable_buddy): ?>
                         <?php echo HTML::anchor(

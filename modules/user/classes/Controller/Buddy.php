@@ -15,14 +15,12 @@ class Controller_Buddy extends Template {
 	{
 		parent::before();
 
-        if (!$this->_auth->logged_in())
-		{
+        if (!$this->_auth->logged_in()) {
 			// No user is currently logged in
 			$this->request->redirect('user/login');
 		}
 
-        if (!Kohana::$config->load('auth')->get('enable_buddy', false))
-		{
+        if (!Kohana::$config->load('auth')->get('enable_buddy', false)) {
             // If user buddy disabled, we return not found.
 			throw HTTP_Exception::factory(404, __('Buddy not allowed'));
 		}
@@ -42,15 +40,13 @@ class Controller_Buddy extends Template {
 
         $user = ORM::factory('User', $id);
 
-		if ( ! $user->loaded())
-		{
+        if (!$user->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
-        if ($account && $user->id === $account->id)
-		{
+        if ($account && $user->id === $account->id) {
             $is_owner = true;
 		}
 
@@ -89,24 +85,19 @@ class Controller_Buddy extends Template {
         $user = ORM::factory('User', $id);
         $account = false;
 
-		if ( ! $user->loaded())
-		{
+        if (!$user->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
-		if ($this->_auth->logged_in())
-		{
+        if ($this->_auth->logged_in()) {
 			$account = Auth_ORM::instance()->get_user();
 		}
 
-        if ($account && $user->id === $account->id)
-		{
+        if ($account && $user->id === $account->id) {
             $is_owner = true;
-		}
-		else
-		{
+        } else {
 			throw HTTP_Exception::factory(403, 'Attempt to access without required privileges.');
 		}
 
@@ -143,20 +134,17 @@ class Controller_Buddy extends Template {
 		$id 	  = (int) $this->request->param('id');
         $user = ORM::factory('User', $id);
         $account = false;
-		
-		if ( ! $user->loaded())
-			{
+
+        if (!$user->loaded()) {
 				Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 				// No user is currently logged in
                 $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 			}
-		
-		if ($this->_auth->logged_in())
-		{
+
+        if ($this->_auth->logged_in()) {
 			$account = Auth_ORM::instance()->get_user();
 		}
-        if (!$account || $user->id !== $account->id)
-		{
+        if (!$account || $user->id !== $account->id) {
 			throw HTTP_Exception::factory(403, 'Attempt to access without required privileges.');
 		}
 		
@@ -192,8 +180,7 @@ class Controller_Buddy extends Template {
         $invitee = ORM::factory('User', $id);
 		$account = Auth_ORM::instance()->get_user();
 
-		if ( ! $invitee->loaded() )
-		{
+        if (!$invitee->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
@@ -213,8 +200,7 @@ class Controller_Buddy extends Template {
 		$id     = (int) $this->request->param('id');
         $friend = ORM::factory('User', $id);
 
-		if ( ! $friend->loaded())
-		{
+        if (!$friend->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
@@ -222,14 +208,12 @@ class Controller_Buddy extends Template {
 
 		$model = Model::factory('buddy');
 
-		if ( $model->isFriend($this->user->id, $friend->id))
-		{
+        if ($model->isFriend($this->user->id, $friend->id)) {
 			// Already friend
             $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $friend->id]));
 		}
 
-		if ( $model->isRequest($this->user->id, $friend->id))
-		{
+        if ($model->isRequest($this->user->id, $friend->id)) {
             $model->accept($this->user->id);
             Message::success(__('Buddy request: %title accepted', ['%title' => $friend->nick]));
 		}
@@ -245,8 +229,7 @@ class Controller_Buddy extends Template {
 		$id 	= (int) $this->request->param('id');
         $friend = ORM::factory('User', $id);
 
-		if ( ! $friend->loaded())
-		{
+        if (!$friend->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
@@ -254,14 +237,12 @@ class Controller_Buddy extends Template {
 
 		$model = Model::factory('buddy');
 
-		if ( $model->isFriend($this->user->id, $friend->id))
-		{
+        if ($model->isFriend($this->user->id, $friend->id)) {
 			// Already friend
             $this->request->redirect(Route::get('user')->uri(['action' => 'profile', 'id' => $id]));
 		}
 
-		if ( $model->isRequest($this->user->id, $friend->id))
-		{
+        if ($model->isRequest($this->user->id, $friend->id)) {
 			$model->reject($id);
             Message::success(__('Buddy %title rejected', ['%title' => $friend->nick]));
 		}
@@ -278,8 +259,7 @@ class Controller_Buddy extends Template {
         $friend = ORM::factory('User', $id);
 		$account = Auth_ORM::instance()->get_user();
 
-		if ( ! $friend->loaded())
-		{
+        if (!$friend->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 			// No user is currently logged in
             $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);

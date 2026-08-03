@@ -26,12 +26,11 @@
 			</tr>
 		</thead>
 
-	<?php 
-		foreach ($perms as $row)
-		{
+        <?php
+        foreach ($perms as $row) {
             $role_perms[$row->rid][$row->permission] = true;
-		}
-	?>
+        }
+        ?>
 
 		<tbody>
 	

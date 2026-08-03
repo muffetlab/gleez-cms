@@ -38,13 +38,11 @@ class Controller_Admin_Role extends Controller_Admin {
 	{
 		$is_datatables = Request::is_datatables();
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $roles = ORM::factory('Role');
             $this->_datatables = $roles->dataTables(['name', 'description', 'special']);
 
-			foreach ($this->_datatables->result() as $role)
-			{
+            foreach ($this->_datatables->result() as $role) {
                 $this->_datatables->add_row([
                     HTML::chars($role->name),
                     HTML::chars($role->description),
@@ -95,18 +93,14 @@ class Controller_Admin_Role extends Controller_Admin {
 		$this->title = __('Add Role');
         $post = ORM::factory('Role');
 
-		if ($this->valid_post('role'))
-		{
+        if ($this->valid_post('role')) {
             $post->values($_POST, ['name', 'description', 'special']);
-			try
-			{
+            try {
 				$post->save();
                 Message::success(__('Role %name saved successful!', ['%name' => $post->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri(), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -130,8 +124,7 @@ class Controller_Admin_Role extends Controller_Admin {
 
         $post = ORM::factory('Role', $id);
 
-		if(!$post->loaded())
-		{
+        if (!$post->loaded()) {
 			Message::error(__("Role doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent role.');
 
@@ -146,20 +139,16 @@ class Controller_Admin_Role extends Controller_Admin {
 					->set('errors', $this->_errors)
 					->bind('post',  $post);
 
-		if ( $this->valid_post('role') )
-		{
+        if ($this->valid_post('role')) {
             $post->values($_POST, ['name', 'description', 'special']);
 
-			try
-			{
+            try {
 				$post->save();
 
                 Message::success(__('Role %name updated successful!', ['%name' => $post->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri(), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -177,8 +166,7 @@ class Controller_Admin_Role extends Controller_Admin {
 
         $role = ORM::factory('Role', $id);
 
-		if ( ! $role->loaded())
-		{
+        if (!$role->loaded()) {
             Message::error(__("Role: doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent role.');
 			$this->request->redirect(Route::get('admin/role')->uri());
@@ -191,23 +179,18 @@ class Controller_Admin_Role extends Controller_Admin {
             ->set('title', $role->name);
 
 		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/role')->uri());
 		}
 
 		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post())
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$role->delete(); //delete the role
                 Message::success(__('Role: :name deleted successful!', [':name' => $role->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri());
-			}
-			catch (Exception $e)
-			{
+            } catch (Exception $e) {
                 Kohana::$log->add(Log::ERROR, 'Error occurred deleting role id: :id, :message', [
                     ':id' => $role->id,
                     ':message' => $e->getMessage()
