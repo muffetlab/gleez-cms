@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme helper for adding content to views
  *

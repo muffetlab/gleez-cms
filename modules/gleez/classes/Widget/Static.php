@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Menu Widget class
  *

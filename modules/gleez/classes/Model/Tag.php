@@ -1,4 +1,5 @@
 <?php
+
 /**
  * An adaptation of Freetag
  *

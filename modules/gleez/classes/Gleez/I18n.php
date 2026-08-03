@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Internationalization (i18n) class with plural support to I18n
  *

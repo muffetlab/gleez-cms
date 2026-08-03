@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Redis-based session class.
  *

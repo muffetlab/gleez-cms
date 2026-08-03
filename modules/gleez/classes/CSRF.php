@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cross-Site Request Forgery helper
  *

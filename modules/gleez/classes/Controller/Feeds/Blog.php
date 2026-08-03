@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Blog Feed Controller
  *

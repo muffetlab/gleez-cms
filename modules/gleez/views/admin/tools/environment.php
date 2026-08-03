@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @todo Use links to Gleez Doc for constants here
  * @todo Use Gleez::init here

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tests the Config lib that's shipped with kohana
  *

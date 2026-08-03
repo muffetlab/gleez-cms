@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class for creating BBCode-like tags (shortcodes).
  * The tag and attribute parsing or regular expression code is

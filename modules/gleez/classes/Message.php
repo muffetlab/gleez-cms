@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Message is a class that lets you easily send messages
  * in your application (aka Flash Messages)

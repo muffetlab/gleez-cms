@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Widgets Core Class
  *

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gleez Core Cache Class
  *

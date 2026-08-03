@@ -1,4 +1,5 @@
 <?php
+
 /**
  * An adaptation of handle path aliasing.
  *

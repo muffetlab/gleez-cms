@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Upload helper class for working with uploaded files and [Validation].
  *

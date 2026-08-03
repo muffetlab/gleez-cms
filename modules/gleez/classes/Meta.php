@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Manager for rendering meta tags (<link> and <meta>)
  *

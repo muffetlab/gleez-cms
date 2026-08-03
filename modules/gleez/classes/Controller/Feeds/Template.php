@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Abstract template class for feed controllers
  *

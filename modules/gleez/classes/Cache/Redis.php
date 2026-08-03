@@ -1,4 +1,5 @@
 <?php
+
 /**
  * [Cache](api/Cache) A Redis driver
  *

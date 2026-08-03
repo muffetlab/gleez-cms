@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JSON helper class
  *

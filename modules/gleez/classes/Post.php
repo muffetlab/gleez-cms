@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core Post Class for handling content and content types
  *
