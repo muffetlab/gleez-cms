@@ -102,7 +102,7 @@ class Controller_Admin_Permission extends Controller_Admin {
 		$id   = (int) $this->request->param('id', 0);
         $post = ORM::factory('User', $id);
 
-        if (!$post->loaded() or $id === 1) {
+        if (!$post->loaded() || $id === 1) {
 			Message::error(__("User doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 

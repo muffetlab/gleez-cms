@@ -186,7 +186,7 @@ class Gravatar {
 		$url = self::HTTP_URL;
 
 		// Building the URL
-        if ($this->useSecureURL() or Request::current()->secure()) {
+        if ($this->useSecureURL() || Request::current()->secure()) {
 			$url = self::HTTPS_URL;
 		}
 
@@ -379,7 +379,7 @@ class Gravatar {
 	 */
     public function setSize(int $size): Gravatar
     {
-        if ($size > 2048 or $size < 0) {
+        if ($size > 2048 || $size < 0) {
 			throw new Kohana_Exception('Avatar size must be within 0 pixels and 2048 pixels');
 		}
 

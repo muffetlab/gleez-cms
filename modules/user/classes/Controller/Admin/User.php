@@ -142,12 +142,12 @@ class Controller_Admin_User extends Controller_Admin {
 					$post->save();
 
                     // Ensure $_POST['roles'] is set and is an array
-                    if (!isset($_POST['roles']) or !is_array($_POST['roles'])) {
+                    if (!isset($_POST['roles']) || !is_array($_POST['roles'])) {
                         $_POST['roles'] = [];
 					}
 
 					// Make sure to add an empty if none of the roles checked to avoid errors
-                    if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login'))) {
+                    if (empty($_POST['roles']) || is_null(Arr::get($_POST['roles'], 'login'))) {
                         $_POST['roles'] = Arr::merge($_POST['roles'], ['login' => '']);
 					}
 
@@ -192,7 +192,7 @@ class Controller_Admin_User extends Controller_Admin {
 
         $post = ORM::factory('User', $id);
 
-        if (!$post->loaded() or $id === 1) {
+        if (!$post->loaded() || $id === 1) {
 			Message::error(__("User doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user');
 
@@ -225,7 +225,7 @@ class Controller_Admin_User extends Controller_Admin {
             if ($data->check()) {
                 try {
 					// password can be empty - it will be ignored in save.
-                    if (empty($_POST['pass']) or (trim($_POST['pass']) == '')) {
+                    if (empty($_POST['pass']) || (trim($_POST['pass']) == '')) {
 						unset($_POST['pass']);
 					}
 
@@ -233,12 +233,12 @@ class Controller_Admin_User extends Controller_Admin {
 					$post->save();
 
                     // Ensure $_POST['roles'] is set and is an array
-                    if (!isset($_POST['roles']) or !is_array($_POST['roles'])) {
+                    if (!isset($_POST['roles']) || !is_array($_POST['roles'])) {
                         $_POST['roles'] = [];
 					}
 
 					// Make sure to add an empty if none of the roles checked to avoid errors
-                    if (empty($_POST['roles']) or is_null(Arr::get($_POST['roles'], 'login'))) {
+                    if (empty($_POST['roles']) || is_null(Arr::get($_POST['roles'], 'login'))) {
                         $_POST['roles'] = Arr::merge($_POST['roles'], ['login' => '']);
 					}
 

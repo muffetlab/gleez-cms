@@ -141,7 +141,7 @@ class User {
      */
     public static function belongsTo($groups): bool
     {
-        if ($groups == 'all' or is_null($groups)) {
+        if ($groups == 'all' || is_null($groups)) {
             return true;
 		}
 
@@ -166,7 +166,7 @@ class User {
             return false;
 		}
 
-        if (in_array('guest', $groups) or array_key_exists(1, $groups)) {
+        if (in_array('guest', $groups) || array_key_exists(1, $groups)) {
             return true;
 		}
 

@@ -984,7 +984,7 @@ class Model_User extends Gleez_Model
         $oldData = unserialize($data);
         $newData = is_array($this->data) ? $this->data : [];
 
-        if (empty($data) or !$oldData) {
+        if (empty($data) || !$oldData) {
             return empty($this->data) ? null : serialize($newData);
 		}
 

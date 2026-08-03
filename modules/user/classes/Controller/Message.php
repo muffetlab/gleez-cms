@@ -49,7 +49,7 @@ class Controller_Message extends Template {
      */
 	public function after()
 	{
-        if ($this->request->action() == 'compose' or $this->request->action() == 'edit') {
+        if ($this->request->action() == 'compose' || $this->request->action() == 'edit') {
 			// Add RichText Support
 			Assets::editor('.textarea', I18n::$lang);
         } else {
@@ -375,7 +375,7 @@ class Controller_Message extends Template {
 				$this->request->redirect($redirect);
 			}
 
-            if (!isset($post['messages']) or (!is_array($post['messages']) or !count(array_filter($post['messages'])))) {
+            if (!isset($post['messages']) || (!is_array($post['messages']) || !count(array_filter($post['messages'])))) {
 				Message::error(__('No messages selected.'));
 				$this->request->redirect($redirect);
 			}
