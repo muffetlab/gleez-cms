@@ -8,7 +8,8 @@
  * @copyright	(c) 2008-2010 Kohana Team
  * @license		http://kohanaphp.com/license.html
  */
-abstract class Captcha {
+abstract class Captcha
+{
 	/**
 	 * @var object Captcha singleton
 	 */

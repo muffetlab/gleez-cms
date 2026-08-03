@@ -11,7 +11,8 @@
  * @copyright	(c) 2008-2010 Kohana Team
  * @license		http://kohanaphp.com/license.html
  */
-class Controller_Captcha extends Controller {
+class Controller_Captcha extends Controller
+{
 
 	/**
 	 * @var boolean Auto render template
