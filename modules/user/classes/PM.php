@@ -9,7 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class PM {
+class PM
+{
 	/**
 	 * Inbox virtual folder name.
 	 * Can be used when determining the type of messages received.

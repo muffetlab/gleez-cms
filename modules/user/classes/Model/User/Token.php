@@ -8,7 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license
  */
-class Model_User_Token extends ORM {
+class Model_User_Token extends ORM
+{
 
     protected $_table_columns = [
         'id' => ['type' => 'int'],

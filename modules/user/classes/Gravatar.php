@@ -15,7 +15,8 @@
  * @copyright  (c) 2011-2013 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Gravatar {
+class Gravatar
+{
 
 	/** The gravatar service URLs */
 	const HTTP_URL  = 'http://www.gravatar.com/avatar/';
