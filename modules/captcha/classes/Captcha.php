@@ -333,7 +333,7 @@ abstract class Captcha {
 			// Resize the image if needed
             if (
                 imagesx($backgroundImage) !== Captcha::$config['width']
-                or imagesy($backgroundImage) !== Captcha::$config['height']
+                || imagesy($backgroundImage) !== Captcha::$config['height']
             ) {
 				imagecopyresampled
 				(
