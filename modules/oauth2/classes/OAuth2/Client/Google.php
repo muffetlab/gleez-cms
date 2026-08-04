@@ -9,7 +9,6 @@
  */
 class OAuth2_Client_Google extends OAuth2_Client
 {
-
 	/**
 	 * Return the authorization endpoint
 	 *

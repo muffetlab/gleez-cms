@@ -9,7 +9,6 @@
  */
 abstract class OAuth2_Client
 {
-
     /**
      * Authorization types
      */

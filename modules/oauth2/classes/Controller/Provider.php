@@ -10,7 +10,6 @@
  */
 class Controller_Provider extends Template
 {
-
 	/**
 	 * Demo content
 	 * @var string

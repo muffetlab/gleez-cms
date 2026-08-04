@@ -2,7 +2,6 @@
 
 class Controller_Client extends Template
 {
-
     /**
      * @throws HTTP_Exception_404
      * @throws View_Exception

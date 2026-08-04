@@ -11,7 +11,6 @@
  */
 class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 {
-
 	private $clientData;
 
 	protected $config;

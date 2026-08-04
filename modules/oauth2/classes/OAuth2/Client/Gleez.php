@@ -9,7 +9,6 @@
  */
 class OAuth2_Client_Gleez extends OAuth2_Client
 {
-
 	/**
 	 * Return the authorization endpoint
 	 *

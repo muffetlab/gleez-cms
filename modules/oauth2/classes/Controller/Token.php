@@ -11,7 +11,6 @@
  */
 class Controller_Token extends Controller
 {
-
 	protected $accessToken;
 	protected $grantTypes;
 	protected $clientAssertionType;
