@@ -217,7 +217,7 @@ abstract class Template extends Controller
      * Loads the template View object, if it is direct request
      *
      * @return  void
-     * @throws Http_Exception_415 If none of the accept-types are supported
+     * @throws HTTP_Exception_415 If none of the accept-types are supported
      * @throws Kohana_Exception
      * @throws View_Exception
      * @throws Exception
@@ -304,7 +304,7 @@ abstract class Template extends Controller
         if ($this->auto_render && !$this->bare) {
 			// Throw exception if none of the accept-types are supported
             if (empty($accept_types)) {
-                throw new Http_Exception_415('Unsupported accept-type');
+                throw new HTTP_Exception_415('Unsupported accept-type');
 			}
 
 			// Initiate a Format instance

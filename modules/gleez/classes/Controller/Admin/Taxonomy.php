@@ -18,7 +18,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin
      *
      * @throws HTTP_Exception
      * @throws HTTP_Exception_403
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
      * @throws ReflectionException
