@@ -14,8 +14,8 @@ class Controller_Admin_User extends Controller_Admin
 	/**
 	 * The before() method is called before controller action
 	 *
-     * @throws Kohana_Exception
-	 * @uses  ACL::required
+     * @throws Kohana_Exception|ReflectionException
+     * @uses ACL::required
 	 */
 	public function before()
 	{

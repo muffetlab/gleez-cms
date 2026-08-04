@@ -19,6 +19,7 @@ class Controller_Admin_Role extends Controller_Admin
      * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses ACL::required
      */
 	public function before()

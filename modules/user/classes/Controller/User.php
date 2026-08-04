@@ -229,6 +229,7 @@ class Controller_User extends Template
      *
      * @throws HTTP_Exception_403
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses Auth_ORM::get_user
      * @uses ACL::check
      * @uses Text::ucfirst
