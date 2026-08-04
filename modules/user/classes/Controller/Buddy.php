@@ -10,7 +10,6 @@
  */
 class Controller_Buddy extends Template
 {
-
 	protected $user;
 
 	public function before()

@@ -18,7 +18,6 @@
  */
 class Gravatar
 {
-
 	/** The gravatar service URLs */
 	const HTTP_URL  = 'http://www.gravatar.com/avatar/';
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';

@@ -11,7 +11,6 @@
  */
 class Controller_Message extends Template
 {
-
     /**
      * The before() method is called before controller action
      *

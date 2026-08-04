@@ -11,7 +11,6 @@
  */
 class Model_User_Token extends ORM
 {
-
     protected $_table_columns = [
         'id' => ['type' => 'int'],
         'user_id' => ['type' => 'int'],

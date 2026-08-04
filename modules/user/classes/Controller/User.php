@@ -11,7 +11,6 @@
  */
 class Controller_User extends Template
 {
-
 	/**
 	 * User object
 	 * @var Model_User

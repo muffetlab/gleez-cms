@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Permission extends Controller_Admin
 {
-
     /**
      * Shows list of permissions
      *

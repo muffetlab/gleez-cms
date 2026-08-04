@@ -11,7 +11,6 @@
  */
 class User
 {
-
 	/**
 	 * Guest user ID
 	 * @type integer

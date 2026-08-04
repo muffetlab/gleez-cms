@@ -10,7 +10,6 @@
  */
 class Model_Identity extends ORM
 {
-
 	/**
 	 * Table columns
 	 * @var array

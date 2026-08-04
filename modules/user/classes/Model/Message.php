@@ -11,7 +11,6 @@
  */
 class Model_Message extends Gleez_Model
 {
-
 	/**
 	 * Sort mode of messages - ascending
 	 * @type string
