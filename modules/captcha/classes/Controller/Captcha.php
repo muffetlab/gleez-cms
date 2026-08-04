@@ -14,7 +14,6 @@
  */
 class Controller_Captcha extends Controller
 {
-
 	/**
 	 * @var boolean Auto render template
 	 **/
