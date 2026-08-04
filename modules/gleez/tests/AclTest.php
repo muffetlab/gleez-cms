@@ -20,7 +20,7 @@ class Gleez_AclTest extends Unittest_TestCase
 	
 	/**
 	 * @dataProvider providerPerms
-     * @throws Cache_Exception|Kohana_Exception
+     * @throws Cache_Exception|Kohana_Exception|ReflectionException
      */
     public function test_acl_check($perm, $user_id)
 	{

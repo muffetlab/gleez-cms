@@ -17,6 +17,7 @@ class Controller_Taxonomy extends Template
      * @throws Http_Exception_415
      * @throws HTTP_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      */
     public function before()
 	{
@@ -35,6 +36,7 @@ class Controller_Taxonomy extends Template
      * @throws Kohana_Exception
      * @throws HTTP_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      */
     public function action_term()
 	{

@@ -15,6 +15,7 @@ class Controller_Autocomplete extends Controller
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      */
     public function before()
 	{

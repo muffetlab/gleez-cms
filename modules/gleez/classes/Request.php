@@ -182,6 +182,7 @@ class Request extends Kohana_Request
      * @throws HTTP_Exception_503
      * @throws Kohana_Exception
      * @throws Request_Exception
+     * @throws ReflectionException
      * @uses    [Kohana::$profiling]
      * @uses    [Profiler]
      * @uses    Gleez::block_ips

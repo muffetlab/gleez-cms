@@ -48,7 +48,7 @@ class Controller_Admin_Autocomplete extends Controller
     /**
      * Retrieve a JSON object containing autocomplete suggestions for existing aliases
      *
-     * @throws HTTP_Exception_403|Kohana_Exception
+     * @throws HTTP_Exception_403|Kohana_Exception|ReflectionException
      * @uses  DB::select
      * @uses  HTML::chars
      * @uses  JSON::encode

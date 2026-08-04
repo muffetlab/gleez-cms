@@ -209,6 +209,7 @@ class ACL
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @since     2.0
      */
     public static function required(string $perm_name, Model_User $user = null, callable $callback = null, array $args = [])
@@ -242,6 +243,7 @@ class ACL
      * @param array $uri Additional route params [Optional]
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @since  2.0
      * @uses   Request::redirect()
      * @uses   Route::get()
@@ -423,6 +425,7 @@ class ACL
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    User::active_user
      * @uses    Module::event
      */
@@ -510,6 +513,7 @@ class ACL
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    User::active_user
      * @uses    Module::event
      */

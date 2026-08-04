@@ -18,6 +18,7 @@ class Controller_Page extends Template
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses  Request::action
      * @uses  ACL::required
      * @uses  Request::param
@@ -63,6 +64,7 @@ class Controller_Page extends Template
      * List of pages
      *
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses  Config::load
      * @uses  Config_Group::get
      * @uses  URL::canonical
@@ -382,6 +384,7 @@ class Controller_Page extends Template
      * @throws HTTP_Exception_404
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses    ACL::post
      * @uses    Request::query
      * @uses    Request::redirect
@@ -445,9 +448,10 @@ class Controller_Page extends Template
     /**
      * Category selector
      *
-     * @throws  HTTP_Exception_403
-     * @throws  HTTP_Exception_404
+     * @throws HTTP_Exception_403
+     * @throws HTTP_Exception_404
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    Config::load
      * @uses    Config::get
      * @uses    Log::add
@@ -531,6 +535,7 @@ class Controller_Page extends Template
      * @throws HTTP_Exception
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses   Config::load
      * @uses   Config::get
      * @uses   Log::add

@@ -18,6 +18,7 @@ class Controller_Blog extends Template
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses  Request::action
      * @uses  ACL::required
      * @uses  Request::param
@@ -60,7 +61,7 @@ class Controller_Blog extends Template
     /**
      * List of blog posts
      *
-     * @throws Kohana_Exception
+     * @throws Kohana_Exception|ReflectionException
      * @uses  ACL::check
      * @uses  ORM::reset
      * @uses  Log::add
@@ -395,6 +396,7 @@ class Controller_Blog extends Template
      * @throws HTTP_Exception_404
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses    ACL::post
      * @uses    Request::query
      * @uses    Request::redirect
@@ -467,9 +469,10 @@ class Controller_Blog extends Template
     /**
      * Category selector
      *
-     * @throws  HTTP_Exception_403
-     * @throws  HTTP_Exception_404
+     * @throws HTTP_Exception_403
+     * @throws HTTP_Exception_404
      * @throws Kohana_Exception
+     * @throws ReflectionException
      */
 	public function action_term()
 	{
@@ -542,8 +545,9 @@ class Controller_Blog extends Template
     /**
      * Tags view
      *
-     * @throw HTTP_Exception_404
+     * @throws HTTP_Exception_404
      * @throws Kohana_Exception
+     * @throws ReflectionException
      */
 	public function action_tag()
 	{

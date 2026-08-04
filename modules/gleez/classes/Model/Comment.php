@@ -281,6 +281,7 @@ class Model_Comment extends Gleez_Model
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    ACL::check
      * @uses    Module::event
      */
@@ -371,6 +372,7 @@ class Model_Comment extends Gleez_Model
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    Log::add
      * @uses    User::active_user
      * @uses    ACL::check

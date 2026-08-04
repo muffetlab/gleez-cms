@@ -39,6 +39,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      */
 	public function before()
 	{

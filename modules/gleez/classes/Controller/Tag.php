@@ -18,6 +18,7 @@ class Controller_Tag extends Template
      * @throws Http_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses    ACL::required
      */
 	public function before()
@@ -39,6 +40,7 @@ class Controller_Tag extends Template
      * @throws HTTP_Exception
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses    Log::add
      * @uses    Text::ucfirst
      * @uses    ACL::check

@@ -194,8 +194,9 @@ class Gleez
      * If Gleez is in maintenance mode, then force all non-admins to get routed
      * to a "This site is down for maintenance" page.
      *
-     * @throws  HTTP_Exception_503
+     * @throws HTTP_Exception_503
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    Request::initial
      * @uses    Config::load
      * @uses    Request::controller
