@@ -61,8 +61,8 @@ class Controller_Provider extends Template
     /**
      * The before() method is called before controller action.
      *
-     * @throws Http_Exception_404 If the provider is disabled
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_404 If the provider is disabled
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
      * @uses Auth::logged_in
@@ -87,7 +87,7 @@ class Controller_Provider extends Template
 
 		// Throw exception if the provider is disabled
         if (!array_key_exists($this->provider, array_filter($providers))) {
-            throw new Http_Exception_404('Unsupported provider', null);
+            throw new HTTP_Exception_404('Unsupported provider', null);
 		}
 
 		$this->route = $this->request->route();
