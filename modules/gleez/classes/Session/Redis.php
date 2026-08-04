@@ -13,7 +13,6 @@
 
 class Session_Redis extends Session
 {
-
 	/**
 	 * Database instance
 	 * @var Database
@@ -54,7 +53,6 @@ class Session_Redis extends Session
      */
     public function __construct(array $config = null, string $id = null)
     {
-
 		// Check that the PhpRedis extension is loaded.
 		if (!extension_loaded('redis')) {
 			throw new Kohana_Exception('You must have PhpRedis installed and enabled to use.');
@@ -162,7 +160,6 @@ class Session_Redis extends Session
 	 */
 	protected function _destroy(): bool
     {
-
         try {
 			// Execute the query
             $this->_redis->del($this->_prefix . $this->_session_id);

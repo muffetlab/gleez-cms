@@ -12,7 +12,6 @@
  */
 class JSON
 {
-	
 	/**
 	 * Encodes the given value into a JSON string
 	 *

@@ -13,7 +13,6 @@
  */
 class Widgets
 {
-
 	/**
 	 * Widgets instance
      * @var Widgets

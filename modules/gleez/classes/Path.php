@@ -11,7 +11,6 @@
  */
 class Path
 {
-
 	/**
      * Default alias for the front page
 	 * @type string

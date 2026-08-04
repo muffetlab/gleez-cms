@@ -16,7 +16,6 @@
  */
 class Theme
 {
-
 	/**
 	 * Active theme name
 	 * @var string

@@ -11,7 +11,6 @@
  */
 class Pagination
 {
-
 	/** Merged configuration settings
 	 * @var array
 	 */

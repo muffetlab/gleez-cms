@@ -43,7 +43,6 @@
  */
 class Cache_Redis extends Cache
 {
-
 	const CACHE_TYPE = 'user';
 
     /**

@@ -11,7 +11,6 @@
  */
 class Gleez
 {
-
 	/**
 	 * Release version
 	 * @type string

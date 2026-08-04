@@ -11,7 +11,6 @@
  */
 class System
 {
-
 	/**
 	 * Windows OS
 	 * @type string

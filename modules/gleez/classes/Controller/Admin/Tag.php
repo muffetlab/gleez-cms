@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Tag extends Controller_Admin
 {
-
     /**
      * The before() method is called before controller action
      *

@@ -24,7 +24,6 @@
  */
 class Locale_Data
 {
-
 	/**
 	 * Locales for Full Named Locales
 	 * @var array

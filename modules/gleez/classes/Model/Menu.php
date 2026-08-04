@@ -11,7 +11,6 @@
  */
 class Model_Menu extends ORM_MPTT
 {
-
 	/**
 	 * Table columns
 	 * @var array

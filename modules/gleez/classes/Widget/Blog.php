@@ -11,7 +11,6 @@
  */
 class Widget_Blog extends Widget
 {
-
 	public function info(){}
 	public function form(){}
 	public function save(array $post){}

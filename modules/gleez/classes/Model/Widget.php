@@ -10,7 +10,6 @@
  */
 class Model_Widget extends ORM
 {
-
 	/**
 	 * Table columns
 	 * @var array

@@ -14,7 +14,6 @@
  */
 abstract class Widget
 {
-
 	/**
 	 * Widget Name
 	 * @var string

@@ -24,7 +24,6 @@
  */
 class Fragment
 {
-
 	/**
 	 * Default number of seconds to cache for
 	 * @var integer

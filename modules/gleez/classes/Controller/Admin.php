@@ -11,7 +11,6 @@
  */
 class Controller_Admin extends Template
 {
-
 	/**
 	 * Page template
      * @var string|View
@@ -64,7 +63,6 @@ class Controller_Admin extends Template
      */
     public function action_login()
     {
-
         if ($this->_auth->logged_in()) {
 			// redirect to the user account
 			$this->request->redirect(Route::get('admin')->uri(), 200);

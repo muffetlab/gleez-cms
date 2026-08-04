@@ -15,7 +15,6 @@
  */
 class Menu
 {
-
 	/**
 	 * Associative array of list items
 	 * @var array

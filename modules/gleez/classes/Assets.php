@@ -53,7 +53,6 @@
  */
 class Assets
 {
-
 	/** Formats that compile can return */
 	const FORMAT_TAG      = 'tag';
 	const FORMAT_FILENAME = 'filename';

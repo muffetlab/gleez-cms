@@ -19,7 +19,6 @@
  */
 class Gleez_Locale
 {
-
 	/**
 	 * The user's Web browser provides information with each request,
 	 * which is published by PHP in the global variable $_SERVER['HTTP_ACCEPT_LANGUAGE'].

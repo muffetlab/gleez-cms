@@ -11,7 +11,6 @@
  */
 class Meta
 {
-
 	/**
 	 * An array of meta links
 	 * @var array

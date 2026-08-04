@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Menu_Item extends Controller_Admin
 {
-
     /**
      * @var array Validation errors
      */

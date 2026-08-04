@@ -18,7 +18,6 @@
  */
 class ORM_MPTT extends Gleez_Model
 {
-
 	/**
 	 * Left column name
 	 * @var string

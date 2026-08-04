@@ -11,7 +11,6 @@
  */
 abstract class Template extends Controller
 {
-
 	/**
      * Page template: view path/name (string) until {@see before()} runs, then a {@see View} instance.
      *

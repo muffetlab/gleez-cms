@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Widget extends Controller_Admin
 {
-
 	/**
 	 * Denotes that a widget is not enabled in any region and should not be shown.
 	 */

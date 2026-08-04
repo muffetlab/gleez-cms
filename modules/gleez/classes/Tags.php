@@ -11,7 +11,6 @@
  */
 class Tags
 {
-
 	// Configuration
 	protected $config;
 

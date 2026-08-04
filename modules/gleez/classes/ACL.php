@@ -26,7 +26,6 @@
  */
 class ACL
 {
-
 	/** Rule type: deny */
     const DENY = false;
 

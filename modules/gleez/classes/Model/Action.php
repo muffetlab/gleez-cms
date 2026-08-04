@@ -10,7 +10,6 @@
  */
 class Model_Action extends ORM
 {
-
 	/**
 	 * "Has many" relationships
 	 * @var array

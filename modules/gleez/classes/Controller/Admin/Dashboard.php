@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Dashboard extends Controller_Admin
 {
-
     /**
      * @throws Kohana_Exception
      * @throws View_Exception

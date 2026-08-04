@@ -14,7 +14,6 @@ use PHPMailer\PHPMailer\PHPMailer;
  */
 class Email
 {
-
 	/**
 	 * Mail queue bool
 	 */

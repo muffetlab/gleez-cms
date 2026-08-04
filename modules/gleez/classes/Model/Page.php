@@ -10,7 +10,6 @@
  */
 class Model_Page extends Post
 {
-
 	/**
 	 * Post table name
 	 * @var string

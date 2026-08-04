@@ -10,7 +10,6 @@
  */
 class Model_Blog extends Post
 {
-
 	/**
 	 * Post table name
 	 * @var string

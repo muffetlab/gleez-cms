@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Tool extends Controller_Admin
 {
-
 	public function action_index()
 	{
 		$this->title = __('Administer Tools');

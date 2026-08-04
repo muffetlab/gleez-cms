@@ -16,7 +16,6 @@
  */
 class Post extends ORM_Versioned
 {
-
     /**
      * Transient form field for comma-separated tags.
      *

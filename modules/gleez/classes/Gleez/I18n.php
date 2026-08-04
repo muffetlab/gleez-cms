@@ -299,7 +299,6 @@ class Gleez_I18n extends I18n
 	 */
     private static function get_plural_key($lang, $count): string
     {
-
 		// Data from CLDR 1.6 (http://unicode.org/cldr/data/common/supplemental/plurals.xml).
 		// Docs: http://www.unicode.org/cldr/data/charts/supplemental/language_plural_rules.html
 		switch ($lang) {

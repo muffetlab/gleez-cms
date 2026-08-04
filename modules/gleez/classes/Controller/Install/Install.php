@@ -11,7 +11,6 @@
  */
 class Controller_Install_Install extends Controller_Template
 {
-
 	/**
 	 * Page template
 	 * @var View
@@ -335,7 +334,6 @@ class Controller_Install_Install extends Controller_Template
      */
     public function check_database($username, $password, $hostname, $database): bool
     {
-
         if (!$link = mysqli_connect($hostname, $username, $password)) {
             if (strpos(mysqli_error($link), 'Access denied')) {
 				throw new Exception('access');
@@ -385,7 +383,6 @@ class Controller_Install_Install extends Controller_Template
 
 	private function mysql_version($link)
 	{
-
 		$result = mysqli_query($link, "SHOW VARIABLES WHERE variable_name = \"version\"");
 		$row = mysqli_fetch_object($result);
 

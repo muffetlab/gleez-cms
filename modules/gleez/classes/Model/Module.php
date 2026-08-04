@@ -10,7 +10,6 @@
  */
 class Model_Module extends ORM
 {
-
 	/**
 	 * Table columns
 	 * @var array

@@ -11,7 +11,6 @@
  */
 class Comment
 {
-
 	// @todo our definitions for comment types and statuses
 	const STATUS_UNAPPROVED = 0;
 	const STATUS_APPROVED   = 1;

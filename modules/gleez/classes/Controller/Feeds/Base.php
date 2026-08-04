@@ -11,7 +11,6 @@
  */
 class Controller_Feeds_Base extends Controller_Feeds_Template
 {
-
     /**
      * Get list of promoted posts
      *

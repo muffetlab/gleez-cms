@@ -11,7 +11,6 @@
  */
 class Datatables
 {
-
 	/** Sort Ascending */
 	const SORT_ASC = 'ASC';
 

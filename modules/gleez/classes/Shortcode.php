@@ -23,7 +23,6 @@
  */
 class Shortcode
 {
-
 	/**
 	 * Container for storing shortcode tags and their hook to call for the shortcode
 	 * @var array

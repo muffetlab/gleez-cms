@@ -11,7 +11,6 @@
  */
 class Model_Comment extends Gleez_Model
 {
-
 	/**
 	 * Table columns
 	 * @var array

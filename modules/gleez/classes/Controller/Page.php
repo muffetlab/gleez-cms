@@ -11,7 +11,6 @@
  */
 class Controller_Page extends Template
 {
-
     /**
      * The before() method is called before controller action
      *

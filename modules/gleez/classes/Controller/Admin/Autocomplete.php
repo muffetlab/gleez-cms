@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Autocomplete extends Controller
 {
-
 	/**
 	 * The before() method is called before controller action
 	 *

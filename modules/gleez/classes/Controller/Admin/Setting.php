@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Setting extends Controller_Admin
 {
-
     /**
      * General Settings
      *

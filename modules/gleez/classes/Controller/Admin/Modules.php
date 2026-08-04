@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Modules extends Controller_Admin
 {
-
     /**
      * Module list.
      *

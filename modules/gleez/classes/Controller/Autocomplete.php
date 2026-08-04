@@ -11,7 +11,6 @@
  */
 class Controller_Autocomplete extends Controller
 {
-
     /**
      * @throws Cache_Exception
      * @throws HTTP_Exception

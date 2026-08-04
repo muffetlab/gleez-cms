@@ -11,7 +11,6 @@
  */
 class CSRF
 {
-
 	/**
 	 * Token time to live in seconds, 30 minutes
 	 * @var integer

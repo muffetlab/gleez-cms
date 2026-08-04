@@ -11,7 +11,6 @@
  */
 class Gleez_Event
 {
-        
 	public static function Post_Save($post)
 	{
 		//Message::warn( Debug::vars($post) );

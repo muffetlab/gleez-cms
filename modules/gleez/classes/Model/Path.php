@@ -10,7 +10,6 @@
  */
 class Model_Path extends Gleez_Model
 {
-
 	/**
 	 * Table columns
 	 * @var array

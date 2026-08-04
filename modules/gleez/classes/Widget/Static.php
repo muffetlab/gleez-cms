@@ -10,7 +10,6 @@
  */
 class Widget_Static extends Widget
 {
-
 	public function info(){}
 	public function form(){}
 	public function save(array $post){}

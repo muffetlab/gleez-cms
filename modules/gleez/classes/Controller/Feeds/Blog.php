@@ -12,7 +12,6 @@
  */
 class Controller_Feeds_Blog extends Controller_Feeds_Base
 {
-
     /**
      * The before() method is called before controller action
      *

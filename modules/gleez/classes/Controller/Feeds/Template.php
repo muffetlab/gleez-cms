@@ -11,7 +11,6 @@
  */
 class Controller_Feeds_Template extends Controller
 {
-
 	/**
 	 * Default page size
 	 * @var integer

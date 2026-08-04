@@ -15,7 +15,6 @@
  */
 class Filter
 {
-
 	/**
 	 * An array of Filters
 	 * @var array

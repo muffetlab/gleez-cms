@@ -10,7 +10,6 @@
  */
 class Controller_Resize extends Controller
 {
-
 	public $width;
 	public $height;
 	public $resize_type;

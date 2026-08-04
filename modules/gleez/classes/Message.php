@@ -12,7 +12,6 @@
  */
 class Message
 {
-
 	// Constants to use for the types of messages that can be set.
 	const ERROR   	= 'error';
 	const ALERT 	= 'alert';

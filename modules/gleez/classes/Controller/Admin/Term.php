@@ -11,7 +11,6 @@
  */
 class Controller_Admin_Term extends Controller_Admin
 {
-
     /**
      * Tree used for bulk update (MPTT)
      * @var array

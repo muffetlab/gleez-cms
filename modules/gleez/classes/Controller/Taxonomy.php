@@ -11,7 +11,6 @@
  */
 class Controller_Taxonomy extends Template
 {
-
     /**
      * @throws HTTP_Exception_403
      * @throws Kohana_Exception

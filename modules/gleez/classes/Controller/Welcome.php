@@ -11,7 +11,6 @@
  */
 class Controller_Welcome extends Template
 {
-
 	/**
 	 * Page template
 	 * @var string

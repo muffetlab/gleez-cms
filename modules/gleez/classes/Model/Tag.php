@@ -10,7 +10,6 @@
  */
 class Model_Tag extends Gleez_Model
 {
-
 	/**
 	 * Table columns
 	 * @var array

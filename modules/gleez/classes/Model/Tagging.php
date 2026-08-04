@@ -10,7 +10,6 @@
  */
 class Model_Tagging extends ORM
 {
-
 	/**
 	 * Table name
 	 * @var string

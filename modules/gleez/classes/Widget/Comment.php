@@ -10,7 +10,6 @@
  */
 class Widget_Comment extends Widget
 {
-
 	public function info(){}
 	public function form(){}
 

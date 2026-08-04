@@ -11,7 +11,6 @@
  */
 class Format
 {
-
 	/** ID safely format */
 	const FALLBACK_FORMAT = 1;
 

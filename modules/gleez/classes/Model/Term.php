@@ -11,7 +11,6 @@
  */
 class Model_Term extends ORM_MPTT
 {
-
 	/**
 	 * Table columns
 	 * @var array

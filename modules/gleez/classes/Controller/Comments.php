@@ -11,7 +11,6 @@
  */
 class Controller_Comments extends Controller
 {
-
 	/**
 	 * Supported return formats
 	 * @var array
