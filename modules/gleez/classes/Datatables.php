@@ -90,12 +90,12 @@ class Datatables
 	 */
 	protected $_render;
 
-	/**
-	 * Initialize
-	 *
-	 * @param  object  $object
-	 */
-	public function __construct($object)
+    /**
+     * Initialize
+     *
+     * @param ORM $object $object
+     */
+    public function __construct(ORM $object)
 	{
 		$this->_object = $object;
 		$this->_object_name = $object->object_name();
