@@ -103,7 +103,7 @@ class ORM_Versioned extends Gleez_Model
 
                 if ($key === 'version') {
 					// Always use the current version
-					//$value = $this->version;
+                    $value = $this->version;
 				}
 
 				$this->__set($key, $value);
