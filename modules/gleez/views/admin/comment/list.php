@@ -25,13 +25,13 @@
 			<table id="admin-list-comments" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["1","desc"],["2","asc"],["4","desc"]]'>
 				<thead>
 					<tr>
-						<th width="5%">#</th>
-						<th width="20%"><?php echo __('Subject'); ?></th>
-						<th width="15%"><?php echo __('Author'); ?></th>
-						<th width="33%"><?php echo __('Posted In');?></th>
-						<th width="18%"><?php echo __('Created'); ?></th>
-						<th width="5%" data-columns='{"orderable":false, "searchable":false}'></th>
-						<th width="5%" data-columns='{"orderable":false, "searchable":false}'></th>
+                        <th style="width: 5%">#</th>
+                        <th style="width: 20%"><?php echo __('Subject'); ?></th>
+                        <th style="width: 15%"><?php echo __('Author'); ?></th>
+                        <th style="width: 33%"><?php echo __('Posted In'); ?></th>
+                        <th style="width: 18%"><?php echo __('Created'); ?></th>
+                        <th style="width: 5%" data-columns='{"orderable":false, "searchable":false}'></th>
+                        <th style="width: 5%" data-columns='{"orderable":false, "searchable":false}'></th>
 					</tr>
 				</thead>
 				<tbody>

@@ -12,11 +12,11 @@
 	<table id="admin-list-menus" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["0", "desc"]]'>
 		<thead>
 		<tr>
-			<th width="60%" class="sorting_desc"><?php echo __("Title"); ?></th>
-			<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
-			<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
-			<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
-			<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
+            <th style="width: 60%" class="sorting_desc"><?php echo __("Title"); ?></th>
+            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
+            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
+            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
+            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
 		</tr>
 		</thead>
 		<tbody>

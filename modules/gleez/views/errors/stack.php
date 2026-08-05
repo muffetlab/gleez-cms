@@ -64,7 +64,17 @@ switch ($code) {
 #kohana_error p { margin: 0; padding: 0.2em 0; }
 #kohana_error a { color: #1b323b; }
 #kohana_error pre { overflow: auto; white-space: pre-wrap; }
-#kohana_error table { width: 100%; display: block; margin: 0 0 0.4em; padding: 0; border-collapse: collapse; background: #fff; }
+
+      #kohana_error table {
+          width: 100%;
+          display: block;
+          margin: 0 0 0.4em;
+          padding: 0;
+          border-collapse: collapse;
+          border-spacing: 0;
+          background: #fff;
+      }
+
 	#kohana_error table td { border: solid 1px #ddd; text-align: left; vertical-align: top; padding: 0.4em; }
 #kohana_error div.content { padding: 0.4em 1em 1em; overflow: hidden; }
 #kohana_error pre.source { margin: 0 0 1em; padding: 0.4em; background: #fff; border: dotted 1px #b7c680; line-height: 1.2em; }
@@ -133,14 +143,14 @@ switch ($code) {
 				</p>
 				<?php if (isset($args_id)): ?>
 				<div id="<?php echo $args_id ?>" class="collapsed">
-					<table cellspacing="0">
+                    <table>
 					<?php foreach ($step['args'] as $name => $arg): ?>
 						<tr>
 							<td><code><?php echo $name ?></code></td>
 							<td><pre><?php echo Debug::dump($arg) ?></pre></td>
 						</tr>
 					<?php endforeach ?>
-					</table>
+                    </table>
 				</div>
 				<?php endif ?>
 				<?php if (isset($source_id)): ?>
@@ -156,37 +166,37 @@ switch ($code) {
 		<?php $included = get_included_files() ?>
 		<h3><a href="#<?php echo $env_id = $error_id.'environment_included' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo __('Included files') ?></a> (<?php echo count($included) ?>)</h3>
 		<div id="<?php echo $env_id ?>" class="collapsed">
-			<table cellspacing="0">
+            <table>
 				<?php foreach ($included as $file): ?>
 				<tr>
 					<td><code><?php echo Debug::path($file) ?></code></td>
 				</tr>
 				<?php endforeach ?>
-			</table>
+            </table>
 		</div>
 		<?php $included = get_loaded_extensions() ?>
 		<h3><a href="#<?php echo $env_id = $error_id.'environment_loaded' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo __('Loaded extensions') ?></a> (<?php echo count($included) ?>)</h3>
 		<div id="<?php echo $env_id ?>" class="collapsed">
-			<table cellspacing="0">
+            <table>
 				<?php foreach ($included as $file): ?>
 				<tr>
 					<td><code><?php echo Debug::path($file) ?></code></td>
 				</tr>
 				<?php endforeach ?>
-			</table>
+            </table>
 		</div>
         <?php foreach (['_SESSION', '_GET', '_POST', '_FILES', '_COOKIE', '_SERVER'] as $var): ?>
             <?php if (empty($GLOBALS[$var]) || !is_array($GLOBALS[$var])) continue ?>
 		<h3><a href="#<?php echo $env_id = $error_id.'environment'.strtolower($var) ?>" onclick="return toggle('<?php echo $env_id ?>')">$<?php echo $var ?></a></h3>
 		<div id="<?php echo $env_id ?>" class="collapsed">
-			<table cellspacing="0">
+            <table>
 				<?php foreach ($GLOBALS[$var] as $key => $value): ?>
 				<tr>
                     <td><code><?php echo htmlspecialchars((string)$key, ENT_QUOTES, Gleez::$charset); ?></code></td>
 					<td><pre><?php echo Debug::dump($value) ?></pre></td>
 				</tr>
 				<?php endforeach ?>
-			</table>
+            </table>
 		</div>
 		<?php endforeach ?>
 	</div>

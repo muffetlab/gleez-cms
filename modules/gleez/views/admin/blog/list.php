@@ -28,12 +28,13 @@
 			<table id="admin-list-blogs" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["4", "desc"]]'>
 				<thead>
 					<tr>
-						<th width="5%" data-columns='{"orderable":false, "searchable":false}'> # </th>
-						<th width="40%"><?php echo __('Title'); ?></th>
-						<th width="20%" data-columns='{"searchable":false}'><?php echo __('Author'); ?></th>
-						<th width="10%" data-columns='{"searchable":false, "className": "status"}'><?php echo __('Status'); ?></th>
-						<th width="12%" data-columns='{"searchable":false}'><?php echo __('Updated'); ?></th>
-						<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
+                        <th style="width: 5%" data-columns='{"orderable":false, "searchable":false}'> #</th>
+                        <th style="width: 40%"><?php echo __('Title'); ?></th>
+                        <th style="width: 20%" data-columns='{"searchable":false}'><?php echo __('Author'); ?></th>
+                        <th style="width: 10%"
+                            data-columns='{"searchable":false, "className": "status"}'><?php echo __('Status'); ?></th>
+                        <th style="width: 12%" data-columns='{"searchable":false}'><?php echo __('Updated'); ?></th>
+                        <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
 					</tr>
 				</thead>
 				<tbody>
