@@ -24,6 +24,7 @@ class Gleez_AclTest extends Unittest_TestCase
      */
     public function test_acl_check($perm, $user_id)
 	{
+        /** @var Model_User $user */
         $user = ORM::factory('User', $user_id);
 
         if ($user_id == 1) {
