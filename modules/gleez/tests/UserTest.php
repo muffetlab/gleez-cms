@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests the Config lib that's shipped with kohana
+ * Tests the User model functionality.
  *
  * @group Gleez
  * @group Gleez.core
