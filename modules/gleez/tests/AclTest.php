@@ -3,9 +3,9 @@
 /**
  * Tests the Config lib that's shipped with kohana
  *
- * @group Gleez
- * @group Gleez.core
- * @group Gleez.core.acl
+ * @group gleez
+ * @group gleez.core
+ * @group gleez.core.acl
  *
  */
 class Gleez_AclTest extends Unittest_TestCase
