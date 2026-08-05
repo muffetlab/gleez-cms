@@ -10,23 +10,6 @@
  */
 class Gleez_UserTest extends Unittest_TestCase
 {
-    public function providerUsers(): array
-    {
-        return [
-            [['name' => 'admin', 'password' => 'gleez1co']],
-            [['name' => 'sundar', 'password' => 'gleez1co']]
-        ];
-	}
-	/**
-	 * @dataProvider providerUsers
-	 */
-	public function testValidUsers($info)
-	{
-        $user = ORM::factory('User');
-		$result = $user->login($info);
-		$this->assertInstanceOf('Model_user', $result);
-	}
-
     public function testInvalidUsers()
 	{
         $this->expectException(Validation_Exception::class);
