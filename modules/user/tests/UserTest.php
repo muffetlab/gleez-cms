@@ -3,9 +3,9 @@
 /**
  * Tests the User model functionality.
  *
- * @group Gleez
- * @group Gleez.core
- * @group Gleez.core.user
+ * @group gleez
+ * @group gleez.user
+ * @group gleez.user.user
  *
  */
 class Gleez_UserTest extends Unittest_TestCase
