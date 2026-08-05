@@ -323,16 +323,6 @@ class Datatables
 			}
 		}
 
-		// @todo - Individual column filtering
-        for ($i = 0, $ien = count($requestColumns); $i < $ien; $i++) {
-			$requestColumn = $requestColumns[$i];
-			$str = $requestColumn['search']['value'];
-
-            if ($requestColumn['searchable'] == 'true' && $str != '') {
-				//$this->search($str);
-			}
-		}
-
 		// Execute the query
 		$this->_result = $this->_execute();
 		$this->_count  = $this->_count();
