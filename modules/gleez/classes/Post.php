@@ -62,6 +62,16 @@ class Post extends ORM_Versioned
         'lang' => ['type' => 'string'],
         'layout' => ['type' => 'string'],
         'image' => ['type' => 'string'],
+        'deleted' => ['type' => 'int'],
+    ];
+
+    /**
+     * Soft-delete column configuration
+     * @var array
+     */
+    protected $_deleted_column = [
+        'column' => 'deleted',
+        'format' => true
     ];
 
 	/**
@@ -482,8 +492,9 @@ class Post extends ORM_Versioned
 	 */
     public function delete(bool $soft = false): Kohana_ORM
     {
-        if (is_array($this->_deleted_column) && $soft) {
-
+        if ($soft) {
+            Cache::instance()->delete($this->type . ':' . $this->type . '-' . $this->id);
+            parent::delete($soft);
         } else {
             // Delete image if exists, to clean up stale images
 			$this->_delete_image();
