@@ -20,7 +20,14 @@ class Model_Role extends Gleez_Model
         'name' => ['type' => 'string'],
         'description' => ['type' => 'string'],
         'special' => ['type' => 'int'],
+        'deleted' => ['type' => 'int'],
     ];
+
+    /**
+     * Soft-delete column
+     * @var array
+     */
+    protected $_deleted_column = ['column' => 'deleted', 'format' => true];
 
 	/**
 	 * A role has many users
@@ -82,13 +89,16 @@ class Model_Role extends Gleez_Model
 	}
 
     /**
-     * Override the delete method to clear cache
+     * Override the delete method to clear cache.
      *
+     * @param bool $soft
+     * @return Kohana_ORM
+     * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-    public function delete(): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
-        parent::delete();
+        parent::delete($soft);
 
 		//cleanup the cache
         Cache::instance()->delete_all();

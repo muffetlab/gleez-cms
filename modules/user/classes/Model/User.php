@@ -32,6 +32,7 @@ class Model_User extends Gleez_Model
         'logins' => ['type' => 'int'],
         'created' => ['type' => 'int'],
         'updated' => ['type' => 'int'],
+        'deleted' => ['type' => 'int'],
         'login' => ['type' => 'int'],
         'status' => ['type' => 'int'],
         'timezone' => ['type' => 'string'],
@@ -53,6 +54,12 @@ class Model_User extends Gleez_Model
 	 * @var array
 	 */
     protected $_updated_column = ['column' => 'updated', 'format' => true];
+
+    /**
+     * Soft-delete column
+     * @var array
+     */
+    protected $_deleted_column = ['column' => 'deleted', 'format' => true];
 
 	/**
 	 * A user has many tokens and roles
