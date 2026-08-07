@@ -20,8 +20,12 @@ class Controller_Admin_Dashboard extends Controller_Admin
 	{
 		$this->title = __('Administer');
 
-		$view = View::factory('admin/dashboard')
-			->set('widgets', Widgets::instance()->render('dashboard'));
+        $dbVersion = Kohana::$config->load('site')->get('version');
+        $needsUpgrade = !$dbVersion || version_compare($dbVersion, Gleez::VERSION, '<');
+
+        $view = View::factory('admin/dashboard')
+            ->set('widgets', Widgets::instance()->render('dashboard'))
+            ->set('needsUpgrade', $needsUpgrade);
 
 		$this->response->body($view);
 	}

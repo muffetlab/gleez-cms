@@ -107,4 +107,64 @@ class Controller_Admin_Tool extends Controller_Admin
 
 		$this->response->body($view);
 	}
+
+    /**
+     * Database schema upgrade
+     *
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_upgrade()
+    {
+        $this->title = __('Database Upgrade');
+
+        $dbVersion = Kohana::$config->load('site')->get('version');
+        $currentVersion = $dbVersion ?: __('Unknown');
+        $targetVersion = Gleez::VERSION;
+        $needsUpgrade = !$dbVersion || version_compare($dbVersion, $targetVersion, '<');
+        $errors = [];
+
+        if ($this->valid_post('upgrade')) {
+            $db = Database::instance();
+            $prefix = $db->table_prefix();
+
+            $sqlFile = MODPATH . 'gleez/views/install/upgrade.sql';
+            $buf = '';
+
+            foreach (file($sqlFile) as $line) {
+                $line = trim($line);
+
+                if ($line === '' || strncmp($line, '--', 2) === 0) {
+                    continue;
+                }
+
+                $buf .= ' ' . $line;
+
+                if (preg_match('/;$/', $buf)) {
+                    $sql = preg_replace('/{(\w+)}/', $prefix . '$1', trim($buf));
+                    try {
+                        $db->query(Database::UPDATE, $sql);
+                    } catch (Database_Exception $e) {
+                        $errors[] = $e->getMessage();
+                    }
+                    $buf = '';
+                }
+            }
+
+            if (empty($errors)) {
+                Cache::instance()->delete_all();
+
+                Message::success(__('Upgrade completed successfully! Database is now at version :version.', [':version' => $targetVersion]));
+                $this->request->redirect(Route::get('admin')->uri(['controller' => 'tool']));
+            }
+        }
+
+        $view = View::factory('admin/tools/upgrade')
+            ->set('currentVersion', $currentVersion)
+            ->set('targetVersion', $targetVersion)
+            ->set('needsUpgrade', $needsUpgrade)
+            ->set('errors', $errors);
+
+        $this->response->body($view);
+    }
 }
