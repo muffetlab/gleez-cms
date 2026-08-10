@@ -1,4 +1,4 @@
-# Upgrading Gleez
+# Upgrading from 1.2.0 to 1.3.0
 
 When you update the Gleez CMS files to a newer version, the database schema may also need to be updated. Gleez automatically detects when a database upgrade is required and guides you through the process.
 
@@ -41,3 +41,15 @@ Foreign key checks are temporarily disabled during the upgrade to allow column t
 Gleez versions prior to 1.3.0 do not have a version record in the `config` table. In this case, the current version is displayed as "Unknown". The upgrade can still be run — the schema changes in `upgrade.sql` are designed to bring a 1.2.0 database up to the current version.
 
 [!!] If you are running a version older than 1.2.0, do not run the upgrade without first verifying your database schema matches the expected 1.2.0 structure. Running the wrong upgrade can cause irreversible damage to your database.
+
+### Password Hash Method
+
+Starting with Gleez 1.3.0, the default `hash_method` in `modules/user/config/auth.php` was changed from `sha1` to `sha256`. Because password hashes are one-way, existing passwords hashed with `sha1` cannot be converted to `sha256` without the original plaintext.
+
+If you are upgrading from a pre-1.3.0 installation, you **must** override the default in your application config to keep `sha1`, otherwise all existing users will be locked out:
+
+1. Create or edit `application/config/auth.php`.
+2. If the file does not exist yet, copy it from `modules/user/config/auth.php` and change `'hash_method'` to `'sha1'`.
+3. If the file already exists, ensure `'hash_method'` is set to `'sha1'`.
+
+This ensures that existing password hashes continue to be verified correctly. New installations of 1.3.0+ will use `sha256` by default.
