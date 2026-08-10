@@ -278,7 +278,7 @@ abstract class Template extends Controller
                 $this->response->headers('Content-Type', 'application/json; charset=' . Kohana::$charset);
 			}
 
-            $this->response->headers('X-Powered-By', Gleez::getVersion(true, true) . ' (' . Gleez::CODENAME . ')');
+            $this->response->headers('X-Powered-By', Gleez::getVersion(true, true));
 
 			$this->_auth   = Auth::instance();
 
@@ -528,7 +528,7 @@ abstract class Template extends Controller
 	protected function _set_default_server_headers()
 	{
         $headers = $this->_config->get('headers', []);
-        $headers['X-Gleez-Version'] = Gleez::getVersion(true, true) . ' (' . Gleez::CODENAME . ')';
+        $headers['X-Gleez-Version'] = Gleez::getVersion(true, true);
 
         $xmlRpc = $this->_config->get('xml_rpc');
 

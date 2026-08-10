@@ -21,13 +21,7 @@ class Gleez
 	 * Minimal required version of php
 	 * @type string
 	 */
-	const PHP_MIN_REQ = '7.0.0';
-
-	/**
-	 * Release codename
-	 * @type string
-	 */
-	const CODENAME = 'Smiling Buddha';
+    const PHP_MIN_REQ = '7.1.0';
 
 	/**
 	 * Default message for maintenance mode
