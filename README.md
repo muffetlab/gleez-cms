@@ -17,23 +17,12 @@ With an emphasis on security and functionality, [Gleez CMS](https://gleezcms.org
 * Content Blocks or Widgets
 * Extensions, Modules or Plugins
 * Themes and Layouts
-* Input formats like Markdown, HTML etc
+* Input formats like Markdown, HTML, etc.
 * Shortcodes
-* oAuth2 login via Google/Facebook/Windows/Github
+* OAuth2 login via Google/Facebook/Windows/GitHub
 * Resize images on fly with caching
 * ORM, MongoDB, Redis support
 * Other Details like SEO, Media, Gravatar, etc.
-
-# Demo
-
-You can visit our demo site to become familiar with the basic features of Gleez CMS
-
-[https://demo.gleezcms.org](https://demo.gleezcms.org)
-
-| Login details | Typical user | Administrator |
-| ------------- |:------------:| -------------:|
-| *Username*    | demo         | demoadmin     |
-| *Password*    | demo         | demoadmin     |
 
 # Internationalization (i18n Support)
 
@@ -104,7 +93,3 @@ an administrator.
 ## Editing Content
 
 Log in with the credentials produced by the installer and manage content from the admin interface.
-
-***
-
-[Official Website](https://gleezcms.org) | [Facebook Page](https://www.facebook.com/gleezcms) | [License](https://github.com/gleez/cms/wiki/License) | [Contributors](https://github.com/gleez/cms/wiki/Contributors)
