@@ -167,23 +167,33 @@ class Tags
 		$normalized_tag = $this->normalize_tag( strtolower($tag) );
 
 		//this is required to avoid duplicate tags, ex: 'demo, demo, test'
-		$result = ORM::factory(Inflector::singular($this->config['tagging_model']))
-			->join($this->config['tag_table'], 'INNER')
-			->on('tag_id', '=', $this->config['tag_table'].'.id' )
-			->where($this->config['object_foreign_key'], '=', $object_id)
-			->where($this->config['tag_table'].'.type', '=', $object->type)
-			->where('name', '=', $normalized_tag);
+        $result = ORM::factory(Inflector::singular($this->config['tagging_model']))
+            ->join($this->config['tag_table'], 'INNER')
+            ->on('tag_id', '=', $this->config['tag_table'] . '.id')
+            ->where($this->config['object_foreign_key'], '=', $object_id)
+            ->where($this->config['tag_table'] . '.type', '=', $object->type)
+            ->where($this->config['tag_table'] . '.deleted', '=', 0)
+            ->where('name', '=', $normalized_tag);
 
         if ($result->find()->loaded()) {
             return true;
 		}
 
-		// Then see if a tag in this form exists.
-		$result = ORM::factory(Inflector::singular($this->config['tag_table']))
-			->where('name', '=', $tag)->where('type', '=', $object->type);
+        // Then see if a tag in this form exists (including soft-deleted, for UNIQUE name/type).
+        $result = ORM::factory(Inflector::singular($this->config['tag_table']))
+            ->withDeleted()
+            ->where('name', '=', $tag)
+            ->where('type', '=', $object->type);
 
         if ($result->reset(false)->count_all() > 0) {
 			$result = $result->find();
+
+            // Reuse a soft-deleted tag instead of inserting a duplicate name
+            if ((int) $result->deleted !== 0) {
+                $result->deleted = 0;
+                $result->save();
+            }
+
 			$tag_id = $result->id;
         } else {
 			// Add new tag!

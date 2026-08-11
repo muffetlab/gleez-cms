@@ -240,8 +240,12 @@ class Controller_Admin_Blog extends Controller_Admin
 					$blogs = array_filter($post['blogs']); // Filter out unchecked posts
 					$this->title = __('Delete Blogs');
 
-					$items = DB::select('id', 'title')->from('posts')
-						->where('id', 'IN', $blogs)->execute()->as_array('id', 'title');
+                    $items = DB::select('id', 'title')
+                        ->from('posts')
+                        ->where('id', 'IN', $blogs)
+                        ->where('deleted', '=', 0)
+                        ->execute()
+                        ->as_array('id', 'title');
 
 					$view = View::factory('form/confirm_multi')
 							->set('action', '')

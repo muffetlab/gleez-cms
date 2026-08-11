@@ -20,14 +20,114 @@ class Gleez_Model extends ORM
      *   - `true` => Unix timestamp via `time()`
      *   - string => `date($format)` result
      *
+     * Soft-deleted rows (`deleted` != 0) are excluded from `find()`, `find_all()`, and `count_all()` unless
+     * `with_deleted()` is used.
+     *
      * @var array|null
      */
     protected $_deleted_column = null;
 
     /**
+     * When true, soft-deleted rows are included in retrieval queries.
+     *
+     * @var bool
+     */
+    protected $withDeleted = false;
+
+    /**
      * @var Datatables
      */
     protected $_datatables;
+
+    /**
+     * Include soft-deleted rows in subsequent find/find_all/count_all queries.
+     *
+     * @param bool $withDeleted Include soft-deleted rows
+     * @return $this
+     */
+    public function withDeleted(bool $withDeleted = true): self
+    {
+        $this->withDeleted = $withDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Apply soft-delete exclusion when `$_deleted_column` is configured.
+     *
+     * Active records store `0` in the deleted column; soft delete writes a timestamp.
+     *
+     * @return $this
+     */
+    protected function excludeDeleted(): self
+    {
+        if (is_array($this->_deleted_column) && !$this->withDeleted) {
+            $column = $this->_object_name . '.' . $this->_deleted_column['column'];
+            $this->where($column, '=', 0);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Finds and loads a single database row into the object.
+     *
+     * Soft-deleted rows are excluded when soft delete is configured.
+     *
+     * @return Database_Result|ORM
+     * @throws Kohana_Exception
+     */
+    public function find()
+    {
+        $this->excludeDeleted();
+
+        return parent::find();
+    }
+
+    /**
+     * Finds multiple database rows and returns an iterator of the rows found.
+     *
+     * Soft-deleted rows are excluded when soft delete is configured.
+     *
+     * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
+     * @throws Kohana_Exception
+     */
+    public function find_all()
+    {
+        $this->excludeDeleted();
+
+        return parent::find_all();
+    }
+
+    /**
+     * Count the number of records in the table.
+     *
+     * Soft-deleted rows are excluded when soft delete is configured.
+     *
+     * @return int
+     * @throws Kohana_Exception
+     */
+    public function count_all(): int
+    {
+        $this->excludeDeleted();
+
+        return parent::count_all();
+    }
+
+    /**
+     * Clears query builder state and soft-delete include flag when resetting.
+     *
+     * @param bool $next Reset immediately and clear for next query
+     * @return Kohana_ORM
+     */
+    public function reset(bool $next = true): Kohana_ORM
+    {
+        if ($next && $this->_db_reset) {
+            $this->withDeleted = false;
+        }
+
+        return parent::reset($next);
+    }
 
     /**
      * Delete a single record, optionally performing a soft delete.

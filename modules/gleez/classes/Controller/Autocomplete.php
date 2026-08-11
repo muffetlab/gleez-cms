@@ -41,11 +41,12 @@ class Controller_Autocomplete extends Controller
         $matches = [];
 
         if ($string) {
-			$result  = DB::select('name')
-				->from('users')
-				->where('name', 'LIKE', $string.'%')
-				->limit('10')
-				->execute();
+            $result = DB::select('name')
+                ->from('users')
+                ->where('name', 'LIKE', $string . '%')
+                ->where('deleted', '=', 0)
+                ->limit(10)
+                ->execute();
 
             foreach ($result as $user) {
                 $matches[$user['name']] = HTML::chars($user['name']);
@@ -66,11 +67,12 @@ class Controller_Autocomplete extends Controller
         $matches = [];
 
         if ($string) {
-			$result  = DB::select('name')
-				->from('users')
-				->where('nick', 'LIKE', $string.'%')
-				->limit('10')
-				->execute();
+            $result = DB::select('name')
+                ->from('users')
+                ->where('nick', 'LIKE', $string . '%')
+                ->where('deleted', '=', 0)
+                ->limit(10)
+                ->execute();
 
             foreach ($result as $user) {
                 $matches[$user['name']] = HTML::chars($user['name']);
@@ -96,9 +98,11 @@ class Controller_Autocomplete extends Controller
         $matches = [];
 
         if (!empty($tag_last)) {
-			$query  = DB::select('name')->from('tags')
-				->where('name', 'LIKE', $tag_last.'%')
-				->where('type', '=', $type);
+            $query = DB::select('name')
+                ->from('tags')
+                ->where('name', 'LIKE', $tag_last . '%')
+                ->where('type', '=', $type)
+                ->where('deleted', '=', 0);
 
 			$result = $query->limit('10')->execute();
 

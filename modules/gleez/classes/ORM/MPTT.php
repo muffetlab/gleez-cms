@@ -1064,13 +1064,18 @@ class ORM_MPTT extends Gleez_Model
 			$value = $this->pk();
 		}
 
-		$result = DB::select($key, $value, $this->level_column)
-				->from($this->_table_name)
-				->where($this->scope_column, '=', $this->{$this->scope_column})
-				->where($this->_primary_key, '<>', $this->pk())
-				->where($this->level_column, '<>', 1)
-				->order_by($this->left_column, 'ASC')
-				->execute($this->_db);
+        $result = DB::select($key, $value, $this->level_column)
+            ->from($this->_table_name)
+            ->where($this->scope_column, '=', $this->{$this->scope_column})
+            ->where($this->_primary_key, '<>', $this->pk())
+            ->where($this->level_column, '<>', 1);
+
+        if (is_array($this->_deleted_column)) {
+            $result->where($this->_deleted_column['column'], '=', 0);
+        }
+
+        $result = $result->order_by($this->left_column, 'ASC')
+            ->execute($this->_db);
 
         if (is_string($indent)) {
             $array = ['last' => ''];

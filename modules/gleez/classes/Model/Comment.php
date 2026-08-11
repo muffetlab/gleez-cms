@@ -218,11 +218,14 @@ class Model_Comment extends Gleez_Model
             $validation->error('guest_name', 'not_empty', [$validation[$field]]);
         } elseif ($this->author == 1 && !empty($this->guest_name)) {
             $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
-						->from('users')
-						->where('name', 'LIKE', $this->guest_name)
-						->or_where('nick', 'LIKE', $this->guest_name)
-						->execute($this->_db)
-						->get('total_count');
+                ->from('users')
+                ->where('deleted', '=', 0)
+                ->and_where_open()
+                ->where('name', 'LIKE', $this->guest_name)
+                ->or_where('nick', 'LIKE', $this->guest_name)
+                ->and_where_close()
+                ->execute($this->_db)
+                ->get('total_count');
 
             if ($result > 0) {
                 $validation->error($field, 'registered_user', [$validation[$field]]);
@@ -264,6 +267,7 @@ class Model_Comment extends Gleez_Model
         $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
             ->from('posts')
             ->where('id', '=', $this->post_id)
+            ->where('deleted', '=', 0)
             ->execute($this->_db)
             ->get('total_count');
 

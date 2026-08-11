@@ -78,13 +78,15 @@ class Controller_Admin_Term extends Controller_Admin
 					->bind('id',     $id)
 					->bind('params', $params);
 
-		$terms = DB::select()->from('terms')
-					->where('lft', '>', $vocab->lft)
-					->where('rgt', '<', $vocab->rgt)
-					->where('scp', '=', $vocab->scp)
-					->order_by('lft', 'ASC')
-					->execute()
-					->as_array();
+        $terms = DB::select()
+            ->from('terms')
+            ->where('lft', '>', $vocab->lft)
+            ->where('rgt', '<', $vocab->rgt)
+            ->where('scp', '=', $vocab->scp)
+            ->where('deleted', '=', 0)
+            ->order_by('lft', 'ASC')
+            ->execute()
+            ->as_array();
 
         if (count($terms) == 0) {
             Message::info(__('There are no Categories that have been created for %vocab.', ['%vocab' => $vocab->name]));

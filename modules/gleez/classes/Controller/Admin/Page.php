@@ -227,11 +227,12 @@ class Controller_Admin_Page extends Controller_Admin
 					$pages = array_filter($post['posts']); // Filter out unchecked posts
 					$this->title = __('Delete Pages');
 
-					$items = DB::select('id', 'title')
-							->from('posts')
-							->where('id', 'IN', $pages)
-							->execute()
-							->as_array('id', 'title');
+                    $items = DB::select('id', 'title')
+                        ->from('posts')
+                        ->where('id', 'IN', $pages)
+                        ->where('deleted', '=', 0)
+                        ->execute()
+                        ->as_array('id', 'title');
 
 					$view = View::factory('form/confirm_multi')
 							->set('action', '')
