@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Black captcha class.
  *
@@ -30,7 +31,7 @@ class Captcha_Black extends Captcha
      * @return string|null
      * @throws Kohana_Exception
      */
-    public function render(bool $html = TRUE, string $type = null): ?string
+    public function render(bool $html = true, string $type = null): ?string
     {
 		// Creates a black image to start from
 		$this->image_create(Captcha::$config['background']);
@@ -38,8 +39,7 @@ class Captcha_Black extends Captcha
 		// Add random white/gray arcs, amount depends on complexity setting
 		$count = (Captcha::$config['width'] + Captcha::$config['height']) / 2;
 		$count = $count / 5 * min(10, Captcha::$config['complexity']);
-		for ($i = 0; $i < $count; $i++)
-		{
+        for ($i = 0; $i < $count; $i++) {
 			imagesetthickness($this->image, mt_rand(1, 2));
 			$color = imagecolorallocatealpha($this->image, 255, 255, 255, mt_rand(0, 120));
 			imagearc($this->image, mt_rand(-Captcha::$config['width'], Captcha::$config['width']), mt_rand(-Captcha::$config['height'], Captcha::$config['height']), mt_rand(-Captcha::$config['width'], Captcha::$config['width']), mt_rand(-Captcha::$config['height'], Captcha::$config['height']), mt_rand(0, 360), mt_rand(0, 360), $color);

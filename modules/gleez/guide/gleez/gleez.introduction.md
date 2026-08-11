@@ -17,7 +17,7 @@ Kohana 3 is an HMVC (Hierarchical Model View Controller) framework written on PH
 
 ## There's nothing you can't extend
 
-Those already familiar with Kohana 3 will know that any CMS or web application built on top of it will be very easy to extend and customize. Kohana 3's major feature is not only its ***HMVC architectural pattern*** but also its ***Cascading File System***. This clever and unique filesystem allows developers to extend or override anything, any extension for Gleez is extendable and overridable, even Gleez's and Kohana 3's Core files. Websites built with Gleez can be fully customized without hacking any core file.
+Those already familiar with Kohana 3 will know that any CMS or web application built on top of it will be very easy to extend and customize. Kohana 3's major feature is not only its ***HMVC architectural pattern*** but also its ***Cascading File System***. This clever and unique filesystem allows developers to extend or override anything. Any extension for Gleez is extendable and overridable — even the core files of Gleez and Kohana 3. Websites built with Gleez can be fully customized without hacking any core file.
 
 ## What is Gleez then?
 
@@ -56,7 +56,6 @@ Gleez is simply a module for Kohana 3. It mainly provides the user interfaces(GU
 * TinyMCE [(https://www.tiny.cloud/tinymce/)](https://www.tiny.cloud/tinymce/)
 * PHP Markdown [(https://github.com/michelf/php-markdown)](https://github.com/michelf/php-markdown)
 * PHPMailer [(https://github.com/PHPMailer/PHPMailer)](https://github.com/PHPMailer/PHPMailer)
-* JSMin [(https://github.com/rgrove/jsmin-php)](https://github.com/rgrove/jsmin-php)
 
 ## Credits
 

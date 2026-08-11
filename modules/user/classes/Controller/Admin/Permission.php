@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Permission Controller
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Permission extends Controller_Admin {
-
+class Controller_Admin_Permission extends Controller_Admin
+{
     /**
      * Shows list of permissions
      *
@@ -53,42 +54,35 @@ class Controller_Admin_Permission extends Controller_Admin {
 		$id = $this->request->param('id', 1);
         $role = ORM::factory('Role', $id);
 
-		if ( ! $role->loaded())
-		{
+        if (!$role->loaded()) {
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent role.');
 		}
 
-		if (isset($_POST['permissions']) AND $this->valid_post('role'))
-		{
-			$per_insert = DB::insert('permissions', array('rid', 'permission', 'module'));
+        if (isset($_POST['permissions']) && $this->valid_post('role')) {
+            $per_insert = DB::insert('permissions', ['rid', 'permission', 'module']);
 
-			foreach ($_POST['role'] as $key => $val)
-			{
-				if (isset($val['name']))
-				{
-					$per_insert->values(array($role->id, $val['name'], $val['module']));
+            foreach ($_POST['role'] as $key => $val) {
+                if (isset($val['name'])) {
+                    $per_insert->values([$role->id, $val['name'], $val['module']]);
 				}
 			}
 
-			try
-			{
+            try {
 				DB::delete('permissions')->where('rid', '=', $role->id)->execute();
 				$per_insert->execute();
 
 				Message::success(__('Permissions saved successfully!'));
 
 				// Redirect to listing
-				$this->request->redirect(Route::get('admin/permission')->uri(array('action' => 'role', 'id' => $role->id)));
-			}
-			catch(ORM_Validation_Exception $e)
-			{
+                $this->request->redirect(Route::get('admin/permission')->uri(['action' => 'role', 'id' => $role->id]));
+            } catch (ORM_Validation_Exception $e) {
 				Message::error(__('Permissions save failed!'));
-				$this->_errors = array('models', TRUE);
+                $this->_errors = ['models', true];
 			}
 		}
 
 		$role_perms  = DB::select()->from('permissions')->as_object()->execute();
-		$this->title = __(':role Permissions', array(':role' => $role->name));
+        $this->title = __(':role Permissions', [':role' => $role->name]);
 
 		$view = View::factory('admin/permission/role')
 			->set('permissions', ACL::all())
@@ -109,47 +103,40 @@ class Controller_Admin_Permission extends Controller_Admin {
 		$id   = (int) $this->request->param('id', 0);
         $post = ORM::factory('User', $id);
 
-		if ( ! $post->loaded() OR $id === 1)
-		{
+        if (!$post->loaded() || $id === 1) {
 			Message::error(__("User doesn't exists!"));
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent user.');
 
-			$this->request->redirect(Route::get('admin/user')->uri(array('action' => 'list')), 404);
+            $this->request->redirect(Route::get('admin/user')->uri(['action' => 'list']), 404);
 		}
 
-		$this->title = __(':user Permissions', array(":user" => $post->name));
-		$action      = Route::get('admin/permission')->uri(array('action' => 'user', 'id' => (isset($post->id) ? $post->id : 0)));
+        $this->title = __(':user Permissions', [':user' => $post->name]);
+        $action = Route::get('admin/permission')->uri(['action' => 'user', 'id' => isset($post->id) ? $post->id : 0]);
 
 		$view = View::factory('admin/permission/user')
 			->set('post',        $post)
-			->set('oldperms',    $post->perms())
+            ->set('oldPermissions', $post->perms())
 			->set('permissions', ACL::all())
 			->set('action',      $action)
 			->bind('errors',     $this->_errors);
 
-		if ($this->valid_post('permissions'))
-		{
+        if ($this->valid_post('permissions')) {
 			$perms = array_filter($_POST['perms']);
-			$post->data = array('permissions' => $perms);
+            $post->data = ['permissions' => $perms];
 
-			try
-			{
+            try {
 				$post->save();
 				Message::success(__('Permissions: saved successful!'));
 
-				$this->request->redirect(Route::get('admin/permission')->uri(array('action' => 'user', 'id' => $post->id)));
-			}
-			catch(ORM_Validation_Exception $e)
-			{
+                $this->request->redirect(Route::get('admin/permission')->uri(['action' => 'user', 'id' => $post->id]));
+            } catch (ORM_Validation_Exception $e) {
 				Message::error(__('Permissions save failed!'));
 
                 $this->_errors = $e->errors('models');
-			}
-			catch(Exception $e)
-			{
+            } catch (Exception $e) {
 				Message::error(__('Permissions save failed!'));
 
-				$this->_errors = array($e->getMessage()); 
+                $this->_errors = [$e->getMessage()];
 			}
 		}
 

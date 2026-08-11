@@ -4,8 +4,7 @@
       $error_id = uniqid('error');
 
 $code = $code ?? 500;
-      switch($code)
-      {
+switch ($code) {
 	    case 403:
 		  echo View::factory('errors/403')->set('url', URL::site( Request::initial()->uri(), true ) );
 	    break;
@@ -65,7 +64,17 @@ $code = $code ?? 500;
 #kohana_error p { margin: 0; padding: 0.2em 0; }
 #kohana_error a { color: #1b323b; }
 #kohana_error pre { overflow: auto; white-space: pre-wrap; }
-#kohana_error table { width: 100%; display: block; margin: 0 0 0.4em; padding: 0; border-collapse: collapse; background: #fff; }
+
+      #kohana_error table {
+          width: 100%;
+          display: block;
+          margin: 0 0 0.4em;
+          padding: 0;
+          border-collapse: collapse;
+          border-spacing: 0;
+          background: #fff;
+      }
+
 	#kohana_error table td { border: solid 1px #ddd; text-align: left; vertical-align: top; padding: 0.4em; }
 #kohana_error div.content { padding: 0.4em 1em 1em; overflow: hidden; }
 #kohana_error pre.source { margin: 0 0 1em; padding: 0.4em; background: #fff; border: dotted 1px #b7c680; line-height: 1.2em; }
@@ -77,27 +86,26 @@ $code = $code ?? 500;
 .js .collapsed { display: none; }
 </style>
 <script type="text/javascript">
-document.documentElement.className = document.documentElement.className + ' js';
-function koggle(elem)
-{
-    // Only works with the "style" attr
-    let disp;
-    elem = document.getElementById(elem);
+    document.documentElement.className = document.documentElement.className + ' js';
+    function toggle(elem) {
+        // Only works with the "style" attr
+        let display;
+        elem = document.getElementById(elem);
 
-    if (elem.style && elem.style['display']) {
-        disp = elem.style['display'];
-    } else if (window.getComputedStyle) {
-        disp = document.defaultView.getComputedStyle(elem, null).getPropertyValue('display');
+        if (elem.style && elem.style['display']) {
+            display = elem.style['display'];
+        } else if (window.getComputedStyle) {
+            display = document.defaultView.getComputedStyle(elem, null).getPropertyValue('display');
+        }
+
+        // Toggle the state of the "display" style
+        elem.style.display = display === 'block' ? 'none' : 'block';
+        return false;
     }
-
-	// Toggle the state of the "display" style
-    elem.style.display = disp === 'block' ? 'none' : 'block';
-	return false;
-}
 </script>
 
 <?php //try { $user = Identity::active_user(); } catch (Exception $e) { } ?>
-    <?php $admin = (class_exists('Model_User') AND class_exists('ACL') AND ACL::check('administer site')) ?>
+<?php $admin = class_exists('Model_User') && class_exists('ACL') && ACL::check('administer site') ?>
 
     <?php if ($admin): ?>
     <div class="big_box" id="error_details clear-block">
@@ -125,24 +133,24 @@ function koggle(elem)
 				<p>
 					<span class="file">
 						<?php if ($step['file']): $source_id = $error_id.'source'.$i; ?>
-							<a href="#<?php echo $source_id ?>" onclick="return koggle('<?php echo $source_id ?>')"><?php echo Debug::path($step['file']) ?> [ <?php echo $step['line'] ?> ]</a>
+							<a href="#<?php echo $source_id ?>" onclick="return toggle('<?php echo $source_id ?>')"><?php echo Debug::path($step['file']) ?> [ <?php echo $step['line'] ?> ]</a>
 						<?php else: ?>
 							{<?php echo __('PHP internal call') ?>}
 						<?php endif ?>
 					</span>
 					&raquo;
-					<?php echo $step['function'] ?>(<?php if ($step['args']): $args_id = $error_id.'args'.$i; ?><a href="#<?php echo $args_id ?>" onclick="return koggle('<?php echo $args_id ?>')"><?php echo __('arguments') ?></a><?php endif ?>)
+					<?php echo $step['function'] ?>(<?php if ($step['args']): $args_id = $error_id.'args'.$i; ?><a href="#<?php echo $args_id ?>" onclick="return toggle('<?php echo $args_id ?>')"><?php echo __('arguments') ?></a><?php endif ?>)
 				</p>
 				<?php if (isset($args_id)): ?>
 				<div id="<?php echo $args_id ?>" class="collapsed">
-					<table cellspacing="0">
+                    <table>
 					<?php foreach ($step['args'] as $name => $arg): ?>
 						<tr>
 							<td><code><?php echo $name ?></code></td>
 							<td><pre><?php echo Debug::dump($arg) ?></pre></td>
 						</tr>
 					<?php endforeach ?>
-					</table>
+                    </table>
 				</div>
 				<?php endif ?>
 				<?php if (isset($source_id)): ?>
@@ -153,42 +161,42 @@ function koggle(elem)
 		<?php endforeach ?>
 		</ol>
 	</div>
-	<h2><a href="#<?php echo $env_id = $error_id.'environment' ?>" onclick="return koggle('<?php echo $env_id ?>')"><?php echo __('Environment') ?></a></h2>
+	<h2><a href="#<?php echo $env_id = $error_id.'environment' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo __('Environment') ?></a></h2>
 	<div id="<?php echo $env_id ?>" class="content collapsed">
 		<?php $included = get_included_files() ?>
-		<h3><a href="#<?php echo $env_id = $error_id.'environment_included' ?>" onclick="return koggle('<?php echo $env_id ?>')"><?php echo __('Included files') ?></a> (<?php echo count($included) ?>)</h3>
+		<h3><a href="#<?php echo $env_id = $error_id.'environment_included' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo __('Included files') ?></a> (<?php echo count($included) ?>)</h3>
 		<div id="<?php echo $env_id ?>" class="collapsed">
-			<table cellspacing="0">
+            <table>
 				<?php foreach ($included as $file): ?>
 				<tr>
 					<td><code><?php echo Debug::path($file) ?></code></td>
 				</tr>
 				<?php endforeach ?>
-			</table>
+            </table>
 		</div>
 		<?php $included = get_loaded_extensions() ?>
-		<h3><a href="#<?php echo $env_id = $error_id.'environment_loaded' ?>" onclick="return koggle('<?php echo $env_id ?>')"><?php echo __('Loaded extensions') ?></a> (<?php echo count($included) ?>)</h3>
+		<h3><a href="#<?php echo $env_id = $error_id.'environment_loaded' ?>" onclick="return toggle('<?php echo $env_id ?>')"><?php echo __('Loaded extensions') ?></a> (<?php echo count($included) ?>)</h3>
 		<div id="<?php echo $env_id ?>" class="collapsed">
-			<table cellspacing="0">
+            <table>
 				<?php foreach ($included as $file): ?>
 				<tr>
 					<td><code><?php echo Debug::path($file) ?></code></td>
 				</tr>
 				<?php endforeach ?>
-			</table>
+            </table>
 		</div>
-		<?php foreach (array('_SESSION', '_GET', '_POST', '_FILES', '_COOKIE', '_SERVER') as $var): ?>
-		<?php if (empty($GLOBALS[$var]) OR ! is_array($GLOBALS[$var])) continue ?>
-		<h3><a href="#<?php echo $env_id = $error_id.'environment'.strtolower($var) ?>" onclick="return koggle('<?php echo $env_id ?>')">$<?php echo $var ?></a></h3>
+        <?php foreach (['_SESSION', '_GET', '_POST', '_FILES', '_COOKIE', '_SERVER'] as $var): ?>
+            <?php if (empty($GLOBALS[$var]) || !is_array($GLOBALS[$var])) continue ?>
+		<h3><a href="#<?php echo $env_id = $error_id.'environment'.strtolower($var) ?>" onclick="return toggle('<?php echo $env_id ?>')">$<?php echo $var ?></a></h3>
 		<div id="<?php echo $env_id ?>" class="collapsed">
-			<table cellspacing="0">
+            <table>
 				<?php foreach ($GLOBALS[$var] as $key => $value): ?>
 				<tr>
                     <td><code><?php echo htmlspecialchars((string)$key, ENT_QUOTES, Gleez::$charset); ?></code></td>
 					<td><pre><?php echo Debug::dump($value) ?></pre></td>
 				</tr>
 				<?php endforeach ?>
-			</table>
+            </table>
 		</div>
 		<?php endforeach ?>
 	</div>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Setting Controller
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Setting extends Controller_Admin {
-
+class Controller_Admin_Setting extends Controller_Admin
+{
     /**
      * General Settings
      *
@@ -31,8 +32,7 @@ class Controller_Admin_Setting extends Controller_Admin {
 		$this->title = __('Settings');
 		$config = Kohana::$config->load('site');
 
-		if (isset($config['maintenance_mode']) AND $config['maintenance_mode'] == 1)
-		{
+        if (isset($config['maintenance_mode']) && $config['maintenance_mode'] == 1) {
 			Message::success(__('Site running in maintenance mode!'));
 		}
 
@@ -47,16 +47,13 @@ class Controller_Admin_Setting extends Controller_Admin {
 			->set('action',             $action)
 			->set('post',               $config);
 
-		if ($this->valid_post('settings'))
-		{
+        if ($this->valid_post('settings')) {
 			unset($_POST['settings'], $_POST['_token'], $_POST['_action']);
 
-			foreach($_POST as $key => $value)
-			{
+            foreach ($_POST as $key => $value) {
 				$config->set($key, $value);
 
-				if($key == 'front_page' )
-				{
+                if ($key == 'front_page') {
 					$this->_set_front_page($value);
 				}
 			}
@@ -81,10 +78,10 @@ class Controller_Admin_Setting extends Controller_Admin {
     private function _set_front_page(string $source): void
     {
 		// Delete previous alias if any
-		Path::delete(array('alias' => Path::FRONT_ALIAS));
+        Path::delete(['alias' => Path::FRONT_ALIAS]);
 
 		// Create and save alias
-		$values = array();
+        $values = [];
 		$values['source'] = $source;
 		$values['alias']  = Path::FRONT_ALIAS;
 

@@ -9,16 +9,17 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Tag extends Controller_Admin {
-
+class Controller_Admin_Tag extends Controller_Admin
+{
     /**
      * The before() method is called before controller action
      *
      * @throws HTTP_Exception
      * @throws HTTP_Exception_403
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses  ACL::required
      */
 	public function before()
@@ -46,28 +47,32 @@ class Controller_Admin_Tag extends Controller_Admin {
 
 		$is_datatables = Request::is_datatables();
 
-		if ($is_datatables)
-		{
+        if ($is_datatables) {
             $tags = ORM::factory('Tag');
-			$this->_datatables = $tags->dataTables(array('name', 'id', 'type'));
+            $this->_datatables = $tags->dataTables(['name', 'id', 'type']);
 
-			foreach ($this->_datatables->result() as $tag)
-			{
-				$this->_datatables->add_row(
-					array(
-                        HTML::chars($tag->name),
-						HTML::anchor($tag->url, $tag->url),
-                        HTML::chars($tag->type),
-
-                        HTML::icon($tag->edit_url, 'fa far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit Tag'))) . '&nbsp;' .
-                        HTML::icon($tag->delete_url, 'fa fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Tag'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-tags'))
-					)
-				);
+            foreach ($this->_datatables->result() as $tag) {
+                $this->_datatables->add_row([
+                    HTML::chars($tag->name),
+                    HTML::anchor($tag->url, $tag->url),
+                    HTML::chars($tag->type),
+                    HTML::icon($tag->edit_url, 'fa far fa-edit', [
+                        'class' => 'btn btn-sm btn-default action-edit',
+                        'title' => __('Edit Tag')
+                    ])
+                    . '&nbsp;'
+                    . HTML::icon($tag->delete_url, 'fa fas fa-trash-can', [
+                        'class' => 'btn btn-sm btn-default action-delete',
+                        'title' => __('Delete Tag'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#admin-list-tags'
+                    ])
+                ]);
 			}
 		}
 
 		$this->title = __('Tags');
-		$url         = Route::url('admin/tag', array('action' => 'list'), TRUE);
+        $url = Route::url('admin/tag', ['action' => 'list'], true);
 
 		$view = View::factory('admin/tag/list')
 				->bind('datatables',   $this->_datatables)
@@ -90,28 +95,24 @@ class Controller_Admin_Tag extends Controller_Admin {
 	{
 		$this->title = __('Add New Tag');
         $post = ORM::factory('Tag');
-		$action      = Route::get('admin/tag')->uri(array('action' => 'add'));
+        $action = Route::get('admin/tag')->uri(['action' => 'add']);
 
-		if ($this->valid_post('tag'))
-		{
+        if ($this->valid_post('tag')) {
             $post->values($_POST, ['name', 'type']);
-			try
-			{
+            try {
 				$post->save();
-				Message::success(__('Tag %name saved successful!', array('%name' => $post->name)));
+                Message::success(__('Tag %name saved successful!', ['%name' => $post->name]));
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
 
-		$view = View::factory('admin/tag/form')
-				->set('post',   $post)
-				->set('action', $action)
-				->set('errors', $this->_errors)
-				->set('path', 	FALSE);
+        $view = View::factory('admin/tag/form')
+            ->set('post', $post)
+            ->set('action', $action)
+            ->set('errors', $this->_errors)
+            ->set('path', false);
 		
 		$this->response->body($view);
 	}
@@ -132,30 +133,25 @@ class Controller_Admin_Tag extends Controller_Admin {
 		$id   = (int) $this->request->param('id', 0);
         $post = ORM::factory('Tag', $id);
 
-		if ( ! $post->loaded())
-		{
+        if (!$post->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent tag.');
 			Message::error(__("Tag doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/tag')->uri(), 404);
 		}
 
-		$this->title = __('Edit Tag %name', array('%name' => $post->name));
+        $this->title = __('Edit Tag %name', ['%name' => $post->name]);
 
-		if ($this->valid_post('tag'))
-		{
+        if ($this->valid_post('tag')) {
             $post->values($_POST, ['name', 'type']);
-			try
-			{
+            try {
 				$post->save();
 
-				Kohana::$log->add(Log::INFO, 'Tag :name saved successful.', array(':name' => $post->name));
-				Message::success(__('Tag %name saved successful!', array('%name' => $post->name)));
+                Kohana::$log->add(Log::INFO, 'Tag :name saved successful.', [':name' => $post->name]);
+                Message::success(__('Tag %name saved successful!', ['%name' => $post->name]));
 
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -182,44 +178,41 @@ class Controller_Admin_Tag extends Controller_Admin {
 	public function action_delete()
 	{
 		$id  = (int) $this->request->param('id', 0);
+
+        /** @var Model_Tag $tag */
         $tag = ORM::factory('Tag', $id);
 
-		if ( ! $tag->loaded())
-		{
+        if (!$tag->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent tag.');
 			Message::error(__("Tag doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/tag')->uri(), 404);
 		}
 
-		$this->title = __('Delete Tag %title', array('%title' => $tag->name));
+        $this->title = __('Delete Tag %title', ['%title' => $tag->name]);
 
 		$view = View::factory('form/confirm')
 				->set('action', $tag->delete_url)
 				->set('title',  $tag->name);
 
 		// If deletion is not desired, redirect to list
-		if (isset($_POST['no']) AND $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/tag')->uri());
 		}
 
 		// If deletion is confirmed
-		if (isset($_POST['yes']) AND $this->valid_post())
-		{
-			try
-			{
-				$tag->delete();
-				Message::success(__('Tag %name deleted successful!', array('%name' => $tag->name)));
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
+                $tag->delete(true);
+                Message::success(__('Tag %name deleted successful!', ['%name' => $tag->name]));
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
-			}
-			catch (Exception $e)
-			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting tag id: :id, :msg',
-					array(':id' => $tag->id, ':msg' => $e->getMessage())
-				);
-				Message::error('An error occurred deleting tag %tag',array('%tag' => $tag->name));
-				$this->_errors = array(__('An error occurred deleting tag %tag',array('%tag' => $tag->name)));
+            } catch (Exception $e) {
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting tag id: :id, :msg', [
+                    ':id' => $tag->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred while deleting tag %tag', ['%tag' => $tag->name]));
+                $this->_errors = [__('An error occurred while deleting tag %tag', ['%tag' => $tag->name])];
 
 				$this->request->redirect(Route::get('admin/tag')->uri(), 503);
 			}

@@ -9,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Welcome extends Template {
-
+class Controller_Welcome extends Template
+{
 	/**
 	 * Page template
 	 * @var string
@@ -20,15 +20,14 @@ class Controller_Welcome extends Template {
     /**
      * The before() method is called before controller action.
      *
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
      */
 	public function before()
 	{
 		// The action_index() is default
-		if ($this->request->action() == 'index')
-		{
+        if ($this->request->action() == 'index') {
 			$this->request->action('welcome');
 		}
 
@@ -43,20 +42,19 @@ class Controller_Welcome extends Template {
 	public function action_welcome()
 	{
 		// If Gleez CMS don't installed
-		if ( ! Gleez::$installed)
-		{
+        if (!Gleez::$installed) {
 			// Send to the installer with server status
-			$this->request->redirect(Route::get('install')->uri(array('action' => 'index')), 200);
+            $this->request->redirect(Route::get('install')->uri(['action' => 'index']), 200);
 		}
 
-		Assets::css('welcome', "media/css/welcome.css", array('default'), array('weight' => 30));
+        Assets::css('welcome', "media/css/welcome.css", ['default'], ['weight' => 30]);
 
 		$this->title = __('Welcome!');
 		$this->schemaType = 'WebPage';
 		$content = View::factory('welcome');
 
 		// Disable sidebars on welcome page
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		$this->response->body($content);
 	}

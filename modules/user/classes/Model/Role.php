@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Default auth role
  *
@@ -10,28 +11,34 @@
  */
 class Model_Role extends Gleez_Model
 {
-
 	/**
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'          => array( 'type' => 'int' ),
-		'name'        => array( 'type' => 'string' ),
-		'description' => array( 'type' => 'string' ),
-		'special'     => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'name' => ['type' => 'string'],
+        'description' => ['type' => 'string'],
+        'special' => ['type' => 'int'],
+        'deleted' => ['type' => 'int'],
+    ];
+
+    /**
+     * Soft-delete column
+     * @var array
+     */
+    protected $_deleted_column = ['column' => 'deleted', 'format' => true];
 
 	/**
 	 * A role has many users
 	 *
 	 * @var array Relationships
 	 */
-	protected $_has_many = array(
-		'users' => array(
-			'through' => 'roles_users'
-		)
-	);
+    protected $_has_many = [
+        'users' => [
+            'through' => 'roles_users'
+        ]
+    ];
 
 	/**
 	 * Rules for the role model
@@ -40,16 +47,16 @@ class Model_Role extends Gleez_Model
 	 */
 	public function rules(): array
     {
-		return array(
-			'name' => array(
-				array('not_empty'),
-				array('min_length', array(':value', 4)),
-				array('max_length', array(':value', 32)),
-			),
-			'description' => array(
-				array('max_length', array(':value', 255)),
-			)
-		);
+        return [
+            'name' => [
+                ['not_empty'],
+                ['min_length', [':value', 4]],
+                ['max_length', [':value', 32]],
+            ],
+            'description' => [
+                ['max_length', [':value', 255]],
+            ]
+        ];
 	}
 
 	/**
@@ -59,11 +66,11 @@ class Model_Role extends Gleez_Model
 	 */
 	public function labels(): array
     {
-		return array(
-			'name'        => __('Name'),
-			'description' => __('Description'),
-			'special'     => __('Special Role'),
-		);
+        return [
+            'name' => __('Name'),
+            'description' => __('Description'),
+            'special' => __('Special Role'),
+        ];
 	}
 
 	/**
@@ -71,7 +78,7 @@ class Model_Role extends Gleez_Model
      *
      * @throws Kohana_Exception|ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		parent::save( $validation );
 
@@ -82,13 +89,16 @@ class Model_Role extends Gleez_Model
 	}
 
     /**
-     * Override the delete method to clear cache
+     * Override the delete method to clear cache.
      *
+     * @param bool $soft
+     * @return Kohana_ORM
+     * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-    public function delete(): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
-        parent::delete();
+        parent::delete($soft);
 
 		//cleanup the cache
         Cache::instance()->delete_all();
@@ -109,13 +119,11 @@ class Model_Role extends Gleez_Model
 	{
         switch ($column) {
 			case 'edit_url':
-				// Model specific links; view, edit, delete url's.
-				return Route::get('admin/role')->uri(array('action' => 'edit', 'id' => $this->id));
+                return Route::get('admin/role')->uri(['action' => 'edit', 'id' => $this->id]);
             case 'delete_url':
-				// Model specific links; view, edit, delete url's.
-				return Route::get('admin/role')->uri(array('action' => 'delete', 'id' => $this->id));
+                return Route::get('admin/role')->uri(['action' => 'delete', 'id' => $this->id]);
             case 'perm_url':
-				return Route::get('admin/permission')->uri(array('action' => 'role', 'id' => $this->id));
+                return Route::get('admin/permission')->uri(['action' => 'role', 'id' => $this->id]);
         }
 
         return $this->get($column);

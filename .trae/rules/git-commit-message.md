@@ -34,6 +34,7 @@ The scope MUST be enclosed in parentheses and specify the name of the affected r
 - `auth`
 - `cache`
 - `captcha`
+- `codebench`
 - `database`
 - `gleez`
 - `image`
@@ -51,10 +52,22 @@ The scope MUST be enclosed in parentheses and specify the name of the affected r
 
 - Use the imperative, present tense: "change" not "changed" nor "changes"
 - Don't capitalize the first word of the description
-- Keep proper nouns, brands, and acronyms capitalized correctly (e.g., Google, OAuth2, Windows, ORM)
+- Keep proper nouns and brands capitalized correctly (e.g., Google, OAuth2, Windows)
+- Use the correct letter case for acronyms (e.g., URL, ORM, OAuth2)
 - No dot (.) at the end
 - Write in English
 
+### Breaking Changes
+
+Changes that break backward compatibility MUST be marked as BREAKING CHANGE:
+
+- **Renaming public properties or methods**: If you rename a public property or method (e.g., `Shortcode::parseAttrs()`), this is a BREAKING CHANGE because external code may depend on the original name
+- **Renaming protected properties or methods**: If the class is widely inherited, this is also a BREAKING CHANGE
+- **Private members**: Renaming private properties or methods is NOT a BREAKING CHANGE
+
+To mark a BREAKING CHANGE:
+1. Add a `!` after the type/scope: `refactor(gleez)!: rename parse_attrs to parseAttrs`
+2. Or add `BREAKING CHANGE:` in the commit message footer with details
 
 ## Examples
 
@@ -64,3 +77,13 @@ The scope MUST be enclosed in parentheses and specify the name of the affected r
 - `style(system): reformat routing middleware according to linter`
 - `test(unittest): add missing test cases for captcha verification`
 - `chore: update dependencies and bump npm package version`
+- `refactor(gleez)!: rename parse_attrs to parseAttrs`
+- `refactor(gleez): rename $xmlrpc to $xmlRpc` (NOT a breaking change, internal variable only)
+
+Breaking change using footer:
+
+```
+refactor(gleez): rename parse_attrs to parseAttrs
+
+BREAKING CHANGE: the parse_attrs method has been renamed to parseAttrs
+```

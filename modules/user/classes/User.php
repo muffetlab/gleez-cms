@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User library
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class User {
-
+class User
+{
 	/**
 	 * Guest user ID
 	 * @type integer
@@ -50,65 +51,58 @@ class User {
 	 * All Roles
 	 * @var array
 	 */
-	protected static $roles = array();
+    protected static $roles = [];
 
     /**
      * Return the active user. If there's no active user, return the guest user.
      *
-     * @return Model_User
+     * @return ORM|bool
      * @throws Kohana_Exception
      */
 	public static function active_user()
 	{
 		// @todo (maybe) cache this object so we're not always doing session lookups.
-		return (! (Auth_ORM::instance()->get_user()) ? self::guest() : Auth_ORM::instance()->get_user());
+        return !Auth_ORM::instance()->get_user() ? self::guest() : Auth_ORM::instance()->get_user();
 	}
 
     /**
      * Check if current user is guest
      *
-     * @return boolean TRUE if current user is guest
+     * @return boolean true if current user is guest
      * @throws Kohana_Exception
      */
-	public static function is_guest()
-	{
+    public static function is_guest(): bool
+    {
         return !Auth_ORM::instance()->get_user();
 	}
 
     /**
      * Check if current user is admin
      *
-     * @return boolean TRUE if current user is admin
+     * @return boolean true if current user is admin
      * @throws Kohana_Exception
      */
-	public static function is_admin()
-	{
-		if(User::is_guest())
-		{
-			return FALSE;
+    public static function is_admin(): bool
+    {
+        if (User::is_guest()) {
+            return false;
 		}
 
 		$user = Auth_ORM::instance()->get_user();
 
 		// To reduce the number of SQL queries, we cache the user's roles in a static variable.
-		if ( ! isset(User::$roles[$user->id]))
-		{
+        if (!isset(User::$roles[$user->id])) {
 			// @todo fetch and save in session to avoid recursive lookups
 			User::$roles[$user->id] = $user->roles();
 		}
 
-		if(in_array('admin', User::$roles[$user->id]) OR  array_key_exists(4, User::$roles[$user->id]))
-		{
-			return TRUE;
-		}
-
-		return FALSE;
+        return in_array('admin', User::$roles[$user->id]) || array_key_exists(4, User::$roles[$user->id]);
 	}
 
 	/**
 	 * Generates a default anonymous $user object.
 	 *
-	 * @return Object - the user object.
+     * @return ORM|bool The user object
 	 */
 	public static function guest()
 	{
@@ -122,8 +116,8 @@ class User {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-	public static function count_all()
-	{
+    public static function count_all(): int
+    {
 		// initialize the cache
         $cache = Cache::instance();
 
@@ -143,75 +137,72 @@ class User {
      * Checks if user belongs to group(s)
      *
      * @param mixed $groups Group(s)
-     * @return boolean TRUE if user belongs to group(s)
+     * @return boolean true if user belongs to group(s)
      * @throws Kohana_Exception
      */
-	public static function belongsto($groups)
-	{
-		if ($groups == 'all' OR is_null($groups))
-		{
-			return TRUE;
+    public static function belongsTo($groups): bool
+    {
+        if ($groups == 'all' || is_null($groups)) {
+            return true;
 		}
 
-		if ( ! is_array($groups))
-		{
+        if (!is_array($groups)) {
 			$groups = @explode(',', $groups);
 		}
 
-		if (Auth_ORM::instance()->logged_in())
-		{
+        if (Auth_ORM::instance()->logged_in()) {
 			$user = Auth_ORM::instance()->get_user();
 
 			// To reduce the number of SQL queries, we cache the user's roles in a static variable.
-			if ( ! isset(User::$roles[$user->id]))
-			{
+            if (!isset(User::$roles[$user->id])) {
 				// @todo fetch and save in session to avoid recursive lookups
 				User::$roles[$user->id] = $user->roles();
 			}
 
 			// array_diff is not safe
-			if (array_intersect(array_values($groups), array_keys(User::$roles[$user->id])))
-			{
-				return TRUE;
+            if (array_intersect(array_values($groups), array_keys(User::$roles[$user->id]))) {
+                return true;
 			}
 
-			return FALSE;
+            return false;
 		}
 
-		if (in_array('guest', $groups) OR array_key_exists(1, $groups))
-		{
-			return TRUE;
+        if (in_array('guest', $groups) || array_key_exists(1, $groups)) {
+            return true;
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
-	 * Look up a user by id.
-	 * @param integer      $id the user id
-	 * @return Model_User  the user object, or boolean if the id was invalid.
+	 * Look up a user by ID.
+     *
+     * @param int $id The user ID
+     * @return ORM|bool The user object, or boolean if the ID was invalid
 	 */
-	public static function lookup($id)
+    public static function lookup(int $id)
 	{
 		return self::_lookup_by_field('id', $id);
 	}
 
-	/**
-	 * Look up a user by name.
-	 * @param integer      $name the user name
-	 * @return Model_User  the user object, or boolean if the name was invalid.
-	 */
-	public static function lookup_by_name($name)
+    /**
+     * Look up a user by name.
+     *
+     * @param string $name The user name
+     * @return ORM|bool The user object, or boolean if the name was invalid
+     */
+    public static function lookup_by_name(string $name)
 	{
 		return self::_lookup_by_field('name', $name);
 	}
 
-	/**
-	 * Look up a user by email.
-	 * @param integer      $email the user email
-	 * @return Model_User  the user object, or boolean if the email was invalid.
-	 */
-	public static function lookup_by_mail($email)
+    /**
+     * Look up a user by email.
+     *
+     * @param string $email The user email
+     * @return ORM|bool The user object, or boolean if the email was invalid
+     */
+    public static function lookup_by_mail(string $email)
 	{
 		return self::_lookup_by_field('mail', $email);
 	}
@@ -219,70 +210,56 @@ class User {
 	/**
 	 * Look up a user by field value
 	 *
-	 * @param   string  $field  Search field
-	 * @param   string  $value  Search value
-	 * @return  Model_User  the user object, or boolean if the name was invalid.
+     * @param string $field Search field
+     * @param string $value Search value
+     * @return ORM|bool The user object, or boolean if the name was invalid
 	 */
-	private static function _lookup_by_field($field, $value)
+    private static function _lookup_by_field(string $field, string $value)
 	{
-		try
-		{
+        try {
             $user = ORM::factory('User')->where($field, '=', $value)->find();
-			if ($user->loaded())
-			{
+            if ($user->loaded()) {
 				return $user;
 			}
-		}
-		catch (Exception $e)
-		{
-			return FALSE;
+        } catch (Exception $e) {
+            return false;
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
-	 * Get role by id
+	 * Get role by ID.
 	 *
-	 * @since  1.2.0
-	 *
-	 * @param  integer  $id  Role id
-	 * @return Model_Role|boolean The Role object, or FALSE if ID is invalid or not found
+     * @param int $id Role ID
+     * @return ORM|bool The Role object, or false if ID is invalid or not found
+     * @since  1.2.0
 	 */
-	public static function getRoleById($id)
+    public static function getRoleById(int $id)
 	{
-		try
-		{
+        try {
             $role = ORM::factory('Role', $id);
-			if ($role->loaded())
-			{
+            if ($role->loaded()) {
 				return $role;
 			}
-		}
-		catch (Exception $e)
-		{
-			return FALSE;
+        } catch (Exception $e) {
+            return false;
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**
      * Is the password provided correct?
      *
-     * @param Model_User $user User
+     * @param ORM $user User
      * @param string $password A plaintext password
-     * @return boolean TRUE if the password is correct
+     * @return boolean true if the password is correct
      * @throws Kohana_Exception
      * @uses   Auth_ORM::hash
      */
-	public static function check_pass($user, $password)
-	{
-		if( !isset($user) || !isset($password) )
-		{
-			return FALSE;
-		}
-
+    public static function check_pass(ORM $user, string $password): bool
+    {
 		$valid = $user->pass;
 		$guess = Auth_ORM::instance()->hash($password);
 		
@@ -292,13 +269,12 @@ class User {
     /**
      * Saves visitor information as a cookie so it can be reused.
      *
-     * @param $values An array of key/value pairs to be saved into a cookie.
+     * @param array $values An array of key/value pairs to be saved into a cookie
      * @throws Kohana_Exception
      */
 	public static function cookie_save(array $values)
 	{
-		foreach ($values as $field => $value)
-		{
+        foreach ($values as $field => $value) {
 			// Set cookie for 365 days.
 			Cookie::set('Gleez.visitor.' . $field, rawurlencode($value), time() + 31536000);
 		}
@@ -307,10 +283,10 @@ class User {
     /**
      * Delete a visitor information cookie.
      *
-     * @param $cookie_name A cookie name such as 'homepage'.
+     * @param string $cookie_name A cookie name such as 'homepage'
      * @throws Kohana_Exception
      */
-	public static function cookie_delete($cookie_name)
+    public static function cookie_delete(string $cookie_name)
 	{
 		Cookie::set('Gleez.visitor.' . $cookie_name, '', time() - 3600);
 	}
@@ -320,11 +296,11 @@ class User {
      *
      * @param string $provider_id The provider user id
      * @param string $provider_name The provider name (facebook, google, live etc)
-     * @return mixed user object or FALSE
+     * @return ORM|null User object or null
      * @throws Kohana_Exception
      */
-	public static function check_identity($provider_id, $provider_name)
-	{
+    public static function check_identity(string $provider_id, string $provider_name): ?ORM
+    {
 		$uid = (int) DB::select('user_id')
 			->from('identities')
 			->where('provider', '=',  $provider_name)
@@ -332,10 +308,7 @@ class User {
 			->execute()
 			->get('user_id');
 
-		// if the user id is found return the user object
-        if ($uid and $uid > 1) return ORM::factory('User', $uid);
-
-		return FALSE;
+        return $uid > 1 ? ORM::factory('User', $uid) : null;
 	}
 
     /**
@@ -345,10 +318,9 @@ class User {
      * @throws Kohana_Exception
      * @todo move to HTML class
      */
-	public static function providers()
-	{
-		if(! Auth_ORM::instance()->logged_in())
-		{
+    public static function providers(): string
+    {
+        if (!Auth_ORM::instance()->logged_in()) {
 			$providers = array_filter(Auth_ORM::providers());
 			return View::factory('oauth/providers')->set('providers', $providers);
 		}
@@ -362,11 +334,10 @@ class User {
 	 * @param   ORM     $user  The user object
 	 * @return  string  html to display
 	 */
-	public static function roles(ORM $user)
-	{
+    public static function roles(ORM $user): string
+    {
 		$roles = '<div class="user-roles">';
-		foreach ($user->roles() as $role)
-		{
+        foreach ($user->roles() as $role) {
             $roles .= '<p><span class="label label-default">' . HTML::chars($role) . '</span></p>';
 		}
 		$roles .= '</div>';
@@ -375,13 +346,13 @@ class User {
 	}
 
     /**
-     * Get user avatar, and creates a image link
+     * Get user avatar, and creates an image link.
      *
      * Optionally, if it is allowed, used [Gravatar].
      *
      * Example:
      * ~~~
-     * $post = Post::dcache($id, 'page', $config);
+     * $post = Post::dynamicCache($id, 'page', $config);
      *
      * echo HTML::anchor($post->user->url, User::getAvatar($post->user));
      * ~~~
@@ -400,50 +371,46 @@ class User {
      * @uses URL::site
      * @uses Arr::merge
      */
-	public static function getAvatar(ORM $user, array $attrs = array(), $protocol = NULL, $index = FALSE)
-	{
+    public static function getAvatar(ORM $user, array $attrs = [], $protocol = null, bool $index = false): string
+    {
 		// Default user pic
 		$avatar = 'media/images/avatar-user-400.png';
 
 		// Set default attributes
-		$attrs_default = array(
-			'size'          => 32,
-			'type'          => 'resize',
-			'itemprop'      => 'image',
-			'default_image' => URL::site($avatar, TRUE),
-		);
+        $attrs_default = [
+            'size' => 32,
+            'type' => 'resize',
+            'itemprop' => 'image',
+            'default_image' => URL::site($avatar, true),
+        ];
 
 		// Merge attributes
 		$attrs = Arr::merge($attrs_default, $attrs);
 
-		$use_gravatar = Kohana::$config->load('site')->get('use_gravatars', FALSE);
+        $use_gravatar = Kohana::$config->load('site')->get('use_gravatars', false);
 
-		if ($use_gravatar)
-		{
-			$avatar = Gravatar::instance($user->mail)
-				->setSize($attrs['size'])
-				->setDefaultImage($attrs['default_image'])
-				->getImage(array(
-					'alt'      => $user->nick,
-					'itemprop' => $attrs['itemprop'],
-					'width'    => $attrs['size'],
-					'height'   => $attrs['size']
-				), $protocol, $index);
-		}
-		else
-		{
-			if ( ! empty($user->picture))
-			{
+        if ($use_gravatar) {
+            $avatar = Gravatar::instance($user->mail)
+                ->setSize($attrs['size'])
+                ->setDefaultImage($attrs['default_image'])
+                ->getImage([
+                    'alt' => $user->nick,
+                    'itemprop' => $attrs['itemprop'],
+                    'width' => $attrs['size'],
+                    'height' => $attrs['size']
+                ], $protocol, $index);
+        } else {
+            if (!empty($user->picture)) {
 				$avatar = $user->picture;
 			}
 
-			$avatar = HTML::resize($avatar, array(
-				'alt'      => $user->nick,
-				'height'   => $attrs['size'],
-				'width'    => $attrs['size'],
-				'type'     => $attrs['type'],
-				'itemprop' => $attrs['itemprop'],
-			), $protocol, $index);
+            $avatar = HTML::resize($avatar, [
+                'alt' => $user->nick,
+                'height' => $attrs['size'],
+                'width' => $attrs['size'],
+                'type' => $attrs['type'],
+                'itemprop' => $attrs['itemprop'],
+            ], $protocol, $index);
 		}
 
 		return $avatar;

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Helper OAuth2 Authorization Code Grant Type
  *
- * @package    Gleez\oAuth2
+ * @package    Gleez\OAuth2
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2013 Gleez Technologies
@@ -15,21 +16,21 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 	protected $request;
 	protected $response;
 
-	public function __construct(array $config = array())
+    public function __construct(array $config = [])
 	{
 		$this->config = $config;
 	}
 
-	public function getQuerystringIdentifier()
-	{
+    public function getQuerystringIdentifier(): string
+    {
 		return 'authorization_code';
 	}
 
     /**
      * @throws Oauth2_Exception
      */
-    public function validateRequest(Request $request, Response $response)
-	{
+    public function validateRequest(Request $request, Response $response): bool
+    {
 		$this->request  = $request;
 		$this->response = $response;
 
@@ -49,13 +50,13 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 		 */
 		if (isset($authCode['redirect_uri']) && $authCode['redirect_uri']) {
 			if (!$request->post('redirect_uri') || urldecode($request->post('redirect_uri')) != $authCode['redirect_uri']) {
-				throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', "The redirect URI is missing or do not match");
+                throw Oauth2_Exception::factory(400, 'redirect_uri_mismatch', 'The redirect URI is missing or do not match');
 			}
 		}
 
-		if ($authCode["expires"] < time()) {
-			throw Oauth2_Exception::factory(400, 'invalid_grant', "The authorization code has expired");
-			//throw new Oauth2_Exception(400, 'invalid_grant', "The authorization code has expired");
+        if ($authCode['expires'] < time()) {
+            throw Oauth2_Exception::factory(400, 'invalid_grant', 'The authorization code has expired');
+            //throw new Oauth2_Exception(400, 'invalid_grant', 'The authorization code has expired');
 		}
 
 		if (!isset($authCode['code'])) {
@@ -74,34 +75,31 @@ class Oauth2_GrantType_AuthorizationCode implements Oauth2_GrantType_Interface
 
 	public function getUserId()
 	{
-        return $this->authCode['user_id'] ?? NULL;
+        return $this->authCode['user_id'] ?? null;
 	}
 
 	public function getScope()
 	{
-        return $this->authCode['scope'] ?? NULL;
+        return $this->authCode['scope'] ?? null;
 	}
 
     /**
      * @throws Oauth2_Exception
      */
-    public function createAccessToken($client_id, $user_id, $scope = NULL)
+    public function createAccessToken($client_id, $user_id, $scope = null)
 	{
-		try
-		{
+        try {
 			$issueRefreshToken = Kohana::$config->load('oauth2')->get('includeRefreshToken', true);
-			
-			return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope, $issueRefreshToken);
-		}
-		catch (Exception $e)
-		{
+
+            return Model::factory('OAuth')->createAccessToken($client_id, $user_id, $scope, $issueRefreshToken);
+        } catch (Exception $e) {
 			throw Oauth2_Exception::factory(500, 'server_error', 'The Token server encountered an unexpected condition which prevented it from fulfilling the request.');
 		}
 	}
 
 	protected function getAuthorizationCode($code)
 	{
-        return Model::factory('oauth')->getAuthorizationCode($code);
+        return Model::factory('OAuth')->getAuthorizationCode($code);
 	}
 
 }

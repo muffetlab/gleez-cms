@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Blog Widget class
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Widget_Blog extends Widget {
-
+class Widget_Blog extends Widget
+{
 	public function info(){}
 	public function form(){}
 	public function save(array $post){}
@@ -22,8 +23,7 @@ class Widget_Blog extends Widget {
      */
     public function render()
 	{
-		switch($this->name)
-		{
+        switch ($this->name) {
 			case 'recent':
 				return $this->recent_blogs();
             case 'announce':
@@ -50,9 +50,8 @@ class Widget_Blog extends Widget {
 		$action = Request::current()->action();
 
 		// Don't show the widget on edit or delete actions
-		if ($action == 'edit' OR $action == 'delete')
-		{
-			return FALSE;
+        if ($action == 'edit' || $action == 'delete') {
+            return false;
 		}
 
         $cache = Cache::instance();
@@ -61,9 +60,8 @@ class Widget_Blog extends Widget {
         if (!$items = $cache->get('widgets:recent_blogs')) {
             $blogs = ORM::factory('Blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
-			$items = array();
-			foreach($blogs as $blog)
-			{
+            $items = [];
+            foreach ($blogs as $blog) {
 				$items[$blog->id]['id']       = $blog->id;
 				$items[$blog->id]['title']    = $blog->title;
 				$items[$blog->id]['url']      = $blog->url;
@@ -97,9 +95,8 @@ class Widget_Blog extends Widget {
 		$action = Request::current()->action();
 
 		// Don't show the widget on edit or delete actions
-		if ($action == 'edit' OR $action == 'delete')
-		{
-			return FALSE;
+        if ($action == 'edit' || $action == 'delete') {
+            return false;
 		}
 
         $cache = Cache::instance();
@@ -108,16 +105,21 @@ class Widget_Blog extends Widget {
         if (!$items = $cache->get('widgets:recent_announce_blogs')) {
             $blogs = ORM::factory('Blog')->order_by('created', 'DESC')->limit(10)->find_all();
 
-			$items = array();
-			foreach($blogs as $blog)
-			{
+            $items = [];
+            foreach ($blogs as $blog) {
 				$items[$blog->id]['id']    = $blog->id;
 				$items[$blog->id]['title'] = $blog->title;
 				$items[$blog->id]['url']   = $blog->url;
 
-				$image = is_null($blog->image)
-                        ? '<div class="empty-photo"><i class="fas fa-camera-retro fa-2x"></i></div>'
-					: HTML::resize($blog->image, array('alt' => $blog->title, 'height' => 140, 'width' => 180, 'type' => 'resize', 'itemprop' => 'image'));
+                $image = is_null($blog->image)
+                    ? '<div class="empty-photo"><i class="fas fa-camera-retro fa-2x"></i></div>'
+                    : HTML::resize($blog->image, [
+                        'alt' => $blog->title,
+                        'height' => 140,
+                        'width' => 180,
+                        'type' => 'resize',
+                        'itemprop' => 'image'
+                    ]);
 
 				$items[$blog->id]['image'] = $image;
 			}

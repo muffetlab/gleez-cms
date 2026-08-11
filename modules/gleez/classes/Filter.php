@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Input Filter
  *
@@ -12,19 +13,19 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Filter {
-
+class Filter
+{
 	/**
 	 * An array of Filters
 	 * @var array
 	 */
-	protected static $_filters = array();
+    protected static $_filters = [];
 
 	/**
 	 * Indicates whether filters are cached
 	 * @var boolean
 	 */
-	public static $cache = FALSE;
+    public static $cache = false;
 
 	/**
 	 * Stores a named filter and returns it
@@ -33,7 +34,7 @@ class Filter {
 	 *
 	 * Example:
 	 * ~~~
-	 * Filter::set('html', array('prepare callback' => FALSE, 'process callback' => 'Text::html' ) )
+     * Filter::set('html', array('prepare callback' => false, 'process callback' => 'Text::html'))
 	 *          ->settings(array(
 	 *                  'html_nofollow' => true,
 	 *                  'allowed_html'  => '<a> <em> <strong> <cite> <blockquote>'
@@ -44,7 +45,7 @@ class Filter {
      * @param array $callbacks Filter callbacks
      * @return  Filter
      */
-    public static function set(string $name, array $callbacks = array()): Filter
+    public static function set(string $name, array $callbacks = []): Filter
     {
 		return Filter::$_filters[$name] = new Filter($name, $callbacks);
 	}
@@ -63,10 +64,8 @@ class Filter {
 	 */
     public static function get(string $name): Filter
     {
-		if ( ! isset(Filter::$_filters[$name]))
-		{
-			throw new Kohana_Exception('The requested filter does not exist: :filter',
-				array(':filter' => $name));
+        if (!isset(Filter::$_filters[$name])) {
+            throw new Kohana_Exception('The requested filter does not exist: :filter', [':filter' => $name]);
 		}
 
 		return Filter::$_filters[$name];
@@ -101,7 +100,7 @@ class Filter {
      */
     public static function formats(): array
     {
-		$config = Kohana::$config->load('inputfilter');
+        $config = Kohana::$config->load('input_filter');
 
         return array_map(function ($format) {
             return $format['name'];
@@ -120,7 +119,7 @@ class Filter {
      * if ( ! Filter::cache())
      * {
      *     // Set filters here
-     *     Filter::cache(TRUE);
+     *     Filter::cache(true);
      * }
      *
      * @param boolean $save Cache the current filters [Optional]
@@ -131,37 +130,28 @@ class Filter {
      * @uses    Cache::get
      * @uses    Cache::set
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    public static function cache(bool $save = false, bool $append = false): bool
     {
 		$cache = Cache::instance();
 
-		if ($save)
-		{
+        if ($save) {
             // Cache all defined routes
             return $cache->set('Filter::cache()', Filter::$_filters);
-		}
-		else
-		{
-			if ($filters = $cache->get('Filter::cache()'))
-			{
-				if ($append)
-				{
+        } else {
+            if ($filters = $cache->get('Filter::cache()')) {
+                if ($append) {
 					// Append cached filters
 					Filter::$_filters += $filters;
-				}
-				else
-				{
+                } else {
 					// Replace existing filters
 					Filter::$_filters = $filters;
 				}
 
 				// Filters were cached
-				return Filter::$cache = TRUE;
-			}
-			else
-			{
+                return Filter::$cache = true;
+            } else {
 				// Filters were not cached
-				return Filter::$cache = FALSE;
+                return Filter::$cache = false;
 			}
 		}
 	}
@@ -175,9 +165,8 @@ class Filter {
      */
     public static function process($text): string
     {
-		$config = Kohana::$config->load('inputfilter');
-		if(!array_key_exists($text->format, $config->get('formats') ) OR !isset($text->format))
-		{
+        $config = Kohana::$config->load('input_filter');
+        if (!array_key_exists($text->format, $config->get('formats')) || !isset($text->format)) {
 			//make sure a valid format id exists, if not set default format id
 			$text->format = (int) $config->get('default_format', 1);
 		}
@@ -189,21 +178,17 @@ class Filter {
         array_multisort(array_column($filters, 'weight'), SORT_ASC, $filters);
 
 		// Give filters the chance to escape HTML-like data such as code or formulas.
-		foreach ($filters as $name => $filter)
-		{
+        foreach ($filters as $name => $filter) {
 			$prepare_callback = $filter_info[$name]->prepare_callback;
-			if ($filter['status'] AND !empty($prepare_callback))
-			{
+            if ($filter['status'] && !empty($prepare_callback)) {
                 $text->text = Filter::execute($prepare_callback, $text->text, $filter);
 			}
 		}
 
 		// Perform filtering
-		foreach ($filters as $name => $filter)
-		{
+        foreach ($filters as $name => $filter) {
 			$process_callback = $filter_info[$name]->process_callback;
-			if ($filter['status'] AND !empty($process_callback))
-			{
+            if ($filter['status'] && !empty($process_callback)) {
                 $text->text = Filter::execute($process_callback, $text->text, $filter);
 			}
 		}
@@ -225,27 +210,23 @@ class Filter {
 		$args = func_get_args();
 		array_shift($args);
 
-		if (is_string($callback) AND strpos($callback, '::') !== FALSE)
-		{
+        if (is_string($callback) && strpos($callback, '::') !== false) {
 			// Make the static callback into an array
 			$callback = explode('::', $callback, 2);
 		}
 
-		if ($callback AND is_callable($callback))
-		{
-			try
-			{
+        if ($callback && is_callable($callback)) {
+            try {
                 if ($callback === ['Text', 'auto_p']) {
                     return Text::auto_p($text);
                 }
 
 				return  call_user_func_array($callback, $args);
-			}
-			catch (Exception $e)
-			{
-				Kohana::$log->add(Log::ERROR, 'Filter callback response :msg for filter: :filter',
-					array(':msg' => $e->getMessage(), 'filter' => $filter['name'])
-				);
+            } catch (Exception $e) {
+                Kohana::$log->add(Log::ERROR, 'Filter callback response :msg for filter: :filter', [
+                    ':msg' => $e->getMessage(),
+                    'filter' => $filter['name']
+                ]);
 
 				return $text;
 			}
@@ -264,13 +245,13 @@ class Filter {
 	 * The prepare and process callbacks for filter
 	 * @var array
 	 */
-	protected $_callbacks = array('prepare callback' => FALSE, 'process callback' => FALSE);
+    protected $_callbacks = ['prepare callback' => false, 'process callback' => false];
 
 	/**
 	 * Filter Settings
 	 * @var array
 	 */
-	protected $_settings = array();
+    protected $_settings = [];
 
 	/**
 	 * Filter Description
@@ -284,7 +265,7 @@ class Filter {
      * @param string $title Filter title
      * @param array $callbacks Filter callbacks
 	 */
-    public function __construct(string $title, array $callbacks = array())
+    public function __construct(string $title, array $callbacks = [])
 	{
 		$this->_title = $title;
 		$this->_callbacks = $callbacks;
@@ -295,33 +276,20 @@ class Filter {
      */
     public function __get($key)
 	{
-		if($key == 'title')
-		{
+        if ($key == 'title') {
 			return $this->_title;
-		}
-		else if($key == 'description')
-		{
+        } elseif ($key == 'description') {
 			return $this->_description;
-		}
-		else if($key == 'prepare_callback')
-		{
+        } elseif ($key == 'prepare_callback') {
 			return $this->_callbacks['prepare callback'];
-		}
-		else if($key == 'process_callback')
-		{
+        } elseif ($key == 'process_callback') {
 			return $this->_callbacks['process callback'];
-		}
-		else if($key == 'callbacks')
-		{
+        } elseif ($key == 'callbacks') {
 			return $this->_callbacks;
-		}
-		else if($key == 'settings')
-		{
+        } elseif ($key == 'settings') {
 			return $this->_settings;
-		}
-		else
-		{
-			throw new Kohana_Exception('The requested property does not exist: :key', array(':key' => $key));
+        } else {
+            throw new Kohana_Exception('The requested property does not exist: :key', [':key' => $key]);
 		}
 	}
 
@@ -331,7 +299,7 @@ class Filter {
      * Example:
      * ~~~
      * $filter->callbacks(array(
-     *     'prepare callback'  => FALSE,
+     *     'prepare callback'  => false,
      *     'process callback'  => 'Text::html'
      * ));
      * ~~~
@@ -341,10 +309,9 @@ class Filter {
      * @param array|null $callbacks key values
      * @return array|Filter
      */
-	public function callbacks(array $callbacks = NULL)
+    public function callbacks(array $callbacks = null)
 	{
-		if ($callbacks === NULL)
-		{
+        if ($callbacks === null) {
 			return $this->_callbacks;
 		}
 
@@ -369,10 +336,9 @@ class Filter {
      * @param array|null $settings key values
      * @return array|Filter
      */
-	public function settings(array $settings = NULL)
+    public function settings(array $settings = null)
 	{
-		if ($settings === NULL)
-		{
+        if ($settings === null) {
 			return $this->_settings;
 		}
 
@@ -394,10 +360,9 @@ class Filter {
      * @param string|null $title Title
      * @return Filter|string
 	 */
-    public function title(string $title = NULL)
+    public function title(string $title = null)
 	{
-		if ($title === NULL)
-		{
+        if ($title === null) {
 			return $this->_title;
 		}
 
@@ -419,10 +384,9 @@ class Filter {
      * @param string|null $description Description
 	 * @return  string|Filter
 	 */
-    public function description(string $description = NULL)
+    public function description(string $description = null)
 	{
-		if ($description === NULL)
-		{
+        if ($description === null) {
 			return $this->_description;
 		}
 

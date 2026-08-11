@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Basic captcha class.
  *
@@ -30,22 +31,20 @@ class Captcha_Basic extends Captcha
      * @return string|null
      * @throws Kohana_Exception
      */
-    public function render(bool $html = TRUE, string $type = null): ?string
+    public function render(bool $html = true, string $type = null): ?string
     {
 		// Creates $this->image
 		$this->image_create(Captcha::$config['background']);
 
 		// Add a random gradient
-		if (empty(Captcha::$config['background']))
-		{
+        if (empty(Captcha::$config['background'])) {
 			$color1 = imagecolorallocate($this->image, mt_rand(200, 255), mt_rand(200, 255), mt_rand(150, 255));
 			$color2 = imagecolorallocate($this->image, mt_rand(200, 255), mt_rand(200, 255), mt_rand(150, 255));
 			$this->image_gradient($color1, $color2);
 		}
 
 		// Add a few random lines
-		for ($i = 0, $count = mt_rand(5, Captcha::$config['complexity'] * 4); $i < $count; $i++)
-		{
+        for ($i = 0, $count = mt_rand(5, Captcha::$config['complexity'] * 4); $i < $count; $i++) {
 			$color = imagecolorallocatealpha($this->image, mt_rand(0, 255), mt_rand(0, 255), mt_rand(100, 255), mt_rand(50, 120));
 			imageline($this->image, mt_rand(0, Captcha::$config['width']), 0, mt_rand(0, Captcha::$config['width']), Captcha::$config['height'], $color);
 		}
@@ -55,8 +54,7 @@ class Captcha_Basic extends Captcha
 		$spacing = (int) (Captcha::$config['width'] * 0.9 / strlen($this->response));
 
 		// Draw each Captcha character with varying attributes
-		for ($i = 0, $strlen = strlen($this->response); $i < $strlen; $i++)
-		{
+        for ($i = 0, $strlen = strlen($this->response); $i < $strlen; $i++) {
 			// Use different fonts if available
             $font = Captcha::$config['fontPath'] . Captcha::$config['fonts'][array_rand(Captcha::$config['fonts'])];
 

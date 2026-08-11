@@ -1,4 +1,5 @@
 <?php
+
 /**
  * [Gleez Gravatar](gleez/gravatar)
  *
@@ -15,8 +16,8 @@
  * @copyright  (c) 2011-2013 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Gravatar {
-
+class Gravatar
+{
 	/** The gravatar service URLs */
 	const HTTP_URL  = 'http://www.gravatar.com/avatar/';
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
@@ -25,7 +26,7 @@ class Gravatar {
 	 * Static instances
 	 * @var  array
 	 */
-	protected static $_instances = array();
+    protected static $_instances = [];
 
 	/**
 	 * Configuration array
@@ -35,11 +36,11 @@ class Gravatar {
 
 	/**
 	 * The default image to use:
-	 * String of the gravatar-recognized default image "type" to use,
-	 * URL or FALSE if using the default gravatar default image.
+     * String of the gravatar-recognized default image "type" to use, URL or false if using the default gravatar default
+     * image.
 	 * @var string
 	 */
-	protected $_default_image = FALSE;
+    protected $_default_image = false;
 
 	/**
 	 * Default size of the returned gravatar
@@ -57,7 +58,7 @@ class Gravatar {
 	 * Should we use the secure (HTTPS) URL base?
 	 * @var boolean
 	 */
-	protected $_secure_url = FALSE;
+    protected $_secure_url = false;
 
 	/**
 	 * The email address of the user
@@ -66,47 +67,47 @@ class Gravatar {
 	protected $_email;
 
 	/**
-	 * If default image shall be shown even if user the has an gravatar profile.
+     * If default image shall be shown even if user the has a gravatar profile.
 	 * @var boolean
 	 */
-	protected $_default_force = FALSE;
+    protected $_default_force = false;
 
 	/**
 	 * List of valid picture formats for downloading
 	 * @var array
 	 */
-	protected $_valid_formats = array(
-		'jpe',
-		'jpg',
-		'jpeg',
-		'gif',
-		'png'
-	);
+    protected $_valid_formats = [
+        'jpe',
+        'jpg',
+        'jpeg',
+        'gif',
+        'png'
+    ];
 
 	/**
 	 * Gravatar defaults
 	 * @var array
 	 */
-	protected static $_default_gravatar = array(
-		'404'       => TRUE,
-		'mm'        => TRUE,
-		'identicon' => TRUE,
-		'monsterid' => TRUE,
-		'wavatar'   => TRUE,
-		'retro'     => TRUE,
-		'blank'     => TRUE
-	);
+    protected static $_default_gravatar = [
+        '404' => true,
+        'mm' => true,
+        'identicon' => true,
+        'monsterid' => true,
+        'wavatar' => true,
+        'retro' => true,
+        'blank' => true
+    ];
 
 	/**
 	 * Gravatar rating
 	 * @var array
 	 */
-	protected static $_ratings = array(
-		'g'  => TRUE,
-		'pg' => TRUE,
-		'r'  => TRUE,
-		'x'  => TRUE
-	);
+    protected static $_ratings = [
+        'g' => true,
+        'pg' => true,
+        'r' => true,
+        'x' => true
+    ];
 
 	/**
 	 * Current store location for downloading user pictures
@@ -118,17 +119,15 @@ class Gravatar {
      * Get a singleton Gravatar instance
      *
      * @param string $email User email
-     * @param array $config Gravatar config [Optional]
+     * @param array|null $config Gravatar config
      * @return Gravatar
      * @throws Kohana_Exception
      * @uses Config::get
      */
-	public static function instance($email, $config = NULL)
-	{
-		if ( ! isset(self::$_instances[$email]))
-		{
-			if (is_null($config))
-			{
+    public static function instance(string $email, array $config = null): Gravatar
+    {
+        if (!isset(self::$_instances[$email])) {
+            if (is_null($config)) {
 				// Load the configuration
 				$config = Kohana::$config->load('gravatar');
 			}
@@ -149,7 +148,7 @@ class Gravatar {
      * @param array|Config_Group $config Gravatar config
      * @throws Kohana_Exception
      */
-	protected function __construct($email, $config)
+    protected function __construct(string $email, $config)
 	{
 		// Set the email address
 		$this->setEmail($email);
@@ -183,34 +182,31 @@ class Gravatar {
 	 * @uses    Request::secure
 	 * @uses    Arr::merge
 	 */
-	public function buildURL()
-	{
+    public function buildURL(): string
+    {
 		$url = self::HTTP_URL;
 
 		// Building the URL
-		if ($this->useSecureURL() OR Request::current()->secure())
-		{
+        if ($this->useSecureURL() || Request::current()->secure()) {
 			$url = self::HTTPS_URL;
 		}
 
         $url .= $this->getEmailHash();
 
-		$query = array(
-			's' => $this->getSize(),
-			'r' => $this->getRating(),
-		);
+        $query = [
+            's' => $this->getSize(),
+            'r' => $this->getRating(),
+        ];
 
-		if ($this->getDefaultImage())
-		{
-			$query = Arr::merge($query, array('d' => $this->getDefaultImage()));
+        if ($this->getDefaultImage()) {
+            $query = Arr::merge($query, ['d' => $this->getDefaultImage()]);
 		}
 
-		if ($this->isForceDefault())
-		{
-			$query = Arr::merge($query, array('f' => 'y'));
+        if ($this->isForceDefault()) {
+            $query = Arr::merge($query, ['f' => 'y']);
 		}
 
-		$url .= URL::query($query, FALSE);
+        $url .= URL::query($query, false);
 
 		return $url;
 	}
@@ -224,8 +220,8 @@ class Gravatar {
 	 *
 	 * @return  integer
 	 */
-	public function getSize()
-	{
+    public function getSize(): int
+    {
 		return $this->_size;
 	}
 
@@ -238,8 +234,8 @@ class Gravatar {
 	 *
 	 * @return  integer
 	 */
-	public function getRating()
-	{
+    public function getRating(): int
+    {
 		return strtolower($this->_rating);
 	}
 
@@ -250,8 +246,8 @@ class Gravatar {
 	 *
 	 * @return string
 	 */
-	public function getEmail()
-	{
+    public function getEmail(): string
+    {
 		return $this->_email;
 	}
 
@@ -262,18 +258,17 @@ class Gravatar {
 	 *
 	 * @return string
 	 */
-	public function getEmailHash()
-	{
+    public function getEmailHash(): string
+    {
 		return hash('md5', $this->_email);
 	}
 
 	/**
 	 * Get the current default image
 	 *
-	 * @since   1.2.0
-	 *
 	 * @return  string   If one is set
-	 * @return  boolean  FALSE if no default image set
+     * @return  boolean  false if no default image set
+     * @since   1.2.0
 	 */
 	public function getDefaultImage()
 	{
@@ -281,7 +276,7 @@ class Gravatar {
 	}
 
     /**
-     * Creates a image link
+     * Creates an image link.
      *
      * Example:
      * ~~~
@@ -297,19 +292,19 @@ class Gravatar {
      * @uses HTML::resize
      * @since 1.3.0
      */
-	public function getImage(array $attrs = NULL, $protocol = NULL, $index = FALSE)
-	{
+    public function getImage(array $attrs = [], $protocol = null, bool $index = false): string
+    {
 		// Set auto attributes
-		$attributes = array(
-			'width'    => $this->_size,
-			'height'   => $this->_size,
-			'itemprop' => 'image'
-		);
+        $attributes = [
+            'width' => $this->_size,
+            'height' => $this->_size,
+            'itemprop' => 'image'
+        ];
 
 		// Merge attributes
-		$attrs = Arr::merge($attributes, (array) $attrs);
+        $attrs = Arr::merge($attributes, $attrs);
 
-		// Return html
+        // Return HTML
 		return HTML::resize($this, $attrs, $protocol, $index);
 	}
 
@@ -320,8 +315,8 @@ class Gravatar {
 	 *
 	 * @return  array
 	 */
-	public function getValidFormats()
-	{
+    public function getValidFormats(): array
+    {
 		return $this->_valid_formats;
 	}
 
@@ -333,21 +328,18 @@ class Gravatar {
      * @uses Config::get
      * @since 1.4.0
      */
-	public function getValidTypes()
-	{
-		$valid_formats = array();
+    public function getValidTypes(): array
+    {
+        $valid_formats = [];
 
-		foreach($this->_valid_formats as $format)
-		{
+        foreach ($this->_valid_formats as $format) {
 			$valid_formats[$format] = Kohana::$config->load('mimes')->get($format);
 		}
 
-		$valid_types   = array();
+        $valid_types = [];
 
-		foreach($valid_formats as $format => $types)
-		{
-			foreach ($types as $type)
-			{
+        foreach ($valid_formats as $format => $types) {
+            foreach ($types as $type) {
 				$valid_types[] = $type;
 			}
 		}
@@ -367,14 +359,12 @@ class Gravatar {
 	 * // For example /srv/http/public_html/site.com/application/media/pictures/filename
 	 * ~~~
 	 *
-	 * @since   1.4.0
-	 *
-	 * @param   string  $filename File name [Optional]
-	 *
+     * @param string|null $filename File name
 	 * @return  string
+     * @since   1.4.0
 	 */
-	public function getStoreLocation($filename = NULL)
-	{
+    public function getStoreLocation(string $filename = null): string
+    {
 		return $this->_store_location . $filename;
 	}
 
@@ -383,23 +373,14 @@ class Gravatar {
 	 *
 	 * [!!] Note: By default, images from Gravatar.com will be returned as 80x80 px
 	 *
-	 * @since   1.1.0
-	 *
 	 * @param   integer  $size  The avatar size to use, must be less than 512 and greater than 0
-	 *
 	 * @return  Gravatar
-	 *
 	 * @throws Kohana_Exception
+     * @since 1.1.0
 	 */
-	public function setSize($size)
-	{
-		if ( ! is_int($size) AND ! ctype_digit($size))
-		{
-			throw new Kohana_Exception('Avatar size specified must be an integer');
-		}
-
-		if ($size > 2048 OR $size < 0)
-		{
+    public function setSize(int $size): Gravatar
+    {
+        if ($size > 2048 || $size < 0) {
 			throw new Kohana_Exception('Avatar size must be within 0 pixels and 2048 pixels');
 		}
 
@@ -417,8 +398,8 @@ class Gravatar {
 	 *
 	 * @return  Gravatar
 	 */
-	public function setValidFormats(array $formats)
-	{
+    public function setValidFormats(array $formats): Gravatar
+    {
 		$this->_valid_formats = $formats;
 
 		return $this;
@@ -427,44 +408,37 @@ class Gravatar {
 	/**
 	 * Set store location for downloading pictures
 	 *
-	 * [!!] Note: If `$location` is NULL, by default used `APPPATH . 'media/pictures'`.
+     * [!!] Note: If `$location` is null, by default used `APPPATH . 'media/pictures'`.
 	 *      If dir not exists and fails create it used sys_get_temp_dir()
 	 *
-	 * @since   1.4.0
-	 *
-	 * @link    http://www.php.net/manual/en/function.sys-get-temp-dir.php sys_get_temp_dir()
-	 *
-	 * @param   string  $location  Store location [Optional]
-	 *
+     * @param string|null $location Store location
 	 * @return  Gravatar
-	 *
 	 * @throws  Kohana_Exception
-	 *
+     * @link    http://www.php.net/manual/en/function.sys-get-temp-dir.php sys_get_temp_dir()
+     * @since   1.4.0
 	 * @uses    Text::reduce_slashes
 	 * @uses    System::mkdir
 	 */
-	public function setStoreLocation($location = NULL)
-	{
+    public function setStoreLocation(string $location = null): Gravatar
+    {
 		$location = Text::reduce_slashes(trim($location));
 		// Set default picture location for downloading
 		$this->_store_location = empty($location) ?  APPPATH . 'media/pictures' : $location;
 
 		// Make sure destination is a directory
-		if ( ! is_dir($this->_store_location))
-		{
-			if ( ! System::mkdir($this->_store_location))
-			{
-				Kohana::$log->add(Log::WARNING, "Can't create location :loc1 for picture downloading. Current location: :loc2",
-					array(':loc1' => $this->_store_location, ':loc2' => sys_get_temp_dir())
-				);
+        if (!is_dir($this->_store_location)) {
+            if (!System::mkdir($this->_store_location)) {
+                Kohana::$log->add(
+                    Log::WARNING, "Can't create location :loc1 for picture downloading. Current location: :loc2",
+                    [':loc1' => $this->_store_location, ':loc2' => sys_get_temp_dir()]
+                );
 				$this->_store_location = sys_get_temp_dir();
 			}
 		}
 
 		// Make sure destination is writable
-		if ( ! is_writable($this->_store_location))
-		{
-			throw new Kohana_Exception('Gravatar download destination is not writable!', array(), 105);
+        if (!is_writable($this->_store_location)) {
+            throw new Kohana_Exception('Gravatar download destination is not writable!', [], 105);
 		}
 
 		$this->_store_location = $this->_store_location . DIRECTORY_SEPARATOR;
@@ -475,24 +449,19 @@ class Gravatar {
 	/**
 	 * Set the email address for current user
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   string  $email  Email address of the user
-	 *
 	 * @return  Gravatar
-	 *
 	 * @throws  Kohana_Exception
-	 *
+     * @since   1.2.0
 	 * @uses    Valid::email
 	 */
-	public function setEmail($email)
-	{
+    public function setEmail(string $email): Gravatar
+    {
 		// trim leading/trailing white spaces
 		$email = trim($email);
 
 		// make sure passed email address is valid
-		if ( ! Valid::email($email))
-		{
+        if (!Valid::email($email)) {
 			throw new Kohana_Exception('E-mail must be a valid email address');
 		}
 
@@ -506,43 +475,32 @@ class Gravatar {
 	 * Set the default image to use for avatars
 	 *
 	 * Possible $image formats:
-	 * + boolean FALSE for the gravatar default
+     * + boolean false for the gravatar default
 	 * + string containing a valid image URL
 	 * + a string specifying a recognized gravatar "default"
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   mixed  $image  The default image to use
-	 *
 	 * @return  Gravatar
-	 *
 	 * @throws  Kohana_Exception
-	 *
+     * @since   1.2.0
 	 * @uses    Valid::url
 	 */
-	public function setDefaultImage($image)
-	{
-		if($image === FALSE)
-		{
-			$this->default_image = FALSE;
+    public function setDefaultImage($image): Gravatar
+    {
+        if ($image === false) {
+            $this->default_image = false;
 
 			return $this;
 		}
 
 		$image = strtolower(trim($image));
-		if ( ! isset(self::$_default_gravatar[$image]))
-		{
-			if ( ! Valid::url($image))
-			{
+        if (!isset(self::$_default_gravatar[$image])) {
+            if (!Valid::url($image)) {
 				throw new Kohana_Exception('The default image specified is not a recognized gravatar "default" and is not a valid URL');
-			}
-			else
-			{
+            } else {
 				$this->_default_image = $image;
 			}
-		}
-		else
-		{
+        } else {
 			$this->_default_image = $image;
 		}
 
@@ -552,23 +510,20 @@ class Gravatar {
 	/**
 	 * Set the maximum allowed rating for avatars
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   string  $rating   The maximum rating to use for avatars ('G', 'PG', 'R', 'X')
-	 *
 	 * @return  Gravatar
-	 *
 	 * @throws Kohana_Exception
+     * @since   1.2.0
 	 */
-	public function setRating($rating)
-	{
+    public function setRating(string $rating): Gravatar
+    {
 		$rating = strtolower($rating);
 
-		if ( ! isset(self::$_ratings[$rating]))
-		{
-			throw new Kohana_Exception('Invalid rating :rating specified, only "G", "PG", "R", or "X" are allowed to be used.',
-				array(':rating' => $rating)
-			);
+        if (!isset(self::$_ratings[$rating])) {
+            throw new Kohana_Exception(
+                'Invalid rating :rating specified, only "G", "PG", "R", or "X" are allowed to be used.',
+                [':rating' => $rating]
+            );
 		}
 
 		$this->_rating = $rating;
@@ -579,15 +534,13 @@ class Gravatar {
 	/**
 	 * Forces gravatar to display default image
 	 *
-	 * @since   1.2.0
-	 *
 	 * @param   boolean  $force  Force default? [Optional]
-	 *
 	 * @return  Gravatar
+     * @since   1.2.0
 	 */
-	public function setForceDefault($force = TRUE)
-	{
-		$this->_default_force = (bool)$force;
+    public function setForceDefault(bool $force = true): Gravatar
+    {
+        $this->_default_force = $force;
 
 		return $this;
 	}
@@ -603,38 +556,31 @@ class Gravatar {
      */
 	protected function _prepareConfig($config)
 	{
-		if (isset($config['secure_url']) AND $config['secure_url'])
-		{
+        if (isset($config['secure_url']) && $config['secure_url']) {
 			$this->enableSecureURL();
 		}
 
-		if (isset($config['size']))
-		{
+        if (isset($config['size'])) {
 			$this->setSize($config['size']);
 		}
 
-		if (isset($config['rating']))
-		{
+        if (isset($config['rating'])) {
 			$this->setRating($config['rating']);
 		}
 
-		if (isset($config['default_image']))
-		{
+        if (isset($config['default_image'])) {
 			$this->setDefaultImage($config['default_image']);
 		}
 
-		if (isset($config['force_default']))
-		{
+        if (isset($config['force_default'])) {
 			$this->setForceDefault($config['force_default']);
 		}
 
-		if (isset($config['valid_formats']) and is_array($config['valid_formats']))
-		{
+        if (isset($config['valid_formats']) && is_array($config['valid_formats'])) {
 			$this->setValidFormats($config['valid_formats']);
 		}
 
-		if (isset($config['store_location']) and is_string($config['store_location']))
-		{
+        if (isset($config['store_location']) && is_string($config['store_location'])) {
 			$this->setStoreLocation($config['store_location']);
 		}
 
@@ -648,8 +594,8 @@ class Gravatar {
 	 *
 	 * @return  boolean
 	 */
-	public function useSecureURL()
-	{
+    public function useSecureURL(): bool
+    {
 		return $this->_secure_url;
 	}
 
@@ -660,9 +606,9 @@ class Gravatar {
 	 *
 	 * @return  Gravatar
 	 */
-	public function enableSecureURL()
-	{
-		$this->_secure_url = TRUE;
+    public function enableSecureURL(): Gravatar
+    {
+        $this->_secure_url = true;
 
 		return $this;
 	}
@@ -674,22 +620,21 @@ class Gravatar {
 	 *
 	 * @return  Gravatar
 	 */
-	public function disableSecureURL()
-	{
-		$this->_secure_url = FALSE;
+    public function disableSecureURL(): Gravatar
+    {
+        $this->_secure_url = false;
 
 		return $this;
 	}
 
 	/**
-	 * Check if need to force the default image to always load
-	 *
-	 * @since   1.2.0
+     * Check if we need to force the default image to always load.
 	 *
 	 * @return boolean
+     * @since 1.2.0
 	 */
-	public function isForceDefault()
-	{
+    public function isForceDefault(): bool
+    {
 		return $this->_default_force;
 	}
 
@@ -721,20 +666,18 @@ class Gravatar {
 	 *
 	 * @uses    File::ext_by_mime
 	 */
-	public function download()
-	{
+    public function download(): stdClass
+    {
         $headers = get_headers($this, 1);
 
 		// Make sure content type exists
-		if ( ! isset($headers['Content-Type']))
-		{
-			throw new Kohana_Exception('Content-Type not found', array(), 300);
+        if (!isset($headers['Content-Type'])) {
+            throw new Kohana_Exception('Content-Type not found', [], 300);
 		}
 
 		// Make sure content type is valid
-		if ( ! in_array($headers['Content-Type'], $this->getValidTypes()))
-		{
-			throw new Kohana_Exception('Content-Type :type is invalid', array(':type' => $headers['Content-Type']), 305);
+        if (!in_array($headers['Content-Type'], $this->getValidTypes())) {
+            throw new Kohana_Exception('Content-Type :type is invalid', [':type' => $headers['Content-Type']], 305);
 		}
 
 		// Set file name

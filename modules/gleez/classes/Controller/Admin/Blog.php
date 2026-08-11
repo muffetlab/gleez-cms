@@ -9,16 +9,17 @@
  * @copyright  (c) 2011-2013 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Blog extends Controller_Admin {
-
+class Controller_Admin_Blog extends Controller_Admin
+{
     /**
      * The before() method is called before controller action
      *
      * @throws HTTP_Exception
      * @throws HTTP_Exception_403
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses  ACL::required
      */
 	public function before()
@@ -36,11 +37,11 @@ class Controller_Admin_Blog extends Controller_Admin {
      */
 	public function after()
 	{
-		$this->_tabs =  array(
-			array('link' => Route::get('admin/blog')->uri(array('action' =>'index')), 'text' => __('Statistics')),
-			array('link' => Route::get('admin/blog')->uri(array('action' =>'list')), 'text' => __('List')),
-			array('link' => Route::get('admin/blog')->uri(array('action' =>'settings')),'text' => __('Settings')),
-		);
+        $this->_tabs = [
+            ['link' => Route::get('admin/blog')->uri(['action' => 'index']), 'text' => __('Statistics')],
+            ['link' => Route::get('admin/blog')->uri(['action' => 'list']), 'text' => __('List')],
+            ['link' => Route::get('admin/blog')->uri(['action' => 'settings']), 'text' => __('Settings')],
+        ];
 
 		parent::after();
 	}
@@ -62,7 +63,7 @@ class Controller_Admin_Blog extends Controller_Admin {
         $articles = ORM::factory('Blog')->where('type', '=', 'blog')->find_all();
         $comments = ORM::factory('Comment')->where('type', '=', 'blog')->find_all();
 
-		$stats = array();
+        $stats = [];
 		$stats['categories']['total'] = count($categories);
 		$stats['tags']['total']       = count($tags);
 		$stats['articles']['total']   = count($articles);
@@ -89,8 +90,8 @@ class Controller_Admin_Blog extends Controller_Admin {
 		$this->title = __('Blog Settings');
 
 		$config = Kohana::$config->load('blog');
-		$action = Route::get('admin/blog')->uri(array('action' =>'settings'));
-		$vocabs = array(__('none'));
+        $action = Route::get('admin/blog')->uri(['action' => 'settings']);
+        $vocabs = [__('none')];
 
 		$view   = View::factory('admin/blog/settings')
 					->bind('vocabs',            $vocabs)
@@ -99,19 +100,15 @@ class Controller_Admin_Blog extends Controller_Admin {
 
         $vocabs = Arr::merge($vocabs, ORM::factory('Term')->where('lft', '=', 1)->where('type', '=', 'blog')->find_all()->as_array('id', 'name'));
 
-		if ($this->valid_post('blog_settings'))
-		{
+        if ($this->valid_post('blog_settings')) {
 			unset($_POST['blog_settings'], $_POST['_token'], $_POST['_action']);
 
-			$cats = $config->get('category', array());
+            $cats = $config->get('category', []);
 
-			foreach ($_POST as $key => $value)
-			{
-				if ($key == 'category')
-				{
+            foreach ($_POST as $key => $value) {
+                if ($key == 'category') {
 					$terms = array_diff($cats, $value);
-					if ($terms)
-					{
+                    if ($terms) {
 						DB::delete('posts_terms')
 							->where('parent_id', 'IN', array_values($terms))
 							->execute();
@@ -123,7 +120,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 			Kohana::$log->add(Log::INFO, 'Blog Settings updated.');
 			Message::success(__('Blog Settings updated!'));
 
-			$this->request->redirect(Route::get('admin/blog')->uri(array('action' =>'settings')));
+            $this->request->redirect(Route::get('admin/blog')->uri(['action' => 'settings']));
 		}
 
 		$this->response->body($view);
@@ -151,40 +148,43 @@ class Controller_Admin_Blog extends Controller_Admin {
 
 		$this->title = __('Blog List');
 
-		$url         = Route::url('admin/blog', array('action' => 'list'), TRUE);
-		$redirect    = Route::get('admin/blog')->uri(array('action' => 'list'));
-		$action      = Route::get('admin/blog')->uri(array('action' => 'bulk'));
+        $url = Route::url('admin/blog', ['action' => 'list'], true);
+        $redirect = Route::get('admin/blog')->uri(['action' => 'list']);
+        $action = Route::get('admin/blog')->uri(['action' => 'bulk']);
 		$destination = '?destination='.$redirect;
 
 		$is_datatables = Request::is_datatables();
         $blogs = ORM::factory('Blog');
 
-		if ($is_datatables)
-		{
-			$this->_datatables = $blogs->dataTables(array('id', 'title', 'author', 'status', 'updated'));
+        if ($is_datatables) {
+            $this->_datatables = $blogs->dataTables(['id', 'title', 'author', 'status', 'updated']);
 
-			foreach ($this->_datatables->result() as $blog)
-			{
-				$this->_datatables->add_row(
-					array(
-						Form::checkbox('blogs['.$blog->id.']', $blog->id, isset($_POST['blogs'][$blog->id])),
-						HTML::anchor($blog->url, $blog->title),
-						HTML::anchor($blog->user->url, $blog->user->nick),
-						HTML::label(__($blog->status), $blog->status),
-						Date::formatted_time($blog->updated, 'M d, Y'),
-                        HTML::icon($blog->edit_url . $destination, 'fa far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit Blog'))) . '&nbsp;' .
-                        HTML::icon($blog->delete_url . $destination, 'fa fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Blog'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-blogs'))
-					)
-				);
+            foreach ($this->_datatables->result() as $blog) {
+                $this->_datatables->add_row([
+                    Form::checkbox('blogs[' . $blog->id . ']', $blog->id, isset($_POST['blogs'][$blog->id])),
+                    HTML::anchor($blog->url, $blog->title),
+                    HTML::anchor($blog->user->url, $blog->user->nick),
+                    HTML::label(__($blog->status), $blog->status),
+                    Date::formatted_time($blog->updated, 'M d, Y'),
+                    HTML::icon($blog->edit_url . $destination, 'fa far fa-edit', [
+                        'class' => 'btn btn-sm btn-default action-edit',
+                        'title' => __('Edit Blog')
+                    ])
+                    . '&nbsp;'
+                    . HTML::icon($blog->delete_url . $destination, 'fa fas fa-trash-can', [
+                        'class' => 'btn btn-sm btn-default action-delete',
+                        'title' => __('Delete Blog'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-blogs'
+                    ])
+                ]);
 			}
 		}
 
-		$view = View::factory('admin/blog/list')
-			->bind('datatables',   $this->_datatables)
-			->set('is_datatables', $is_datatables)
-			->set('action',        $action)
-			->set('actions',       Post::bulk_actions(TRUE, 'blog'))
-			->set('url',           $url);
+        $view = View::factory('admin/blog/list')
+            ->bind('datatables', $this->_datatables)
+            ->set('is_datatables', $is_datatables)
+            ->set('action', $action)
+            ->set('actions', Post::bulk_actions(true, 'blog'))
+            ->set('url', $url);
 
 		$this->response->body($view);
 	}
@@ -203,20 +203,18 @@ class Controller_Admin_Blog extends Controller_Admin {
      */
 	public function action_bulk()
 	{
-		$redirect = Route::get('admin/blog')->uri(array('action' => 'list'));
+        $redirect = Route::get('admin/blog')->uri(['action' => 'list']);
 
 		$this->title = __('Bulk Actions');
 		$post = $this->request->post();
 
 		// If deletion is not desired, redirect to list
-		if (isset($post['no']) AND $this->valid_post())
-		{
+        if (isset($post['no']) && $this->valid_post()) {
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-		if (isset($post['yes']) AND $this->valid_post())
-		{
+        if (isset($post['yes']) && $this->valid_post()) {
 			$blogs = array_filter($post['items']);
 
 			Post::bulk_delete($blogs, 'blog');
@@ -226,29 +224,28 @@ class Controller_Admin_Blog extends Controller_Admin {
 			$this->request->redirect($redirect);
 		}
 
-		if ($this->valid_post('blog-bulk-actions'))
-		{
-			if(isset($post['operation']) AND empty($post['operation']))
-			{
+        if ($this->valid_post('blog-bulk-actions')) {
+            if (isset($post['operation']) && empty($post['operation'])) {
 				Message::error(__('No bulk operation selected.'));
 				$this->request->redirect($redirect);
 			}
 
-			if ( ! isset($post['blogs']) OR ( ! is_array($post['blogs']) OR ! count(array_filter($post['blogs']))))
-			{
+            if (!isset($post['blogs']) || !is_array($post['blogs']) || !count(array_filter($post['blogs']))) {
 				Message::error(__('No blogs selected.'));
 				$this->request->redirect($redirect);
 			}
 
-			try
-			{
-				if ($post['operation'] == 'delete')
-				{
+            try {
+                if ($post['operation'] == 'delete') {
 					$blogs = array_filter($post['blogs']); // Filter out unchecked posts
 					$this->title = __('Delete Blogs');
 
-					$items = DB::select('id', 'title')->from('posts')
-						->where('id', 'IN', $blogs)->execute()->as_array('id', 'title');
+                    $items = DB::select('id', 'title')
+                        ->from('posts')
+                        ->where('id', 'IN', $blogs)
+                        ->where('deleted', '=', 0)
+                        ->execute()
+                        ->as_array('id', 'title');
 
 					$view = View::factory('form/confirm_multi')
 							->set('action', '')
@@ -261,9 +258,7 @@ class Controller_Admin_Blog extends Controller_Admin {
 
 				Message::success(__('The update has been performed!'));
 				$this->request->redirect($redirect);
-			}
-			catch( Exception $e)
-			{
+            } catch (Exception $e) {
 				Message::error(__('The update has not been performed!'));
 			}
 		}
@@ -280,20 +275,16 @@ class Controller_Admin_Blog extends Controller_Admin {
 	 */
     private function _bulk_update(array $post)
 	{
-		$operations = Post::bulk_actions(FALSE, 'blog');
+        $operations = Post::bulk_actions(false, 'blog');
 		$operation  = $operations[$post['operation']];
 		$blogs = array_filter($post['blogs']); // Filter out unchecked pages
 
-		if ($operation['callback'])
-		{
+        if ($operation['callback']) {
             list($func) = Arr::callback($operation['callback']);
-			if (isset($operation['arguments']))
-			{
-				$args = array_merge(array($blogs), $operation['arguments']);
-			}
-			else
-			{
-				$args = array($blogs);
+            if (isset($operation['arguments'])) {
+                $args = array_merge([$blogs], $operation['arguments']);
+            } else {
+                $args = [$blogs];
 			}
 
 			// set model name

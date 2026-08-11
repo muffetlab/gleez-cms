@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Redis-based session class.
  *
@@ -10,8 +11,8 @@
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
 
-class Session_Redis extends Session {
-
+class Session_Redis extends Session
+{
 	/**
 	 * Database instance
 	 * @var Database
@@ -50,9 +51,8 @@ class Session_Redis extends Session {
      * @throws Kohana_Exception
      * @throws Session_Exception
      */
-    public function __construct(array $config = NULL, string $id = NULL)
+    public function __construct(array $config = null, string $id = null)
     {
-
 		// Check that the PhpRedis extension is loaded.
 		if (!extension_loaded('redis')) {
 			throw new Kohana_Exception('You must have PhpRedis installed and enabled to use.');
@@ -105,7 +105,7 @@ class Session_Redis extends Session {
      */
     protected function _read(string $id = null): ?string
     {
-		if ($id OR $id = Cookie::get($this->_name)) {
+        if ($id || ($id = Cookie::get($this->_name))) {
 			$result = $this->_redis->get($this->_prefix . $id);
 
 			if ($result) {
@@ -120,7 +120,7 @@ class Session_Redis extends Session {
 		// Create a new session id
 		$this->_regenerate();
 
-		return NULL;
+        return null;
 	}
 
 	/**
@@ -131,7 +131,7 @@ class Session_Redis extends Session {
 	protected function _regenerate(): ?string
     {
 		// Create a new session id
-		$id = str_replace('.', '-', uniqid(NULL, TRUE));
+        $id = str_replace('.', '-', uniqid(null, true));
 
 		return $this->_session_id = $id;
 	}
@@ -150,7 +150,7 @@ class Session_Redis extends Session {
 		// Update the cookie with the new session id
 		Cookie::set($this->_name, $this->_session_id, $this->_lifetime);
 
-		return TRUE;
+        return true;
 	}
 
 	/**
@@ -160,9 +160,7 @@ class Session_Redis extends Session {
 	 */
 	protected function _destroy(): bool
     {
-
-		try
-		{
+        try {
 			// Execute the query
             $this->_redis->del($this->_prefix . $this->_session_id);
 
@@ -170,10 +168,10 @@ class Session_Redis extends Session {
 			Cookie::delete($this->_name);
 		} catch (Exception $e) {
 			// An error occurred, the session has not been deleted
-			return FALSE;
+            return false;
 		}
 
-		return TRUE;
+        return true;
 	}
 
 	/**
@@ -185,7 +183,7 @@ class Session_Redis extends Session {
     {
 		$this->_regenerate();
 
-		return TRUE;
+        return true;
 	}
 
 }

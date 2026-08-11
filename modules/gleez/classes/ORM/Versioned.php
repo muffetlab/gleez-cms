@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Object Relational Mapping (ORM) "versioned" extension
  *
@@ -11,14 +12,13 @@
  */
 class ORM_Versioned extends Gleez_Model
 {
-
-	protected $_last_version = NULL;
+    protected $_last_version = null;
 
 	/**
 	 * The version state
 	 * @var boolean
 	 */
-	protected $_restore =  FALSE;
+    protected $_restore = false;
 
     /**
      * Overload `ORM::update` to support versioned data
@@ -29,13 +29,12 @@ class ORM_Versioned extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function update(Validation $validation = NULL): Kohana_ORM
+    public function update(Validation $validation = null): Kohana_ORM
     {
         $object = null;
 
-		if ( ! $this->_restore)
-		{
-			$this->_last_version = 1 + ($this->_last_version === NULL ? $this->_object['version'] : $this->_last_version);
+        if (!$this->_restore) {
+            $this->_last_version = 1 + ($this->_last_version === null ? $this->_object['version'] : $this->_last_version);
 			$this->__set('version', $this->_last_version);
 
 			$object = DB::select()->from($this->_table_name)
@@ -46,25 +45,20 @@ class ORM_Versioned extends Gleez_Model
 		parent::update($validation);
 
 		// Create version only if its general update not version restore
-        if ($this->_saved and !$this->_restore && $object)
-		{
-			$data = array();
-			foreach ($object as $key => $value)
-			{
-				if ($key === $this->_primary_key OR array_key_exists($key, $this->_ignored_columns))
-				{
+        if ($this->_saved && !$this->_restore && $object) {
+            $data = [];
+            foreach ($object as $key => $value) {
+                if ($key === $this->_primary_key || array_key_exists($key, $this->_ignored_columns)) {
 					continue;
 				}
 
-				if ($key === 'version')
-				{
+                if ($key === 'version') {
 					// Always use the current version
 					$value = $this->_last_version;
 				}
 
 				//make sure only column names except primary key is stored in revision
-				if(array_key_exists($key, $this->_table_columns))
-				{
+                if (array_key_exists($key, $this->_table_columns)) {
 					$data[$key] = $value;
 				}
 			}
@@ -98,22 +92,18 @@ class ORM_Versioned extends Gleez_Model
 			->limit(1)
 			->execute($this->_db);
 
-		if (count($query))
-		{
+        if (count($query)) {
 			$row = $query->current();
 
-			foreach ($row as $key => $value)
-			{
-				if ($key === $this->_primary_key OR $key === $this->foreign_key() OR $key == 'version_log')
-				{
+            foreach ($row as $key => $value) {
+                if ($key === $this->_primary_key || $key === $this->foreign_key() || $key == 'version_log') {
 					// Do not overwrite the primary key
 					continue;
 				}
 
-				if ($key === 'version')
-				{
+                if ($key === 'version') {
 					// Always use the current version
-					//$value = $this->version;
+                    $value = $this->version;
 				}
 
 				$this->__set($key, $value);
@@ -146,8 +136,7 @@ class ORM_Versioned extends Gleez_Model
 					->limit(1)
 					->execute($this->_db);
 
-		if (count($query))
-		{
+        if (count($query)) {
             $this->_load_values($query->current());
 		}
 
@@ -158,35 +147,31 @@ class ORM_Versioned extends Gleez_Model
      * Overloads ORM::delete() to delete all versioned entries of current object
      * and the object itself
      *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
      * @return  ORM
      * @throws Kohana_Exception
      */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
 		// Use primary key value
 		$id = $this->pk();
 
-        if ($status = parent::delete())
-		{
-            if (is_array($this->_deleted_column) && $soft)
-			{
-				$data = array();
+        if ($status = parent::delete($soft)) {
+            if (is_array($this->_deleted_column) && $soft) {
+                $data = [];
 
 				// Fill the deleted column
 				$column = $this->_deleted_column['column'];
 				$format = $this->_deleted_column['format'];
 
-				$data[$column] = $this->_object[$column] = ($format === TRUE) ? time() : date($format);
+                $data[$column] = $this->_object[$column] = ($format === true) ? time() : date($format);
 				
 				// Update a single record mark as soft deleted
 				DB::update($this->version_table())
 					->set($data)
 					->where($this->foreign_key(), '=', $id)
 					->execute($this->_db);
-			}
-			else
-			{
+            } else {
 				// Delete the object
 				DB::delete($this->version_table())
 					->where($this->foreign_key(), '=', $id)

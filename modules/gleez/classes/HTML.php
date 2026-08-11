@@ -1,4 +1,5 @@
 <?php
+
 /**
  * HTML Helper
  *
@@ -32,10 +33,9 @@ class HTML extends Kohana_HTML
     public static function script(string $file, array $attributes = null, $protocol = null, bool $index = false): string
     {
 		// Allow theme to serve its own media assets
-        if (strpos($file, 'media/js') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
-		{
+        if (strpos($file, 'media/js') !== false && Gleez::$installed && strpos($file, 'guide-media') === false) {
 			$theme = Theme::$active;
-            $file = str_replace(array('media/js'), "media/$theme/js", $file);
+            $file = str_replace(['media/js'], "media/$theme/js", $file);
 		}
 
 		return parent::script($file, $attributes, $protocol, $index);
@@ -60,10 +60,9 @@ class HTML extends Kohana_HTML
     public static function style(string $file, array $attributes = null, $protocol = null, bool $index = false): string
     {
 		// Allow theme to serve its own media assets
-        if (strpos($file, 'media/css') !== FALSE and Gleez::$installed and strpos($file, 'guide-media') === FALSE)
-		{
+        if (strpos($file, 'media/css') !== false && Gleez::$installed && strpos($file, 'guide-media') === false) {
 			$theme = Theme::$active;
-            $file = str_replace(array('media/css'), "media/$theme/css", $file);
+            $file = str_replace(['media/css'], "media/$theme/css", $file);
 		}
 
 		return parent::style($file, $attributes, $protocol, $index);
@@ -87,43 +86,35 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    URL::base
      */
-    public static function resize(string $file, array $attributes = NULL, $protocol = NULL, bool $index = FALSE): string
+    public static function resize(string $file, array $attributes = null, $protocol = null, bool $index = false): string
     {
-		if (strlen($file) <= 1)
-		{
+        if (strlen($file) <= 1) {
 			return '';
 		}
 
-		if (isset($attributes['width']))
-		{
+        if (isset($attributes['width'])) {
 			$width = $attributes['width'];
 		}
 
-		if (isset($attributes['height']))
-		{
+        if (isset($attributes['height'])) {
 			$height = $attributes['height'];
 		}
 
-		if (isset($attributes['type']))
-		{
+        if (isset($attributes['type'])) {
 			$type = $attributes['type'];
 			unset($attributes['type']);
-		}
-		else
-		{
+        } else {
 			$type = 'crop';
 		}
 
-		if (strpos($file, '://') === FALSE)
-		{
-			if (isset($width) AND isset($height))
-			{
-				$file = (strpos($file, 'media/') === FALSE) ? $file : str_replace('media/', '', $file);
+        if (strpos($file, '://') === false) {
+            if (isset($width) && isset($height)) {
+                $file = (strpos($file, 'media/') === false) ? $file : str_replace('media/', '', $file);
                 $file = "media/imagecache/$type/{$width}x$height/$file";
 			}
 
             // Auto-detect index file
-            $index = (!$index and !empty(Kohana::$index_file)) ? TRUE : $index;
+            $index = !$index && !empty(Kohana::$index_file) ? true : $index;
 
 			// Add the base URL
 			$file = URL::base($protocol, $index).$file;
@@ -143,49 +134,39 @@ class HTML extends Kohana_HTML
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function links(array $links, array $attributes = array('class' => 'links')): string
+    public static function links(array $links, array $attributes = ['class' => 'links']): string
     {
 		$output = '';
 
-		if (count($links) > 0)
-		{
+        if (count($links) > 0) {
 			$output = '<ul'. self::attributes($attributes) .'>';
 
 			$num_links = count($links);
 			$i = 1;
 
-			foreach ($links as $item)
-			{
+            foreach ($links as $item) {
 				$class = 'link-' . $i;
 
 				// Add first, last and active classes to the list of links to help out themers.
-				if ($i == 1)
-				{
+                if ($i == 1) {
 					$class .= ' first';
 				}
 
 				// Check if the menu item URI is or contains the current URI
-				if(is_object($item) AND self::is_active($item->link))
-				{
+                if (is_object($item) && self::is_active($item->link)) {
 					$class .= ' active';
-				}
-				elseif(is_array($item) AND self::is_active($item['link']))
-				{
+                } elseif (is_array($item) && self::is_active($item['link'])) {
 					$class .= ' active';
 				}
 
-				if ($i == $num_links)
-				{
+                if ($i == $num_links) {
 					$class .= ' last';
 				}
-				$output .= '<li'.self::attributes(array('class' => $class)) .'>';
+                $output .= '<li' . self::attributes(['class' => $class]) . '>';
 
-				if( is_object($item))
-				{
+                if (is_object($item)) {
 					$output .= self::anchor($item->link, $item->name);
-				}
-				elseif( is_array($item))
-				{
+                } elseif (is_array($item)) {
 					$output .= self::anchor($item['link'], $item['name']);
 				}
 
@@ -207,23 +188,20 @@ class HTML extends Kohana_HTML
      * @throws Kohana_Exception
      * @uses    HTML::chars
      */
-    public static function tabs(array $tabs, array $attributes = array('class' => 'tabs')): string
+    public static function tabs(array $tabs, array $attributes = ['class' => 'tabs']): string
     {
 		$output = '';
 
-		if (count($tabs) > 0)
-		{
+        if (count($tabs) > 0) {
 			$output = '<ul'.self::attributes($attributes).'>';
 
 			$num_links = count($tabs);
 			$i = 1;
 
-			foreach ($tabs as $tab)
-			{
+            foreach ($tabs as $tab) {
 				$class = 'tab-' . $i;
 
-				if(isset($tab['active']) OR ( isset($tab['link']) AND self::is_active($tab['link'])))
-				{
+                if (isset($tab['active']) || isset($tab['link']) && self::is_active($tab['link'])) {
 					$class .= ' active';
 				}
 
@@ -235,17 +213,14 @@ class HTML extends Kohana_HTML
 					$class .= ' last';
 				}
 
-				$output .= '<li'.self::attributes(array('class' => $class)).'>';
+                $output .= '<li' . self::attributes(['class' => $class]) . '>';
 
 				// Sanitized link text
                 $tab['text'] = HTML::chars($tab['text']);
 
-				if(empty($tab['link']))
-				{
+                if (empty($tab['link'])) {
 					$output .= '<span class="active">'.$tab['text'].'</span>';
-				}
-				else
-				{
+                } else {
 					$output .= self::anchor($tab['link'], $tab['text']);
 				}
 				$i++;
@@ -286,7 +261,7 @@ class HTML extends Kohana_HTML
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function icon(string $url, string $icon, array $attrs = array()): string
+    public static function icon(string $url, string $icon, array $attrs = []): string
     {
         return self::anchor($url, '<i class="' . $icon . '"></i>', $attrs);
 	}
@@ -306,8 +281,7 @@ class HTML extends Kohana_HTML
 	 */
     public static function label(string $text, string $label = 'default'): string
     {
-		switch (strtolower($label))
-		{
+        switch (strtolower($label)) {
 			case 'publish':
 				$status = 'success';
 			break;
@@ -344,22 +318,22 @@ class HTML extends Kohana_HTML
 	 */
     public static function per_page(): array
     {
-		return array(
-			5 => 5,
-			10 => 10,
-			15 => 15,
-			20 => 20,
-			25 => 25,
-			30 => 30,
-			35 => 35,
-			40 => 40,
-			45 => 45,
-			50 => 50,
-			70 => 70,
-			100 => 100,
-			150 => 150,
-			250 => 250,
-			300 => 300,
-		);
+        return [
+            5 => 5,
+            10 => 10,
+            15 => 15,
+            20 => 20,
+            25 => 25,
+            30 => 30,
+            35 => 35,
+            40 => 40,
+            45 => 45,
+            50 => 50,
+            70 => 70,
+            100 => 100,
+            150 => 150,
+            250 => 250,
+            300 => 300,
+        ];
 	}
 }

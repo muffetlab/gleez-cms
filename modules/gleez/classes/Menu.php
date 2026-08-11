@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core Menu Class
  *
@@ -12,19 +13,19 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Menu {
-
+class Menu
+{
 	/**
 	 * Associative array of list items
 	 * @var array
 	 */
-	protected $items = array();
+    protected $items = [];
 
 	/**
 	 * Associative array of attributes for list
 	 * @var array
 	 */
-	protected $attributes = array();
+    protected $attributes = [];
 
     /**
      * Creates and returns a new menu object
@@ -32,7 +33,7 @@ class Menu {
      * @param array|null $items Array of list items (instead of using add() method) [Optional]
      * @return Menu
      */
-    public static function factory(array $items = NULL): Menu
+    public static function factory(array $items = null): Menu
     {
 		return new static($items);
 	}
@@ -42,7 +43,7 @@ class Menu {
      *
      * @param array|null $items Array of list items (instead of using add() method) [Optional]
      */
-	public function __construct(array $items = NULL)
+    public function __construct(array $items = null)
 	{
 		$this->items   = $items;
 	}
@@ -60,24 +61,20 @@ class Menu {
      * @param Menu|null $children Instance of class that contain children [Optional]
      * @return Menu
      */
-    public function add(string $id, string $title, string $url, string $descp = '', array $params = NULL, string $image = NULL, string $parent_id = NULL, Menu $children = NULL): Menu
+    public function add(string $id, string $title, string $url, string $descp = '', array $params = null, string $image = null, string $parent_id = null, Menu $children = null): Menu
     {
-		if( $parent_id )
-		{
+        if ($parent_id) {
 			$this->items = static::add_child($parent_id, $this->items, $id, $title, $url, $descp, $params, $image, $children);
-		}
-		else
-		{
-			$this->items[$id] = array
-			(
-				'title'    => $title,
-				'url'      => $url,
-				'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
-				'access'   => TRUE, // @todo
-				'descp'	   => $descp,
-				'params'   => $params,
-				'image'    => $image
-			);
+        } else {
+            $this->items[$id] = [
+                'title' => $title,
+                'url' => $url,
+                'children' => ($children instanceof Menu) ? $children->get_items() : null,
+                'access' => true, // @todo
+                'descp' => $descp,
+                'params' => $params,
+                'image' => $image
+            ];
 		}
 
 		return $this;
@@ -90,14 +87,11 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
-    public function remove(string $target_id, bool $parent_id = FALSE): Menu
+    public function remove(string $target_id, bool $parent_id = false): Menu
     {
-		if ($parent_id)
-		{
+        if ($parent_id) {
 			$this->items = static::remove_child($target_id, $this->items);
-		}
-		else if (isset( $this->items[$target_id]))
-		{
+        } elseif (isset($this->items[$target_id])) {
 			unset($this->items[$target_id]);
 		}
 
@@ -112,14 +106,11 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
-    public function set_title(string $target_id, string $title, bool $parent_id = FALSE): Menu
+    public function set_title(string $target_id, string $title, bool $parent_id = false): Menu
     {
-		if ( $parent_id )
-		{
+        if ($parent_id) {
 			$this->items = static::change_title_url($target_id, $this->items, $title);
-		}
-		else if ( isset( $this->items[$target_id] ) )
-		{
+        } elseif (isset($this->items[$target_id])) {
             $this->items[$target_id]['title'] = $title;
 		}
 
@@ -134,14 +125,11 @@ class Menu {
      * @param boolean $parent_id Parent Id of link [Optional]
 	 * @return  MENU
 	 */
-    public function set_url(string $target_id, string $url, bool $parent_id = FALSE): Menu
+    public function set_url(string $target_id, string $url, bool $parent_id = false): Menu
     {
-		if ( $parent_id )
-		{
+        if ($parent_id) {
 			$this->items = static::change_title_url($target_id, $this->items, $url, 'url');
-		}
-		else if ( isset( $this->items[$target_id] ) )
-		{
+        } elseif (isset($this->items[$target_id])) {
             $this->items[$target_id]['url'] = $url;
 		}
 
@@ -156,7 +144,7 @@ class Menu {
      * @return  string  HTML unordered list
      * @throws Kohana_Exception
      */
-    public function render(array $attributes = NULL, array $items = NULL): string
+    public function render(array $attributes = null, array $items = null): string
     {
 		static $i;
 
@@ -178,46 +166,40 @@ class Menu {
 		$num_items = count($items);
 		$_i = 1;
 
-		foreach ($items as $key => $item)
-		{
+        foreach ($items as $key => $item) {
             $has_children = count($item['children'] ?? []);
-			$classes = NULL;
-			$attributes  = array();
-			$caret = NULL;
+            $classes = null;
+            $attributes = [];
+            $caret = null;
 
 			// Add first, last and parent classes to the list of links to help out themers.
 			if ($_i == 1)          $classes[] = 'first';
 			if ($_i == $num_items) $classes[] = 'last';
-			if ( $has_children )
-			{
+            if ($has_children) {
 				$classes[] = 'parent dropdown';
 				$attributes[] = 'dropdown-toggle collapsed';
 				if($i == 2) $classes[] = 'dropdown-submenu';
 			}
 
 			// Check if the menu item URI is or contains the current URI
-			if (HTML::is_active($item['url']))
-			{
+            if (HTML::is_active($item['url'])) {
 				$classes[] = 'active';
 				$attributes[] = 'active';
 			}
 
-			if ( ! empty($classes))
-			{
-				$classes = HTML::attributes(array('class' => implode(' ', $classes)));
+            if (!empty($classes)) {
+                $classes = HTML::attributes(['class' => implode(' ', $classes)]);
 			}
 
-			if ( ! empty($attributes))
-			{
-				$attributes = array('class' => implode(' ', $attributes));
+            if (!empty($attributes)) {
+                $attributes = ['class' => implode(' ', $attributes)];
 			}
 
-			$id = HTML::attributes(array('id' => 'menu-'.$key));
+            $id = HTML::attributes(['id' => 'menu-' . $key]);
 
 			//Twitter bootstrap attributes
             $class = '';
-			if ($has_children)
-			{
+            if ($has_children) {
 				$attributes['data-toggle'] = 'dropdown';
 				$item['url'] = '#';
 				$caret = ($i == 2) ? '': '<b class="caret"></b>';
@@ -225,8 +207,7 @@ class Menu {
 			}
 
             // Twitter bootstrap use collapse for widget menu children.
-			if($has_children && $is_widget)
-			{
+            if ($has_children && $is_widget) {
 				$attributes['data-toggle'] = 'collapse';
 				$attributes['data-parent'] = '#menu-'.$key;
 				$item['url'] ='#collapse-'.$key;
@@ -235,12 +216,11 @@ class Menu {
 			}
 
 			//set title
-            $title = (isset($item['image'])) ? '<i class="fa fa-fw ' . $item['image'] . '"></i>' : '';
+            $title = isset($item['image']) ? '<i class="fa fa-fw ' . $item['image'] . '"></i>' : '';
 			// localize item menu
             $title .= '<span>' . HTML::chars(__($item['title'])) . $caret . '</span>';
 
-            if (!empty($item['descp']))
-			{
+            if (!empty($item['descp'])) {
 				// localize item desc
                 $title .= '<span class="menu-descp">' . HTML::chars(__($item['descp'])) . '</span>';
 				
@@ -248,9 +228,8 @@ class Menu {
 
 			$menu .= '<li'.$classes.'  ' .$id. '>'.HTML::anchor($item['url'], $title, $attributes);
 
-			if ( $has_children )
-			{
-				$menu .= $this->render(array('class' => $class, 'id' => 'collapse-'.$key),  $item['children']);
+            if ($has_children) {
+                $menu .= $this->render(['class' => $class, 'id' => 'collapse-' . $key], $item['children']);
 			}
 
 			$_i++;
@@ -270,12 +249,9 @@ class Menu {
 	 */
 	public function __toString()
 	{
-		try
-		{
+        try {
 			return $this->render();
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			return $e->getMessage();
 		}
 	}
@@ -308,7 +284,7 @@ class Menu {
      * @return string
      * @throws Kohana_Exception
      */
-    public static function links(string $name, array $attr = array('class' => 'menus')): ?string
+    public static function links(string $name, array $attr = ['class' => 'menus']): ?string
     {
         $menu = static::buildMenu($name);
 
@@ -421,19 +397,16 @@ class Menu {
 	 */
     private static function change_title_url(string $needle, array $array, string $string, string $op = 'title'): array
     {
-		foreach ($array as $key => $value)
-		{
+        foreach ($array as $key => $value) {
 			# Check for val
-			if ($key == $needle)
-			{
+            if ($key == $needle) {
                 if ($op == 'title') $array[$key]['title'] = $string;
                 if ($op == 'url') $array[$key]['url'] = $string;
 
 				return $array;
 			}
 
-			if (isset($value['children']))
-			{
+            if (isset($value['children'])) {
 				$array[$key]['children'] = static::change_title_url($needle, $value['children'], $string, $op);
 			}
 		}
@@ -455,28 +428,24 @@ class Menu {
      * @param Menu|null $children The new children [Optional]
      * @return array
      */
-    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = FALSE, array $params = NULL, string $image = NULL, Menu $children = NULL): array
+    private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = false, array $params = null, string $image = null, Menu $children = null): array
     {
-		foreach ($array as $key => $value)
-		{
-			if ($key == $needle)
-			{
-				$array[$key]['children'][$id] = array
-				(
-					'title'    => $title,
-					'url'      => $url,
-					'children' => ($children instanceof Menu) ? $children->get_items() : NULL,
-					'access'   => TRUE, // @todo
-					'descp'	   => $descp,
-					'params'   => $params,
-					'image'    => $image
-				);
+        foreach ($array as $key => $value) {
+            if ($key == $needle) {
+                $array[$key]['children'][$id] = [
+                    'title' => $title,
+                    'url' => $url,
+                    'children' => ($children instanceof Menu) ? $children->get_items() : null,
+                    'access' => true, // @todo
+                    'descp' => $descp,
+                    'params' => $params,
+                    'image' => $image
+                ];
 
 				return $array;
 			}
 
-			if (isset($value['children']))
-			{
+            if (isset($value['children'])) {
 				$array[$key]['children'] = static::add_child($needle, $value['children'], $id, $title, $url, $descp, $params, $image, $children);
 			}
 		}
@@ -493,17 +462,14 @@ class Menu {
 	 */
     private static function remove_child(string $needle, array $array): array
     {
-		foreach ($array as $key => $value)
-		{
-			if ($key == $needle)
-			{
+        foreach ($array as $key => $value) {
+            if ($key == $needle) {
 				unset($array[$key]);
 
 				return $array;
 			}
 
-			if (isset($value['children']))
-			{
+            if (isset($value['children'])) {
 				$array[$key]['children'] = static::remove_child($needle, $value['children']);
 			}
 		}

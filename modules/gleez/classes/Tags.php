@@ -1,4 +1,5 @@
 <?php
+
 /**
  * An adaptation of Freetag
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Tags {
-
+class Tags
+{
 	// Configuration
 	protected $config;
 
@@ -26,10 +27,9 @@ class Tags {
      * @return Tags
      * @throws Kohana_Exception
      */
-    public static function factory(array $config = array()): Tags
+    public static function factory(array $config = []): Tags
     {
-		if ( ! isset(self::$_instance))
-		{
+        if (!isset(self::$_instance)) {
 			// Create a new session instance
 			self::$_instance = new self($config);
 		}
@@ -45,7 +45,7 @@ class Tags {
      * @throws Kohana_Exception
      * @uses  Log::DEBUG
      */
-	public function __construct($config = array())
+    public function __construct($config = [])
 	{
 		// Append default tags configuration
 		$config += Kohana::$config->load('tags')->as_array();
@@ -54,8 +54,7 @@ class Tags {
 		$this->config = $config;
 
 		// Enable logging in DEVELOPMENT mode
-		if (Kohana::$environment === Kohana::DEVELOPMENT)
-		{
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
 			Kohana::$log->add(Log::DEBUG, 'Tags Library loaded');
 		}
 	}
@@ -71,44 +70,37 @@ class Tags {
      * This method has been refactored to automatically look for existing tags and run
      * adds/updates/deletes as appropriate.
      *
-     * Returns TRUE if successful, FALSE otherwise.
-     *
      * @param string $tags The raw string form of the tag to delete. See above for notes.
      * @param Model $object The Model Object
      * @param boolean|integer $user_id The User id [Optional]
      * @param boolean $skip_updates Whether to skip the update portion for objects that haven't been tagged [Optional]
-     * @return    boolean
+     * @return boolean Returns true if successful, false otherwise.
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function tagging(string $tags, Model $object, $user_id = FALSE, bool $skip_updates = TRUE): bool
+    public function tagging(string $tags, Model $object, $user_id = false, bool $skip_updates = true): bool
     {
-		if ( ! $user_id)  return FALSE;
+        if (!$user_id)
+            return false;
 
 		$tags = self::explode($tags);
 		$old_tags = $object->tags->find_all();
 
-		$preserve_tags = array();
-		$remove_tags = array();
+        $preserve_tags = [];
+        $remove_tags = [];
 
-		if ( ! $skip_updates AND count($old_tags))
-		{
-			foreach ($old_tags as $tag)
-			{
-				if ( ! in_array($tag->name, $tags))
-				{
+        if (!$skip_updates && count($old_tags)) {
+            foreach ($old_tags as $tag) {
+                if (!in_array($tag->name, $tags)) {
 					$remove_tags[] = intval($tag->id);
-				}
-				else
-				{
+                } else {
 					// We need to preserve old tags that appear (to save timestamps)
 					$preserve_tags[] = $tag->name;
 				}
 			}
 		}
 
-		if( count($remove_tags) )
-		{
+        if (count($remove_tags)) {
 			// remove unexisting tags
 			$object->remove('tags', $remove_tags);
 		}
@@ -117,7 +109,7 @@ class Tags {
 
 		$this->_tag_object_array($user_id, $object, $new_tags);
 
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -134,12 +126,10 @@ class Tags {
      */
     private function _tag_object_array(int $user_id, Model $object, array $tags): void
     {
-		foreach($tags as $tag)
-		{
+        foreach ($tags as $tag) {
 			$tag = trim($tag);
 
-			if ( ! empty($tag) AND (strlen($tag) <= $this->config['max_tag_length']))
-			{
+            if (!empty($tag) && strlen($tag) <= $this->config['max_tag_length']) {
 				$this->safe_tag($user_id, $object, $tag);
 			}
 		}
@@ -161,15 +151,13 @@ class Tags {
      */
     public function safe_tag(int $user_id, Model $object, string $tag = ''): bool
     {
-		$object_id = $object->id;
+        $object_id = (int) $object->id;
 
-        if (!$user_id or !$object_id = intval($object_id) or empty($tag))
-		{
-			return FALSE;
+        if (!$user_id || !$object_id || empty($tag)) {
+            return false;
 		}
 
-		if ( ! empty($this->config['append_to_integer']) and is_numeric($tag) and intval($tag) == $tag)
-		{
+        if (!empty($this->config['append_to_integer']) && is_numeric($tag) && intval($tag) == $tag) {
 			// Converts numeric tag "123" to "123_" to facilitate
 			// alphanumeric sorting (otherwise, PHP converts string to
 			// true integer).
@@ -179,29 +167,35 @@ class Tags {
 		$normalized_tag = $this->normalize_tag( strtolower($tag) );
 
 		//this is required to avoid duplicate tags, ex: 'demo, demo, test'
-		$result = ORM::factory(Inflector::singular($this->config['tagging_model']))
-			->join($this->config['tag_table'], 'INNER')
-			->on('tag_id', '=', $this->config['tag_table'].'.id' )
-			->where($this->config['object_foreign_key'], '=', $object_id)
-			->where($this->config['tag_table'].'.type', '=', $object->type)
-			->where('name', '=', $normalized_tag);
+        $result = ORM::factory(Inflector::singular($this->config['tagging_model']))
+            ->join($this->config['tag_table'], 'INNER')
+            ->on('tag_id', '=', $this->config['tag_table'] . '.id')
+            ->where($this->config['object_foreign_key'], '=', $object_id)
+            ->where($this->config['tag_table'] . '.type', '=', $object->type)
+            ->where($this->config['tag_table'] . '.deleted', '=', 0)
+            ->where('name', '=', $normalized_tag);
 
-        if ($result->find()->loaded())
-		{
-			return TRUE;
+        if ($result->find()->loaded()) {
+            return true;
 		}
 
-		// Then see if a tag in this form exists.
-		$result = ORM::factory(Inflector::singular($this->config['tag_table']))
-			->where('name', '=', $tag)->where('type', '=', $object->type);
+        // Then see if a tag in this form exists (including soft-deleted, for UNIQUE name/type).
+        $result = ORM::factory(Inflector::singular($this->config['tag_table']))
+            ->withDeleted()
+            ->where('name', '=', $tag)
+            ->where('type', '=', $object->type);
 
-		if ($result->reset(FALSE)->count_all() > 0)
-		{
+        if ($result->reset(false)->count_all() > 0) {
 			$result = $result->find();
+
+            // Reuse a soft-deleted tag instead of inserting a duplicate name
+            if ((int) $result->deleted !== 0) {
+                $result->deleted = 0;
+                $result->save();
+            }
+
 			$tag_id = $result->id;
-		}
-		else
-		{
+        } else {
 			// Add new tag!
 			$new_tag = ORM::factory(Inflector::singular($this->config['tag_table']));
 			$new_tag->name = $normalized_tag;
@@ -211,9 +205,8 @@ class Tags {
 			$tag_id = $new_tag->id;
 		}
 
-		if ( ! ($tag_id > 0))
-		{
-			return FALSE;
+        if (!($tag_id > 0)) {
+            return false;
 		}
 
 		$new_tagging = ORM::factory(Inflector::singular($this->config['tagging_model']));
@@ -223,7 +216,7 @@ class Tags {
 		$new_tagging->{$this->config['object_foreign_key']} = $object_id;
 		$new_tagging->save();
 
-		return TRUE;
+        return true;
 	}
 
 	/**
@@ -248,22 +241,16 @@ class Tags {
 	 */
     public function normalize_tag(string $tag): string
     {
-		if ($this->config['normalize_tags'] )
-		{
-			if ($this->config['use_gleez_normalization'])
-			{
+        if ($this->config['normalize_tags']) {
+            if ($this->config['use_gleez_normalization']) {
 				$tag = URL::title($tag);
-			}
-			else
-			{
+            } else {
 				$normalized_valid_chars = $this->config['custom_normalization'];
 				$tag = preg_replace("/[^$normalized_valid_chars]/", "", $tag);
 			}
 
 			return strtolower($tag);
-		}
-		else
-		{
+        } else {
 			return $tag;
 		}
 	}
@@ -280,12 +267,10 @@ class Tags {
         // This handles cases like: this, "some-company, llc", "and ""this"" w,o.rks", foo bar
         $typed_tags = array_unique(str_getcsv($tags));
 
-		$tags = array();
-		foreach ($typed_tags as $tag)
-		{
+        $tags = [];
+        foreach ($typed_tags as $tag) {
             $tag = trim($tag);
-			if ($tag != "")
-			{
+            if ($tag != "") {
 				$tags[] = $tag;
 			}
 		}
@@ -302,12 +287,10 @@ class Tags {
 	 */
     public static function implode(array $tags): string
     {
-		$encoded_tags = array();
-		foreach ($tags as $tag)
-		{
+        $encoded_tags = [];
+        foreach ($tags as $tag) {
 			// Commas and quotes in tag names are special cases, so encode them.
-			if (strpos($tag, ',') !== FALSE OR strpos($tag, '"') !== FALSE)
-			{
+            if (strpos($tag, ',') !== false || strpos($tag, '"') !== false) {
 				$tag = '"' . str_replace('"', '""', $tag) . '"';
 			}
 

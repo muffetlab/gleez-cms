@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Access Control Library
  *
@@ -23,13 +24,13 @@
  *
  * @todo       Implement their own exceptions (eg. ACL_Exception)
  */
-class ACL {
-
+class ACL
+{
 	/** Rule type: deny */
-	const DENY = FALSE;
+    const DENY = false;
 
 	/** Rule type: allow */
-	const ALLOW = TRUE;
+    const ALLOW = true;
 
 	/** Rule type: deny */
 	const PERM_DENY = 2;
@@ -40,17 +41,17 @@ class ACL {
 	/**
 	 * @var boolean Indicates whether perms are cached
 	 */
-	public static $cache = FALSE;
+    public static $cache = false;
 
 	/**
 	 * @var array All permissions
 	 */
-	protected static $_all_perms = array();
+    protected static $_all_perms = [];
 
 	/**
 	 * @var array Single permission
 	 */
-	protected static $_perm = array();
+    protected static $_perm = [];
 
     /**
      * Get all roles for user.
@@ -63,16 +64,13 @@ class ACL {
      */
     private static function get_user_roles(Model_User $user): array
     {
-		$roles = array();
+        $roles = [];
 
 		// User #1 is guest
-		if ($user->id == User::GUEST_ID)
-		{
+        if ($user->id == User::GUEST_ID) {
 			// Role #1 is guest
 			$roles[User::GUEST_ID] = User::getRoleById(User::GUEST_ROLE_ID)->name;
-		}
-		else
-		{
+        } else {
 			$roles = $user->roles();
 		}
 
@@ -88,10 +86,10 @@ class ACL {
 	 */
     public static function get(string $name): ACL
     {
-		if ( ! isset(self::$_all_perms[$name]))
-		{
-			throw new Kohana_Exception('The requested Permission does not exist: :permission',
-				array(':permission' => $name));
+        if (!isset(self::$_all_perms[$name])) {
+            throw new Kohana_Exception('The requested Permission does not exist: :permission', [
+                ':permission' => $name
+            ]);
 		}
 
 	  return self::$_all_perms[$name];
@@ -146,7 +144,7 @@ class ACL {
      *  if ( ! ACL::cache())
      *  {
      *    // Set perms here
-     *    ACL::cache(TRUE);
+     *    ACL::cache(true);
      *  }
      * ~~~
      *
@@ -159,37 +157,28 @@ class ACL {
      * @uses    Cache::get
      * @uses    Arr::merge
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    public static function cache(bool $save = false, bool $append = false): bool
     {
 		$cache = Cache::instance();
 
-		if ($save)
-		{
+        if ($save) {
             // Cache all defined perms
             return $cache->set('ACL::cache()', self::$_all_perms);
-		}
-		else
-		{
-			if ($perms = $cache->get('ACL::cache()'))
-			{
-				if ($append)
-				{
+        } else {
+            if ($perms = $cache->get('ACL::cache()')) {
+                if ($append) {
 					// Append cached perms
 					self::$_all_perms = Arr::merge(self::$_all_perms, $perms);
-				}
-				else
-				{
+                } else {
 					// Replace existing perms
 					self::$_all_perms = $perms;
 				}
 
 				// perms were cached
-				return self::$cache = TRUE;
-			}
-			else
-			{
+                return self::$cache = true;
+            } else {
 				// perms were not cached
-				return self::$cache = FALSE;
+                return self::$cache = false;
 			}
 		}
 	}
@@ -205,7 +194,7 @@ class ACL {
      * // Example with a callable function
      * ACL::required(
      *    'administer site',
-     *    NULL,
+     *    null,
      *    $this->request->redirect(Route::get('user')->uri(array('action' => 'login')))
      * );
      *
@@ -220,17 +209,15 @@ class ACL {
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @since     2.0
      */
-    public static function required(string $perm_name, Model_User $user = NULL, callable $callback = NULL, array $args = array())
+    public static function required(string $perm_name, Model_User $user = null, callable $callback = null, array $args = [])
 	{
-		if ( ! self::check($perm_name, $user))
-		{
-			if ( ! is_null($callback))
-			{
+        if (!self::check($perm_name, $user)) {
+            if (!is_null($callback)) {
 				// Check if the $callback is a valid callback
-				if ( ! is_callable($callback))
-				{
+                if (!is_callable($callback)) {
                     throw new Kohana_Exception('An invalid callback was added to the ACL::required().');
 				}
 				call_user_func($callback, $args);
@@ -239,8 +226,9 @@ class ACL {
 			}
 
 			// If the action is set and the role hasn't been matched, the user doesn't have permission
-			throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action :perm.',
-				array(':perm' => $perm_name));
+            throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action :perm.', [
+                ':perm' => $perm_name
+            ]);
 		}
 	}
 
@@ -255,24 +243,24 @@ class ACL {
      * @param array $uri Additional route params [Optional]
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @since  2.0
      * @uses   Request::redirect()
      * @uses   Route::get()
      */
-    public static function redirect(string $perm_name, $route = NULL, array $uri = array())
+    public static function redirect(string $perm_name, $route = null, array $uri = [])
 	{
-		if ( ! self::check($perm_name))
-		{
-			if ( ! is_null($route) AND is_string($route))
-			{
+        if (!self::check($perm_name)) {
+            if (is_string($route)) {
 				Request::initial()->redirect(Route::get($route)->uri($uri), 403);
 
 				return;
 			}
 
 			// If the action is set and the role hasn't been matched, the user doesn't have permission.
-			throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action :perm.',
-				array(':perm' => $perm_name));
+            throw HTTP_Exception::factory(403, 'Unauthorized attempt to access action :perm.', [
+                ':perm' => $perm_name
+            ]);
 		}
 	}
 
@@ -282,17 +270,17 @@ class ACL {
      * If the user is not given, used currently active user
      *
      * @param string $perm_name Permission name
-     * @param ORM|null $user User object [Optional]
+     * @param Model_User|null $user User object [Optional]
      * @return  boolean
      * @throws Cache_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    User::active_user
      */
-    public static function check(string $perm_name, ORM $user = NULL): bool
+    public static function check(string $perm_name, Model_User $user = null): bool
     {
 		// If we weren't given an auth object
-		if (is_null($user))
-		{
+        if (is_null($user)) {
 			// Just get the default instance.
 			$user = User::active_user();
 		}
@@ -302,15 +290,13 @@ class ACL {
         }
 
 		// User #2 has all privileges:
-		if ($user->id == User::ADMIN_ID)
-		{
+        if ($user->id == User::ADMIN_ID) {
 			return self::ALLOW;
 		}
 
 		// To reduce the number of SQL queries, we cache the user's permissions
 		// in a static variable.
-		if ( ! isset(self::$_perm[$user->id]))
-		{
+        if (!isset(self::$_perm[$user->id])) {
 			self::_set_permissions($user);
 		}
 
@@ -380,8 +366,7 @@ class ACL {
                 ->as_object()
 						->execute();
 
-			foreach ($result as $row)
-			{
+            foreach ($result as $row) {
 				$perms[$row->rid][$row->permission] = self::ALLOW;
 			}
 
@@ -405,30 +390,23 @@ class ACL {
 		$user_roles = self::get_user_roles($user);
 	
 		// Filter out active roles
-		$roles = array_filter(array_keys($user_roles), array('self', 'is_role'));
-		self::$_perm[$user->id] = array();
+        $roles = array_filter(array_keys($user_roles), ['self', 'is_role']);
+        self::$_perm[$user->id] = [];
 
 		//role based permissions
-		foreach($roles as $role)
-		{
-			if(isset($site_perms[$role]) AND is_array($site_perms[$role]))
-			{
+        foreach ($roles as $role) {
+            if (isset($site_perms[$role]) && is_array($site_perms[$role])) {
                 self::$_perm[$user->id] = array_merge(self::$_perm[$user->id], $site_perms[$role]);
 			}
 		}
 
 		// User based permissions
-		foreach($user_perms as $perm => $val)
-		{
-			if($val == self::PERM_ALLOW)
-			{
-				self::$_perm[$user->id] = array_merge(self::$_perm[$user->id], array($perm => self::ALLOW) );
-			}
-			elseif($val == self::PERM_DENY)
-			{
+        foreach ($user_perms as $perm => $val) {
+            if ($val == self::PERM_ALLOW) {
+                self::$_perm[$user->id] = array_merge(self::$_perm[$user->id], [$perm => self::ALLOW]);
+            } elseif ($val == self::PERM_DENY) {
 				//if we deny this permission unset if it exists
-				if (isset(self::$_perm[$user->id][$perm]) )
-				{
+                if (isset(self::$_perm[$user->id][$perm])) {
 					unset(self::$_perm[$user->id][$perm]);
 				}
 			}
@@ -438,7 +416,7 @@ class ACL {
     /**
      * Make sure the user has permission to do certain action on this object
      *
-     * Similar to [Post::access] but this return TRUE/FALSE instead of exception
+     * Similar to [Post::access] but this return true/false instead of exception.
      *
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $post The post object
@@ -447,95 +425,86 @@ class ACL {
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function post(string $action, ORM $post, Model_User $user = NULL): bool
+    public static function post(string $action, ORM $post, Model_User $user = null): bool
     {
-		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
-		{
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true)) {
 			// If the $action was not one of the supported ones, we return access denied.
-			Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.',
-				array(':act' => $action)
-			);
-			return FALSE;
+            Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
+
+            return false;
 		}
 
-        if (!$post->loaded())
-		{
+        if (!$post->loaded()) {
 			// If the post was not loaded, we return access denied.
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent post.');
 		}
 
 		// If no user object is supplied, the access check is for the current user.
-		if (is_null($user))
-		{
+        if (is_null($user)) {
 			$user = User::active_user();
 		}
 
-		if (self::check('bypass post access', $user))
-		{
-			return TRUE;
+        if (self::check('bypass post access', $user)) {
+            return true;
 		}
 
 		// Allow other modules to interact with access
 		Module::event('post_access', $action, $post);
 
-		if ($action === 'view')
-		{
-			if ($post->status === 'publish' AND self::check('access content', $user))
-			{
-				return TRUE;
+        if ($action === 'view') {
+            if ($post->status === 'publish' && self::check('access content', $user)) {
+                return true;
 			}
 			// Check if authors can view their own unpublished posts.
-			elseif ($post->status != 'publish'
-				AND self::check('view own unpublished content', $user)
-				AND $post->author == (int)$user->id
-				AND $user->id != 1)
-			{
-				return TRUE;
-			}
-			else
-			{
-				return self::check('administer content', $user) OR self::check('administer content '.$post->type, $user);
-			}
-		}
-
-		if ($action === 'edit')
-		{
-			if ((self::check('edit own '.$post->type) OR self::check('edit any '.$post->type))
-				AND $post->author == (int)$user->id
-				AND $user->id != 1)
-			{
-				return TRUE;
-			}
-			else
-			{
-				return self::check('administer content', $user) OR self::check('administer content '.$post->type, $user);
+            elseif (
+                $post->status != 'publish'
+                && self::check('view own unpublished content', $user)
+                && $post->author == (int) $user->id
+                && $user->id != 1
+            ) {
+                return true;
+            } else {
+                return self::check('administer content', $user) || self::check('administer content ' . $post->type, $user);
 			}
 		}
 
-		if ($action === 'delete')
-		{
-			if ((self::check('delete own '.$post->type) OR self::check('delete any '.$post->type))
-				AND $post->author == (int)$user->id
-				AND $user->id != 1)
-			{
-				return TRUE;
-			}
-			else
-			{
-				return self::check('administer content', $user) OR self::check('administer content '.$post->type, $user);
+        if ($action === 'edit') {
+            if (
+                (self::check('edit own ' . $post->type) || self::check('edit any ' . $post->type))
+                && $post->author == (int) $user->id
+                && $user->id != 1
+            ) {
+                return true;
+            } else {
+                return self::check('administer content', $user) || self::check('administer content ' . $post->type, $user);
 			}
 		}
 
-		return TRUE;
+        if ($action === 'delete') {
+            if (
+                (self::check('delete own ' . $post->type) || self::check('delete any ' . $post->type))
+                && $post->author == (int) $user->id
+                && $user->id != 1
+            ) {
+                return true;
+            } else {
+                return self::check('administer content', $user) || self::check('administer content ' . $post->type, $user);
+			}
+		}
+
+        return true;
 	}
 
     /**
      * Make sure the user has permission to do the action on this object
      *
-     * Similar to [Comment::access] but this return TRUE/FALSE instead of exception
+     * Similar to [Comment::access] but this return true/false instead of exception.
      *
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $comment The comment object
@@ -544,100 +513,77 @@ class ACL {
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    User::active_user
      * @uses    Module::event
      */
-    public static function comment(string $action, ORM $comment, Model_User $user = NULL): bool
+    public static function comment(string $action, ORM $comment, Model_User $user = null): bool
     {
-		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
-		{
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true)) {
 			// If the $action was not one of the supported ones, we return access denied.
-			Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.',
-				array(':act' => $action)
-			);
-			return FALSE;
+            Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
+
+            return false;
 		}
 
-		if ( ! $comment->loaded())
-		{
+        if (!$comment->loaded()) {
 			// If the $action was not one of the supported ones, we return access denied.
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent comment.');
 		}
 
 		// If no user object is supplied, the access check is for the current user.
-		if (is_null($user))
-		{
+        if (is_null($user)) {
 			$user = User::active_user();
 		}
 
-		if (self::check('bypass comment access', $user))
-		{
-			return TRUE;
+        if (self::check('bypass comment access', $user)) {
+            return true;
 		}
 
 		// Allow other modules to interact with access
 		Module::event('comment_access', $action, $comment);
 
-		if ($action === 'view')
-		{
-			if ($comment->status === 'publish' AND self::check('access comment', $user))
-			{
-				return TRUE;
+        if ($action === 'view') {
+            if ($comment->status === 'publish' && self::check('access comment', $user)) {
+                return true;
 			}
 			// Check if commenters can view their own unpublished comments.
-			elseif ($comment->status != 'publish'
-				AND $comment->author == (int)$user->id
-				AND $user->id != 1)
-			{
-				return TRUE;
-			}
-			elseif (self::check('administer comment', $user))
-			{
-				return TRUE;
-			}
-			else
-			{
-				return FALSE;
+            elseif ($comment->status != 'publish' && $comment->author == (int) $user->id && $user->id != 1) {
+                return true;
+            } elseif (self::check('administer comment', $user)) {
+                return true;
+            } else {
+                return false;
 			}
 		}
 
-		if ($action === 'edit')
-		{
-			if (self::check('edit own comment')
-				AND $comment->author == (int)$user->id
-				AND $user->id != 1)
-			{
-				return TRUE;
-			}
-			elseif (self::check('administer comment', $user))
-			{
-				return TRUE;
-			}
-			else
-			{
-				return FALSE;
+        if ($action === 'edit') {
+            if (self::check('edit own comment') && $comment->author == (int) $user->id && $user->id != 1) {
+                return true;
+            } elseif (self::check('administer comment', $user)) {
+                return true;
+            } else {
+                return false;
 			}
 		}
 
-		if ($action === 'delete')
-		{
-			if ((self::check('delete own comment') OR self::check('delete any comment'))
-				AND $comment->author == (int)$user->id
-				AND $user->id != 1)
-			{
-				return TRUE;
-			}
-			elseif (self::check('administer comment', $user))
-			{
-				return TRUE;
-			}
-			else
-			{
-				return FALSE;
+        if ($action === 'delete') {
+            if (
+                (self::check('delete own comment') || self::check('delete any comment'))
+                && $comment->author == (int) $user->id
+                && $user->id != 1
+            ) {
+                return true;
+            } elseif (self::check('administer comment', $user)) {
+                return true;
+            } else {
+                return false;
 			}
 		}
 
-		return TRUE;
+        return true;
 	}
 
 }

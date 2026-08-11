@@ -9,16 +9,17 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Page extends Controller_Admin {
-
+class Controller_Admin_Page extends Controller_Admin
+{
     /**
      * The before() method is called before controller action
      *
      * @throws HTTP_Exception
      * @throws HTTP_Exception_403
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses  ACL::required
      */
 	public function before()
@@ -38,11 +39,11 @@ class Controller_Admin_Page extends Controller_Admin {
 	public function after()
 	{
 		// Tabs
-		$this->_tabs =  array(
-			array('link' => Route::get('admin/page')->uri(array('action' =>'index')), 'text' => __('Statistics')),
-			array('link' => Route::get('admin/page')->uri(array('action' =>'list')), 'text' => __('List')),
-			array('link' => Route::get('admin/page')->uri(array('action' =>'settings')),'text' => __('Settings')),
-		);
+        $this->_tabs = [
+            ['link' => Route::get('admin/page')->uri(['action' => 'index']), 'text' => __('Statistics')],
+            ['link' => Route::get('admin/page')->uri(['action' => 'list']), 'text' => __('List')],
+            ['link' => Route::get('admin/page')->uri(['action' => 'settings']), 'text' => __('Settings')],
+        ];
 
 		parent::after();
 	}
@@ -65,7 +66,7 @@ class Controller_Admin_Page extends Controller_Admin {
         $articles = ORM::factory('Page')->where('type', '=', 'page')->find_all();
         $comments = ORM::factory('Comment')->where('type', '=', 'page')->find_all();
 
-		$stats = array();
+        $stats = [];
 		$stats['categories']['total'] = count($categories);
 		$stats['tags']['total']       = count($tags);
 		$stats['articles']['total']   = count($articles);
@@ -87,25 +88,21 @@ class Controller_Admin_Page extends Controller_Admin {
 		$this->title = __('Page Settings');
 
         $config = Kohana::$config->load('page');
-		$action   = Route::get('admin/page')->uri(array('action' =>'settings'));
+        $action = Route::get('admin/page')->uri(['action' => 'settings']);
 
 		$view = View::factory('admin/page/settings')
                 ->set('config', $config)
 					->set('action',  $action);
 
-		if ($this->valid_post('page_settings'))
-		{
+        if ($this->valid_post('page_settings')) {
 			unset($_POST['page_settings'], $_POST['_token'], $_POST['_action']);
 
-            $cats = $config->get('category', array());
+            $cats = $config->get('category', []);
 
-			foreach ($_POST as $key => $value)
-			{
-				if ($key == 'category')
-				{
+            foreach ($_POST as $key => $value) {
+                if ($key == 'category') {
 					$terms = array_diff($cats, $value);
-					if ($terms)
-					{
+                    if ($terms) {
 						DB::delete('posts_terms')
 							->where('parent_id', 'IN', array_values($terms))
 							->execute();
@@ -117,7 +114,7 @@ class Controller_Admin_Page extends Controller_Admin {
 			Kohana::$log->add(Log::INFO, 'Page Settings updated.');
 			Message::success(__('Page Settings updated!'));
 
-			$this->request->redirect(Route::get('admin/page')->uri(array('action' =>'settings')), 200);
+            $this->request->redirect(Route::get('admin/page')->uri(['action' => 'settings']), 200);
 		}
 
 		$this->response->body($view);
@@ -134,42 +131,47 @@ class Controller_Admin_Page extends Controller_Admin {
 	{
 		Assets::popup();
 
-		$url         = Route::url('admin/page', array('action' => 'list'), TRUE);
-		$redirect    = Route::get('admin/page')->uri(array('action' => 'list'));
-		$form_action = Route::get('admin/page')->uri(array('action' => 'bulk'));
+        $url = Route::url('admin/page', ['action' => 'list'], true);
+        $redirect = Route::get('admin/page')->uri(['action' => 'list']);
+        $form_action = Route::get('admin/page')->uri(['action' => 'bulk']);
 		$destination = '?destination='.$redirect;
 		
 		$is_datatables = Request::is_datatables();
         $pages = ORM::factory('Page');
 
-		if ($is_datatables)
-		{
-			$this->_datatables = $pages->dataTables(array('id', 'title', 'author', 'status', 'updated'));
+        if ($is_datatables) {
+            $this->_datatables = $pages->dataTables(['id', 'title', 'author', 'status', 'updated']);
 
-			foreach ($this->_datatables->result() as $page)
-			{
-				$this->_datatables->add_row(
-					array(
-						Form::checkbox('posts['.$page->id.']', $page->id, isset($_POST['posts'][$page->id])),
-						HTML::anchor($page->url, $page->title),
-						HTML::anchor($page->user->url, $page->user->nick),
-						HTML::label(__($page->status), $page->status),
-						Date::formatted_time($page->updated, 'M d, Y'),
-                        HTML::icon($page->edit_url . $destination, 'fa far fa-edit', array('class' => 'btn btn-sm btn-default action-edit', 'title' => __('Edit Page'))) . '&nbsp;' .
-                        HTML::icon($page->delete_url . $destination, 'fa fas fa-trash-can', array('class' => 'btn btn-sm btn-default action-delete', 'title' => __('Delete Page'), 'data-toggle' => 'popup', 'data-table' => '#admin-list-pages'))
-					)
-				);
+            foreach ($this->_datatables->result() as $page) {
+                $this->_datatables->add_row([
+                    Form::checkbox('posts[' . $page->id . ']', $page->id, isset($_POST['posts'][$page->id])),
+                    HTML::anchor($page->url, $page->title),
+                    HTML::anchor($page->user->url, $page->user->nick),
+                    HTML::label(__($page->status), $page->status),
+                    Date::formatted_time($page->updated, 'M d, Y'),
+                    HTML::icon($page->edit_url . $destination, 'fa far fa-edit', [
+                        'class' => 'btn btn-sm btn-default action-edit',
+                        'title' => __('Edit Page')
+                    ])
+                    . '&nbsp;'
+                    . HTML::icon($page->delete_url . $destination, 'fa fas fa-trash-can', [
+                        'class' => 'btn btn-sm btn-default action-delete',
+                        'title' => __('Delete Page'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#admin-list-pages'
+                    ])
+                ]);
 			}
 		}
 
 		$this->title = __('Page List');
-		
-		$view = View::factory('admin/page/list')
-				->bind('datatables',   $this->_datatables)
-				->set('is_datatables', $is_datatables)
-				->set('action',        $form_action)
-				->set('actions',       Post::bulk_actions(TRUE, 'page'))
-				->set('url',           $url);
+
+        $view = View::factory('admin/page/list')
+            ->bind('datatables', $this->_datatables)
+            ->set('is_datatables', $is_datatables)
+            ->set('action', $form_action)
+            ->set('actions', Post::bulk_actions(true, 'page'))
+            ->set('url', $url);
 
 		$this->response->body($view);
 	}
@@ -188,20 +190,18 @@ class Controller_Admin_Page extends Controller_Admin {
      */
 	public function action_bulk()
 	{
-		$redirect = Route::get('admin/page')->uri(array('action' => 'list'));
+        $redirect = Route::get('admin/page')->uri(['action' => 'list']);
 
 		$this->title = __('Bulk Actions');
 		$post = $this->request->post();
 
 		// If deletion is not desired, redirect to list
-		if (isset($post['no']) AND $this->valid_post())
-		{
+        if (isset($post['no']) && $this->valid_post()) {
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-		if (isset($post['yes']) AND $this->valid_post())
-		{
+        if (isset($post['yes']) && $this->valid_post()) {
 			$pages = array_filter($post['items']);
 
 			Post::bulk_delete($pages, 'page');
@@ -211,32 +211,28 @@ class Controller_Admin_Page extends Controller_Admin {
 			$this->request->redirect($redirect);
 		}
 
-		if ($this->valid_post('page-bulk-actions'))
-		{
-			if (isset($post['operation']) AND empty($post['operation']))
-			{
+        if ($this->valid_post('page-bulk-actions')) {
+            if (isset($post['operation']) && empty($post['operation'])) {
 				Message::error(__('No bulk operation selected.'));
 				$this->request->redirect($redirect);
 			}
-			
-			if ( ! isset($post['posts']) OR ( ! is_array($post['posts']) OR ! count(array_filter($post['posts']))))
-			{
+
+            if (!isset($post['posts']) || !is_array($post['posts']) || !count(array_filter($post['posts']))) {
 				Message::error(__('No pages selected.'));
 				$this->request->redirect($redirect);
 			}
 
-			try
-			{
-				if ($post['operation'] == 'delete')
-				{
+            try {
+                if ($post['operation'] == 'delete') {
 					$pages = array_filter($post['posts']); // Filter out unchecked posts
 					$this->title = __('Delete Pages');
 
-					$items = DB::select('id', 'title')
-							->from('posts')
-							->where('id', 'IN', $pages)
-							->execute()
-							->as_array('id', 'title');
+                    $items = DB::select('id', 'title')
+                        ->from('posts')
+                        ->where('id', 'IN', $pages)
+                        ->where('deleted', '=', 0)
+                        ->execute()
+                        ->as_array('id', 'title');
 
 					$view = View::factory('form/confirm_multi')
 							->set('action', '')
@@ -250,9 +246,7 @@ class Controller_Admin_Page extends Controller_Admin {
 
 				Message::success(__('The update has been performed!'));
 				$this->request->redirect($redirect);
-			}
-			catch( Exception $e)
-			{
+            } catch (Exception $e) {
 				Message::error(__('The update has not been performed!'));
 			}
 		}
@@ -274,16 +268,12 @@ class Controller_Admin_Page extends Controller_Admin {
 		$operation  = $operations[$post['operation']];
 		$pages = array_filter($post['posts']); // Filter out unchecked pages
 
-		if ($operation['callback'])
-		{
+        if ($operation['callback']) {
             list($func) = Arr::callback($operation['callback']);
-			if (isset($operation['arguments']))
-			{
-				$args = array_merge(array($pages), $operation['arguments']);
-			}
-			else
-			{
-				$args = array($pages);
+            if (isset($operation['arguments'])) {
+                $args = array_merge([$pages], $operation['arguments']);
+            } else {
+                $args = [$pages];
 			}
 
 			// set model name

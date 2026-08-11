@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Menu Model Class
  *
@@ -8,27 +9,27 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Model_Menu extends ORM_MPTT {
-
+class Model_Menu extends ORM_MPTT
+{
 	/**
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns =  array(
-		'id'     => array( 'type' => 'int' ),
-		'title'  => array( 'type' =>  'string' ),
-		'name'   => array( 'type' =>  'string' ),
-		'descp'  => array( 'type' =>  'string' ),
-		'image'  => array( 'type' =>  'string' ),
-		'url'    => array( 'type' =>  'string' ),
-		'params' => array( 'type' =>  'string' ),
-		'active' => array( 'type' => 'int' ),
-		'pid'    => array( 'type' => 'int' ),
-		'lft'    => array( 'type' => 'int' ),
-		'rgt'    => array( 'type' => 'int' ),
-		'lvl'    => array( 'type' => 'int' ),
-		'scp'    => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'title' => ['type' => 'string'],
+        'name' => ['type' => 'string'],
+        'descp' => ['type' => 'string'],
+        'image' => ['type' => 'string'],
+        'url' => ['type' => 'string'],
+        'params' => ['type' => 'string'],
+        'active' => ['type' => 'int'],
+        'pid' => ['type' => 'int'],
+        'lft' => ['type' => 'int'],
+        'rgt' => ['type' => 'int'],
+        'lvl' => ['type' => 'int'],
+        'scp' => ['type' => 'int'],
+    ];
 
 	/**
 	 * Scope column name
@@ -49,11 +50,11 @@ class Model_Menu extends ORM_MPTT {
 	 */
 	public function rules(): array
     {
-		return array(
-			'name' => array(
-                array(array($this, 'is_valid'), array(':validation')),
-			),
-		);
+        return [
+            'name' => [
+                [[$this, 'is_valid'], [':validation']],
+            ],
+        ];
 	}
 
 	/**
@@ -63,11 +64,11 @@ class Model_Menu extends ORM_MPTT {
 	 */
 	public function labels(): array
     {
-		return array(
-			'title'  => __('Title'),
-			'name'   => __('Slug'),
-			'url'    => __('Link'),
-		);
+        return [
+            'title' => __('Title'),
+            'name' => __('Slug'),
+            'url' => __('Link'),
+        ];
 	}
 
     /**
@@ -84,13 +85,13 @@ class Model_Menu extends ORM_MPTT {
 	{
         switch ($column) {
 			case 'list_items_url':
-				return Route::get('admin/menu/item')->uri(array('id' => $this->id));
+                return Route::get('admin/menu/item')->uri(['id' => $this->id]);
             case 'add_item_url':
-				return Route::get('admin/menu/item')->uri(array('id' => $this->id, 'action' => 'add'));
+                return Route::get('admin/menu/item')->uri(['id' => $this->id, 'action' => 'add']);
             case 'edit_url':
-				return Route::get('admin/menu')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('admin/menu')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get('admin/menu')->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get('admin/menu')->uri(['id' => $this->id, 'action' => 'delete']);
         }
 
         return parent::__get($column);
@@ -105,12 +106,9 @@ class Model_Menu extends ORM_MPTT {
 	 */
 	public function is_valid(Validation $validation)
 	{
-		if ( empty($this->name) AND empty($this->title) )
-		{
-			$validation->error('title', 'not_empty', array($this->title));
-		}
-		else
-		{
+        if (empty($this->name) && empty($this->title)) {
+            $validation->error('title', 'not_empty', [$this->title]);
+        } else {
 			$text = empty($this->name) ? $this->title : $this->name;
 			$this->name = $this->_unique_slug(URL::title($text));
 		}
@@ -125,9 +123,9 @@ class Model_Menu extends ORM_MPTT {
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
-		$this->params = empty($this->params) ? NULL : serialize($this->params);
+        $this->params = empty($this->params) ? null : serialize($this->params);
 
 		return parent::save( $validation );
 	}
@@ -142,9 +140,9 @@ class Model_Menu extends ORM_MPTT {
     {
 		$i = 1;
 		$original = $str;
+        $post = ORM::factory('Menu', ['name' => $str]);
 
-        while ($post = ORM::factory('Menu', array('name' => $str)) and $post->loaded() and $post->id !== $this->id)
-		{
+        while ($post->loaded() && $post->id !== $this->id) {
 			$str = $original . '-' . $i;
 			$i++;
 		}
@@ -167,20 +165,14 @@ class Model_Menu extends ORM_MPTT {
     public function create_at($parent, $location = 'last'): Model_Menu
     {
 		// Create the term as first child, last child, or as next sibling based on location
-		if ($location == 'first')
-		{
+        if ($location == 'first') {
 			$this->insert_as_first_child($parent);
-		}
-		else if ($location == 'last')
-		{
+        } elseif ($location == 'last') {
 			$this->insert_as_last_child($parent);
-		}
-		else
-		{
+        } else {
             $target = ORM::factory('Menu', (int) $location);
-			
-			if ( ! $target->loaded())
-			{
+
+            if (!$target->loaded()) {
 				throw new Kohana_Exception("Could not create menu, could not find target for
 							  insert_as_next_sibling id: " . (int) $location);
 			}
@@ -205,8 +197,7 @@ class Model_Menu extends ORM_MPTT {
         $target = ORM::factory('Menu', $target);
 
 		// Make sure it exists
-		if ( ! $target->loaded())
-		{
+        if (!$target->loaded()) {
 			throw new Kohana_Exception("Could not move item, target item did not exist." . (int) $target->id);
 		}
 

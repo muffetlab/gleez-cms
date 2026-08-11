@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Internationalization (i18n) class with plural support to I18n
  *
@@ -39,7 +40,7 @@ class Gleez_I18n extends I18n
 	/**
 	 * @var  array  array of available languages
 	 */
-	protected static $_languages = array();
+    protected static $_languages = [];
 
 	/**
 	 * @var  string  source language: en-us, es-es, zh-cn, etc
@@ -57,41 +58,36 @@ class Gleez_I18n extends I18n
     public static function initialize(): string
     {
 		// Installed Locales
-		self::$_languages = Kohana::$config->load('site')->get('installed_locales', array());
+        self::$_languages = Kohana::$config->load('site')->get('installed_locales', []);
 
 		// Allow the user or browser to override the default locale
-		$locale_override  = Kohana::$config->load('site')->get('locale_override', FALSE);
+        $locale_override = Kohana::$config->load('site')->get('locale_override', false);
 
 		// 1. Check the session specific preference (cookie)
 		$locale = Gleez_I18n::cookieLocale();
 
 		// 2. Check the user's preference
-		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'USER'))
-		{
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'USER')) {
 			$locale = Gleez_I18n::userLocale();
 		}
 
 		// 3. Check the request client/browser's preference
-		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'CLIENT'))
-		{
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'CLIENT')) {
 			$locale = Gleez_I18n::requestLocale();
 		}
 
 		// 4. Check the url preference and get the language from url
-		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'URL'))
-		{
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'URL')) {
 			$locale = Gleez_I18n::urlLocale();
 		}
 
         // 5. Check the subdomain preference and get the language form subdomain
-		if(!$locale AND ($locale_override == 'ALL' OR $locale_override == 'DOMAIN'))
-		{
+        if (!$locale && ($locale_override == 'ALL' || $locale_override == 'DOMAIN')) {
 			$locale = Gleez_I18n::domainLocale();
 		}
 
 		// 6. Default locale
-		if(!$locale)
-		{
+        if (!$locale) {
 			$locale = Kohana::$config->load('site')->get('locale', Gleez_I18n::$default);
 		}
 
@@ -105,7 +101,7 @@ class Gleez_I18n extends I18n
      * Test if $lang exists in the list of available languages in config.
 	 *
      * @param string $lang
-	 * @return bool returns TRUE if $lang is available, otherwise FALSE
+     * @return bool Returns true if $lang is available, otherwise false
 	 */
     public static function isAvailable(string $lang): bool
     {
@@ -153,22 +149,18 @@ class Gleez_I18n extends I18n
 	public static function userLocale()
 	{
 		// Can't set guest users locale, default's to site locale
-		if (User::is_guest())
-		{
+        if (User::is_guest()) {
 			// Respect cookie if its set already or use default
 			$locale = strtolower(Cookie::get(self::$_cookie, Gleez_I18n::$default));
-		}
-		else
-		{
+        } else {
 			$locale	= User::active_user()->language;
 		}
 
-		if (self::isAvailable($locale))
-		{
+        if (self::isAvailable($locale)) {
 			return $locale;
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**
@@ -185,17 +177,15 @@ class Gleez_I18n extends I18n
 		$cookie_data = strtolower(Cookie::get(self::$_cookie));
 
 		//double check cookie data
-		if ($cookie_data AND preg_match("/^([a-z]{2,3}(?:_[A-Z]{2})?)$/", trim($cookie_data), $matches))
-		{
+        if ($cookie_data && preg_match("/^([a-z]{2,3}(?:_[A-Z]{2})?)$/", trim($cookie_data), $matches)) {
 			$locale = $matches[1];
 
-			if( self::isAvailable($locale) )
-			{
+            if (self::isAvailable($locale)) {
 				return $locale;
 			}
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**
@@ -210,14 +200,13 @@ class Gleez_I18n extends I18n
 	public static function urlLocale()
 	{
 		$uri = Request::detect_uri();
-		if (preg_match ('/^\/(' . join ('|', array_keys(self::$_languages)) . ')\/?$/', $uri, $matches))
-		{
+        if (preg_match('/^\/(' . join('|', array_keys(self::$_languages)) . ')\/?$/', $uri, $matches)) {
 			//'~^(?:' . implode('|', array_keys($installed_locales)) . ')(?=/|$)~i'
 			// matched /lang or /lang/
 			return $matches[1];
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -230,12 +219,11 @@ class Gleez_I18n extends I18n
 	 */
 	public static function domainLocale()
 	{
-		if (preg_match ('/^(' . join ('|', array_keys(self::$_languages)) . ')\./', $_SERVER['HTTP_HOST'], $matches))
-		{
+        if (preg_match('/^(' . join('|', array_keys(self::$_languages)) . ')\./', $_SERVER['HTTP_HOST'], $matches)) {
 			return $matches[1];
 		}
 
-		return FALSE;
+        return false;
 	}
 
     /**
@@ -254,8 +242,7 @@ class Gleez_I18n extends I18n
      */
     public static function lang(string $lang = null): string
     {
-		if ($lang && self::isAvailable($lang) )
-		{
+        if ($lang && self::isAvailable($lang)) {
 			// Store target language in I18n
 			Gleez_I18n::$lang = self::$_languages[$lang]['i18n_code'];
 
@@ -266,8 +253,7 @@ class Gleez_I18n extends I18n
 			setlocale(LC_ALL, self::$_languages[$lang]['locale']);
 
 			// Update language in cookie
-			if (strtolower(Cookie::get(self::$_cookie)) !== $lang)
-			{
+            if (strtolower(Cookie::get(self::$_cookie)) !== $lang) {
 				// Trying to set language to cookies
 				Cookie::set(self::$_cookie, $lang, Date::YEAR);
 			}
@@ -313,7 +299,6 @@ class Gleez_I18n extends I18n
 	 */
     private static function get_plural_key($lang, $count): string
     {
-
 		// Data from CLDR 1.6 (http://unicode.org/cldr/data/common/supplemental/plurals.xml).
 		// Docs: http://www.unicode.org/cldr/data/charts/supplemental/language_plural_rules.html
 		switch ($lang) {
@@ -342,13 +327,13 @@ class Gleez_I18n extends I18n
 			case 'ar':
 				if ($count == 0) {
 					return 'zero';
-				} else if ($count == 1) {
+                } elseif ($count == 1) {
 					return 'one';
-				} else if ($count == 2) {
+                } elseif ($count == 2) {
 					return 'two';
-				} else if (is_int($count) AND ($i = $count % 100) >= 3 AND $i <= 10) {
+                } elseif (is_int($count) && ($i = $count % 100) >= 3 && $i <= 10) {
 					return 'few';
-                } else if (is_int($count) && $count % 100 >= 11) {
+                } elseif (is_int($count) && $count % 100 >= 11) {
 					return 'many';
 				} else {
 					return 'other';
@@ -366,14 +351,14 @@ class Gleez_I18n extends I18n
 			case 'nso':
 			case 'ti':
 			case 'wa':
-				if ($count == 0 OR $count == 1) {
+                if ($count == 0 || $count == 1) {
 					return 'one';
 				} else {
 					return 'other';
 				}
 
 			case 'fr':
-				if ($count >= 0 and $count < 2) {
+                if ($count >= 0 && $count < 2) {
 					return 'one';
 				} else {
 					return 'other';
@@ -382,7 +367,7 @@ class Gleez_I18n extends I18n
 			case 'lv':
 				if ($count == 0) {
 					return 'zero';
-				} else if ($count % 10 == 1 AND $count % 100 != 11) {
+                } elseif ($count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
 				} else {
 					return 'other';
@@ -397,7 +382,7 @@ class Gleez_I18n extends I18n
 			case 'sms':
 				if ($count == 1) {
 					return 'one';
-				} else if ($count == 2) {
+                } elseif ($count == 2) {
 					return 'two';
 				} else {
 					return 'other';
@@ -407,16 +392,16 @@ class Gleez_I18n extends I18n
 			case 'mo':
 				if ($count == 1) {
 					return 'one';
-                } else if ($count === 0 || ($i = $count % 100) >= 1 && $i <= 19) {
+                } elseif ($count === 0 || ($i = $count % 100) >= 1 && $i <= 19) {
 					return 'few';
 				} else {
 					return 'other';
 				}
 
 			case 'lt':
-				if (is_int($count) AND $count % 10 == 1 AND $count % 100 != 11) {
+                if (is_int($count) && $count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
-                } else if (
+                } elseif (
                     is_int($count)
                     && $count % 10 >= 2
                     && (($i = $count % 100) < 11 || $i > 19)
@@ -433,15 +418,15 @@ class Gleez_I18n extends I18n
 			case 'be':
 			case 'bs':
 			case 'sh':
-				if (is_int($count) AND $count % 10 == 1 AND $count % 100 != 11) {
+                if (is_int($count) && $count % 10 == 1 && $count % 100 != 11) {
 					return 'one';
-                } else if (
+                } elseif (
                     is_int($count)
                     && ($i = $count % 10) >= 2 && $i <= 4
                     && (($j = $count % 100) < 12 || $j > 14)
                 ) {
 					return 'few';
-                } else if (
+                } elseif (
                     is_int($count)
                     && ($count % 10 == 0 || $count % 10 >= 5 || ($i = $count % 100) >= 11 && $i <= 14)
                 ) {
@@ -454,7 +439,7 @@ class Gleez_I18n extends I18n
 			case 'sk':
 				if ($count == 1) {
 					return 'one';
-				} else if (is_int($count) AND $count >= 2 AND $count <= 4) {
+                } elseif (is_int($count) && $count >= 2 && $count <= 4) {
 					return 'few';
 				} else {
 					return 'other';
@@ -463,7 +448,7 @@ class Gleez_I18n extends I18n
 			case 'pl':
 				if ($count == 1) {
 					return 'one';
-                } else if (
+                } elseif (
                     is_int($count)
                     && ($i = $count % 10) >= 2 && $i <= 4
                     && (($j = $count % 100) < 12 || $j > 14)
@@ -477,9 +462,9 @@ class Gleez_I18n extends I18n
 			case 'sl':
 				if ($count % 100 == 1) {
 					return 'one';
-				} else if ($count % 100 == 2) {
+                } elseif ($count % 100 == 2) {
 					return 'two';
-				} else if (is_int($count) AND ($i = $count % 100) >= 3 AND $i <= 4) {
+                } elseif (is_int($count) && ($i = $count % 100) >= 3 && $i <= 4) {
 					return 'few';
 				} else {
 					return 'other';
@@ -488,9 +473,9 @@ class Gleez_I18n extends I18n
 			case 'mt':
 				if ($count == 1) {
 					return 'one';
-				} else if ($count == 0 OR is_int($count) AND ($i = $count % 100) >= 2 AND $i <= 10) {
+                } elseif ($count == 0 || is_int($count) && ($i = $count % 100) >= 2 && $i <= 10) {
 					return 'few';
-				} else if (is_int($count) AND ($i = $count % 100) >= 11 AND $i <= 19) {
+                } elseif (is_int($count) && ($i = $count % 100) >= 11 && $i <= 19) {
 					return 'many';
 				} else {
 					return 'other';
@@ -506,9 +491,9 @@ class Gleez_I18n extends I18n
 			case 'cy':
 				if ($count == 1) {
 					return 'one';
-				} else if ($count == 2) {
+                } elseif ($count == 2) {
 					return 'two';
-				} else if ($count == 8 OR $count == 11) {
+                } elseif ($count == 8 || $count == 11) {
 					return 'many';
 				} else {
 					return 'other';
@@ -520,8 +505,7 @@ class Gleez_I18n extends I18n
 	}
 }
 
-if ( ! function_exists('__'))
-{
+if (!function_exists('__')) {
     /**
      * Translate strings to the page language or a given language
      *
@@ -548,26 +532,20 @@ if ( ! function_exists('__'))
      * @uses Gleez_I18n::get
      * @uses HTML::chars
      */
-    function __(string $string, array $values = NULL, string $lang = 'en-us'): string
+    function __(string $string, array $values = null, string $lang = 'en-us'): string
     {
-		if ($lang !== Gleez_I18n::$lang)
-		{
+        if ($lang !== Gleez_I18n::$lang) {
 			// The message and target languages are different
 			// Get the translation for this message
 			$string = Gleez_I18n::get($string);
 		}
 
-		if (empty($values))
-		{
+        if (empty($values)) {
 			return $string;
-		}
-		else
-		{
+        } else {
 			// Transform arguments before inserting them.
-			foreach ($values as $key => $value)
-			{
-				switch ($key[0])
-				{
+            foreach ($values as $key => $value) {
+                switch ($key[0]) {
 					case '@':
 						// Escaped only
 						$values[$key] = HTML::chars($value);
@@ -603,19 +581,18 @@ if ( ! function_exists('__'))
  * @param array|null $values Values to replace in the translated text. [Optional]
  * @param string $lang Source language [Optional]
  */
-function _e(string $string, array $values = NULL, string $lang = 'en-us')
+function _e(string $string, array $values = null, string $lang = 'en-us')
 {
 	echo __($string, $values, $lang);
 }
 
-function __n($count, $singular, $plural, array $values = array(), $lang = 'en-us'): string
+function __n($count, $singular, $plural, array $values = [], $lang = 'en-us'): string
 {
-	if ($lang !== Gleez_I18n::$lang)
-	{
+    if ($lang !== Gleez_I18n::$lang) {
 		$string = $count === 1 ? Gleez_I18n::get($singular) : Gleez_I18n::get_plural($plural, $count);
 	}
 	else
 		$string = $count === 1 ? $singular : $plural;
 
-	return strtr($string, array_merge($values, array('%count' => $count)));
+    return strtr($string, array_merge($values, ['%count' => $count]));
 }

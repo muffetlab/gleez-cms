@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The OAuth Client Controller
  *
@@ -7,8 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Provider extends Template {
-
+class Controller_Provider extends Template
+{
 	/**
 	 * Demo content
 	 * @var string
@@ -60,8 +61,8 @@ class Controller_Provider extends Template {
     /**
      * The before() method is called before controller action.
      *
-     * @throws Http_Exception_404 If the provider is disabled
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_404 If the provider is disabled
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
      * @uses Auth::logged_in
@@ -75,7 +76,7 @@ class Controller_Provider extends Template {
 		parent::before();
 
 		// Disable sidebars on user pages
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		// Load the session
 		$this->session = Session::instance();
@@ -85,9 +86,8 @@ class Controller_Provider extends Template {
 		$providers = Auth_ORM::providers();
 
 		// Throw exception if the provider is disabled
-		if( ! array_key_exists($this->provider, array_filter($providers)))
-		{
-			throw new Http_Exception_404('Unsupported provider', NULL);
+        if (!array_key_exists($this->provider, array_filter($providers))) {
+            throw new HTTP_Exception_404('Unsupported provider', null);
 		}
 
 		$this->route = $this->request->route();
@@ -96,8 +96,7 @@ class Controller_Provider extends Template {
         $this->provider_config = Kohana::$config->load("oauth2.providers.$this->provider");
 		$this->client = OAuth2_Client::factory($this->provider, $this->provider_config['id'], $this->provider_config['secret']);
 
-		if ($token = $this->session->get($this->key('access')))
-		{
+        if ($token = $this->session->get($this->key('access'))) {
 			// Make the access token available
 			$this->token = $token;
 		}
@@ -122,28 +121,24 @@ class Controller_Provider extends Template {
 
 	public function action_login()
 	{
-		try
-		{
-			$dest = Route::get('user')->uri(array('action' => 'profile'));
+        try {
+            $dest = Route::get('user')->uri(['action' => 'profile']);
 
-			if ( ! is_null($this->request->query('destination')) )
-			{
+            if (!is_null($this->request->query('destination'))) {
 				$dest = $this->request->query('destination');
 			}
 
 			$this->session->set('destination', $dest);
 
 			// Get the login URL from the provider
-			$url = $this->client->get_authentication_url($this->provider_config['callback'], array(
-				'scope' => $this->provider_config['scope'],
-				'state' => time(),
-			));
+            $url = $this->client->get_authentication_url($this->provider_config['callback'], [
+                'scope' => $this->provider_config['scope'],
+                'state' => time(),
+            ]);
 
 			// Redirect to the provider's login page
 			$this->request->redirect($url);
-		}
-		catch( Exception $e)
-		{
+        } catch (Exception $e) {
 			Kohana::$log->add(Log::ERROR,  (string) $e);
 		}
 	}
@@ -153,11 +148,9 @@ class Controller_Provider extends Template {
      */
     public function action_callback()
 	{
-		try
-		{
-			// Attempt to complete signin
-			if ($code = Arr::get($_REQUEST, 'code'))
-			{
+        try {
+            // Attempt to complete sign-in
+            if ($code = Arr::get($_REQUEST, 'code')) {
 				$params['code']           = $code;
 				$params['grant_type']     = 'authorization_code';
 				$params['client_id']      = $this->provider_config['id'];
@@ -174,23 +167,16 @@ class Controller_Provider extends Template {
 
 				$this->oauthComplete();
 			}
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+        } catch (ORM_Validation_Exception $e) {
 			Message::error(__("Couldn't login. Contact administer for error!"));
 			Kohana::$log->add(Log::ERROR,  (string) $e);
 		} catch (Database_Exception $e) {
-			// Skiping duplicate record entry exception.
+            // Handle duplicate record entry exception.
 			Kohana::$log->add(Log::ERROR,  (string) $e);
-		}
-		catch(Exception $e)
-		{
-			if(Auth::instance()->logged_in())
-			{
+        } catch (Exception $e) {
+            if (Auth::instance()->logged_in()) {
 				Message::error(__('Identity associated with different user'));
-			}
-			else
-			{
+            } else {
 				Message::error(__("Couldn't login. Contact administer for error!"));
 			}
 
@@ -198,7 +184,9 @@ class Controller_Provider extends Template {
 		}
 
 		// Redirect to the profile page or destination url
-		$this->request->redirect( Session::instance()->get('destination', Route::get('user')->uri(array('action' => 'profile'))));
+        $this->request->redirect(Session::instance()->get('destination', Route::get('user')->uri([
+            'action' => 'profile'
+        ])));
 	}
 
     /**
@@ -206,17 +194,15 @@ class Controller_Provider extends Template {
      */
     protected function oauthComplete()
 	{
-		// Login succesful
+        // Login successful
 		$response = $this->client->get_user_data();
 
 		//make sure the response is valid by checking id
-		if (isset($response['id']))
-		{
+        if (isset($response['id'])) {
 			// Check whether that id exists in our identities table (provider_id field)
 			$user = User::check_identity( $response['id'], $this->provider);
 
-			if(isset($response['email']))
-			{
+            if (isset($response['email'])) {
 				// @see Controller_Provider::sso_signup
 				$this->sso_signup( $response, $user );
 			}
@@ -230,73 +216,66 @@ class Controller_Provider extends Template {
      *
      * @throws Kohana_Exception
      */
-	protected function sso_signup($data, $user = FALSE)
+    protected function sso_signup($data, $user = false): void
 	{
 		//vars for processing stuff
-		$creation = FALSE;
+        $creation = false;
 
-		$provider = array();
+        $provider = [];
 		$provider['provider']      = $this->provider;
 		$provider['provider_id']   = $data['id'];
 		$provider['refresh_token'] = $this->session->get($this->key('refresh'));
 
-		if($user instanceof Model_User AND ! Auth::instance()->logged_in())
-		{
+        if ($user instanceof Model_User && !Auth::instance()->logged_in()) {
 			// If they're loaded, they're a member. Login if not logged
-			if($user->loaded())
-			{
+            if ($user->loaded()) {
 				// Log in as this user
 				Auth::instance()->force_login($user);
 
-				Message::success(__('Welcome back, :nick logged in via (:provider).',
-					array(
-						':nick' => $user->nick,
-						':provider' => $this->provider
-					))
-				);
-
-				return true;
-			}
+                Message::success(__('Welcome back, :nick logged in via (:provider).', [
+                    ':nick' => $user->nick,
+                    ':provider' => $this->provider
+                ]));
+            }
         } elseif (!$user && Auth::instance()->logged_in()) {
-			// Associate their new oAuth with their current account.
+            // Associate their new OAuth with their current account.
 			$account = Auth::instance()->get_user();
 
 			// @see Model_Auth_User::sso_signup for associate this provider
 			$account->sso_signup($data, $provider);
 
-			Message::success(__('Attached identity :nick (:provider) to your account.',
-					array(':nick' => $account->nick, ':provider' => $this->provider))
-				);
+            Message::success(__('Attached identity :nick (:provider) to your account.', [
+                ':nick' => $account->nick,
+                ':provider' => $this->provider
+            ]));
         } elseif (!$user && !Auth::instance()->logged_in()) {
             $account = ORM::factory('User')->where('mail', '=', $data['email'])->find();
 
-			if(!$account->loaded()) $creation = TRUE;
+            if (!$account->loaded())
+                $creation = true;
 
 			// @see Model_Auth_User::sso_signup for create new account/associate this OAuth
 			$account->sso_signup($data, $provider);
 
-			if($creation)
-			{
-				Message::success(__('Thank you :nick for registering via (:provider).',
-					array(':nick' => $account->nick, ':provider' =>  $this->provider))
-				);
-			}
-			else
-			{
-				Message::success(__('Attached identity :nick (:provider) to your account.',
-					array(':nick' => $account->nick, ':provider' => $this->provider))
-				);
+            if ($creation) {
+                Message::success(__('Thank you :nick for registering via (:provider).', [
+                    ':nick' => $account->nick,
+                    ':provider' => $this->provider
+                ]));
+            } else {
+                Message::success(__('Attached identity :nick (:provider) to your account.', [
+                    ':nick' => $account->nick,
+                    ':provider' => $this->provider
+                ]));
 			}
 
 			// If yes, log the user in and give him a normal auth session.
 			Auth::instance()->force_login($account);
 		}
+    }
 
-		return;
-	}
-
-	public function key($name)
-	{
+    public function key($name): string
+    {
         return "api_{$this->provider}_$name";
 	}
 

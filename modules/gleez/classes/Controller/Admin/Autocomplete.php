@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Autocomplete Controller
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Autocomplete extends Controller {
-
+class Controller_Admin_Autocomplete extends Controller
+{
 	/**
 	 * The before() method is called before controller action
 	 *
@@ -20,11 +21,10 @@ class Controller_Admin_Autocomplete extends Controller {
 	public function before()
 	{
 		// Ajax request only!
-		if ( ! $this->request->is_ajax())
-		{
-			throw HTTP_Exception::factory(404, 'Accessing an ajax request :type externally',
-				array(':type' => '<small>'.$this->request->uri().'</small>')
-			);
+        if (!$this->request->is_ajax()) {
+            throw HTTP_Exception::factory(404, 'Accessing an ajax request :type externally', [
+                ':type' => '<small>' . $this->request->uri() . '</small>'
+            ]);
 		}
 
 		parent::before();
@@ -38,8 +38,7 @@ class Controller_Admin_Autocomplete extends Controller {
 	 */
 	public function after()
 	{
-		if ($this->request->is_ajax())
-		{
+        if ($this->request->is_ajax()) {
 			$this->response->headers('content-type',  'application/json; charset='.Kohana::$charset);
 		}
 
@@ -49,7 +48,7 @@ class Controller_Admin_Autocomplete extends Controller {
     /**
      * Retrieve a JSON object containing autocomplete suggestions for existing aliases
      *
-     * @throws HTTP_Exception_403|Kohana_Exception
+     * @throws HTTP_Exception_403|Kohana_Exception|ReflectionException
      * @uses  DB::select
      * @uses  HTML::chars
      * @uses  JSON::encode
@@ -59,19 +58,17 @@ class Controller_Admin_Autocomplete extends Controller {
 	{
 		ACL::required('administer menu');
 
-		$string  = $this->request->param('string', FALSE);
-		$matches = array();
+        $string = $this->request->param('string', false);
+        $matches = [];
 
-		if ($string)
-		{
+        if ($string) {
 			$result  = DB::select('alias')
 						->from('paths')
 						->where('alias', 'LIKE', $string.'%')
 						->limit('10')
 						->execute();
 
-			foreach ($result as $link)
-			{
+            foreach ($result as $link) {
                 $matches[$link['alias']] = HTML::chars($link['alias']);
 			}
 		}

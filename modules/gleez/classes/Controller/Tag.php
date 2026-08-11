@@ -9,15 +9,16 @@
  * @copyright  (c) 2011-2013 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Tag extends Template {
-
+class Controller_Tag extends Template
+{
     /**
      * The before() method is called before controller action
      *
      * @throws HTTP_Exception_403
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses    ACL::required
      */
 	public function before()
@@ -39,6 +40,7 @@ class Controller_Tag extends Template {
      * @throws HTTP_Exception
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses    Log::add
      * @uses    Text::ucfirst
      * @uses    ACL::check
@@ -51,40 +53,37 @@ class Controller_Tag extends Template {
 		$id = (int) $this->request->param('id', 0);
         $tag = ORM::factory('Tag', $id);
 
-		if ( ! $tag->loaded())
-		{
-			throw HTTP_Exception::factory(404, 'Tag :tag not found!', array(':tag' => $id));
+        if (!$tag->loaded()) {
+            throw HTTP_Exception::factory(404, 'Tag :tag not found!', [':tag' => $id]);
 		}
 
-		$this->title = __(':title', array(':title' => Text::ucfirst($tag->name)));
+        $this->title = __(':title', [':title' => Text::ucfirst($tag->name)]);
 
-		$view = View::factory('tag/view')
-				->set('teaser',      TRUE)
-				->bind('pagination', $pagination)
-				->bind('posts',      $posts);
+        $view = View::factory('tag/view')
+            ->set('teaser', true)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 		$posts = $tag->posts;
 
-		if ( ! ACL::check('administer tags') AND ! ACL::check('administer content'))
-		{
+        if (!ACL::check('administer tags') && !ACL::check('administer content')) {
 			$posts->where('status', '=', 'publish');
 		}
 
-		$total = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			Kohana::$log->add(Log::INFO, 'No posts found.');
 			$this->response->body(View::factory('page/none'));
 			return;
 		}
 
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
-			'total_items'    => $total,
-			'items_per_page' => 15,
-			'uri'            => $tag->url,
-		));
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => 15,
+            'uri' => $tag->url,
+        ]);
 
 		$posts = $posts->order_by('created', 'DESC')
             ->limit($pagination->itemsPerPage())
@@ -94,10 +93,9 @@ class Controller_Tag extends Template {
 		$this->response->body($view);
 
 		// Set the canonical and shortlink for search engines
-		if ($this->auto_render === TRUE)
-		{
-			Meta::links(URL::canonical($tag->url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('tag', array('action' => 'view', 'id' => $tag->id)), array('rel' => 'shortlink'));
+        if ($this->auto_render === true) {
+            Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('tag', ['action' => 'view', 'id' => $tag->id]), ['rel' => 'shortlink']);
 		}
 	}
 }

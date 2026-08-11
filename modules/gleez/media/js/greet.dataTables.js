@@ -12,8 +12,7 @@
 +function ($) {
 	'use strict';
 
-	// GREET DATATABLE CLASS DEFINITION
-	// ======================
+    // Greet DataTable Class Definition
 
     const DataTable = function (table, options) {
         const $table = $(table),
@@ -155,52 +154,39 @@
         }
 	}
 
-    // GREET DATATABLE PLUGIN DEFINITION
-	// =======================
+    // Greet DataTable Plugin Definition
 
-    const old = $.fn.gdatatable;
+    const old = $.fn.gDataTable;
 
-    $.fn.gdatatable = function (option) {
+    $.fn.gDataTable = function (option) {
 		return this.each(function () {
             const $this = $(this);
-            let data = $this.data('gdatatable');
+            let data = $this.data('gDataTable');
             const options = $.extend({}, DataTable.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
-            if (!data) $this.data('gdatatable', (data = new DataTable(this, options)))
+            if (!data)
+                $this.data('gDataTable', (data = new DataTable(this, options)))
 			if (typeof option == 'string') data[option]()
 		})
 	}
 
-	$.fn.gdatatable.Constructor = DataTable
+    $.fn.gDataTable.Constructor = DataTable
 
-	// GREET DATATABLES NO CONFLICT
-	// =================
+    // Greet DataTables No Conflict
 
-	$.fn.gdatatable.noConflict = function () {
-		$.fn.gdatatable = old
+    $.fn.gDataTable.noConflict = function () {
+        $.fn.gDataTable = old
 		return this
 	}
 
-	// GREET DATATABLES DATA-API
-	// ==============
+    // Greet DataTables Data API
 
     $(window).on('load.datatable.data-api', function () {
 		if (!$.fn.dataTable) return
 		
 		$('[data-toggle="datatable"]').each(function () {
             const $table = $(this);
-            $table.gdatatable($table.data())
+            $table.gDataTable($table.data())
 		})
 	})
-
-	// Added pajax and jquery mobile support
-    $(document).on('pjax:complete pagecontainerchange', function () {
-		if (!$.fn.dataTable) return
-		
-		$('[data-toggle="datatable"]').each(function () {
-            const $table = $(this);
-            $table.gdatatable($table.data())
-		})
-	})
-
 }(jQuery);

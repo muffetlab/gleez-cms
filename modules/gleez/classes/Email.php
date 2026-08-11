@@ -12,12 +12,12 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @license    https://gleezcms.org/license Gleez CMS License
  * @link       https://github.com/Synchro/PHPMailer
  */
-class Email {
-
+class Email
+{
 	/**
 	 * Mail queue bool
 	 */
-	protected $queue = FALSE;
+    protected $queue = false;
 
 	/**
 	 * Mail object
@@ -33,7 +33,7 @@ class Email {
      * @throws Kohana_Exception
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public static function factory(bool $exceptions = TRUE): Email
+    public static function factory(bool $exceptions = true): Email
     {
 		return new Email($exceptions);
 	}
@@ -44,7 +44,7 @@ class Email {
      * @param boolean $exceptions PHPMailer should throw external exceptions? [Optional]
      * @throws \PHPMailer\PHPMailer\Exception|Kohana_Exception
      */
-    public function __construct(bool $exceptions = TRUE)
+    public function __construct(bool $exceptions = true)
 	{
         // Create PHPMailer object
 		$this->_mail = new PHPMailer($exceptions);
@@ -53,7 +53,7 @@ class Email {
 		$this->_mail->setFrom(Kohana::$config->load('site')->get('site_email','webmaster@example.com'), Template::getSiteName());
 		$this->_mail->WordWrap = 70;
 		$this->_mail->CharSet  = Kohana::$charset;
-		$this->_mail->XMailer  = Gleez::getVersion(FALSE, TRUE);
+        $this->_mail->XMailer = Gleez::getVersion(false, true);
 		$this->_mail->setLanguage(I18n::$lang);
 		$this->_mail->Debugoutput = 'error_log';
 	}
@@ -83,15 +83,12 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function message(string $body, string $type = NULL): Email
+    public function message(string $body, string $type = null): Email
     {
-		if ( ! $type OR $type === 'text/plain')
-		{
+        if (!$type || $type === 'text/plain') {
 			// Set the main text/plain body
 			$this->_mail->Body = $body;
-		}
-		else
-		{
+        } else {
 			// Add a custom mime type
 			$this->_mail->msgHTML($body);
 		}
@@ -113,7 +110,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function to(string $email, string $name = NULL): Email
+    public function to(string $email, string $name = null): Email
     {
 		$this->_mail->addAddress($email, $name);
 
@@ -128,7 +125,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function cc(string $email, string $name = NULL): Email
+    public function cc(string $email, string $name = null): Email
     {
 		$this->_mail->addCC($email, $name);
 
@@ -143,7 +140,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function bcc(string $email, string $name = NULL): Email
+    public function bcc(string $email, string $name = null): Email
     {
 		$this->_mail->addBCC($email, $name);
 
@@ -158,7 +155,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function from(string $email, string $name = NULL): Email
+    public function from(string $email, string $name = null): Email
     {
 		$this->_mail->setFrom($email, $name);
 
@@ -173,7 +170,7 @@ class Email {
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function reply_to(string $email, string $name = NULL): Email
+    public function reply_to(string $email, string $name = null): Email
     {
 		$this->_mail->addReplyTo($email, $name);
 
@@ -201,16 +198,13 @@ class Email {
      * @param array|null $params Additional params for unique
 	 * @return  Email
 	 */
-    public function queue(int $timestamp = NULL, bool $unique = FALSE, array $params = NULL): Email
+    public function queue(int $timestamp = null, bool $unique = false, array $params = null): Email
     {
-		try
-		{
+        try {
 			//@todo insert into mailqueue table
-			$this->queue = TRUE;
-		}
-		catch(Exception $e)
-		{
-			Kohana::$log->add(Log::ERROR, 'Error queuing mail error: :e', array(':e' => $e->getMessage()));
+            $this->queue = true;
+        } catch (Exception $e) {
+            Kohana::$log->add(Log::ERROR, 'Error queuing mail error: :e', [':e' => $e->getMessage()]);
 		}
 
 		return $this;
@@ -223,20 +217,17 @@ class Email {
 	 */
     public function send(): bool
     {
-		try
-		{
+        try {
             // Send mail if it's not queued
-            if (!$this->queue)
-			{
+            if (!$this->queue) {
 				$this->_mail->send();
 			}
-	
-			return TRUE;
-		}
-		catch(Exception $e)
-		{
-			Kohana::$log->add(Log::ERROR, 'Error sending mail error: :e', array(':e' => $e->getMessage()));
-			return FALSE;
+
+            return true;
+        } catch (Exception $e) {
+            Kohana::$log->add(Log::ERROR, 'Error sending mail error: :e', [':e' => $e->getMessage()]);
+
+            return false;
 		}
 	}
 

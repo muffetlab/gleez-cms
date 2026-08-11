@@ -1,4 +1,5 @@
 <?php
+
 /**
  * An adaptation of Freetag
  *
@@ -9,29 +10,38 @@
  */
 class Model_Tag extends Gleez_Model
 {
-
 	/**
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns =  array(
-		'id' 	=> array( 'type' => 'int' ),
-		'name' 	=> array( 'type' => 'string' ),
-		'type' 	=> array( 'type' => 'string' ),
-		'count' => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'name' => ['type' => 'string'],
+        'type' => ['type' => 'string'],
+        'count' => ['type' => 'int'],
+        'deleted' => ['type' => 'int'],
+    ];
+
+    /**
+     * Soft-delete column configuration
+     * @var array
+     */
+    protected $_deleted_column = [
+        'column' => 'deleted',
+        'format' => true
+    ];
 
 	/**
 	 * "Has many" relationships
 	 * @var array
 	 */
-	protected $_has_many = array(
-		'posts' => array(
+    protected $_has_many = [
+        'posts' => [
             'model' => 'Post',
-			'through'     => 'posts_tags',
-			'foreign_key' => 'tag_id'
-		),
-	);
+            'through' => 'posts_tags',
+            'foreign_key' => 'tag_id'
+        ],
+    ];
 
 	/**
 	 * Labels for fields in this model
@@ -40,10 +50,10 @@ class Model_Tag extends Gleez_Model
 	 */
 	public function labels(): array
     {
-		return array(
-			'name' => __('Tag'),
-			'type'  => __('Type'),
-		);
+        return [
+            'name' => __('Tag'),
+            'type' => __('Type'),
+        ];
 	}
 
 	/**
@@ -53,12 +63,12 @@ class Model_Tag extends Gleez_Model
 	 */
 	public function rules(): array
     {
-		return array(
-			'name' => array(
-				array('not_empty'),
-				array(array($this, 'tag_available'), array(':validation', ':field')),
-			),
-		);
+        return [
+            'name' => [
+                ['not_empty'],
+                [[$this, 'tag_available'], [':validation', ':field']],
+            ],
+        ];
 	}
 
     /**
@@ -70,12 +80,11 @@ class Model_Tag extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		parent::save( $validation );
 
-		if ( $this->loaded())
-		{
+        if ($this->loaded()) {
 			// Add or remove path aliases
 			$this->_aliases();
 		}
@@ -86,25 +95,22 @@ class Model_Tag extends Gleez_Model
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships.
 	 *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
 	 * @return  ORM
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
-        if (is_array($this->_deleted_column) && $soft)
-		{
-
-		}
-		else
-		{
+        if (is_array($this->_deleted_column) && $soft) {
+            parent::delete($soft);
+        } else {
 			$source = $this->rawurl;
 
             parent::delete();
 
 			// Delete the path aliases associated with this object
-			Path::delete( array('source' => $source) );
+            Path::delete(['source' => $source]);
 			unset($source);
 		}
 
@@ -122,19 +128,18 @@ class Model_Tag extends Gleez_Model
 	private function _aliases()
 	{
 		// Create and save alias for the post
-		$values = array();
+        $values = [];
 
 		$path = Path::load($this->rawurl);
 
-		if ($path)
-		{
+        if ($path) {
 			$values['id'] = (int) $path['id'];
 		}
 
 		$alias  = empty($this->path) ? 'tags/'.$this->name : $this->path;
 		$values['source'] = $this->rawurl;
 		$values['alias']  = Path::clean($alias);
-		$values['type']   = empty($this->type) ? FALSE : $this->type ;
+        $values['type'] = empty($this->type) ? false : $this->type;
 		$values['action'] = empty($this->action) ? 'tag' : $this->action;
 
 		$values = Module::action('tag_aliases', $values, $this);
@@ -162,11 +167,11 @@ class Model_Tag extends Gleez_Model
                 // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('name');
             case 'rawurl':
-				return Route::get($this->type)->uri(array('action' => 'tag', 'id' => $this->id));
+                return Route::get($this->type)->uri(['action' => 'tag', 'id' => $this->id]);
             case 'edit_url':
-				return Route::get('admin/tag')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('admin/tag')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get('admin/tag')->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get('admin/tag')->uri(['id' => $this->id, 'action' => 'delete']);
             case 'url':
 			case 'link':
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
@@ -188,7 +193,7 @@ class Model_Tag extends Gleez_Model
      */
     public function tag_available(Validation $validation, string $field)
 	{
-		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
+        $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
 				->from($this->_table_name)
 				->where('name', '=', $validation[$field])
 				->where($this->_primary_key, '!=', $this->pk())
@@ -196,9 +201,8 @@ class Model_Tag extends Gleez_Model
 				->execute($this->_db)
 				->get('total_count');
 
-		if($result > 0)
-		{
-			$validation->error($field, 'tag_available', array($validation[$field]));
+        if ($result > 0) {
+            $validation->error($field, 'tag_available', [$validation[$field]]);
 		}
 	}
 

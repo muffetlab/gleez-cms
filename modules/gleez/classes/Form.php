@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Form helper class
  *
@@ -22,7 +23,7 @@ class Form extends Kohana_Form
      * echo Form::open('search', array('method' => 'get'));
      *
      * // When "file" inputs are present, you must include the "enctype"
-     * echo Form::open(NULL, array('enctype' => 'multipart/form-data'));
+     * echo Form::open(null, array('enctype' => 'multipart/form-data'));
      * ~~~
      *
      * @param mixed $action Form action, defaults to the current request URI, or Request class to use
@@ -43,15 +44,14 @@ class Form extends Kohana_Form
     public static function open($action = null, array $attributes = null): string
     {
 		// Dynamically sets destination url to from action if exists in url
-        if (PHP_SAPI !== 'cli' and $desti = Request::current()->query('destination') and !empty($desti)) {
+        if (PHP_SAPI !== 'cli' && ($destination = Request::current()->query('destination')) && !empty($destination)) {
 			// Properly parse the path and query
 			$url = URL::explode($action);
 
-			//On seriously malformed URLs, parse_url() may return FALSE.
-			if (isset($url['path']) AND is_array($url['query_params']))
-			{
+            // On seriously malformed URLs, parse_url() may return false.
+            if (isset($url['path']) && is_array($url['query_params'])) {
 				//add destination param
-				$url['query_params']['destination'] = $desti;
+                $url['query_params']['destination'] = $destination;
 
 				//set the form action parameter
                 $attributes['action'] = $url['path'] . URL::query($url['query_params']);
@@ -60,13 +60,12 @@ class Form extends Kohana_Form
 
         $out = parent::open($action, $attributes) . PHP_EOL;
 
-		if (Gleez::$installed)
-		{
+        if (Gleez::$installed) {
 			// Assign the global form css file
-			Assets::css('form', 'media/css/form.css', array('weight' => 2));
+            Assets::css('form', 'media/css/form.css', ['weight' => 2]);
 
 			$action  = md5($action . CSRF::key());
-			$out 	.= self::hidden('_token', CSRF::token(FALSE, $action)).PHP_EOL;
+            $out .= self::hidden('_token', CSRF::token(false, $action)) . PHP_EOL;
 			$out 	.= self::hidden('_action', $action).PHP_EOL;
 		}
 
@@ -100,17 +99,15 @@ class Form extends Kohana_Form
             $attributes['type'] = 'text';
         }
 
-        if (!isset($attributes['id']) && $attributes['type'] != 'hidden')
-		{
+        if (!isset($attributes['id']) && $attributes['type'] != 'hidden') {
             $attributes['id'] = self::_get_id_by_name($name);
 		}
 
-        if ($attributes['type'] === 'text' and !empty($url))
-		{
+        if ($attributes['type'] === 'text' && !empty($url)) {
             $attributes['class'] = isset($attributes['class']) ? $attributes['class'] . ' form-autocomplete' : 'form-autocomplete';
             $attributes['id'] = $name;
-            $attributes['autocomplete'] = "off";
-            $attributes['data-url'] = URL::site($url, TRUE);
+            $attributes['autocomplete'] = 'off';
+            $attributes['data-url'] = URL::site($url, true);
             $attributes['data-provide'] = 'typeahead';
 
 			// Assign the typeahead js file
@@ -138,8 +135,7 @@ class Form extends Kohana_Form
      */
     public static function textarea(string $name, string $body = '', array $attributes = null, bool $double_encode = true): string
     {
-		if ( ! isset($attributes['id']))
-		{
+        if (!isset($attributes['id'])) {
 			$attributes['id'] = self::_get_id_by_name($name);
 		}
 
@@ -164,8 +160,7 @@ class Form extends Kohana_Form
      */
     public static function select(string $name, array $options = null, $selected = null, array $attributes = null): string
     {
-		if (! isset($attributes['id']))
-		{
+        if (!isset($attributes['id'])) {
 			$attributes['id'] = self::_get_id_by_name($name);
 		}
 
@@ -194,8 +189,7 @@ class Form extends Kohana_Form
      */
     public static function button(string $name, string $body, array $attributes = null): string
     {
-        if (!isset($attributes['id']))
-		{
+        if (!isset($attributes['id'])) {
             $attributes['id'] = self::_get_id_by_name($name);
 		}
 
@@ -213,12 +207,11 @@ class Form extends Kohana_Form
      * @throws Kohana_Exception
      * @uses    Form::select
      */
-    public static function weight(string $name, int $selected = 0, array $attrs = NULL, int $delta = 15): string
+    public static function weight(string $name, int $selected = 0, array $attrs = null, int $delta = 15): string
     {
-		$options = array();
+        $options = [];
 
-		for ($n = (-1 * $delta); $n <= $delta; $n++)
-		{
+        for ($n = (-1 * $delta); $n <= $delta; $n++) {
 			$options[$n] = $n;
 		}
 
@@ -235,10 +228,9 @@ class Form extends Kohana_Form
      * @throws Kohana_Exception
      * @uses    Arr::get
      */
-    public static function filter(string $column, array $vals, array $attrs = array()): string
+    public static function filter(string $column, array $vals, array $attrs = []): string
     {
-		if ( ! isset($attrs['style']))
-		{
+        if (!isset($attrs['style'])) {
 			// Default type is text
 			$attrs['style'] = 'width: 100%';
 		}
@@ -260,7 +252,7 @@ class Form extends Kohana_Form
      * @link    https://getdatepicker.com/4/
      * @uses    Form::input
      */
-    public static function date(string $name, string $value = NULL, array $attrs = NULL): string
+    public static function date(string $name, string $value = null, array $attrs = null): string
     {
 		$out = '';
 
@@ -269,8 +261,7 @@ class Form extends Kohana_Form
         Assets::js('bs.mm', 'media/js/moment/moment.min.js', ['bootstrap']);
         Assets::js('bs.dt', 'media/js/bootstrap-datetimepicker.min.js', ['bootstrap']);
 
-		if ( ! isset($attrs['id']))
-		{
+        if (!isset($attrs['id'])) {
 			$attrs['id'] = Form::_get_id_by_name($name);
 		}  
 
@@ -289,34 +280,29 @@ class Form extends Kohana_Form
         ];
 
 		// Add locale support to datepicker. @todo CH and latin support
-        if (Gleez_I18n::$lang !== 'en-us')
-		{
+        if (Gleez_I18n::$lang !== 'en-us') {
 			$lang                                   = I18n::$lang;
             $options['locale'] = $lang;
             Assets::js('bs.mm.locale', "media/js/moment/locale/$lang.js", ['bs.mm']);
 		}
 
-        if (isset($attrs['format']))
-		{
+        if (isset($attrs['format'])) {
             $options['format'] = $attrs['format'];
             unset($attrs['format']);
 		}
 
-        if (isset($attrs['showTodayButton']))
-		{
+        if (isset($attrs['showTodayButton'])) {
             $options['showTodayButton'] = $attrs['showTodayButton'];
             unset($attrs['showTodayButton']);
 		}
 
-        if (isset($attrs['viewMode']))
-		{
+        if (isset($attrs['viewMode'])) {
             $options['viewMode'] = $attrs['viewMode'];
             unset($attrs['viewMode']);
 		}
 
 		// Set the input value
-        if (!$value)
-		{
+        if (!$value) {
             $attrs['value'] = Date::formatted_time(time(), 'd-m-Y h:i:s');
         } elseif (is_numeric($value)) {
             $attrs['value'] = Date::formatted_time($value, 'd-m-Y h:i:s');
@@ -342,6 +328,6 @@ class Form extends Kohana_Form
 	 */
     protected static function _get_id_by_name(string $name): string
     {
-		return 'form-'.str_replace(array('[]', '][', '[', ']', '\\'), array('', '_', '_', '', '_'), $name);
+        return 'form-' . str_replace(['[]', '][', '[', ']', '\\'], ['', '_', '_', '', '_'], $name);
 	}
 }

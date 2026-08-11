@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Math captcha class.
  *
@@ -24,20 +25,17 @@ class Captcha_Math extends Captcha
     public function generate_challenge(): string
     {
 		// Easy
-		if (Captcha::$config['complexity'] < 4)
-		{
+        if (Captcha::$config['complexity'] < 4) {
 			$numbers[] = mt_rand(1, 5);
 			$numbers[] = mt_rand(1, 4);
 		}
 		// Normal
-		elseif (Captcha::$config['complexity'] < 7)
-		{
+        elseif (Captcha::$config['complexity'] < 7) {
 			$numbers[] = mt_rand(10, 20);
 			$numbers[] = mt_rand(1, 10);
 		}
 		// Difficult, well, not really ;)
-		else
-		{
+        else {
 			$numbers[] = mt_rand(100, 200);
 			$numbers[] = mt_rand(10, 20);
 			$numbers[] = mt_rand(1, 10);

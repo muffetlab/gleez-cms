@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Widget base class
  *
@@ -11,8 +12,8 @@
  *
  * @todo       Add docs
  */
-abstract class Widget {
-
+abstract class Widget
+{
 	/**
 	 * Widget Name
 	 * @var string

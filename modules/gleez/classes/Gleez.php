@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gleez Core class
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Gleez {
-
+class Gleez
+{
 	/**
 	 * Release version
 	 * @type string
@@ -20,13 +21,7 @@ class Gleez {
 	 * Minimal required version of php
 	 * @type string
 	 */
-	const PHP_MIN_REQ = '7.0.0';
-
-	/**
-	 * Release codename
-	 * @type string
-	 */
-	const CODENAME = 'Smiling Buddha';
+    const PHP_MIN_REQ = '7.1.0';
 
 	/**
 	 * Default message for maintenance mode
@@ -38,7 +33,7 @@ class Gleez {
 	 * Gleez installed?
 	 * @var boolean
 	 */
-	public static $installed = FALSE;
+    public static $installed = false;
 
 	/**
 	 * Public [Gleez_Locale] instance
@@ -47,26 +42,26 @@ class Gleez {
 	 *
 	 * @var Gleez_Locale
 	 */
-	public static $locale = NULL;
+    public static $locale = null;
 
 	/**
 	 * Has [Gleez::ready] been called?
 	 * @var boolean
 	 */
-	protected static $_init = FALSE;
+    protected static $_init = false;
 
 	/**
 	 * Set the X-Powered-By header?
 	 * @var  boolean
 	 */
-	public static $expose = FALSE;
+    public static $expose = false;
 
 	/**
 	 * Whether to enable [profiling](gleez/profiling)
 	 * @todo  May be set by [Gleez::init or Gleez::ready]
 	 * @var boolean
 	 */
-	public static $profiling = TRUE;
+    public static $profiling = true;
 
 	/**
 	 * Character set of input and output
@@ -93,14 +88,13 @@ class Gleez {
      */
 	public static function ready()
 	{
-		if (self::$_init)
-		{
+        if (self::$_init) {
 			// Do not allow execution twice
 			return;
 		}
 
 		// Gleez is now initialized?
-		self::$_init = TRUE;
+        self::$_init = true;
 
 		// Set default cookie salt and lifetime
 		self::_set_cookie();
@@ -108,8 +102,7 @@ class Gleez {
 		// Check database config file exist or not
 		Gleez::$installed = file_exists(APPPATH.'config/database.php');
 
-		if (Gleez::$installed)
-		{
+        if (Gleez::$installed) {
 			// Database config reader and writer
 			Kohana::$config->attach(new Config_Database);
 		}
@@ -117,8 +110,7 @@ class Gleez {
         Kohana_Exception::$error_view = 'errors/stack';
 
 		// Turn off notices and strict errors in production
-		if (Kohana::$environment === Kohana::PRODUCTION)
-		{
+        if (Kohana::$environment === Kohana::PRODUCTION) {
 			// Turn off notices and strict errors
 			error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 		}
@@ -131,35 +123,32 @@ class Gleez {
 
 		// Disable the kohana powered headers
 		// @todo Remove it, use Gleez::$expose
-		Kohana::$expose = FALSE;
+        Kohana::$expose = false;
 
 		/**
 		 * If database.php doesn't exist, then we assume that the Gleez is not
 		 * properly installed and send to the installer.
 		 */
-		if ( ! Gleez::$installed)
-		{
+        if (!Gleez::$installed) {
 			Session::$default = 'cookie';
 			Kohana_Exception::$error_view = 'errors/error';
 
 			// Static file serving (CSS, JS, images)
-			Route::set('install/media', 'media(/<file>)', array(
-				'file' => '.+'
-			))
-			->defaults(array(
-				'controller' => 'install',
-				'action'     => 'media',
-				'file'       => NULL,
-				'directory'  => 'install'
-			));
+            Route::set('install/media', 'media(/<file>)', [
+                'file' => '.+'
+            ])->defaults([
+                'controller' => 'install',
+                'action' => 'media',
+                'file' => null,
+                'directory' => 'install'
+            ]);
 
-			Route::set('install', '(install(/<action>))', array(
-				'action' => 'index|systemcheck|database|install|finalize'
-			))
-			->defaults(array(
-				'controller' => 'install',
-				'directory'  => 'install'
-			));
+            Route::set('install', '(install(/<action>))', [
+                'action' => 'index|systemcheck|database|install|finalize'
+            ])->defaults([
+                'controller' => 'install',
+                'directory' => 'install'
+            ]);
 
 			return;
 		}
@@ -168,7 +157,7 @@ class Gleez {
 		Session::$default = Kohana::$config->load('site')->get('session_type');
 
 		// Initialize Gleez modules
-		Module::load_modules(FALSE);
+        Module::load_modules(false);
 
 		// Load the active theme(s)
 		Theme::load_themes();
@@ -184,11 +173,11 @@ class Gleez {
 	 */
     public static function types(): array
     {
-		$states = array(
-			'blog'  => __('Blog'),
-			'page'  => __('Page'),
-			'user'  => __('User')
-		);
+        $states = [
+            'blog' => __('Blog'),
+            'page' => __('Page'),
+            'user' => __('User')
+        ];
 
         return Module::action('gleez_types', $states);
 	}
@@ -199,8 +188,9 @@ class Gleez {
      * If Gleez is in maintenance mode, then force all non-admins to get routed
      * to a "This site is down for maintenance" page.
      *
-     * @throws  HTTP_Exception_503
+     * @throws HTTP_Exception_503
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    Request::initial
      * @uses    Config::load
      * @uses    Request::controller
@@ -210,13 +200,12 @@ class Gleez {
      */
 	public static function maintenance_mode()
 	{
-		$maintenance_mode = Kohana::$config->load('site')->get('maintenance_mode', FALSE);
-		$message          = Kohana::$config->load('site')->get('offline_message', FALSE);
+        $maintenance_mode = Kohana::$config->load('site')->get('maintenance_mode', false);
+        $message = Kohana::$config->load('site')->get('offline_message', false);
         $message = empty($message) ? Gleez::MAINTENANCE_MESSAGE : $message;
 		$request          = Request::initial();
 
-        if ($maintenance_mode && $request->controller() != 'user' && $request->action() != 'login' && !ACL::check('administer site') && $request->controller() != 'media')
-		{
+        if ($maintenance_mode && $request->controller() != 'user' && $request->action() != 'login' && !ACL::check('administer site') && $request->controller() != 'media') {
 			throw HTTP_Exception::factory(503, __($message));
 		}
 	}
@@ -235,9 +224,8 @@ class Gleez {
         $blocked_ips = Kohana::$config->load('site')->get('blocked_ips');
 		$ip          = Request::$client_ip;
 
-		if ( ! empty($blocked_ips) AND in_array($ip, preg_split("/[\s,]+/",$blocked_ips)))
-		{
-			throw HTTP_Exception::factory(403, 'Sorry, your ip address (:ip) has been banned.', array(':ip' => $ip));
+        if (!empty($blocked_ips) && in_array($ip, preg_split("/[\s,]+/", $blocked_ips))) {
+            throw HTTP_Exception::factory(403, 'Sorry, your ip address (:ip) has been banned.', [':ip' => $ip]);
 		}
 	}
 
@@ -252,42 +240,36 @@ class Gleez {
 	 */
     protected static function find_file_custom(string $file): string
     {
-		if (file_exists($file))
-		{
+        if (file_exists($file)) {
 			return $file;
 		}
 
 		$uri = THEMEPATH . $file;
-		if (file_exists($uri))
-		{
+        if (file_exists($uri)) {
 			return $uri;
 		}
 
 		$uri = APPPATH . $file;
-		if (file_exists($uri))
-		{
+        if (file_exists($uri)) {
 			return $uri;
 		}
 
 		$modules = Kohana::modules();
-		foreach ($modules as $module)
-		{
+        foreach ($modules as $module) {
 			$uri = $module . $file;
-			if (file_exists($uri))
-			{
+            if (file_exists($uri)) {
 				return $uri;
 			}
 		}
 
 		$uri = SYSPATH . $file;
-		if (file_exists($uri))
-		{
+        if (file_exists($uri)) {
 			return $uri;
 		}
 
-		throw new Kohana_Exception('Unable to locate file `:file`. No file exists with the specified file name.', array(
-			':file' => $file
-		));
+        throw new Kohana_Exception('Unable to locate file `:file`. No file exists with the specified file name.', [
+            ':file' => $file
+        ]);
 	}
 
 	/**
@@ -297,7 +279,7 @@ class Gleez {
      * @param boolean $full If set, return the full version with `Gleez CMS` prefix [Optional]
 	 * @return  string   The version of Gleez
 	 */
-    public static function getVersion(bool $with_v = TRUE, bool $full = FALSE): string
+    public static function getVersion(bool $with_v = true, bool $full = false): string
     {
 		$version = $with_v ? 'v' . Gleez::VERSION : Gleez::VERSION;
 

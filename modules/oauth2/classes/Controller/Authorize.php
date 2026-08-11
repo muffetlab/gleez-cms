@@ -1,14 +1,16 @@
 <?php
+
 /**
- * Controller oAuth2 Authorize
+ * Controller OAuth2 Authorize
  *
- * @package    Gleez\oAuth2
+ * @package    Gleez\OAuth2
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Controller_Authorize extends Template {
+class Controller_Authorize extends Template
+{
 	/**
 	 * List of possible authentication response types.
 	 * The "authorization_code" mechanism exclusively supports 'code'
@@ -26,7 +28,8 @@ class Controller_Authorize extends Template {
 	private $client_id;
 	private $redirect_uri;
 	private $response_type;
-	private $is_authorized   = FALSE;
+
+    private $is_authorized = false;
 
 	// These 2 vars are not part of oauth2
 	private $approval_prompt = 'auto';
@@ -39,7 +42,7 @@ class Controller_Authorize extends Template {
     /**
      * The before() method is called before controller action
      *
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
      */
@@ -51,10 +54,10 @@ class Controller_Authorize extends Template {
 		$this->config = Kohana::$config->load('oauth2')->as_array();
 
 		// create array of supported response types
-		$this->responseTypes = array(
-			'code'	=> new Oauth2_ResponseType_AuthorizationCode($this->config),
-			'token'	=> new Oauth2_ResponseType_AccessToken($this->config),
-		);
+        $this->responseTypes = [
+            'code' => new Oauth2_ResponseType_AuthorizationCode($this->config),
+            'token' => new Oauth2_ResponseType_AccessToken($this->config),
+        ];
 
 		/**
 		 * Indicates if the user should be re-prompted for consent.
@@ -82,7 +85,7 @@ class Controller_Authorize extends Template {
 		$this->display			= $this->request->query('display');
 
 		// Disable sidebars on oauth2
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 	}
 
     /**
@@ -112,8 +115,7 @@ class Controller_Authorize extends Template {
      */
 	public function action_index()
 	{
-		try
-		{
+        try {
             // We repeat this, because we need to re-validate. The request could be POSTed by a 3rd-party (because we
             // are not internally enforcing NONCEs, etc.)
 			$this->validateAuthorizeRequest();
@@ -123,18 +125,17 @@ class Controller_Authorize extends Template {
 				$this->redirect_uri = $this->client['redirect_uri'];
 			}
 
-			$params = array(
-				'scope'				=> $this->scope,
-				'state'				=> $this->state,
-				'client_id'			=> $this->client['client_id'],
-				'redirect_uri'		=> $this->redirect_uri,
-				'response_type'		=> $this->response_type,
-				'approval_prompt'	=> $this->approval_prompt,
-				'access_type'		=> $this->access_type
-			);
+            $params = [
+                'scope' => $this->scope,
+                'state' => $this->state,
+                'client_id' => $this->client['client_id'],
+                'redirect_uri' => $this->redirect_uri,
+                'response_type' => $this->response_type,
+                'approval_prompt' => $this->approval_prompt,
+                'access_type' => $this->access_type
+            ];
 
-			if( $this->request->post('oauth2') )
-			{
+            if ($this->request->post('oauth2')) {
 				// check the form data to see if the user authorized the request
 				$authorized = (bool) $this->request->post('authorize');
             } elseif (!$authorized = $this->showAuthorizeForm($params)) {
@@ -143,25 +144,27 @@ class Controller_Authorize extends Template {
 			}
 
 			if ($authorized === false) {
-				$this->setRedirect($this->config['redirect_status_code'], $this->redirect_uri, $this->state, 'access_denied', "The user denied access to your application");
+                $this->setRedirect(
+                    $this->redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $this->state,
+                    'access_denied',
+                    'The user denied access to your application'
+                );
 			}
 
-			return $this->authorizeFinish($params, $this->redirect_uri);
-		}
-		catch(Oauth2_Exception $e) 
-		{
+            $this->authorizeFinish($params, $this->redirect_uri);
+        } catch (Oauth2_Exception $e) {
 			// Throw an exception because there was a problem with the client's request
-			$response = array(
-				'error'				=> $e->getError(),
-				'error_description' => $e->getMessage()
-			);
+            $response = [
+                'error' => $e->getError(),
+                'error_description' => $e->getMessage()
+            ];
 
 			$this->response->status($e->getCode());
-			$this->response->headers(array('Cache-Control' => 'no-store', 'Pragma' => 'no-cache'));
+            $this->response->headers(['Cache-Control' => 'no-store', 'Pragma' => 'no-cache']);
 			$this->response->body(json_encode($response));
-		}
-		catch (Exception $e) 
-		{
+        } catch (Exception $e) {
 			/**
 			 * Something went wrong!
 			 *
@@ -193,22 +196,21 @@ class Controller_Authorize extends Template {
 		$uri = $this->buildUri($redirect_uri, $uri_params);
 
 		// return redirect response
-		$this->setRedirect($this->config['redirect_status_code'], $uri);
+        $this->setRedirect($uri, $this->config['redirect_status_code']);
 	}
 
     /**
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    protected function showAuthorizeForm($params)
-	{
+    protected function showAuthorizeForm($params): bool
+    {
 		$url = Route::get('oauth2/auth')->uri().URL::query($params);
 
-		if ( ! Auth::instance()->logged_in())
-		{
-			$this->request->redirect( 
-				Route::get('user')->uri(array('action' => 'login')) . URL::query( array('destination' => $url) ) 
-			);
+        if (!Auth::instance()->logged_in()) {
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']) . URL::query([
+                    'destination' => $url
+                ]));
 		}
 
 		$user  = Auth::instance()->get_user();
@@ -217,24 +219,23 @@ class Controller_Authorize extends Template {
 		$consent = $this->checkConsent($params['client_id'], $user->id);
 
 		// Check if the client should be automatically approved
-		//$autoApprove = ($params['auto_approve'] === '1') ? TRUE : FALSE;
+        //$autoApprove = ($params['auto_approve'] === '1') ? true : false;
         $autoApprove = $params['approval_prompt'] !== 'force';
 
-		/*
-		 * Dispaly the "do you want to authorize?" form if previously not approved,
-		 * or, if approval_promt parameter is 'force'
-		 */ 
-		if ( $consent === FALSE || $autoApprove === FALSE )
-		{
+        /*
+         * Display the "do you want to authorize?" form if previously not approved, or, if approval_prompt parameter is
+         * 'force'.
+         */
+        if ($consent === false || $autoApprove === false) {
             $view = View::factory('oauth2/authorize')->set('client', $this->client)->set('action', $url);
 
 			$this->title = __('Welcome to the OAuth2.0 Server!');
 			$this->response->body($view);
 
-			return FALSE;
+            return false;
 		}
 
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -252,12 +253,12 @@ class Controller_Authorize extends Template {
      * @see http://tools.ietf.org/html/rfc6749#section-10.12
      * @see http://tools.ietf.org/html/rfc6749#section-4.1.1
      */
-	protected function validateAuthorizeRequest()
-	{
+    protected function validateAuthorizeRequest(): bool
+    {
 		// Make sure a valid client id was supplied (we can not redirect because we were unable to verify the URI)
-		if (!$client_id = $this->request->query("client_id")) {
+        if (!$client_id = $this->request->query('client_id')) {
 		    // We don't have a good URI to use
-		   	throw Oauth2_Exception::factory(400, 'invalid_client', "No client id supplied");
+            throw Oauth2_Exception::factory(400, 'invalid_client', 'No client id supplied');
 		}
 
 		// Get client details
@@ -306,20 +307,38 @@ class Controller_Authorize extends Template {
 		//}
 
 		// type and client_id are required
-		if (!$response_type || !in_array($response_type, array(self::RESPONSE_TYPE_AUTHORIZATION_CODE, self::RESPONSE_TYPE_ACCESS_TOKEN))) {
-		    $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'invalid_request', 'Invalid or missing response type');
+        if (!$response_type || !in_array($response_type, [self::RESPONSE_TYPE_AUTHORIZATION_CODE, self::RESPONSE_TYPE_ACCESS_TOKEN])) {
+            $this->setRedirect(
+                $redirect_uri,
+                $this->config['redirect_status_code'],
+                $state,
+                'invalid_request',
+                'Invalid or missing response type'
+            );
 
 		    return false;
 		}
 
 		if ($response_type == self::RESPONSE_TYPE_AUTHORIZATION_CODE) {
 		    if (!isset($this->responseTypes['code'])) {
-		        $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unsupported_response_type', 'authorization code grant type not supported');
+                $this->setRedirect(
+                    $redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $state,
+                    'unsupported_response_type',
+                    'authorization code grant type not supported'
+                );
 
 		        return false;
 		    }
 		    if (!$this->checkRestrictedGrantType($client_id, 'authorization_code')) {
-		        $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unauthorized_client', 'The grant type is unauthorized for this client_id');
+                $this->setRedirect(
+                    $redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $state,
+                    'unauthorized_client',
+                    'The grant type is unauthorized for this client_id'
+                );
 
 		        return false;
 		    }
@@ -330,12 +349,24 @@ class Controller_Authorize extends Template {
 
 		if ($response_type == self::RESPONSE_TYPE_ACCESS_TOKEN) {
 		    if (!$this->config['allow_implicit']) {
-		        $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unsupported_response_type', 'implicit grant type not supported');
+                $this->setRedirect(
+                    $redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $state,
+                    'unsupported_response_type',
+                    'implicit grant type not supported'
+                );
 
 		        return false;
 		    }
 		    if (!$this->checkRestrictedGrantType($client_id, 'implicit')) {
-		        $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'unauthorized_client', 'The grant type is unauthorized for this client_id');
+                $this->setRedirect(
+                    $redirect_uri,
+                    $this->config['redirect_status_code'],
+                    $state,
+                    'unauthorized_client',
+                    'The grant type is unauthorized for this client_id'
+                );
 
 		        return false;
 		    }
@@ -343,20 +374,38 @@ class Controller_Authorize extends Template {
 
 		// Validate that the requested scope is supported
 /*		if (false === $scope) {
-		    $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'invalid_client', 'This application requires you specify a scope parameter');
+            $this->setRedirect(
+                $redirect_uri,
+                $this->config['redirect_status_code'],
+                $state,
+                'invalid_client',
+                'This application requires you specify a scope parameter'
+            );
 
 		    return false;
 		}
 
 		if (!is_null($scope) && !$this->scopeExists($scope, $client_id)) {
-		    $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, $state, 'invalid_scope', 'An unsupported scope was requested');
+            $this->setRedirect(
+                $redirect_uri,
+                $this->config['redirect_status_code'],
+                $state,
+                'invalid_scope',
+                'An unsupported scope was requested'
+            );
 
 		    return false;
 		}*/
 
 		// Validate state parameter exists (if configured to enforce this)
 		if ($this->config['enforce_state'] && !$state) {
-		    $this->setRedirect($this->config['redirect_status_code'], $redirect_uri, null, 'invalid_request', 'The state parameter is required');
+            $this->setRedirect(
+                $redirect_uri,
+                $this->config['redirect_status_code'],
+                null,
+                'invalid_request',
+                'The state parameter is required'
+            );
 
 		    return false;
 		}
@@ -375,16 +424,12 @@ class Controller_Authorize extends Template {
 	/**
 	 * Internal method for validating redirect URI supplied
 	 *
-	 * @param string $inputUri
-	 * The submitted URI to be validated
-	 * @param string $registeredUriString
-	 * The allowed URI(s) to validate against.  Can be a space-delimited string of URIs to
-	 * allow for multiple URIs
-	 *
+	 * @param string $inputUri The submitted URI to be validated
+	 * @param string $registeredUriString The allowed URI(s) to validate against. Can be a space-delimited string of URIs to allow for multiple URIs.
 	 * @see http://tools.ietf.org/html/rfc6749#section-3.1.2
 	 */
-	private function validateRedirectUri($inputUri, $registeredUriString)
-	{
+    private function validateRedirectUri(string $inputUri, string $registeredUriString): bool
+    {
 		if (!$inputUri || !$registeredUriString) {
 		    return false; // if either one is missing, assume INVALID
 		}
@@ -411,15 +456,21 @@ class Controller_Authorize extends Template {
     /**
      * @throws Kohana_Exception
      */
-    protected function setRedirect($statusCode = 302, $url, $state = null, $error = null, $errorDescription = null)
+    protected function setRedirect(
+        string  $url,
+        int     $statusCode = 302,
+        ?string $state = null,
+        ?string $error = null,
+        ?string $errorDescription = null
+    )
 	{
-		$parameters = array();
+        $parameters = [];
 
 		if (!is_null($error)) {
-			$parameters = array(
-				'error' => $error,
-				'error_description' => $errorDescription,
-			);
+            $parameters = [
+                'error' => $error,
+                'error_description' => $errorDescription,
+            ];
 		}
 
 		if (!is_null($state)) {
@@ -441,18 +492,18 @@ class Controller_Authorize extends Template {
      */
     protected function getClientDetails($id)
 	{
-        $client = ORM::factory('OAClient')->where('client_id', '=', $id)->find();
+        $client = ORM::factory('Client')->where('client_id', '=', $id)->find();
 
 		if( $client->loaded() ) return $client->as_array();
 
-		return FALSE;
+        return false;
 	}
 
     /**
      * @throws Kohana_Exception
      */
-    public function checkRestrictedGrantType($client_id, $grant_type)
-	{
+    public function checkRestrictedGrantType($client_id, $grant_type): bool
+    {
 		$details = $this->getClientDetails($client_id);
 
 		if (! empty($details['grant_types'])) {
@@ -466,11 +517,9 @@ class Controller_Authorize extends Template {
 	}
 
 	// Checks whether user already approved client access or not
-	public function checkConsent($client_id, $user_id)
-	{
-		$oatoken = Model::factory('oauth')->checkConsent($client_id, $user_id);
-
-        return !empty($oatoken);
+    public function checkConsent($client_id, $user_id): bool
+    {
+        return Model::factory('OAuth')->checkConsent($client_id, $user_id);
 	}
 
     /**
@@ -481,28 +530,28 @@ class Controller_Authorize extends Template {
      * @return string An absolute URI with supplied parameters
      * @ingroup oauth2_section_4
      */
-	private function buildUri($uri, $params)
-	{
+    private function buildUri(string $uri, array $params): string
+    {
 		$parse_url = parse_url($uri);
 
 		// Add our params to the parsed uri
 		foreach ($params as $k => $v) {
 			if (isset($parse_url[$k])) {
-				$parse_url[$k] .= "&" . http_build_query($v);
+                $parse_url[$k] .= '&' . http_build_query($v);
 			} else {
 				$parse_url[$k] = http_build_query($v);
 			}
 		}
 
         // Put Humpty Dumpty back together
-		return
-			((isset($parse_url["scheme"])) ? $parse_url["scheme"] . "://" : "")
-			. ((isset($parse_url["user"])) ? $parse_url["user"]
-			. ((isset($parse_url["pass"])) ? ":" . $parse_url["pass"] : "") . "@" : "")
-			. ((isset($parse_url["host"])) ? $parse_url["host"] : "")
-			. ((isset($parse_url["port"])) ? ":" . $parse_url["port"] : "")
-			. ((isset($parse_url["path"])) ? $parse_url["path"] : "")
-            . (!empty($parse_url['query']) ? "?" . $parse_url["query"] : "")
-			. ((isset($parse_url["fragment"])) ? "#" . $parse_url["fragment"] : "");
+        return (isset($parse_url['scheme']) ? $parse_url['scheme'] . '://' : '')
+            . (isset($parse_url['user'])
+                ? $parse_url['user'] . (isset($parse_url['pass']) ? ':' . $parse_url['pass'] : '') . '@'
+                : '')
+            . ($parse_url['host'] ?? '')
+            . (isset($parse_url['port']) ? ':' . $parse_url['port'] : '')
+            . ($parse_url['path'] ?? '')
+            . (!empty($parse_url['query']) ? '?' . $parse_url['query'] : '')
+            . (isset($parse_url['fragment']) ? '#' . $parse_url['fragment'] : '');
 	}
 }

@@ -4,7 +4,7 @@
 	</a>
 	<ul class="dropdown-menu">
 		<?php foreach($actions as $action): ?>
-			<li><?php echo HTML::anchor($action['link'], $action['text'], array('data-toggle' => 'popup')); ?></li>
+            <li><?php echo HTML::anchor($action['link'], $action['text'], ['data-toggle' => 'popup']); ?></li>
 		<?php endforeach; ?>
 	</ul>
 </div>

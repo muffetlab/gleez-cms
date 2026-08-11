@@ -1,4 +1,5 @@
 <?php
+
 /**
  * An adaptation of taxonomy (Categories and Category Groups)
  *
@@ -8,36 +9,46 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Model_Term extends ORM_MPTT {
-
+class Model_Term extends ORM_MPTT
+{
 	/**
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'          => array( 'type' => 'int' ),
-		'name'        => array( 'type' => 'string' ),
-		'description' => array( 'type' => 'string' ),
-		'image'       => array( 'type' => 'string' ),
-		'type'        => array( 'type' => 'string' ),
-		'pid'         => array( 'type' => 'int' ),
-		'lft'         => array( 'type' => 'int' ),
-		'rgt'         => array( 'type' => 'int' ),
-		'lvl'         => array( 'type' => 'int' ),
-		'scp'         => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'name' => ['type' => 'string'],
+        'description' => ['type' => 'string'],
+        'image' => ['type' => 'string'],
+        'type' => ['type' => 'string'],
+        'pid' => ['type' => 'int'],
+        'lft' => ['type' => 'int'],
+        'rgt' => ['type' => 'int'],
+        'lvl' => ['type' => 'int'],
+        'scp' => ['type' => 'int'],
+        'deleted' => ['type' => 'int'],
+    ];
+
+    /**
+     * Soft-delete column configuration
+     * @var array
+     */
+    protected $_deleted_column = [
+        'column' => 'deleted',
+        'format' => true
+    ];
 
 	/**
 	 * "Has many" relationships
 	 * @var array
 	 */
-	protected $_has_many = array(
-		'posts' => array(
+    protected $_has_many = [
+        'posts' => [
             'model' => 'Post',
-			'through'     => 'posts_terms',
-			'foreign_key' => 'term_id'
-		),
-	);
+            'through' => 'posts_terms',
+            'foreign_key' => 'term_id'
+        ],
+    ];
 
 	/**
 	 * Left column name
@@ -76,11 +87,11 @@ class Model_Term extends ORM_MPTT {
 	 */
 	public function filters(): array
     {
-		return array(
-			'image' => array(
-				array(array($this, 'uploadImage'))
-			)
-		);
+        return [
+            'image' => [
+                [[$this, 'uploadImage']]
+            ]
+        ];
 	}
 
 	/**
@@ -90,11 +101,11 @@ class Model_Term extends ORM_MPTT {
 	 */
 	public function rules(): array
     {
-		return array(
-			'name' => array(
-				array('not_empty'),
-			),
-		);
+        return [
+            'name' => [
+                ['not_empty'],
+            ],
+        ];
 	}
 
     /**
@@ -106,14 +117,13 @@ class Model_Term extends ORM_MPTT {
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		$this->type  = empty($this->type) ? 'post' : $this->type;
 
 		parent::save($validation);
 
-		if ($this->loaded())
-		{
+        if ($this->loaded()) {
 			// Add or remove path aliases
 			$this->_aliases();
 		}
@@ -124,24 +134,22 @@ class Model_Term extends ORM_MPTT {
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships.
 	 *
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
 	 * @return  ORM
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
 	 */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
-        if (is_array($this->_deleted_column) && $soft)
-		{
-
-		}
-		else
-		{
+        if (is_array($this->_deleted_column) && $soft) {
+            parent::delete($soft);
+        } else {
 			$source = $this->rawurl;
 
 			parent::delete($soft);
 
 			// Delete the path aliases associated with this object
-			Path::delete(array('source' => $source));
+            Path::delete(['source' => $source]);
 			unset($source);
 		}
 
@@ -158,12 +166,11 @@ class Model_Term extends ORM_MPTT {
 	private function _aliases()
 	{
 		// Create and save alias for the post
-		$values = array();
+        $values = [];
 
 		$path = Path::load($this->rawurl);
 
-		if ($path)
-		{
+        if ($path) {
 			$values['id'] = (int) $path['id'];
 		}
 
@@ -203,14 +210,14 @@ class Model_Term extends ORM_MPTT {
 				return parent::__get('name');
             case 'rawurl':
                 // Raw fields without markup. Usage: during edit or etc.!
-				return Route::get($this->type)->uri(array('action' => 'term', 'id' => $this->id));
+                return Route::get($this->type)->uri(['action' => 'term', 'id' => $this->id]);
             case 'url':
 			case 'link':
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
             case 'edit_url':
-				return Route::get('admin/term')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('admin/term')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get('admin/term')->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get('admin/term')->uri(['id' => $this->id, 'action' => 'delete']);
         }
 
         return parent::__get($column);
@@ -229,7 +236,7 @@ class Model_Term extends ORM_MPTT {
      */
     public function term_available(Validation $validation, string $field)
 	{
-		$query = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
+        $query = DB::select([DB::expr('COUNT(*)'), 'total_count'])
 				->from($this->_table_name)
 				->where('name', '=', $validation[$field])
 				->where($this->_primary_key, '!=', $this->pk())
@@ -237,9 +244,8 @@ class Model_Term extends ORM_MPTT {
 				->execute($this->_db)
 				->get('total_count');
 
-		if ($query > 0)
-		{
-			$validation->error($field, 'term_available', array($validation[$field]));
+        if ($query > 0) {
+            $validation->error($field, 'term_available', [$validation[$field]]);
 		}
 	}
 
@@ -258,29 +264,24 @@ class Model_Term extends ORM_MPTT {
 	public function create_at($parent, $location = 'last')
 	{
 		// Create the term as first child, last child, or as next sibling based on location
-		if ($location == 'first')
-		{
+        if ($location == 'first') {
 			$this->insert_as_first_child($parent);
-		}
-		elseif ($location == 'last')
-		{
+        } elseif ($location == 'last') {
 			$this->insert_as_last_child($parent);
-		}
-		else
-		{
+        } else {
             $target = ORM::factory('Term', (int) $location);
 
-			if ( ! $target->loaded())
-			{
-				throw new Kohana_Exception('Could not create term, could not find target for insert_as_next_sibling id: :location ',
-					array(':location' =>  (int) $location));
+            if (!$target->loaded()) {
+                throw new Kohana_Exception(
+                    'Could not create term, could not find target for insert_as_next_sibling id: :location ',
+                    [':location' => (int) $location]
+                );
 			}
 
 			$this->insert_as_last_child($target);
 		}
 
-		if ($this->loaded())
-		{
+        if ($this->loaded()) {
 			// Add or remove path aliases
 			$this->_aliases();
 		}
@@ -290,13 +291,12 @@ class Model_Term extends ORM_MPTT {
      * Upload image and return file path.
      *
      * @param array $file Uploaded file
-     * @return  NULL|string   NULL when filed, otherwise file path
+     * @return null|string Returns null when failed, otherwise file path
      * @throws Kohana_Exception
      */
     public function uploadImage(array $file): ?string
     {
-		if (isset($file['tmp_name']) AND ! empty($file['tmp_name']))
-		{
+        if (!empty($file['tmp_name'])) {
 			return Upload::uploadImage($file);
 		}
 

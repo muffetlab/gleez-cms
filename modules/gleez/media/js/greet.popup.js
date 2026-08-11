@@ -14,8 +14,7 @@
 +function ($) {
 	'use strict';
 
-	// GREET POPUP CLASS DEFINITION
-	// ======================
+    // Greet Popup Class Definition
 
     const Popup = function (element, options) {
         this.init(element, options)
@@ -88,7 +87,7 @@
 
         // Now, if there are any forms in the popup, hijack them if necessary.
 		// Pass the popup object to the form as data() to handle popup events from form
-		if (data && this.options.consumeform) {
+        if (data && this.options.consumeForm) {
 			this.forms = $data.filter('form')
 			
 			//if only one form, remove and create custom buttons in popup footer
@@ -151,7 +150,7 @@
 		//add the popup element to form data
 		//add the datatable element to form data
 		$(submitBtn)
-				.attr('data-toggle', 'ajaxform')
+            .attr('data-toggle', 'ajaxForm')
 				.attr('class',		 sAttr)
 				.attr('href',		 '#')
 				.data('form',		 this.forms)
@@ -185,7 +184,7 @@
 			.not('input[name^="cancel"]')
 			.not('input[name$="no"]')
 			.not('input[name$="cancel"]')
-			.attr('data-toggle', 'ajaxform')
+            .attr('data-toggle', 'ajaxForm')
             .data('popup', this.$element)
 
 		//add close handler to no/cancel buttons
@@ -200,12 +199,11 @@
 
 	Popup.prototype.dataTable = function () {
         let dTable;
-        if (this.options.consumedt && this.options.table) {
+        if (this.options.consumeDataTable && this.options.table) {
             dTable = $(this.options.table);
             this.options.table = false
 			if(dTable.length > 0) this.options.table = dTable
-		}
-		else if (this.options.consumedt && !this.options.table){
+        } else if (this.options.consumeDataTable && !this.options.table) {
             dTable = $(this.options.click).closest('table.dataTable');
             if (dTable.length > 0) this.options.table = dTable
 		}
@@ -214,7 +212,7 @@
 	Popup.prototype.tab = function () {
         const that = this;
 
-        if (this.isShown && this.options.consumetab) {
+        if (this.isShown && this.options.consumeTab) {
 			this.$element.on('keydown.tabindex.popup', '[data-tabindex]', function (e) {
                 if (e.keyCode && e.keyCode === 9) {
                     let $next = $(this),
@@ -310,9 +308,9 @@
 			}
 		}
 
-		if (this.options.modaloverflow){
+        if (this.options.modalOverflow) {
             const modalOverflow = $(window).height() - 10 < this.$element.height();
-            if (modalOverflow || this.options.modaloverflow) {
+            if (modalOverflow || this.options.modalOverflow) {
 				this.$element
 					.css('margin-top', 0)
 					.addClass('popup-overflow')
@@ -604,12 +602,12 @@
 		, minWidth      : 100
 		, minHeight     : 100
 		, maxWidth      : 9999
-		, maxHeight     : 9999
-		, modaloverflow : false
-		, consumetab    : true
-		, consumeform   : true
-		, consumedt     : true
-		, table         : false
+        , maxHeight: 9999,
+        modalOverflow: false,
+        consumeTab: true,
+        consumeForm: true,
+        consumeDataTable: true,
+        table: false
 		, focusOn       : false
 		, replace       : false
 		, resize        : false
@@ -622,8 +620,7 @@
 		, template      : '<div id="{popup.id}" class="popup fade" tabIndex="-1" role="dialog"><div class="popup-dialog"><div class="popup-content"><div class="popup-header"><button type="button" class="close" data-dismiss="popup">&times;</button><h4 class="popup-title">&nbsp;</h4></div><div class="popup-body"></div><div class="popup-footer"></div></div></div></div>'
 	}
 
-	// GREET POPUP PLUGIN DEFINITION
-	// =======================
+    // Greet Popup Plugin Definition
 
     const old = $.fn.popup;
 
@@ -645,16 +642,14 @@
 
 	$.fn.popup.Constructor = Popup
 
-	// GREET POPUP NO CONFLICT
-	// =================
+    // Greet Popup No Conflict
 
 	$.fn.popup.noConflict = function () {
 		$.fn.popup = old
 		return this
 	}
 
-	// GREET POPUP DATA-API
-	// ==============
+    // Greet Popup Data API
 
 	$(document).on('click.popup.data-api', '[data-toggle="popup"]', function (e) {
         const $this = $(this);

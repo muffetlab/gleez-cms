@@ -1,4 +1,5 @@
 <?php
+
 /**
  * An adaptation of handle path aliasing.
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Path {
-
+class Path
+{
 	/**
      * Default alias for the front page
 	 * @type string
@@ -28,17 +29,15 @@ class Path {
     {
 		$regex 	= "#(/p(?P<page>\d+))+$#uD";  // preg_match()
 		$reg_ex = "#(/p\d+)+$#uD";            // preg_replace()
-		$page 	= NULL;                       // default pager id is null
+        $page = null;                       // default pager id is null
 
         // Determine alias from route URI to support transformed parameters
         $alias = $route->uri($params);
 
 		// Save this value for pagination
 		// @todo use preg_replace_callback to handle both set and replace
-		if (@preg_match($regex, $alias, $matches))
-		{
-			if (isset($matches['page']))
-			{
+        if (@preg_match($regex, $alias, $matches)) {
+            if (isset($matches['page'])) {
 				$page = $matches['page'];
 			}
 			unset($matches);
@@ -48,32 +47,29 @@ class Path {
         $alias = preg_replace($reg_ex, '', $alias);
 
 		// Check if it's a front page request and set <front> tag
-		if (empty($alias) AND $alias == NULL)
-		{
+        if (empty($alias) && $alias == null) {
 			$alias = self::FRONT_ALIAS;
 		}
 
-		$result = self::load(array('alias' => $alias));
-		if ( ! $result)
-		{
+        $result = self::load(['alias' => $alias]);
+        if (!$result) {
             // No alias found, return original params to allow normal routing
             return $params;
 		}
 
         // Reset the self::FRONT_ALIAS tag to '', or else the request fails.
-        if ($alias === self::FRONT_ALIAS)
-		{
+        if ($alias === self::FRONT_ALIAS) {
 			$result['alias'] = '';
 		}
 
-		return array(
-			'directory'  => $result['route_directory'],
-			'controller' => $result['route_controller'],
-			'action'     => $result['route_action'],
-			'id' 	     => $result['route_id'],
-			'uri'	     => $result['alias'],
-			'page'	     => $page
-		);
+        return [
+            'directory' => $result['route_directory'],
+            'controller' => $result['route_controller'],
+            'action' => $result['route_action'],
+            'id' => $result['route_id'],
+            'uri' => $result['alias'],
+            'page' => $page
+        ];
 	}
 
 	/**
@@ -89,28 +85,21 @@ class Path {
      */
 	public static function save(array $values)
 	{
-		try
-		{
-			if (isset($values['id']) AND is_numeric($values['id']))
-			{
+        try {
+            if (isset($values['id']) && is_numeric($values['id'])) {
                 $path = ORM::factory('Path', $values['id'])
                     ->values($values, ['source', 'alias'])
 					->save();
-			}
-			else
-			{
+            } else {
                 $path = ORM::factory('Path')
                     ->values($values, ['source', 'alias'])
 					->save();
 			}
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			// log error and return, to avoid breaking process
-			Kohana::$log->add(Log::ERROR, 'Error: :error creating path alias.',
-				array(':error' => $e->getMessage())
-			);
-			return FALSE;
+            Kohana::$log->add(Log::ERROR, 'Error: :error creating path alias.', [':error' => $e->getMessage()]);
+
+            return false;
 		}
 
 		return $path;
@@ -124,69 +113,55 @@ class Path {
 	 */
     public static function delete($criteria): bool
     {
-		try
-		{
+        try {
 			$query = DB::delete('paths');
 
-			if ( ! is_array($criteria))
-			{
-				$criteria = array('id' => $criteria);
+            if (!is_array($criteria)) {
+                $criteria = ['id' => $criteria];
 			}
 
-			foreach ($criteria as $field => $value)
-			{
+            foreach ($criteria as $field => $value) {
 				$query->where($field, '=', $value);
 			}
 
 			$query->execute();
-		}
-		catch (Exception $e)
-		{
-			Kohana::$log->add(Log::ERROR, 'Error: :error deleting path alias.', array(':error' => $e->getMessage()));
-			return FALSE;
+        } catch (Exception $e) {
+            Kohana::$log->add(Log::ERROR, 'Error: :error deleting path alias.', [':error' => $e->getMessage()]);
+
+            return false;
 		}
 
-		return TRUE;
+        return true;
 	}
 
 	/**
 	 * Fetch a specific URL alias from the database
 	 *
 	 * @param   mixed  $conditions  A string representing the source, a number representing the id, or an array of query conditions
-	 * @return  mixed  FALSE if no alias was found or MySQL result set
+     * @return  mixed  Returns false if no alias was found or MySQL result set
 	 */
 	public static function load($conditions)
 	{
-		try
-		{
+        try {
 			$path = DB::select()->from('paths');
 
-			if (is_numeric($conditions))
-			{
+            if (is_numeric($conditions)) {
 				$path->where('id', '=', $conditions);
-			}
-			elseif (is_string($conditions))
-			{
+            } elseif (is_string($conditions)) {
 				$path->where('source', '=', $conditions);
-			}
-			elseif (is_array($conditions))
-			{
-				foreach($conditions as $field => $value)
-				{
+            } elseif (is_array($conditions)) {
+                foreach ($conditions as $field => $value) {
 					$path->where($field, '=', $value);
 				}
-			}
-			else
-			{
-				return FALSE;
+            } else {
+                return false;
 			}
 
 			$path = $path->execute()->current();
-		}
-		catch(Exception $e)
-		{
-			Kohana::$log->add(Log::ERROR, 'Error: :error lookup path alias.', array(':error' => $e->getMessage()));
-			return FALSE;
+        } catch (Exception $e) {
+            Kohana::$log->add(Log::ERROR, 'Error: :error lookup path alias.', [':error' => $e->getMessage()]);
+
+            return false;
 		}
 
 		return $path;
@@ -200,17 +175,14 @@ class Path {
 	 */
     public static function alias(string $source): string
     {
-		try
-		{
+        try {
 			return DB::select('alias')->from('paths')
 				->where('source', '=', $source)
 				->limit(1)
 				->execute()
 				->get('alias', $source);
-		}
-		catch (Exception $e)
-		{
-			Kohana::$log->add(Log::ERROR, 'Error: :error getting alias.', array(':error' => $e->getMessage()));
+        } catch (Exception $e) {
+            Kohana::$log->add(Log::ERROR, 'Error: :error getting alias.', [':error' => $e->getMessage()]);
 			return $source;
 		}
 	}
@@ -237,8 +209,7 @@ class Path {
 		$separator = '-';
 
         // Empty strings do not need any processing.
-        if ($string === '')
-		{
+        if ($string === '') {
 			return '';
 		}
 
@@ -263,23 +234,23 @@ class Path {
      *
      * @param string $path The path to match
      * @param string $patterns String containing a set of patterns separated by \n, \r or \r\n.
-     * @return  boolean  TRUE if the path matches a pattern, FALSE otherwise
+     * @return boolean Returns true if the path matches a pattern, false otherwise
      * @throws Kohana_Exception
      */
     public static function match_path(string $path, string $patterns): bool
     {
 		// Convert path settings to a regular expression.
         // Therefore, replace newlines with a logical or, /* with asterisks and the <front> with the frontpage.
-		$to_replace = array(
-			'/(\r\n?|\n)/', // newlines
-			'/\\\\\*/',     // asterisks
-			'/(^|\|)\\\\<front\\\\>($|\|)/' // <front>
-		);
-		$replacements = array(
-			'|',
-			'.*',
-			'\1' . preg_quote(URL::base(), '/') . '\2'
-		);
+        $to_replace = [
+            '/(\r\n?|\n)/', // newlines
+            '/\\\\\*/',     // asterisks
+            '/(^|\|)\\\\<front\\\\>($|\|)/' // <front>
+        ];
+        $replacements = [
+            '|',
+            '.*',
+            '\1' . preg_quote(URL::base(), '/') . '\2'
+        ];
 		$patterns_quoted = preg_quote($patterns, '/');
 		$regexps[$patterns] = '/^(' . preg_replace($to_replace, $replacements, $patterns_quoted) . ')$/';
 

@@ -7,8 +7,8 @@
  * @license		http://opensource.org/licenses/MIT
  *
  */
-abstract class OAuth2_Client {
-
+abstract class OAuth2_Client
+{
     /**
      * Authorization types
      */
@@ -51,12 +51,12 @@ abstract class OAuth2_Client {
     /**
      * @var string  Client id
      */
-    protected $_client_id = NULL;
+    protected $_client_id = null;
 
     /**
      * @var string  Client secret
      */
-    protected $_client_secret = NULL;
+    protected $_client_secret = null;
 
     /**
      * @var int     Client authentication type
@@ -66,7 +66,7 @@ abstract class OAuth2_Client {
     /**
      * @var string  Access token
      */
-    protected $_access_token = NULL;
+    protected $_access_token = null;
 
     /**
      * @var int     Access token type
@@ -76,12 +76,12 @@ abstract class OAuth2_Client {
     /**
      * @var string  Access token secret
      */
-    protected $_access_token_secret = NULL;
+    protected $_access_token_secret = null;
 
     /**
      * @var string  Access token crypt algorithm
      */
-    protected $_access_token_algorithm = NULL;
+    protected $_access_token_algorithm = null;
 
     /**
      * @var string  Access token parameter name
@@ -91,12 +91,12 @@ abstract class OAuth2_Client {
     /**
      * @var string  The path to the certificate file to use for https connections
      */
-    protected $_certificate_file = NULL;
+    protected $_certificate_file = null;
 
     /**
      * @var array   cURL options
      */
-    protected $_curl_options = array();
+    protected $_curl_options = [];
 
     /**
      * @var array   The last response from the OAuth server
@@ -106,55 +106,63 @@ abstract class OAuth2_Client {
     /**
      * @var array   Required params for different grant types
      */
-    protected $_required_params = array(
-        'authorization_code'    => array('code', 'redirect_uri'),
-        'password'              => array('username', 'password'),
-        'refresh_token'         => array('refresh_token'),
-        'client_credentials'    => array()
-    );
+    protected $_required_params = [
+        'authorization_code' => ['code', 'redirect_uri'],
+        'password' => ['username', 'password'],
+        'refresh_token' => ['refresh_token'],
+        'client_credentials' => []
+    ];
 
     /**
      * Return the authorization endpoint
      *
      * @return  string
      */
-    abstract function get_authorization_endpoint();
+    abstract function get_authorization_endpoint(): string;
 
     /**
      * Return the access token endpoint
      *
      * @return  string
      */
-    abstract function get_access_token_endpoint();
+    abstract function get_access_token_endpoint(): string;
 
     /**
      * Return the user profile service url
      *
      * @return  string
      */
-    abstract function get_user_profile_service_url();
+    abstract function get_user_profile_service_url(): string;
 
     /**
      * Return data about the user
      *
      * @return  array
      */
-    abstract function get_user_data();
+    abstract function get_user_data(): array;
 
     /**
      * Construct
      *
-     * @param   string  $client_id
-     * @param   string  $client_secret
-     * @param   int     $client_auth_type
-     * @param   string  $certificate_file
+     * @param string $client_id
+     * @param string $client_secret
+     * @param int $client_auth_type
+     * @param string|null $certificate_file
      * @throws  OAuth2_Client_Exception
      */
-    public function __construct($client_id, $client_secret, $client_auth_type = self::AUTH_TYPE_URI, $certificate_file = NULL)
+    public function __construct(
+        string $client_id,
+        string $client_secret,
+        int $client_auth_type = self::AUTH_TYPE_URI,
+        string $certificate_file = null
+    )
     {
-        if ( ! extension_loaded('curl'))
-        {
-            throw new OAuth2_Client_Exception('The cURL extension must be installed.', array(), OAuth2_Client_Exception::E_NO_CURL_INSTALLED);
+        if (!extension_loaded('curl')) {
+            throw new OAuth2_Client_Exception(
+                'The cURL extension must be installed.',
+                [],
+                OAuth2_Client_Exception::E_NO_CURL_INSTALLED
+            );
         }
 
         $this->_client_id           = $client_id;
@@ -162,9 +170,12 @@ abstract class OAuth2_Client {
         $this->_client_auth_type    = $client_auth_type;
         $this->_certificate_file    = $certificate_file;
 
-        if ( ! empty($this->_certificate_file)  && ! is_file($this->_certificate_file))
-        {
-            throw new OAuth2_Client_Exception('The certificate file was not found.', array(), OAuth2_Client_Exception::E_CERTIFICATE_FILE_INVALID);
+        if (!empty($this->_certificate_file) && !is_file($this->_certificate_file)) {
+            throw new OAuth2_Client_Exception(
+                'The certificate file was not found.',
+                [],
+                OAuth2_Client_Exception::E_CERTIFICATE_FILE_INVALID
+            );
         }
     }
 
@@ -173,7 +184,7 @@ abstract class OAuth2_Client {
      *
      * @return  string
      */
-    public function get_client_id()
+    public function get_client_id(): ?string
     {
         return $this->_client_id;
     }
@@ -183,7 +194,7 @@ abstract class OAuth2_Client {
      *
      * @return  string
      */
-    public function get_client_secret()
+    public function get_client_secret(): ?string
     {
         return $this->_client_secret;
     }
@@ -191,52 +202,54 @@ abstract class OAuth2_Client {
     /**
      * Get the authentication url
      *
-     * @param   string  $redirect_uri
+     * @param string $redirect_uri
      * @param   array   $extra_parameters
      * @return  string  URL used for authentication
      */
-    public function get_authentication_url($redirect_uri, array $extra_parameters = array())
+    public function get_authentication_url(string $redirect_uri, array $extra_parameters = []): string
     {
-        $parameters = array_merge(array(
+        $parameters = array_merge([
             'response_type' => 'code',
-            'client_id'     => $this->_client_id,
-            'redirect_uri'  => $redirect_uri
-        ), $extra_parameters);
+            'client_id' => $this->_client_id,
+            'redirect_uri' => $redirect_uri
+        ], $extra_parameters);
 
-        return $this->get_authorization_endpoint().'?'.http_build_query($parameters, NULL, '&');
+        return $this->get_authorization_endpoint() . '?' . http_build_query($parameters, null, '&');
     }
 
     /**
      * Request the access token
      *
-     * @param   int     $grant_type         Grant Type ('authorization_code', 'password', 'client_credentials', 'refresh_token', or a custom code (@see GrantType Classes)
+     * @param int $grant_type Grant type ('authorization_code', 'password', 'client_credentials', 'refresh_token', or a custom code (@see GrantType Classes)
      * @param   array   $parameters         Array sent to the server (depend on which grant type you're using)
      * @return  array                       The server response
      * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
-    public function request_access_token($grant_type, array $parameters)
+    public function request_access_token(int $grant_type, array $parameters): array
     {
-        if ( ! $grant_type)
-        {
-            throw new OAuth2_Client_Exception('The grant_type is mandatory.', array(), OAuth2_Client_Exception::E_NO_GRANT_TYPE_SPECIFIED);
+        if (!$grant_type) {
+            throw new OAuth2_Client_Exception(
+                'The grant_type is mandatory.',
+                [],
+                OAuth2_Client_Exception::E_NO_GRANT_TYPE_SPECIFIED
+            );
         }
 
-        foreach ($this->_required_params[$grant_type] as $param)
-        {
+        foreach ($this->_required_params[$grant_type] as $param) {
             if ( ! isset($parameters[$param]))
-                throw new OAuth2_Client_Exception('The ":param" parameter must be defined for ":grant_type" grant type.', array(
-                    ':param' => $param,
-                    ':grant_type' => $grant_type
-                ), OAuth2_Client_Exception::E_MISSING_PARAMETER);
+                throw new OAuth2_Client_Exception(
+                    'The ":param" parameter must be defined for ":grant_type" grant type.',
+                    [':param' => $param, ':grant_type' => $grant_type],
+                    OAuth2_Client_Exception::E_MISSING_PARAMETER
+                );
         }
 
         // Set grant type
         $parameters['grant_type'] = $grant_type;
 
-        $http_headers = array();
+        $http_headers = [];
 
-        switch ($this->_client_auth_type)
-        {
+        switch ($this->_client_auth_type) {
             case self::AUTH_TYPE_URI:
             case self::AUTH_TYPE_FORM:
                 $parameters['client_id'] = $this->_client_id;
@@ -249,9 +262,9 @@ abstract class OAuth2_Client {
                 break;
 
             default:
-                throw new OAuth2_Client_Exception('Unknown client auth type ":client_auth_type".', array(
+                throw new OAuth2_Client_Exception('Unknown client auth type ":client_auth_type".', [
                     ':client_auth_type' => $this->_client_auth_type
-                ), OAuth2_Client_Exception::E_UNKNOWN_AUTH_TYPE);
+                ], OAuth2_Client_Exception::E_UNKNOWN_AUTH_TYPE);
         }
 
         return $this->_execute_request($this->get_access_token_endpoint(), $parameters, self::HTTP_METHOD_POST, $http_headers, self::HTTP_FORM_CONTENT_TYPE_APPLICATION);
@@ -262,25 +275,27 @@ abstract class OAuth2_Client {
      *
      * @param string $grant_type
      * @param array $parameters
-     * @param string $response
+     * @param string|null $response
      * @return  string
      * @throws  OAuth2_Client_Exception
      * @throws Kohana_Exception
      */
-    public function get_access_token($grant_type, $parameters, $response = NULL)
+    public function get_access_token(string $grant_type, array $parameters, string $response = null): string
     {
         $response = $response ?: $this->request_access_token($grant_type, $parameters);
         $result   = $response['result'];
 
-        if ( ! is_array($result))
-        {
+        if (!is_array($result)) {
             // Make sure `$result` is an array
             parse_str($result, $result);
         }
 
-        if ( ! isset($result[$this->_access_token_param_name]))
-        {
-            throw new OAuth2_Client_Exception('Unable to get the access token.', array(), OAuth2_Client_Exception::E_CANT_GET_ACCESS_TOKEN);
+        if (!isset($result[$this->_access_token_param_name])) {
+            throw new OAuth2_Client_Exception(
+                'Unable to get the access token.',
+                [],
+                OAuth2_Client_Exception::E_CANT_GET_ACCESS_TOKEN
+            );
         }
 
         // Return the access token
@@ -292,7 +307,7 @@ abstract class OAuth2_Client {
      *
      * @param string $token
      */
-    public function set_access_token($token)
+    public function set_access_token(string $token)
     {
         $this->_access_token = $token;
     }
@@ -300,9 +315,9 @@ abstract class OAuth2_Client {
     /**
      * Set the client authentication type
      *
-     * @param   string  $client_auth_type   (AUTH_TYPE_URI, AUTH_TYPE_AUTHORIZATION, AUTH_TYPE_FORM)
+     * @param string $client_auth_type (AUTH_TYPE_URI, AUTH_TYPE_AUTHORIZATION, AUTH_TYPE_FORM)
      */
-    public function set_client_auth_type($client_auth_type)
+    public function set_client_auth_type(string $client_auth_type)
     {
         $this->_client_auth_type = $client_auth_type;
     }
@@ -310,10 +325,10 @@ abstract class OAuth2_Client {
     /**
      * Set an option for the curl transfer
      *
-     * @param   int     $option
+     * @param int $option
      * @param   mixed   $value
      */
-    public function set_curl_option($option, $value)
+    public function set_curl_option(int $option, $value)
     {
         $this->_curl_options[$option] = $value;
     }
@@ -321,9 +336,9 @@ abstract class OAuth2_Client {
     /**
      * Set multiple options for a cURL transfer
      *
-     * @param   array   $options
+     * @param array $options
      */
-    public function set_curl_options($options)
+    public function set_curl_options(array $options)
     {
         $this->_curl_options = array_merge($this->_curl_options, $options);
     }
@@ -331,11 +346,11 @@ abstract class OAuth2_Client {
     /**
      * Set the access token type
      *
-     * @param   int     $type       Access token type (ACCESS_TOKEN_BEARER, ACCESS_TOKEN_MAC, ACCESS_TOKEN_URI)
-     * @param   string  $secret     The secret key used to encrypt the MAC header
-     * @param   string  $algorithm  Algorithm used to encrypt the signature
+     * @param int $type Access token type (ACCESS_TOKEN_BEARER, ACCESS_TOKEN_MAC, ACCESS_TOKEN_URI)
+     * @param string|null $secret The secret key used to encrypt the MAC header
+     * @param string|null $algorithm Algorithm used to encrypt the signature
      */
-    public function set_access_token_type($type, $secret = NULL, $algorithm = NULL)
+    public function set_access_token_type(int $type, string $secret = null, string $algorithm = null)
     {
         $this->_access_token_type = $type;
         $this->_access_token_secret = $secret;
@@ -345,25 +360,35 @@ abstract class OAuth2_Client {
     /**
      * Fetch a protected resource
      *
-     * @param   string  $protected_resource_url
-     * @param   array   $parameters
-     * @param   string  $http_method
+     * @param string $protected_resource_url
+     * @param array $parameters
+     * @param string $http_method
      * @param   array   $http_headers
-     * @param   int     $form_content_type
-     * @param   bool    $check_http_status
-     * @param   int     $expected_http_status
+     * @param int $form_content_type
+     * @param bool $check_http_status
+     * @param int $expected_http_status
      * @return  array
      * @throws  OAuth2_Client_Exception|Kohana_Exception
      */
-    public function fetch($protected_resource_url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = array(), $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART, $check_http_status = TRUE, $expected_http_status = 200)
+    public function fetch(
+        string $protected_resource_url,
+        array  $parameters = [],
+        string $http_method = self::HTTP_METHOD_GET,
+        array  $http_headers = [],
+        int    $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART,
+        bool   $check_http_status = true,
+        int    $expected_http_status = 200
+    ): array
     {
-        if ($this->_access_token)
-        {
-            switch ($this->_access_token_type)
-            {
+        if ($this->_access_token) {
+            switch ($this->_access_token_type) {
                 case self::TOKEN_TYPE_URI:
                     if ( ! is_array($parameters))
-                        throw new OAuth2_Client_Exception('You need to give parameters as array if you want to give the token within the URI.', array(), OAuth2_Client_Exception::E_INCORRECT_PARAMETER);
+                        throw new OAuth2_Client_Exception(
+                            'You need to give parameters as array if you want to give the token within the URI.',
+                            [],
+                            OAuth2_Client_Exception::E_INCORRECT_PARAMETER
+                        );
 
                     $parameters[$this->_access_token_param_name] = $this->_access_token;
                     break;
@@ -381,19 +406,20 @@ abstract class OAuth2_Client {
                     break;
 
                 default:
-                    throw new OAuth2_Client_Exception('Unknown access token type: ":access_token_type".', array(
+                    throw new OAuth2_Client_Exception('Unknown access token type: ":access_token_type".', [
                         ':access_token_type' => $this->_access_token_type
-                    ), OAuth2_Client_Exception::E_UNKNOWN_ACCESS_TOKEN_TYPE);
+                    ], OAuth2_Client_Exception::E_UNKNOWN_ACCESS_TOKEN_TYPE);
             }
         }
 
         $response = $this->_execute_request($protected_resource_url, $parameters, $http_method, $http_headers, $form_content_type);
 
-        if ($check_http_status && $response['code'] != $expected_http_status)
-        {
-            throw new OAuth2_Client_Exception('Fetching ":resource" was unsuccessful. See the last server response for more details.', array(
-                ':resource' => $protected_resource_url
-            ), OAuth2_Client_Exception::E_FETCH_UNSUCCESSFUL);
+        if ($check_http_status && $response['code'] != $expected_http_status) {
+            throw new OAuth2_Client_Exception(
+                'Fetching ":resource" was unsuccessful. See the last server response for more details.',
+                [':resource' => $protected_resource_url],
+                OAuth2_Client_Exception::E_FETCH_UNSUCCESSFUL
+            );
 
         }
 
@@ -403,42 +429,32 @@ abstract class OAuth2_Client {
     /**
      * Generate the MAC signature
      *
-     * @param   string  $url
-     * @param   array   $parameters
-     * @param   string  $http_method
+     * @param string $url
+     * @param array $parameters
+     * @param string $http_method
      * @return  string
      */
-    protected function _generate_mac_signature($url, $parameters, $http_method)
+    protected function _generate_mac_signature(string $url, array $parameters, string $http_method): string
     {
         $timestamp  = time();
         $nonce      = uniqid();
         $parsed_url = parse_url($url);
 
-        if ( ! isset($parsed_url['port']))
-        {
+        if (!isset($parsed_url['port'])) {
             $parsed_url['port'] = ($parsed_url['scheme'] == 'https') ? 443 : 80;
         }
 
-        if ($http_method == self::HTTP_METHOD_GET)
-        {
-            if (is_array($parameters))
-            {
-                $parsed_url['path'] .= '?'.http_build_query($parameters, NULL, '&');
-            }
-            elseif ($parameters)
-            {
-                $parsed_url['path'] .= '?'.$parameters;
-            }
+        if ($http_method == self::HTTP_METHOD_GET) {
+            $parsed_url['path'] .= '?' . http_build_query($parameters, null, '&');
         }
 
-        $signature = base64_encode(hash_hmac($this->_access_token_algorithm,
-            $timestamp."\n" .
-            $nonce."\n" .
-            $http_method."\n" .
-            $parsed_url['path']."\n" .
-            $parsed_url['host']."\n" .
-            $parsed_url['port']."\n\n" .
-            $this->_access_token_secret, TRUE));
+        $signature = base64_encode(hash_hmac($this->_access_token_algorithm, $timestamp . "\n"
+            . $nonce . "\n"
+            . $http_method . "\n"
+            . $parsed_url['path'] . "\n"
+            . $parsed_url['host'] . "\n"
+            . $parsed_url['port'] . "\n\n"
+            . $this->_access_token_secret, true));
 
         return 'id="'.$this->_access_token.'", ts="'.$timestamp.'", nonce="'.$nonce.'", mac="'.$signature.'"';
     }
@@ -455,18 +471,23 @@ abstract class OAuth2_Client {
      * @throws Kohana_Exception
      * @throws OAuth2_Client_Exception
      */
-    protected function _execute_request($url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = NULL, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
+    protected function _execute_request(
+        string $url,
+        $parameters = [],
+        string $http_method = self::HTTP_METHOD_GET,
+        array  $http_headers = null,
+        int    $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART
+    ): array
     {
-        $curl_options = array(
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_SSL_VERIFYPEER => TRUE,
-            CURLOPT_CUSTOMREQUEST  => $http_method
-        );
+        $curl_options = [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_CUSTOMREQUEST => $http_method
+        ];
 
-        switch ($http_method)
-        {
+        switch ($http_method) {
             case self::HTTP_METHOD_POST:
-                $curl_options[CURLOPT_POST] = TRUE;
+                $curl_options[CURLOPT_POST] = true;
                 /* No break */
 
             case self::HTTP_METHOD_PUT:
@@ -477,26 +498,22 @@ abstract class OAuth2_Client {
                  * while passing a URL-encoded string will encode the data as application/x-www-form-urlencoded.
                  * http://php.net/manual/en/function.curl-setopt.php
                  */
-                if (is_array($parameters) && self::HTTP_FORM_CONTENT_TYPE_APPLICATION === $form_content_type)
-                {
-                    $parameters = http_build_query($parameters, NULL, '&');
+                if (is_array($parameters) && self::HTTP_FORM_CONTENT_TYPE_APPLICATION === $form_content_type) {
+                    $parameters = http_build_query($parameters, null, '&');
                 }
 
                 $curl_options[CURLOPT_POSTFIELDS] = $parameters;
                 break;
 
             case self::HTTP_METHOD_HEAD:
-                $curl_options[CURLOPT_NOBODY] = TRUE;
+                $curl_options[CURLOPT_NOBODY] = true;
                 /* No break */
 
             case self::HTTP_METHOD_DELETE:
             case self::HTTP_METHOD_GET:
-                if (is_array($parameters))
-                {
-                    $url .= '?'.http_build_query($parameters, NULL, '&');
-                }
-                elseif ($parameters)
-                {
+                if (is_array($parameters)) {
+                    $url .= '?' . http_build_query($parameters, null, '&');
+                } elseif ($parameters) {
                     $url .= '?'.$parameters;
                 }
                 break;
@@ -507,11 +524,9 @@ abstract class OAuth2_Client {
 
         $curl_options[CURLOPT_URL] = $url;
 
-        if (is_array($http_headers))
-        {
-            $header = array();
-            foreach ($http_headers as $key => $parsed_url_value)
-            {
+        if (is_array($http_headers)) {
+            $header = [];
+            foreach ($http_headers as $key => $parsed_url_value) {
                 $header[] = "$key: $parsed_url_value";
             }
             $curl_options[CURLOPT_HTTPHEADER] = $header;
@@ -524,21 +539,17 @@ abstract class OAuth2_Client {
         curl_setopt_array($ch, $curl_options);
 
         // Https handling
-        if ( ! empty($this->certificate_file))
-        {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
+        if (!empty($this->certificate_file)) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             curl_setopt($ch, CURLOPT_CAINFO, $this->certificate_file);
-        }
-        else
-        {
+        } else {
             // Bypass SSL verification
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         }
 
-        if ( ! empty($this->curl_options))
-        {
+        if (!empty($this->curl_options)) {
             curl_setopt_array($ch, $this->curl_options);
         }
 
@@ -549,22 +560,19 @@ abstract class OAuth2_Client {
         $http_code    = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
-        if ($curl_error = curl_error($ch))
-        {
-            throw new OAuth2_Client_Exception($curl_error, array(), OAuth2_Client_Exception::E_CURL_ERROR);
-        }
-        else
-        {
-            $json_decode = json_decode($result, TRUE);
+        if ($curl_error = curl_error($ch)) {
+            throw new OAuth2_Client_Exception($curl_error, [], OAuth2_Client_Exception::E_CURL_ERROR);
+        } else {
+            $json_decode = json_decode($result, true);
         }
 
         curl_close($ch);
 
-        return $this->_last_response = array(
-            'result'        => ($json_decode === NULL) ? $result : $json_decode,
-            'code'          => $http_code,
-            'content_type'  => $content_type
-        );
+        return $this->_last_response = [
+            'result' => ($json_decode === null) ? $result : $json_decode,
+            'code' => $http_code,
+            'content_type' => $content_type
+        ];
     }
 
     /**
@@ -572,7 +580,7 @@ abstract class OAuth2_Client {
      *
      * @return array
      */
-    public function get_last_response()
+    public function get_last_response(): array
     {
         return $this->_last_response;
     }
@@ -580,9 +588,9 @@ abstract class OAuth2_Client {
     /**
      * Set the name of the parameter that carry the access token
      *
-     * @param   string  $name
+     * @param string $name
      */
-    public function set_access_token_param_name($name)
+    public function set_access_token_param_name(string $name)
     {
         $this->_access_token_param_name = $name;
     }
@@ -590,14 +598,20 @@ abstract class OAuth2_Client {
     /**
      * OAuth2 client factory for different providers
      *
-     * @param   string  $provider
-     * @param   string  $client_id
-     * @param   string  $client_secret
-     * @param   int     $client_auth_type
-     * @param   string  $certificate_file
+     * @param string $provider
+     * @param string $client_id
+     * @param string $client_secret
+     * @param int $client_auth_type
+     * @param string|null $certificate_file
      * @return  mixed
      */
-    public static function factory($provider, $client_id, $client_secret, $client_auth_type = self::AUTH_TYPE_URI, $certificate_file = NULL)
+    public static function factory(
+        string $provider,
+        string $client_id,
+        string $client_secret,
+        int    $client_auth_type = self::AUTH_TYPE_URI,
+        string $certificate_file = null
+    )
     {
         $class_name = 'OAuth2_Client_'.$provider;
         return new $class_name($client_id, $client_secret, $client_auth_type, $certificate_file);

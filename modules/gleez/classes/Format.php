@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gleez Format Manager
  *
@@ -8,22 +9,22 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Format {
-
+class Format
+{
 	/** ID safely format */
 	const FALLBACK_FORMAT = 1;
 
 	/** @var Format Format instance */
-	public static $instance = NULL;
+    public static $instance = null;
 
 	/** @var array Formats set */
-	public static $formats = NULL;
+    public static $formats = null;
 
 	/** @var integer Fallback format */
 	public static $fallback_format;
 
 	/** @var array Format configuration */
-	protected $_config = array();
+    protected $_config = [];
 
     /**
      * Creates a singleton of a Gleez_Format
@@ -37,18 +38,16 @@ class Format {
      * @return  Format  Format instance
      * @throws Kohana_Exception
      */
-    public static function instance(array $config = array()): ?Format
+    public static function instance(array $config = []): ?Format
     {
-		if ( ! is_null(Format::$instance))
-		{
+        if (!is_null(Format::$instance)) {
 			// Return the current instance if initiated already
 			return Format::$instance;
 		}
 
-		if (empty($config))
-		{
+        if (empty($config)) {
 			// Load the configuration
-			$config = Kohana::$config->load('inputfilter');
+            $config = Kohana::$config->load('input_filter');
 		}
 
 		new Format($config->as_array());
@@ -85,23 +84,19 @@ class Format {
 	 */
     protected function _prepare(array $config): Format
     {
-		if (isset(Format::$formats))
-		{
+        if (isset(Format::$formats)) {
 			// Return the current format set if initiated already
 			return $this;
 		}
-		foreach ($config['formats'] as $id => $format)
-		{
+
+        foreach ($config['formats'] as $id => $format) {
 			Format::$formats[$id]['#is_fallback'] = ($id == Format::$fallback_format);
 			Format::$formats[$id]['name']         = HTML::chars($format['name']);
 			Format::$formats[$id]['weight']       = HTML::chars($format['weight']);
 
-			if ($id == Format::$fallback_format)
-			{
+            if ($id == Format::$fallback_format) {
 				$roles_markup = __('All roles may use this format');
-			}
-			else
-			{
+            } else {
 				$roles = $format['roles'];
 				$roles_markup = $roles ? implode(',', $roles) : __('No roles may use this format');
 			}
@@ -144,7 +139,7 @@ class Format {
 	 * @return  mixed
 	 * @uses    Arr::get
 	 */
-    public function get(int $id, $default = NULL)
+    public function get(int $id, $default = null)
 	{
 		return Arr::get(Format::$formats, $id, $default);
 	}

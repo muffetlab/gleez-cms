@@ -4,9 +4,9 @@
 */
 
 // Number of page links at the start and end of the whole range
-$count_out = ( ! empty($config['count_out'])) ? (int) $config['count_out'] : 1;
+$count_out = !empty($config['count_out']) ? (int) $config['count_out'] : 1;
 // Number of page links on each side of current page
-$count_in = ( ! empty($config['count_in'])) ? (int) $config['count_in'] : 5;
+$count_in = !empty($config['count_in']) ? (int) $config['count_in'] : 5;
 
 // Beginning group of pages: $n1...$n2
 $n1 = 1;
@@ -23,34 +23,29 @@ $use_middle = ($n5 >= $n4);
 
 // Point $n3 between $n2 and $n4
 $n3 = (int) (($n2 + $n4) / 2);
-$use_n3 = ($use_middle AND (($n4 - $n2) > 1));
+$use_n3 = $use_middle && ($n4 - $n2) > 1;
 
 // Point $n6 between $n5 and $n7
 $n6 = (int) (($n5 + $n7) / 2);
-$use_n6 = ($use_middle AND (($n7 - $n5) > 1));
+$use_n6 = $use_middle && ($n7 - $n5) > 1;
 
 // Links to display as array(page => content)
-$links = array();
+$links = [];
 
 // Generate links data in accordance with calculated numbers
-for ($i = $n1; $i <= $n2; $i++)
-{
+for ($i = $n1; $i <= $n2; $i++) {
 	$links[$i] = $i;
 }
-if ($use_n3)
-{
+if ($use_n3) {
 	$links[$n3] = '&hellip;';
 }
-for ($i = $n4; $i <= $n5; $i++)
-{
+for ($i = $n4; $i <= $n5; $i++) {
 	$links[$i] = $i;
 }
-if ($use_n6)
-{
+if ($use_n6) {
 	$links[$n6] = '&hellip;';
 }
-for ($i = $n7; $i <= $n8; $i++)
-{
+for ($i = $n7; $i <= $n8; $i++) {
 	$links[$i] = $i;
 }
 
@@ -58,7 +53,7 @@ for ($i = $n7; $i <= $n8; $i++)
 
 <div>
 	<ul class="pagination pagination-centered">
-		<?php if ($previous_page !== FALSE): ?>
+        <?php if ($previous_page !== false): ?>
 			<li><a href="<?php echo HTML::chars($page->url($previous_page)) ?>" class="prev" rel="prev">&larr;</a></li>
 		<?php else: ?>
 			<li class="disabled"><a href="" class="disabled">&larr;</a></li>
@@ -72,7 +67,7 @@ for ($i = $n7; $i <= $n8; $i++)
 			<?php endif ?>
 		<?php endforeach ?>
 
-		<?php if ($next_page !== FALSE): ?>
+        <?php if ($next_page !== false): ?>
 			<li><a href="<?php echo HTML::chars($page->url($next_page)) ?>" class="next" rel="next">&rarr;</a></li>
 		<?php else: ?>
 			<li class="disabled"><a href="" class="disabled">&rarr;</a></li>

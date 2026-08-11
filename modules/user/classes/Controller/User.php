@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller User
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Controller_User extends Template {
-
+class Controller_User extends Template
+{
 	/**
 	 * User object
 	 * @var Model_User
@@ -27,24 +28,22 @@ class Controller_User extends Template {
      */
 	public function before()
 	{
-		Assets::css('user', 'media/css/user.css', array('theme'), array('weight' => 60));
+        Assets::css('user', 'media/css/user.css', ['theme'], ['weight' => 60]);
 
 		parent::before();
 
-		// Get the currently logged in user or set up a new one.
+        // Get the currently logged-in user or set up a new one.
 		// Note that get_user will also do an auto_login check.
-		if (($this->_user = $this->_auth->get_user()) === FALSE)
-		{
+        if (($this->_user = $this->_auth->get_user()) === false) {
             $this->_user = ORM::factory('User');
 		}
 
-        if (strpos($this->request->uri(), 'user/reset/') !== FALSE)
-		{
+        if (strpos($this->request->uri(), 'user/reset/') !== false) {
 			$this->request->action('reset_'.$this->request->action());
 		}
 
 		// Disable sidebars on user pages
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 	}
 
     /**
@@ -71,11 +70,10 @@ class Controller_User extends Template {
 		// set the template title (see Template for implementation)
 		$this->title = __('User Registration');
 
-		// If user already signed-in
-		if ($this->_auth->logged_in())
-		{
+        // If user already signed in
+        if ($this->_auth->logged_in()) {
 			// redirect to the user account
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 		}
 
 		/** @var $post Model_User */
@@ -83,13 +81,12 @@ class Controller_User extends Template {
 		/** @var $config Config_Group */
 		$config = Kohana::$config->load('auth');
 
-		if ( ! $config->register)
-		{
+        if (!$config->register) {
 			// If user registration disabled, we return access denied.
 			throw HTTP_Exception::factory(403, __('User registration not allowed'));
 		}
 
-		$action = Route::get('user')->uri(array('action' => $this->request->action()));
+        $action = Route::get('user')->uri(['action' => $this->request->action()]);
 
         $male = isset($post->gender) && $post->gender == 1;
         $female = isset($post->gender) && $post->gender == 2;
@@ -103,17 +100,14 @@ class Controller_User extends Template {
 			->bind('female', $female)
 			->bind('errors', $this->_errors);
 
-		if ($config->get('use_captcha', FALSE))
-		{
+        if ($config->get('use_captcha', false)) {
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
 		}
 
 		// If there is a post and $_POST is not empty
-		if ($this->valid_post('register'))
-		{
-			try
-			{
+        if ($this->valid_post('register')) {
+            try {
 				// creating user, adding roles and sending verification mail
 				$form = $this->request->post();
 				$post->signup($form);
@@ -121,13 +115,11 @@ class Controller_User extends Template {
 				// sign the user in
 				Auth_ORM::instance()->login($post->name, $post->pass);
 
-				Kohana::$log->add(Log::INFO, 'Account :title created successful.', array(':title' => $post->nick));
-				Message::success(__('Account %title created successful!', array('%title' => $post->nick)));
+                Kohana::$log->add(Log::INFO, 'Account :title created successful.', [':title' => $post->nick]);
+                Message::success(__('Account %title created successful!', ['%title' => $post->nick]));
 
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')));
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+                $this->request->redirect(Route::get('user')->uri(['action' => 'profile']));
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -147,23 +139,22 @@ class Controller_User extends Template {
      */
 	public function action_login()
 	{
-		// If user already signed-in
-		if ($this->_auth->logged_in())
-		{
+        // If user already signed in
+        if ($this->_auth->logged_in()) {
 			// redirect to the user account
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 		}
 
 		$this->title = __('Sign In');
         $user = ORM::factory('User');
 
 		// Disable sidebars on login page
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		// Create form action
         $destination = $_GET['destination'] ?? Request::initial()->uri();
-		$params      = array('action' => 'login');
-		$action      = Route::get('user')->uri($params).URL::query(array('destination' => $destination));
+        $params = ['action' => 'login'];
+        $action = Route::get('user')->uri($params) . URL::query(['destination' => $destination]);
 
 		$view = View::factory('user/login')
 			->set('register',     Kohana::$config->load('auth')->get('register'))
@@ -173,23 +164,19 @@ class Controller_User extends Template {
 			->set('action',       $action)
 			->bind('errors',      $this->_errors);
 
-		if ($this->valid_post('login'))
-		{
-			try
-			{
+        if ($this->valid_post('login')) {
+            try {
 				// Check Auth
 				$user->login($this->request->post());
 
 				// If the post data validates using the rules setup in the user model
-				Message::success(__('Welcome, %title!', array('%title' => $user->nick)));
-				Kohana::$log->add(Log::INFO, 'User :name logged in.', array(':name' => $user->name));
+                Message::success(__('Welcome, %title!', ['%title' => $user->nick]));
+                Kohana::$log->add(Log::INFO, 'User :name logged in.', [':name' => $user->name]);
 
 				// redirect to the user account
                 $this->request->redirect($_GET['destination'] ?? '', 200);
 
-			}
-			catch (Validation_Exception $e)
-			{
+            } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('login');
 			}
 		}
@@ -208,13 +195,13 @@ class Controller_User extends Template {
 	public function action_logout()
 	{
 		// Disable template on logout
-		$this->auto_render = FALSE;
+        $this->auto_render = false;
 
 		// Sign out the user
 		Auth_ORM::instance()->logout();
 
         // Redirect to the user account and then the sign-in page if logout worked as expected
-		$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+        $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 	}
 
     /**
@@ -226,14 +213,14 @@ class Controller_User extends Template {
      */
 	public function action_profile()
 	{
-		if ( ! $this->_auth->logged_in())
-		{
+        if (!$this->_auth->logged_in()) {
 			// No user is currently logged in
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
-		}
-		else
-		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'view', 'id' => $this->_auth->get_user()->id)), 200);
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
+        } else {
+            $this->request->redirect(Route::get('user')->uri([
+                'action' => 'view',
+                'id' => $this->_auth->get_user()->id
+            ]), 200);
 		}
 	}
 
@@ -242,6 +229,7 @@ class Controller_User extends Template {
      *
      * @throws HTTP_Exception_403
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses Auth_ORM::get_user
      * @uses ACL::check
      * @uses Text::ucfirst
@@ -255,11 +243,11 @@ class Controller_User extends Template {
 
 		$id       = (int) $this->request->param('id', 0);
         $user = ORM::factory('User', $id);
-		$is_owner = FALSE;
-		$request  = FALSE;
-		$isFriend = FALSE;
-		$friends  = array();
-        $enable_buddy = (bool) Kohana::$config->load('auth')->get('enable_buddy', FALSE);
+        $is_owner = false;
+        $request = false;
+        $isFriend = false;
+        $friends = [];
+        $enable_buddy = (bool) Kohana::$config->load('auth')->get('enable_buddy', false);
 
 		// Add Schema.org support
 		$this->schemaType = 'ProfilePage';
@@ -271,29 +259,23 @@ class Controller_User extends Template {
             || $this->_user->id !== $user->id
             && !ACL::check('administer users')
             && !ACL::check('access profiles')
-        )
-		{
+        ) {
             throw HTTP_Exception::factory(403, 'Attempt to access without required privileges.');
 		}
 
-        if ($this->_user->id == $user->id)
-		{
+        if ($this->_user->id == $user->id) {
 			Assets::popup();
 
 			$this->title = __('My Account');
-		}
-		else
-		{
-            $this->title = __('Profile %title', array('%title' => Text::ucfirst($user->nick)));
+        } else {
+            $this->title = __('Profile %title', ['%title' => Text::ucfirst($user->nick)]);
 		}
 
-        if ($this->_user->id == $user->id && $enable_buddy)
-		{
-			$is_owner = TRUE;
+        if ($this->_user->id == $user->id && $enable_buddy) {
+            $is_owner = true;
 		}
 
-        if ($enable_buddy)
-		{
+        if ($enable_buddy) {
             $request = Model::factory('buddy')->isRequest($this->_user->id, $user->id);
             $isFriend = Model::factory('buddy')->isFriend($this->_user->id, $user->id);
 			$friends   = Model::factory('buddy')->friends($user->id, 5);
@@ -303,7 +285,7 @@ class Controller_User extends Template {
 					->set('user',		 $user)
 					->set('is_owner',	 $is_owner)
 					->set('request',	 $request)
-					->set('isfriend',	 $isFriend)
+            ->set('isFriend', $isFriend)
 					->set('friends', 	 $friends)
 					->set('enable_buddy',$enable_buddy);
 
@@ -325,9 +307,8 @@ class Controller_User extends Template {
 	public function action_edit()
 	{
 		// The user is not logged in
-		if ( ! $this->_auth->logged_in())
-		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+        if (!$this->_auth->logged_in()) {
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
 		$user = $this->_auth->get_user();
@@ -335,7 +316,7 @@ class Controller_User extends Template {
 
         $male = isset($user->gender) && $user->gender == 1;
         $female = isset($user->gender) && $user->gender == 2;
-		$action = Route::get('user')->uri(array('action' => $this->request->action(), 'id' => $user->id));
+        $action = Route::get('user')->uri(['action' => $this->request->action(), 'id' => $user->id]);
 
 		$view = View::factory('user/edit')
 				->set('user',    $user)
@@ -345,28 +326,24 @@ class Controller_User extends Template {
 				->bind('errors', $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('user_edit'))
-		{
+        if ($this->valid_post('user_edit')) {
 			// Creating user age
 			$dob = strtotime(Arr::get($_POST, 'days').'-'.Arr::get($_POST, 'month').'-'.Arr::get($_POST, 'years'));
 
 			// Unset not needed field
 			unset($_POST['years'], $_POST['month'], $_POST['days'], $_POST['name']);
 
-			$post = Arr::merge($_POST, array('dob' => $dob));
+            $post = Arr::merge($_POST, ['dob' => $dob]);
 
-			try
-			{
+            try {
                 $user->values($post, ['nick', 'homepage', 'mail', 'bio', 'dob'])->save();
 
 				// If the post data validates using the rules setup in the user model
-				Message::success(__("%title successfully updated!", array('%title' => $user->nick)));
+                Message::success(__('%title successfully updated!', ['%title' => $user->nick]));
 
 				// redirect to the user account
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+                $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -386,15 +363,14 @@ class Controller_User extends Template {
 	public function action_password()
 	{
 		// The user is not logged in
-		if ( ! $this->_auth->logged_in())
-		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 200);
+        if (!$this->_auth->logged_in()) {
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 200);
 		}
 
 		$user = Auth_ORM::instance()->get_user();
 		$this->title =  __('Change Password');
 		$destination = Request::initial()->uri();
-		$params = array('action' => $this->request->action());
+        $params = ['action' => $this->request->action()];
 
 		$view = View::factory('user/password')
 				->set('destination', $destination)
@@ -402,10 +378,8 @@ class Controller_User extends Template {
 				->bind('errors',     $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('change_pass'))
-		{
-			try
-			{
+        if ($this->valid_post('change_pass')) {
+            try {
 				// Change password
 				$user->change_pass($this->request->post());
 
@@ -413,11 +387,9 @@ class Controller_User extends Template {
 				Message::success(__('Password successfully changed! We hope you feel safer now.'));
 
 				// Redirect to the user account
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
+                $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
 
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -435,12 +407,11 @@ class Controller_User extends Template {
 	public function action_photo()
 	{
 		// The user is not logged in
-		if ( ! $this->_auth->logged_in())
-		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'login')), 401);
+        if (!$this->_auth->logged_in()) {
+            $this->request->redirect(Route::get('user')->uri(['action' => 'login']), 401);
 		}
 
-		$allowed_types = Kohana::$config->load('media')->get('supported_image_formats', array('jpg', 'png', 'gif'));
+        $allowed_types = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
 		$user = $this->_auth->get_user();
 		$this->title =  __('Upload Photo');
 
@@ -450,21 +421,17 @@ class Controller_User extends Template {
 					->bind('errors',       $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('user_edit'))
-		{
-			try
-			{
+        if ($this->valid_post('user_edit')) {
+            try {
 				$post = Arr::merge($this->request->post(), $_FILES);
                 $user->values($post, ['picture'])->save();
 
 				// If the post data validates using the rules setup in the user model
-				Message::success(__('Photo successfully uploaded!', array('%title' => $user->nick)));
+                Message::success(__('Photo successfully uploaded!', ['%title' => $user->nick]));
 
 				// Redirect to the user account
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'profile')), 200);
-			}
-			catch(ORM_Validation_Exception $e)
-			{
+                $this->request->redirect(Route::get('user')->uri(['action' => 'profile']), 200);
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -491,8 +458,7 @@ class Controller_User extends Template {
 		$this->_preventCollision($id);
 
 		// Confirm the user's sign-up
-		if ($this->_user->confirm_signup($id, $token))
-		{
+        if ($this->_user->confirm_signup($id, $token)) {
 			// @todo If logged in, redirect to profile page or something, otherwise to sign in form
 			// @todo If account already confirmed, show Message::NOTICE
 			Message::success(__('Congratulations! Your sign-up has been confirmed.'));
@@ -518,15 +484,14 @@ class Controller_User extends Template {
 	public function action_reset_password()
 	{
 		// The user is logged in, yet it is possible that he lost his password anyway
-		if ($this->_auth->logged_in())
-		{
-			$this->request->redirect(Route::get('user')->uri(array('action' => 'password', 'id' => $this->_user->id)), 200);
+        if ($this->_auth->logged_in()) {
+            $this->request->redirect(Route::get('user')->uri(['action' => 'password', 'id' => $this->_user->id]), 200);
 		}
 
 		// Show form
 		$this->title = __('Reset password');
 
-		$action = Route::get('user/reset')->uri(array('action' => 'password'));
+        $action = Route::get('user/reset')->uri(['action' => 'password']);
 
 		$view = View::factory('user/reset_pass')
 				->set('action',  $action)
@@ -534,23 +499,22 @@ class Controller_User extends Template {
 				->bind('errors', $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('reset_pass'))
-		{
-			try
-			{
+        if ($this->valid_post('reset_pass')) {
+            try {
 				// Try to reset the password
 				$this->_user->reset_password($_POST);
 
-				Message::success(__('Instructions to reset your password are being sent to your email address %mail.', array('%mail' => $_POST['mail'])));
-				Kohana::$log->add(Log::INFO, 'Password reset instructions mailed to :name at :mail.',
-					array(':name' => $this->_user->name, ':mail' => $_POST['mail'])
-				);
+                Message::success(__('Instructions to reset your password are being sent to your email address %mail.', [
+                    '%mail' => $_POST['mail']
+                ]));
+                Kohana::$log->add(Log::INFO, 'Password reset instructions mailed to :name at :mail.', [
+                    ':name' => $this->_user->name,
+                    ':mail' => $_POST['mail']
+                ]);
 
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'login')));
+                $this->request->redirect(Route::get('user')->uri(['action' => 'login']));
 
-			}
-			catch (Validation_Exception $e)
-			{
+            } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('models/mail');
 			}
 		}
@@ -576,8 +540,7 @@ class Controller_User extends Template {
      */
 	public function action_reset_confirm_password()
 	{
-		if ($this->_auth->logged_in())
-		{
+        if ($this->_auth->logged_in()) {
 			// redirect to the user account
 			$this->request->redirect('user/profile');
 		}
@@ -591,8 +554,7 @@ class Controller_User extends Template {
 		$this->_preventCollision($id);
 
 		// Validate the confirmation link first
-		if ( ! $this->_user->confirm_reset_password_link($id, $token, $time))
-		{
+        if (!$this->_user->confirm_reset_password_link($id, $token, $time)) {
 			Message::error(__('The confirmation link to reset your password has expired or is invalid. Please request a new one using the form below.'));
 			$this->request->redirect('user/reset/password');
 		}
@@ -605,18 +567,14 @@ class Controller_User extends Template {
 			->bind('errors', $this->_errors);
 
 		// Form submitted
-		if ($this->valid_post('password_confirm'))
-		{
-			try
-			{
+        if ($this->valid_post('password_confirm')) {
+            try {
 				$this->_user->confirm_reset_password_form($_POST);
 				
 				Message::success(__('You can now sign in with your new password.'));
-				$this->request->redirect(Route::get('user')->uri(array('action' => 'login')));
+                $this->request->redirect(Route::get('user')->uri(['action' => 'login']));
 
-			}
-			catch (Validation_Exception $e)
-			{
+            } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('models/user');
 			}
 		}
@@ -632,15 +590,14 @@ class Controller_User extends Template {
 	 * This situation could arise, for example, when a user follows a
 	 * confirmation links while another user was still logged in.
 	 *
-	 * @param  integer  $id  User id of the current user
+     * @param int $id User ID of the current user
 	 */
-	protected function _preventCollision($id)
+    protected function _preventCollision(int $id)
 	{
 		// Another user (on the same browser) is still logged in
-		if ($this->_auth->logged_in() AND $id != $this->_user->id)
-		{
+        if ($this->_auth->logged_in() && $id != $this->_user->id) {
 			// Cover your ears, we're blowing up the whole session!
-			$this->_auth->logout(TRUE);
+            $this->_auth->logout(true);
 
 			// Also, override the user object with a new one
             $this->_user = ORM::factory('User');

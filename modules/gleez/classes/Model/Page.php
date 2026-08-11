@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gleez Page Model
  *
@@ -7,8 +8,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Model_Page extends Post {
-
+class Model_Page extends Post
+{
 	/**
 	 * Post table name
 	 * @var string
@@ -29,19 +30,17 @@ class Model_Page extends Post {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		$config = Kohana::$config->load('page');
 		$this->status = empty($this->status) ? $config->get('default_status', 'draft') : $this->status;
 
-		if( ! $config->use_comment)
-		{
+        if (!$config->use_comment) {
 			$this->comment = empty($this->comment) ? $config->get('comment', 0) : $this->comment;
 		}
 
-		if( ! $config->use_excerpt )
-		{
-			$this->teaser = FALSE;
+        if (!$config->use_excerpt) {
+            $this->teaser = false;
 		}
 
 		return parent::save($validation);
@@ -105,11 +104,11 @@ class Model_Page extends Post {
     /**
      * Deletes a single record or multiple records, ignoring relationships
      *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
      * @return  Post
      * @throws Kohana_Exception
      */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
 		$this->where($this->_object_name.'.type', '=', $this->_post_type);
 

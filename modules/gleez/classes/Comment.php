@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Comment Core Class
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Comment {
-
+class Comment
+{
 	// @todo our definitions for comment types and statuses
 	const STATUS_UNAPPROVED = 0;
 	const STATUS_APPROVED   = 1;
@@ -29,24 +30,23 @@ class Comment {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public static function form($controller, $item, $captcha = FALSE)
+    public static function form($controller, $item, $captcha = false)
 	{
 		// Set default comment form action
 		$action = Request::current()->uri();
 
-		$view = View::factory('comment/form')
-					->set('use_captcha', $captcha)
-					->set('action',      $action)
-					->set('is_edit',     FALSE)
-					->set('auth',        Auth::instance())
-					->set('destination', array())
-					->set('item',        $item)
-					->bind('errors',     $errors)
-					->bind('post',       $post);
+        $view = View::factory('comment/form')
+            ->set('use_captcha', $captcha)
+            ->set('action', $action)
+            ->set('is_edit', false)
+            ->set('auth', Auth::instance())
+            ->set('destination', [])
+            ->set('item', $item)
+            ->bind('errors', $errors)
+            ->bind('post', $post);
 
 		// Set if captcha necessary
-		if ($captcha)
-		{
+        if ($captcha) {
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
 		}
@@ -54,38 +54,30 @@ class Comment {
 		// Load the comment model
         $post = ORM::factory('Comment');
 
-		if ($controller->valid_post('comment'))
-		{
-			$values = Arr::merge(array('post_id' => $item->id, 'type' => $item->type), $_POST);
-			try
-			{
+        if ($controller->valid_post('comment')) {
+            $values = Arr::merge(['post_id' => $item->id, 'type' => $item->type], $_POST);
+            try {
                 $post->values($values, ['post_id', 'type', 'body'])->save();
-				if($post->status != 'publish')
-				{
+                if ($post->status != 'publish') {
 					Message::success(__('Your comment has been queued for review by site administrators and will be published after approval.') );
-				}
-				else
-				{
-					Message::success(__('Your comment has been posted.', array(':title' => $post->title)) );
+                } else {
+                    Message::success(__('Your comment has been posted.', [':title' => $post->title]));
 				}
 
 				// Save the anonymous user information to a cookie for reuse.
-				if (User::is_guest())
-				{
-					User::cookie_save(array(
-						'name'  => $post->guest_name,
-						'email' => $post->guest_email,
-						'url'   => $post->guest_url
-					));
+                if (User::is_guest()) {
+                    User::cookie_save([
+                        'name' => $post->guest_name,
+                        'email' => $post->guest_email,
+                        'url' => $post->guest_url
+                    ]);
 				}
 
-				Kohana::$log->add(Log::INFO, 'Comment: :title has posted.', array(':title' => $post->title));
+                Kohana::$log->add(Log::INFO, 'Comment: :title has posted.', [':title' => $post->title]);
 
 				// Redirect to post page
 				$controller->request->redirect(Request::current()->uri());
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
 				// @todo Add messages
                 $errors = $e->errors('models');
 			}
@@ -109,12 +101,12 @@ class Comment {
      */
     public static function status(): array
     {
-		$states = array(
-			'publish'   => __('Publish'),
-			'draft'     => __('Unpublish'),
-			'spam'      => __('Spam'),
-			'delete'    => __('Delete'),
-		);
+        $states = [
+            'publish' => __('Publish'),
+            'draft' => __('Unpublish'),
+            'spam' => __('Spam'),
+            'delete' => __('Delete'),
+        ];
 
         return Module::action('comment_status', $states);
 	}
@@ -122,44 +114,43 @@ class Comment {
 	/**
 	 * List of actions
 	 *
-     * @param boolean $list TRUE for dropdown for bult actions
+     * @param boolean $list true for dropdown for bult actions
 	 * @return  array
 	 */
-    public static function bulk_actions(bool $list = FALSE): array
+    public static function bulk_actions(bool $list = false): array
     {
-		$states = array(
-			'publish' => array(
-				'label' => __('Publish the selected comments'),
-				'callback' => 'Comment::bulk_update',
-				'arguments' => array(
-					'updates' => array('status' => 'publish')
-				),
-			),
-			'draft' => array(
-				'label' => __('Unpublish the selected comments'),
-				'callback' => 'Comment::bulk_update',
-				'arguments' => array(
-					'updates' => array('status' => 'draft')
-				),
-			),
-			'spam' => array(
-				'label' => __('Mark the selected comments as Spam'),
-				'callback' => 'Comment::bulk_update',
-				'arguments' => array(
-					'updates' => array('status' => 'spam')
-				),
-			),
-			'delete' => array(
-				'label' => __('Delete the selected comments'),
-				'callback' => NULL,
-			)
-		);
+        $states = [
+            'publish' => [
+                'label' => __('Publish the selected comments'),
+                'callback' => 'Comment::bulk_update',
+                'arguments' => [
+                    'updates' => ['status' => 'publish']
+                ],
+            ],
+            'draft' => [
+                'label' => __('Unpublish the selected comments'),
+                'callback' => 'Comment::bulk_update',
+                'arguments' => [
+                    'updates' => ['status' => 'draft']
+                ],
+            ],
+            'spam' => [
+                'label' => __('Mark the selected comments as Spam'),
+                'callback' => 'Comment::bulk_update',
+                'arguments' => [
+                    'updates' => ['status' => 'spam']
+                ],
+            ],
+            'delete' => [
+                'label' => __('Delete the selected comments'),
+                'callback' => null,
+            ]
+        ];
 
 		// Allow module developers to override
 		$values = Module::action('comment_bulk_actions', $states);
 
-		if ($list)
-		{
+        if ($list) {
             return array_map(function ($array) {
                 return $array['label'];
             }, $values);
@@ -175,10 +166,8 @@ class Comment {
 	{
         $posts = ORM::factory('Comment')->where('id', 'IN', $ids)->find_all();
 
-		foreach ($posts as $post)
-		{
-			foreach ($actions as $name => $value)
-			{
+        foreach ($posts as $post) {
+            foreach ($actions as $name => $value) {
 				$post->$name = $value;
 			}
 			$post->save();

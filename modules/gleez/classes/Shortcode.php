@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class for creating BBCode-like tags (shortcodes).
  * The tag and attribute parsing or regular expression code is
@@ -20,19 +21,19 @@
  * @license    http://wordpress.org/about/license
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Shortcode {
-
+class Shortcode
+{
 	/**
 	 * Container for storing shortcode tags and their hook to call for the shortcode
 	 * @var array
 	 */
-	protected static $_tags = array();
+    protected static $_tags = [];
 
 	/**
 	 * Indicates whether shortcodes are cached
 	 * @var  boolean
 	 */
-	protected static $_cache = FALSE;
+    protected static $_cache = false;
 
 	/**
 	 * Add hook for shortcode tag
@@ -50,17 +51,16 @@ class Shortcode {
 	 * @uses    Assets::css
 	 * @uses    Assets::js
 	 */
-    public static function set(string $tag, callable $callback, $asset = FALSE): array
+    public static function set(string $tag, callable $callback, $asset = false): array
     {
-		if ( ! is_callable($callback) )
-		{
+        if (!is_callable($callback)) {
 			throw new Kohana_Exception('Invalid Shortcode::callback specified');
 		}
 
 		self::$_tags[$tag] = $callback;
 
-		if($asset AND $asset == 'css') Assets::css($tag, "media/css/shortcodes/$tag.css");
-		if($asset AND $asset == 'js')  Assets::js($tag, "media/js/shortcodes/$tag.js");
+        if ($asset && $asset == 'css') Assets::css($tag, "media/css/shortcodes/$tag.css");
+        if ($asset && $asset == 'js') Assets::js($tag, "media/js/shortcodes/$tag.js");
 
 		return self::$_tags;
 	}
@@ -88,7 +88,7 @@ class Shortcode {
 	 */
     public static function remove_all(): array
     {
-		self::$_tags = array();
+        self::$_tags = [];
 
 		return self::$_tags;
 	}
@@ -120,7 +120,7 @@ class Shortcode {
      * if ( ! Shortcode::cache())
      * {
      *     // Set Shortcodes here
-     *     Shortcode::cache(TRUE);
+     *     Shortcode::cache(true);
      * }
      * ~~~
      *
@@ -131,37 +131,28 @@ class Shortcode {
      * @throws Kohana_Exception
      * @uses    Kohana::cache
      */
-    public static function cache(bool $save = FALSE, bool $append = FALSE): bool
+    public static function cache(bool $save = false, bool $append = false): bool
     {
 		$cache = Cache::instance();
 
-		if ($save === TRUE)
-		{
+        if ($save === true) {
 			// Cache all defined shortcodes
 			return $cache->set('Shortcode::cache()', self::$_tags);
-		}
-		else
-		{
-			if ($tags = $cache->get('Shortcode::cache()'))
-			{
-				if ($append)
-				{
+        } else {
+            if ($tags = $cache->get('Shortcode::cache()')) {
+                if ($append) {
 					// Append cached Shortcodes
 					self::$_tags += $tags;
-				}
-				else
-				{
+                } else {
 					// Replace existing Shortcodes
 					self::$_tags = $tags;
 				}
 
 				// Shortcodes were cached
-				return self::$_cache = TRUE;
-			}
-			else
-			{
+                return self::$_cache = true;
+            } else {
 				// Shortcodes were not cached
-				return self::$_cache = FALSE;
+                return self::$_cache = false;
 			}
 		}
 	}
@@ -178,7 +169,7 @@ class Shortcode {
 	 */
     public static function process(string $content): string
     {
-		if (empty(self::$_tags) OR !is_array(self::$_tags))
+        if (empty(self::$_tags) || !is_array(self::$_tags))
 			return $content;
 
 		$pattern = self::get_regex();
@@ -194,23 +185,19 @@ class Shortcode {
     protected static function execute(array $m): string
     {
 		// allow [[foo]] syntax for escaping a tag
-		if ( $m[1] == '[' && $m[6] == ']' )
-		{
+        if ($m[1] == '[' && $m[6] == ']') {
 			return substr($m[0], 1, -1);
 		}
 
 		$tag = $m[2];
-		$attr = self::parse_atts( $m[3] );
+        $attrs = self::parseAttrs($m[3]);
 
-		if ( isset( $m[5] ) )
-		{
+        if (isset($m[5])) {
 			// enclosing tag - extra parameter
-			return $m[1] . call_user_func( self::$_tags[$tag], $attr, $m[5], $tag ) . $m[6];
-		}
-		else
-		{
+            return $m[1] . call_user_func(self::$_tags[$tag], $attrs, $m[5], $tag) . $m[6];
+        } else {
 			// self-closing tag
-			return $m[1] . call_user_func( self::$_tags[$tag], $attr, NULL,  $tag ) . $m[6];
+            return $m[1] . call_user_func(self::$_tags[$tag], $attrs, null, $tag) . $m[6];
 		}
 	}
 
@@ -233,14 +220,14 @@ class Shortcode {
 	 */
     protected static function get_regex(): string
     {
-		$tagnames = array_keys(self::$_tags);
-		$tagregexp = join( '|', array_map('preg_quote', $tagnames) );
+        $tagNames = array_keys(self::$_tags);
+        $tagRegexp = join('|', array_map('preg_quote', $tagNames));
 
 		// WARNING! Do not change this regex without changing do_shortcode_tag() and strip_shortcode_tag()
 		return
 			'\\['                              // Opening bracket
 			. '(\\[?)'                           // 1: Optional second opening bracket for escaping shortcodes: [[tag]]
-			. "($tagregexp)"                     // 2: Shortcode name
+            . "($tagRegexp)"                     // 2: Shortcode name
 			. '\\b'                              // Word boundary
 			. '('                                // 3: Unroll the loop: Inside the opening shortcode tag
 			.     '[^\\]\\/]*'                   // Not a closing bracket or forward slash
@@ -278,34 +265,30 @@ class Shortcode {
 	 * @param string $text
 	 * @return array List of attributes and their value.
 	 */
-    public static function parse_atts(string $text): array
+    public static function parseAttrs(string $text): array
     {
-		$atts = array();
+        $attrs = [];
 		$pattern = '/(\w+)\s*=\s*"([^"]*)"(?:\s|$)|(\w+)\s*=\s*\'([^\']*)\'(?:\s|$)|(\w+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
 		$text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
 
-		if ( preg_match_all($pattern, $text, $match, PREG_SET_ORDER) )
-		{
-			foreach ($match as $m)
-			{
+        if (preg_match_all($pattern, $text, $match, PREG_SET_ORDER)) {
+            foreach ($match as $m) {
 				if (!empty($m[1]))
-					$atts[strtolower($m[1])] = stripcslashes($m[2]);
+                    $attrs[strtolower($m[1])] = stripcslashes($m[2]);
 				elseif (!empty($m[3]))
-					$atts[strtolower($m[3])] = stripcslashes($m[4]);
+                    $attrs[strtolower($m[3])] = stripcslashes($m[4]);
 				elseif (!empty($m[5]))
-					$atts[strtolower($m[5])] = stripcslashes($m[6]);
-				elseif (isset($m[7]) and strlen($m[7]))
-					$atts[] = stripcslashes($m[7]);
+                    $attrs[strtolower($m[5])] = stripcslashes($m[6]);
+                elseif (isset($m[7]) && strlen($m[7]))
+                    $attrs[] = stripcslashes($m[7]);
 				elseif (isset($m[8]))
-					$atts[] = stripcslashes($m[8]);
+                    $attrs[] = stripcslashes($m[8]);
 			}
-		}
-		else
-		{
-			$atts = ltrim($text);
+        } else {
+            $attrs = ltrim($text);
 		}
 
-		return $atts;
+        return $attrs;
 	}
 
 	/**
@@ -315,25 +298,21 @@ class Shortcode {
 	 * supported by the caller and given as a list. The returned attributes will
 	 * only contain the attributes in the $pairs list.
 	 *
-	 * If the $atts list has unsupported attributes, then they will be ignored and
-	 * removed from the final returned list.
+     * If the $attrs list has unsupported attributes, then they will be ignored and removed from the final returned
+     * list.
 	 *
-	 * @param array $pairs Entire list of supported attributes and their defaults.
-	 * @param array $atts User defined attributes in shortcode tag.
-	 * @return array Combined and filtered attribute list.
+     * @param array $pairs Entire list of supported attributes and their defaults
+     * @param array $attrs User defined attributes in shortcode tag
+     * @return array Combined and filtered attribute list
 	 */
-    public static function attributes(array $pairs, array $atts): array
+    public static function attributes(array $pairs, array $attrs): array
     {
-		$out = array();
+        $out = [];
 
-		foreach($pairs as $name => $default)
-		{
-			if ( array_key_exists($name, $atts) )
-			{
-				$out[$name] = $atts[$name];
-			}
-			else
-			{
+        foreach ($pairs as $name => $default) {
+            if (array_key_exists($name, $attrs)) {
+                $out[$name] = $attrs[$name];
+            } else {
 				$out[$name] = $default;
 			}
 		}
@@ -349,7 +328,7 @@ class Shortcode {
 	 */
     protected static function strip(string $content): string
     {
-		if (empty(self::$_tags) OR !is_array(self::$_tags))
+        if (empty(self::$_tags) || !is_array(self::$_tags))
 			return $content;
 
 		$pattern = self::get_regex();
@@ -359,8 +338,7 @@ class Shortcode {
 	protected static function strip_tag( $m )
 	{
 		// allow [[foo]] syntax for escaping a tag
-		if ( $m[1] == '[' AND $m[6] == ']' )
-		{
+        if ($m[1] == '[' && $m[6] == ']') {
 			return substr($m[0], 1, -1);
 		}
 

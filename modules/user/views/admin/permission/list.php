@@ -1,8 +1,13 @@
 <div class="help">
-	<p><?php echo __('Permissions let you control what users can do on your site. Each user role (defined on the :user-roles) has its own set of permissions. Permissions also allow trusted users to share the administrative burden of running a busy site.', array(':user-roles' => HTML::anchor(Route::get('admin/role')->uri(), __('user roles page')))); ?></p>
+    <p><?php echo __('Permissions let you control what users can do on your site. Each user role (defined on the :user-roles) has its own set of permissions. Permissions also allow trusted users to share the administrative burden of running a busy site.', [
+            ':user-roles' => HTML::anchor(Route::get('admin/role')->uri(), __('user roles page'))
+        ]); ?></p>
 </div>
 
-<?php echo Form::open(Route::get('admin/permission')->uri(), array('id'=>'permission-form ', 'class'=>'permission-form form')) ?>
+<?php echo Form::open(Route::get('admin/permission')->uri(), [
+    'id' => 'permission-form ',
+    'class' => 'permission-form form'
+]) ?>
 
 	<?php include Kohana::find_file('views', 'errors/partial'); ?>
 
@@ -21,12 +26,11 @@
 			</tr>
 		</thead>
 
-	<?php 
-		foreach ($perms as $row)
-		{
-			$role_perms[$row->rid][$row->permission] = TRUE;
-		}
-	?>
+        <?php
+        foreach ($perms as $row) {
+            $role_perms[$row->rid][$row->permission] = true;
+        }
+        ?>
 
 		<tbody>
 	
@@ -38,7 +42,7 @@
 			</tr>
 	
 			<?php foreach ($access_names as $perm => $name): ?>
-				<tr class="<?php echo Text::alternate("odd", "even") ?>">
+                <tr class="<?php echo Text::alternate('odd', 'even') ?>">
 					<td class="permission" >
 						<div class="permission-item" id="permission-<?php echo str_replace(' ', '-', $perm) ?>" >
 							<strong><?php echo ucwords($name['title']) ?></strong>

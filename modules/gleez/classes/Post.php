@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core Post Class for handling content and content types
  *
@@ -13,8 +14,8 @@
  *
  * @todo       This class does not do any permission checking
  */
-class Post extends ORM_Versioned {
-
+class Post extends ORM_Versioned
+{
     /**
      * Transient form field for comma-separated tags.
      *
@@ -22,7 +23,7 @@ class Post extends ORM_Versioned {
      *
      * @var string|null
      */
-    public $ftags = null;
+    public $formTags = null;
 
 	/**
 	 * Special tag for stopping widgets setting
@@ -40,84 +41,94 @@ class Post extends ORM_Versioned {
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'       => array( 'type' => 'int' ),
-		'version'  => array( 'type' => 'int' ),
-		'author'   => array( 'type' => 'int' ),
-		'title'    => array( 'type' => 'string' ),
-		'body'     => array( 'type' => 'string' ),
-		'teaser'   => array( 'type' => 'string' ),
-		'status'   => array( 'type' => 'string' ),
-		'promote'  => array( 'type' => 'int' ),
-		'moderate' => array( 'type' => 'int' ),
-		'sticky'   => array( 'type' => 'int' ),
-		'type'     => array( 'type' => 'string' ),
-		'format'   => array( 'type' => 'int' ),
-		'created'  => array( 'type' => 'int' ),
-		'updated'  => array( 'type' => 'int' ),
-		'pubdate'  => array( 'type' => 'int' ),
-		'password' => array( 'type' => 'string' ),
-		'comment'  => array( 'type' => 'int' ),
-		'lang'     => array( 'type' => 'string' ),
-		'layout'   => array( 'type' => 'string' ),
-		'image'    => array( 'type' => 'string' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'version' => ['type' => 'int'],
+        'author' => ['type' => 'int'],
+        'title' => ['type' => 'string'],
+        'body' => ['type' => 'string'],
+        'teaser' => ['type' => 'string'],
+        'status' => ['type' => 'string'],
+        'promote' => ['type' => 'int'],
+        'moderate' => ['type' => 'int'],
+        'sticky' => ['type' => 'int'],
+        'type' => ['type' => 'string'],
+        'format' => ['type' => 'int'],
+        'created' => ['type' => 'int'],
+        'updated' => ['type' => 'int'],
+        'pubdate' => ['type' => 'int'],
+        'password' => ['type' => 'string'],
+        'comment' => ['type' => 'int'],
+        'lang' => ['type' => 'string'],
+        'layout' => ['type' => 'string'],
+        'image' => ['type' => 'string'],
+        'deleted' => ['type' => 'int'],
+    ];
+
+    /**
+     * Soft-delete column configuration
+     * @var array
+     */
+    protected $_deleted_column = [
+        'column' => 'deleted',
+        'format' => true
+    ];
 
 	/**
      * Autofill updated column
 	 * @var array
 	 */
-	protected $_updated_column = array(
-		'column' => 'updated',
-		'format' => TRUE
-	);
+    protected $_updated_column = [
+        'column' => 'updated',
+        'format' => true
+    ];
 
 	/**
 	 * "Belongs to" relationships
 	 * @var array
 	 */
-	protected $_belongs_to = array(
-		'user' => array(
-			'foreign_key' => 'author'
-		)
-	);
+    protected $_belongs_to = [
+        'user' => [
+            'foreign_key' => 'author'
+        ]
+    ];
 
 	/**
 	 * "Has many" relationships
 	 * @var array
 	 */
-	protected $_has_many = array(
-		'tags' => array(
+    protected $_has_many = [
+        'tags' => [
             'model' => 'Tag',
-			'through'     => 'posts_tags',
-			'foreign_key' => 'post_id',
-			'far_key'     => 'tag_id'
-		),
-		'terms' => array(
+            'through' => 'posts_tags',
+            'foreign_key' => 'post_id',
+            'far_key' => 'tag_id'
+        ],
+        'terms' => [
             'model' => 'Term',
-			'through'     => 'posts_terms',
-			'foreign_key' => 'post_id',
-			'far_key'     => 'term_id'
-		),
-		'comments' => array(
+            'through' => 'posts_terms',
+            'foreign_key' => 'post_id',
+            'far_key' => 'term_id'
+        ],
+        'comments' => [
             'model' => 'Comment',
-			'foreign_key' => 'post_id'
-		)
-	);
+            'foreign_key' => 'post_id'
+        ]
+    ];
 
 	/**
 	 * Ignored columns
 	 * @var array
 	 */
-	protected $_ignored_columns = array(
-		'author_name',
-		'author_date',
-		'author_pubdate',
-		'path',
-		'categories',
-		'ftags',
-		'content'
-	);
+    protected $_ignored_columns = [
+        'author_name',
+        'author_date',
+        'author_pubdate',
+        'path',
+        'categories',
+        'form_tags',
+        'content'
+    ];
 
 	/**
 	 * Post type
@@ -149,7 +160,7 @@ class Post extends ORM_Versioned {
      * @param mixed $id Parameter for find or object to load [Optional]
      * @throws Kohana_Exception
      */
-	public function __construct($id = NULL)
+    public function __construct($id = null)
 	{
 		// Set primary image defaults
 		$this->_image_path = APPPATH.'media/posts/';
@@ -165,31 +176,31 @@ class Post extends ORM_Versioned {
 	 */
     public function rules(): array
     {
-		return array(
-			'title' => array(
-				array('not_empty'),
-			),
-			'body' => array(
-				array('not_empty'),
-				array('min_length', array(':value', 10)),
-			),
-			'author' => array(
-				array(array($this, 'is_valid'), array('author', ':validation', ':field')),
-			),
-			'created' => array(
-				array(array($this, 'is_valid'), array('created', ':validation', ':field')),
-			),
-			'pubdate' => array(
-				array(array($this, 'is_valid'), array('pubdate', ':validation', ':field')),
-			),
-			'status' => array(
-				array('not_empty'),
-				array('Post::valid_state', array(':value')),
-			),
-			'categories' => array(
-				array(array($this, 'is_valid'), array('category', ':validation', ':field')),
-			),
-		);
+        return [
+            'title' => [
+                ['not_empty'],
+            ],
+            'body' => [
+                ['not_empty'],
+                ['min_length', [':value', 10]],
+            ],
+            'author' => [
+                [[$this, 'is_valid'], ['author', ':validation', ':field']],
+            ],
+            'created' => [
+                [[$this, 'is_valid'], ['created', ':validation', ':field']],
+            ],
+            'pubdate' => [
+                [[$this, 'is_valid'], ['pubdate', ':validation', ':field']],
+            ],
+            'status' => [
+                ['not_empty'],
+                ['Post::valid_state', [':value']],
+            ],
+            'categories' => [
+                [[$this, 'is_valid'], ['category', ':validation', ':field']],
+            ],
+        ];
 	}
 
 	/**
@@ -199,12 +210,12 @@ class Post extends ORM_Versioned {
 	 */
     public function labels(): array
     {
-		return array(
-			'title'  => __('Title'),
-			'body'   => __('Body'),
-			'teaser' => __('Teaser'),
-			'image'  => __('Primary Image'),
-		);
+        return [
+            'title' => __('Title'),
+            'body' => __('Body'),
+            'teaser' => __('Teaser'),
+            'image' => __('Primary Image'),
+        ];
 	}
 
 	/**
@@ -219,60 +230,41 @@ class Post extends ORM_Versioned {
     public function is_valid(string $name, Validation $validation, string $field)
 	{
 		// Make sure we have a valid term id set
-		if ($name == 'category')
-		{
-			if (isset($this->categories) AND is_array($this->categories))
-			{
-                foreach ($this->categories as $term)
-				{
-					if ($term == 'last' OR ! Valid::numeric($term))
-					{
-						$validation->error('categories', 'invalid', array($validation[$field]));
+        if ($name == 'category') {
+            if (isset($this->categories) && is_array($this->categories)) {
+                foreach ($this->categories as $term) {
+                    if ($term == 'last' || !Valid::numeric($term)) {
+                        $validation->error('categories', 'invalid', [$validation[$field]]);
 					}
 				}
 			}
 		}
         // Make sure we have a valid date is set, or current time
-		elseif ($name == 'created')
-		{
-			if ( ! empty($this->author_date) AND ! ($date = strtotime($this->author_date)))
-			{
-				$validation->error($field, 'invalid', array($this->author_date));
-			}
-			else
-			{
-				if (isset($date))
-				{
+        elseif ($name == 'created') {
+            if (!empty($this->author_date) && !($date = strtotime($this->author_date))) {
+                $validation->error($field, 'invalid', [$this->author_date]);
+            } else {
+                if (isset($date)) {
 					$this->created = $date;
 				}
 			}
 		}
         // Make sure we have a valid author id set, or a guest id
-		elseif ($name == 'author')
-		{
-			if ( ! empty($this->author_name) AND ! ($account = User::lookup_by_name($this->author_name)))
-			{
-				$validation->error($field, 'invalid', array($this->author_name));
-			}
-			else
-			{
-				if (isset($account))
-				{
+        elseif ($name == 'author') {
+            if (!empty($this->author_name) && !($account = User::lookup_by_name($this->author_name))) {
+                $validation->error($field, 'invalid', [$this->author_name]);
+            } else {
+                if (isset($account)) {
 					$this->author = $account->id;
 				}
 			}
 		}
         // Make sure we have a valid date is set, or current time
-		elseif ($name == 'pubdate')
-		{
-			if ( ! empty($this->author_pubdate) AND ! ($date = strtotime($this->author_pubdate)))
-			{
-				$validation->error($field, 'invalid', array($validation[$field]));
-			}
-			else
-			{
-				if (isset($date))
-				{
+        elseif ($name == 'pubdate') {
+            if (!empty($this->author_pubdate) && !($date = strtotime($this->author_pubdate))) {
+                $validation->error($field, 'invalid', [$validation[$field]]);
+            } else {
+                if (isset($date)) {
 					$this->pubdate = $date;
 				}
 			}
@@ -303,8 +295,7 @@ class Post extends ORM_Versioned {
      */
 	protected function before_save()
 	{
-		if (isset($_FILES['image']['name']) AND ! empty($_FILES['image']['name']))
-		{
+        if (!empty($_FILES['image']['name'])) {
             // Validate image before saving
             $allowedTypes = Kohana::$config->load('media')->get('supported_image_formats', ['jpg', 'png', 'gif']);
             $validation = Validation::factory($_FILES)
@@ -331,8 +322,7 @@ class Post extends ORM_Versioned {
 			// generate a unique filename to avoid conflicts
 			$filename = File::getUnique($_FILES['image']['name']);
 
-            if (Upload::save($_FILES['image'], $filename, $this->_image_path))
-			{
+            if (Upload::save($_FILES['image'], $filename, $this->_image_path)) {
 				$this->image = $filename;
 			}
 		}
@@ -352,7 +342,7 @@ class Post extends ORM_Versioned {
      * @uses    Cache::delete
      * @uses    URL::site
      */
-    public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		// Set some defaults
 		$this->status  = empty($this->status)  ? 'draft' : $this->status;
@@ -365,12 +355,12 @@ class Post extends ORM_Versioned {
 		$this->updated = empty($this->updated) ? time() : $this->updated;
 
 		//Ugly existing image check, not sure why empty behaves strange on $this->rawimage
-        $image = $this->_original_values['image'] ?? FALSE;
+        $image = $this->_original_values['image'] ?? false;
 
-		$this->image   = empty($image) 		? NULL : $image;
+        $this->image = empty($image) ? null : $image;
 		$this->type    = empty($this->type)     ? $this->_post_type : $this->type;
 		$this->author  = empty($this->author)   ? User::active_user()->id : $this->author;
-		$this->format  = empty($this->format)   ? Kohana::$config->load('inputfilter')->get('default_format', 1) : $this->format;
+        $this->format = empty($this->format) ? Kohana::$config->load('input_filter')->get('default_format', 1) : $this->format;
 
         // Always save only raw text, unformatted text
 		$this->teaser  = empty($this->rawteaser) ? $this->_teaser() : $this->rawteaser;
@@ -380,8 +370,7 @@ class Post extends ORM_Versioned {
 
 		parent::save($validation);
 
-		if ( $this->loaded())
-		{
+        if ($this->loaded()) {
 			// Add or remove terms
 			$this->_terms();
 
@@ -410,14 +399,12 @@ class Post extends ORM_Versioned {
 		$delimiter = strpos($this->rawbody, self::TEASER_TAG);
 
 		// If the size is zero, and there is no delimiter, the entire body is teaser.
-		if ($size == 0 AND $delimiter === FALSE)
-		{
+        if ($size == 0 && $delimiter === false) {
 			return $this->rawbody;
 		}
 
 		// If a valid delimiter has been specified, use it to chop off the teaser.
-		if ($delimiter !== FALSE)
-		{
+        if ($delimiter !== false) {
 			return substr($this->rawbody, 0, $delimiter);
 		}
 
@@ -431,22 +418,18 @@ class Post extends ORM_Versioned {
      */
 	private function _terms()
 	{
-		if ( !empty($this->categories))
-		{
+        if (!empty($this->categories)) {
 			// Filter out empty terms
 			$this->categories = array_filter($this->categories);
 		}
 
-		if (isset($this->categories) AND is_array($this->categories))
-		{
+        if (isset($this->categories) && is_array($this->categories)) {
 			// Remove the previous terms relationship
 			$this->remove('terms');
 
-            foreach ($this->categories as $term)
-			{
+            foreach ($this->categories as $term) {
 				// Add the term relationship
-				if ( isset($term) AND !empty($term) AND $term != 'last')
-				{
+                if (!empty($term) && $term != 'last') {
                     $this->add('terms', (int) $term);
 				}
 			}
@@ -461,9 +444,8 @@ class Post extends ORM_Versioned {
      */
 	private function _tags()
 	{
-		if (isset($this->ftags))
-		{
-            Tags::factory()->tagging($this->ftags, $this, $this->author, FALSE);
+        if (isset($this->formTags)) {
+            Tags::factory()->tagging($this->formTags, $this, $this->author, false);
 		}
 	}
 
@@ -477,19 +459,18 @@ class Post extends ORM_Versioned {
 	protected function aliases()
 	{
 		// Create and save alias for the post
-		$values = array();
+        $values = [];
 
 		$path = Path::load($this->rawurl);
 
-		if ($path)
-		{
+        if ($path) {
 			$values['id'] = (int) $path['id'];
 		}
 
 		$alias = empty($this->path) ? $this->_object_plural.'/'.$this->title : $this->path;
 		$values['source'] = $this->rawurl;
 		$values['alias']  = Path::clean( $alias );
-		$values['type']   = NULL;
+        $values['type'] = null;
 		$values['action'] = empty($this->action) ? $this->type : $this->action;
 
 		$values = Module::action('post_aliases', $values, $this);
@@ -502,21 +483,19 @@ class Post extends ORM_Versioned {
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships
 	 *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
 	 * @return  Post
 	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Cache::delete
 	 * @uses    Path::delete
 	 */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+    public function delete(bool $soft = false): Kohana_ORM
     {
-        if (is_array($this->_deleted_column) && $soft)
-		{
-
-		}
-		else
-		{
+        if ($soft) {
+            Cache::instance()->delete($this->type . ':' . $this->type . '-' . $this->id);
+            parent::delete($soft);
+        } else {
             // Delete image if exists, to clean up stale images
 			$this->_delete_image();
 
@@ -525,7 +504,7 @@ class Post extends ORM_Versioned {
 			parent::delete($soft);
 
 			// Delete the path aliases associated with this object
-			Path::delete(array('source' => $source));
+            Path::delete(['source' => $source]);
 			unset($source);
 		}
 
@@ -559,11 +538,11 @@ class Post extends ORM_Versioned {
             case 'tags_form':
                 return $this->tags->find_all()->as_array('id', 'rawname');
             case 'taxonomy':
-                return HTML::links($this->terms->find_all()->as_array(), array('class' => 'nav nav-pills pull-right'));
+                return HTML::links($this->terms->find_all()->as_array(), ['class' => 'nav nav-pills pull-right']);
             case 'tagcloud':
-                return HTML::links($this->tags->find_all()->as_array(), array('class' => 'nav nav-pills'));
+                return HTML::links($this->tags->find_all()->as_array(), ['class' => 'nav nav-pills']);
             case 'links':
-				return HTML::links($this->links(), array('class' => 'links inline'));
+                return HTML::links($this->links(), ['class' => 'links inline']);
             case 'rawtitle':
                 // Raw fields without markup. Usage: during edit or etc.!
 				return parent::__get('title');
@@ -574,25 +553,25 @@ class Post extends ORM_Versioned {
                 // Raw fields without markup. Usage: during edit or etc.!
                 return parent::__get('body') ?: '';
             case 'rawurl':
-				return Route::get($this->type)->uri(array( 'id' => $this->id, 'action' => 'view'));
+                return Route::get($this->type)->uri(['id' => $this->id, 'action' => 'view']);
             case 'rawimage':
                 // Raw fields without path. Usage: during edit or etc.!
 				return parent::__get('image');
             case 'url':
 				return ($path = Path::load($this->rawurl)) ? $path['alias'] : $this->rawurl;
             case 'edit_url':
-				return Route::get($this->type)->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get($this->type)->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get($this->type)->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get($this->type)->uri(['id' => $this->id, 'action' => 'delete']);
             case 'image':
-				return $this->rawimage ? $this->_image_url.$this->rawimage : NULL;
+                return $this->rawimage ? $this->_image_url . $this->rawimage : null;
             case 'count_comments':
-				return (int) DB::select(array(DB::expr('COUNT(*)'), 'mycount'))
+                return (int) DB::select([DB::expr('COUNT(*)'), 'count_comments'])
 					->from('comments')
 					->where('status', '=', 'publish')
 					->where('post_id', '=', $this->id)
 					->execute()
-					->get('mycount');
+                    ->get('count_comments');
         }
 
         return parent::__get($column);
@@ -606,12 +585,12 @@ class Post extends ORM_Versioned {
 	 */
     public static function status(): array
     {
-		$states = array(
-			'archive' => __('Archive'),
-			'draft'   => __('Draft'),
-			'private' => __('Private'),
-			'publish' => __('Published'),
-		);
+        $states = [
+            'archive' => __('Archive'),
+            'draft' => __('Draft'),
+            'private' => __('Private'),
+            'publish' => __('Published'),
+        ];
 
         return Module::action('post_status', $states);
 	}
@@ -627,15 +606,14 @@ class Post extends ORM_Versioned {
 	 */
     public function links(): array
     {
-		$links = array(
-			'more'   => array('link' => $this->url,        'name' => __('Read More')),
-			'edit'   => array('link' => $this->edit_url,   'name' => __('Edit')),
-			'delete' => array('link' => $this->delete_url, 'name' => __('Delete')),
-		);
+        $links = [
+            'more' => ['link' => $this->url, 'name' => __('Read More')],
+            'edit' => ['link' => $this->edit_url, 'name' => __('Edit')],
+            'delete' => ['link' => $this->delete_url, 'name' => __('Delete')],
+        ];
 
 		// Unset read more link on full page view
-		if (Request::current()->uri() == $this->url)
-		{
+        if (Request::current()->uri() == $this->url) {
 			unset($links['more']);
 		}
 
@@ -645,75 +623,73 @@ class Post extends ORM_Versioned {
 	/**
 	 * Bulk actions
 	 *
-     * @param boolean $list TRUE for dropdown for bulk actions [Optional]
+     * @param boolean $list true for dropdown for bulk actions [Optional]
      * @param string $type Type of post [Optional]
 	 * @return  mixed    States
 	 * @uses    Post::bulk_update
 	 * @uses    Post::bulk_convert
 	 * @uses    Module::action
 	 */
-    public static function bulk_actions(bool $list = FALSE, string $type = 'post')
+    public static function bulk_actions(bool $list = false, string $type = 'post')
 	{
-		$states = array(
-			'publish'    => array(
-				'label'     => __('Publish'),
-				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('status' => 'publish')),
-			),
-			'unpublish'  => array(
-				'label'     => __('Unpublish'),
-				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('status' => 'draft')),
-			),
-			'promote'    => array(
-				'label'     => __('Promote to front page'),
-				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('status' => 'publish', 'promote' => 1)),
-			),
-			'demote'     => array(
-				'label'     => __('Demote from front page'),
-				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('promote' => 0)),
-			),
-			'sticky'     => array(
-				'label'     => __('Make sticky'),
-				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('sticky' => 1)),
-			),
-			'unsticky'   => array(
-				'label'     => __('Remove stickiness'),
-				'callback'  => 'Post::bulk_update',
-				'arguments' => array('updates' => array('sticky' => 0)),
-			),
-			'delete'     => array(
-				'label'     => __('Delete'),
-				'callback'  => NULL,
-			),
-			'ct_page'    => array(
-				'label'     => __('Convert to @page', array('@page' => __('Page'))),
-				'callback'  => 'Post::bulk_convert',
-				'arguments' => array('actions' => array('page')),
-			),
-			'ct_blog'    => array(
-				'label'     => __('Convert to @blog', array('@blog' => __('Blog'))),
-				'callback'  => 'Post::bulk_convert',
-				'arguments' => array('actions' => array('blog')),
-			),
-			'ct_forum'   => array(
-				'label'     => __('Convert to @forum', array('@forum' => __('Forum'))),
-				'callback'  => 'Post::bulk_convert',
-				'arguments' => array('actions' => array('forum')),
-			),
-		);
+        $states = [
+            'publish' => [
+                'label' => __('Publish'),
+                'callback' => 'Post::bulk_update',
+                'arguments' => ['updates' => ['status' => 'publish']],
+            ],
+            'unpublish' => [
+                'label' => __('Unpublish'),
+                'callback' => 'Post::bulk_update',
+                'arguments' => ['updates' => ['status' => 'draft']],
+            ],
+            'promote' => [
+                'label' => __('Promote to front page'),
+                'callback' => 'Post::bulk_update',
+                'arguments' => ['updates' => ['status' => 'publish', 'promote' => 1]],
+            ],
+            'demote' => [
+                'label' => __('Demote from front page'),
+                'callback' => 'Post::bulk_update',
+                'arguments' => ['updates' => ['promote' => 0]],
+            ],
+            'sticky' => [
+                'label' => __('Make sticky'),
+                'callback' => 'Post::bulk_update',
+                'arguments' => ['updates' => ['sticky' => 1]],
+            ],
+            'unsticky' => [
+                'label' => __('Remove stickiness'),
+                'callback' => 'Post::bulk_update',
+                'arguments' => ['updates' => ['sticky' => 0]],
+            ],
+            'delete' => [
+                'label' => __('Delete'),
+                'callback' => null,
+            ],
+            'ct_page' => [
+                'label' => __('Convert to @page', ['@page' => __('Page')]),
+                'callback' => 'Post::bulk_convert',
+                'arguments' => ['actions' => ['page']],
+            ],
+            'ct_blog' => [
+                'label' => __('Convert to @blog', ['@blog' => __('Blog')]),
+                'callback' => 'Post::bulk_convert',
+                'arguments' => ['actions' => ['blog']],
+            ],
+            'ct_forum' => [
+                'label' => __('Convert to @forum', ['@forum' => __('Forum')]),
+                'callback' => 'Post::bulk_convert',
+                'arguments' => ['actions' => ['forum']],
+            ],
+        ];
 
 		// Allow module developers to override
 		$values = Module::action('post_bulk_actions', $states);
 
-		if ($list)
-		{
-			$options = array('' => __('Bulk Options'));
-			foreach ($values as $operation => $array)
-			{
+        if ($list) {
+            $options = ['' => __('Bulk Options')];
+            foreach ($values as $operation => $array) {
                 if ($operation == "ct_$type") continue;
 				$options[$operation] = $array['label'];
 			}
@@ -743,10 +719,8 @@ class Post extends ORM_Versioned {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($posts as $post)
-		{
-			foreach ($actions as $name => $value)
-			{
+        foreach ($posts as $post) {
+            foreach ($actions as $name => $value) {
 				$post->$name = $value;
 			}
 			$post->save();
@@ -771,9 +745,9 @@ class Post extends ORM_Versioned {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($posts as $post)
-		{
-			$post->delete();
+        foreach ($posts as $post) {
+            /** @var Model_Post $post */
+            $post->delete(true);
 		}
 	}
 
@@ -799,10 +773,9 @@ class Post extends ORM_Versioned {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($posts as $post)
-		{
+        foreach ($posts as $post) {
 			// Delete the path aliases associated with this object
-			Path::delete(array('source' => $post->rawurl));
+            Path::delete(['source' => $post->rawurl]);
 
 			// Remove the previous terms relationship
 			$post->remove('terms');
@@ -811,10 +784,10 @@ class Post extends ORM_Versioned {
 			$post->remove('tags');
 
 			// Update the type column in comments
-			DB::update('comments')
-				->set(array('type' => $new_type))
-				->where('post_id', '=', $post->id)
-				->execute();
+            DB::update('comments')
+                ->set(['type' => $new_type])
+                ->where('post_id', '=', $post->id)
+                ->execute();
 
 			// Set the post type to new type
 			$post->type = $new_type;
@@ -842,43 +815,39 @@ class Post extends ORM_Versioned {
     public static function widgets(string $content, string $region = 'post_inline'): string
     {
 		// Save some cpu cycles, when the content is empty
-		if ($content == NULL or empty($content))
-		{
+        if (empty($content)) {
 			return $content;
 		}
 
 		// We found special tag, so don't set widgets!
 		// Just return the content
-		if (strpos($content, self::NO_WIDGETS_TAG) !== FALSE)
-		{
+        if (strpos($content, self::NO_WIDGETS_TAG) !== false) {
 			return $content;
 		}
 
-		$poses = array();
-		$lastpos = -1;
-		$repchar = "<p";
+        $poses = [];
+        $lastPos = -1;
+        $repChar = "<p";
 
 		// if we didn't find a p tag, try br tag
-		if (strpos($content, "<p") === FALSE)
-		{
-			$repchar = "<br";
+        if (strpos($content, "<p") === false) {
+            $repChar = "<br";
 		}
 
-		while (strpos($content, $repchar, $lastpos+1) !== FALSE)
-		{
-			$lastpos = strpos($content, $repchar, $lastpos+1);
-			$poses[] = $lastpos;
+        while (strpos($content, $repChar, $lastPos + 1) !== false) {
+            $lastPos = strpos($content, $repChar, $lastPos + 1);
+            $poses[] = $lastPos;
 		}
 
 		// Cut the doc in half, so the widgets don't go past the end of the article.
-		$pickme = $poses[ceil(sizeof($poses)/2) -1];
+        $pickMe = $poses[ceil(sizeof($poses) / 2) - 1];
 
 		$widgets     = Widgets::instance()->render($region);
-		$replacewith = ($widgets) ? '<div id="'.$region.'" class="clear-block">'.$widgets.'</div>' : NULL;
-		$content     = substr_replace($content, $replacewith.$repchar, $pickme, 2);
+        $replaceWith = $widgets ? '<div id="' . $region . '" class="clear-block">' . $widgets . '</div>' : null;
+        $content = substr_replace($content, $replaceWith . $repChar, $pickMe, 2);
 
 		// save some memory
-		unset($poses, $lastpos, $repchar, $half, $pickme, $widgets, $replacewith);
+        unset($poses, $lastPos, $repChar, $half, $pickMe, $widgets, $replaceWith);
 
 		return $content;
 	}
@@ -895,26 +864,23 @@ class Post extends ORM_Versioned {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public static function dcache(int $id, string $type, $config): ORM
+    public static function dynamicCache(int $id, string $type, $config): ORM
 	{
         $cache = Cache::instance();
-		$use_cache = (bool) $config->get('use_cache', FALSE);
-        $post = ($use_cache) ? $cache->get($type . ':' . $type . '-' . $id, FALSE) : FALSE;
+        $use_cache = (bool) $config->get('use_cache', false);
+        $post = $use_cache ? $cache->get($type . ':' . $type . '-' . $id, false) : false;
 
-		if (empty($post))
-		{
+        if (empty($post)) {
             $post = ORM::factory(ucfirst($type), $id);
 
-			if ( ! $post->loaded())
-			{
+            if (!$post->loaded()) {
 				throw HTTP_Exception::factory(404, 'Attempt to access non-existent post.');
 			}
 
 			$post->content = View::factory($type."/body")->set('config', $config)->bind('post', $post)->render();
 
-			if ($use_cache)
-			{
-				$data               = array();
+            if ($use_cache) {
+                $data = [];
 				$data['author']     = (int)$post->author;
 				$data['status']     = $post->status;
 				$data['title']      = $post->title;
@@ -938,7 +904,7 @@ class Post extends ORM_Versioned {
     /**
      * Gets recent articles (post, page, blog, etc.)
      *
-     * Return FALSE if articles not found
+     * Return false if articles not found
      *
      * @param array $args Array of arguments. Overrides defaults [Optional]
      * @return  mixed
@@ -950,44 +916,41 @@ class Post extends ORM_Versioned {
      * @uses    Cache::get
      * @uses    Cache::set
      */
-	public static function recent_posts(array $args = array())
+    public static function recent_posts(array $args = [])
 	{
-		$default = array(
-			'limit'     => 10,
-			'offset'    => 0,
-			'type'      => 'post',
-			'orderby'   => 'created',
-			'order'     => 'DESC',
+        $default = [
+            'limit' => 10,
+            'offset' => 0,
+            'type' => 'post',
+            'orderBy' => 'created',
+            'order' => 'DESC',
             'status' => implode(',', array_keys(Post::status())),
-			'use_cache' => TRUE,
-			'as_array'  => TRUE,
-		);
+            'use_cache' => true,
+            'as_array' => true,
+        ];
 
 		$params = (object) System::parse_args($args, $default);
         $cache = Cache::instance();
-        $post = $params->use_cache ? $cache->get('post:recent_' . $params->type) : NULL;
+        $post = $params->use_cache ? $cache->get('post:recent_' . $params->type) : null;
 
-		if (empty($post))
-		{
+        if (empty($post)) {
             $post = ORM::factory(ucfirst($params->type))
 						->where('status', 'IN', $params->status)
-						->order_by($params->orderby, $params->order)
+                ->order_by($params->orderBy, $params->order)
 						->limit($params->limit)
 						->offset($params->offset)
 						->find_all();
 
-			if ($params->as_array)
-			{
+            if ($params->as_array) {
 				$post->as_array();
 			}
 
-			if ($params->use_cache)
-			{
+            if ($params->use_cache) {
                 $cache->set('post:recent_' . $params->type, $post, Date::HOUR);
 			}
 		}
 
-		return ( ! empty($post)) ? $post : FALSE;
+        return !empty($post) ? $post : false;
 	}
 
 	/**
@@ -997,8 +960,7 @@ class Post extends ORM_Versioned {
 	 */
     protected function _delete_image(): Post
     {
-		if ($this->rawimage AND file_exists($this->_image_path.$this->rawimage))
-		{
+        if ($this->rawimage && file_exists($this->_image_path . $this->rawimage)) {
 			@unlink($this->_image_path.$this->rawimage);
 		}
 

@@ -1,10 +1,9 @@
 <h1><?php echo __('Hello!')?></h1>
 
-<p><?php echo __(':name sent a message using the contact form at :site.', array(
-            ':name' => HTML::chars($name),
-		':site' => URL::site('contact', TRUE)
-	));
-?></p>
+<p><?php echo __(':name sent a message using the contact form at :site.', [
+        ':name' => HTML::chars($name),
+        ':site' => URL::site('contact', true)
+    ]); ?></p>
 
 <?php echo Text::markup($body); ?>
 <br>

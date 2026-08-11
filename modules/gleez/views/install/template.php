@@ -5,9 +5,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?php echo $title; ?> | Gleez CMS</title>
 	<?php
-		foreach ($styles as $style => $media)
-		{
-			echo HTML::style($style, array('media' => $media), TRUE).PHP_EOL;
+    foreach ($styles as $style => $media) {
+            echo HTML::style($style, ['media' => $media], true) . PHP_EOL;
 		}
 	?>
 	<link rel="shortcut icon" href="<?php echo URL::site($link); ?>" type="image/x-icon">
@@ -51,9 +50,7 @@
 							<hr>
 							<blockquote>
 								<small>
-								<?php
-									echo __('Did something go wrong? Try the :github.', array(':github' => HTML::anchor('https://github.com/gleez/cms/issues', 'Github Issues') ));
-								?>
+                                    <?php echo __('Did something go wrong? Try the :github.', [':github' => HTML::anchor('https://github.com/gleez/cms/issues', 'Github Issues')]); ?>
 								</small>
 							</blockquote>
 						</div>
@@ -66,7 +63,7 @@
 	<div id="footer">
 		<div class="container">
 			<div class="credits">
-                <p class="text-muted"><?php echo __('Powered by :gleez v{gleez_version}', array(':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'), '{gleez_version}' => Gleez::getVersion(false))); ?></p>
+                <p class="text-muted"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'), '{gleez_version}' => Gleez::getVersion(false)]); ?></p>
 				<p class="text-muted">&copy; 2011-<?php echo date('Y') ?> Gleez Technologies</p>
 			</div>
 		</div>

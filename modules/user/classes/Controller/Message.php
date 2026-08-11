@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller Message
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Controller_Message extends Template {
-
+class Controller_Message extends Template
+{
     /**
      * The before() method is called before controller action
      *
@@ -20,23 +21,20 @@ class Controller_Message extends Template {
      */
 	public function before()
 	{
-		if (User::is_guest())
-		{
+        if (User::is_guest()) {
 			throw HTTP_Exception::factory(403, 'Permission denied! You must login!');
 		}
 
-		$id = $this->request->param('id', FALSE);
+        $id = $this->request->param('id', false);
 
-		if ($id AND 'index' == $this->request->action())
-		{
+        if ($id && 'index' == $this->request->action()) {
 			$this->request->action('view');
 		}
-		if ( ! $id AND 'index' == $this->request->action())
-		{
+        if (!$id && 'index' == $this->request->action()) {
 			$this->request->action('inbox');
 		}
 
-		Assets::css('user', 'media/css/user.css', array('theme'), array('weight' => 60));
+        Assets::css('user', 'media/css/user.css', ['theme'], ['weight' => 60]);
 
 		parent::before();
 	}
@@ -52,23 +50,20 @@ class Controller_Message extends Template {
      */
 	public function after()
 	{
-		if ($this->request->action() == 'compose' OR $this->request->action() == 'edit')
-		{
+        if ($this->request->action() == 'compose' || $this->request->action() == 'edit') {
 			// Add RichText Support
 			Assets::editor('.textarea', I18n::$lang);
-		}
-		else
-		{
+        } else {
 			// Tabs
-			$this->_tabs =  array(
-				array('link' => Route::get('user/message')->uri(array('action' =>'inbox')), 'text' => __('Inbox')),
-				array('link' => Route::get('user/message')->uri(array('action' =>'outbox')), 'text' => __('Sent Messages')),
-				array('link' => Route::get('user/message')->uri(array('action' =>'drafts')), 'text' => __('Drafts')),
-				array('link' => Route::get('user/message')->uri(array('action' =>'list')), 'text' => __('All Messages'))
-			);
+            $this->_tabs = [
+                ['link' => Route::get('user/message')->uri(['action' => 'inbox']), 'text' => __('Inbox')],
+                ['link' => Route::get('user/message')->uri(['action' => 'outbox']), 'text' => __('Sent Messages')],
+                ['link' => Route::get('user/message')->uri(['action' => 'drafts']), 'text' => __('Drafts')],
+                ['link' => Route::get('user/message')->uri(['action' => 'list']), 'text' => __('All Messages')]
+            ];
 
 			// Disable sidebars on message pages except compose and edit
-			$this->_sidebars = FALSE;
+            $this->_sidebars = false;
 		}
 
 		parent::after();
@@ -94,9 +89,9 @@ class Controller_Message extends Template {
 	{
 		Assets::popup();
 
-		$url         = Route::url('user/message', array('action' => 'inbox'), TRUE);
-		$redirect    = Route::get('user/message')->uri(array('action' => 'inbox'));
-		$form_action = Route::get('user/message')->uri(array('action' => 'bulk', 'id' => PM::INBOX));
+        $url = Route::url('user/message', ['action' => 'inbox'], true);
+        $redirect = Route::get('user/message')->uri(['action' => 'inbox']);
+        $form_action = Route::get('user/message')->uri(['action' => 'bulk', 'id' => PM::INBOX]);
 		$destination = '?destination='.$redirect;
 
 		$is_datatables = Request::is_datatables();
@@ -104,23 +99,31 @@ class Controller_Message extends Template {
 		/** @var $messages Model_Message */
 		$messages = ORM::factory('Message')->loadInbox();
 
-		if ($is_datatables)
-		{
-			$this->_datatables = $messages->dataTables(array('id', 'subject', 'sender', 'sent'));
+        if ($is_datatables) {
+            $this->_datatables = $messages->dataTables(['id', 'subject', 'sender', 'sent']);
 
-			foreach ($this->_datatables->result() as $message)
-			{
-				$this->_datatables->add_row(
-					array(
-						Form::checkbox('messages['.$message->id.']', $message->id, isset($_POST['messages'][$message->id])),
-						HTML::anchor($message->user->url, $message->user->nick, array('class' => 'message-'.$message->status)),
-						HTML::anchor($message->url, Text::limit_chars($message->subject, 20), array('class' => 'message-'.$message->status))
-						.' '.
-						HTML::anchor($message->url, Text::limit_chars(strip_tags($message->body), 80)),
-						Date::formatted_time($message->sent, 'M d, Y'),
-                        HTML::icon($message->delete_url . $destination, 'fas fa-trash-can', array('title' => __('Delete Message'), 'data-toggle' => 'popup', 'data-table' => '#user-message-inbox'))
-					)
-				);
+            foreach ($this->_datatables->result() as $message) {
+                $this->_datatables->add_row([
+                    Form::checkbox(
+                        'messages[' . $message->id . ']',
+                        $message->id,
+                        isset($_POST['messages'][$message->id])
+                    ),
+                    HTML::anchor($message->user->url, $message->user->nick, [
+                        'class' => 'message-' . $message->status
+                    ]),
+                    HTML::anchor($message->url, Text::limit_chars($message->subject, 20), [
+                        'class' => 'message-' . $message->status
+                    ])
+                    . ' '
+                    . HTML::anchor($message->url, Text::limit_chars(strip_tags($message->body), 80)),
+                    Date::formatted_time($message->sent, 'M d, Y'),
+                    HTML::icon($message->delete_url . $destination, 'fas fa-trash-can', [
+                        'title' => __('Delete Message'),
+                        'data-toggle' => 'popup',
+                        'data-table' => '#user-message-inbox'
+                    ])
+                ]);
 			}
 		}
 
@@ -205,46 +208,47 @@ class Controller_Message extends Template {
 		$this->title = __('New Message');
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 		// Set form action
-		$action = Route::get('user/message')->uri(array('action' => 'compose')).URL::query($destination);
+        $action = Route::get('user/message')->uri(['action' => 'compose']) . URL::query($destination);
 
-		$view = View::factory('message/form')
-				->bind('message',    $message)
-				->bind('errors',     $this->_errors)
-				->set('destination', $destination)
-				->set('action',      $action)
-				->set('recipient',   FALSE);
+        $view = View::factory('message/form')
+            ->bind('message', $message)
+            ->bind('errors', $this->_errors)
+            ->set('destination', $destination)
+            ->set('action', $action)
+            ->set('recipient', false);
 
         $message = ORM::factory('Message');
 
-		if ($this->valid_post('message'))
-		{
-			$sent   = (isset($_POST['draft']) AND $_POST['draft']) ? 0 : time();
+        if ($this->valid_post('message')) {
+            $sent = isset($_POST['draft']) && $_POST['draft'] ? 0 : time();
 			$sender = Auth_ORM::instance()->get_user();
 			$status = $sent == 0 ? PM::STATUS_DRAFT : PM::STATUS_UNREAD;
 			$act    = $sent == 0 ? __('saved') : __('sent');
 
-			try
-			{
-				$message->values(array(
-					'sender'    => $sender->id,
-					'recipient' => User::lookup_by_name($_POST['recipient']),
-					'subject'   => $_POST['subject'],
-					'body'      => $_POST['body'],
-					'status'    => $status,
-					'format'    => $_POST['format'],
-					'sent'      => $sent
-				))->save();
+            try {
+                $message->values([
+                    'sender' => $sender->id,
+                    'recipient' => User::lookup_by_name($_POST['recipient']),
+                    'subject' => $_POST['subject'],
+                    'body' => $_POST['body'],
+                    'status' => $status,
+                    'format' => $_POST['format'],
+                    'sent' => $sent
+                ], ['sender', 'recipient', 'subject', 'body', 'status', 'format', 'sent'])->save();
 
-				Kohana::$log->add(Log::INFO, 'Message :id successfully :act.', array(':id' => $message->id, ':act' => $act));
-				Message::success(__('Message successfully :act.', array(':act' => $act)));
+                Kohana::$log->add(Log::INFO, 'Message :id successfully :act.', [
+                    ':id' => $message->id,
+                    ':act' => $act
+                ]);
+                Message::success(__('Message successfully :act.', [':act' => $act]));
 
 				// Redirect to Inbox
 				$this->request->redirect(Route::get('user/message')->uri());
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -275,9 +279,9 @@ class Controller_Message extends Template {
 
 		$this->title = __('Delete Message');
 
-		$destination = ($this->request->query('destination') !== NULL)
-			? array('destination' => $this->request->query('destination'))
-			: array();
+        $destination = $this->request->query('destination') !== null
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 
 		$redirect = empty($destination)
 			? Route::get('user/message')->uri()
@@ -288,29 +292,25 @@ class Controller_Message extends Template {
 			->set('title',  $message->subject);
 
 		// If deletion is not desired, redirect
-		if (isset($_POST['no']) AND $this->valid_post())
-		{
+        if (isset($_POST['no']) && $this->valid_post()) {
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-		if ( isset($_POST['yes']) AND $this->valid_post() )
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$title = $message->subject;
 				$id    = $message->id;
 				$message->delete();
 
-				Kohana::$log->add(Log::INFO, 'Message :id deleted.', array(':id' => $id));
-				Message::success(__('Message %title deleted successful!', array('%title' => $title)));
-			}
-			catch (Exception $e)
-			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting message id: :id, :msg',
-					array(':id' => $message->id, ':msg' => $e->getMessage())
-				);
-				Message::error(__('An error occurred deleting message %title',array('%title' => $message->subject)));
+                Kohana::$log->add(Log::INFO, 'Message :id deleted.', [':id' => $id]);
+                Message::success(__('Message %title deleted successful!', ['%title' => $title]));
+            } catch (Exception $e) {
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting message id: :id, :msg', [
+                    ':id' => $message->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred deleting message %title', ['%title' => $message->subject]));
 			}
 
 			$this->request->redirect($redirect);
@@ -336,8 +336,7 @@ class Controller_Message extends Template {
 	{
 		$id = (int) $this->request->param('id', 0);
 
-		switch ($id)
-		{
+        switch ($id) {
 			case PM::INBOX:
 				$destination = 'inbox';
 			break;
@@ -351,19 +350,17 @@ class Controller_Message extends Template {
 				$destination = 'list';
 		}
 
-		$redirect    = Route::get('user/message')->uri(array('action' => $destination));
+        $redirect = Route::get('user/message')->uri(['action' => $destination]);
 		$post        = $this->request->post();
 		$this->title = __('Bulk Actions');
 
 		// If deletion is not desired, redirect to list
-		if (isset($post['no']) AND $this->valid_post())
-		{
+        if (isset($post['no']) && $this->valid_post()) {
 			$this->request->redirect($redirect);
 		}
 
 		// If deletion is confirmed
-		if (isset($post['yes']) AND $this->valid_post())
-		{
+        if (isset($post['yes']) && $this->valid_post()) {
 			$ids = array_filter($post['items']);
 
 			PM::bulk_delete($ids);
@@ -373,24 +370,19 @@ class Controller_Message extends Template {
 			$this->request->redirect($redirect);
 		}
 
-		if ($this->valid_post('message-bulk-actions'))
-		{
-			if (isset($post['operation']) AND empty($post['operation']))
-			{
+        if ($this->valid_post('message-bulk-actions')) {
+            if (isset($post['operation']) && empty($post['operation'])) {
 				Message::error(__('No bulk operation selected.'));
 				$this->request->redirect($redirect);
 			}
 
-			if ( ! isset($post['messages']) OR ( ! is_array($post['messages']) OR ! count(array_filter($post['messages']))))
-			{
+            if (!isset($post['messages']) || (!is_array($post['messages']) || !count(array_filter($post['messages'])))) {
 				Message::error(__('No messages selected.'));
 				$this->request->redirect($redirect);
 			}
 
-			try
-			{
-				if ($post['operation'] == 'delete')
-				{
+            try {
+                if ($post['operation'] == 'delete') {
 					$ids = array_filter($post['messages']); // Filter out unchecked messages
 					$this->title = __('Delete Messages');
 
@@ -412,9 +404,7 @@ class Controller_Message extends Template {
 
 				Message::success(__('The update has been performed!'));
 				$this->request->redirect($redirect);
-			}
-			catch( Exception $e)
-			{
+            } catch (Exception $e) {
 				Message::error(__('The update has not been performed!'));
 				Kohana::$log->add(Log::ERROR, 'Message updates failed: '.$e->getMessage());
 			}
@@ -427,27 +417,22 @@ class Controller_Message extends Template {
 	/**
 	 * Bulk updates
 	 *
-	 * @param  array  $post
-	 *
+     * @param array $post
 	 * @uses   PM::bulk_actions
 	 * @uses   Arr::callback
 	 */
-	private function _bulk_update($post)
+    private function _bulk_update(array $post)
 	{
         $operations = PM::bulk_actions();
 		$operation  = $operations[$post['operation']];
 		$messages   = array_filter($post['messages']); // Filter out unchecked pages
 
-		if ($operation['callback'])
-		{
+        if ($operation['callback']) {
 			list($func, $params) = Arr::callback($operation['callback']);
-			if (isset($operation['arguments']))
-			{
-				$args = array_merge(array($messages), $operation['arguments']);
-			}
-			else
-			{
-				$args = array($messages);
+            if (isset($operation['arguments'])) {
+                $args = array_merge([$messages], $operation['arguments']);
+            } else {
+                $args = [$messages];
 			}
 
 			// set model name

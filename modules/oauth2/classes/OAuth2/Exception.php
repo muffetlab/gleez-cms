@@ -1,8 +1,9 @@
 <?php
+
 /**
  * OAuth2 Exception
  *
- * @package    Gleez\oAuth2
+ * @package    Gleez\OAuth2
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2013 Gleez Technologies
@@ -60,8 +61,14 @@ class Oauth2_Exception extends Exception
      * @param null $error_uri The Error URL [Optional]
      * @return Oauth2_Exception
      */
-	public static function factory($code, $error, $message = NULL, array $variables = NULL, $error_uri = NULL)
-	{
+    public static function factory(
+        int    $code,
+        string $error,
+               $message = null,
+        array  $variables = null,
+               $error_uri = null
+    ): Oauth2_Exception
+    {
 		return new self($code, $error, $message, $variables, $error_uri);
 	}
 
@@ -79,13 +86,13 @@ class Oauth2_Exception extends Exception
      * @param array|null $variables Translation variables [Optional]
      * @param null $error_uri The Error URL [Optional]
      */
-	public function __construct($code, $error, $message = NULL, array $variables = NULL, $error_uri = NULL)
+    public function __construct($code, $error, $message = null, array $variables = null, $error_uri = null)
 	{
 		// Set the message
-		$pmessage = is_null($message) ? $error : __($message, $variables);
+        $msg = is_null($message) ? $error : __($message, $variables);
 
 		// Pass the message and integer code to the parent
-		parent::__construct($pmessage, (int) $code);
+        parent::__construct($msg, (int) $code);
 
 		// Save the unmodified code
 		// @link http://bugs.php.net/39615
@@ -94,12 +101,10 @@ class Oauth2_Exception extends Exception
 		$this->error_description 	= $message;
 		$this->error_uri			= $error_uri;
 
-		if (!is_null($error_uri)) 
-		{
-			if (strlen($error_uri) > 0 && $error_uri[0] == '#')
-			{
+        if (!is_null($error_uri)) {
+            if (strlen($error_uri) > 0 && $error_uri[0] == '#') {
 				// we are referencing an oauth bookmark (for brevity)
-				$this->error_uri = 'http://tools.ietf.org/html/rfc6749' . $error_uri;
+                $this->error_uri = 'https://datatracker.ietf.org/doc/html/rfc6749' . $error_uri;
 			}
 		}
 	}
@@ -120,26 +125,31 @@ class Oauth2_Exception extends Exception
 	}
 
 
-	public function getError()
-	{
+    public function getError(): string
+    {
 		return $this->error;
 	}
 
-	public function getJsonError()
+    public function getJsonError(): string
 	{
-		return json_encode(array(
-			'error'				=> $this->getError(),
-			'error_description'	=> $this->getMessage(),
-		));
+        $error = [
+            'error' => $this->getError(),
+            'error_description' => $this->getMessage(),
+        ];
+
+        if (!is_null($this->error_uri)) {
+            $error['error_uri'] = $this->error_uri;
+        }
+
+        return json_encode($error);
 	}
 
     /**
      * @throws Kohana_Exception
      */
-    public function render()
-	{
-		try
-		{
+    public function render(): Response
+    {
+        try {
 			// Instantiate the error view.
 			//$view = View::factory(self::$error_view, get_defined_vars());
 
@@ -156,18 +166,16 @@ class Oauth2_Exception extends Exception
 
 			// Set the response body
 			//$response->body($view->render());
-			$response->body($this->error);
-		}
-		catch (Exception $e)
-		{
+            $response->body($this->getJsonError());
+        } catch (Exception $e) {
 			/**
 			 * Things are going badly for us, Lets try to keep things under control by
 			 * generating a simpler response object.
 			 */
 			$response = Response::factory();
 			$response->status($this->code);
-			$response->headers('Content-Type', 'text/plain');
-			$response->body($this->error);
+            $response->headers('Content-Type', 'application/json;charset=utf-8');
+            $response->body($this->getJsonError());
 		}
 
 		return $response;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Modified Preorder Tree Traversal Class
  *
@@ -17,7 +18,6 @@
  */
 class ORM_MPTT extends Gleez_Model
 {
-
 	/**
 	 * Left column name
 	 * @var string
@@ -55,14 +55,11 @@ class ORM_MPTT extends Gleez_Model
      * @throws Kohana_Exception
      * @uses    Arr::unshift
      */
-	public function __construct($id = NULL)
+    public function __construct($id = null)
 	{
-		if (empty($this->_sorting))
-		{
-			$this->_sorting = array($this->scope_column => 'ASC', $this->left_column => 'ASC');
-		}
-		else
-		{
+        if (empty($this->_sorting)) {
+            $this->_sorting = [$this->scope_column => 'ASC', $this->left_column => 'ASC'];
+        } else {
 			$this->_sorting = Arr::unshift($this->_sorting, $this->left_column, 'ASC');
 			$this->_sorting = Arr::unshift($this->_sorting, $this->scope_column, 'ASC');
 		}
@@ -98,16 +95,13 @@ class ORM_MPTT extends Gleez_Model
 	 */
     public function is_descendant($target): bool
     {
-		if ( ! ($target instanceof $this))
-		{
+        if (!($target instanceof $this)) {
 			$target = self::factory($this->object_name(), $target);
 		}
-		
-		return (
-				$this->{$this->left_column} > $target->{$target->left_column}
-				AND $this->{$this->right_column} < $target->{$target->right_column}
-				AND $this->{$this->scope_column} = $target->{$target->scope_column}
-			);
+
+        return $this->{$this->left_column} > $target->{$target->left_column}
+            && $this->{$this->right_column} < $target->{$target->right_column}
+            && $this->{$this->scope_column} === $target->{$target->scope_column};
 	}
 
 	/**
@@ -118,8 +112,7 @@ class ORM_MPTT extends Gleez_Model
 	 */
     public function is_child($target): bool
     {
-		if ( ! ($target instanceof $this))
-		{
+        if (!($target instanceof $this)) {
 			$target = self::factory($this->object_name(), $target);
 		}
 
@@ -134,8 +127,7 @@ class ORM_MPTT extends Gleez_Model
 	 */
     public function is_parent($target): bool
     {
-		if ( ! ($target instanceof $this))
-		{
+        if (!($target instanceof $this)) {
 			$target = self::factory($this->object_name(), $target);
 		}
 
@@ -151,13 +143,12 @@ class ORM_MPTT extends Gleez_Model
 	 */
     public function is_sibling($target): bool
     {
-		if ( ! ($target instanceof $this))
-		{
+        if (!($target instanceof $this)) {
 			$target = self::factory($this->object_name(), $target);
 		}
 		
 		if ((int) $this->pk() === (int) $target->pk())
-			return FALSE;
+            return false;
 
 		return ((int) $this->{$this->parent_column} === (int) $target->{$target->parent_column});
 	}
@@ -180,8 +171,7 @@ class ORM_MPTT extends Gleez_Model
 	 */
     public function is_in_parents($target): bool
     {
-		if ( ! ($target instanceof $this))
-		{
+        if (!($target instanceof $this)) {
 			$target = self::factory($this->object_name(), $target);
 		}
 
@@ -197,10 +187,9 @@ class ORM_MPTT extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
-		if ( ! $this->loaded())
-		{
+        if (!$this->loaded()) {
 			return $this->make_root($validation);
 		}
 
@@ -216,25 +205,21 @@ class ORM_MPTT extends Gleez_Model
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function make_root(Validation $validation = NULL, int $scope = NULL): ORM_MPTT
+    public function make_root(Validation $validation = null, int $scope = null): ORM_MPTT
     {
 		// If node already exists, and already root, exit
-		if ($this->loaded() AND $this->is_root())
+        if ($this->loaded() && $this->is_root())
 			return $this;
 
 		// delete node space first
-		if ($this->loaded())
-		{
+        if ($this->loaded()) {
 			$this->delete_space($this->left(), $this->size());
 		}
 
-		if (is_null($scope))
-		{
+        if (is_null($scope)) {
 			// Increment next scope
 			$scope = self::get_next_scope();
-		}
-		elseif ( ! $this->scope_available($scope))
-		{
+        } elseif (!$this->scope_available($scope)) {
             throw new Kohana_Exception('Scope :scope is not available', [':scope' => $scope]);
 		}
 
@@ -244,12 +229,9 @@ class ORM_MPTT extends Gleez_Model
 		$this->{$this->right_column} = 2;
 		$this->{$this->parent_column} = 0;
 
-		try
-		{
+        try {
 			parent::save($validation);
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+        } catch (ORM_Validation_Exception $e) {
 			// Some fields didn't validate, throw an exception
             throw new Kohana_Exception('Failed to make root: :error', [':error' => $e->getMessage()], $e->getCode());
 		}
@@ -264,25 +246,20 @@ class ORM_MPTT extends Gleez_Model
      * @param string|null $column name of the targets nodes column to use [Optional]
 	 * @return  ORM_MPTT
 	 */
-    protected function parent_from($target, string $column = NULL)
+    protected function parent_from($target, string $column = null)
 	{
-		if ( ! $target instanceof $this)
-		{
-			$target = self::factory($this->object_name(), array($this->primary_key() => $target));
+        if (!$target instanceof $this) {
+            $target = self::factory($this->object_name(), [$this->primary_key() => $target]);
 		}
 
-		if ($column === NULL)
-		{
+        if ($column === null) {
 			$column = $target->primary_key();
 		}
 
-		if ($target->loaded())
-		{
+        if ($target->loaded()) {
 			$this->{$this->parent_column} = $target->{$column};
-		}
-		else
-		{
-			$this->{$this->parent_column} = NULL;
+        } else {
+            $this->{$this->parent_column} = null;
 		}
 
 		return $target;
@@ -365,19 +342,14 @@ class ORM_MPTT extends Gleez_Model
         if ($this->loaded()) {
             throw new Kohana_Exception('Cannot insert node because it is already loaded');
         }
-		 
-		 
-		if ( ! $target instanceof $this)
-		{
-			$target = self::factory($this->object_name(), array($this->primary_key() => $target));
-		 
-			if ( ! $target->loaded())
-			{
+
+        if (!$target instanceof $this) {
+            $target = self::factory($this->object_name(), [$this->primary_key() => $target]);
+
+            if (!$target->loaded()) {
                 throw new Kohana_Exception('Target node not found');
 			}
-		}
-		else
-		{
+        } else {
 			$target->reload();
 		}
 		
@@ -390,13 +362,10 @@ class ORM_MPTT extends Gleez_Model
 		$this->{$this->scope_column} = $target->{$this->scope_column};
 
 		$this->create_space($this->{$this->left_column});
-		 
-		try
-		{
+
+        try {
 			parent::save();
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+        } catch (ORM_Validation_Exception $e) {
 			// We had a problem saving, make sure we clean up the tree
 			$this->delete_space($this->left());
 
@@ -413,16 +382,48 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Deletes the current node and all descendants.
 	 *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
-	 * @throws  Kohana_Exception
-	 */
-    public function delete(bool $soft = FALSE): Kohana_ORM
+     * When `$soft` is `true` and `$_deleted_column` is configured, the node and all its descendants are marked as
+     * deleted via an UPDATE instead of being removed from the database. The tree structure is preserved to allow
+     * restoration.
+     *
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
+     * @throws Kohana_Exception
+     */
+    public function delete(bool $soft = false): Kohana_ORM
     {
+        if (is_array($this->_deleted_column) && $soft) {
+            $column = $this->_deleted_column['column'];
+            $format = $this->_deleted_column['format'];
+            $value = $format === true ? time() : date($format);
+
+            $this->_object[$column] = $value;
+
+            // Start the transaction
+            $this->_db->begin();
+
+            try {
+                // Soft-delete the node and all its descendants
+                DB::update($this->_table_name)
+                    ->value($column, $value)
+                    ->where($this->left_column, ' >=', $this->left())
+                    ->where($this->right_column, ' <= ', $this->right())
+                    ->where($this->scope_column, ' = ', $this->scope())
+                    ->execute($this->_db);
+            } catch (Kohana_Exception $e) {
+                $this->_db->rollback();
+                throw $e;
+            }
+
+            // Commit the transaction
+            $this->_db->commit();
+
+            return $this;
+        }
+
 		// Start the transaction
 		$this->_db->begin();
 
-		try
-		{
+        try {
 			DB::delete($this->_table_name)
 				->where($this->left_column,' >=',$this->left())
 				->where($this->right_column,' <= ',$this->right())
@@ -430,9 +431,7 @@ class ORM_MPTT extends Gleez_Model
 				->execute($this->_db);
 
 			$this->delete_space($this->left(), $this->size());
-		}
-		catch (Kohana_Exception $e)
-		{
+        } catch (Kohana_Exception $e) {
 			$this->_db->rollback();
 			throw $e;
 		}
@@ -451,7 +450,8 @@ class ORM_MPTT extends Gleez_Model
     public function move_to_first_child($target): ORM_MPTT
     {
 		$target = $this->parent_from($target, $this->primary_key());
-		return $this->move($target, TRUE, 1, 1, TRUE);
+
+        return $this->move($target, true, 1, 1, true);
 	}
 
     /**
@@ -462,7 +462,8 @@ class ORM_MPTT extends Gleez_Model
     public function move_to_last_child($target): ORM_MPTT
     {
 		$target = $this->parent_from($target, $this->primary_key());
-		return $this->move($target, FALSE, 0, 1, TRUE);
+
+        return $this->move($target, false, 0, 1, true);
 	}
 
     /**
@@ -473,7 +474,8 @@ class ORM_MPTT extends Gleez_Model
     public function move_to_prev_sibling($target): ORM_MPTT
     {
 		$target = $this->parent_from($target, $this->parent_column);
-		return $this->move($target, TRUE, 0, 0, FALSE);
+
+        return $this->move($target, true, 0, 0, false);
 	}
 
     /**
@@ -484,7 +486,8 @@ class ORM_MPTT extends Gleez_Model
     public function move_to_next_sibling($target): ORM_MPTT
     {
 		$target = $this->parent_from($target, $this->parent_column);
-		return $this->move($target, FALSE, 1, 0, FALSE);
+
+        return $this->move($target, false, 1, 0, false);
 	}
 
     /**
@@ -506,40 +509,33 @@ class ORM_MPTT extends Gleez_Model
 		$this->reload();
 		 
 		// Catch any database or other exceptions and unlock
-		try
-		{
-			if ( ! $target instanceof $this)
-			{
-				$target = self::factory($this->object_name(), array($this->primary_key() => $target));
-				 
-				if ( ! $target->loaded())
-				{
+        try {
+            if (!$target instanceof $this) {
+                $target = self::factory($this->object_name(), [$this->primary_key() => $target]);
+
+                if (!$target->loaded()) {
 					$this->_db->rollback();
                     throw new Kohana_Exception('Target node not found');
 				}
-			}
-			else
-			{
+            } else {
 				$target->reload();
 			}
 
 			// Stop $this being moved into a descendant or itself or disallow if target is root
-			if ($target->is_descendant($this)
-				OR $this->{$this->primary_key()} === $target->{$this->primary_key()}
-				OR ($allow_root_target === FALSE AND $target->is_root()))
-			{
+            if (
+                $target->is_descendant($this)
+                || $this->{$this->primary_key()} === $target->{$this->primary_key()}
+                || $allow_root_target === false && $target->is_root()
+            ) {
 				$this->_db->rollback();
                 throw new Kohana_Exception('Invalid target for node move');
 			}
 
-			if ($level_offset > 0)
-			{
+            if ($level_offset > 0) {
 				// We're moving to a child node so add 1 to left offset.
-				$left_offset = ($left_column === TRUE) ? ($target->left() + 1) : ($target->right() + $left_offset);
-			}
-			else
-			{
-				$left_offset = ($left_column === TRUE) ? $target->left() : ($target->right() + $left_offset);
+                $left_offset = ($left_column === true) ? ($target->left() + 1) : ($target->right() + $left_offset);
+            } else {
+                $left_offset = ($left_column === true) ? $target->left() : ($target->right() + $left_offset);
 			}
 			
 			$level_offset = $target->level() - $this->level() + $level_offset;
@@ -558,19 +554,16 @@ class ORM_MPTT extends Gleez_Model
 				. $level_offset.', `'.$this->scope_column.'` = '.$target->scope()
 				. ' WHERE `'.$this->left_column.'` >= '.$this->left().' AND `'
 				. $this->right_column.'` <= '.$this->right().' AND `'
-				. $this->scope_column.'` = '.$this->scope(), TRUE);
+				. $this->scope_column.'` = '.$this->scope(), true);
 			
 			$this->delete_space($this->left(), $size);
-		}
-		catch (Kohana_Exception $e)
-		{
+        } catch (Kohana_Exception $e) {
 			$this->_db->rollback();
 			throw $e;
 		}
 
 		// all went well so save the parent_id if changed
-		if ($parent_id != $this->{$this->parent_column})
-		{
+        if ($parent_id != $this->{$this->parent_column}) {
 			$this->{$this->parent_column} = $parent_id;
 			$this->save();
 		}
@@ -595,7 +588,7 @@ class ORM_MPTT extends Gleez_Model
 				->execute($this->_db)
 				->current();
 
-		if ($scope AND intval($scope['scope']) > 0)
+        if ($scope && intval($scope['scope']) > 0)
 			return intval($scope['scope']) + 1;
 
 		return 1;
@@ -608,18 +601,17 @@ class ORM_MPTT extends Gleez_Model
      * @return  Model|ORM
 	 * @throws  Kohana_Exception
 	 */
-    public function root(int $scope = NULL)
+    public function root(int $scope = null)
 	{
-		if (is_null($scope) AND $this->loaded())
-		{
+        if (is_null($scope) && $this->loaded()) {
 			$scope = $this->scope();
+        } elseif (is_null($scope) && !$this->loaded()) {
+            throw new Kohana_Exception(':method must be called on an ORM_MPTT object instance.', [
+                ':method' => 'root'
+            ]);
 		}
-		elseif (is_null($scope) AND ! $this->loaded())
-		{
-			throw new Kohana_Exception(':method must be called on an ORM_MPTT object instance.', array(':method' => 'root'));
-		}
-		
-		return self::factory($this->object_name(), array($this->left_column => 1, $this->scope_column => $scope));
+
+        return self::factory($this->object_name(), [$this->left_column => 1, $this->scope_column => $scope]);
 	}
 
     /**
@@ -643,7 +635,7 @@ class ORM_MPTT extends Gleez_Model
 	public function parent()
 	{
 		if ($this->is_root())
-			return NULL;
+            return null;
 
 		return self::factory($this->object_name(), $this->{$this->parent_column});
 	}
@@ -658,7 +650,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function parents(bool $root = TRUE, bool $with_self = FALSE, string $direction = 'ASC', bool $direct_parent_only = FALSE)
+    public function parents(bool $root = true, bool $with_self = false, string $direction = 'ASC', bool $direct_parent_only = false)
 	{
 		$suffix = $with_self ? '=' : '';
 
@@ -667,14 +659,12 @@ class ORM_MPTT extends Gleez_Model
 			->where($this->right_column, '>'.$suffix, $this->right())
 			->where($this->scope_column, '=', $this->scope())
 			->order_by($this->left_column, $direction);
-		
-		if ( ! $root)
-		{
+
+        if (!$root) {
 			$query->where($this->left_column, '!=', 1);
 		}
-		
-		if ($direct_parent_only)
-		{
+
+        if ($direct_parent_only) {
 			$query
 				->where($this->level_column, '=', $this->level() - 1)
 				->limit(1);
@@ -692,9 +682,9 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function children(bool $self = FALSE, string $direction = 'ASC', $limit = FALSE)
+    public function children(bool $self = false, string $direction = 'ASC', $limit = false)
 	{
-		return $this->descendants($self, $direction, TRUE, FALSE, $limit);
+        return $this->descendants($self, $direction, true, false, $limit);
 	}
 
     /**
@@ -704,16 +694,13 @@ class ORM_MPTT extends Gleez_Model
      * @return  object
      * @throws Kohana_Exception
      */
-    public function fulltree(bool $scope = NULL)
+    public function fullTree(bool $scope = null)
 	{
 		$result = self::factory($this->object_name());
 
-		if ( ! is_null($scope))
-		{
+        if (!is_null($scope)) {
 			$result->where($this->scope_column, '=', $scope);
-		}
-		else
-		{
+        } else {
 			$result->order_by($this->scope_column, 'ASC')
 					->order_by($this->left_column, 'ASC');
 		}
@@ -729,7 +716,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function siblings(bool $self = FALSE, string $direction = 'ASC')
+    public function siblings(bool $self = false, string $direction = 'ASC')
 	{
 		$query = self::factory($this->object_name())
 			->where($this->left_column, '>', $this->parent->left())
@@ -737,9 +724,8 @@ class ORM_MPTT extends Gleez_Model
 			->where($this->scope_column, '=', $this->scope())
 			->where($this->level_column, '=', $this->level())
 			->order_by($this->left_column, $direction);
-		 
-		if ( ! $self)
-		{
+
+        if (!$self) {
 			$query->where($this->primary_key(), '<>', $this->pk());
 		}
 		 
@@ -754,9 +740,9 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function leaves(bool $self = FALSE, string $direction = 'ASC')
+    public function leaves(bool $self = false, string $direction = 'ASC')
 	{
-		return $this->descendants($self, $direction, TRUE, TRUE);
+        return $this->descendants($self, $direction, true, true);
 	}
 
     /**
@@ -770,7 +756,7 @@ class ORM_MPTT extends Gleez_Model
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
-    public function descendants(bool $self = FALSE, string $direction = 'ASC', bool $direct_children_only = FALSE, bool $leaves_only = FALSE, $limit = FALSE)
+    public function descendants(bool $self = false, string $direction = 'ASC', bool $direct_children_only = false, bool $leaves_only = false, $limit = false)
 	{
 		$left_operator = $self ? '>=' : '>';
 		$right_operator = $self ? '<=' : '<';
@@ -780,30 +766,24 @@ class ORM_MPTT extends Gleez_Model
 			->where($this->right_column, $right_operator, $this->right())
 			->where($this->scope_column, '=', $this->scope())
 			->order_by($this->left_column, $direction);
-		
-		if ($direct_children_only)
-		{
-			if ($self)
-			{
+
+        if ($direct_children_only) {
+            if ($self) {
 				$query
 					->and_where_open()
 					->where($this->level_column, '=', $this->level())
 					->or_where($this->level_column, '=', $this->level() + 1)
 					->and_where_close();
-			}
-			else
-			{
+            } else {
 				$query->where($this->level_column, '=', $this->level() + 1);
 			}
 		}
-		
-		if ($leaves_only)
-		{
+
+        if ($leaves_only) {
 			$query->where($this->right_column, '=', DB::expr($this->left_column.' + 1'));
 		}
-		
-		if ($limit !== FALSE)
-		{
+
+        if ($limit !== false) {
 			$query->limit($limit);
 		}
 		
@@ -817,14 +797,13 @@ class ORM_MPTT extends Gleez_Model
      * @return    Database_Result
      * @throws Kohana_Exception
      */
-    public function get_levels(int $scope = NULL): Database_Result
+    public function get_levels(int $scope = null): Database_Result
     {
-		$result = DB::select($this->level_column)
-			->distinct(TRUE)
-			->from($this->_table_name);
-		
-		if ( ! empty($scope))
-		{
+        $result = DB::select($this->level_column)
+            ->distinct(true)
+            ->from($this->_table_name);
+
+        if (!empty($scope)) {
             $result->where($this->scope_column, '=', $scope);
 		}
 			
@@ -840,17 +819,17 @@ class ORM_MPTT extends Gleez_Model
      */
     protected function create_space(int $start, int $size = 2)
 	{
-		DB::update($this->_table_name)
-			->set(array($this->left_column => DB::expr($this->left_column.' + '.$size)))
-			->where($this->left_column,'>=', $start)
-			->where($this->scope_column, '=', $this->scope())
-			->execute($this->_db);
+        DB::update($this->_table_name)
+            ->set([$this->left_column => DB::expr($this->left_column . ' + ' . $size)])
+            ->where($this->left_column, '>=', $start)
+            ->where($this->scope_column, '=', $this->scope())
+            ->execute($this->_db);
 
-		DB::update($this->_table_name)
-			->set(array($this->right_column => DB::expr($this->right_column.' + '.$size)))
-			->where($this->right_column,'>=', $start)
-			->where($this->scope_column, '=', $this->scope())
-			->execute($this->_db);
+        DB::update($this->_table_name)
+            ->set([$this->right_column => DB::expr($this->right_column . ' + ' . $size)])
+            ->where($this->right_column, '>=', $start)
+            ->where($this->scope_column, '=', $this->scope())
+            ->execute($this->_db);
 	}
 
     /**
@@ -862,17 +841,17 @@ class ORM_MPTT extends Gleez_Model
      */
     protected function delete_space(int $start, int $size = 2)
 	{
-		DB::update($this->_table_name)
-			->set(array($this->left_column => DB::expr($this->left_column.' - '.$size)))
-			->where($this->left_column, '>=', $start)
-			->where($this->scope_column, '=', $this->scope())
-			->execute($this->_db);
+        DB::update($this->_table_name)
+            ->set([$this->left_column => DB::expr($this->left_column . ' - ' . $size)])
+            ->where($this->left_column, '>=', $start)
+            ->where($this->scope_column, '=', $this->scope())
+            ->execute($this->_db);
 
-		DB::update($this->_table_name)
-			->set(array($this->right_column => DB::expr($this->right_column.' - '.$size)))
-			->where($this->right_column,'>=', $start)
-			->where($this->scope_column, '=', $this->scope())
-			->execute($this->_db);
+        DB::update($this->_table_name)
+            ->set([$this->right_column => DB::expr($this->right_column . ' - ' . $size)])
+            ->where($this->right_column, '>=', $start)
+            ->where($this->scope_column, '=', $this->scope())
+            ->execute($this->_db);
 	}
 
     /**
@@ -883,7 +862,11 @@ class ORM_MPTT extends Gleez_Model
      */
 	protected function lock()
 	{
-        $this->_db->query(Database::UPDATE, 'LOCK TABLE ' . $this->_db->quote_table($this->_table_name) . ' WRITE', TRUE);
+        $this->_db->query(
+            Database::UPDATE,
+            'LOCK TABLE ' . $this->_db->quote_table($this->_table_name) . ' WRITE',
+            true
+        );
 	}
 
 	/**
@@ -891,7 +874,7 @@ class ORM_MPTT extends Gleez_Model
 	 */
 	protected function unlock()
 	{
-        $this->_db->query(Database::UPDATE, 'UNLOCK TABLES', TRUE);
+        $this->_db->query(Database::UPDATE, 'UNLOCK TABLES', true);
 	}
 
 	/**
@@ -981,15 +964,12 @@ class ORM_MPTT extends Gleez_Model
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-    public function rebuild_tree(int $left = 1, $target = NULL): int
+    public function rebuild_tree(int $left = 1, $target = null): int
     {
 		// check if using target or self as root and load if not loaded
-		if (is_null($target) AND ! $this->loaded())
-		{
+        if (is_null($target) && !$this->loaded()) {
             throw new Kohana_Exception('Cannot rebuild tree: node is not loaded');
-		}
-		elseif (is_null($target))
-		{
+        } elseif (is_null($target)) {
 			$target = $this;
 		}
 
@@ -998,14 +978,12 @@ class ORM_MPTT extends Gleez_Model
             $target = self::factory($this->object_name(), $target);
         }
 
-		if ( ! $target->loaded())
-		{
+        if (!$target->loaded()) {
             throw new Kohana_Exception('Cannot rebuild tree: node is not loaded');
 		}
 
 		// Use the current node left value for entire tree
-		if (is_null($left))
-		{
+        if (is_null($left)) {
 			$left = $target->{$target->left_column};
 		}
 
@@ -1014,8 +992,7 @@ class ORM_MPTT extends Gleez_Model
 		$right = $left + 1;
 		$children = $target->children();
 
-		foreach ($children as $child)
-		{
+        foreach ($children as $child) {
 			$right = $child->rebuild_tree($right);
 		}
 
@@ -1046,9 +1023,9 @@ class ORM_MPTT extends Gleez_Model
 			case 'children':
 				return $this->children();
 			case 'first_child':
-				return $this->children(FALSE, 'ASC', 1);
+                return $this->children(false, 'ASC', 1);
 			case 'last_child':
-				return $this->children(FALSE, 'DESC', 1);
+                return $this->children(false, 'DESC', 1);
 			case 'siblings':
 				return $this->siblings();
 			case 'root':
@@ -1059,8 +1036,8 @@ class ORM_MPTT extends Gleez_Model
 				return $this->leaves();
 			case 'descendants':
 				return $this->descendants();
-			case 'fulltree':
-				return $this->fulltree();
+            case 'full_tree':
+                return $this->fullTree();
 			default:
                 return parent::__get($column);
 		}
@@ -1075,33 +1052,34 @@ class ORM_MPTT extends Gleez_Model
      * @return  array
      * @throws Kohana_Exception
      */
-    public function select_list(string $key = NULL, string $value = NULL, string $indent = NULL): array
+    public function select_list(string $key = null, string $value = null, string $indent = null): array
     {
-		if ($key === NULL)
-		{
+        if ($key === null) {
 			// Use the default key
 			$key = $this->_primary_key;
 		}
 
-		if ($value === NULL)
-		{
+        if ($value === null) {
 			// Use the default value
 			$value = $this->pk();
 		}
 
-		$result = DB::select($key, $value, $this->level_column)
-				->from($this->_table_name)
-				->where($this->scope_column, '=', $this->{$this->scope_column})
-				->where($this->_primary_key, '<>', $this->pk())
-				->where($this->level_column, '<>', 1)
-				->order_by($this->left_column, 'ASC')
-				->execute($this->_db);
-		
-		if (is_string($indent))
-		{
-			$array = array('last' => '');
-			foreach ($result as $row)
-			{
+        $result = DB::select($key, $value, $this->level_column)
+            ->from($this->_table_name)
+            ->where($this->scope_column, '=', $this->{$this->scope_column})
+            ->where($this->_primary_key, '<>', $this->pk())
+            ->where($this->level_column, '<>', 1);
+
+        if (is_array($this->_deleted_column)) {
+            $result->where($this->_deleted_column['column'], '=', 0);
+        }
+
+        $result = $result->order_by($this->left_column, 'ASC')
+            ->execute($this->_db);
+
+        if (is_string($indent)) {
+            $array = ['last' => ''];
+            foreach ($result as $row) {
 				$array[$row[$key]] = str_repeat($indent, $row[$this->level_column] - 2).$row[$value];
 			}
 

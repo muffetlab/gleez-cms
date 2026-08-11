@@ -9,30 +9,29 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Blog extends Template {
-
+class Controller_Blog extends Template
+{
     /**
      * The before() method is called before controller action
      *
      * @throws HTTP_Exception_403
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses  Request::action
      * @uses  ACL::required
      * @uses  Request::param
      */
 	public function before()
 	{
-		$id = $this->request->param('id', FALSE);
+        $id = $this->request->param('id', false);
 
-		if ($id AND $this->request->action() == 'index')
-		{
+        if ($id && $this->request->action() == 'index') {
 			$this->request->action('view');
 		}
 
-		if ( ! $id AND $this->request->action() == 'index')
-		{
+        if (!$id && $this->request->action() == 'index') {
 			$this->request->action('list');
 		}
 
@@ -48,13 +47,12 @@ class Controller_Blog extends Template {
      */
 	public function after()
 	{
-		if ($this->request->action() == 'add' OR $this->request->action() == 'edit')
-		{
+        if ($this->request->action() == 'add' || $this->request->action() == 'edit') {
 			// Add RichText Support
 			Assets::editor('.textarea', I18n::$lang);
 
 			// Flag to disable left/right sidebars
-			$this->_sidebars = FALSE;
+            $this->_sidebars = false;
 		}
 
 		parent::after();
@@ -63,7 +61,7 @@ class Controller_Blog extends Template {
     /**
      * List of blog posts
      *
-     * @throws Kohana_Exception
+     * @throws Kohana_Exception|ReflectionException
      * @uses  ACL::check
      * @uses  ORM::reset
      * @uses  Log::add
@@ -79,8 +77,7 @@ class Controller_Blog extends Template {
 	{
         $posts = ORM::factory('Blog');
 
-		if ( ! ACL::check('administer blog'))
-		{
+        if (!ACL::check('administer blog')) {
 			$posts->where('status', '=', 'publish');
 		}
 
@@ -91,10 +88,9 @@ class Controller_Blog extends Template {
 		 * Bug in ORM to repeat the `where()` methods after using `count_all()`
 		 * @link http://forum.kohanaframework.org/discussion/7736 Solved
 		 */
-		$total = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			Kohana::$log->add(Log::INFO, 'No blogs found.');
 			$this->response->body(View::factory('blog/none'));
 			return;
@@ -102,21 +98,21 @@ class Controller_Blog extends Template {
 
 		$config = Kohana::$config->load('blog');
 
-		$view = View::factory('blog/list')
-			->set('teaser',      TRUE)
-			->set('config',      $config)
-			->bind('rss_link',   $rss_link)
-			->bind('pagination', $pagination)
-			->bind('posts',      $posts);
+        $view = View::factory('blog/list')
+            ->set('teaser', true)
+            ->set('config', $config)
+            ->bind('rss_link', $rss_link)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 		$url        = Route::get('blog')->uri();
-		$rss_link   = Route::get('rss')->uri(array('controller' => 'blog'));
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $url,
-		));
+        $rss_link = Route::get('rss')->uri(['controller' => 'blog']);
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $url,
+        ]);
 
 		$posts = $posts->order_by('sticky', 'DESC')
 			->order_by('created', 'DESC')
@@ -127,15 +123,14 @@ class Controller_Blog extends Template {
 		$this->response->body($view);
 
 		// Set the canonical and shortlink for search engines
-		if ($this->auto_render)
-		{
-			Meta::links(URL::canonical($url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('blog', array(), TRUE), array('rel' => 'shortlink'));
-			Meta::links(URL::site('rss/blog', TRUE), array(
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . __('Blogs'),
-			));
+        if ($this->auto_render) {
+            Meta::links(URL::canonical($url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('blog', [], true), ['rel' => 'shortlink']);
+            Meta::links(URL::site('rss/blog', true), [
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . __('Blogs'),
+            ]);
 		}
 	}
 
@@ -152,7 +147,7 @@ class Controller_Blog extends Template {
      * @throws Request_Exception
      * @throws View_Exception
      * @uses    Gleez_Config::load
-     * @uses    Post::dcache
+     * @uses    Post::dynamicCache
      * @uses    ACL::post
      * @uses    ACL::check
      * @uses    Auth::logged_in
@@ -166,39 +161,35 @@ class Controller_Blog extends Template {
 		$id     = (int) $this->request->param('id', 0);
 		$config = Kohana::$config->load('blog');
 
-		$post = Post::dcache($id, 'blog', $config);
+        $post = Post::dynamicCache($id, 'blog', $config);
 
-		if ( ! ACL::post('view', $post))
-		{
+        if (!ACL::post('view', $post)) {
 			// If the post was not loaded, we return access denied.
 			throw HTTP_Exception::factory(403, 'Access denied!');
 		}
 
-		if (ACL::post('edit', $post))
-		{
-			$this->_tabs[] = array('link' => $post->url, 'text' => __('View'));
-			$this->_tabs[] = array('link' => $post->edit_url, 'text' => __('Edit'));
+        if (ACL::post('edit', $post)) {
+            $this->_tabs[] = ['link' => $post->url, 'text' => __('View')];
+            $this->_tabs[] = ['link' => $post->edit_url, 'text' => __('Edit')];
 		}
 
-		if (ACL::post('delete', $post))
-		{
-			$this->_tabs[] =  array('link' => $post->delete_url, 'text' => __('Delete'));
+        if (ACL::post('delete', $post)) {
+            $this->_tabs[] = ['link' => $post->delete_url, 'text' => __('Delete')];
 		}
 
-		if (($post->comment == Comment::COMMENT_OPEN OR $post->comment == Comment::COMMENT_CLOSED)
-			AND ACL::check('access comment'))
-		{
+        if (
+            ($post->comment == Comment::COMMENT_OPEN || $post->comment == Comment::COMMENT_CLOSED)
+            and ACL::check('access comment')
+        ) {
 			// Determine pagination offset
-			$p = ((int) $this->request->param('page', 0)) ? '/p'.$this->request->param('page', 0) : FALSE;
+            $p = ((int) $this->request->param('page', 0)) ? '/p' . $this->request->param('page', 0) : false;
 
 			// Handle comment listing
 			$comments = Request::factory('comments/blog/public/'.$id.$p)->execute()->body();
 		}
 
-		if ($post->comment == Comment::COMMENT_OPEN AND ACL::check('post comment'))
-		{
-			if ($this->_auth->logged_in() OR ($config->comment_anonymous AND ! $this->_auth->logged_in()))
-			{
+        if ($post->comment == Comment::COMMENT_OPEN && ACL::check('post comment')) {
+            if ($this->_auth->logged_in() || $config->comment_anonymous && !$this->_auth->logged_in()) {
 				// Handle comment posting
 				$comment_form = Comment::form($this, $post);
 			}
@@ -206,8 +197,7 @@ class Controller_Blog extends Template {
 		}
 
 		// show site and other provider login buttons
-		if ($post->comment == Comment::COMMENT_OPEN AND $config->use_provider_buttons)
-		{
+        if ($post->comment == Comment::COMMENT_OPEN && $config->use_provider_buttons) {
 			$provider_buttons = User::providers();
 		}
 
@@ -224,10 +214,9 @@ class Controller_Blog extends Template {
 		$this->response->body($view);
 
 		// Set the canonical and shortlink for search engines
-		if ($this->auto_render)
-		{
-			Meta::links(URL::canonical($post->url), array('rel' => 'canonical'));
-			Meta::links($post->rawurl, array('rel' => 'shortlink'));
+        if ($this->auto_render) {
+            Meta::links(URL::canonical($post->url), ['rel' => 'canonical']);
+            Meta::links($post->rawurl, ['rel' => 'shortlink']);
 		}
 	}
 
@@ -257,51 +246,47 @@ class Controller_Blog extends Template {
 		$config = Kohana::$config->load('blog');
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 		// Set form action
-		$action = Route::get('blog')->uri(array('action' => 'add')).URL::query($destination);
+        $action = Route::get('blog')->uri(['action' => 'add']) . URL::query($destination);
 
-		$view = View::factory('blog/form')
-			->set('destination', $destination)
-			->set('action',      $action)
-			->set('config',      $config)
-			->set('created',     FALSE)
-			->set('author',      FALSE)
-			->set('path',        FALSE)
-            ->set('tags', $_POST['ftags'] ?? FALSE)
-			->set('image',        FALSE)
-			->bind('errors',     $this->_errors)
-			->bind('terms',      $terms)
-			->bind('blog',       $post);
+        $view = View::factory('blog/form')
+            ->set('destination', $destination)
+            ->set('action', $action)
+            ->set('config', $config)
+            ->set('created', false)
+            ->set('author', false)
+            ->set('path', false)
+            ->set('tags', $_POST['form_tags'] ?? false)
+            ->set('image', false)
+            ->bind('errors', $this->_errors)
+            ->bind('terms', $terms)
+            ->bind('blog', $post);
 
 
         $post = ORM::factory('Blog');
 		$post->status = $config->get('default_status', 'draft');
 
-		if ($config->get('use_category', FALSE))
-		{
-            $terms = ORM::factory('Term', array('type' => 'blog', 'lvl' => 1))->select_list('id', 'name', '--');
+        if ($config->get('use_category', false)) {
+            $terms = ORM::factory('Term', ['type' => 'blog', 'lvl' => 1])->select_list('id', 'name', '--');
 		}
 
-		if ($config->get('use_captcha', FALSE))
-		{
+        if ($config->get('use_captcha', false)) {
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
 		}
 
-		if ($this->valid_post('blog'))
-		{
-			try
-			{
+        if ($this->valid_post('blog')) {
+            try {
                 $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
-				Kohana::$log->add(Log::INFO, 'Blog :title created.', array(':title' => $post->title));
-				Message::success(__('Blog %title created', array('%title' => $post->title)));
+                Kohana::$log->add(Log::INFO, 'Blog :title created.', [':title' => $post->title]);
+                Message::success(__('Blog %title created', ['%title' => $post->title]));
 
 				$this->request->redirect($post->url);
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
 				// @todo Added messages
                 $this->_errors = $e->errors('models');
 			}
@@ -336,8 +321,7 @@ class Controller_Blog extends Template {
 		$id = (int) $this->request->param('id', 0);
         $post = ORM::factory('Blog', $id);
 
-		if ( ! ACL::post('edit', $post))
-		{
+        if (!ACL::post('edit', $post)) {
 			// If the post was not loaded, we return access denied.
 			throw HTTP_Exception::factory(403, 'Access denied!');
 		}
@@ -346,66 +330,60 @@ class Controller_Blog extends Template {
 		$config = Kohana::$config->load('blog');
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 		// Set form action
-		$action = Route::get('blog')->uri(array('id' => $id, 'action' => 'edit')).URL::query($destination);
+        $action = Route::get('blog')->uri(['id' => $id, 'action' => 'edit']) . URL::query($destination);
 
-		$view = View::factory('blog/form')
-			->set('destination',  $destination)
-			->set('action',       $action)
-			->set('config',       $config)
-			->set('path',         FALSE)
-			->set('created',      $post->created)
-			->set('author',       $post->user->name)
-			->set('tags',         Tags::implode($post->tags_form))
-			->set('image',        FALSE)
-			->bind('errors',      $this->_errors)
-			->bind('terms',       $terms)
-			->bind('blog',        $post);
+        $view = View::factory('blog/form')
+            ->set('destination', $destination)
+            ->set('action', $action)
+            ->set('config', $config)
+            ->set('path', false)
+            ->set('created', $post->created)
+            ->set('author', $post->user->name)
+            ->set('tags', Tags::implode($post->tags_form))
+            ->set('image', false)
+            ->bind('errors', $this->_errors)
+            ->bind('terms', $terms)
+            ->bind('blog', $post);
 
-		if ($config->get('use_captcha', FALSE))
-		{
+        if ($config->get('use_captcha', false)) {
 			$captcha = Captcha::instance();
 			$view->set('captcha', $captcha);
 		}
 
-		if ($path = Path::load($post->rawurl))
-		{
+        if ($path = Path::load($post->rawurl)) {
 			$view->set('path', $path['alias']);
 		}
 
-		if ($config->get('use_category', FALSE))
-		{
-            $terms = ORM::factory('Term', array('type' => 'blog', 'lvl' => 1))
+        if ($config->get('use_category', false)) {
+            $terms = ORM::factory('Term', ['type' => 'blog', 'lvl' => 1])
 				->select_list('id', 'name', '--');
 		}
 
-		if($this->valid_post('blog'))
-		{
-			try
-			{
+        if ($this->valid_post('blog')) {
+            try {
                 $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
 
-				Kohana::$log->add(Log::INFO, 'Blog :title updated.', array(':title' => $post->title));
-				Message::success(__('Blog %title updated', array('%title' => $post->title)));
+                Kohana::$log->add(Log::INFO, 'Blog :title updated.', [':title' => $post->title]);
+                Message::success(__('Blog %title updated', ['%title' => $post->title]));
 
 				$this->request->redirect(empty($destination) ? $post->url : $this->request->query('destination'));
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
 				// @todo Add messages
                 $this->_errors = $e->errors('models');
 			}
 		}
 
-		$this->_tabs =  array(
-			array('link' => $post->url, 'text' => __('View')),
-			array('link' => $post->edit_url, 'text' => __('Edit')),
-		);
+        $this->_tabs = [
+            ['link' => $post->url, 'text' => __('View')],
+            ['link' => $post->edit_url, 'text' => __('Edit')],
+        ];
 
-		if (ACL::post('delete', $post))
-		{
-			$this->_tabs[] =  array('link' => $post->delete_url, 'text' => __('Delete'));
+        if (ACL::post('delete', $post)) {
+            $this->_tabs[] = ['link' => $post->delete_url, 'text' => __('Delete')];
 		}
 
 		$this->response->body($view);
@@ -418,6 +396,7 @@ class Controller_Blog extends Template {
      * @throws HTTP_Exception_404
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses    ACL::post
      * @uses    Request::query
      * @uses    Request::redirect
@@ -433,53 +412,55 @@ class Controller_Blog extends Template {
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
+
+        /** @var Model_Blog $post */
         $post = ORM::factory('Blog', $id);
 
-		if( ! ACL::post('delete', $post))
-		{
+        if (!ACL::post('delete', $post)) {
 			// If the post was not loaded, we return access denied.
 			throw HTTP_Exception::factory(403, 'Access denied!');
 		}
 
-		$this->title = __('Delete :title', array(':title' => $post->title));
+        $this->title = __('Delete :title', [':title' => $post->title]);
 
-		$destination = ($this->request->query('destination') !== NULL) ?
-			array('destination' => $this->request->query('destination')) : array();
+        $destination = ($this->request->query('destination') !== null)
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 
-		$view = View::factory('form/confirm')
-			->set('action', Route::get('blog')->uri(array('action' => 'delete', 'id' => $post->id)).URL::query($destination))
-			->set('title', $post->title);
+        $view = View::factory('form/confirm')
+            ->set('action', Route::get('blog')->uri([
+                    'action' => 'delete',
+                    'id' => $post->id
+                ]) . URL::query($destination))
+            ->set('title', $post->title);
 
 		// If deletion is not desired, redirect to post
-		if ($this->valid_post('no'))
-		{
+        if ($this->valid_post('no')) {
 			$this->request->redirect($post->url);
 		}
 
 		// If deletion is confirmed
-		if ($this->valid_post('yes'))
-		{
+        if ($this->valid_post('yes')) {
 			$title = $post->title;
 
-			try
-			{
-				$post->delete();
+            try {
+                $post->delete(true);
 
                 Cache::instance()->delete('blog:blog-' . $id);
 
-				Kohana::$log->add(Log::INFO, 'Blog :title deleted.', array(':title' => $title));
-				Message::success(__('Blog %title deleted successful!', array('%title' => $title)));
-			}
-			catch (Exception $e)
-			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting blog id: :id, :msg',
-					array(':id' => $post->id, ':msg' => $e->getMessage())
-				);
-				Message::error(__('An error occurred deleting blog %post',array('%post' => $title)));
+                Kohana::$log->add(Log::INFO, 'Blog :title deleted.', [':title' => $title]);
+                Message::success(__('Blog %title deleted successful!', ['%title' => $title]));
+            } catch (Exception $e) {
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting blog id: :id, :msg', [
+                    ':id' => $post->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred deleting blog %post', ['%post' => $title]));
 			}
 
-			$redirect = empty($destination) ? Route::get('blog')->uri(array('action' => 'list')) :
-				$this->request->query('destination');
+            $redirect = empty($destination)
+                ? Route::get('blog')->uri(['action' => 'list'])
+                : $this->request->query('destination');
 
 			$this->request->redirect($redirect);
 		}
@@ -490,59 +471,56 @@ class Controller_Blog extends Template {
     /**
      * Category selector
      *
-     * @throws  HTTP_Exception_403
-     * @throws  HTTP_Exception_404
+     * @throws HTTP_Exception_403
+     * @throws HTTP_Exception_404
      * @throws Kohana_Exception
+     * @throws ReflectionException
      */
 	public function action_term()
 	{
 		$config = Kohana::$config->load('blog');
 
-		if ( ! $config->use_category)
-		{
+        if (!$config->use_category) {
 			throw HTTP_Exception::factory(403, 'Attempt to access disabled feature.');
 		}
 
 		$id    = (int) $this->request->param('id', 0);
-		$array = array('id' => $id, 'type' => 'blog');
+        $array = ['id' => $id, 'type' => 'blog'];
         $term = ORM::factory('Term', $array)->where('lvl', '!=', 1);
 
-		if ( ! $term->loaded())
-		{
-			throw HTTP_Exception::factory(404, 'Category ":term" not found', array(':term' => $id));
+        if (!$term->loaded()) {
+            throw HTTP_Exception::factory(404, 'Category ":term" not found', [':term' => $id]);
 		}
 
-		$this->title = __(':term', array(':term' => $term->name));
-		$view = View::factory('blog/list')
-			->set('teaser',      TRUE)
-			->set('config',      $config)
-			->bind('rss_link',   $rss_link)
-			->bind('pagination', $pagination)
-			->bind('posts',       $posts);
+        $this->title = __(':term', [':term' => $term->name]);
+        $view = View::factory('blog/list')
+            ->set('teaser', true)
+            ->set('config', $config)
+            ->bind('rss_link', $rss_link)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 		$posts = $term->posts;
 
-		if ( ! ACL::check('administer terms') AND !ACL::check('administer content'))
-		{
+        if (!ACL::check('administer terms') && !ACL::check('administer content')) {
 			$posts->where('status', '=', 'publish');
 		}
 
-		$total = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			Kohana::$log->add(Log::INFO, 'No blogs found.');
 			$this->response->body(View::factory('blog/none'));
 			return;
 		}
 
-		$rss_link   = Route::get('rss')->uri(array('controller' => 'blog', 'action' => 'term', 'id' => $term->id));
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $term->url,
-		));
+        $rss_link = Route::get('rss')->uri(['controller' => 'blog', 'action' => 'term', 'id' => $term->id]);
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $term->url,
+        ]);
 
 		$posts = $posts->order_by('sticky', 'DESC')
 			->order_by('created', 'DESC')
@@ -553,68 +531,65 @@ class Controller_Blog extends Template {
 		$this->response->body($view);
 
 		// Set the canonical and shortlink for search engines
-		if ($this->auto_render)
-		{
-			Meta::links(URL::canonical($term->url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('blog', array('action' => 'term', 'id' => $term->id), TRUE), array(
-				'rel' => 'shortlink'
-			));
-			Meta::links(Route::url('rss', array('controller' => 'blog', 'action' => 'term', 'id' => $term->id), TRUE), array(
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . $term->name,
-			));
+        if ($this->auto_render) {
+            Meta::links(URL::canonical($term->url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('blog', ['action' => 'term', 'id' => $term->id], true), [
+                'rel' => 'shortlink'
+            ]);
+            Meta::links(Route::url('rss', ['controller' => 'blog', 'action' => 'term', 'id' => $term->id], true), [
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . $term->name,
+            ]);
 		}
 	}
 
     /**
      * Tags view
      *
-     * @throw HTTP_Exception_404
+     * @throws HTTP_Exception_404
      * @throws Kohana_Exception
+     * @throws ReflectionException
      */
 	public function action_tag()
 	{
 		$config = Kohana::$config->load('blog');
 		$id = (int) $this->request->param('id', 0);
-        $tag = ORM::factory('Tag', array('id' => $id, 'type' => 'blog'));
+        $tag = ORM::factory('Tag', ['id' => $id, 'type' => 'blog']);
 
-		if ( ! $tag->loaded())
-		{
-			throw HTTP_Exception::factory(404, 'Tag ":tag" Not Found', array(':tag'=>$id));
+        if (!$tag->loaded()) {
+            throw HTTP_Exception::factory(404, 'Tag ":tag" Not Found', [':tag' => $id]);
 		}
 
-		$this->title = __(':title', array(':title' => Text::ucfirst($tag->name)));
-		$view = View::factory('blog/list')
-			->set('teaser',      TRUE)
-			->set('config',      $config)
-			->bind('rss_link',   $rss_link)
-			->bind('pagination', $pagination)
-			->bind('posts',      $posts);
+        $this->title = __(':title', [':title' => Text::ucfirst($tag->name)]);
+        $view = View::factory('blog/list')
+            ->set('teaser', true)
+            ->set('config', $config)
+            ->bind('rss_link', $rss_link)
+            ->bind('pagination', $pagination)
+            ->bind('posts', $posts);
 
 		$posts = $tag->posts;
 
-		if ( ! ACL::check('administer tags') AND !ACL::check('administer content'))
-		{
+        if (!ACL::check('administer tags') && !ACL::check('administer content')) {
 			$posts->where('status', '=', 'publish');
 		}
 
-		$total = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			Kohana::$log->add(Log::INFO, 'No blogs found.');
 			$this->response->body(View::factory('blog/none'));
 			return;
 		}
 
-		$rss_link   = Route::get('rss')->uri(array('controller' => 'blog', 'action' => 'tag', 'id' => $tag->id));
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
-			'total_items'    => $total,
-			'items_per_page' => $config->get('items_per_page', 15),
-			'uri'            => $tag->url,
-		));
+        $rss_link = Route::get('rss')->uri(['controller' => 'blog', 'action' => 'tag', 'id' => $tag->id]);
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => $config->get('items_per_page', 15),
+            'uri' => $tag->url,
+        ]);
 
 		$posts = $posts->order_by('created', 'DESC')
             ->limit($pagination->itemsPerPage())
@@ -624,17 +599,16 @@ class Controller_Blog extends Template {
 		$this->response->body($view);
 
 		// Set the canonical and shortlink for search engines
-		if ($this->auto_render)
-		{
-			Meta::links(URL::canonical($tag->url, $pagination), array('rel' => 'canonical'));
-			Meta::links(Route::url('blog', array('action' => 'tag', 'id' => $tag->id), TRUE), array(
-				'rel' => 'shortlink'
-			));
-			Meta::links(Route::url('rss', array('controller' => 'blog', 'action' => 'tag', 'id' => $tag->id), TRUE), array(
-				'rel'   => 'alternate',
-				'type'  => 'application/rss+xml',
-				'title' => Template::getSiteName() . ' : ' . $tag->name,
-			));
+        if ($this->auto_render) {
+            Meta::links(URL::canonical($tag->url, $pagination), ['rel' => 'canonical']);
+            Meta::links(Route::url('blog', ['action' => 'tag', 'id' => $tag->id], true), [
+                'rel' => 'shortlink'
+            ]);
+            Meta::links(Route::url('rss', ['controller' => 'blog', 'action' => 'tag', 'id' => $tag->id], true), [
+                'rel' => 'alternate',
+                'type' => 'application/rss+xml',
+                'title' => Template::getSiteName() . ' : ' . $tag->name,
+            ]);
 		}
 	}
 }

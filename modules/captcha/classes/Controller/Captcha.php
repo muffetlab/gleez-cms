@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Outputs the dynamic Captcha resource.
  * Usage: Call the Captcha controller from a view, e.g.
@@ -11,12 +12,12 @@
  * @copyright	(c) 2008-2010 Kohana Team
  * @license		http://kohanaphp.com/license.html
  */
-class Controller_Captcha extends Controller {
-
+class Controller_Captcha extends Controller
+{
 	/**
 	 * @var boolean Auto render template
 	 **/
-	public $auto_render = FALSE;
+    public $auto_render = false;
 
     /**
      * @var array|mixed
@@ -45,7 +46,7 @@ class Controller_Captcha extends Controller {
         // Output the Captcha challenge resource (no HTML)
 		// Pull the config group name from the URL
 		//$group = $this->request->param('group', 'default');
-		Captcha::instance($this->group)->render(FALSE);
+        Captcha::instance($this->group)->render(false);
 	}
 
     /**
@@ -56,4 +57,4 @@ class Controller_Captcha extends Controller {
 		Captcha::instance($this->group)->update_response_session();
 	}
 
-} // End Captcha_Controller
+}

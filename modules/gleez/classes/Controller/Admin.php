@@ -9,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin extends Template {
-
+class Controller_Admin extends Template
+{
 	/**
 	 * Page template
      * @var string|View
@@ -39,19 +39,19 @@ class Controller_Admin extends Template {
      * The before() method is called before controller action
      *
      * @throws HTTP_Exception
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses  ACL::required
      * @uses  Theme::$is_admin
      */
 	public function before()
 	{
 		// Inform tht we're in admin section for themers/developers
-		Theme::$is_admin = TRUE;
+        Theme::$is_admin = true;
 
-		if($this->request->action() != 'login')
-		{
+        if ($this->request->action() != 'login') {
 			ACL::redirect('administer site', 'admin/login');
 		}
 
@@ -62,27 +62,25 @@ class Controller_Admin extends Template {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public function action_login(){
-		
-		if ($this->_auth->logged_in())
-		{
+    public function action_login()
+    {
+        if ($this->_auth->logged_in()) {
 			// redirect to the user account
 			$this->request->redirect(Route::get('admin')->uri(), 200);
 		}
 
 		// Disable sidebars on login page
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		$this->title = __('Sign In');
         $user = ORM::factory('User');
 
 		// Create form action
         $destination = $_GET['destination'] ?? 'admin';
-		$params      = array('action' => 'login');
-		$action      = Route::get('admin/login')->uri($params).URL::query(array('destination' => $destination));
+        $params = ['action' => 'login'];
+        $action = Route::get('admin/login')->uri($params) . URL::query(['destination' => $destination]);
 
-        if (kohana::find_file('views', 'layouts/login'))
-		{
+        if (kohana::find_file('views', 'layouts/login')) {
 			$this->template->set_filename('layouts/login');
 		}			
 			
@@ -92,22 +90,18 @@ class Controller_Admin extends Template {
 			->set('action',       $action)
 			->bind('errors',      $this->_errors);
 
-		if ($this->valid_post('login'))
-		{
-			try
-			{
+        if ($this->valid_post('login')) {
+            try {
 				// Check Auth
 				$user->login($this->request->post());
 
 				// If the post data validates using the rules setup in the user model
-				Message::success(__('Welcome, %title!', array('%title' => $user->nick)));
-				Kohana::$log->add(Log::INFO, 'User :name logged in.', array(':name' => $user->name));
+                Message::success(__('Welcome, %title!', ['%title' => $user->nick]));
+                Kohana::$log->add(Log::INFO, 'User :name logged in.', [':name' => $user->name]);
 
 				// redirect to the user account
                 $this->request->redirect($_GET['destination'] ?? 'admin', 200);
-			}
-			catch (Validation_Exception $e)
-			{
+            } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('login');
 			}
 		}
@@ -117,7 +111,7 @@ class Controller_Admin extends Template {
 
 	public function after()
 	{
-		Assets::css('admin', "media/css/admin.css", array('default'), array('weight' => 60));
+        Assets::css('admin', "media/css/admin.css", ['default'], ['weight' => 60]);
 		parent::after();
 	}
 

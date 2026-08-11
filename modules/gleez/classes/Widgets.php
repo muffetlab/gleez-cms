@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Widgets Core Class
  *
@@ -10,8 +11,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license
  */
-class Widgets {
-
+class Widgets
+{
 	/**
 	 * Widgets instance
      * @var Widgets
@@ -22,25 +23,25 @@ class Widgets {
 	 * Associative array of widgets
      * @var array
 	 */
-	protected $_widgets = array();
+    protected $_widgets = [];
 
 	/**
 	 * Associative array of widget regions that will be loaded
      * @var array
 	 */
-	protected $_regions = array();
+    protected $_regions = [];
 
 	/**
 	 * Count of widgets inside a region
      * @var array
 	 */
-	protected $_widget_count = array();
+    protected $_widget_count = [];
 
 	/**
 	 * Status of Widgets, if it's already loaded from the database
      * @var bool
 	 */
-	protected $_loaded = FALSE;
+    protected $_loaded = false;
 
 	/**
 	 * Region name right|left etc
@@ -65,8 +66,7 @@ class Widgets {
      */
     public static function instance(string $region = 'right', string $format = 'html'): Widgets
     {
-		if ( ! isset(Widgets::$instance))
-		{
+        if (!isset(Widgets::$instance)) {
 			new Widgets($region, $format);
 		}
 
@@ -107,22 +107,20 @@ class Widgets {
      */
     public function add(string $region, string $name, $widget): Widgets
     {
-		if ( ! is_object($widget))
-		{
-			throw new Kohana_Exception('Not a valid widget object: :widget', array(':widget' => $name));
+        if (!is_object($widget)) {
+            throw new Kohana_Exception('Not a valid widget object: :widget', [':widget' => $name]);
 		}
 
-		if ( ! isset($this->_regions[$region]))
-		{
-			$this->_regions[$region] = array();
+        if (!isset($this->_regions[$region])) {
+            $this->_regions[$region] = [];
 		}
 
         $this->_regions[$region][] = $name;
 
 		// set default widget members
-		$widget->config = FALSE;
-		$widget->content = FALSE;
-		$widget->visible = TRUE;
+        $widget->config = false;
+        $widget->content = false;
+        $widget->visible = true;
 
 		$this->_widgets[$name] = $widget;
 
@@ -142,8 +140,7 @@ class Widgets {
 	 */
     public function get(string $name)
 	{
-		if ( ! isset($this->_widgets[$name]))
-		{
+        if (!isset($this->_widgets[$name])) {
             return null;
 		}
 
@@ -159,26 +156,22 @@ class Widgets {
 	 * $widget = $region->remove('right');
 	 *
 	 * // Removes login widget
-	 * $widget = $region->remove(FALSE, 'login');
+     * $widget = $region->remove(false, 'login');
 	 * ~~~
 	 *
      * @param string|null $region Region name [Optional]
      * @param string|null $widget Widget name [Optional]
 	 */
-    public function remove(string $region = NULL, string $widget = NULL)
+    public function remove(string $region = null, string $widget = null)
 	{
-		if ( ! is_null($region))
-		{
-			if (isset($this->_regions[$region]))
-			{
+        if (!is_null($region)) {
+            if (isset($this->_regions[$region])) {
 				unset($this->_regions[$region]);
 			}
 		}
 
-		if ( ! is_null($widget))
-		{
-			if (isset($this->_widgets[$widget]))
-			{
+        if (!is_null($widget)) {
+            if (isset($this->_widgets[$widget])) {
 				unset($this->_widgets[$widget]);
 			}
 		}
@@ -196,10 +189,9 @@ class Widgets {
      * @param string|null $region Region name [Optional]
 	 * @return  $this|string
 	 */
-    public function region(string $region = NULL)
+    public function region(string $region = null)
 	{
-		if (is_null($region))
-		{
+        if (is_null($region)) {
 			return $this->_region;
 		}
 
@@ -220,10 +212,9 @@ class Widgets {
      * @param string|null $format Format name [Optional]
 	 * @return  $this|string
 	 */
-    public function format(string $format = NULL)
+    public function format(string $format = null)
 	{
-		if (is_null($format))
-		{
+        if (is_null($format)) {
 			return $this->_format;
 		}
 
@@ -239,12 +230,9 @@ class Widgets {
 	 */
 	public function __toString()
 	{
-		try
-		{
+        try {
 			return $this->render();
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			return $e->getMessage();
 		}
 	}
@@ -257,30 +245,26 @@ class Widgets {
      * @return  string  HTML widgets
      * @throws Kohana_Exception
      */
-    public function render(string $region = NULL, string $format = NULL): string
+    public function render(string $region = null, string $format = null): string
     {
 		//set region, respect $this->region();
-		if ( ! is_null($region))
-		{
+        if (!is_null($region)) {
 			$this->region($region);
 		}
 
 		//set format, respect $this->format();
-		if ( ! is_null($format))
-		{
+        if (!is_null($format)) {
 			$this->format($format);
 		}
 
-		if ( ! isset($this->_regions[$this->_region]) OR is_null($this->_regions[$this->_region]))
-		{
+        if (!isset($this->_regions[$this->_region]) || is_null($this->_regions[$this->_region])) {
             return '';
 		}
 
-		$response = array();
+        $response = [];
 
-        foreach ($this->_regions[$this->_region] as $name)
-		{
-            $response[] = $this->get_widget($name, TRUE, $this->_format);
+        foreach ($this->_regions[$this->_region] as $name) {
+            $response[] = $this->get_widget($name, true, $this->_format);
 		}
 
 		return trim(implode(PHP_EOL.PHP_EOL, $response));
@@ -290,22 +274,21 @@ class Widgets {
      * Returns the named widget
      *
      * @param string $name Name of the widget
-     * @param boolean $visible Visibility permission from widget or FALSE to skip
-     * @param mixed $format The format of the output ex:xhtml, html or FALSE for object
+     * @param boolean $visible Visibility permission from widget or false to skip
+     * @param mixed $format The format of the output ex:xhtml, html or false for object
      * @return  object|string|null Widget object, HTML string, or null
      * @throws Kohana_Exception
      */
-    public function get_widget(string $name, bool $visible = FALSE, $format = FALSE)
+    public function get_widget(string $name, bool $visible = false, $format = false)
 	{
-		if ( ! $widget = $this->get($name))
-		{
+        if (!$widget = $this->get($name)) {
             return null;
 		}
 
         if ($visible) {
             $widget = $this->is_visible($widget);
         } else {
-            $widget->visible = TRUE;
+            $widget->visible = true;
         }
 
 		// Enable developers to override widget
@@ -314,16 +297,15 @@ class Widgets {
 
         $response = null;
 
-		if ($widget->status AND $widget->visible)
-		{
-			try
-			{
+        if ($widget->status && $widget->visible) {
+            try {
                 $widget->content = Widget::factory($name, $widget)->render();
-				$response = ($format === FALSE) ? $widget : trim($this->_html($widget, $this->_region, $this->_format));
-			}
-			catch (Exception $e)
-			{
-				Kohana::$log->add(Log::ERROR, 'Error processing widget ":name": :msg', array(':name' => $name, ':msg' => $e->getMessage()));
+                $response = ($format === false) ? $widget : trim($this->_html($widget, $this->_region, $this->_format));
+            } catch (Exception $e) {
+                Kohana::$log->add(Log::ERROR, 'Error processing widget ":name": :msg', [
+                    ':name' => $name,
+                    ':msg' => $e->getMessage()
+                ]);
 			}
 		}
 
@@ -353,8 +335,7 @@ class Widgets {
      */
     public static function install(array $widget, string $module)
 	{
-		if (isset($widget['name']) AND isset($widget['title']))
-		{
+        if (isset($widget['name']) && isset($widget['title'])) {
 			// name must be unique
 			$values['name']   = @strtolower($widget['name']);
 			$values['title']  = (string) $widget['title'];
@@ -362,14 +343,11 @@ class Widgets {
 			$values['status'] = 0;
 			$values['region'] = '-1';
 
-			try
-			{
+            try {
                 ORM::factory('Widget')->values($values, ['name', 'title', 'module', 'status', 'region'])->save();
-				Kohana::$log->add(Log::DEBUG, 'Insert widget where module: :module', array(':module' => $module));
-			}
-			catch (Database_Exception $e)
-			{
-				Kohana::$log->add(Log::ERROR, 'Unable to insert widgets: :mgs', array(':msg' => $e->getMessage()));
+                Kohana::$log->add(Log::DEBUG, 'Insert widget where module: :module', [':module' => $module]);
+            } catch (Database_Exception $e) {
+                Kohana::$log->add(Log::ERROR, 'Unable to insert widgets: :mgs', [':msg' => $e->getMessage()]);
 			}
 		}
 	}
@@ -383,16 +361,13 @@ class Widgets {
      */
     public static function uninstall(string $module)
 	{
-		try
-		{
+        try {
             ORM::factory('Widget')->where('module', '=', $module)->delete();
             Cache::instance()->delete_all();
 
-			Kohana::$log->add(Log::INFO, 'Deleted widgets where module: :module', array(':module' => $module));
-		}
-		catch (Database_Exception $e)
-		{
-			Kohana::$log->add(Log::ERROR, 'Unable to delete widgets: :msg', array(':msg' => $e->getMessage()));
+            Kohana::$log->add(Log::INFO, 'Deleted widgets where module: :module', [':module' => $module]);
+        } catch (Database_Exception $e) {
+            Kohana::$log->add(Log::ERROR, 'Unable to delete widgets: :msg', [':msg' => $e->getMessage()]);
 		}
 	}
 
@@ -406,8 +381,7 @@ class Widgets {
 	protected function load()
 	{
 		// if the widgets have been loaded already, just return it.
-		if ($this->_loaded)
-		{
+        if ($this->_loaded) {
 			return $this->_widgets;
 		}
 
@@ -420,10 +394,9 @@ class Widgets {
 				->order_by('weight', 'ASC')
 				->find_all();
 
-			$widgets = array();
+            $widgets = [];
 
-			foreach($_widgets as $_widget)
-			{
+            foreach ($_widgets as $_widget) {
 				/** @var $_widget ORM */
 				$widgets[] = (object)$_widget->as_array();
 			}
@@ -431,12 +404,11 @@ class Widgets {
             $cache->set('widgets:widgets', $widgets, Date::DAY);
 		}
 
-		foreach ($widgets as $widget)
-		{
+        foreach ($widgets as $widget) {
 			$this->add($widget->region, $widget->name, $widget);
 		}
 
-		$this->_loaded = TRUE;
+        $this->_loaded = true;
 
 		return $this;
 	}
@@ -447,22 +419,19 @@ class Widgets {
     protected function is_visible($widget)
 	{
 		static $current_route;
-		$widget->visible = TRUE;
+        $widget->visible = true;
 
-		if (is_null($current_route))
-		{
+        if (is_null($current_route)) {
 			$current_route = Request::current()->uri();
 			$current_route = UTF8::strtolower($current_route);
 		}
 
 		// role based widget access
-		if ( ! User::belongsto($widget->roles))
-		{
-			$widget->visible = FALSE;
+        if (!User::belongsTo($widget->roles)) {
+            $widget->visible = false;
 		}
 
-		if ($widget->pages)
-		{
+        if ($widget->pages) {
 			$pages = UTF8::strtolower($widget->pages);
 			$page_match =  Path::match_path($current_route, $pages);
 
@@ -477,23 +446,20 @@ class Widgets {
      */
     private function _html($widget, $region, $format): string
     {
-		$zebra = $id = FALSE;
+        $zebra = $id = false;
 
 		// Remove empty strings if content is string instead of view object
-		if (is_string($widget->content))
-		{
+        if (is_string($widget->content)) {
 			//@todo needs a better way
 			$widget->content = trim($widget->content);
 		}
 
 		// Don't render any widget if the content is null or empty
-		if (empty($widget->content))
-		{
+        if (empty($widget->content)) {
             return '';
 		}
 
-		if ($region)
-		{
+        if ($region) {
 			// All widgets get an independent counter for each region.
 			if ( ! isset($this->_widget_count[$region]))
 				$this->_widget_count[$region] = 1;

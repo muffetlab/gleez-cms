@@ -6,15 +6,15 @@
 		<p><?php echo __('An alias defines a different name for an existing URL path &mdash; for example, the alias \'about\' for the URL path \'page/1\'. A URL path can have multiple aliases.'); ?></p>
 	</div>
 
-    <?php echo HTML::anchor($add_url, '<i class="fas fa-plus"></i> ' . __('Add Alias'), array('class' => 'btn btn-success pull-right')) ?>
+    <?php echo HTML::anchor($add_url, '<i class="fas fa-plus"></i> ' . __('Add Alias'), ['class' => 'btn btn-success pull-right']) ?>
 	<div class='clearfix'></div><br>
 
 	<table id="admin-list-paths" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["1", "desc"]]'>
 		<thead>
 		<tr>
-			<th width="50%" class="sorting_desc"><?php echo __("URL Path"); ?></th>
-			<th width="40%" class="sorting_desc"><?php echo __("Alias"); ?></th>
-			<th width="10%" data-columns='{"orderable":false, "searchable":false}'></th>
+            <th style="width: 50%" class="sorting_desc"><?php echo __("URL Path"); ?></th>
+            <th style="width: 40%" class="sorting_desc"><?php echo __("Alias"); ?></th>
+            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
 		</tr>
 		</thead>
 		<tbody>

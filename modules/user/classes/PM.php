@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Private Message Helper
  *
@@ -9,7 +10,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class PM {
+class PM
+{
 	/**
 	 * Inbox virtual folder name.
 	 * Can be used when determining the type of messages received.
@@ -52,39 +54,36 @@ class PM {
 	/**
 	 * Bulk Actions
 	 *
-	 * @param   boolean  $list  TRUE for dropdown for bulk actions [Optional]
-	 *
+     * @param boolean $list true for dropdown for bulk actions
 	 * @return  mixed
 	 * @uses    Module::action
 	 */
-	public static function bulk_actions($list = FALSE)
+    public static function bulk_actions(bool $list = false)
 	{
-		$states = array(
-			'read'    => array(
-				'label'     => __('Mark as read'),
-				'callback'  => 'PM::bulk_update',
-				'arguments' => array('updates' => array('status' => self::STATUS_READ)),
-			),
-			'unread'  => array(
-				'label'     => __('Mark as unread'),
-				'callback'  => 'PM::bulk_update',
-				'arguments' => array('updates' => array('status' => self::STATUS_UNREAD)),
-			),
-			'delete'  => array(
-				'label'     => __('Delete'),
-				'callback'  => NULL,
-			)
-		);
+        $states = [
+            'read' => [
+                'label' => __('Mark as read'),
+                'callback' => 'PM::bulk_update',
+                'arguments' => ['updates' => ['status' => self::STATUS_READ]],
+            ],
+            'unread' => [
+                'label' => __('Mark as unread'),
+                'callback' => 'PM::bulk_update',
+                'arguments' => ['updates' => ['status' => self::STATUS_UNREAD]],
+            ],
+            'delete' => [
+                'label' => __('Delete'),
+                'callback' => null,
+            ]
+        ];
 
 		// Allow module developers to override
 		$values = Module::action('message_bulk_actions', $states);
 
-		if ($list)
-		{
-			$options = array('' => __('Bulk Actions'));
+        if ($list) {
+            $options = ['' => __('Bulk Actions')];
 
-			foreach ($values as $operation => $array)
-			{
+            foreach ($values as $operation => $array) {
 				$options[$operation] = $array['label'];
 			}
 
@@ -112,12 +111,9 @@ class PM {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($messages as $message)
-		{
-			foreach ($actions as $name => $value)
-			{
-				if (property_exists($message, $name))
-				{
+        foreach ($messages as $message) {
+            foreach ($actions as $name => $value) {
+                if (property_exists($message, $name)) {
 					$message->$name = $value;
 				}
 			}
@@ -143,8 +139,7 @@ class PM {
 			->where('id', 'IN', $ids)
 			->find_all();
 
-		foreach($messages as $message)
-		{
+        foreach ($messages as $message) {
 			$message->delete();
 		}
 	}

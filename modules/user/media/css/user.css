@@ -213,7 +213,7 @@ a#add-pic:hover {
 	font-size: 11px;
 }
 
-.help-signin {
+.help-sign-up {
 	color: #333;
 	background: #FDFDFD;
 	margin: 1em .2em;
@@ -231,15 +231,6 @@ form .captcha {
 
 ul{
 	list-style:none;
-}
-
-ul.tabnav > li {
-    color: #333;
-    display: inline;
-    float: right;
-    font-size: 11px;
-    list-style-type: none;
-    margin: 0 5px 0 0;
 }
 
 .reset_password legend {
@@ -299,7 +290,8 @@ ul.tabnav > li {
 	width:50px;
 	display:inline-block;
 }
-.list-all .allusers img{
+
+.list-all .friend-item img {
 	height:80px;
 	width:80px;
 }
@@ -309,7 +301,8 @@ ul.tabnav > li {
 .list-all .all-view{
 	padding-right: 5px;
 }
-.list-group-item.friends, .list-group-item.allusers{
+
+.list-group-item.friends, .list-group-item.friend-item {
 	border-left: none;
 	border-right: none;
 }
@@ -317,7 +310,7 @@ ul.tabnav > li {
 	border-bottom: none;
 }
 
-.list-all .allusers img{
+.list-all .friend-item img {
 	height:80px;
 	width:80px;
 }

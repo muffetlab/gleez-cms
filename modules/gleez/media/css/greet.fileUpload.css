@@ -17,11 +17,13 @@
 
   direction: ltr;
 }
-.fileupload {
+
+.file-upload {
   display: inline-block;
   margin-bottom: 9px;
 }
-.fileupload .form-control {
+
+.file-upload .form-control {
   display: inline-block;
   padding-top: 7px;
   padding-bottom: 5px;
@@ -29,66 +31,81 @@
   vertical-align: middle;
   cursor: text;
 }
-.fileupload .thumbnail {
+
+.file-upload .thumbnail {
   display: inline-block;
   margin-bottom: 5px;
   overflow: hidden;
   text-align: center;
   vertical-align: middle;
 }
-.fileupload .thumbnail > img {
+
+.file-upload .thumbnail > img {
   max-height: 100%;
 }
-.fileupload .btn {
+
+.file-upload .btn {
   vertical-align: middle;
 }
-.fileupload-exists .fileupload-new,
-.fileupload-new .fileupload-exists {
+
+.file-upload-exists .file-upload-new, .file-upload-new .file-upload-exists {
   display: none;
 }
-.fileupload-inline .fileupload-controls {
+
+.file-upload-inline .file-upload-controls {
   display: inline;
 }
-.fileupload-filename {
+
+.file-upload-filename {
   display: inline-block;
   overflow: hidden;
   vertical-align: middle;
 }
-.form-control .fileupload-filename {
+
+.form-control .file-upload-filename {
   vertical-align: bottom;
 }
-.fileupload-new .input-group .btn-file {
+
+.file-upload-new .input-group .btn-file {
   border-radius: 0 4px 4px 0;
 }
-.fileupload-new .input-group .btn-file.btn-xs,
-.fileupload-new .input-group .btn-file.btn-sm {
+
+.file-upload-new .input-group .btn-file.btn-xs, .file-upload-new .input-group .btn-file.btn-sm {
   border-radius: 0 3px 3px 0;
 }
-.fileupload-new .input-group .btn-file.btn-lg {
+
+.file-upload-new .input-group .btn-file.btn-lg {
   border-radius: 0 6px 6px 0;
 }
-.form-group.has-warning .fileupload .fileupload-preview {
+
+.form-group.has-warning .file-upload .file-upload-preview {
   color: #8a6d3b;
 }
-.form-group.has-warning .fileupload .thumbnail {
+
+.form-group.has-warning .file-upload .thumbnail {
   border-color: #faebcc;
 }
-.form-group.has-error .fileupload .fileupload-preview {
+
+.form-group.has-error .file-upload .file-upload-preview {
   color: #a94442;
 }
-.form-group.has-error .fileupload .thumbnail {
+
+.form-group.has-error .file-upload .thumbnail {
   border-color: #ebccd1;
 }
-.form-group.has-success .fileupload .fileupload-preview {
+
+.form-group.has-success .file-upload .file-upload-preview {
   color: #3c763d;
 }
-.form-group.has-success .fileupload .thumbnail {
+
+.form-group.has-success .file-upload .thumbnail {
   border-color: #d6e9c6;
 }
 .input-group-addon:not(:first-child) {
   border-left: 0;
 }
-.fileupload .fileupload-success, .fileupload .fileupload-error {
+
+.file-upload .file-upload-success, .file-upload .file-upload-error {
   display: none;
   opacity:0.9; /* CSS3 */
   z-index:1000;
@@ -98,18 +115,22 @@
   border-radius: 25px;
   position: absolute;
 }
-.fileupload .fileupload-success {
+
+.file-upload .file-upload-success {
   color: #8cc657;
 }
-.fileupload .fileupload-error {
+
+.file-upload .file-upload-error {
   color: #ee162d;
 }
-.fileupload .fileupload-message {
+
+.file-upload .file-upload-message {
   display: none;
   margin-bottom: 0.5em;
   padding: 5px 3px;
 }
-.fileupload .loading {
+
+.file-upload .loading {
     opacity: 0.5;
 	z-index:1000;
     background: #fff url('../images/progress.gif') no-repeat center center;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Manager for rendering meta tags (<link> and <meta>)
  *
@@ -8,19 +9,19 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-class Meta {
-
+class Meta
+{
 	/**
 	 * An array of meta links
 	 * @var array
 	 */
-	public static $links = array();
+    public static $links = [];
 
 	/**
 	 * An array of meta tags
 	 * @var array
 	 */
-	public static $tags = array();
+    public static $tags = [];
 
     /**
      * Meta Link wrapper
@@ -34,23 +35,21 @@ class Meta {
      * @uses    URL::site
      * @uses    URL::is_absolute
      */
-    public static function links(string $handle = NULL, array $attrs = array())
+    public static function links(string $handle = null, array $attrs = [])
 	{
 		// Return all meta links
-		if (is_null($handle))
-		{
+        if (is_null($handle)) {
 			return self::all_links();
 		}
 
-		$attrs['href'] = URL::is_absolute($handle) ? $handle : URL::site($handle, TRUE);
+        $attrs['href'] = URL::is_absolute($handle) ? $handle : URL::site($handle, true);
 
 		// Make sure have only one 'canonical' link per request
-		if (isset($attrs['rel']) AND $attrs['rel'] == 'canonical')
-		{
+        if (isset($attrs['rel']) && $attrs['rel'] == 'canonical') {
 			$handle = 'canonical';
 		}
 
-		return self::$links[$handle] = array('url' => $attrs['href'], 'attrs' => $attrs);
+        return self::$links[$handle] = ['url' => $attrs['href'], 'attrs' => $attrs];
 	}
 
 	/**
@@ -63,8 +62,7 @@ class Meta {
 	 */
     public static function get_link(string $handle): ?string
     {
-		if ( ! isset(self::$links[$handle]))
-		{
+        if (!isset(self::$links[$handle])) {
             return null;
 		}
 
@@ -73,19 +71,15 @@ class Meta {
 		$output      = '';
 		$conditional = Arr::get($attrs, 'conditional');
 
-		if ( ! empty($conditional))
-		{
+        if (!empty($conditional)) {
 			unset($attrs['conditional']);
 		}
 
 		$link = '<link'.HTML::attributes($attrs).'>';
 
-		if (empty($conditional))
-		{
+        if (empty($conditional)) {
 			$output .= $link;
-		}
-		else
-		{
+        } else {
             $output .= "<!--[if $conditional]>$link<![endif]-->";
 		}
 
@@ -99,15 +93,13 @@ class Meta {
 	 */
     public static function all_links(): string
     {
-		if (empty(self::$links))
-		{
+        if (empty(self::$links)) {
             return '';
 		}
 
-		$assets = array();
+        $assets = [];
 
-		foreach (self::_sort(self::$links) as $handle => $data)
-		{
+        foreach (self::_sort(self::$links) as $handle => $data) {
 			$assets[] = self::get_link($handle);
 		}
 
@@ -126,29 +118,26 @@ class Meta {
      * @param array $attrs An associative array of tag settings [Optional]
      * @return array|string Setting returns asset array, getting returns asset HTML
 	 */
-    public static function tags(string $handle = NULL, string $value = NULL, array $attrs = array())
+    public static function tags(string $handle = null, string $value = null, array $attrs = [])
 	{
 		// Return all meta links
-		if (is_null($handle))
-		{
+        if (is_null($handle)) {
 			return self::all_tags();
 		}
 
-		if ( ! is_array($attrs))
-		{
-			$attrs = array();
+        if (!is_array($attrs)) {
+            $attrs = [];
 		}
 
 		$name_type = isset($attrs['http_equiv']) ? 'http-equiv' : 'name';
 		$attrs[$name_type] = $handle;
 		$attrs['content'] = $value;
 
-		if ($handle == 'charset')
-		{
-			$attrs = array();
+        if ($handle == 'charset') {
+            $attrs = [];
 		}
 
-		return self::$tags[$handle] = array('handle' => $handle, 'value' => $value, 'attrs' => $attrs);
+        return self::$tags[$handle] = ['handle' => $handle, 'value' => $value, 'attrs' => $attrs];
 	}
 
 	/**
@@ -160,8 +149,7 @@ class Meta {
 	 */
     public static function get_tag(string $handle): ?string
     {
-		if ( ! isset(self::$tags[$handle]))
-		{
+        if (!isset(self::$tags[$handle])) {
             return null;
 		}
 
@@ -170,23 +158,18 @@ class Meta {
 		$output      = '';
 		$conditional = Arr::get($attrs, 'conditional');
 
-		if ($asset['handle'] == 'charset')
-		{
+        if ($asset['handle'] == 'charset') {
 			return '<meta charset="'.$asset['value'].'">';
 		}
 
-		if ( ! empty($conditional))
-		{
+        if (!empty($conditional)) {
 			unset($attrs['conditional']);
 		}
 
 		$meta = '<meta'.HTML::attributes($attrs).'>';
-		if (empty($conditional))
-		{
+        if (empty($conditional)) {
 			$output .= $meta;
-		}
-		else
-		{
+        } else {
             $output .= "<!--[if $conditional]>$meta<![endif]-->";
 		}
 
@@ -200,15 +183,13 @@ class Meta {
 	 */
     public static function all_tags(): string
     {
-		if (empty(self::$tags))
-		{
+        if (empty(self::$tags)) {
             return '';
 		}
 
-		$assets = array();
+        $assets = [];
 
-		foreach (self::_sort(self::$tags) as $handle => $data)
-		{
+        foreach (self::_sort(self::$tags) as $handle => $data) {
 			$assets[] = self::get_tag($handle);
 		}
 

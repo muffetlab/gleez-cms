@@ -1,4 +1,5 @@
 <?php
+
 /**
  * [Cache](api/Cache) A Redis driver
  *
@@ -40,8 +41,8 @@
  * @license    https://gleezcms.org/license Gleez CMS License
  * @link 	   https://github.com/nicolasff/phpredis
  */
-class Cache_Redis extends Cache {
-
+class Cache_Redis extends Cache
+{
 	const CACHE_TYPE = 'user';
 
     /**
@@ -63,16 +64,15 @@ class Cache_Redis extends Cache {
 	protected function __construct(array $config)
 	{
 		// Check that the PhpRedis extension is loaded.
-		if ( ! extension_loaded('redis'))
-		{
+        if (!extension_loaded('redis')) {
 			throw new Cache_Exception('You must have PhpRedis installed and enabled to use.');
 		}
 
 		// Define a default settings array.
-		$default_settings = array(
-			'host' => 'localhost',
-			'port' => 6379
-		);
+        $default_settings = [
+            'host' => 'localhost',
+            'port' => 6379
+        ];
 
 		// Merge the default settings with the user-defined settings.
 		$this->config(Arr::merge($default_settings, $config));
@@ -87,8 +87,7 @@ class Cache_Redis extends Cache {
 	/**
 	 * Retrieve a cached value entry by id
 	 *
-	 * Return the stored variable or array of variables on success
-	 * or $default FALSE on failure
+     * Return the stored variable or array of variables on success or $default false on failure.
 	 *
 	 * Examples:
 	 * ~~~
@@ -110,17 +109,16 @@ class Cache_Redis extends Cache {
     public function get(string $id, $default = null)
 	{
 		//  Try to fetch a stored variable from the cache
-		try
-		{
+        try {
 			// Return the cache
 			return $this->_redis->get(System::sanitize_id($this->config('prefix').$id));
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			// Cache is corrupt or not exists, let return happen normally
-			Kohana::$log->add(Log::ERROR, 'An error occurred retrieving corrupt or not exists cache name: [:name]',
-				array(':name' => System::sanitize_id($this->config('prefix').$id))
-			);
+            Kohana::$log->add(
+                Log::ERROR,
+                'An error occurred retrieving corrupt or not exists cache name: [:name]',
+                [':name' => System::sanitize_id($this->config('prefix') . $id)]
+            );
 		}
 
 		// Cache not found, return default value
@@ -149,24 +147,20 @@ class Cache_Redis extends Cache {
      */
     public function set(string $id, $data, int $lifetime = null): bool
     {
-		if ($lifetime === NULL)
-		{
+        if ($lifetime === null) {
 			$lifetime = Arr::get($this->_config, 'default_expire', Cache::DEFAULT_EXPIRE);
 		}
 
-		try
-		{
+        try {
 			return $this->_redis->set(System::sanitize_id($this->config('prefix').$id), $data, $lifetime);
-		}
-		catch (Exception $e)
-		{
-			Kohana::$log->add(Log::ERROR, 'An error occurred setting [:name] to cache.',
-				array(':name' => System::sanitize_id($this->config('prefix').$id))
-			);
+        } catch (Exception $e) {
+            Kohana::$log->add(Log::ERROR, 'An error occurred setting [:name] to cache.', [
+                ':name' => System::sanitize_id($this->config('prefix') . $id)
+            ]);
 		}
 
 		// Failed to write cache
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -249,19 +243,18 @@ class Cache_Redis extends Cache {
 	 */
     protected function exists(string $id): bool
     {
-		try
-		{
+        try {
 			return $this->_redis->exists(System::sanitize_id($this->config('prefix').$id));
-		}
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
 			// Cache is corrupt or not exists, let return happen normally
-			Kohana::$log->add(Log::ERROR, 'An error occurred retrieving corrupt or not exists cache name: [:name]',
-				array(':name' => System::sanitize_id($this->config('prefix').$id))
-			);
+            Kohana::$log->add(
+                Log::ERROR,
+                'An error occurred retrieving corrupt or not exists cache name: [:name]',
+                [':name' => System::sanitize_id($this->config('prefix') . $id)]
+            );
 		}
 
 		// Cache not found, return default value
-		return FALSE;
+        return false;
 	}
 }

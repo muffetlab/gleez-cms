@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Default auth user token
  *
@@ -8,20 +9,20 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license
  */
-class Model_User_Token extends ORM {
-
-	protected $_table_columns = array(
-		'id' => array( 'type' => 'int' ),
-		'user_id' => array( 'type' => 'int' ),
-		'user_agent' => array( 'type' => 'string' ),
-		'token' => array( 'type' => 'string' ),
-		'type' => array( 'type' => 'string', "column_default" => NULL ),
-		'created' => array( 'type' => 'int' ),
-		'expires' => array( 'type' => 'int' ),
-	);
+class Model_User_Token extends ORM
+{
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'user_id' => ['type' => 'int'],
+        'user_agent' => ['type' => 'string'],
+        'token' => ['type' => 'string'],
+        'type' => ['type' => 'string', 'column_default' => null],
+        'created' => ['type' => 'int'],
+        'expires' => ['type' => 'int'],
+    ];
 
 	// Relationships
-	protected $_belongs_to = array('user' => array());
+    protected $_belongs_to = ['user' => []];
 
     /**
      * Handles garbage collection and deleting of expired objects.
@@ -29,18 +30,16 @@ class Model_User_Token extends ORM {
      * @return void
      * @throws Kohana_Exception
      */
-	public function __construct($id = NULL)
+    public function __construct($id = null)
 	{
 		parent::__construct($id);
 
-		if (mt_rand(1, 100) === 1)
-		{
+        if (mt_rand(1, 100) === 1) {
 			// Do garbage collection
 			$this->delete_expired();
 		}
 
-		if ($this->expires < time() AND $this->_loaded)
-		{
+        if ($this->expires < time() && $this->_loaded) {
 			// This object has expired
 			$this->delete();
 		}
@@ -52,8 +51,8 @@ class Model_User_Token extends ORM {
      * @return ORM
      * @throws Kohana_Exception
      */
-	public function delete_expired()
-	{
+    public function delete_expired(): ORM
+    {
 		// Delete all expired tokens
 		DB::delete($this->_table_name)
 			->where('expires', '<', time())
@@ -62,19 +61,19 @@ class Model_User_Token extends ORM {
 		return $this;
 	}
 
-	public function create(Validation $validation = NULL): Kohana_ORM
+    public function create(Validation $validation = null): Kohana_ORM
     {
 		$this->token = $this->create_token();
 
 		return parent::create($validation);
 	}
 
-	protected function create_token()
-	{
+    protected function create_token(): string
+    {
 		do
 		{
-			$token = sha1(uniqid(Text::random('alnum', 32), TRUE));
-		} while (ORM::factory('User_token', array('token' => $token))->loaded());
+            $token = sha1(uniqid(Text::random('alnum', 32), true));
+        } while (ORM::factory('User_token', ['token' => $token])->loaded());
 
 		return $token;
 	}

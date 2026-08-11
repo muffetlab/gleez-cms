@@ -1,4 +1,5 @@
 <?php
+
 /**
  * URL Class Helper
  *
@@ -21,15 +22,13 @@ class URL extends Kohana_URL
      * @throws Kohana_Exception
      * @uses    Request::uri
      */
-    public static function canonical($url, $pagination = NULL, array $query = NULL, $protocol = TRUE): string
+    public static function canonical($url, $pagination = null, array $query = null, $protocol = true): string
     {
-		if ($url instanceof Request)
-		{
+        if ($url instanceof Request) {
 			return self::site($url->uri(), $protocol);
 		}
 
-		if ($pagination AND $pagination->current_page > 1)
-		{
+        if ($pagination && $pagination->current_page > 1) {
 			$url .= '/p' . $pagination->current_page;
 		}
 
@@ -44,7 +43,7 @@ class URL extends Kohana_URL
 	 */
     public static function is_absolute(string $url): bool
     {
-		return (strpos($url, '://') === FALSE);
+        return (strpos($url, '://') === false);
 	}
 
     /**
@@ -58,9 +57,8 @@ class URL extends Kohana_URL
      */
     public static function is_remote(string $url): bool
     {
-		if((strpos($url, '://') !== FALSE))
-		{
-			$base = URL::base(TRUE);
+        if ((strpos($url, '://') !== false)) {
+            $base = URL::base(true);
 
 			$host1 = str_replace('www.', '', parse_url($base, PHP_URL_HOST));
 			$host2 = str_replace('www.', '', parse_url($url, PHP_URL_HOST));
@@ -68,7 +66,7 @@ class URL extends Kohana_URL
 			return trim($host1) === trim($host2);
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -83,16 +81,13 @@ class URL extends Kohana_URL
     public static function explode(string $url): array
     {
 		$url = parse_url($url);
-		$url['query_params'] = array();
+        $url['query_params'] = [];
 
-		// On seriously malformed URLs, parse_url() may return FALSE.
-		if (isset($url['query']))
-		{
+        // On seriously malformed URLs, parse_url() may return false.
+        if (isset($url['query'])) {
 			$pairs = explode('&', $url['query']);
-			foreach($pairs as $pair)
-			{
-				if (trim($pair) == '')
-				{
+            foreach ($pairs as $pair) {
+                if (trim($pair) == '') {
 					continue;
 				}
 
@@ -114,17 +109,15 @@ class URL extends Kohana_URL
      * @return  string
      * @throws Kohana_Exception
      */
-    public static function current($protocol = NULL, bool $index = FALSE, bool $with_query_params = TRUE): string
+    public static function current($protocol = null, bool $index = false, bool $with_query_params = true): string
     {
 		static $uri;
 		$query = null;
-		if (!$with_query_params)
-		{
+        if (!$with_query_params) {
 			$query = self::query();
 		}
 
-		if (empty($uri))
-		{
+        if (empty($uri)) {
 			$uri = self::site(Request::current()->uri());
 		}
 
@@ -140,10 +133,9 @@ class URL extends Kohana_URL
      */
     public static function is_active(string $url): bool
     {
-		if (preg_match('#^[A-Z][A-Z0-9+.\-]+://#i', $url))
-		{
+        if (preg_match('#^[A-Z][A-Z0-9+.\-]+://#i', $url)) {
 			// Don't check URIs with a scheme ... not really a URI is it?
-			return FALSE;
+            return false;
 		}
 
 		$current = explode('/', trim(str_replace(self::base(), '', self::current()), '/'));
@@ -151,17 +143,14 @@ class URL extends Kohana_URL
 		$url = explode('/', trim(str_replace(self::base(), '', $url), '/'));
 		ksort($url);
 
-		if (0 == count(array_diff($url, $current)))
-		{
-			return TRUE;
+        if (0 == count(array_diff($url, $current))) {
+            return true;
 		}
 
-		$result = FALSE;
+        $result = false;
 
-		if (count($url) < count($current))
-		{
-			for ($i = 0; $i == count($url); $i++)
-			{
+        if (count($url) < count($current)) {
+            for ($i = 0; $i == count($url); $i++) {
                 $result = $url[$i] == $current[$i];
 			}
 		}

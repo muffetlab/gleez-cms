@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gleez File Class
  *
@@ -22,14 +23,11 @@ class File extends Kohana_File
 	 * @uses    Text::random
 	 * @uses    UTF8::strtolower
 	 */
-    public static function getUnique(string $name = NULL, int $length = 20, bool $remove_spaces = TRUE, string $replacement = '_'): string
+    public static function getUnique(string $name = null, int $length = 20, bool $remove_spaces = true, string $replacement = '_'): string
     {
-		if (is_null($name))
-		{
+        if (is_null($name)) {
             return UTF8::strtolower(uniqid() . Text::random('alnum', $length));
-		}
-		else
-		{
+        } else {
 			// Find the file extension
 			$ext    = strtolower(pathinfo($name, PATHINFO_EXTENSION));
 			

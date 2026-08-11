@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Setting the Routes
  *
@@ -7,62 +8,53 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-if ( ! Route::cache())
-{
-	//User Backend routes
-	Route::set('admin/oauth2', 'admin/oauth2(/<action>(/<id>))(/p<page>)', array(
-		'id'         => '\d+',
-		'page'       => '\d+',
-		'action'     => 'list|add|edit|delete'
-	))
-	->defaults(array(
-		'directory'  => 'admin',
-		'controller' => 'oauth2',
-		'action'     => 'list',
-	));
+if (!Route::cache()) {
+    //User Backend routes
+    Route::set('admin/oauth2', 'admin/oauth2(/<action>(/<id>))(/p<page>)', [
+        'id' => '\d+',
+        'page' => '\d+',
+        'action' => 'list|add|edit|delete'
+    ])->defaults([
+        'directory' => 'admin',
+        'controller' => 'oauth2',
+        'action' => 'list',
+    ]);
 
-	Route::set('oauth2/provider', 'oauth2/<provider>(/<action>)', array('provider' => 'gleez|google|facebook|live|github'))
-	->defaults(array(
-		'controller' => 'provider',
-		'action'     => 'index',
-	));
-	
-	//oAuth2 Frontend routes
-	Route::set('oauth2/auth', 'oauth2/auth')
-	->defaults(array(
-		'controller' => 'authorize',
-		'action'     => 'index',
-	));
+    Route::set('oauth2/provider', 'oauth2/<provider>(/<action>)', [
+        'provider' => 'gleez|google|facebook|live|github'
+    ])->defaults([
+        'controller' => 'provider',
+        'action' => 'index',
+    ]);
 
-	Route::set('oauth2/token', 'oauth2/token')
-	->defaults(array(
-		'controller' => 'token',
-		'action'     => 'index',
-	));
+    // OAuth2 frontend routes
+    Route::set('oauth2/auth', 'oauth2/auth')->defaults([
+        'controller' => 'authorize',
+        'action' => 'index',
+    ]);
 
-	Route::set('oauth2/revoke', 'oauth2/revoke')
-	->defaults(array(
-		'controller' => 'revoke',
-		'action'     => 'index',
-	));
-	
-	Route::set('oauth2/test', 'oauth2/test(/<action>)')
-	->defaults(array(
-		'controller' => 'oauthtest',
-		'action'     => 'coderequest',
-	));
-	
-	Route::set('oauth2/me', 'oauth2/me(/<action>)')
-	->defaults(array(
-		'controller' => 'me',
-		'action'     => 'index',
-	));
-	
-	Route::set('oauth2/client', 'oauth2/client(/<action>)(/<id>)', array('id' => '\d+', 'action' => 'list|register|edit|view|delete'))
-	->defaults(array(
-		'controller' => 'client',
-		'action'     => 'list',
-	));
+    Route::set('oauth2/token', 'oauth2/token')->defaults([
+        'controller' => 'token',
+        'action' => 'index',
+    ]);
+
+    Route::set('oauth2/revoke', 'oauth2/revoke')->defaults([
+        'controller' => 'revoke',
+        'action' => 'index',
+    ]);
+
+    Route::set('oauth2/me', 'oauth2/me(/<action>)')->defaults([
+        'controller' => 'me',
+        'action' => 'index',
+    ]);
+
+    Route::set('oauth2/client', 'oauth2/client(/<action>)(/<id>)', [
+        'id' => '\d+',
+        'action' => 'list|register|edit|view|delete'
+    ])->defaults([
+        'controller' => 'client',
+        'action' => 'list',
+    ]);
 } 
 
 
@@ -75,42 +67,41 @@ if ( ! Route::cache())
  *
  * @uses ACL Used to define the privileges
  */
-if ( ! ACL::cache() )
-{
-	ACL::set('oauth2', array(
-		'administer oauth2' => array(
-			'title'           => __('Administer oAuth2'),
-			'restrict access' => TRUE,
-			'description'     => __('oAUth Management'),
-		),
-		'access oaclient2' => array(
-			'title'           => __('Access Clients'),
-			'restrict access' => FALSE,
-			'description'     => __('Access to all oAuth2 Clients'),
-		),
-		'edit oaclient2' => array(
-			'title'           => __('Edit Client'),
-			'restrict access' => FALSE,
-			'description'     => __('The ability to change oAuth2 Client'),
-		),
-		'edit own oaclient2' => array(
-			'title'           => __('Change own Client'),
-			'restrict access' => TRUE,
-			'description'     => __('The ability to change own oAuth2 Client'),
-		),
-		'delete oaclient2' => array(
-			'title'           => __('Delete Client'),
-			'restrict access' => FALSE,
-			'description'     => __('The ability to delete oAuth2 Client'),
-		),
-		'delete own oaclient2' => array(
-			'title'           => __('Delete own Client'),
-			'restrict access' => TRUE,
-			'description'     => __('The ability to delete own oAuth2 Client'),
-		)
-	));
+if (!ACL::cache()) {
+    ACL::set('oauth2', [
+        'administer oauth2' => [
+            'title' => __('Administer OAuth2'),
+            'restrict access' => true,
+            'description' => __('OAuth Management'),
+        ],
+        'access oauth2 client' => [
+            'title' => __('Access Clients'),
+            'restrict access' => false,
+            'description' => __('Access to all OAuth2 Clients'),
+        ],
+        'edit oauth2 client' => [
+            'title' => __('Edit Client'),
+            'restrict access' => false,
+            'description' => __('The ability to change OAuth2 Client'),
+        ],
+        'edit own oauth2 client' => [
+            'title' => __('Change own Client'),
+            'restrict access' => true,
+            'description' => __('The ability to change own OAuth2 Client'),
+        ],
+        'delete oauth2 client' => [
+            'title' => __('Delete Client'),
+            'restrict access' => false,
+            'description' => __('The ability to delete OAuth2 Client'),
+        ],
+        'delete own oauth2 client' => [
+            'title' => __('Delete own Client'),
+            'restrict access' => true,
+            'description' => __('The ability to delete own OAuth2 Client'),
+        ]
+    ]);
 
-	/** Cache the module specific permissions in production */
-	ACL::cache(FALSE, Kohana::$environment === Kohana::PRODUCTION);
+    /** Cache the module specific permissions in production */
+    ACL::cache(false, Kohana::$environment === Kohana::PRODUCTION);
 }
  

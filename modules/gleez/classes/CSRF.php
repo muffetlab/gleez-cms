@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cross-Site Request Forgery helper
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class CSRF {
-
+class CSRF
+{
 	/**
 	 * Token time to live in seconds, 30 minutes
 	 * @var integer
@@ -45,7 +46,7 @@ class CSRF {
      * @return  boolean
      * @throws Kohana_Exception
      */
-    public static function valid(string $token = NULL, string $action = '', string $id = ''): bool
+    public static function valid(string $token = null, string $action = '', string $id = ''): bool
     {
 		// get token and action from Form POST
 		if (empty($token))  $token  = Arr::get($_REQUEST, '_token');
@@ -83,9 +84,8 @@ class CSRF {
     {
 		$config = Kohana::$config->load('site');
 
-		if ( !($key = $config->get('gleez_private_key')) )
-		{
-			$key = sha1(uniqid(mt_rand(), TRUE)) . md5(uniqid(mt_rand(), TRUE));
+        if (!($key = $config->get('gleez_private_key'))) {
+            $key = sha1(uniqid(mt_rand(), true)) . md5(uniqid(mt_rand(), true));
 			$config->set('gleez_private_key', $key);
 		}
 

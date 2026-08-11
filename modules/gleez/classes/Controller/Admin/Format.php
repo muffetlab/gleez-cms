@@ -9,16 +9,17 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Format extends Controller_Admin {
-
+class Controller_Admin_Format extends Controller_Admin
+{
     /**
      * The before() method is called before controller action.
      *
      * @throws HTTP_Exception
      * @throws HTTP_Exception_403
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      */
 	public function before()
 	{
@@ -42,8 +43,7 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		$total = $this->_format->count_all();
 
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			Kohana::$log->add(Log::INFO, 'No formats found.');
 			$this->response->body(View::factory('admin/format/none'));
 
@@ -55,8 +55,7 @@ class Controller_Admin_Format extends Controller_Admin {
 
 		$this->response->body($view);
 
-		if ( ! $this->_internal)
-		{
+        if (!$this->_internal) {
             Assets::tableDrag();
 		}
 	}
@@ -69,7 +68,6 @@ class Controller_Admin_Format extends Controller_Admin {
      * @uses  Config::load
      * @uses  Message::error
      * @uses  Filter::all
-     * @uses  InputFilter::filters
      */
 	public function action_configure()
 	{
@@ -78,9 +76,8 @@ class Controller_Admin_Format extends Controller_Admin {
 		// Get required format
 		$format = $this->_format->get($id);
 
-		if (is_null($format))
-		{
-			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent format id :id', array(':id' => $id));
+        if (is_null($format)) {
+            Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent format id :id', [':id' => $id]);
             Message::error(__("Text Format doesn't exists!"));
 
 			$this->request->redirect(Route::get('admin/format')->uri(), 404);
@@ -94,9 +91,9 @@ class Controller_Admin_Format extends Controller_Admin {
 		$enabled_filters = $formats[$id]['filters'];
 
 		// Form attributes
-		$params = array('id' => $id, 'action' => 'configure');
+        $params = ['id' => $id, 'action' => 'configure'];
 
-		$this->title = __('Configure %name format', array('%name' => $format['name']));
+        $this->title = __('Configure %name format', ['%name' => $format['name']]);
 
 		$view = View::factory('admin/format/form')
 			->set('roles', $all_roles)
@@ -105,8 +102,7 @@ class Controller_Admin_Format extends Controller_Admin {
 			->set('format', $format)
 			->set('params', $params);
 
-		if ($this->valid_post('filter'))
-		{
+        if ($this->valid_post('filter')) {
 			unset($_POST['filter'], $_POST['_token'], $_POST['_action']);
 			Message::info(__('Not implemented yet!'));
 		}

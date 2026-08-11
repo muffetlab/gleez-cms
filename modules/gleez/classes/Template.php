@@ -9,8 +9,8 @@
  * @copyright  (c) 2011-2018 Gleez Technologies
  * @license    https://gleezcms.org/license Gleez CMS License
  */
-abstract class Template extends Controller {
-
+abstract class Template extends Controller
+{
 	/**
      * Page template: view path/name (string) until {@see before()} runs, then a {@see View} instance.
      *
@@ -22,13 +22,13 @@ abstract class Template extends Controller {
 	 * Auto render template?
 	 * @var boolean
 	 */
-	public $auto_render = TRUE;
+    public $auto_render = true;
 
 	/**
 	 * Turn debugging on?
 	 * @var boolean
 	 */
-	public $debug = FALSE;
+    public $debug = false;
 
 	/**
 	 * The site name
@@ -40,19 +40,19 @@ abstract class Template extends Controller {
 	 * The page title
 	 * @var string
 	 */
-	public $title = NULL;
+    public $title = null;
 
 	/**
      * The page subtitle
 	 * @var string
 	 */
-	public $subtitle = FALSE;
+    public $subtitle = false;
 
 	/**
 	 * The Schema Type
 	 * @var string
 	 */
-	public $schemaType = FALSE;
+    public $schemaType = false;
 
 	/**
 	 * The delimiter page header and site name
@@ -64,37 +64,31 @@ abstract class Template extends Controller {
 	 * The page title icon
 	 * @var string
 	 */
-	public $icon = FALSE;
+    public $icon = false;
 
 	/**
 	 * Turn bare template on?
 	 * @var boolean
 	 */
-	public $bare = FALSE;
+    public $bare = false;
 
 	/**
 	 * The sidebar content
 	 * @var array
 	 */
-	protected $_regions = array();
+    protected $_regions = [];
 
 	/**
 	 * Is ajax request?
 	 * @var boolean
 	 */
-	protected $_ajax = FALSE;
-
-	/**
-	 * Is pjax request?
-	 * @var boolean
-	 */
-	protected $_pjax = FALSE;
+    protected $_ajax = false;
 
 	/**
 	 * is internal request?
 	 * @var boolean
 	 */
-	protected $_internal = FALSE;
+    protected $_internal = false;
 
 	/**
 	 * The configuration settings
@@ -119,12 +113,6 @@ abstract class Template extends Controller {
 	 * @var Format
 	 */
 	protected $_format;
-
-	/**
-	 * The destination url
-	 * @var array
-	 */
-	protected $_desti;
 
 	/**
 	 * The destination url
@@ -179,23 +167,23 @@ abstract class Template extends Controller {
 	 * (accept-type => path to format template)
 	 * @var array
 	 */
-	protected $_accept_formats = array(
-		'text/html'             => 'html',
-		'application/xhtml+xml' => 'xhtml',
-		'application/xml'       => 'xml',
-		'application/json'      => 'json',
-		'application/csv'       => 'csv',
-		'text/plain'            => 'php',
-		'text/javascript'       => 'jsonp',
-		'*/*'                   => 'xhtml' //ie7 ie8
-	);
+    protected $_accept_formats = [
+        'text/html' => 'html',
+        'application/xhtml+xml' => 'xhtml',
+        'application/xml' => 'xml',
+        'application/json' => 'json',
+        'application/csv' => 'csv',
+        'text/plain' => 'php',
+        'text/javascript' => 'jsonp',
+        '*/*' => 'xhtml' //ie7 ie8
+    ];
 
 	/**
 	 * Enable sidebars for this request?
      * For example, adding or editing pages don't require sidebars.
 	 * @var boolean
 	 */
-	protected $_sidebars = TRUE;
+    protected $_sidebars = true;
 
 	/**
 	 * Datatable Object.
@@ -207,7 +195,7 @@ abstract class Template extends Controller {
 	 * An array of form error messages to be displayed to the user.
 	 * @var array
 	 */
-	protected $_errors = array();
+    protected $_errors = [];
 
 	/**
 	 * If JSON is going to be delivered to the client,
@@ -220,7 +208,7 @@ abstract class Template extends Controller {
 	 * Allows overriding 'FormSaved' property to send with JSON.
 	 * @var boolean
 	 */
-    protected $formSaved = FALSE;
+    protected $formSaved = false;
 
 	/** @var String|null */
 	protected $nonce;
@@ -229,7 +217,7 @@ abstract class Template extends Controller {
      * Loads the template View object, if it is direct request
      *
      * @return  void
-     * @throws Http_Exception_415 If none of the accept-types are supported
+     * @throws HTTP_Exception_415 If none of the accept-types are supported
      * @throws Kohana_Exception
      * @throws View_Exception
      * @throws Exception
@@ -244,68 +232,53 @@ abstract class Template extends Controller {
 				$this->nonce = base64_encode(random_bytes(20));
 		}
 
-        if (!$this->bare)
-		{
+        if (!$this->bare) {
 			// Load the config
 			$this->_config = Kohana::$config->load('site');
 
-			if (Kohana::$profiling)
-			{
+            if (Kohana::$profiling) {
 				// Start a new benchmark token
 				$this->_benchmark = Profiler::start('Gleez', ucfirst($this->request->controller()) .' Controller');
 			}
 
 			// Test whether the current request is command line request
             if (PHP_SAPI === 'cli') {
-				$this->_ajax       = FALSE;
-				$this->auto_render = FALSE;
+                $this->_ajax = false;
+                $this->auto_render = false;
 			}
 
 			// Test whether the current request is the first request
-			if ( ! $this->request->is_initial())
-			{
-				$this->_internal   = TRUE;
-				$this->auto_render = FALSE;
+            if (!$this->request->is_initial()) {
+                $this->_internal = true;
+                $this->auto_render = false;
 			}
 
 			// Test whether the current request is ajax request
-			if ($this->request->is_ajax())
-			{
-				$this->_ajax       = TRUE;
-				$this->auto_render = FALSE;
-			}
-
-			// Test whether the current request is pjax request
-			if (isset($_SERVER['HTTP_X_PJAX']) && $this->_config->get('allow_pjax', FALSE))
-			{
-				$this->_pjax       = TRUE;
+            if ($this->request->is_ajax()) {
+                $this->_ajax = true;
+                $this->auto_render = false;
 			}
 
 			// Test whether the current request is jquery mobile request. ugly hack
-			if (isset($_SERVER['HTTP_X_THEME']) && $_SERVER['HTTP_X_THEME'] == 'mobile' && $this->_config->get('mobile_theme', FALSE))
-			{
-				$this->_ajax       = FALSE;
-				$this->_pjax       = FALSE;
-				$this->auto_render = TRUE;
+            if (isset($_SERVER['HTTP_X_THEME']) && $_SERVER['HTTP_X_THEME'] == 'mobile' && $this->_config->get('mobile_theme', false)) {
+                $this->_ajax = false;
+                $this->auto_render = true;
 			}
 
 			// Test whether the current request is mobile request. ugly hack
-			if (Request::is_mobile() && $this->_config->get('mobile_theme', FALSE))
-			{
-				$this->_ajax       = FALSE;
-				$this->_pjax       = FALSE;
-				$this->auto_render = TRUE;
+            if (Request::is_mobile() && $this->_config->get('mobile_theme', false)) {
+                $this->_ajax = false;
+                $this->auto_render = true;
 			}
 
 			// Test whether the current request is datatables request
-			if (Request::is_datatables())
-			{
-				$this->_ajax       = TRUE;
-				$this->auto_render = FALSE;
+            if (Request::is_datatables()) {
+                $this->_ajax = true;
+                $this->auto_render = false;
                 $this->response->headers('Content-Type', 'application/json; charset=' . Kohana::$charset);
 			}
 
-			$this->response->headers('X-Powered-By', Gleez::getVersion(TRUE, TRUE) . ' (' . Gleez::CODENAME . ')');
+            $this->response->headers('X-Powered-By', Gleez::getVersion(true, true));
 
 			$this->_auth   = Auth::instance();
 
@@ -322,18 +295,16 @@ abstract class Template extends Controller {
 			$this->_response_format = $this->request->headers()->preferred_accept(array_keys($this->_accept_formats));
 
 			$site_name = Template::getSiteName();
-            $url = URL::site('', TRUE);
+            $url = URL::site('', true);
 
 			View::bind_global('site_name', $site_name);
 			View::bind_global('site_url',  $url);
 		}
 
-        if ($this->auto_render && !$this->bare)
-		{
+        if ($this->auto_render && !$this->bare) {
 			// Throw exception if none of the accept-types are supported
-            if (empty($accept_types))
-			{
-                throw new Http_Exception_415('Unsupported accept-type');
+            if (empty($accept_types)) {
+                throw new HTTP_Exception_415('Unsupported accept-type');
 			}
 
 			// Initiate a Format instance
@@ -346,33 +317,29 @@ abstract class Template extends Controller {
 			$this->_widgets         = Widgets::instance();
 			$this->template->_admin = Theme::$is_admin;
 
-			// Set the destination & redirect url
-			$this->_desti = array(
-				'destination' => $this->request->uri()
-			);
-
-			$this->redirect = ($this->request->query('destination') !== NULL) ? $this->request->query('destination') : array();
+            // Set the redirect URL
+            $this->redirect = ($this->request->query('destination') !== null) ? $this->request->query('destination') : [];
 
 			// Bind the generic page variables
             $this->template
-				->set('site_slogan',   $this->_config->get('site_slogan', __('Innovate IT')))
-				->set('site_logo',     $this->_config->get('site_logo', FALSE))
-				->set('sidebar_left',  array())
-				->set('sidebar_right', array())
-				->set('column_class',  '')
-				->set('main_column',   12)
-				->set('head_title',    $this->title)
-				->set('title',         $this->title)
-				->set('subtitle',      $this->subtitle)
-				->set('icon',          $this->icon)
-				->set('schemaType',    $this->schemaType)
-				->set('front',         FALSE)
-				->set('mission',       FALSE)
-				->set('tabs',          FALSE)
-				->set('subtabs',       FALSE)
-				->set('actions',       FALSE)
-				->set('_user',         $this->_auth->get_user())
-				->bind('datatables',   $this->_datatables);
+                ->set('site_slogan', $this->_config->get('site_slogan', __('Innovate IT')))
+                ->set('site_logo', $this->_config->get('site_logo', false))
+                ->set('sidebar_left', [])
+                ->set('sidebar_right', [])
+                ->set('column_class', '')
+                ->set('main_column', 12)
+                ->set('head_title', $this->title)
+                ->set('title', $this->title)
+                ->set('subtitle', $this->subtitle)
+                ->set('icon', $this->icon)
+                ->set('schemaType', $this->schemaType)
+                ->set('front', false)
+                ->set('mission', false)
+                ->set('tabs', false)
+                ->set('subtabs', false)
+                ->set('actions', false)
+                ->set('_user', $this->_auth->get_user())
+                ->bind('datatables', $this->_datatables);
 
 			// Page Title
 			$this->title = ucwords($this->request->controller());
@@ -397,13 +364,11 @@ abstract class Template extends Controller {
 			View::bind_global('template', $this->template);
 		}
 
-		if (Kohana::$environment === Kohana::DEVELOPMENT)
-		{
-			Kohana::$log->add(Log::DEBUG, 'Executing Controller [:controller] action [:action]',
-				array(
-					':controller' => $this->request->controller(),
-					':action'     => $this->request->action(),
-			));
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
+            Kohana::$log->add(Log::DEBUG, 'Executing Controller [:controller] action [:action]', [
+                ':controller' => $this->request->controller(),
+                ':action' => $this->request->action(),
+            ]);
 		}
 	}
 
@@ -415,10 +380,9 @@ abstract class Template extends Controller {
      */
 	public function after()
 	{
-        if ($this->auto_render && !$this->bare)
-		{
+        if ($this->auto_render && !$this->bare) {
 			// Controller name as the default page id if none set
-			empty($this->_page_id) AND $this->_page_id = $this->request->controller();
+            empty($this->_page_id) and $this->_page_id = $this->request->controller();
 
 			// Load left and right sidebars if available
 			$this->_set_sidebars();
@@ -427,33 +391,32 @@ abstract class Template extends Controller {
 			$this->_set_column_class();
 
 			// Do some CSS magic to page class
-			$classes   = array(
-				I18n::$lang,
-				$this->request->controller(),
-				$this->request->action(),
-				$this->request->controller() . '-' . $this->request->action(),
-				$this->template->column_class,
-				$this->_page_class,
-				($this->_auth->logged_in()) ? 'logged-in' : 'not-logged-in'
-			);
+            $classes = [
+                I18n::$lang,
+                $this->request->controller(),
+                $this->request->action(),
+                $this->request->controller() . '-' . $this->request->action(),
+                $this->template->column_class,
+                $this->_page_class,
+                ($this->_auth->logged_in()) ? 'logged-in' : 'not-logged-in'
+            ];
 
 			// Special check for frontpage and frontpage title
-			if ($this->is_frontpage())
-			{
+            if ($this->is_frontpage()) {
 				// Set front variable true for themers
-				$this->template->front = TRUE;
+                $this->template->front = true;
 				// Don't show title on homepage
-				$this->template->title = FALSE;
+                $this->template->title = false;
 				// Don't show title on homepage
-				$this->title           = FALSE;
+                $this->title = false;
 
 				$this->template->mission = __($this->_config->get('site_mission', ''));
 			}
 
-			View::set_global(array(
-				'is_front' => $this->template->front,
-				'is_admin' => $this->template->_admin
-			));
+            View::set_global([
+                'is_front' => $this->template->front,
+                'is_admin' => $this->template->_admin
+            ]);
 
 			$classes[]  = $this->template->_admin ? 'backend' : 'frontend';
 			$classes[]  = ($this->template->front) ? 'front' : 'not-front';
@@ -466,43 +429,40 @@ abstract class Template extends Controller {
 			Module::event('template', $this);
 
 			// Set primary menu
-			$primary_menu = Menu::links('main-menu', array(
-				'class' => 'menus nav navbar-nav'
-			));
+            $primary_menu = Menu::links('main-menu', [
+                'class' => 'menus nav navbar-nav'
+            ]);
 
 			// Bind the generic page variables
-			$this->template->set('lang', I18n::$lang)
-				->set('page_id',      $this->_page_id)
-				->set('page_class',   $page_class)
-				->set('primary_menu', $primary_menu)
-				->set('title',        $this->title)
-				->set('subtitle',     $this->subtitle)
-				->set('icon',         $this->icon)
-				->set('schemaType',   $this->schemaType)
-				->set('mission',      $this->template->mission)
-				->set('content',      $this->response->body())
-				->set('messages',     Message::display())
-				->set('getNonce',     $this->nonce)
-				->set('profiler',     FALSE);
+            $this->template
+                ->set('lang', I18n::$lang)
+                ->set('page_id', $this->_page_id)
+                ->set('page_class', $page_class)
+                ->set('primary_menu', $primary_menu)
+                ->set('title', $this->title)
+                ->set('subtitle', $this->subtitle)
+                ->set('icon', $this->icon)
+                ->set('schemaType', $this->schemaType)
+                ->set('mission', $this->template->mission)
+                ->set('content', $this->response->body())
+                ->set('messages', Message::display())
+                ->set('getNonce', $this->nonce)
+                ->set('profiler', false);
 
-			if (count($this->_tabs) > 0)
-			{
+            if (count($this->_tabs) > 0) {
 				$this->template->tabs = View::factory('tabs')->set('tabs', $this->_tabs);
 			}
 
-			if (count($this->_subtabs) > 0)
-			{
+            if (count($this->_subtabs) > 0) {
 				$this->template->subtabs = View::factory('tabs')->set('tabs', $this->_subtabs);
 			}
 
-			if (count($this->_actions) > 0)
-			{
+            if (count($this->_actions) > 0) {
 				$this->template->actions = View::factory('actions')->set('actions', $this->_actions);
 			}
 
 			// And profiler if debug is true
-			if (Kohana::$environment !== Kohana::PRODUCTION AND $this->debug)
-			{
+            if (Kohana::$environment !== Kohana::PRODUCTION && $this->debug) {
 				$this->template->profiler = View::factory('profiler/stats');
 			}
 
@@ -515,13 +475,10 @@ abstract class Template extends Controller {
 			$output = $this->response->body();
 			$this->process_ajax();
 
-			if($this->_pjax) {
-				$output = '<title>'. $this->title .'</title>' . $this->response->body();
-			}
-			elseif ($this->_response_format === 'application/json')
-			{
+            if ($this->_response_format === 'application/json') {
 				// Check for dataTables request
-				if ($this->request->query('draw') !== NULL) return;
+                if ($this->request->query('draw') !== null)
+                    return;
 
 				$output = $this->_json['Data'];
 			}
@@ -532,10 +489,8 @@ abstract class Template extends Controller {
 			$this->response->body($output);
 		}
 
-        if (!$this->bare)
-		{
-			if (isset($this->_benchmark))
-			{
+        if (!$this->bare) {
+            if (isset($this->_benchmark)) {
 				// Stop the benchmark
 				Profiler::stop($this->_benchmark);
 			}
@@ -552,19 +507,12 @@ abstract class Template extends Controller {
 	 */
 	protected function _set_head_title()
 	{
-		if ($this->title)
-		{
-			$head_title = array(
-				strip_tags($this->title),
-				$this->template->site_name
-			);
-		}
-		else
-		{
-			$head_title = array($this->template->site_name);
+        if ($this->title) {
+            $head_title = [strip_tags($this->title), $this->template->site_name];
+        } else {
+            $head_title = [$this->template->site_name];
 
-			if ($this->template->site_slogan)
-			{
+            if ($this->template->site_slogan) {
 				$head_title[] = $this->template->site_slogan;
 			}
 		}
@@ -579,14 +527,13 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_server_headers()
 	{
-		$headers = $this->_config->get('headers', array());
-		$headers['X-Gleez-Version'] = Gleez::getVersion(TRUE, TRUE) . ' ('.Gleez::CODENAME.')';
+        $headers = $this->_config->get('headers', []);
+        $headers['X-Gleez-Version'] = Gleez::getVersion(true, true);
 
-        $xmlrpc = $this->_config->get('xmlrpc');
+        $xmlRpc = $this->_config->get('xml_rpc');
 
-		if ( ! is_null($xmlrpc))
-		{
-			$headers['X-Pingback'] = URL::site($xmlrpc, TRUE);
+        if (!is_null($xmlRpc)) {
+            $headers['X-Pingback'] = URL::site($xmlRpc, true);
 		}
 
 		// replace nonce variable
@@ -602,8 +549,7 @@ abstract class Template extends Controller {
 	 */
     protected function _set_server_headers(array $headers)
 	{
-        if (!empty($headers))
-		{
+        if (!empty($headers)) {
 			$this->response->headers($headers);
 		}
 	}
@@ -619,13 +565,11 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_meta_links()
 	{
-		$meta  = $this->_config->get('meta', array());
+        $meta = $this->_config->get('meta', []);
 		$links = Arr::get($meta, 'links');
 
-		if ($links)
-		{
-			foreach ($links as $url => $attributes)
-			{
+        if ($links) {
+            foreach ($links as $url => $attributes) {
 				Meta::links($url, $attributes);
 			}
 		}
@@ -642,29 +586,25 @@ abstract class Template extends Controller {
 	 */
 	protected function _set_default_meta_tags()
 	{
-		$meta        = $this->_config->get('meta', array());
+        $meta = $this->_config->get('meta', []);
 		$keywords    = $this->_config->get('keywords', '');
 		$description = $this->_config->get('description', '');
 
 		$tags = Arr::get($meta, 'tags');
-		$tags = Arr::merge($tags, array('keywords' => $keywords), array('description' => $description));
+        $tags = Arr::merge($tags, ['keywords' => $keywords], ['description' => $description]);
 
-		if ($tags)
-		{
-			foreach ($tags as $handle => $value)
-			{
-				$conditional = NULL;
+        if ($tags) {
+            foreach ($tags as $handle => $value) {
+                $conditional = null;
 
-				if (is_array($value))
-				{
+                if (is_array($value)) {
 					$conditional = Arr::get($value, 'conditional');
 					$value       = Arr::get($value, 'value', '');
 				}
 
-				$attrs = array();
+                $attrs = [];
 
-				if (isset($conditional))
-				{
+                if (isset($conditional)) {
 					$attrs['conditional'] = $conditional;
 				}
 
@@ -680,8 +620,7 @@ abstract class Template extends Controller {
 	 */
     protected function _set_sidebars(): Template
     {
-		if ($this->_sidebars !== FALSE)
-		{
+        if ($this->_sidebars !== false) {
 			$this->template->sidebar_left  = $this->_widgets->render('left');
 			$this->template->sidebar_right = $this->_widgets->render('right');
 		}
@@ -699,20 +638,15 @@ abstract class Template extends Controller {
 		$sidebar_left  = $this->template->sidebar_left;
 		$sidebar_right = $this->template->sidebar_right;
 
-		if ( ! empty($sidebar_left) AND ! empty($sidebar_right))
-		{
+        if (!empty($sidebar_left) && !empty($sidebar_right)) {
 			$this->template->column_class = 'main-both';
 			$this->template->main_column  = 6;
-		}
-		else
-		{
-			if ( ! empty($sidebar_left))
-			{
+        } else {
+            if (!empty($sidebar_left)) {
 				$this->template->column_class = 'main-left';
 				$this->template->main_column  = 9;
 			}
-			if ( ! empty($sidebar_right))
-			{
+            if (!empty($sidebar_right)) {
 				$this->template->column_class = 'main-right';
 				$this->template->main_column  = 9;
 			}
@@ -729,13 +663,13 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_css()
 	{
-		Assets::css('bootstrap', 'media/css/bootstrap.min.css', NULL, array('weight' => -15));
+        Assets::css('bootstrap', 'media/css/bootstrap.min.css', null, ['weight' => -15]);
         Assets::css('fontawesome-all', 'media/fontawesome/css/all.min.css', null, ['weight' => -13]);
         Assets::css('fontawesome-solid', 'media/fontawesome/css/solid.min.css', ['fontawesome-all'], ['weight' => -12]);
         Assets::css('fontawesome-regular', 'media/fontawesome/css/regular.min.css', ['fontawesome-all'], ['weight' => -12]);
         Assets::css('fontawesome-brands', 'media/fontawesome/css/brands.min.css', ['fontawesome-all'], ['weight' => -12]);
-		Assets::css('default', 'media/css/default.css', NULL, array('weight' => 0));
-		Assets::css('theme', "media/css/theme.css", array('default'), array('weight' => 50));
+        Assets::css('default', 'media/css/default.css', null, ['weight' => 0]);
+        Assets::css('theme', 'media/css/theme.css', ['default'], ['weight' => 50]);
 	}
 
     /**
@@ -746,30 +680,28 @@ abstract class Template extends Controller {
      */
 	protected function _set_default_js()
 	{
-		Assets::js('bootstrap', 'media/js/bootstrap.min.js', array('jquery'), FALSE, array('weight' => -8));
+        Assets::js('bootstrap', 'media/js/bootstrap.min.js', ['jquery'], false, ['weight' => -8]);
 
 		// Google js only in production and not in admin section
-		if (Kohana::PRODUCTION === Kohana::$environment AND Theme::$is_admin === FALSE)
-		{
+        if (Kohana::PRODUCTION === Kohana::$environment && Theme::$is_admin === false) {
             $ua = $this->_config->get('google_ua');
 
-			if ( ! empty($ua) )
-			{
+            if (!empty($ua)) {
 				Assets::google_stats($ua, $this->_config->get('site_url'));
 			}
 		}
 	}
 
     /**
-     * Returns TRUE if the POST has a valid CSRF
+     * Returns true if the POST has a valid CSRF.
      *
      * Usage:<br>
      * <code>
      *    if ($this->valid_post('upload_photo')) { ... }
      * </code>
      *
-     * @param string|NULL $submit Submit value [Optional]
-     * @return  boolean  Return TRUE if it's valid $_POST
+     * @param string|null $submit Submit value [Optional]
+     * @return boolean Return true if it's valid $_POST
      * @throws Kohana_Exception
      * @uses    Request::is_post
      * @uses    Request::post_max_size_exceeded
@@ -779,26 +711,25 @@ abstract class Template extends Controller {
      * @uses    CSRF::valid
      * @uses    Captcha::valid
      */
-    public function valid_post(string $submit = NULL): bool
+    public function valid_post(string $submit = null): bool
     {
-		if ( ! $this->request->is_post())
-		{
-			return FALSE;
+        if (!$this->request->is_post()) {
+            return false;
 		}
 
-		if (Request::post_max_size_exceeded())
-		{
-			$this->_errors = array('_action' => __('Max file size of :max Bytes exceeded!',
-				array(':max' => Request::get_post_max_size())) );
-			return FALSE;
+        if (Request::post_max_size_exceeded()) {
+            $this->_errors = [
+                '_action' => __('Max file size of :max Bytes exceeded!', [':max' => Request::get_post_max_size()])
+            ];
+
+            return false;
 		}
 
-		if ( ! is_null($submit) )
-		{
-			if ( ! isset($_POST[$submit]))
-			{
-				$this->_errors = array('_action' => __('This form has altered. Please try submitting it again.'));
-				return FALSE;
+        if (!is_null($submit)) {
+            if (!isset($_POST[$submit])) {
+                $this->_errors = ['_action' => __('This form has altered. Please try submitting it again.')];
+
+                return false;
 			}
 		}
 
@@ -808,30 +739,28 @@ abstract class Template extends Controller {
         $has_csrf = !empty($_token) && !empty($_action);
 		$valid_csrf = CSRF::valid($_token, $_action);
 
-		if ($has_csrf AND ! $valid_csrf)
-		{
+        if ($has_csrf && !$valid_csrf) {
 			// CSRF was submitted but expired
-			$this->_errors = array('_token' => __('This form has expired. Please try submitting it again.'));
-			return FALSE;
+            $this->_errors = ['_token' => __('This form has expired. Please try submitting it again.')];
+
+            return false;
 		}
 
-		if (isset($_POST['_captcha']))
-		{
+        if (isset($_POST['_captcha'])) {
 			$captcha = $this->request->post('_captcha');
-			if (empty($captcha))
-			{
+            if (empty($captcha)) {
 				// CSRF was not entered
-				$this->_errors = array('_captcha' => __('The security code can\'t be empty.'));
-				return FALSE;
-			}
-			elseif ( ! Captcha::valid($captcha))
-			{
-				$this->_errors = array('_captcha' => __('The security answer was wrong.'));
-				return FALSE;
+                $this->_errors = ['_captcha' => __('The security code can\'t be empty.')];
+
+                return false;
+            } elseif (!Captcha::valid($captcha)) {
+                $this->_errors = ['_captcha' => __('The security answer was wrong.')];
+
+                return false;
 			}
 		}
 
-		return $has_csrf AND $valid_csrf;
+        return $has_csrf && $valid_csrf;
 	}
 
 	/**
@@ -846,13 +775,10 @@ abstract class Template extends Controller {
 	{
 		$queries = 0;
 
-		if (Kohana::$profiling)
-		{
+        if (Kohana::$profiling) {
 			// DB queries
-			foreach (Profiler::groups() as $group => $benchmarks)
-			{
-				if (strpos($group, 'database') === 0)
-				{
+            foreach (Profiler::groups() as $group => $benchmarks) {
+                if (strpos($group, 'database') === 0) {
 					$queries += count($benchmarks);
 				}
 			}
@@ -864,13 +790,13 @@ abstract class Template extends Controller {
 		$realMemoryUsage = Request::isHHVM();
 
 		// Get the total memory and execution time
-		$total = array(
+        $total = [
             '{memory_usage}' => number_format((memory_get_peak_usage($realMemoryUsage) - KOHANA_START_MEMORY) / 1024 / 1024, 2) . '&nbsp;' . __('MB'),
-			'{gleez_version}'    => Gleez::VERSION,
-            '{execution_time}' => number_format(microtime(TRUE) - KOHANA_START_TIME, 3) . '&nbsp;' . __('seconds'),
-			'{included_files}'   => count(get_included_files()),
-			'{database_queries}' => $queries
-		);
+            '{gleez_version}' => Gleez::VERSION,
+            '{execution_time}' => number_format(microtime(true) - KOHANA_START_TIME, 3) . '&nbsp;' . __('seconds'),
+            '{included_files}' => count(get_included_files()),
+            '{database_queries}' => $queries
+        ];
 
 		// Insert the totals into the response
 		$this->template = strtr((string) $this->template, $total);
@@ -887,7 +813,7 @@ abstract class Template extends Controller {
     {
 		$uri = preg_replace("#(/p\d+)+$#uD", '', rtrim($this->request->uri(), '/'));
 
-		return (empty($uri) OR ($uri === $this->_config->front_page));
+        return empty($uri) || $uri === $this->_config->front_page;
 	}
 
     /**
@@ -898,40 +824,32 @@ abstract class Template extends Controller {
      */
 	protected function process_ajax()
 	{
-		if ( $this->request->method() == HTTP_Request::POST )
-		{
+        if ($this->request->method() == HTTP_Request::POST) {
 			// Allow for override. Set the form saved true for ajax request, if no errors
-			if (empty($this->_errors))
-			{
+            if (empty($this->_errors)) {
                 $this->SetFormSaved();
-			}
-			else
-			{
-				$this->SetFormSaved(FALSE);
+            } else {
+                $this->SetFormSaved(false);
 			}
 
-			if ($this->_response_format === 'application/json')
-			{
-				$this->SetJson('Body', FALSE);
+            if ($this->_response_format === 'application/json') {
+                $this->SetJson('Body', false);
 			}
-		}
-		else
-		{
-			if ($this->_response_format === 'application/json')
-			{
+        } else {
+            if ($this->_response_format === 'application/json') {
 				$this->SetJson('Body', base64_encode($this->response->body()));
 			}
 		}
 
-		if ($this->_response_format === 'application/json')
-		{
-			if ($this->request->query('draw') !== NULL) return;
+        if ($this->_response_format === 'application/json') {
+            if ($this->request->query('draw') !== null)
+                return;
 
-			$scripts = Assets::js(FALSE, NULL, NULL, FALSE, NULL, Assets::FORMAT_AJAX);
-            $styles = Assets::css(null, NULL, NULL, null, Assets::FORMAT_AJAX);
+            $scripts = Assets::js(false, null, null, false, null, Assets::FORMAT_AJAX);
+            $styles = Assets::css(null, null, null, null, Assets::FORMAT_AJAX);
 
             $this->SetJson('formSaved', $this->formSaved);
-			$this->SetJson('messages',   Message::get(NULL, NULL, TRUE));
+            $this->SetJson('messages', Message::get(null, null, true));
 			$this->SetJson('errors',     $this->_errors);
 			$this->SetJson('redirect',   Request::$redirect_url);
 			$this->SetJson('title',      $this->title);
@@ -939,8 +857,7 @@ abstract class Template extends Controller {
 			$this->SetJson('css',        $styles);
 			$this->SetJson('js',         $scripts);
 
-			if ( ! Valid::utf8($this->_json['Body']))
-			{
+            if (!Valid::utf8($this->_json['Body'])) {
 				$this->_json['Body'] = utf8_encode($this->_json['Body']);
 			}
 
@@ -965,7 +882,7 @@ abstract class Template extends Controller {
 	 *
 	 * @param bool $Saved Whether form data was successfully saved.
 	 */
-    public function SetFormSaved(bool $Saved = TRUE)
+    public function SetFormSaved(bool $Saved = true)
 	{
         $this->formSaved = $Saved;
 	}

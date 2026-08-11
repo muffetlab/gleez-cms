@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User Widget class
  *
@@ -7,8 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Widget_User extends Widget {
-
+class Widget_User extends Widget
+{
 	public function info(){}
 	public function form(){}
 	public function save(array $post){}
@@ -31,23 +32,22 @@ class Widget_User extends Widget {
      * @throws View_Exception
      * @throws Kohana_Exception
      */
-    public function login()
-	{
+    public function login(): ?string
+    {
 		$auth    = Auth_ORM::instance();
 		$request = Request::current();
 
 		// If user already signed-in / don't show the widget on user controller.
-		if ($auth->logged_in() OR $request->controller() === 'user')
-		{
+		if ($auth->logged_in() OR $request->controller() === 'user') {
             return null;
 		}
 
-		Assets::css('user', 'media/css/user.css', array('weight' => 2));
+        Assets::css('user', 'media/css/user.css', ['weight' => 2]);
 
 		// Create form action
         $destination = $_GET['destination'] ?? Request::initial()->uri();
-		$params      = array('action' => 'login');
-		$action      = Route::get('user')->uri($params).URL::query(array('destination' => $destination));
+        $params = ['action' => 'login'];
+        $action = Route::get('user')->uri($params) . URL::query(['destination' => $destination]);
 
 		return View::factory('widget/login')
 				->set('register',     Kohana::$config->load('auth')->get('register'))

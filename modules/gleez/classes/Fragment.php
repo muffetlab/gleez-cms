@@ -1,4 +1,5 @@
 <?php
+
 /**
  * View fragment caching
  *
@@ -21,8 +22,8 @@
  *
  * @uses       Kohana::cache
  */
-class Fragment {
-
+class Fragment
+{
 	/**
 	 * Default number of seconds to cache for
 	 * @var integer
@@ -33,13 +34,13 @@ class Fragment {
 	 * Use multilingual fragment support?
 	 * @var boolean
 	 */
-	public static $i18n = FALSE;
+    public static $i18n = false;
 
 	/**
 	 * List of buffer => cache key
 	 * @var array
 	 */
-	protected static $_caches = array();
+    protected static $_caches = [];
 
 	/**
 	 * Generate the cache key name for a fragment
@@ -48,7 +49,7 @@ class Fragment {
 	 *
 	 * Example:
 	 * ~~~
-	 * $key = Fragment::_cache_key('footer', TRUE);
+     * $key = Fragment::_cache_key('footer', true);
 	 * ~~~
 	 *
      * @param string $name Fragment name
@@ -58,16 +59,15 @@ class Fragment {
 	 *
 	 * @uses    I18n::lang
 	 */
-    protected static function _cache_key(string $name, bool $i18n = NULL): string
+    protected static function _cache_key(string $name, bool $i18n = null): string
     {
-		if (is_null($i18n))
-		{
+        if (is_null($i18n)) {
 			// Use the default setting
 			$i18n = Fragment::$i18n;
 		}
 
 		// Language prefix for cache key
-		$i18n = ($i18n === TRUE) ? I18n::lang() : '';
+        $i18n = ($i18n === true) ? I18n::lang() : '';
 
 		$separator = Cache::SEPARATOR;
 
@@ -95,29 +95,26 @@ class Fragment {
      * @throws Kohana_Exception
      * @uses    Cache::get
      */
-    public static function getCache(string $name, $i18n = NULL): bool
+    public static function getCache(string $name, $i18n = null): bool
     {
 		$cache = Cache::instance();
 
 		// Get the cache key name
 		$cache_key = Fragment::_cache_key($name, $i18n);
 
-		if ($fragment = $cache->get($cache_key))
-		{
+        if ($fragment = $cache->get($cache_key)) {
 			// Display the cached fragment now
 			echo $fragment;
 
-			return TRUE;
-		}
-		else
-		{
+            return true;
+        } else {
 			// Start the output buffer
 			ob_start();
 
 			// Store the cache key by the buffer level
 			Fragment::$_caches[ob_get_level()] = $cache_key;
 
-			return FALSE;
+            return false;
 		}
 	}
 
@@ -133,15 +130,14 @@ class Fragment {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-	public static function setCache($lifetime = NULL)
+    public static function setCache($lifetime = null)
 	{
 		$cache = Cache::instance();
 
 		// Get the buffer level
 		$level = ob_get_level();
 
-		if (isset(Fragment::$_caches[$level]))
-		{
+        if (isset(Fragment::$_caches[$level])) {
 			// Get the cache key based on the level
 			$cache_key = Fragment::$_caches[$level];
 
@@ -169,7 +165,7 @@ class Fragment {
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
-    public static function delete(string $name, $i18n = NULL)
+    public static function delete(string $name, $i18n = null)
 	{
 		Cache::instance()->delete(Fragment::_cache_key($name, $i18n));
 	}

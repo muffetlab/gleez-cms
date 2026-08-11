@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Request and response wrapper
  *
@@ -43,12 +44,11 @@ class Request extends Kohana_Request
     {
 		$devices = 'android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos';
 
-		if (isset($_SERVER['HTTP_USER_AGENT']))
-		{
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
 			return (preg_match("/$devices/i", $_SERVER['HTTP_USER_AGENT']) > 0);
 		}
 
-		return FALSE;
+        return false;
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Request extends Kohana_Request
 	 * @return  boolean
 	 * @uses    Request::current
 	 */
-    public static function is_datatables(Request $request = NULL): bool
+    public static function is_datatables(Request $request = null): bool
     {
         $request = $request ?: Request::current();
 
@@ -89,18 +89,14 @@ class Request extends Kohana_Request
         $max_size = Kohana::$config->load('media')->get('post_max_size');
 
 		// Set post_max_size default value if it not exists
-		if (is_null($max_size))
-		{
+        if (is_null($max_size)) {
             Kohana::$config->load('media')->set('post_max_size', $max_size = static::DEFAULT_POST_MAX_SIZE);
 		}
 
-		if(static::isHHVM())
-		{
+        if (static::isHHVM()) {
 			//$php_settings = ini_get('post_max_size');
 			$php_settings = ini_get('hhvm.server.max_post_size');
-		}
-		else 
-		{
+        } else {
 			// Get the post_max_size in bytes from php.ini
 			$php_settings = Num::bytes(ini_get('post_max_size'));
 		}
@@ -133,27 +129,23 @@ class Request extends Kohana_Request
 	{
 		$referrer = $this->uri();
 
-		if (strpos($referrer, '://') === FALSE)
-		{
-			$referrer = URL::site($referrer, TRUE, Kohana::$index_file);
+        if (strpos($referrer, '://') === false) {
+            $referrer = URL::site($referrer, true, Kohana::$index_file);
 		}
 
-		if (strpos($url, '://') === FALSE)
-		{
+        if (strpos($url, '://') === false) {
 			// Make the URI into a URL
-			$url = URL::site($url, TRUE, Kohana::$index_file);
+            $url = URL::site($url, true, Kohana::$index_file);
 		}
 
 		// Check whether the current request is ajax request
-		if ($this->is_ajax())
-		{
+        if ($this->is_ajax()) {
 			self::$redirect_url = $url;
 			// Stop execution
 			return;
 		}
 
-		if (($response = $this->response()) === NULL)
-		{
+        if (($response = $this->response()) === null) {
 			$response = $this->create_response();
 		}
 
@@ -190,6 +182,7 @@ class Request extends Kohana_Request
      * @throws HTTP_Exception_503
      * @throws Kohana_Exception
      * @throws Request_Exception
+     * @throws ReflectionException
      * @uses    [Kohana::$profiling]
      * @uses    [Profiler]
      * @uses    Gleez::block_ips
@@ -199,8 +192,7 @@ class Request extends Kohana_Request
     {
         $response = parent::execute();
 
-		if (Gleez::$installed)
-		{
+        if (Gleez::$installed) {
 			// Deny access to blocked IP addresses
 			Gleez::block_ips();
 
@@ -217,10 +209,9 @@ class Request extends Kohana_Request
      * @param Response|null $response Response to apply to this request
      * @return Request|Response
      */
-	public function response(Response $response = NULL)
+    public function response(Response $response = null)
 	{
-		if ($response === NULL)
-		{
+        if ($response === null) {
 			// Act as a getter
 			return $this->_response;
 		}
@@ -245,12 +236,11 @@ class Request extends Kohana_Request
 	 * @return  Response
 	 * @since   3.1.0
 	 */
-    public function create_response(bool $bind = TRUE): Response
+    public function create_response(bool $bind = true): Response
     {
-		$response = new Response(array('_protocol' => $this->protocol()));
+        $response = new Response(['_protocol' => $this->protocol()]);
 
-		if ($bind)
-		{
+        if ($bind) {
 			// Bind a new response to the request
 			$this->_response = $response;
 		}

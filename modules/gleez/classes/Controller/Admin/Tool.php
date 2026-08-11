@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Tools Controller
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Tool extends Controller_Admin {
-
+class Controller_Admin_Tool extends Controller_Admin
+{
 	public function action_index()
 	{
 		$this->title = __('Administer Tools');
@@ -48,19 +49,19 @@ class Controller_Admin_Tool extends Controller_Admin {
 	{
 		//get tables names and the size and the index
 		$total_space = 0;
-		$tables_info = array();
+        $tables_info = [];
 
         $tables = DB::query(Database::SELECT, 'SHOW TABLE STATUS')->execute()->as_array();
 
-		foreach ($tables as $table)
-		{
+        foreach ($tables as $table) {
 			$tot_data = $table['Data_length'];
 			$tot_idx  = $table['Index_length'];
 
-			$tables_info[] = array( 'name' => $table['Name'],
-									'rows' => $table['Rows'],
-									'space' => round (($tot_data + $tot_idx) / 1024,3),
-									);
+            $tables_info[] = [
+                'name' => $table['Name'],
+                'rows' => $table['Rows'],
+                'space' => round(($tot_data + $tot_idx) / 1024, 3),
+            ];
 
 			$total_space += ($tot_data + $tot_idx) / 1024;
 		}
@@ -70,7 +71,9 @@ class Controller_Admin_Tool extends Controller_Admin {
 				->set('count', count($tables))
 				->set('space', $total_space);
 
-        $this->title = __('Database :sub', array(':sub' => '<small>(' . Kohana::$config->load('database.default.connection.database') . ')</small>'));
+        $this->title = __('Database :sub', [
+            ':sub' => '<small>(' . Kohana::$config->load('database.default.connection.database') . ')</small>'
+        ]);
 		$this->response->body($view);
 	}
 
@@ -79,7 +82,7 @@ class Controller_Admin_Tool extends Controller_Admin {
      */
     public function action_environment()
 	{
-		$gleezEnv = array();
+        $gleezEnv = [];
 
 		// First Step. The lowest priority
 		// Get environment variable from $_SERVER, .htaccess, apache.conf, nginx.conf, etc.
@@ -90,13 +93,12 @@ class Controller_Admin_Tool extends Controller_Admin {
 		get_cfg_var('GLEEZ_ENV') && $gleezEnv['env'] = 'Kohana::'.strtoupper(get_cfg_var('GLEEZ_ENV'));
 
 		//
-		!empty($gleezEnv) && $gleezEnv['all'] = array(
-			'Kohana::DEVELOPMENT' => Kohana::DEVELOPMENT,
-			'Kohana::TESTING'     => Kohana::TESTING,
-			'Kohana::STAGING'     => Kohana::STAGING,
-			'Kohana::PRODUCTION'  => Kohana::PRODUCTION
-
-		);
+        !empty($gleezEnv) and $gleezEnv['all'] = [
+            'Kohana::DEVELOPMENT' => Kohana::DEVELOPMENT,
+            'Kohana::TESTING' => Kohana::TESTING,
+            'Kohana::STAGING' => Kohana::STAGING,
+            'Kohana::PRODUCTION' => Kohana::PRODUCTION
+        ];
 
 		$this->title = __('Gleez Environment');
 
@@ -105,4 +107,64 @@ class Controller_Admin_Tool extends Controller_Admin {
 
 		$this->response->body($view);
 	}
+
+    /**
+     * Database schema upgrade
+     *
+     * @throws View_Exception
+     * @throws Kohana_Exception
+     */
+    public function action_upgrade()
+    {
+        $this->title = __('Database Upgrade');
+
+        $dbVersion = Kohana::$config->load('site')->get('version');
+        $currentVersion = $dbVersion ?: __('Unknown');
+        $targetVersion = Gleez::VERSION;
+        $needsUpgrade = !$dbVersion || version_compare($dbVersion, $targetVersion, '<');
+        $errors = [];
+
+        if ($this->valid_post('upgrade')) {
+            $db = Database::instance();
+            $prefix = $db->table_prefix();
+
+            $sqlFile = MODPATH . 'gleez/views/install/upgrade.sql';
+            $buf = '';
+
+            foreach (file($sqlFile) as $line) {
+                $line = trim($line);
+
+                if ($line === '' || strncmp($line, '--', 2) === 0) {
+                    continue;
+                }
+
+                $buf .= ' ' . $line;
+
+                if (preg_match('/;$/', $buf)) {
+                    $sql = preg_replace('/{(\w+)}/', $prefix . '$1', trim($buf));
+                    try {
+                        $db->query(Database::UPDATE, $sql);
+                    } catch (Database_Exception $e) {
+                        $errors[] = $e->getMessage();
+                    }
+                    $buf = '';
+                }
+            }
+
+            if (empty($errors)) {
+                Cache::instance()->delete_all();
+
+                Message::success(__('Upgrade completed successfully! Database is now at version :version.', [':version' => $targetVersion]));
+                $this->request->redirect(Route::get('admin')->uri(['controller' => 'tool']));
+            }
+        }
+
+        $view = View::factory('admin/tools/upgrade')
+            ->set('currentVersion', $currentVersion)
+            ->set('targetVersion', $targetVersion)
+            ->set('needsUpgrade', $needsUpgrade)
+            ->set('errors', $errors);
+
+        $this->response->body($view);
+    }
 }

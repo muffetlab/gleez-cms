@@ -3,9 +3,9 @@
 /**
  * Tests plural form key selection in Gleez_I18n.
  *
- * @group Gleez
- * @group Gleez.core
- * @group Gleez.core.i18n
+ * @group gleez
+ * @group gleez.core
+ * @group gleez.core.i18n
  * @package     Gleez
  * @category    Tests
  * @author      Loong <loong2460@gmail.com>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Comment Widget class
  *
@@ -7,8 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Widget_Comment extends Widget {
-
+class Widget_Comment extends Widget
+{
 	public function info(){}
 	public function form(){}
 
@@ -23,8 +24,7 @@ class Widget_Comment extends Widget {
      */
     public function render()
 	{
-		switch($this->name)
-		{
+        switch ($this->name) {
 			case 'recent':
                 return $this->recent();
             default:
@@ -40,9 +40,8 @@ class Widget_Comment extends Widget {
     public function recent()
 	{
 		// Don't show the widget on edit or delete actions.
-		if (Request::current()->action() == 'edit' OR Request::current()->action() == 'delete')
-		{
-			return FALSE;
+        if (Request::current()->action() == 'edit' || Request::current()->action() == 'delete') {
+            return false;
 		}
 
         $cache = Cache::instance();
@@ -57,9 +56,8 @@ class Widget_Comment extends Widget {
 					->limit(10)
 					->find_all();
 
-			$comments = array();
-			foreach($blogs as $blog)
-			{
+            $comments = [];
+            foreach ($blogs as $blog) {
 				$comments[$blog->id]['id'] = $blog->id;
 				$comments[$blog->id]['type'] = $blog->type;
 				$comments[$blog->id]['title'] = $blog->title;

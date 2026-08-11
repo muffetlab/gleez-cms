@@ -1,63 +1,65 @@
-
 DROP TABLE IF EXISTS {posts};
 CREATE TABLE {posts} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  version bigint(20) unsigned NOT NULL DEFAULT '0',
-  author bigint(20) unsigned NOT NULL DEFAULT '0',
-  title text NOT NULL,
-  body longtext NOT NULL,
-  teaser text,
-  status varchar(20) NOT NULL DEFAULT 'draft',
-  promote tinyint(1) NOT NULL DEFAULT '0',
-  moderate tinyint(1) NOT NULL DEFAULT '0',
-  sticky tinyint(1) NOT NULL DEFAULT '0',
-  type varchar(20) NOT NULL DEFAULT 'post',
-  format tinyint(4) NOT NULL DEFAULT '1',
-  created int(11) NOT NULL DEFAULT '0',
-  updated int(11) NOT NULL DEFAULT '0',
-  pubdate int(11) NOT NULL DEFAULT '0',
-  password varchar(20) DEFAULT '',
-  comment tinyint(4) NOT NULL DEFAULT '0',
-  lang varchar(12) NOT NULL DEFAULT 'en',
-  layout varchar(255) NOT NULL DEFAULT '',
-  image varchar(255) DEFAULT NULL,
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  version BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  author BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  title TEXT NOT NULL,
+  body LONGTEXT NOT NULL,
+  teaser TEXT,
+  status VARCHAR(20) NOT NULL DEFAULT 'draft',
+  promote TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  moderate TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  sticky TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  type VARCHAR(20) NOT NULL DEFAULT 'post',
+  format TINYINT UNSIGNED NOT NULL DEFAULT '1',
+  created INT UNSIGNED NOT NULL DEFAULT '0',
+  updated INT UNSIGNED NOT NULL DEFAULT '0',
+  deleted INT UNSIGNED NOT NULL DEFAULT '0',
+  pubdate INT UNSIGNED NOT NULL DEFAULT '0',
+  password VARCHAR(20) DEFAULT '',
+  comment TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  lang VARCHAR(12) NOT NULL DEFAULT 'en',
+  layout VARCHAR(255) NOT NULL DEFAULT '',
+  image VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (id),
   KEY `post_type` (`type`),
-  KEY `post_type_id` (`type`,`id`),
-  KEY `post_type_moderate` (`type`,`moderate`),
-  KEY `type_status_date` (`type`,`status`,`created`,`id`),
-  KEY `post_frontpage` (`promote`,`status`,`sticky`,`created`),
+  KEY `post_type_id` (`type`, `id`),
+  KEY `post_type_moderate` (`type`, `moderate`),
+  KEY `type_status_date` (`type`, `status`, `created`, `id`),
+  KEY `post_frontpage` (`promote`, `status`, `sticky`, `created`),
   KEY `post_author` (`author`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {posts} (`id`, `version`, `author`, `title`, `body`, `teaser`, `status`, `promote`, `moderate`, `sticky`, `type`, `format`, `created`, `updated`, `pubdate`, `password`, `comment`, `lang`) VALUES
 (1, 0, 2, 'Welcome to Gleez - Content Management System!', 'What Is Gleez CMS?\r\n\r\nGleez CMS is a user-friendly website content management system. With Gleez CMS you can easily build dynamic websites within a matter of minutes with just the click of your mouse! Maintain your web content, navigation and even limit what groups or specific users can access, from anywhere in the world with just a web browser! \r\n\r\nWith an emphasis on security and functionality, Gleez CMS is a professional and robust system suitable for any business or organization website. Built on the PHP programming language and the MySQL database, Gleez CMS delivers superb performance on any size website.\r\n\r\nDownload:\r\nwww.gleezcms.org', 'What Is Gleez CMS?\r\n\r\nGleez CMS is a user-friendly website content management system. With Gleez CMS you can easily build dynamic websites within a matter of minutes with just the click of your mouse! Maintain your web content, navigation and even limit what groups or specific users can access, from anywhere in the world with just a web browser!', 'publish', 0, 0, 0, 'page', 1, 1304978011, 1305488194, 1304978011, '', 0, 'en');
 
 DROP TABLE IF EXISTS {tags};
 CREATE TABLE {tags} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(64) NOT NULL,
-  type varchar(64) NOT NULL DEFAULT 'post',
-  count int(11) unsigned NOT NULL DEFAULT '0',
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(64) NOT NULL,
+  type VARCHAR(64) NOT NULL DEFAULT 'post',
+  count INT UNSIGNED NOT NULL DEFAULT '0',
+  deleted INT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   KEY type (type),
   UNIQUE KEY name_type (name, type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {terms};
 CREATE TABLE {terms} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(64) NOT NULL,
-  description varchar(255) DEFAULT NULL,
-  image varchar(255) DEFAULT NULL,
-  type varchar(64) NOT NULL DEFAULT 'post',
-  pid int(11) unsigned NOT NULL DEFAULT '0',
-  lft int(10) unsigned DEFAULT NULL,
-  rgt int(10) unsigned DEFAULT NULL,
-  lvl int(10) unsigned DEFAULT NULL,
-  scp int(10) unsigned DEFAULT NULL,
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(64) NOT NULL,
+  description VARCHAR(255) DEFAULT NULL,
+  image VARCHAR(255) DEFAULT NULL,
+  type VARCHAR(64) NOT NULL DEFAULT 'post',
+  pid INT UNSIGNED NOT NULL DEFAULT '0',
+  lft INT UNSIGNED DEFAULT NULL,
+  rgt INT UNSIGNED DEFAULT NULL,
+  lvl INT UNSIGNED DEFAULT NULL,
+  scp INT UNSIGNED DEFAULT NULL,
+  deleted INT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {terms} (`id`, `name`, `description`, `image`, `type`, `pid`, `lft`, `rgt`, `lvl`, `scp`) VALUES
 (1, 'Pages', 'Use to group pages on similar topics into categories.', NULL, 'page', 0, 1, 2, 1, 1),
@@ -65,64 +67,65 @@ INSERT INTO {terms} (`id`, `name`, `description`, `image`, `type`, `pid`, `lft`,
 
 DROP TABLE IF EXISTS {comments};
 CREATE TABLE {comments} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  post_id bigint(20) unsigned NOT NULL DEFAULT '0',
-  author bigint(20) unsigned NOT NULL DEFAULT '1',
-  pid bigint(20) unsigned NOT NULL DEFAULT '0',
-  title varchar(128) DEFAULT NULL,
-  body longtext NOT NULL,
-  hostname  varchar(255) DEFAULT NULL,
-  created int(11) NOT NULL DEFAULT '0',
-  updated int(11) NOT NULL DEFAULT '0',
-  status varchar(20) NOT NULL DEFAULT 'draft',
-  format tinyint(4) NOT NULL DEFAULT '1',
-  thread varchar(255) DEFAULT NULL,
-  type varchar(20) NOT NULL DEFAULT 'post',
-  guest_name varchar(128) DEFAULT NULL,
-  guest_email varchar(128) DEFAULT NULL,
-  guest_url varchar(255) DEFAULT NULL,
-  karma int(11) NOT NULL DEFAULT '0',
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  post_id BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  author BIGINT UNSIGNED NOT NULL DEFAULT '1',
+  pid BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  title VARCHAR(128) DEFAULT NULL,
+  body LONGTEXT NOT NULL,
+  hostname VARCHAR(255) DEFAULT NULL,
+  created INT UNSIGNED NOT NULL DEFAULT '0',
+  updated INT UNSIGNED NOT NULL DEFAULT '0',
+  status VARCHAR(20) NOT NULL DEFAULT 'draft',
+  format TINYINT UNSIGNED NOT NULL DEFAULT '1',
+  thread VARCHAR(255) DEFAULT NULL,
+  type VARCHAR(20) NOT NULL DEFAULT 'post',
+  guest_name VARCHAR(128) DEFAULT NULL,
+  guest_email VARCHAR(128) DEFAULT NULL,
+  guest_url VARCHAR(255) DEFAULT NULL,
+  karma INT NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
-  KEY comment_status_pid (`status`,pid),
+  KEY comment_status_pid (`status`, pid),
   KEY comment_num_new (post_id, `status`, created, id, thread),
   KEY comment_author (author),
   KEY comment_post_type (post_id, `type`),
   KEY comment_type (`type`),
-  KEY comment_post_id  (`post_id`),
+  KEY comment_post_id (`post_id`),
   FOREIGN KEY (`post_id`) REFERENCES {posts} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {users};
 CREATE TABLE {users} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(60) NOT NULL DEFAULT '',
-  pass varchar(128) NOT NULL DEFAULT '',
-  mail varchar(254) NOT NULL DEFAULT '',
-  homepage varchar(255) DEFAULT NULL,
-  bio varchar(800) DEFAULT NULL,
-  nick varchar(255) DEFAULT NULL,
-  gender tinyint(4) DEFAULT NULL,
-  dob int(11) NOT NULL DEFAULT '0',
-  theme varchar(255) DEFAULT NULL,
-  signature varchar(255) DEFAULT NULL,
-  signature_format int(10) unsigned DEFAULT '1',
-  logins int(10) unsigned NOT NULL DEFAULT '0',
-  created int(11) NOT NULL DEFAULT '0',
-  updated int(11) NOT NULL DEFAULT '0',
-  access int(11) NOT NULL DEFAULT '0',
-  login int(11) NOT NULL DEFAULT '0',
-  status tinyint(4) NOT NULL DEFAULT '0',
-  timezone varchar(32) DEFAULT 'UTC',
-  language varchar(12) DEFAULT 'en_US',
-  picture varchar(255) DEFAULT NULL,
-  init varchar(254) DEFAULT NULL,
-  `hash` char(32) DEFAULT NULL,
-  `data` longblob,
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(60) NOT NULL DEFAULT '',
+  pass VARCHAR(128) NOT NULL DEFAULT '',
+  mail VARCHAR(254) NOT NULL DEFAULT '',
+  homepage VARCHAR(255) DEFAULT NULL,
+  bio VARCHAR(800) DEFAULT NULL,
+  nick VARCHAR(255) DEFAULT NULL,
+  gender TINYINT UNSIGNED DEFAULT NULL,
+  dob INT UNSIGNED NOT NULL DEFAULT '0',
+  theme VARCHAR(255) DEFAULT NULL,
+  signature VARCHAR(255) DEFAULT NULL,
+  signature_format INT UNSIGNED DEFAULT '1',
+  logins INT UNSIGNED NOT NULL DEFAULT '0',
+  created INT UNSIGNED NOT NULL DEFAULT '0',
+  updated INT UNSIGNED NOT NULL DEFAULT '0',
+  deleted INT UNSIGNED NOT NULL DEFAULT '0',
+  access INT UNSIGNED NOT NULL DEFAULT '0',
+  login INT UNSIGNED NOT NULL DEFAULT '0',
+  status TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  timezone VARCHAR(32) DEFAULT 'UTC',
+  language VARCHAR(12) DEFAULT 'en_US',
+  picture VARCHAR(255) DEFAULT NULL,
+  init VARCHAR(254) DEFAULT NULL,
+  `hash` CHAR(32) DEFAULT NULL,
+  `data` LONGBLOB,
   PRIMARY KEY (id),
   UNIQUE KEY mail (mail),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `hash` (`hash`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {users} (`id`, `name`, `pass`, `mail`, `nick`, `gender`, `dob`, `theme`, `signature`, `signature_format`, `logins`, `created`, `updated`, `login`, `status`, `timezone`, `language`, `picture`, `init`, `hash`, `data`) VALUES
 (1, 'guest', '', 'guest@example.com', 'Guest', NULL, 0, '', '', NULL, 0, 0, 0, 0, 1, 'UTC', 'en_US', '', '', NULL, NULL),
@@ -130,30 +133,29 @@ INSERT INTO {users} (`id`, `name`, `pass`, `mail`, `nick`, `gender`, `dob`, `the
 
 DROP TABLE IF EXISTS {messages};
 CREATE TABLE {messages} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  sender bigint(20) unsigned NOT NULL DEFAULT '0',
-  recipient bigint(20) unsigned NOT NULL DEFAULT '0',
-  subject varchar(128) NOT NULL,
-  body longtext NOT NULL,
-  status varchar(20) NOT NULL DEFAULT 'unread',
-  format tinyint(4) NOT NULL DEFAULT '1',
-  created int(11) NOT NULL DEFAULT '0',
-  sent int(11) NOT NULL DEFAULT '0',
-  lang varchar(12) NOT NULL DEFAULT 'en',
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  sender BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  recipient BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  subject VARCHAR(128) NOT NULL,
+  body LONGTEXT NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'unread',
+  format TINYINT UNSIGNED NOT NULL DEFAULT '1',
+  created INT UNSIGNED NOT NULL DEFAULT '0',
+  sent INT UNSIGNED NOT NULL DEFAULT '0',
+  lang VARCHAR(12) NOT NULL DEFAULT 'en',
   PRIMARY KEY (id),
-  KEY `message_id` (`id`),
-  KEY `message_status_date` (`status`,`created`,`id`),
+  KEY `message_status_date` (`status`, `created`, `id`),
   KEY `message_author` (`sender`),
   FOREIGN KEY (`sender`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {config};
 CREATE TABLE {config} (
-  `group_name` varchar(128) NOT NULL,
-  `config_key` varchar(128) NOT NULL,
-  `config_value` text NOT NULL,
-  PRIMARY KEY (`group_name`,`config_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `group_name` VARCHAR(128) NOT NULL,
+  `config_key` VARCHAR(128) NOT NULL,
+  `config_value` TEXT NOT NULL,
+  PRIMARY KEY (`group_name`, `config_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {config} (`group_name`, `config_key`, `config_value`) VALUES
 ('site', 'admin_theme', 's:6:"cerber";'),
@@ -174,25 +176,26 @@ INSERT INTO {config} (`group_name`, `config_key`, `config_value`) VALUES
 ('site', 'timezone', 's:12:"Asia/Kolkata";'),
 ('site', 'time_format', 's:5:"H:i:s";'),
 ('site', 'gleez_private_key', 's:72:"d6b7050911d1fa78e8f8eb648feacbb61a03805fa62126cbc303cab12dba77067655674c";'),
-('site', 'auth_hash_key', 's:72:"d6b7050911d1fa78e8f8eb648feacbb61a03805fa62126cbc303cab12dba77067655674c";');
+('site', 'auth_hash_key', 's:72:"d6b7050911d1fa78e8f8eb648feacbb61a03805fa62126cbc303cab12dba77067655674c";'),
+('site', 'version', 's:5:"1.3.0";');
 
 DROP TABLE IF EXISTS {menus};
 CREATE TABLE {menus} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  title varchar(128) NOT NULL,
-  name varchar(128) NOT NULL,
-  descp varchar(255) DEFAULT NULL,
-  image varchar(255) DEFAULT NULL,
-  url varchar(255) DEFAULT NULL,
-  params text,
-  active tinyint(3) NOT NULL DEFAULT '1',
-  pid int(11) unsigned NOT NULL DEFAULT '0',
-  lft int(10) unsigned DEFAULT NULL,
-  rgt int(10) unsigned DEFAULT NULL,
-  lvl int(10) unsigned DEFAULT NULL,
-  scp int(10) unsigned DEFAULT NULL,
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  title VARCHAR(128) NOT NULL,
+  name VARCHAR(128) NOT NULL,
+  descp VARCHAR(255) DEFAULT NULL,
+  image VARCHAR(255) DEFAULT NULL,
+  url VARCHAR(255) DEFAULT NULL,
+  params TEXT,
+  active TINYINT UNSIGNED NOT NULL DEFAULT '1',
+  pid INT UNSIGNED NOT NULL DEFAULT '0',
+  lft INT UNSIGNED DEFAULT NULL,
+  rgt INT UNSIGNED DEFAULT NULL,
+  lvl INT UNSIGNED DEFAULT NULL,
+  scp INT UNSIGNED DEFAULT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {menus} (`id`, `title`, `name`, `descp`, `image`, `url`, `params`, `active`, `pid`, `lft`, `rgt`, `lvl`, `scp`) VALUES
 (1, 'Main Menu', 'main-menu', 'The Main menu is used on many sites to show the major sections of the site, often in a top navigation bar.', NULL, NULL, '', 1, 0, 1, 18, 1, 1),
@@ -226,35 +229,35 @@ INSERT INTO {menus} (`id`, `title`, `name`, `descp`, `image`, `url`, `params`, `
 
 DROP TABLE IF EXISTS {modules};
 CREATE TABLE {modules} (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(128) NOT NULL,
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(128) NOT NULL,
   type ENUM('module', 'theme') NOT NULL DEFAULT 'module',
-  active tinyint(3) NOT NULL DEFAULT '0',
-  weight int(11) NOT NULL DEFAULT '0',
-  version varchar(20) NOT NULL DEFAULT '1.0',
-  path varchar(255) DEFAULT NULL,
+  active TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  weight INT NOT NULL DEFAULT '0',
+  version VARCHAR(20) NOT NULL DEFAULT '1.0',
+  path VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {modules} (`id`, `name`, `type`, `active`, `weight`, `version`, `path`) VALUES
 (1, 'user', 'module', 1, 0, '2.0', NULL);
 
 DROP TABLE IF EXISTS {paths};
 CREATE TABLE {paths} (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  source varchar(255) NOT NULL,
-  alias varchar(255) NOT NULL,
-  lang varchar(12) NOT NULL DEFAULT 'und',
-  route_name varchar(255) DEFAULT NULL,
-  route_directory varchar(255) DEFAULT NULL,
-  route_controller varchar(255) DEFAULT NULL,
-  route_action varchar(255) DEFAULT NULL,
-  route_id varchar(255) DEFAULT NULL,
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  source VARCHAR(255) NOT NULL,
+  alias VARCHAR(255) NOT NULL,
+  lang VARCHAR(12) NOT NULL DEFAULT 'und',
+  route_name VARCHAR(255) DEFAULT NULL,
+  route_directory VARCHAR(255) DEFAULT NULL,
+  route_controller VARCHAR(255) DEFAULT NULL,
+  route_action VARCHAR(255) DEFAULT NULL,
+  route_id VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (id),
-  KEY id_lang_alias (lang,alias,id),
+  KEY id_lang_alias (lang, alias, id),
   KEY id_source (`source`),
-  KEY id_lang_path (lang,`source`,id)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+  KEY id_lang_path (lang, `source`, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {paths} (`id`, `source`, `alias`, `lang`, `route_name`, `route_directory`, `route_controller`, `route_action`, `route_id`) VALUES
 (1, 'rss', 'rss.xml', 'und', 'rss', 'feeds', 'base', 'index', NULL),
@@ -265,12 +268,12 @@ INSERT INTO {paths} (`id`, `source`, `alias`, `lang`, `route_name`, `route_direc
 
 DROP TABLE IF EXISTS {permissions};
 CREATE TABLE {permissions} (
-  rid int(11) NOT NULL,
-  permission varchar(64) NOT NULL,
-  module varchar(255) NOT NULL,
-  PRIMARY KEY (rid,permission),
+  rid INT UNSIGNED NOT NULL,
+  permission VARCHAR(64) NOT NULL,
+  module VARCHAR(255) NOT NULL,
+  PRIMARY KEY (rid, permission),
   KEY permission (permission)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {permissions} (`rid`, `permission`, `module`) VALUES
 (1, 'access content', 'content'),
@@ -312,71 +315,73 @@ INSERT INTO {permissions} (`rid`, `permission`, `module`) VALUES
 
 DROP TABLE IF EXISTS {posts_versions};
 CREATE TABLE {posts_versions} (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `post_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `version` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `author`  bigint(20) unsigned NOT NULL DEFAULT '1',
-  `title`  text NOT NULL,
-  `body`   longtext NOT NULL,
-  teaser text,
-  status varchar(20) NOT NULL DEFAULT 'draft',
-  promote tinyint(1) NOT NULL DEFAULT '0',
-  moderate tinyint(1) NOT NULL DEFAULT '0',
-  sticky tinyint(1) NOT NULL DEFAULT '0',
-  type varchar(20) NOT NULL DEFAULT 'post',
-  format tinyint(4) NOT NULL DEFAULT '1',
-  created int(11) NOT NULL DEFAULT '0',
-  updated int(11) NOT NULL DEFAULT '0',
-  pubdate int(11) NOT NULL DEFAULT '0',
-  password varchar(20) DEFAULT '',
-  comment tinyint(4) NOT NULL DEFAULT '0',
-  lang varchar(12) NOT NULL DEFAULT 'en',
-  layout varchar(255) NOT NULL,
-  image varchar(255) DEFAULT NULL,
-  version_log varchar(255) DEFAULT NULL,
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `post_id` BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  `version` BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  `author` BIGINT UNSIGNED NOT NULL DEFAULT '1',
+  `title` TEXT NOT NULL,
+  `body` LONGTEXT NOT NULL,
+  teaser TEXT,
+  status VARCHAR(20) NOT NULL DEFAULT 'draft',
+  promote TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  moderate TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  sticky TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  type VARCHAR(20) NOT NULL DEFAULT 'post',
+  format TINYINT UNSIGNED NOT NULL DEFAULT '1',
+  created INT UNSIGNED NOT NULL DEFAULT '0',
+  updated INT UNSIGNED NOT NULL DEFAULT '0',
+  deleted INT UNSIGNED NOT NULL DEFAULT '0',
+  pubdate INT UNSIGNED NOT NULL DEFAULT '0',
+  password VARCHAR(20) DEFAULT '',
+  comment TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  lang VARCHAR(12) NOT NULL DEFAULT 'en',
+  layout VARCHAR(255) NOT NULL DEFAULT '',
+  image VARCHAR(255) DEFAULT NULL,
+  version_log VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`),
   KEY `post_author` (`author`),
   FOREIGN KEY (`post_id`) REFERENCES {posts} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {posts_tags};
 CREATE TABLE {posts_tags} (
-  post_id bigint(20) unsigned NOT NULL DEFAULT '0',
-  tag_id bigint(20) unsigned NOT NULL DEFAULT '0',
-  author bigint(20) NOT NULL DEFAULT '1',
-  type varchar(20) NOT NULL DEFAULT 'post',
-  created int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (post_id,tag_id),
+  post_id BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  tag_id INT UNSIGNED NOT NULL DEFAULT '0',
+  author BIGINT UNSIGNED NOT NULL DEFAULT '1',
+  type VARCHAR(20) NOT NULL DEFAULT 'post',
+  created INT UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (post_id, tag_id),
   KEY fk_tag_id (tag_id),
   FOREIGN KEY (`post_id`) REFERENCES {posts} (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`tag_id`)  REFERENCES {tags}  (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  FOREIGN KEY (`tag_id`) REFERENCES {tags} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {posts_terms};
 CREATE TABLE {posts_terms} (
-  post_id bigint(20) unsigned NOT NULL DEFAULT '0',
-  term_id bigint(20) unsigned NOT NULL DEFAULT '0',
-  type varchar(20) NOT NULL DEFAULT 'post',
-  parent_id bigint(20) NOT NULL DEFAULT '0',
-  term_order int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (post_id,term_id),
+  post_id BIGINT UNSIGNED NOT NULL DEFAULT '0',
+  term_id INT UNSIGNED NOT NULL DEFAULT '0',
+  type VARCHAR(20) NOT NULL DEFAULT 'post',
+  parent_id INT UNSIGNED NOT NULL DEFAULT '0',
+  term_order INT UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (post_id, term_id),
   KEY fk_term_id (term_id),
   KEY `type` (`type`),
-  KEY posts_terms_ibfk_1 (post_id,`type`),
+  KEY posts_terms_ibfk_1 (post_id, `type`),
   FOREIGN KEY (`post_id`) REFERENCES {posts} (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`term_id`) REFERENCES {terms} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {roles};
 CREATE TABLE {roles} (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(32) NOT NULL,
-  description varchar(255) DEFAULT NULL,
-  special tinyint(1) DEFAULT '0',
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  description VARCHAR(255) DEFAULT NULL,
+  special TINYINT UNSIGNED DEFAULT '0',
+  deleted INT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY uniq_name (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {roles} (`id`, `name`, `description`, `special`) VALUES
 (1, 'Anonymous', 'Guests can only view content. Anyone browsing the site who is not signed in is considered to be a "Guest".', 1),
@@ -386,13 +391,13 @@ INSERT INTO {roles} (`id`, `name`, `description`, `special`) VALUES
 
 DROP TABLE IF EXISTS {roles_users};
 CREATE TABLE {roles_users} (
-  user_id bigint(20) unsigned NOT NULL,
-  role_id int(11) unsigned NOT NULL,
-  PRIMARY KEY (user_id,role_id),
+  user_id BIGINT UNSIGNED NOT NULL,
+  role_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (user_id, role_id),
   KEY fk_role_id (role_id),
   FOREIGN KEY (`user_id`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`role_id`) REFERENCES {roles} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {roles_users} (`user_id`, `role_id`) VALUES
 (1, 1),
@@ -402,52 +407,51 @@ INSERT INTO {roles_users} (`user_id`, `role_id`) VALUES
 
 DROP TABLE IF EXISTS {sessions};
 CREATE TABLE {sessions} (
-  session_id varchar(24) NOT NULL,
-  last_active int(10) unsigned NOT NULL,
-  contents longtext NOT NULL,
+  session_id VARCHAR(24) NOT NULL,
+  last_active INT UNSIGNED NOT NULL,
+  contents LONGTEXT NOT NULL,
   PRIMARY KEY (session_id),
-  KEY last_active (last_active),
-  KEY session (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY last_active (last_active)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {user_tokens};
 CREATE TABLE {user_tokens} (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  user_id bigint(20) unsigned NOT NULL,
-  user_agent varchar(40) NOT NULL,
-  token varchar(40) NOT NULL,
-  `type` varchar(100) DEFAULT NULL,
-  created int(11) unsigned NOT NULL DEFAULT '0',
-  expires int(11) unsigned NOT NULL,
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id BIGINT UNSIGNED NOT NULL,
+  user_agent VARCHAR(40) NOT NULL,
+  token VARCHAR(40) NOT NULL,
+  `type` VARCHAR(100) DEFAULT NULL,
+  created INT UNSIGNED NOT NULL DEFAULT '0',
+  expires INT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY uniq_token (token),
   KEY fk_user_id (user_id),
   FOREIGN KEY (`user_id`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {widgets};
 CREATE TABLE {widgets} (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `module` varchar(64) NOT NULL,
-  `theme` varchar(64) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '0',
-  `region` varchar(64) DEFAULT '-1',
-  `weight` int(11) NOT NULL DEFAULT '0',
-  `cache` tinyint(4) NOT NULL DEFAULT '0',
-  `visibility` tinyint(4) NOT NULL DEFAULT '0',
-  `pages` text DEFAULT NULL,
-  `roles` varchar(255) DEFAULT NULL,
-  `show_title` tinyint(1) DEFAULT '1',
-  `body` longtext,
-  `format` tinyint(3) NOT NULL DEFAULT '1',
-  `icon` varchar(255) DEFAULT 'fa-none',
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(128) NOT NULL,
+  `title` VARCHAR(255) DEFAULT NULL,
+  `module` VARCHAR(64) NOT NULL,
+  `theme` VARCHAR(64) DEFAULT NULL,
+  `status` TINYINT UNSIGNED DEFAULT '0',
+  `region` VARCHAR(64) DEFAULT '-1',
+  `weight` INT NOT NULL DEFAULT '0',
+  `cache` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  `visibility` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  `pages` TEXT DEFAULT NULL,
+  `roles` VARCHAR(255) DEFAULT NULL,
+  `show_title` TINYINT UNSIGNED DEFAULT '1',
+  `body` LONGTEXT,
+  `format` TINYINT UNSIGNED NOT NULL DEFAULT '1',
+  `icon` VARCHAR(255) DEFAULT 'fa-none',
   PRIMARY KEY (`id`),
   KEY `fk_name` (`name`),
   KEY `fk_module` (`module`),
   KEY `fk_status` (`status`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO {widgets} (`id`, `name`, `title`, `module`, `theme`, `status`, `region`, `weight`, `cache`, `visibility`, `pages`, `roles`, `show_title`, `body`, `format`, `icon`) VALUES
 (1, 'admin/donate', 'Donate', 'gleez', NULL, 1, 'right', -5, 0, 0, '', '4', 1, NULL, 1, 'fas fa-gift'),
@@ -460,131 +464,131 @@ INSERT INTO {widgets} (`id`, `name`, `title`, `module`, `theme`, `status`, `regi
 (8, 'user/login', 'Login', 'user', NULL, 1, 'right', -4, 0, 0, NULL, NULL, 1, NULL, 0, 'fas fa-lock'),
 (9, 'comment/recent', 'Comments', 'gleez', NULL, 0, '-1', -4, 0, 0, NULL, NULL, 1, NULL, 0, 'fas fa-comment'),
 (10, 'admin/shortcut', 'Quick Shortcuts', 'gleez', NULL, 1, 'dashboard', -5, 0, 0, NULL, NULL, 1, NULL, 0, 'fas fa-bookmark'),
-(11, 'blog/recent', 'Recent Blogs', 'gleez',  NULL, 0,  '-1', 0,  0,  0,  NULL, NULL, 1,  NULL, 1,  'fas fa-book'),
-(12, 'blog/announce', 'Announce of Recent Blogs', 'gleez',  NULL, 0,  '-1', 0,  0,  0,  NULL, NULL, 1,  NULL, 1,  'fas fa-book');
+(11, 'blog/recent', 'Recent Blogs', 'gleez', NULL, 0, '-1', 0, 0, 0, NULL, NULL, 1, NULL, 1, 'fas fa-book'),
+(12, 'blog/announce', 'Announce of Recent Blogs', 'gleez', NULL, 0, '-1', 0, 0, 0, NULL, NULL, 1, NULL, 1, 'fas fa-book');
 
 DROP TABLE IF EXISTS {identities};
 CREATE TABLE {identities} (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `provider` varchar(32) NOT NULL,
-  `provider_id` varchar(128) NOT NULL,
-  `refresh_token` text DEFAULT NULL,
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `provider` VARCHAR(32) NOT NULL,
+  `provider_id` VARCHAR(128) NOT NULL,
+  `refresh_token` TEXT DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `provider` (`provider`),
   KEY `provider_id` (`provider`, `provider_id`),
   UNIQUE KEY `user_provider_id` (`user_id`, `provider`, `provider_id`),
   FOREIGN KEY (`user_id`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {sitemaps};
 CREATE TABLE {sitemaps} (
-  id bigint(20) unsigned NOT NULL DEFAULT '0',
-  loc varchar(255) NOT NULL,
-  lastmod int(11) unsigned NOT NULL DEFAULT '0',
-  priority float NOT NULL DEFAULT '0.5',
-  changefreq int(10) unsigned NOT NULL DEFAULT '0',
-  status tinyint(4) NOT NULL DEFAULT '1',
-  type varchar(20) NOT NULL DEFAULT 'post',
-  PRIMARY KEY (`id`,`type`),
+  id INT UNSIGNED NOT NULL DEFAULT '0',
+  loc VARCHAR(255) NOT NULL,
+  lastmod INT UNSIGNED NOT NULL DEFAULT '0',
+  priority FLOAT NOT NULL DEFAULT '0.5',
+  changefreq INT UNSIGNED NOT NULL DEFAULT '0',
+  status TINYINT UNSIGNED NOT NULL DEFAULT '1',
+  type VARCHAR(20) NOT NULL DEFAULT 'post',
+  PRIMARY KEY (`id`, `type`),
   KEY `loc` (`loc`),
-  KEY `status_loc` (`status`,`loc`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `status_loc` (`status`, `loc`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {buddies};
 CREATE TABLE IF NOT EXISTS {buddies} (
-    `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    `request_from` bigint(20) UNSIGNED NOT NULL,
-    `request_to` bigint(20) UNSIGNED NOT NULL,
-    `accepted` INT(1) UNSIGNED NOT NULL DEFAULT '0',
-    `date_requested` int(11) NOT NULL DEFAULT '0',
-    `date_accepted` int(11) NOT NULL DEFAULT '0',
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `request_from` BIGINT UNSIGNED NOT NULL,
+    `request_to` BIGINT UNSIGNED NOT NULL,
+    `accepted` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+    `date_requested` INT UNSIGNED NOT NULL DEFAULT '0',
+    `date_accepted` INT UNSIGNED NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `buddy_requests_fk_1` (`request_from`),
     KEY `buddy_requests_fk_2` (`request_to`),
     FOREIGN KEY (`request_from`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`request_to`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {oauth_clients};
 CREATE TABLE IF NOT EXISTS {oauth_clients} (
-    `id` bigint(20) NOT NULL AUTO_INCREMENT,
-    `title` varchar(255) NOT NULL,
-    `user_id` bigint(20) UNSIGNED NOT NULL,
-    `client_id` varchar(255) NOT NULL,
-    `client_secret` varchar(255) NOT NULL,
-    `redirect_uri` varchar(255) NOT NULL,
-    `grant_types` varchar(255) DEFAULT 'authorization_code',
-    `status` tinyint(2) NOT NULL,
-    `description` text NOT NULL,
-    `logo` varchar(255) NOT NULL,
-    `created` int(11) NOT NULL,
-    `updated` int(11) NOT NULL,
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `client_id` VARCHAR(255) NOT NULL,
+    `client_secret` VARCHAR(255) NOT NULL,
+    `redirect_uri` VARCHAR(255) NOT NULL,
+    `grant_types` VARCHAR(255) DEFAULT 'authorization_code',
+    `status` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+    `description` TEXT NOT NULL,
+    `logo` VARCHAR(255) NOT NULL,
+    `created` INT UNSIGNED NOT NULL DEFAULT '0',
+    `updated` INT UNSIGNED NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `oauth_clients_fk_1` (`client_id`),
     KEY `oauth_clients_fk_2` (`client_secret`),
     KEY `oauth_clients_fk_3` (`user_id`),
     FOREIGN KEY (`user_id`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {oauth_codes};
 CREATE TABLE IF NOT EXISTS {oauth_codes} (
-    `id` bigint(20) NOT NULL AUTO_INCREMENT,
-    `code` varchar(255) NOT NULL,
-    `client_id` varchar(255) NOT NULL,
-    `user_id` bigint(20) UNSIGNED NOT NULL,
-    `redirect_uri` varchar(255) NOT NULL,
-    `scope` varchar(255) DEFAULT NULL,
-    `expires` int(11) NOT NULL,
-    `created` int(11) NOT NULL,
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(255) NOT NULL,
+    `client_id` VARCHAR(255) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `redirect_uri` VARCHAR(255) NOT NULL,
+    `scope` VARCHAR(255) DEFAULT NULL,
+    `expires` INT UNSIGNED NOT NULL DEFAULT '0',
+    `created` INT UNSIGNED NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `oauth_codes_fk_1` (`client_id`),
     KEY `oauth_codes_fk_2` (`user_id`),
     KEY `oauth_codes_fk_23` (`code`),
     FOREIGN KEY (`user_id`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`client_id`) REFERENCES {oauth_clients} (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS {oauth_tokens};
 CREATE TABLE IF NOT EXISTS {oauth_tokens} (
-    `id` bigint(20) NOT NULL AUTO_INCREMENT,
-    `access_token` varchar(255) NOT NULL,
-    `refresh_token` varchar(255) DEFAULT NULL,
-    `client_id` varchar(255) NOT NULL,
-    `user_id` bigint(20) UNSIGNED NOT NULL,
-    `scope` varchar(255) DEFAULT NULL,
-    `access_expires` int(11) NOT NULL,
-    `refresh_expires` int(11) NOT NULL,
-    `created` int(11) NOT NULL,
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `access_token` VARCHAR(255) NOT NULL,
+    `refresh_token` VARCHAR(255) DEFAULT NULL,
+    `client_id` VARCHAR(255) NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `scope` VARCHAR(255) DEFAULT NULL,
+    `access_expires` INT UNSIGNED NOT NULL DEFAULT '0',
+    `refresh_expires` INT UNSIGNED NOT NULL DEFAULT '0',
+    `created` INT UNSIGNED NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `oauth_tokens_fk_1` (`client_id`),
     KEY `oauth_tokens_fk_2` (`user_id`),
     KEY `oauth_tokens_fk_3` (`access_token`),
     FOREIGN KEY (`user_id`) REFERENCES {users} (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`client_id`) REFERENCES {oauth_clients} (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS {mail_queue} (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  from_name varchar(64) DEFAULT NULL,
-  from_email varchar(128) NOT NULL,
-  to_email varchar(128) NOT NULL,
-  to_name varchar(128) DEFAULT NULL,
-  subject varchar(255) NOT NULL,
-  body text NOT NULL,
-  hash varchar(128) NOT NULL,
-  status tinyint(1) NOT NULL DEFAULT '0',
-  priority tinyint(1) NOT NULL DEFAULT '0',
-  max_attempts tinyint(3) NOT NULL DEFAULT '3',
-  attempts tinyint(3) NOT NULL DEFAULT '0',
-  last_attempt int(11) NOT NULL DEFAULT '0',
-  created int(11) NOT NULL DEFAULT '0',
-  pubdate int(11) NOT NULL DEFAULT '0',
-  sentdate int(11) NOT NULL DEFAULT '0',
-  timezone varchar(32) DEFAULT 'UTC',
-  language varchar(12) DEFAULT 'en_US',
-  template varchar(255) DEFAULT NULL,
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  from_name VARCHAR(64) DEFAULT NULL,
+  from_email VARCHAR(128) NOT NULL,
+  to_email VARCHAR(128) NOT NULL,
+  to_name VARCHAR(128) DEFAULT NULL,
+  subject VARCHAR(255) NOT NULL,
+  body TEXT NOT NULL,
+  hash VARCHAR(128) NOT NULL,
+  status TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  priority TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  max_attempts TINYINT UNSIGNED NOT NULL DEFAULT '3',
+  attempts TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  last_attempt INT UNSIGNED NOT NULL DEFAULT '0',
+  created INT UNSIGNED NOT NULL DEFAULT '0',
+  pubdate INT UNSIGNED NOT NULL DEFAULT '0',
+  sentdate INT UNSIGNED NOT NULL DEFAULT '0',
+  timezone VARCHAR(32) DEFAULT 'UTC',
+  language VARCHAR(12) DEFAULT 'en_US',
+  template VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `to_email` (`to_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Helper OAuth2 Client Credentials Grant Type
  *
- * @package    Gleez\oAuth2
+ * @package    Gleez\OAuth2
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2013 Gleez Technologies
@@ -10,20 +11,18 @@
  */
 class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 {
-
 	private $clientData;
 
 	protected $config;
 	protected $request;
 	protected $response;
 
-	public function __construct(array $config = array(), $is_grant = FALSE)
+    public function __construct(array $config = [], $is_grant = false)
 	{
 		/** We use the same class for validating request for other grants
 		 *	make sure this is true only if the request grant_type is 'client_credentials'
 		 */
-        if ($is_grant)
-		{
+        if ($is_grant) {
 			/**
 			 * The client credentials grant type MUST only be used by confidential clients
 			 *
@@ -36,16 +35,16 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 		$this->config = $config;
 	}
 
-	public function getQuerystringIdentifier()
-	{
+    public function getQuerystringIdentifier(): string
+    {
 		return 'client_credentials';
 	}
 
     /**
      * @throws Oauth2_Exception
      */
-    public function validateRequest(Request $request, Response $response)
-	{
+    public function validateRequest(Request $request, Response $response): bool
+    {
 		$this->request  = $request;
 		$this->response = $response;
 
@@ -53,25 +52,20 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'Client credentials are required');
 		}
 
-		if (!isset($clientData['client_id'])) 
-		{
+        if (!isset($clientData['client_id'])) {
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'Missing parameter: "client_id" is required');
 		}
 
-        if (empty($clientData['client_secret']))
-		{
-			if (!$this->config['allow_public_clients']) 
-			{
+        if (empty($clientData['client_secret'])) {
+            if (!$this->config['allow_public_clients']) {
 				throw Oauth2_Exception::factory(400, 'invalid_client', 'Client credentials are required');
 			}
 
 			// Is this a public client?
-			if ( ! $this->getClientDetails($clientData['client_id']))
-			{
+            if (!$this->getClientDetails($clientData['client_id'])) {
 				throw Oauth2_Exception::factory(400, 'invalid_client', 'This client is invalid or must authenticate using a client secret');
 			}
-		}
-		elseif ($this->checkClientCredentials($clientData['client_id'], $clientData['client_secret']) === false) {
+        } elseif ($this->checkClientCredentials($clientData['client_id'], $clientData['client_secret']) === false) {
 			throw Oauth2_Exception::factory(400, 'invalid_client', 'The client credentials are invalid');
 		}
 
@@ -91,30 +85,27 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 
 	public function getUserId()
 	{
-        return $this->clientData['user_id'] ?? NULL;
+        return $this->clientData['user_id'] ?? null;
 	}
 
 	public function getScope()
 	{
-        return $this->clientData['scope'] ?? NULL;
+        return $this->clientData['scope'] ?? null;
 	}
 
     /**
      * @throws Oauth2_Exception
      */
-    public function createAccessToken($client_id, $user_id, $scope = NULL)
+    public function createAccessToken($client_id, $user_id, $scope = null)
 	{
-		try
-		{
+        try {
 			/**
 			 * Client Credentials Grant does NOT include a refresh token
 			 *
 			 * @see http://tools.ietf.org/html/rfc6749#section-4.4.3
 			 */
-            return Model::factory('oauth')->createAccessToken($client_id, $user_id, $scope);
-		}
-		catch (Exception $e)
-		{
+            return Model::factory('OAuth')->createAccessToken($client_id, $user_id, $scope);
+        } catch (Exception $e) {
 			throw Oauth2_Exception::factory(500, 'server_error', 'The Token server encountered an unexpected condition which prevented it from fulfilling the request.');
 		}
 	}
@@ -138,9 +129,13 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
      */
 	protected function getClientCredentials()
 	{
-		if (isset($_SERVER['PHP_AUTH_USER']) && ! is_null($clientId = $_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && ! is_null($clientSecret = $_SERVER['PHP_AUTH_PW'])) 
-		{
-			return array('client_id' => $clientId, 'client_secret' => $clientSecret);
+        if (
+            isset($_SERVER['PHP_AUTH_USER'])
+            && !is_null($clientId = $_SERVER['PHP_AUTH_USER'])
+            && isset($_SERVER['PHP_AUTH_PW'])
+            && !is_null($clientSecret = $_SERVER['PHP_AUTH_PW'])
+        ) {
+            return ['client_id' => $clientId, 'client_secret' => $clientSecret];
 		} 
 
 		if ($this->config['allow_credentials_in_request_body']) {
@@ -150,7 +145,10 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 				 * client_secret can be null if the client's password is an empty string
 				 * @see http://tools.ietf.org/html/rfc6749#section-2.3.1
 				 */
-				return array('client_id' => $this->request->post('client_id'), 'client_secret' => $this->request->post('client_secret'));
+                return [
+                    'client_id' => $this->request->post('client_id'),
+                    'client_secret' => $this->request->post('client_secret')
+                ];
 			}
 		}
 
@@ -159,21 +157,21 @@ class Oauth2_GrantType_ClientCredentials implements Oauth2_GrantType_Interface
 	        $this->setError(400, 'invalid_client', 'Client credentials were not found in the headers'.$message);
 	    }*/
 
-	    return FALSE;
+        return false;
 	}
 
 	public function getClientDetails($id)
 	{
-		return Model::factory('oauth')->getClientDetails($id);
+        return Model::factory('OAuth')->getClientDetails($id);
 	}
 
 	public function checkClientCredentials($id, $secret)
 	{
-		return Model::factory('oauth')->checkClientCredentials($id, $secret);
+        return Model::factory('OAuth')->checkClientCredentials($id, $secret);
 	}
 
 	public function checkRestrictedGrantType($client_id, $grant_type)
 	{
-		return Model::factory('oauth')->checkRestrictedGrantType($client_id, $grant_type);
+        return Model::factory('OAuth')->checkRestrictedGrantType($client_id, $grant_type);
 	}
 }

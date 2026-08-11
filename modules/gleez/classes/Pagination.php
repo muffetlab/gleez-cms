@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Pagination links generator
  *
@@ -8,20 +9,20 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Pagination {
-
+class Pagination
+{
 	/** Merged configuration settings
 	 * @var array
 	 */
-	protected $config = array(
-		'current_page'      => array('source' => 'query_string', 'key' => 'page'),
-		'total_items'       => 0,
-		'items_per_page'    => 10,
-		'view'              => 'pagination/basic',
-		'auto_hide'         => TRUE,
-		'first_page_in_url' => FALSE,
-		'uri'               => NULL
-	);
+    protected $config = [
+        'current_page' => ['source' => 'query_string', 'key' => 'page'],
+        'total_items' => 0,
+        'items_per_page' => 10,
+        'view' => 'pagination/basic',
+        'auto_hide' => true,
+        'first_page_in_url' => false,
+        'uri' => null
+    ];
 
 	// Current page number
 	protected $current_page;
@@ -57,25 +58,25 @@ class Pagination {
 	protected $current_last_item;
 
 	/**
-	 * Previous page number; FALSE if the current page is the first one
+     * Previous page number; false if the current page is the first one
 	 * @var mixed
 	 */
 	protected $previous_page;
 
 	/**
-	 * Next page number; FALSE if the current page is the last one
+     * Next page number; false if the current page is the last one
 	 * @var mixed
 	 */
 	protected $next_page;
 
 	/**
-	 * First page number; FALSE if the current page is the first one
+     * First page number; false if the current page is the first one
 	 * @var mixed
 	 */
 	protected $first_page;
 
 	/**
-	 * Last page number; FALSE if the current page is the last one
+     * Last page number; false if the current page is the last one
 	 * @var mixed
 	 */
 	protected $last_page;
@@ -102,7 +103,7 @@ class Pagination {
 	 * Parameters to use with Route to create URIs
 	 * @var array
 	 */
-	protected $_route_params = array();
+    protected $_route_params = [];
 
 	/**
 	 * Requested URI
@@ -118,7 +119,7 @@ class Pagination {
      * @return  Pagination
      * @throws Kohana_Exception
      */
-    public static function factory(array $config = array(), Request $request = NULL): Pagination
+    public static function factory(array $config = [], Request $request = null): Pagination
     {
 		return new self($config, $request);
 	}
@@ -130,14 +131,13 @@ class Pagination {
      * @param Request|null $request Request [Optional]
      * @throws Kohana_Exception
      */
-	public function __construct(array $config = array(), Request $request = NULL)
+    public function __construct(array $config = [], Request $request = null)
 	{
 		// Overwrite system defaults with application defaults
 		$this->config = $this->config_group() + $this->config;
 
 		// Assign Request
-		if (is_null($request))
-		{
+        if (is_null($request)) {
 			$request = Request::current();
 		}
 
@@ -149,8 +149,7 @@ class Pagination {
 		// Assign default route params
 		$this->_route_params = $request->param();
 
-		if (isset($config['uri']))
-		{
+        if (isset($config['uri'])) {
 			$this->_uri = $config['uri'];
 		}
 
@@ -178,8 +177,7 @@ class Pagination {
         $config['group'] = $group;
 
 		// Recursively load requested config groups
-		while (isset($config['group']) AND $config_file->offsetExists($config['group']))
-		{
+        while (isset($config['group']) && $config_file->offsetExists($config['group'])) {
 			// Temporarily store config group name
 			$group = $config['group'];
 			unset($config['group']);
@@ -206,10 +204,9 @@ class Pagination {
      * @return  object  Pagination
      * @throws Kohana_Exception
      */
-	public function setup(array $config = array())
+    public function setup(array $config = [])
 	{
-		if (isset($config['group']))
-		{
+        if (isset($config['group'])) {
 			// Recursively load requested config groups
 			$config += $this->config_group($config['group']);
 		}
@@ -218,23 +215,20 @@ class Pagination {
 		$this->config = $config + $this->config;
 
 		// Only (re)calculate pagination when needed
-		if (is_null($this->current_page)
-			OR isset($config['current_page'])
-			OR isset($config['total_items'])
-			OR isset($config['items_per_page']))
-		{
+        if (
+            is_null($this->current_page)
+            || isset($config['current_page'])
+            || isset($config['total_items'])
+            || isset($config['items_per_page'])
+        ) {
 			// Retrieve the current page number
-			if ( ! empty($this->config['current_page']['page']))
-			{
+            if (!empty($this->config['current_page']['page'])) {
 				// The current page number has been set manually
 				$this->current_page = (int) $this->config['current_page']['page'];
-			}
-			else
-			{
+            } else {
 				$query_key = $this->config['current_page']['key'];
 
-				switch ($this->config['current_page']['source'])
-				{
+                switch ($this->config['current_page']['source']) {
 					case 'query_string':
 						$this->current_page = ( ! is_null($this->_request->query($query_key)))
 							? (int) $this->_request->query($query_key)
@@ -255,10 +249,10 @@ class Pagination {
 			$this->current_page       = (int) min(max(1, $this->current_page), max(1, $this->total_pages));
 			$this->current_first_item = (int) min((($this->current_page - 1) * $this->items_per_page) + 1, $this->total_items);
 			$this->current_last_item  = (int) min($this->current_first_item + $this->items_per_page - 1, $this->total_items);
-			$this->previous_page      = ($this->current_page > 1) ? $this->current_page - 1 : FALSE;
-			$this->next_page          = ($this->current_page < $this->total_pages) ? $this->current_page + 1 : FALSE;
-			$this->first_page         = ($this->current_page === 1) ? FALSE : 1;
-			$this->last_page          = ($this->current_page >= $this->total_pages) ? FALSE : $this->total_pages;
+            $this->previous_page = ($this->current_page > 1) ? $this->current_page - 1 : false;
+            $this->next_page = ($this->current_page < $this->total_pages) ? $this->current_page + 1 : false;
+            $this->first_page = ($this->current_page === 1) ? false : 1;
+            $this->last_page = ($this->current_page >= $this->total_pages) ? false : $this->total_pages;
 			$this->offset            = (int) (($this->current_page - 1) * $this->items_per_page);
 		}
 
@@ -282,26 +276,21 @@ class Pagination {
 		$pager = '/p'. $page;
 
 		// No page number in URLs to first page
-		if ($page === 1 AND ! $this->config['first_page_in_url'])
-		{
-			$page = NULL;
-			$pager = NULL;
+        if ($page === 1 && !$this->config['first_page_in_url']) {
+            $page = null;
+            $pager = null;
 		}
 
-		switch ($this->config['current_page']['source'])
-		{
+        switch ($this->config['current_page']['source']) {
 			case 'query_string':
 
-				return URL::site($this->_route->uri($this->_route_params).
-					$this->query(array($this->config['current_page']['key'] => $page)));
+                return URL::site($this->_route->uri($this->_route_params)
+                    . $this->query([$this->config['current_page']['key'] => $page]));
 
 			case 'route':
-				return URL::site($this->_route->uri(
-						array_merge(
-							$this->_route_params,
-							array($this->config['current_page']['key'] => $page)
-						)
-					). $this->query());
+                return URL::site($this->_route->uri(array_merge($this->_route_params, [
+                        $this->config['current_page']['key'] => $page
+                    ])) . $this->query());
 			case 'cms':
 				return URL::site($this->_uri . $pager . $this->query());
 		}
@@ -319,12 +308,11 @@ class Pagination {
     public function valid_page(int $page): bool
     {
 		// Page number has to be a clean integer
-		if ( ! Valid::digit($page))
-		{
-			return FALSE;
+        if (!Valid::digit($page)) {
+            return false;
 		}
 
-		return $page > 0 AND $page <= $this->total_pages;
+        return $page > 0 && $page <= $this->total_pages;
 	}
 
     /**
@@ -334,22 +322,19 @@ class Pagination {
      * @return  string  pagination output (HTML)
      * @throws View_Exception
      */
-    public function render($view = NULL): string
+    public function render($view = null): string
     {
 		// Automatically hide pagination whenever it is superfluous
-		if ($this->config['auto_hide'] === TRUE AND $this->total_pages <= 1)
-		{
+        if ($this->config['auto_hide'] === true && $this->total_pages <= 1) {
 			return '';
 		}
 
-		if (is_null($view))
-		{
+        if (is_null($view)) {
 			// Use the view from config
 			$view = $this->config['view'];
 		}
 
-		if ( ! $view instanceof View)
-		{
+        if (!$view instanceof View) {
 			// Load the view file
 			$view = View::factory($view);
 		}
@@ -367,10 +352,9 @@ class Pagination {
      * @param Request|null $request Request [Optional]
      * @return Request|Pagination Route if used as getter, chainable as setter
      */
-	public function request(Request $request = NULL)
+    public function request(Request $request = null)
 	{
-		if (is_null($request))
-		{
+        if (is_null($request)) {
 			return $this->_request;
 		}
 
@@ -387,19 +371,15 @@ class Pagination {
      * @throws Kohana_Exception
      * @uses    Route::get
      */
-	public function route($route = NULL)
+    public function route($route = null)
 	{
-		if (is_null($route))
-		{
+        if (is_null($route)) {
 			return $this->_route;
 		}
 
-		if ($route instanceof Route)
-		{
+        if ($route instanceof Route) {
 			$this->_route = $route;
-		}
-		else if (is_string($route))
-		{
+        } elseif (is_string($route)) {
 			$this->_route = Route::get($route);
 		}
 
@@ -412,10 +392,9 @@ class Pagination {
      * @param array|null $route_params Route parameters to set [Optional]
      * @return array|Pagination Route parameters if used as getter, chainable as setter
      */
-	public function route_params(array $route_params = NULL)
+    public function route_params(array $route_params = null)
 	{
-		if (is_null($route_params))
-		{
+        if (is_null($route_params)) {
 			return $this->_route_params;
 		}
 
@@ -430,10 +409,9 @@ class Pagination {
      * @param string|null $uri Route uri to set [Optional]
      * @return string|Pagination Route uri if used as getter, chainable as setter
 	 */
-    public function uri(string $uri = NULL)
+    public function uri(string $uri = null)
 	{
-		if (is_null($uri))
-		{
+        if (is_null($uri)) {
 			return $this->_uri;
 		}
 
@@ -448,26 +426,22 @@ class Pagination {
      * @param array|null $params Parameters to override [Optional]
      * @return string
      */
-    public function query(array $params = NULL): string
+    public function query(array $params = null): string
     {
-		if (is_null($params))
-		{
+        if (is_null($params)) {
 			// Use only the current parameters
 			$params = $this->_request->query();
-		}
-		else
-		{
+        } else {
 			// Merge the current and new parameters
 			$params = array_merge($this->_request->query(), $params);
 		}
 
-		if (empty($params))
-		{
+        if (empty($params)) {
 			// No query parameters
 			return '';
 		}
 
-		// Note: http_build_query returns an empty string for a params array with only NULL values
+        // Note: http_build_query returns an empty string for a params array with only null values
 		$query = http_build_query($params, '', '&');
 
 		// Don't prepend '?' to an empty string
@@ -483,12 +457,9 @@ class Pagination {
      */
 	public function __toString()
 	{
-		try
-		{
+        try {
 			return $this->render();
-		}
-		catch(Exception $e)
-		{
+        } catch (Exception $e) {
 			Kohana_Exception::handler($e);
 		}
 	}
@@ -517,11 +488,11 @@ class Pagination {
 	 * Returns a Pagination property
 	 *
      * @param string $key Property name
-	 * @return  mixed   Pagination property; NULL if not found
+     * @return mixed Pagination property; null if not found
 	 */
     public function __get(string $key)
 	{
-        return $this->$key ?? NULL;
+        return $this->$key ?? null;
 	}
 
     /**
@@ -532,8 +503,8 @@ class Pagination {
      * @return  void
      * @throws Kohana_Exception
      */
-	public function __set($key, $value)
+    public function __set(string $key, $value)
 	{
-		$this->setup(array($key => $value));
+        $this->setup([$key => $value]);
 	}
 }

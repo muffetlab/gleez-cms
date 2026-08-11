@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gleez jQuery DataTables support
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Datatables {
-
+class Datatables
+{
 	/** Sort Ascending */
 	const SORT_ASC = 'ASC';
 
@@ -22,7 +23,7 @@ class Datatables {
      * @param ORM|null $object
      * @return Datatables
      */
-    public static function factory(ORM $object = NULL): Datatables
+    public static function factory(ORM $object = null): Datatables
     {
 		return new Datatables($object);
 	}
@@ -39,13 +40,13 @@ class Datatables {
 	 * Columns
 	 * @var array
 	 */
-	protected $_columns = array();
+    protected $_columns = [];
 
 	/**
 	 * Search columns
 	 * @var array
 	 */
-	protected $_search_columns = array();
+    protected $_search_columns = [];
 
 	/**
 	 * Count for request
@@ -69,7 +70,7 @@ class Datatables {
 	 * Rows
 	 * @var array
 	 */
-	protected $_rows = array();
+    protected $_rows = [];
 
 	/**
 	 * View
@@ -89,12 +90,12 @@ class Datatables {
 	 */
 	protected $_render;
 
-	/**
-	 * Initialize
-	 *
-	 * @param  object  $object
-	 */
-	public function __construct($object)
+    /**
+     * Initialize
+     *
+     * @param ORM $object $object
+     */
+    public function __construct(ORM $object)
 	{
 		$this->_object = $object;
 		$this->_object_name = $object->object_name();
@@ -130,23 +131,18 @@ class Datatables {
     protected function _search(string $query)
 	{
 		// Use search columns if specified; otherwise, search across all columns
-		$columns = ( ! empty($this->_search_columns)) ? $this->_search_columns : $this->_columns;
+        $columns = !empty($this->_search_columns) ? $this->_search_columns : $this->_columns;
 
 
-		if (count($columns) > 0)
-		{
+        if (count($columns) > 0) {
             $query = '%' . HTML::chars($query) . '%';
 
 			$this->_object->where_open();
 
-			foreach ($columns as $key => $column)
-			{
-				if ($key === 0)
-				{
+            foreach ($columns as $key => $column) {
+                if ($key === 0) {
 					$this->_object->where($this->_object_name.'.'.$column, 'like', $query);
-				}
-				else
-				{
+                } else {
 					$this->_object->or_where($this->_object_name.'.'.$column, 'like', $query);
 				}
 			}
@@ -163,26 +159,6 @@ class Datatables {
     protected function _count(): int
     {
 		return count($this->_result);
-	}
-
-	/**
-	 * Count total
-	 *
-	 * @return  integer
-	 */
-    protected function _count_total(): int
-    {
-		return $this->_object->reset(FALSE)->count_all();
-	}
-
-	/**
-	 * Execute result on object
-	 *
-	 * @return	mixed
-	 */
-	protected function _execute()
-	{
-		return $this->_object->find_all();
 	}
 
 	/**
@@ -209,8 +185,7 @@ class Datatables {
      */
     public function sort(string $column, string $direction = self::SORT_ASC): Datatables
     {
-		if ( ! in_array($direction, array(self::SORT_ASC, self::SORT_DESC)))
-		{
+        if (!in_array($direction, [self::SORT_ASC, self::SORT_DESC])) {
 			throw new Kohana_Exception('Invalid sort order of `' . $direction . '`.');
 		}
 
@@ -248,10 +223,9 @@ class Datatables {
      * @param array|null $columns Columns for setting [Optional]
      * @return array|Datatables
      */
-	public function columns(array $columns = NULL)
+    public function columns(array $columns = null)
 	{
-		if ($columns === NULL)
-		{
+        if ($columns === null) {
 			return $this->_columns;
 		}
 
@@ -280,13 +254,12 @@ class Datatables {
     {
 		$request = $this->request();
 
-		if (!$request instanceof Request)
-		{
+        if (!$request instanceof Request) {
 			throw new Kohana_Exception('DataTables expecting valid Request. If within a sub-request, have controller pass `$this->request`.');
 		}
 
 		$columns = $this->columns();
-		$this->_count_total = $this->_count_total();
+        $this->_count_total = $this->_object->reset(false)->count_all();
 
 		$requestOrder   = $request->query('order');
         $requestColumns = (array) $request->query('columns');
@@ -294,16 +267,13 @@ class Datatables {
 		$requestSearch  = $request->query('search');
 		$requestLength  = $request->query('length');
 
-        if (is_array($requestOrder) && count($requestOrder) > 0)
-		{
-			for ($i = 0; $i < count($requestOrder); $i++)
-			{
+        if (is_array($requestOrder) && count($requestOrder) > 0) {
+            for ($i = 0; $i < count($requestOrder); $i++) {
 				// Convert the column index into the column data property
 				$columnIdx     = intval($requestOrder[$i]['column']);
 				$requestColumn = $requestColumns[$columnIdx];
 
-				if ($requestColumn['orderable'] == 'true' && isset($columns[$columnIdx]))
-				{
+                if ($requestColumn['orderable'] == 'true' && isset($columns[$columnIdx])) {
 					$column  = $columns[$columnIdx];
 					$sort    = 'Datatables::SORT_' . strtoupper($requestOrder[$i]['dir']);
 
@@ -320,45 +290,27 @@ class Datatables {
 		}
 
 		// Searching/Filtering
-		if ($requestSearch !== NULL && $requestSearch['value'] != '')
-		{
+        if ($requestSearch !== null && $requestSearch['value'] != '') {
 			$str = $requestSearch['value'];
-			for ($i = 0, $ien = count($requestColumns); $i < $ien ; $i++)
-			{
+            for ($i = 0, $ien = count($requestColumns); $i < $ien; $i++) {
 				// Convert the column index into the column data property
 				$requestColumn = $requestColumns[$i];
 
 				// global search
-				if ($requestColumn['searchable'] == 'true')
-				{
+                if ($requestColumn['searchable'] == 'true') {
 					$this->search($str);
 				}
 			}
 		}
 
-		// @todo - Individual column filtering
-		for ($i = 0, $ien = count($requestColumns); $i < $ien ; $i++)
-		{
-			$requestColumn = $requestColumns[$i];
-			$str = $requestColumn['search']['value'];
-
-			if ($requestColumn['searchable'] == 'true'  && $str != '')
-			{
-				//$this->search($str);
-			}
-		}
-
 		// Execute the query
-		$this->_result = $this->_execute();
+        $this->_result = $this->_object->find_all();
 		$this->_count  = $this->_count();
 
 		// Count should always match total unless search is being applied
-		if ($requestSearch !== NULL && $requestSearch['value'] != '')
-		{
+        if ($requestSearch !== null && $requestSearch['value'] != '') {
 			$this->_count = $this->count();
-		}
-		else
-		{
+        } else {
 			$this->_count = $this->_count_total;
 		}
 
@@ -371,10 +323,9 @@ class Datatables {
      * @param string|null $path
      * @return Datatables|string
 	 */
-    public function view(string $path = NULL)
+    public function view(string $path = null)
 	{
-		if ($path === NULL)
-		{
+        if ($path === null) {
 			return $this->_view;
 		}
 
@@ -390,12 +341,10 @@ class Datatables {
      * @param Request|null $request
      * @return Datatables|Request
      */
-	public function request(Request $request = NULL)
+    public function request(Request $request = null)
 	{
-		if ($request === NULL)
-		{
-			if ($this->_request instanceof Request)
-			{
+        if ($request === null) {
+            if ($this->_request instanceof Request) {
 				return $this->_request;
 			}
 
@@ -439,20 +388,17 @@ class Datatables {
      */
     public function render(): string
     {
-		if ($this->_render === NULL)
-		{
-			if ($this->_view)
-			{
-				View::factory($this->_view, array('datatables' => $this))->render();
+        if ($this->_render === null) {
+            if ($this->_view) {
+                View::factory($this->_view, ['datatables' => $this])->render();
 			}
 
-			$this->_render = json_encode(array
-			(
-				'draw'              => intval($this->request()->query('draw')),
+            $this->_render = json_encode([
+                'draw' => intval($this->request()->query('draw')),
                 'recordsTotal' => $this->_count_total,
                 'recordsFiltered' => $this->_count,
-				'data'              => $this->_rows
-			));
+                'data' => $this->_rows
+            ]);
 		}
 
 		return $this->_render;

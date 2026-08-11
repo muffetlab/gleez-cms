@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Action Model Class
  *
@@ -7,16 +8,16 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Model_Action extends ORM {
-
+class Model_Action extends ORM
+{
 	/**
 	 * "Has many" relationships
 	 * @var array
 	 */
-	protected $_has_many = array(
-		'roles' => array(
+    protected $_has_many = [
+        'roles' => [
             'model' => 'Role',
-			'through' => 'action_roles'
-		),
-	);
+            'through' => 'action_roles'
+        ],
+    ];
 }

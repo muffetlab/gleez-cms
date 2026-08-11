@@ -23,7 +23,7 @@ class Text extends Kohana_Text
      * @param string $text Text string to filter html
      * @return string
      */
-    public static function htmlcorrector(string $text): string
+    public static function htmlCorrector(string $text): string
     {
 		return static::dom_serialize(static::dom_load($text));
 	}
@@ -67,18 +67,15 @@ class Text extends Kohana_Text
 		$body_node    = $dom_document->getElementsByTagName('body')->item(0);
 		$body_content = '';
 
-		foreach ($body_node->getElementsByTagName('script') as $node)
-		{
+        foreach ($body_node->getElementsByTagName('script') as $node) {
 			static::escape_cdata_element($dom_document, $node);
 		}
 
-		foreach ($body_node->getElementsByTagName('style') as $node)
-		{
+        foreach ($body_node->getElementsByTagName('style') as $node) {
 			static::escape_cdata_element($dom_document, $node, '/*', '*/');
 		}
 
-		foreach ($body_node->childNodes as $child_node)
-		{
+        foreach ($body_node->childNodes as $child_node) {
 			$body_content .= $dom_document->saveXML($child_node);
 		}
 
@@ -98,10 +95,8 @@ class Text extends Kohana_Text
 	*/
     private static function escape_cdata_element(DOMDocument $dom_document, DOMElement $dom_element, string $comment_start = '//', string $comment_end = '')
 	{
-		foreach ($dom_element->childNodes as $node)
-		{
-			if (get_class($node) == 'DOMCdataSection')
-			{
+        foreach ($dom_element->childNodes as $node) {
+            if (get_class($node) == 'DOMCdataSection') {
                 $embed_prefix = PHP_EOL . "<!--$comment_start--><![CDATA[$comment_start ><!--$comment_end" . PHP_EOL;
                 $embed_suffix = PHP_EOL . "$comment_start--><!]]>$comment_end" . PHP_EOL;
 
@@ -131,8 +126,8 @@ class Text extends Kohana_Text
      *
      * @param string $text The text to be filtered
      * @param integer|null $format_id The format id of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
-     * @param string|null $langcode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
-     * @param boolean $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to FALSE when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
+     * @param string|null $langCode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
+     * @param boolean $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to false when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
      * @return  mixed
      * @throws Kohana_Exception
      * @uses    Config::load
@@ -143,42 +138,40 @@ class Text extends Kohana_Text
      * @uses    Filter::process
      * @todo    Make @params description shorter
      */
-    public static function markup(string $text, int $format_id = NULL, string $langcode = NULL, bool $cache = FALSE)
+    public static function markup(string $text, int $format_id = null, string $langCode = null, bool $cache = false)
 	{
 		// Save some cpu cycles if text is empty or null
-		if(empty($text))
-		{
+        if (empty($text)) {
 			return $text;
 		}
 
-		$format_id = is_null($format_id) ? Kohana::$config->load('inputfilter')->get('default_format', 1) : $format_id;
-		$langcode  = is_null($langcode) ? I18n::$lang : $langcode;
+        $format_id = is_null($format_id) ? Kohana::$config->load('input_filter')->get('default_format', 1) : $format_id;
+        $langCode = is_null($langCode) ? I18n::$lang : $langCode;
 
 		// Check for a cached version of this piece of text.
-		$cache_id = $format_id . ':' . $langcode . ':' . hash('sha256', $text);
-        if ($cache and $cached = Cache::instance()->get('cache_filter:' . $cache_id)) {
+        $cache_id = $format_id . ':' . $langCode . ':' . hash('sha256', $text);
+        if ($cache && ($cached = Cache::instance()->get('cache_filter:' . $cache_id))) {
 			return $cached;
 		}
 
 		// Convert all Windows and Mac newlines to a single newline, so filters
 		// only need to deal with one possibility.
-		$text = str_replace(array("\r\n", "\r"), "\n", $text);
+        $text = str_replace(["\r\n", "\r"], "\n", $text);
 
-		$textObj = new ArrayObject(array(
-				'text' 	   => (string) $text,
-				'format'   => (int)    $format_id,
-            'langcode' => $langcode,
+        $textObj = new ArrayObject([
+            'text' => (string) $text,
+            'format' => (int) $format_id,
+            'langCode' => $langCode,
             'cache' => $cache,
             'cache_id' => $cache_id
-		), ArrayObject::ARRAY_AS_PROPS);
+        ], ArrayObject::ARRAY_AS_PROPS);
 
-		Module::event('inputfilter', $textObj);
+        Module::event('input_filter', $textObj);
 
 		$text = Filter::process($textObj); // run all filters
 
 		// Store in cache with a minimum expiration time of 1 day.
-		if ($cache)
-		{
+        if ($cache) {
             Cache::instance()->set('cache_filter:' . $cache_id, $text, time() + Date::DAY);
 		}
 
@@ -199,17 +192,14 @@ class Text extends Kohana_Text
     {
         $text = HTMLFilter::factory($text, $filter)->render();
 
-		if ($filter['settings']['html_nofollow'])
-		{
+        if ($filter['settings']['html_nofollow']) {
 			$html_dom = static::dom_load($text);
 			$links = $html_dom->getElementsByTagName('a');
-			foreach ($links as $link)
-			{
+            foreach ($links as $link) {
 				$link->setAttribute('rel', 'nofollow');
 
 				//Shortens long URLs to http://www.example.com/long/url...
-				if ($filter['settings']['url_length'])
-				{
+                if ($filter['settings']['url_length']) {
 					$link->nodeValue = static::limit_chars($link->nodeValue,
 										 (int) $filter['settings']['url_length'], '....');
 				}
@@ -238,7 +228,7 @@ class Text extends Kohana_Text
 	 * @return  string
 	 * @link    http://drupal.org/project/more_filters
 	 */
-    public static function initialcaps(string $text): string
+    public static function initialCaps(string $text): string
     {
 		// Adds <span class="initial"> tag around the initial letter of each paragraph.
 		// Only add after an opening <p> tag, ignoring any leading spaces. First letter must be a letter or number (no symbols).

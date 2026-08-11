@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Comment Model Class
  *
@@ -10,44 +11,43 @@
  */
 class Model_Comment extends Gleez_Model
 {
-
 	/**
 	 * Table columns
 	 * @var array
 	 */
-	protected $_table_columns = array(
-		'id'          => array( 'type' => 'int' ),
-		'post_id'     => array( 'type' => 'int' ),
-		'pid'         => array( 'type' => 'int' ),
-		'author'      => array( 'type' => 'int' ),
-		'title'       => array( 'type' => 'string' ),
-		'body'        => array( 'type' => 'string' ),
-		'hostname'    => array( 'type' => 'string' ),
-		'created'     => array( 'type' => 'int' ),
-		'updated'     => array( 'type' => 'int' ),
-		'status'      => array( 'type' => 'string' ),
-		'type'        => array( 'type' => 'string' ),
-		'format'      => array( 'type' => 'int' ),
-		'thread'      => array( 'type' => 'string' ),
-		'guest_email' => array( 'type' => 'string' ),
-		'guest_name'  => array( 'type' => 'string' ),
-		'guest_url'   => array( 'type' => 'string' ),
-		'karma'       => array( 'type' => 'int' ),
-	);
+    protected $_table_columns = [
+        'id' => ['type' => 'int'],
+        'post_id' => ['type' => 'int'],
+        'pid' => ['type' => 'int'],
+        'author' => ['type' => 'int'],
+        'title' => ['type' => 'string'],
+        'body' => ['type' => 'string'],
+        'hostname' => ['type' => 'string'],
+        'created' => ['type' => 'int'],
+        'updated' => ['type' => 'int'],
+        'status' => ['type' => 'string'],
+        'type' => ['type' => 'string'],
+        'format' => ['type' => 'int'],
+        'thread' => ['type' => 'string'],
+        'guest_email' => ['type' => 'string'],
+        'guest_name' => ['type' => 'string'],
+        'guest_url' => ['type' => 'string'],
+        'karma' => ['type' => 'int'],
+    ];
 
 	/**
 	 * "Belongs to" relationships
 	 * @var array
 	 */
-	protected $_belongs_to = array(
-		'post' => array(
+    protected $_belongs_to = [
+        'post' => [
             'model' => 'Post',
-			'foreign_key' => 'post_id'
-		),
-		'user' => array(
-			'foreign_key' => 'author'
-		)
-	);
+            'foreign_key' => 'post_id'
+        ],
+        'user' => [
+            'foreign_key' => 'author'
+        ]
+    ];
 
 	/**
 	 * Rules for the post model
@@ -56,33 +56,33 @@ class Model_Comment extends Gleez_Model
 	 */
 	public function rules(): array
     {
-		return array(
-			'author' => array(
-				array('not_empty'),
-			),
-			'post_id' => array(
-				array('not_empty'),
-				array(array($this, 'valid_post'), array(':validation', ':field')),
-			),
-			'guest_name' => array(
-				array(array($this, 'valid_author'), array(':validation', ':field')),
-			),
-			'guest_email' => array(
-				array(array($this, 'valid_email'), array(':validation', ':field')),
-			),
-			'guest_url' => array(
-				array('url'),
-			),
-			'status' => array(
-				array('Comment::valid_state', array(':value')),
-			),
-			'body' => array(
-				array('not_empty'),
-			),
-			'type' => array(
-				array('not_empty'),
-			),
-		);
+        return [
+            'author' => [
+                ['not_empty'],
+            ],
+            'post_id' => [
+                ['not_empty'],
+                [[$this, 'valid_post'], [':validation', ':field']],
+            ],
+            'guest_name' => [
+                [[$this, 'valid_author'], [':validation', ':field']],
+            ],
+            'guest_email' => [
+                [[$this, 'valid_email'], [':validation', ':field']],
+            ],
+            'guest_url' => [
+                ['url'],
+            ],
+            'status' => [
+                ['Comment::valid_state', [':value']],
+            ],
+            'body' => [
+                ['not_empty'],
+            ],
+            'type' => [
+                ['not_empty'],
+            ],
+        ];
 	}
 
 	/**
@@ -92,14 +92,14 @@ class Model_Comment extends Gleez_Model
 	 */
 	public function labels(): array
     {
-		return array(
-			'title'       => __('Title'),
-			'body'        => __('Comment'),
-			'guest_name'  => __('Name'),
-			'guest_email' => __('Email'),
-			'guest_url'   => __('Website'),
-			'author'      => __('Author'),
-		);
+        return [
+            'title' => __('Title'),
+            'body' => __('Comment'),
+            'guest_name' => __('Name'),
+            'guest_email' => __('Email'),
+            'guest_url' => __('Website'),
+            'author' => __('Author'),
+        ];
 	}
 
     /**
@@ -117,28 +117,25 @@ class Model_Comment extends Gleez_Model
      * @uses    Request::$client_ip
      * @uses    User::active_user
      */
-	public function save(Validation $validation = NULL): Kohana_ORM
+    public function save(Validation $validation = null): Kohana_ORM
     {
 		// Set some defaults
 		$this->updated = time();
-        $this->format = empty($this->format) ? Kohana::$config->load('inputfilter.default_format') : $this->format;
+        $this->format = empty($this->format) ? Kohana::$config->load('input_filter.default_format') : $this->format;
 		$this->author = empty($this->author) ? User::active_user()->id : $this->author;
 
-		if ( ! $this->loaded())
-		{
+        if (!$this->loaded()) {
 			// New comment
 			$this->created = $this->updated;
 			$this->hostname = substr(Request::$client_ip, 0, 32); //set hostname only if its new comment.
 
-			if (empty($this->status))
-			{
+            if (empty($this->status)) {
 				$this->status = ACL::check('skip comment approval') ? 'publish' : 'draft';
 			}
 		}
 
 		// Validate the comment's title. If not specified, extract from comment body.
-		if (trim($this->title) == '' AND !empty($this->body))
-		{
+        if (trim($this->title) == '' && !empty($this->body)) {
 			// The body may be in any format, so:
 			// 1) Filter it into HTML
 			// 2) Strip out all HTML tags
@@ -147,8 +144,7 @@ class Model_Comment extends Gleez_Model
 
 			// Edge cases where the comment body is populated only by HTML tags will
 			// require a default subject.
-			if ($this->title == '')
-			{
+            if ($this->title == '') {
 				$this->title = __('(No subject)');
 			}
 		}
@@ -183,11 +179,11 @@ class Model_Comment extends Gleez_Model
                 // Raw fields without markup. Usage: during edit or etc.!
                 return $this->get('body') ?? '';
             case 'url':
-				return Route::get('comment')->uri( array('id' => $this->id, 'action' => 'view'));
+                return Route::get('comment')->uri(['id' => $this->id, 'action' => 'view']);
             case 'edit_url':
-				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'edit'));
+                return Route::get('comment')->uri(['id' => $this->id, 'action' => 'edit']);
             case 'delete_url':
-				return Route::get('comment')->uri(array('id' => $this->id, 'action' => 'delete'));
+                return Route::get('comment')->uri(['id' => $this->id, 'action' => 'delete']);
         }
 
         return parent::__get($column);
@@ -208,38 +204,31 @@ class Model_Comment extends Gleez_Model
      */
     public function valid_author(Validation $validation, string $field)
 	{
-		if ( ! empty($this->author_name) AND ! ($account = User::lookup_by_name($this->author_name)))
-		{
-			$validation->error('author', 'invalid', array($this->author_name));
-		}
-		else
-		{
-			if (isset($account))
-			{
+        if (!empty($this->author_name) && !($account = User::lookup_by_name($this->author_name))) {
+            $validation->error('author', 'invalid', [$this->author_name]);
+        } else {
+            if (isset($account)) {
 				$this->author = $account->id;
 			}
 		}
 
-		if (empty($this->author))
-		{
-			$validation->error($field, 'not_empty', array($validation[$field]));
-		}
-		elseif ($this->author == 1 AND empty($this->guest_name))
-		{
-			$validation->error('guest_name', 'not_empty', array($validation[$field]));
-		}
-		elseif ($this->author == 1 AND ! empty($this->guest_name))
-		{
-			$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
-						->from('users')
-						->where('name', 'LIKE', $this->guest_name)
-						->or_where('nick', 'LIKE', $this->guest_name)
-						->execute($this->_db)
-						->get('total_count');
+        if (empty($this->author)) {
+            $validation->error($field, 'not_empty', [$validation[$field]]);
+        } elseif ($this->author == 1 && empty($this->guest_name)) {
+            $validation->error('guest_name', 'not_empty', [$validation[$field]]);
+        } elseif ($this->author == 1 && !empty($this->guest_name)) {
+            $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
+                ->from('users')
+                ->where('deleted', '=', 0)
+                ->and_where_open()
+                ->where('name', 'LIKE', $this->guest_name)
+                ->or_where('nick', 'LIKE', $this->guest_name)
+                ->and_where_close()
+                ->execute($this->_db)
+                ->get('total_count');
 
-			if ($result > 0)
-			{
-				$validation->error($field, 'registered_user', array($validation[$field]));
+            if ($result > 0) {
+                $validation->error($field, 'registered_user', [$validation[$field]]);
 			}
 		}
 	}
@@ -254,15 +243,11 @@ class Model_Comment extends Gleez_Model
 	 */
     public function valid_email(Validation $validation, string $field)
 	{
-		if ($this->author == 1)
-		{
-			if (empty($validation[$field]))
-			{
-				$validation->error($field, 'not_empty', array($validation[$field]));
-			}
-			elseif ( ! Valid::email($validation[$field]))
-			{
-				$validation->error($field, 'invalid', array($validation[$field]));
+        if ($this->author == 1) {
+            if (empty($validation[$field])) {
+                $validation->error($field, 'not_empty', [$validation[$field]]);
+            } elseif (!Valid::email($validation[$field])) {
+                $validation->error($field, 'invalid', [$validation[$field]]);
 			}
 		}
 	}
@@ -279,15 +264,15 @@ class Model_Comment extends Gleez_Model
      */
     public function valid_post(Validation $validation, string $field)
 	{
-		$result = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
-				->from('posts')
-				->where('id', '=', $this->post_id)
-				->execute($this->_db)
-				->get('total_count');
+        $result = DB::select([DB::expr('COUNT(*)'), 'total_count'])
+            ->from('posts')
+            ->where('id', '=', $this->post_id)
+            ->where('deleted', '=', 0)
+            ->execute($this->_db)
+            ->get('total_count');
 
-		if ($result  != 1)
-		{
-			$validation->error($field, 'invalid', array($validation[$field]));
+        if ($result != 1) {
+            $validation->error($field, 'invalid', [$validation[$field]]);
 		}
 	}
 
@@ -300,94 +285,79 @@ class Model_Comment extends Gleez_Model
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    ACL::check
      * @uses    Module::event
      */
-    public function access($action = FALSE, Model_User $user = NULL): Model_Comment
+    public function access($action = false, Model_User $user = null): Model_Comment
     {
-		if ( ! $action)
-		{
+        if (!$action) {
 			$action = 'view';
 		}
 
-		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
-		{
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true)) {
 			// If the $action was not one of the supported ones, we return access denied.
-			throw HTTP_Exception::factory(404, 'Unauthorized attempt to access non-existent action :act.',
-				array(':act' => $action));
+            throw HTTP_Exception::factory(404, 'Unauthorized attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
 		}
 
-		if ( ! $this->loaded())
-		{
+        if (!$this->loaded()) {
 			// If the $action was not one of the supported ones, we return access denied.
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent post.');
 		}
 
 		// If no user object is supplied, the access check is for the current user.
-		empty($user) AND $user = User::active_user();
+        empty($user) and $user = User::active_user();
 
-		if (ACL::check('bypass comment access', $user))
-		{
+        if (ACL::check('bypass comment access', $user)) {
 			return $this;
 		}
 
 		// Allow other modules to interact with access
 		Module::event('comment_access', $action, $this);
 
-		if ($action === 'view')
-		{
-			if ($this->status === 'publish' AND ACL::check('access comment', $user))
-			{
+        if ($action === 'view') {
+            if ($this->status === 'publish' && ACL::check('access comment', $user)) {
 				return $this;
 			}
 			// Check if authors can view their own unpublished posts.
-			elseif ($this->status != 'publish' AND $this->author == (int)$user->id AND $user->id != 1)
-			{
+            elseif ($this->status != 'publish' && $this->author == (int) $user->id && $user->id != 1) {
 				return $this;
-			}
-			elseif (ACL::check('administer comment', $user))
-			{
+            } elseif (ACL::check('administer comment', $user)) {
 				return $this;
-			}
-			else
-			{
-				throw HTTP_Exception::factory(403, 'Unauthorized attempt to view comment :post.',
-					array(':post' => $this->id));
+            } else {
+                throw HTTP_Exception::factory(403, 'Unauthorized attempt to view comment :post.', [
+                    ':post' => $this->id
+                ]);
 			}
 		}
 
-		if ($action === 'edit')
-		{
-			if (ACL::check('edit own comment') AND $this->author == (int)$user->id AND $user->id != 1)
-			{
+        if ($action === 'edit') {
+            if (ACL::check('edit own comment') && $this->author == (int) $user->id && $user->id != 1) {
 				return $this;
-			}
-			elseif (ACL::check('administer comment', $user))
-			{
+            } elseif (ACL::check('administer comment', $user)) {
 				return $this;
-			}
-			else
-			{
-				throw HTTP_Exception::factory(403, 'Unauthorized attempt to edit comment :post',
-					array(':post' => $this->id));
+            } else {
+                throw HTTP_Exception::factory(403, 'Unauthorized attempt to edit comment :post', [
+                    ':post' => $this->id
+                ]);
 			}
 		}
 
-		if ($action === 'delete')
-		{
-			if ((ACL::check('delete own comment') OR ACL::check('delete any comment')) AND
-				$this->author == (int)$user->id AND $user->id != 1)
-			{
+        if ($action === 'delete') {
+            if (
+                (ACL::check('delete own comment') || ACL::check('delete any comment'))
+                && $this->author == (int) $user->id
+                && $user->id != 1
+            ) {
 				return $this;
-			}
-			elseif (ACL::check('administer comment', $user))
-			{
+            } elseif (ACL::check('administer comment', $user)) {
 				return $this;
-			}
-			else
-			{
-				throw HTTP_Exception::factory(403, 'Unauthorised attempt to delete comment :post',
-					array(':post' => $this->id));
+            } else {
+                throw HTTP_Exception::factory(403, 'Unauthorised attempt to delete comment :post', [
+                    ':post' => $this->id
+                ]);
 			}
 		}
 
@@ -406,26 +376,26 @@ class Model_Comment extends Gleez_Model
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
+     * @throws ReflectionException
      * @uses    Log::add
      * @uses    User::active_user
      * @uses    ACL::check
      * @uses    Module::event
      */
-    public function user_can($action = FALSE, Model_User $user = NULL)
+    public function user_can($action = false, Model_User $user = null)
 	{
 		if( ! $action) $action = 'view';
 
-		if ( ! in_array($action, array('view', 'edit', 'delete', 'add', 'list'), TRUE))
-		{
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true)) {
 			// If the $action was not one of the supported ones, we return access denied.
-			Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to access non-existent action :act.',
-				array(':act' => $action)
-			);
-			return FALSE;
+            Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
+
+            return false;
 		}
 
-		if ( ! $this->loaded())
-		{
+        if (!$this->loaded()) {
 			// If the $action was not one of the supported ones, we return access denied.
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent comment.');
 		}
@@ -433,80 +403,66 @@ class Model_Comment extends Gleez_Model
 		// If no user object is supplied, the access check is for the current user.
 		if (empty($user)) $user = User::active_user();
 
-		if (ACL::check('bypass comment access', $user))
-		{
-			return TRUE;
+        if (ACL::check('bypass comment access', $user)) {
+            return true;
 		}
 
 		//allow other modules to interact with access
 		Module::event('comment_access', $action, $this);
 
 		// can view?
-		if ($action === 'view')
-		{
-			if ($this->status === 'publish' AND ACL::check('access comment', $user))
-			{
+        if ($action === 'view') {
+            if ($this->status === 'publish' && ACL::check('access comment', $user)) {
 				return $this;
 			}
 			// Check if commentators can view their own unpublished comments.
-			elseif ($this->status != 'publish' AND $this->author == (int)$user->id AND $user->id != 1)
-			{
+            elseif ($this->status != 'publish' && $this->author == (int) $user->id && $user->id != 1) {
 				return $this;
-			}
-			elseif (ACL::check('administer comment', $user))
-			{
+            } elseif (ACL::check('administer comment', $user)) {
 				return $this;
-			}
-			else
-			{
-				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to view comment :post.',
-					array(':post' => $this->id)
-				);
-				return FALSE;
+            } else {
+                Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to view comment :post.', [
+                    ':post' => $this->id
+                ]);
+
+                return false;
 			}
 		}
 
 		// can edit?
-		if ($action === 'edit')
-		{
-			if (ACL::check('edit own comment') AND $this->author == (int)$user->id AND $user->id != 1)
-			{
+        if ($action === 'edit') {
+            if (ACL::check('edit own comment') && $this->author == (int) $user->id && $user->id != 1) {
 				return $this;
-			}
-			elseif (ACL::check('administer comment', $user))
-			{
+            } elseif (ACL::check('administer comment', $user)) {
 				return $this;
-			}
-			else
-			{
-				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to edit comment :post.',
-					array(':post' => $this->id)
-				);
-				return FALSE;
+            } else {
+                Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to edit comment :post.', [
+                    ':post' => $this->id
+                ]);
+
+                return false;
 			}
 		}
 
 		// can delete?
-		if ($action === 'delete')
-		{
-			if ((ACL::check('delete own comment') OR ACL::check('delete any comment')) AND
-				$this->author == (int)$user->id AND $user->id != 1)
-			{
+        if ($action === 'delete') {
+            if (
+                (ACL::check('delete own comment') || ACL::check('delete any comment'))
+                && $this->author == (int) $user->id
+                && $user->id != 1
+            ) {
 				return $this;
-			}
-			elseif (ACL::check('administer comment', $user))
-			{
+            } elseif (ACL::check('administer comment', $user)) {
 				return $this;
-			}
-			else
-			{
-				Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to delete comment :post.',
-					array(':post' => $this->id)
-				);
-				return FALSE;
+            } else {
+                Kohana::$log->add(Log::NOTICE, 'Unauthorised attempt to delete comment :post.', [
+                    ':post' => $this->id
+                ]);
+
+                return false;
 			}
 		}
 
-		return TRUE;
+        return true;
 	}
 }

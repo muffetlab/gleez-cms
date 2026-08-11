@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Widget class
  *
@@ -7,8 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Widget_Admin extends Widget {
-
+class Widget_Admin extends Widget
+{
 	public function info() {}
 	public function form() {}
 	public function save(array $post) {}
@@ -20,8 +21,7 @@ class Widget_Admin extends Widget {
      */
     public function render(): string
     {
-		switch($this->name)
-		{
+        switch ($this->name) {
 			case 'donate':
 				return $this->donate();
             case 'welcome':
@@ -43,9 +43,10 @@ class Widget_Admin extends Widget {
     {
 		$menus = Menu::items('management')->get_items();
 		unset($menus['administer']);
-		return View::factory('widgets/shortcuts')
-				->set(array( 'items' => $menus ))
-				->render();
+
+        return View::factory('widgets/shortcuts')
+            ->set(['items' => $menus])
+            ->render();
 	}
 
     /**
@@ -53,10 +54,10 @@ class Widget_Admin extends Widget {
      */
     public function donate(): string
     {
-		return View::factory('widgets/static')->set(array(
-			'title' => __('Donate'),
-			'content' => __('If you use Gleez, we ask that you donate to ensure future development is possible.')
-		))->render();
+        return View::factory('widgets/static')->set([
+            'title' => __('Donate'),
+            'content' => __('If you use Gleez, we ask that you donate to ensure future development is possible.')
+        ])->render();
 	}
 
     /**
@@ -64,10 +65,10 @@ class Widget_Admin extends Widget {
      */
     public function welcome(): string
     {
-		return View::factory('widgets/welcome')->set(array(
-			'title' => __('Welcome'),
-		))->render();
-	}
+        return View::factory('widgets/welcome')->set([
+            'title' => __('Welcome'),
+        ])->render();
+    }
 
     /**
      * @throws View_Exception

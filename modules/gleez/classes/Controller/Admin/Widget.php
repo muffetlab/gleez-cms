@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Widget Controller
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Widget extends Controller_Admin {
-
+class Controller_Admin_Widget extends Controller_Admin
+{
 	/**
 	 * Denotes that a widget is not enabled in any region and should not be shown.
 	 */
@@ -64,38 +65,34 @@ class Controller_Admin_Widget extends Controller_Admin {
         // makes sure all blocks in the same region get a unique weight.
 		$weight_delta = round(count($widgets) / 2);
 
-		foreach ($widget_regions as $key => $value)
-		{
+        foreach ($widget_regions as $key => $value) {
 			// Initialize an empty array for the region.
-			$widget_listing[$key] = array();
+            $widget_listing[$key] = [];
 		}
 
 		// Initialize disabled widgets array.
-		$widget_listing[self::$WIDGET_REGION_NONE] = array();
+        $widget_listing[self::$WIDGET_REGION_NONE] = [];
 
 		// Add each block in the form to the appropriate place in the widget listing.
-		foreach ($widgets as $widget)
-		{
+        foreach ($widgets as $widget) {
 			// Fetch the region for the current widget.
             $region = ($widget->region ?? self::$WIDGET_REGION_NONE);
 			$widget_listing[$region][] = $widget;
 		}
 
-		if ($this->valid_post('widget-list'))
-		{
-			foreach ($_POST['widgets'] as $widget)
-			{
+        if ($this->valid_post('widget-list')) {
+            foreach ($_POST['widgets'] as $widget) {
 				$widget['status'] = (int) ($widget['region'] != self::$WIDGET_REGION_NONE);
 				$widget['region'] = $widget['status'] ? $widget['region'] : self::$WIDGET_REGION_NONE;
 
-				DB::update('widgets')
-					->set(array(
-						'status'=> $widget['status'],
-						'weight' => $widget['weight'],
-						'region' => $widget['region'])
-					)
-					->where('id','=',$widget['id'])
-					->execute();
+                DB::update('widgets')
+                    ->set([
+                        'status' => $widget['status'],
+                        'weight' => $widget['weight'],
+                        'region' => $widget['region']
+                    ])
+                    ->where('id', '=', $widget['id'])
+                    ->execute();
 			}
 
 			Message::success(__('The Widget settings have been updated.'));
@@ -107,7 +104,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$this->response->body($view);
 
         Assets::tableDrag();
-		Assets::js('widgets', 'media/js/widgets.js', array('jquery'), FALSE, array('weight' => 5));
+        Assets::js('widgets', 'media/js/widgets.js', ['jquery'], false, ['weight' => 5]);
 	}
 
     /**
@@ -130,8 +127,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 					->set('roles', $all_roles)
 					->set('regions', $widget_regions);
 
-		if ($this->valid_post('widget'))
-		{
+        if ($this->valid_post('widget')) {
             $widget->values($_POST, [
                 'title',
                 'region',
@@ -143,20 +139,17 @@ class Controller_Admin_Widget extends Controller_Admin {
                 'body',
                 'format'
             ]);
-			try
-			{
+            try {
 				$widget->name = 'static/'. Text::random('alnum', 6);
 				$widget->module = 'gleez';
 				$widget->save();
 
-				Message::success(__('Widget %name created successful!', array('%name' => $widget->title)));
+                Message::success(__('Widget %name created successful!', ['%name' => $widget->title]));
                 Cache::instance()->delete_all();
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/widget')->uri());
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
 				$view->errors = $e->errors('models');
 			}
 		}
@@ -174,8 +167,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$id     = (int) $this->request->param('id', 0);
         $widget = ORM::factory('Widget', $id);
 
-		if ( ! $widget->loaded())
-		{
+        if (!$widget->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
             Message::error(__("Widget doesn't exists!"));
 
@@ -191,7 +183,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 						->find_all()
 						->as_array('id', 'name');
 
-		$this->title = __('Edit %widget widget', array('%widget' => $widget->title));
+        $this->title = __('Edit %widget widget', ['%widget' => $widget->title]);
 
 		$view = View::factory('admin/widget/form')
 					->set('widget', $widget)
@@ -199,26 +191,21 @@ class Controller_Admin_Widget extends Controller_Admin {
 					->set('roles',  $all_roles)
 					->set('regions', $widget_regions);
 
-		if ($this->valid_post('widget'))
-		{
+        if ($this->valid_post('widget')) {
             $widget->values($_POST, ['title', 'region', 'status', 'icon', 'show_title', 'visibility', 'pages']);
-			try
-			{
+            try {
 				$widget->save();
-				if(isset($_POST['widget']))
-				{
+                if (isset($_POST['widget'])) {
 					unset($_POST['widget'], $_POST['_token'], $_POST['_action']);
 				}
 
 				$handler->save($_POST);
-				Message::success(__('Widget %name updated successful!', array('%name' => $widget->title)));
+                Message::success(__('Widget %name updated successful!', ['%name' => $widget->title]));
                 Cache::instance()->delete_all();
 
 				// Redirect to listing
 				$this->request->redirect(Route::get('admin/widget')->uri());
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
 				$view->errors = $e->errors('models');
 			}
 		}
@@ -236,8 +223,7 @@ class Controller_Admin_Widget extends Controller_Admin {
 		$id = (int) $this->request->param('id', 0);
         $widget = ORM::factory('Widget', $id);
 
-		if ( ! $widget->loaded())
-		{
+        if (!$widget->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent widget.');
             Message::error(__("Widget doesn't exists!"));
 
@@ -248,45 +234,43 @@ class Controller_Admin_Widget extends Controller_Admin {
         $static = $split_name && $split_name[0] == 'static';
 
         // We can only delete if it's a custom widget
-		if( ! $static)
-		{
+        if (!$static) {
 			$this->request->redirect(Route::get('admin/widget')->uri());
 		}
 
 		$handler     = Widget::factory($widget->name, $widget);
-		$this->title = __('Delete :title', array(':title' => $widget->title ));
-		$destination = ($this->request->query('destination') !== NULL) ?
-			array('destination' => $this->request->query('destination')) : array();
+        $this->title = __('Delete :title', [':title' => $widget->title]);
+        $destination = $this->request->query('destination') !== null
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 
-		$view = View::factory('form/confirm')
-					->set('action', Route::get('admin/widget')
-					->uri( array('action' => 'delete', 'id' => $widget->id) ).URL::query($destination) )
-					->set('title', $widget->title);
+        $view = View::factory('form/confirm')
+            ->set('action', Route::get('admin/widget')->uri([
+                    'action' => 'delete',
+                    'id' => $widget->id
+                ]) . URL::query($destination))
+            ->set('title', $widget->title);
 
 		// If deletion is not desired, redirect to post
-		if (isset($_POST['no']) AND $this->valid_post())
-		{
-			$this->request->redirect(Route::get('admin/widget')->uri(array('id' => $widget->id)));
+        if (isset($_POST['no']) && $this->valid_post()) {
+            $this->request->redirect(Route::get('admin/widget')->uri(['id' => $widget->id]));
 		}
 
 		// If deletion is confirmed
-		if (isset($_POST['yes']) AND $this->valid_post())
-		{
-			try
-			{
+        if (isset($_POST['yes']) && $this->valid_post()) {
+            try {
 				$title = $widget->title;
 				$widget->delete();
 				$handler->delete($_POST);
 
-				Message::success(__('Widget :title deleted successful!', array(':title' => $title)));
+                Message::success(__('Widget :title deleted successful!', [':title' => $title]));
                 Cache::instance()->delete_all();
-			}
-			catch (Exception $e)
-			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting widget id: :id, :msg',
-					array(':id' => $widget->id, ':msg' => $e->getMessage())
-				);
-				Message::error(__('An error occurred deleting widget %title', array(':title' => $widget->title)));
+            } catch (Exception $e) {
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting widget id: :id, :msg', [
+                    ':id' => $widget->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred deleting widget %title', [':title' => $widget->title]));
 			}
 
 			$redirect = empty($destination) ? Route::get('admin/widget')->uri() :

@@ -110,7 +110,7 @@ $avatar->setSize(64);
 
 ### default_image
 
-The default image if gravatar is not found, FALSE uses gravatar default.
+The default image if gravatar is not found, false uses gravatar default.
 Possible values:
 
 + __404__ &mdash; do not load any image if none is associated with the email, instead return an HTTP 404 (File Not Found) response
@@ -169,16 +169,16 @@ $avatar->setRating('PG');
 
 ### force_default
 
-If for some reason you wanted to force the default image to always load, you can set it to TRUE
+If for some reason you wanted to force the default image to always load, you can set it to true.
 
 Example:
 ~~~
 $avatar->setForceDefault();
 // Is the same as
-$avatar->setForceDefault(TRUE);
+$avatar->setForceDefault(true);
 
 // Disable
-$avatar->setForceDefault(FALSE);
+$avatar->setForceDefault(false);
 ~~~
 
 ### valid_formats
@@ -196,7 +196,7 @@ $avatar->setValidFormats(array('jpg', 'png'));
 
 Set store location for downloading pictures
 
-[!!] Note: If `store_location` is NULL, or not string, or not param exists, by default use `'media/pictures'`
+[!!] Note: If `store_location` is null, or not string, or not param exists, by default use `'media/pictures'`
      from APPPATH. If dir not exists and fails create it used sys_get_temp_dir().
      See [sys_get_temp_dir](http://www.php.net/manual/en/function.sys-get-temp-dir.php)
 

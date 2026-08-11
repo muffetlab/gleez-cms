@@ -37,12 +37,12 @@
     };
 
     // tableDrag is required, and we should be on the widgets admin page.
-	if (typeof $.fn.tabledrag == 'undefined') {
+    if (typeof $.fn.tableDrag == 'undefined') {
 		return null
 	}
 
     const $widgetsTable = $('table#widgets');
-    const widgets = $widgetsTable.tabledrag({
+    const widgets = $widgetsTable.tableDrag({
         weight: {
             fieldClass: 'row-weight',
             hidden: true
@@ -130,7 +130,7 @@
 
     // A custom message for the blocks page specifically.
 	Gleez.theme.tableDragChangedWarning = function () {
-		return '<div class="tabledrag-changed-warning alert alert-warning">' + Gleez.theme('tableDragChangedMarker') + ' ' + Gleez.t('The changes to these widgets will not be saved until the <em>Save widgets</em> button is clicked.') + '</div>';
+        return '<div class="table-drag-changed-warning alert alert-warning">' + Gleez.theme('tableDragChangedMarker') + ' ' + Gleez.t('The changes to these widgets will not be saved until the <em>Save widgets</em> button is clicked.') + '</div>';
 	}
 
 }(jQuery);

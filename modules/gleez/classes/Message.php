@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Message is a class that lets you easily send messages
  * in your application (aka Flash Messages)
@@ -9,8 +10,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license	   https://gleezcms.org/license  Gleez CMS License
  */
-class Message {
-
+class Message
+{
 	// Constants to use for the types of messages that can be set.
 	const ERROR   	= 'error';
 	const ALERT 	= 'alert';
@@ -43,30 +44,26 @@ class Message {
      * @return  void
      * @throws Kohana_Exception
      */
-    public static function set(string $type, $message, ?array $options = NULL)
+    public static function set(string $type, $message, ?array $options = null)
 	{
 		// Load existing messages
 		$messages = (array) self::get();
 
 		// Add new message
-		if (is_array($message))
-		{
-            foreach ($message as $_message)
-			{
-				$messages[] = (object) array(
-					'type'     => $type,
-					'text'     => $_message,
-					'options'  => (array) $options,
-				);
+        if (is_array($message)) {
+            foreach ($message as $_message) {
+                $messages[] = (object) [
+                    'type' => $type,
+                    'text' => $_message,
+                    'options' => (array) $options,
+                ];
 			}
-		}
-		else
-		{
-			$messages[] = (object) array(
-				'type'     => $type,
-				'text'     => $message,
-				'options'  => (array) $options,
-			);
+        } else {
+            $messages[] = (object) [
+                'type' => $type,
+                'text' => $message,
+                'options' => (array) $options,
+            ];
 		}
 
 		// set messages
@@ -80,7 +77,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function error($message, array $options = NULL)
+    public static function error($message, array $options = null)
 	{
 		self::set(self::ERROR, $message, $options);
 	}
@@ -92,7 +89,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function alert($message, array $options = NULL)
+    public static function alert($message, array $options = null)
 	{
 		self::set(self::ALERT, $message, $options);
 	}
@@ -104,7 +101,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function critical($message, array $options = NULL)
+    public static function critical($message, array $options = null)
 	{
 		self::set(self::CRITICAL, $message, $options);
 	}
@@ -116,7 +113,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function notice($message, array $options = NULL)
+    public static function notice($message, array $options = null)
 	{
 		self::set(self::NOTICE, $message, $options);
 	}
@@ -128,7 +125,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function success($message, array $options = NULL)
+    public static function success($message, array $options = null)
 	{
 		self::set(self::SUCCESS, $message, $options);
 	}
@@ -140,7 +137,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function warn($message, array $options = NULL)
+    public static function warn($message, array $options = null)
 	{
 		self::set(self::WARN, $message, $options);
 	}
@@ -152,7 +149,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function info($message, array $options = NULL)
+    public static function info($message, array $options = null)
 	{
 		self::set(self::INFO, $message, $options);
 	}
@@ -164,7 +161,7 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function access($message, array $options = NULL)
+    public static function access($message, array $options = null)
 	{
 		self::set(self::ACCESS, $message, $options);
 	}
@@ -176,10 +173,9 @@ class Message {
      * @param array|null $options Any options for the message [Optional]
      * @throws Kohana_Exception
      */
-	public static function debug($message, array $options = NULL)
+    public static function debug($message, array $options = null)
 	{
-		if (Kohana::$environment !== Kohana::PRODUCTION)
-		{
+        if (Kohana::$environment !== Kohana::PRODUCTION) {
 			self::set(self::DEBUG, $message, $options);
 		}
 	}
@@ -194,7 +190,7 @@ class Message {
      * @throws Kohana_Exception
      * @throws View_Exception
      */
-    public static function render($type = NULL, bool $delete = TRUE, $view = NULL): string
+    public static function render($type = null, bool $delete = true, $view = null): string
     {
 		return self::display($type, $delete, $view);
 	}
@@ -219,36 +215,34 @@ class Message {
      * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
      * @param mixed $default Default value to return [Optional]
      * @param bool $delete Delete the messages?
-     * @return    mixed    array or NULL
+     * @return mixed Returns messages array or null
      * @throws Kohana_Exception
      */
-    public static function get($type = NULL, $default = NULL, bool $delete = FALSE)
+    public static function get($type = null, $default = null, bool $delete = false)
 	{
 		// Get the messages
-		$messages = Session::instance()->get(self::$session_key, array());
+        $messages = Session::instance()->get(self::$session_key, []);
 
-		if ($messages === NULL)
-		{
+        if ($messages === null) {
 			// No messages to return
 			return $default;
 		}
 
-		if ($type !== NULL)
-		{
+        if ($type !== null) {
 			// Will hold the filtered set of messages to return
-			$return = array();
+            $return = [];
 
 			// Store the remainder in case delete or get_once is called
-			$remainder = array();
+            $remainder = [];
 
-			foreach ($messages as $message)
-			{
-				if (($message['type'] === $type) OR (is_array($type) AND in_array($message['type'], $type)) OR (is_array($type) AND Arr::is_assoc($type) AND !in_array($message['type'], $type[1])))
-				{
+            foreach ($messages as $message) {
+                if (
+                    $message['type'] === $type
+                    || is_array($type) && in_array($message['type'], $type)
+                    || is_array($type) && Arr::is_assoc($type) && !in_array($message['type'], $type[1])
+                ) {
 					$return[] = $message;
-				}
-				else
-				{
+                } else {
 					$remainder[] = $message;
 				}
 			}
@@ -260,15 +254,11 @@ class Message {
 			$messages = $return;
 		}
 
-		if ($delete === TRUE)
-		{
-			if ($type === NULL OR empty($remainder))
-			{
+        if ($delete === true) {
+            if ($type === null || empty($remainder)) {
 				// Nothing to save, delete the key from memory
 				self::clear();
-			}
-			else
-			{
+            } else {
 				// Override the messages with the remainder to simulate a deletion
 				Session::instance()->set(self::$session_key, $remainder);
 			}
@@ -294,17 +284,14 @@ class Message {
      * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
      * @throws Kohana_Exception
      */
-	public static function clear($type = NULL)
+    public static function clear($type = null)
 	{
-		if ($type === NULL)
-		{
+        if ($type === null) {
 			// Delete everything!
 			Session::instance()->delete(self::$session_key);
-		}
-		else
-		{
+        } else {
 			// Deletion by type happens in get(), too weird?
-			self::get($type, NULL, TRUE);
+            self::get($type, null, true);
 		}
 	}
 
@@ -317,24 +304,21 @@ class Message {
      * @return   string   Message to string
      * @throws View_Exception|Kohana_Exception
      */
-    public static function display($type = NULL, bool $delete = TRUE, $view = NULL): string
+    public static function display($type = null, bool $delete = true, $view = null): string
     {
-		$messages = self::get($type, NULL, $delete);
+        $messages = self::get($type, null, $delete);
 
-		if (empty($messages))
-		{
+        if (empty($messages)) {
 			// No messages
 			return '';
 		}
 
-		if (is_null($view))
-		{
+        if (is_null($view)) {
 			// Use the default view
 			$view = self::$default_view;
 		}
 
-		if ( ! $view instanceof View)
-		{
+        if (!$view instanceof View) {
 			// Load the view file
 			$view = new View($view);
 		}

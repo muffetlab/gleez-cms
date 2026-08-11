@@ -275,13 +275,13 @@ a {
 	padding: 10px 0;
 }
 
-.readmore {
+.read-more {
 	background-color: #d93 !important;
 	border-color: #d93 !important;
 	color: #fff !important;
 }
 
-.readmore:hover {
+.read-more:hover {
 	background-color: #c48c2d !important;
 	border-color: #c48c2d !important;
 }
@@ -551,6 +551,10 @@ ol.comments li{
 	list-style: none;
 }
 
+ul.comments-list {
+	list-style: none;
+}
+
 li.comment{
 	border-top: 1px solid #DDDDDD;
 	line-height: 20px;
@@ -674,10 +678,6 @@ li.comment{
 .sidebar ul, #right ul, #admin-list-users ul{
 	padding:0;
 	margin:0;
-}
-
-#postdiv .inside .form-group{
-	margin-bottom:2px;
 }
 
 #blog .meta {

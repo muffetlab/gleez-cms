@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Comments controller
  *
@@ -8,18 +9,18 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Comments extends Controller {
-
+class Controller_Comments extends Controller
+{
 	/**
 	 * Supported return formats
 	 * @var array
 	 */
-	protected $supported_formats = array(
-		'.xhtml',
-		'.json',
-		'.xml',
-		'.rss',
-	);
+    protected $supported_formats = [
+        '.xhtml',
+        '.json',
+        '.xml',
+        '.rss',
+    ];
 
 	/**
 	 * Comment model to use (based on group)
@@ -43,13 +44,13 @@ class Controller_Comments extends Controller {
 	 * Group name
 	 * @var string
 	 */
-	protected $group = NULL;
+    protected $group = null;
 
 	/**
 	 * Config object
 	 * @var Config
 	 */
-	protected $config = NULL;
+    protected $config = null;
 
     /**
      * Perform format check
@@ -59,8 +60,7 @@ class Controller_Comments extends Controller {
 	public function before()
 	{
 		// Make sure request is an internal request
-		if ($this->request === Request::initial())
-		{
+        if ($this->request === Request::initial()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt was made to access comments controller externally.');
             $this->request->redirect();
 		}
@@ -86,12 +86,9 @@ class Controller_Comments extends Controller {
 		$id = $this->request->param('id', 0);
 
 		// Comment must have a parent
-		if ($id == 0)
-		{
+        if ($id == 0) {
 			Kohana::$log->add(Log::INFO, 'Attempt to load all public comments without a defined parent.');
-        }
-		else
-		{
+        } else {
             $this->create_list();
 		}
 	}
@@ -108,8 +105,7 @@ class Controller_Comments extends Controller {
 
         $posts = ORM::factory('Comment')->where('status', '=', $state);
 
-		if ($parent_id)
-		{
+        if ($parent_id) {
 			$posts->where('post_id', '=', $parent_id);
 
 			$source = $this->group.'/view/'.$parent_id;
@@ -117,11 +113,10 @@ class Controller_Comments extends Controller {
 		}
 
 		// Get total number of comments
-		$total  = $posts->reset(FALSE)->count_all();
+        $total = $posts->reset(false)->count_all();
 
 		// Check if there are any comments to display
-		if ($total == 0)
-		{
+        if ($total == 0) {
 			// @todo
 			return;
 		}
@@ -131,12 +126,12 @@ class Controller_Comments extends Controller {
 		$offset = ($page - 1) * $this->per_page;
 
 		// Create pagination
-		$pagination = Pagination::factory(array(
-			'current_page'   => array('source'=>'cms', 'key'=>'page'),
-			'total_items'    => $total,
-			'items_per_page' => $this->per_page,
-			'uri'            => $uri,
-		));
+        $pagination = Pagination::factory([
+            'current_page' => ['source' => 'cms', 'key' => 'page'],
+            'total_items' => $total,
+            'items_per_page' => $this->per_page,
+            'uri' => $uri,
+        ]);
 
 		// Execute query
 		$comments = $posts->order_by('created', 'ASC')
@@ -145,11 +140,11 @@ class Controller_Comments extends Controller {
 						->find_all();
 
 		// If no comments found (bad offset/page)
-		if (count($comments) == 0)
-		{
-			Kohana::$log->add(Log::INFO, 'No comments found for state: :state, page: :page',
-				array(':state' => $state, ':page' => $page)
-			);
+        if (count($comments) == 0) {
+            Kohana::$log->add(Log::INFO, 'No comments found for state: :state, page: :page', [
+                ':state' => $state,
+                ':page' => $page
+            ]);
 			return;
 		}
 

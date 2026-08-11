@@ -9,15 +9,16 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Comment extends Template {
-
+class Controller_Comment extends Template
+{
     /**
      * The before() method is called before controller action
      *
      * @throws HTTP_Exception_403
-     * @throws Http_Exception_415
+     * @throws HTTP_Exception_415
      * @throws Kohana_Exception
      * @throws View_Exception
+     * @throws ReflectionException
      * @uses  ACL::required
      */
 	public function before()
@@ -25,7 +26,7 @@ class Controller_Comment extends Template {
 		ACL::required('access comment');
 
 		// Disable sidebars on comments page
-		$this->_sidebars = FALSE;
+        $this->_sidebars = false;
 
 		parent::before();
 	}
@@ -38,10 +39,9 @@ class Controller_Comment extends Template {
 	{
 		$id       = (int) $this->request->param('id', 0);
         $comment = ORM::factory('Comment', $id)->access();
-		$route    = Route::get('comment')->uri(array('action' => 'list'));
+        $route = Route::get('comment')->uri(['action' => 'list']);
 
-		if ( ! $comment->loaded())
-		{
+        if (!$comment->loaded()) {
 			Kohana::$log->add(Log::ERROR, 'Attempt to access non-existent comment.');
             Message::error(__("Comment doesn't exists!"));
 
@@ -73,35 +73,33 @@ class Controller_Comment extends Template {
         $comment = ORM::factory('Comment', $id)->access('edit');
 
 		// Set form destination
-		$destination = ( ! is_null($this->request->query('destination'))) ? array('destination' => $this->request->query('destination')) : array();
+        $destination = !is_null($this->request->query('destination'))
+            ? ['destination' => $this->request->query('destination')]
+            : [];
 		// Set form action
-		$action = Route::get('comment')->uri(array('id' => $id, 'action' => 'edit')).URL::query($destination);
+        $action = Route::get('comment')->uri(['id' => $id, 'action' => 'edit']) . URL::query($destination);
 
 		$this->title = __('Edit Comment');
-		$view = View::factory('comment/form')
-					->set('use_captcha',  FALSE)
-					->set('is_edit',      TRUE)
-					->set('auth',         Auth::instance())
-					->set('item',         $comment)
-					->set('action',       $action)
-					->set('destination',  $destination)
-					->bind('errors',      $this->_errors)
-					->bind('post',        $comment);
+        $view = View::factory('comment/form')
+            ->set('use_captcha', false)
+            ->set('is_edit', true)
+            ->set('auth', Auth::instance())
+            ->set('item', $comment)
+            ->set('action', $action)
+            ->set('destination', $destination)
+            ->bind('errors', $this->_errors)
+            ->bind('post', $comment);
 
-		if ($this->valid_post('comment'))
-		{
-			try
-			{
+        if ($this->valid_post('comment')) {
+            try {
 				/** @var $comment ORM */
                 $comment->values($_POST, ['status', 'body'])->save();
 
-				Kohana::$log->add(Log::INFO, 'Comment: :title updated.', array(':title' => $comment->title));
-				Message::success(__('Comment %title has been updated.', array('%title' => $comment->title)));
+                Kohana::$log->add(Log::INFO, 'Comment: :title updated.', [':title' => $comment->title]);
+                Message::success(__('Comment %title has been updated.', ['%title' => $comment->title]));
 
 				$this->request->redirect(empty($destination) ? $comment->url : $this->request->query('destination'));
-			}
-			catch (ORM_Validation_Exception $e)
-			{
+            } catch (ORM_Validation_Exception $e) {
                 $this->_errors = $e->errors('models');
 			}
 		}
@@ -118,41 +116,40 @@ class Controller_Comment extends Template {
 		$id          = (int) $this->request->param('id', 0);
         $comment = ORM::factory('Comment', $id)->access('delete');
 		$this->title = __('Are you absolutely sure?');
-		$destination = empty($this->redirect) ? array() : array('destination' => $this->redirect);
+        $destination = empty($this->redirect) ? [] : ['destination' => $this->redirect];
 		$post        = $this->request->post();
-		$route       = Route::get('comment')->uri(array('action' => 'view', 'id' => $comment->id));
+        $route = Route::get('comment')->uri(['action' => 'view', 'id' => $comment->id]);
 
-		$view = View::factory('form/confirm')
-				->set('action', Route::get('comment')->uri(array('action' => 'delete', 'id' => $comment->id)).URL::query($destination))
-				->set('title', $comment->title);
+        $view = View::factory('form/confirm')
+            ->set('action', Route::get('comment')->uri([
+                    'action' => 'delete',
+                    'id' => $comment->id
+                ]) . URL::query($destination))
+            ->set('title', $comment->title);
 
 		// If deletion is not desired, redirect to post
-		if (isset($post['no']) AND $this->valid_post())
-		{
+        if (isset($post['no']) && $this->valid_post()) {
 			$this->request->redirect(empty($this->redirect) ? $route : $this->redirect);
 		}
 
 		// If deletion is confirmed
-		if (isset($post['yes']) AND $this->valid_post())
-		{
+        if (isset($post['yes']) && $this->valid_post()) {
 			$redirect = $comment->post->url;
 			$title = $comment->title;
 
-			try
-			{
+            try {
 				$comment->delete();
 
-				Kohana::$log->add(Log::INFO, 'Comment: :title deleted.', array(':title' => $title));
-				Message::success(__('Comment %title deleted successful!', array('%title' => $title)));
-			}
-			catch (Exception $e)
-			{
-				Kohana::$log->add(Log::ERROR, 'Error occurred deleting comment id: :id, :msg',
-					array(':id' => $comment->id, ':msg' => $e->getMessage())
-				);
-				Message::error('An error occurred deleting comment %post.',array('%post' => $title));
+                Kohana::$log->add(Log::INFO, 'Comment: :title deleted.', [':title' => $title]);
+                Message::success(__('Comment %title deleted successful!', ['%title' => $title]));
+            } catch (Exception $e) {
+                Kohana::$log->add(Log::ERROR, 'Error occurred deleting comment id: :id, :msg', [
+                    ':id' => $comment->id,
+                    ':msg' => $e->getMessage()
+                ]);
+                Message::error(__('An error occurred while deleting comment %post', ['%post' => $title]));
 
-				$this->_errors = array('An error occurred deleting comment %post.',array('%post' => $title));
+                $this->_errors = [__('An error occurred while deleting comment %post', ['%post' => $title])];
 			}
 
 			$redirect = empty($destination) ? $redirect : $this->redirect;

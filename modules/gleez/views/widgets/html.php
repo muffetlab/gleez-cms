@@ -1,4 +1,5 @@
-<div id="widget-<?php echo $widget->module; ?>-<?php echo HTML::chars($widget->name); ?> <?php echo (isset($id)) ? 'widget-'.$id : '' ?>" class="panel panel-default widget widget-<?php echo HTML::chars($widget->name); ?> <?php echo ($widget->menu) ? 'widget-menu' : ''; ?> <?php echo (isset($zebra)) ? 'widget-'.$zebra : '' ?>">
+<div id="widget-<?php echo $widget->module; ?>-<?php echo HTML::chars($widget->name); ?> <?php echo isset($id) ? 'widget-' . $id : '' ?>"
+     class="panel panel-default widget widget-<?php echo HTML::chars($widget->name); ?> <?php echo $widget->menu ? 'widget-menu' : ''; ?> <?php echo isset($zebra) ? 'widget-' . $zebra : '' ?>">
   	<?php if ($widget->show_title): ?>
 		<div class="panel-heading">
             <h3 class="panel-title">

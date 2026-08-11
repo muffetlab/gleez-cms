@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Alpha captcha class.
  *
@@ -30,22 +31,20 @@ class Captcha_Alpha extends Captcha
      * @return string|null
      * @throws Kohana_Exception
      */
-    public function render(bool $html = TRUE, string $type = null): ?string
+    public function render(bool $html = true, string $type = null): ?string
     {
 		// Creates $this->image
 		$this->image_create(Captcha::$config['background']);
 
 		// Add a random gradient
-		if (empty(Captcha::$config['background']))
-		{
+        if (empty(Captcha::$config['background'])) {
 			$color1 = imagecolorallocate($this->image, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
 			$color2 = imagecolorallocate($this->image, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
 			$this->image_gradient($color1, $color2);
 		}
 
 		// Add a few random circles
-		for ($i = 0, $count = mt_rand(10, Captcha::$config['complexity'] * 3); $i < $count; $i++)
-		{
+        for ($i = 0, $count = mt_rand(10, Captcha::$config['complexity'] * 3); $i < $count; $i++) {
 			$color = imagecolorallocatealpha($this->image, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255), mt_rand(80, 120));
 			$size = mt_rand(5, Captcha::$config['height'] / 3);
 			imagefilledellipse($this->image, mt_rand(0, Captcha::$config['width']), mt_rand(0, Captcha::$config['height']), $size, $size, $color);
@@ -60,8 +59,7 @@ class Captcha_Alpha extends Captcha
 		$chars = 'ABEFGJKLPQRTVY';
 
 		// Draw each Captcha character with varying attributes
-		for ($i = 0, $strlen = strlen($this->response); $i < $strlen; $i++)
-		{
+        for ($i = 0, $strlen = strlen($this->response); $i < $strlen; $i++) {
 			// Use different fonts if available
             $font = Captcha::$config['fontPath'] . Captcha::$config['fonts'][array_rand(Captcha::$config['fonts'])];
 

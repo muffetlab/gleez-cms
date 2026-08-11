@@ -93,9 +93,9 @@ If you put Gleez in a subfolder, the links on all your pages will probably be br
 
 There are a few things you'll want to do with your application before moving into production.
 
-1. See the [Configuration page](about.configuration) in the docs.
+1. See the [Configuration page](../kohana/config) in the docs.
    This covers most of the global settings that would change between environments.
-   As a general rule, you should enable caching and disable profiling ([Kohana::init] settings) for production sites. [Route caching](api/Route#cache) can also help if you have a lot of routes.
+   As a general rule, you should enable caching and disable profiling ([Kohana::init] settings) for production sites. [Route::cache] can also help if you have a lot of routes.
 
 2. Turn on APC or some kind of opcode caching. This is the single easiest performance boost you can make to PHP itself. The more complex your application, the bigger the benefit of using opcode caching.
 
@@ -110,7 +110,7 @@ There are a few things you'll want to do with your application before moving int
 		 */
 		Kohana::init(array(
 			'base_url'   => '/',
-			'index_file' => FALSE,
+            'index_file' => false,
 			'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
 			'caching'    => Kohana::$environment === Kohana::PRODUCTION,
 		));

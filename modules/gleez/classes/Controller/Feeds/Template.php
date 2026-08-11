@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Abstract template class for feed controllers
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Feeds_Template extends Controller {
-
+class Controller_Feeds_Template extends Controller
+{
 	/**
 	 * Default page size
 	 * @var integer
@@ -68,7 +69,7 @@ class Controller_Feeds_Template extends Controller {
 	 * Feed items
 	 * @var array
 	 */
-	protected $_items = array();
+    protected $_items = [];
 
 	/**
 	 * Feed item
@@ -120,7 +121,7 @@ class Controller_Feeds_Template extends Controller {
 		$this->_config = Kohana::$config->load('site');
 
 		// Getting site URL
-        $this->_site_url = $this->_config->get('site_url', URL::site('', TRUE));
+        $this->_site_url = $this->_config->get('site_url', URL::site('', true));
 
 		// Getting TTL
 		$this->_ttl = $this->_config->get('feed_ttl', Date::HOUR * 60);
@@ -130,17 +131,17 @@ class Controller_Feeds_Template extends Controller {
         $this->_cache_key = "feeds:feed-{$this->request->controller()}-{$this->request->action()}-$this->_limit-$this->_page-$this->_id";
 
 		// Fills the array elements
-		$this->_items = $this->_cache->get($this->_cache_key, array());
+        $this->_items = $this->_cache->get($this->_cache_key, []);
 
 		parent::before();
 
 		$this->response->headers('Content-Type', 'text/xml');
 
-		if (Kohana::$environment === Kohana::DEVELOPMENT)
-		{
-			Kohana::$log->add(Log::DEBUG, 'Executing Controller: :controller, action: :action',
-				array(':controller' => $this->request->controller(), ':action' => $this->request->action())
-			);
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
+            Kohana::$log->add(Log::DEBUG, 'Executing Controller: :controller, action: :action', [
+                ':controller' => $this->request->controller(),
+                ':action' => $this->request->action()
+            ]);
 		}
 	}
 
@@ -154,8 +155,7 @@ class Controller_Feeds_Template extends Controller {
 	{
 		parent::after();
 
-		if (isset($this->_items['title']))
-		{
+        if (isset($this->_items['title'])) {
 			unset($this->_items['title']);
 		}
 

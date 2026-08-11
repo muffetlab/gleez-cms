@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User authorization library
  *
@@ -27,23 +28,21 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws Kohana_Exception
      * @uses   Module::is_active
      */
-	public static function providers()
-	{
+    public static function providers(): array
+    {
 		if ( ! Module::is_active('oauth2'))
-			return array();
+            return [];
 
-		$config    = Kohana::$config->load('oauth2')->get('providers', array());
-		$providers = array();
+        $config = Kohana::$config->load('oauth2')->get('providers', []);
+        $providers = [];
 
-		foreach($config as $name => $provider)
-		{
-			if ($provider['enable'] === TRUE)
-			{
-				$providers[$name] = array(
-					'name' => $name,
-					'url'  => Route::get('oauth2/provider')->uri(array('provider' => $name, 'action' => 'login')),
+        foreach ($config as $name => $provider) {
+            if ($provider['enable'] === true) {
+                $providers[$name] = [
+                    'name' => $name,
+                    'url' => Route::get('oauth2/provider')->uri(['provider' => $name, 'action' => 'login']),
                     'icon' => $provider['icon'] ?? 'facebook',
-				);
+                ];
 			}
 		}
 
@@ -59,18 +58,17 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function logged_in_oauth($provider = NULL)
-	{
+    public function logged_in_oauth($provider = null): bool
+    {
 		// For starters, the user needs to be logged in
 		if ( ! parent::logged_in())
-			return FALSE;
+            return false;
 
 		// Get the user from the session.
-		// Because parent::logged_in returned TRUE, we know this is a valid user ORM object.
+        // Because parent::logged_in returned true, we know this is a valid user ORM object.
 		$user = $this->get_user();
 
-		if ($provider !== NULL)
-		{
+        if ($provider !== null) {
 			// Check for one specific OAuth provider
 			$provider = $provider.'_id';
 			//return ! empty($user->$provider);
@@ -86,8 +84,8 @@ class Auth_ORM extends Kohana_Auth_ORM
 	 *
 	 * @return  string
 	 */
-	public function get_provider()
-	{
+    public function get_provider(): string
+    {
         return $this->_session->get($this->_config['session_key'] . '_provider');
 	}
 
@@ -109,14 +107,13 @@ class Auth_ORM extends Kohana_Auth_ORM
     /**
      * Get the stored password for a username.
      *
-     * @param mixed username string, or user ORM object
+     * @param mixed $user Username string, or user ORM object
      * @return string
      * @throws Kohana_Exception
      */
 	public function password($user): string
     {
-		if ( ! is_object($user))
-		{
+        if (!is_object($user)) {
 			$username = $user;
 
 			// Load the user
@@ -141,9 +138,8 @@ class Auth_ORM extends Kohana_Auth_ORM
 		$user_model = $this->get_user();
 		$user = $user_model->original_values();
 
-		if ( ! $user)
-		{
-			return FALSE;
+        if (!$user) {
+            return false;
 		}
 
 		//Avoid Timing attacks
@@ -160,20 +156,19 @@ class Auth_ORM extends Kohana_Auth_ORM
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
      */
-	public function force_sso_login(ORM $user, $mark_session_as_forced = FALSE)
-	{
-		if ($mark_session_as_forced === TRUE)
-		{
+    public function force_sso_login(ORM $user, bool $mark_session_as_forced = false): bool
+    {
+        if ($mark_session_as_forced === true) {
 			// Mark the session as forced, to prevent users from changing account information
-			$this->_session->set('auth_forced', TRUE);
+            $this->_session->set('auth_forced', true);
 		}
 
 		// Token data
-		$data = array(
-			'user_id'    => $user->id,
-			'expires'    => time() + $this->_config['lifetime'],
-			'user_agent' => sha1(Request::$user_agent),
-		);
+        $data = [
+            'user_id' => $user->id,
+            'expires' => time() + $this->_config['lifetime'],
+            'user_agent' => sha1(Request::$user_agent),
+        ];
 
 		// Create a new autologin token
         $token = ORM::factory('User_Token')
@@ -190,9 +185,9 @@ class Auth_ORM extends Kohana_Auth_ORM
     /**
      * Logs a user in.
      *
-     * @param string username
-     * @param string password
-     * @param boolean enable autologin
+     * @param string $username Username
+     * @param string $password Password
+     * @param bool $remember Enable autologin
      * @return bool
      * @throws Kohana_Exception|ReflectionException
      */
@@ -242,24 +237,22 @@ class Auth_ORM extends Kohana_Auth_ORM
         }
 
 		// If the passwords match, perform a login! role id: 2
-		if ($user->has('roles', 2) AND User::check_pass($user, $password) AND $user->id !== 1)
-		{
+        if ($user->has('roles', 2) && User::check_pass($user, $password) && $user->id !== 1) {
             // Successful login, reset failed attempts
             if ($maxFailedLogins > 0) {
                 $cache->delete($failedAttemptsKey);
                 $cache->delete($failedAttemptsKey . ':time');
             }
 
-			if ($remember === TRUE)
-			{
+            if ($remember === true) {
 				// Token data
-				$data = array(
-					'user_id'    => $user->id,
-					'expires'    => time() + $this->_config['lifetime'],
-					'user_agent' => sha1(Request::$user_agent),
-					'type'	     => 'autologin',
-					'created'    => time(),
-				);
+                $data = [
+                    'user_id' => $user->id,
+                    'expires' => time() + $this->_config['lifetime'],
+                    'user_agent' => sha1(Request::$user_agent),
+                    'type' => 'autologin',
+                    'created' => time(),
+                ];
 
 				// Create a new autologin token
                 $token = ORM::factory('User_Token')
@@ -273,7 +266,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 			// Finish the login
 			$this->complete_login($user);
 
-			return TRUE;
+            return true;
 		}
 
 		// Login failed
@@ -282,6 +275,6 @@ class Auth_ORM extends Kohana_Auth_ORM
             $cache->set($failedAttemptsKey . ':time', time(), $loginJailTime);
         }
 
-		return FALSE;
+        return false;
 	}
 }

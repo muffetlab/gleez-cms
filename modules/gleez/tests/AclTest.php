@@ -1,44 +1,43 @@
 <?php
+
 /**
  * Tests the Config lib that's shipped with kohana
  *
- * @group Gleez
- * @group Gleez.core
- * @group Gleez.core.acl
+ * @group gleez
+ * @group gleez.core
+ * @group gleez.core.acl
  *
  */
 class Gleez_AclTest extends Unittest_TestCase
 {
     public function providerPerms(): array
     {
-		return array(
-			array('administer site', 2),
-			array('view page', 1),
-		);
+        return [
+            ['administer site', 2],
+            ['view page', 1],
+        ];
 	}
 	
 	/**
 	 * @dataProvider providerPerms
-     * @throws Cache_Exception|Kohana_Exception
+     * @group gleez.db
+     * @throws Cache_Exception|Kohana_Exception|ReflectionException
      */
     public function test_acl_check($perm, $user_id)
 	{
+        /** @var Model_User $user */
         $user = ORM::factory('User', $user_id);
 
-		if ($user_id == 1)
-		{
+        if ($user_id == 1) {
 			$this->assertFalse(ACL::check($perm, $user));
-		}
-		else
-		{
+        } else {
 			$this->assertTrue(ACL::check($perm, $user));
 		}
-		
 	}
 	
 	/**
-	 * If Route::cache() was able to restore routes from the cache then
-	 * it should return TRUE and load the cached routes
+     * If Route::cache() was able to restore routes from the cache then it should return true and load the cached
+     * routes.
 	 *
 	 * @test
 	 * @covers Route::cache
@@ -49,16 +48,16 @@ class Gleez_AclTest extends Unittest_TestCase
         $aclList = ACL::all();
 
 		// First we create the cache
-		ACL::cache(TRUE);
+        ACL::cache(true);
 
         // Now let's modify the "current" routes
-		ACL::set('contact', array(
-			'sending mail' => array(
-				'title' => __('Sending Mails'),
-				'restrict access' => FALSE,
-				'description' => __('Ability to send messages for administrators from your site'),
-			),
-		));
+        ACL::set('contact', [
+            'sending mail' => [
+                'title' => __('Sending Mails'),
+                'restrict access' => false,
+                'description' => __('Ability to send messages for administrators from your site'),
+            ],
+        ]);
 
 		// Then try and load said cache
 		$this->assertTrue(ACL::cache());

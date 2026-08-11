@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Menu Widget class
  *
@@ -7,8 +8,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Widget_Menu extends Widget {
-
+class Widget_Menu extends Widget
+{
 	public function info(){}
 	public function form(){}
 	public function save(array $post){}
@@ -19,7 +20,7 @@ class Widget_Menu extends Widget {
      */
     public function render(): ?string
     {
-        return Menu::links($this->name, array('class' => 'menus', 'widget' => TRUE));
+        return Menu::links($this->name, ['class' => 'menus', 'widget' => true]);
 	}
 
 }

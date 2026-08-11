@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Admin Dashboard Controller
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Admin_Dashboard extends Controller_Admin {
-
+class Controller_Admin_Dashboard extends Controller_Admin
+{
     /**
      * @throws Kohana_Exception
      * @throws View_Exception
@@ -19,8 +20,12 @@ class Controller_Admin_Dashboard extends Controller_Admin {
 	{
 		$this->title = __('Administer');
 
-		$view = View::factory('admin/dashboard')
-			->set('widgets', Widgets::instance()->render('dashboard'));
+        $dbVersion = Kohana::$config->load('site')->get('version');
+        $needsUpgrade = !$dbVersion || version_compare($dbVersion, Gleez::VERSION, '<');
+
+        $view = View::factory('admin/dashboard')
+            ->set('widgets', Widgets::instance()->render('dashboard'))
+            ->set('needsUpgrade', $needsUpgrade);
 
 		$this->response->body($view);
 	}

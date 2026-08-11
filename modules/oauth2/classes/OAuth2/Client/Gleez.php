@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Gleez\OAuth\Client\Gleez
  * @author     Gleez Team
@@ -6,15 +7,15 @@
  * @license    https://gleezcms.org/license  Gleez CMS License
  *
  */
-class OAuth2_Client_Gleez extends OAuth2_Client {
-
+class OAuth2_Client_Gleez extends OAuth2_Client
+{
 	/**
 	 * Return the authorization endpoint
 	 *
 	 * @return  string
 	 */
-	public function get_authorization_endpoint()
-	{
+    public function get_authorization_endpoint(): string
+    {
 		return 'https://gleezcms.org/oauth2/auth';
 	}
 
@@ -23,8 +24,8 @@ class OAuth2_Client_Gleez extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_access_token_endpoint()
-	{
+    public function get_access_token_endpoint(): string
+    {
 		return 'https://gleezcms.org/oauth2/token';
 	}
 
@@ -33,8 +34,8 @@ class OAuth2_Client_Gleez extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_user_profile_service_url()
-	{
+    public function get_user_profile_service_url(): string
+    {
 		return 'https://gleezcms.org/oauth2/me';
 	}
 
@@ -44,25 +45,24 @@ class OAuth2_Client_Gleez extends OAuth2_Client {
      * @return array
      * @throws OAuth2_Client_Exception|Kohana_Exception
      */
-	public function get_user_data()
-	{
+    public function get_user_data(): array
+    {
 		$url = $this->get_user_profile_service_url();
 		$response = $this->fetch($url);
 
 		return $this->parseResponse($response['result']);
 	}
 
-	protected function parseResponse($response)
-	{
-		$data = array();
+    protected function parseResponse($response): array
+    {
+        $data = [];
 
-		if( isset($response['email']) )
-		{
+        if (isset($response['email'])) {
 			$data['id']     = $response['id'];
 			$data['email']  = $response['email'];
 			$data['nick']   = $response['name'];
-			$data['link']   = (isset($response['link']) && $response['link'] != NULL) ? $response['link'] : '';
-			$data['gender'] = (isset($response['gender']) && $response['gender'] != NULL) ? $response['gender'] : '';
+            $data['link'] = (isset($response['link']) && $response['link'] != null) ? $response['link'] : '';
+            $data['gender'] = (isset($response['gender']) && $response['gender'] != null) ? $response['gender'] : '';
 		}
 
 		return $data;

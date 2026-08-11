@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gleez Core Utils class
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class System {
-
+class System
+{
 	/**
 	 * Windows OS
 	 * @type string
@@ -24,7 +25,7 @@ class System {
 
 	/**
 	 * Minimum amount of memory allocated to php-script.
-	 * Can be used if ini_get('memory_limit') returns 0, -1, NULL or FALSE.
+     * Can be used if ini_get('memory_limit') returns 0, -1, null or false.
 	 * This amount is used by default since PHP 5.3
 	 * @type integer
 	 */
@@ -41,32 +42,27 @@ class System {
 		// Default return
 		$not_available = __('Not available');
 
-		if (function_exists('sys_getloadavg') && is_array(sys_getloadavg()))
-		{
+        if (function_exists('sys_getloadavg') && is_array(sys_getloadavg())) {
 			$load_averages = sys_getloadavg();
 			array_walk($load_averages, create_function('&$v', '$v = round($v, 3);'));
 			$server_load = $load_averages[0] . ' ' . $load_averages[1] . ' ' . $load_averages[2];
-		}
-		elseif (@is_readable('/proc/loadavg'))
-		{
+        } elseif (@is_readable('/proc/loadavg')) {
 			// We use @ just in case
 			$fh            = @fopen('/proc/loadavg', 'r');
 			$load_averages = @fread($fh, 64);
 			@fclose($fh);
 
-			$load_averages = empty($load_averages) ? array() : explode(' ', $load_averages);
+            $load_averages = empty($load_averages) ? [] : explode(' ', $load_averages);
 
 			$server_load = isset($load_averages[2]) ? $load_averages[0] . ' ' . $load_averages[1] . ' ' . $load_averages[2] : $not_available;
-		}
-		elseif (!in_array(PHP_OS, array(
-			'WINNT',
-			'WIN32'
-		)) && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages))
-		{
+        } elseif (
+            !in_array(PHP_OS, ['WINNT', 'WIN32'])
+            && preg_match('/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/i', @exec('uptime'), $load_averages)
+        ) {
 			$server_load = $load_averages[1] . ' ' . $load_averages[2] . ' ' . $load_averages[3];
-		}
-		else
-			$server_load = $not_available;
+        } else {
+            $server_load = $not_available;
+        }
 
 		return $server_load;
 	}
@@ -80,19 +76,18 @@ class System {
      * @param string $path The directory path
      * @param integer $mode Set permission mode (as in chmod) [Optional]
      * @param boolean $recursive Create directories recursively if necessary [Optional]
-	 * @return  boolean             Returns TRUE on success or FALSE on failure
+     * @return boolean Returns true on success or false on failure
 	 *
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
-    public static function mkdir(string $path, int $mode = 0777, bool $recursive = TRUE): bool
+    public static function mkdir(string $path, int $mode = 0777, bool $recursive = true): bool
     {
-		$out = FALSE;
-		$oldumask = umask(0);
-		if (! is_dir($path))
-		{
+        $out = false;
+        $oldUmask = umask(0);
+        if (!is_dir($path)) {
 			$out = @mkdir($path, $mode, $recursive);
 		}
-		umask($oldumask);
+        umask($oldUmask);
 
 		return $out;
 	}
@@ -164,7 +159,7 @@ class System {
             Cache::instance()->set('icons:fa-icons', $icons, Date::WEEK);
 		}
 
-        return array("fa-none" => __('none')) + $icons;
+        return ["fa-none" => __('none')] + $icons;
 	}
 
 	/**
@@ -194,23 +189,17 @@ class System {
 	 * @param   array         $defaults  Array that serves as the defaults [Optional]
 	 * @return  array                    Merged user defined values with defaults
 	 */
-    public static function parse_args($args, array $defaults = array()): array
+    public static function parse_args($args, array $defaults = []): array
     {
-		if (is_object($args))
-		{
+        if (is_object($args)) {
 			$result = get_object_vars($args);
-		}
-		elseif (is_array($args))
-		{
+        } elseif (is_array($args)) {
 			$result = &$args;
-		}
-		else
-		{
+        } else {
 			parse_str($args, $result);
 		}
 
-		if ( ! empty($defaults))
-		{
+        if (!empty($defaults)) {
 			return Arr::merge($defaults, $result);
 		}
 
@@ -233,36 +222,32 @@ class System {
     public static function sanitize_id(string $id): string
     {
 		// Change slashes and spaces to underscores
-		return str_replace(array(
-			'/',
-			'\\',
-			' '
-		), '_', $id);
+        return str_replace(['/', '\\', ' '], '_', $id);
 	}
 
 	public static function check()
 	{
-		$criteria = array(
-			'php_version'           => version_compare(PHP_VERSION, Gleez::PHP_MIN_REQ, '>='),
-			'mysqli'                => function_exists("mysqli_query"),
-			'system_directory'      => is_dir(SYSPATH),
+        $criteria = [
+            'php_version' => version_compare(PHP_VERSION, Gleez::PHP_MIN_REQ, '>='),
+            'mysqli' => function_exists("mysqli_query"),
+            'system_directory' => is_dir(SYSPATH),
             'application_directory' => (is_dir(APPPATH) && is_file(APPPATH . 'bootstrap.php')),
-			'modules_directory'     => is_dir(MODPATH),
-			'config_writable'       => (is_dir(APPPATH.'config') && is_writable(APPPATH.'config')),
-			'cache_writable'        => (is_dir(APPPATH.'cache') && is_writable(APPPATH.'cache')),
-			'pcre_utf8'             => ( @preg_match('/^.$/u', 'ñ') ),
-			'pcre_unicode'          => ( @preg_match('/^\pL$/u', 'ñ') ),
-			'reflection_enabled'    => class_exists('ReflectionClass'),
-			'spl_autoload_register' => function_exists('spl_autoload_register'),
-			'filters_enabled'       => function_exists('filter_list'),
-			'iconv_loaded'          => extension_loaded('iconv'),
-			'simplexml'             => extension_loaded('simplexml'),
-			'json_encode'           => function_exists('json_encode'),
-			'mbstring'              => (extension_loaded('mbstring') && MB_OVERLOAD_STRING),
-			'ctype_digit'           => function_exists('ctype_digit'),
-			'uri_determination'     => isset($_SERVER['REQUEST_URI']) || isset($_SERVER['PHP_SELF']) || isset($_SERVER['PATH_INFO']),
-			'gd_info'               => function_exists('gd_info'),
-		);
+            'modules_directory' => is_dir(MODPATH),
+            'config_writable' => (is_dir(APPPATH . 'config') && is_writable(APPPATH . 'config')),
+            'cache_writable' => (is_dir(APPPATH . 'cache') && is_writable(APPPATH . 'cache')),
+            'pcre_utf8' => (@preg_match('/^.$/u', 'ñ')),
+            'pcre_unicode' => (@preg_match('/^\pL$/u', 'ñ')),
+            'reflection_enabled' => class_exists('ReflectionClass'),
+            'spl_autoload_register' => function_exists('spl_autoload_register'),
+            'filters_enabled' => function_exists('filter_list'),
+            'iconv_loaded' => extension_loaded('iconv'),
+            'simpleXml' => extension_loaded('simplexml'),
+            'json_encode' => function_exists('json_encode'),
+            'mbstring' => (extension_loaded('mbstring') && MB_OVERLOAD_STRING),
+            'ctype_digit' => function_exists('ctype_digit'),
+            'uri_determination' => isset($_SERVER['REQUEST_URI']) || isset($_SERVER['PHP_SELF']) || isset($_SERVER['PATH_INFO']),
+            'gd_info' => function_exists('gd_info'),
+        ];
 
 		// Allow other modules to override or add
         return Module::action('system_check', $criteria);
@@ -274,8 +259,7 @@ class System {
      * It can be used to obtain a human-readable form
      * of a PHP memory_limit.
      *
-     * [!!] Note: If ini_get('memory_limit') returns 0, -1, NULL or FALSE
-     *      returns [System::MIN_MEMORY_LIMIT]
+     * [!!] Note: If ini_get('memory_limit') returns 0, -1, null or false, returns [System::MIN_MEMORY_LIMIT]
      *
      * @return string
      * @throws Kohana_Exception
@@ -315,8 +299,7 @@ class System {
     public static function hashEquals(string $known_string, string $user_string): bool
     {
 		// Available only in php >= 5.6.0
-		if ( function_exists('hash_equals') )
-		{
+        if (function_exists('hash_equals')) {
 			return hash_equals($known_string, $user_string);
 		}
 
@@ -361,7 +344,7 @@ class System {
 
 		$css = file_get_contents($path);
 
-		$icons = array();
+        $icons = [];
 
         // Match selector lists and Unicode in one regex pass, e.g., ".fa-edit,.fa-pen-to-square{--fa:"\f044"}"
         $pattern = '/((?:\.' . preg_quote($class_prefix, '/') . '[\w-]+\s*,\s*)*\.' . preg_quote($class_prefix, '/') . '[\w-]+)\s*\{[^{}]*--fa:\s*"([^"]+)"[^{}]*}/';
@@ -390,9 +373,9 @@ class System {
 	*/
     public static function faReadableName(array $array, string $class_prefix = 'fa-'): array
     {
-        $temp = array();
+        $temp = [];
 		foreach ($array as $class => $unicode) {
-			$temp[$class] = ucfirst( str_ireplace(array($class_prefix, '-'), array('', ' '), $class) );
+            $temp[$class] = ucfirst(str_ireplace([$class_prefix, '-'], ['', ' '], $class));
 		}
 
 		return $temp;

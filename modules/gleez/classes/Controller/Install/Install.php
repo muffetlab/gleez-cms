@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gleez Installer
  *
@@ -8,8 +9,8 @@
  * @copyright  (c) 2011-2014 Gleez Technologies
  * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Controller_Install_Install extends Controller_Template {
-
+class Controller_Install_Install extends Controller_Template
+{
 	/**
 	 * Page template
 	 * @var View
@@ -38,34 +39,29 @@ class Controller_Install_Install extends Controller_Template {
      */
 	public function before()
 	{
-		if ($this->request->action() === 'media')
-		{
+        if ($this->request->action() === 'media') {
 			// Do not template media files
-			$this->auto_render = FALSE;
-		}
-		else
-		{
+            $this->auto_render = false;
+        } else {
 			// Grab the necessary routes
 			$this->_media = Route::get('install/media');
 		}
 
 		parent::before();
 
-		if ($this->request->action() === 'index')
-		{
+        if ($this->request->action() === 'index') {
 			Session::instance('cookie')->destroy();
 		}
 
-		if ($this->auto_render)
-		{
+        if ($this->auto_render) {
 			$this->_session = Session::instance('cookie');
-			$this->template->menu = array(
-				__('Welcome'),
-				__('System Check'),
-				__('Database'),
-				__('Install'),
-				__('Finish')
-			);
+            $this->template->menu = [
+                __('Welcome'),
+                __('System Check'),
+                __('Database'),
+                __('Install'),
+                __('Finish')
+            ];
 		}
 	}
 
@@ -77,19 +73,18 @@ class Controller_Install_Install extends Controller_Template {
      */
 	public function after()
 	{
-		if ($this->auto_render)
-		{
+        if ($this->auto_render) {
 			// Add styles
-			$this->template->styles = array(
-                $this->_media->uri(array('file' => 'css/bootstrap.min.css')) => 'screen',
-				$this->_media->uri(array('file' => 'css/install.css')) => 'screen',
-			);
+            $this->template->styles = [
+                $this->_media->uri(['file' => 'css/bootstrap.min.css']) => 'screen',
+                $this->_media->uri(['file' => 'css/install.css']) => 'screen',
+            ];
 
-            $this->template->logo = $this->_media->uri(array('file' => 'images/logo.png'));
-            $this->template->link = $this->_media->uri(array('file' => 'icons/favicon.ico'));
+            $this->template->logo = $this->_media->uri(['file' => 'images/logo.png']);
+            $this->template->link = $this->_media->uri(['file' => 'icons/favicon.ico']);
 
 			// Do some CSS magic to page class
-			$classes   = array();
+            $classes = [];
 			$classes[] = I18n::$lang;
 			$classes[] = $this->request->controller();
 			$classes[] = $this->request->action();
@@ -120,13 +115,13 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->title = __('Install');
 
 		$this->template->_activity = __('20');
-		$this->template->menu = array(
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			__('System Check'),
-			__('Database'),
-			__('Install'),
-			__('Finish')
-		);
+        $this->template->menu = [
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            __('System Check'),
+            __('Database'),
+            __('Install'),
+            __('Finish')
+        ];
 
 		$this->template->content = new View('install/welcome');
 	}
@@ -139,13 +134,13 @@ class Controller_Install_Install extends Controller_Template {
 	{
 		$this->template->title =  __('System Check');
 		$this->template->_activity = __('40');
-		$this->template->menu = array(
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'systemcheck')), __('System Check')),
-			__('Database'),
-			__('Install'),
-			__('Finish')
-		);
+        $this->template->menu = [
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
+            __('Database'),
+            __('Install'),
+            __('Finish')
+        ];
 
 		!file_exists(APPPATH . "cache") && System::mkdir(APPPATH . "cache");
 		!file_exists(APPPATH . "config") && System::mkdir(APPPATH . "config");
@@ -159,29 +154,30 @@ class Controller_Install_Install extends Controller_Template {
 
 		$view = View::factory('install/systemcheck', System::check());
 
-		if (	$view->php_version
-			AND $view->mysqli
-			AND $view->system_directory
-			AND $view->application_directory
-			AND $view->modules_directory
-			AND $view->config_writable
-			AND $view->cache_writable
-			AND $view->pcre_utf8
-			AND $view->pcre_unicode
-			AND $view->reflection_enabled
-			AND $view->filters_enabled
-			AND $view->iconv_loaded
-			AND $view->spl_autoload_register
-			AND $view->simplexml
-			AND $view->json_encode
-			AND $view->mbstring
-			AND $view->ctype_digit
-			AND $view->uri_determination
-			AND $view->gd_info)
-			$this->request->redirect(Route::get('install')->uri(array('action' => 'database')));
+        if (
+            $view->php_version
+            && $view->mysqli
+            && $view->system_directory
+            && $view->application_directory
+            && $view->modules_directory
+            && $view->config_writable
+            && $view->cache_writable
+            && $view->pcre_utf8
+            && $view->pcre_unicode
+            && $view->reflection_enabled
+            && $view->filters_enabled
+            && $view->iconv_loaded
+            && $view->spl_autoload_register
+            && $view->simpleXml
+            && $view->json_encode
+            && $view->mbstring
+            && $view->ctype_digit
+            && $view->uri_determination
+            && $view->gd_info
+        ) {
+            $this->request->redirect(Route::get('install')->uri(['action' => 'database']));
 
-		else
-		{
+        } else {
 			$this->template->error = __('Gleez may not work correctly with your environment.');
 		}
 
@@ -194,7 +190,7 @@ class Controller_Install_Install extends Controller_Template {
      */
     public function action_database()
 	{
-		$action = Route::get('install')->uri(array('action' => 'database'));
+        $action = Route::get('install')->uri(['action' => 'database']);
 		$view = View::factory('install/database')
 					->bind('form', $form)
 					->set('action', $action);
@@ -203,50 +199,45 @@ class Controller_Install_Install extends Controller_Template {
 
 		$this->template->title = __('Database Configuration');
 		$this->template->_activity = __('60');
-		$this->template->menu = array(
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'systemcheck')), __('System Check')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'database')), __('Database')),
-			__('Install'),
-			__('Finish')
-		);
+        $this->template->menu = [
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
+            __('Install'),
+            __('Finish')
+        ];
 
-		$form = array(
-			'user' => '',
-			'pass' => '',
-			'hostname' => 'localhost',
-			'database' => 'gleezcms',
-			'table_prefix' => 'gl_'
-		);
+        $form = [
+            'user' => '',
+            'pass' => '',
+            'hostname' => 'localhost',
+            'database' => 'gleezcms',
+            'table_prefix' => 'gl_'
+        ];
 
-		if (isset($_POST['db']))
-		{
-			$data = array(
-				'user' => $username = $_POST['user'],
-				'pass' => $password = $_POST['pass'],
-				'hostname' => $hostname = $_POST['hostname'],
-				'database' => $database = $_POST['database'],
-                    'table_prefix' => $_POST['table_prefix']
-			);
+        if (isset($_POST['db'])) {
+            $data = [
+                'user' => $username = $_POST['user'],
+                'pass' => $password = $_POST['pass'],
+                'hostname' => $hostname = $_POST['hostname'],
+                'database' => $database = $_POST['database'],
+                'table_prefix' => $_POST['table_prefix']
+            ];
 
-			try
-			{
+            try {
 				$this->check_database($username, $password, $hostname, $database);
 
 				$this->_session->set('database_data', $data);
 
-				$this->request->redirect(Route::get('install')->uri(array('action' => 'install')));
-			}
-			catch (Exception $e)
-			{
+                $this->request->redirect(Route::get('install')->uri(['action' => 'install']));
+            } catch (Exception $e) {
 				$form = Arr::overwrite($form, $_POST);
 				$error = $e->getMessage();
 
 				// TODO create better error messages
 				// Try to use mysql_errno.
 				// Error message of East Asian character sets will display garbled text on utf-8 web page
-				switch ($error)
-				{
+                switch ($error) {
 					case 'access':
 						$this->template->error = __('Wrong username or password');
 					break;
@@ -260,9 +251,10 @@ class Controller_Install_Install extends Controller_Template {
 						$this->template->error = __('Could not select the database');
 					break;
 					case 'version':
-						$this->template->error = __('Gleez requires at least MySQL version 5.0.0. You\'re using version :version',
-								array( ':version' => $this->mysql_version(1) )
-							);
+                        $this->template->error = __(
+                            'Gleez requires at least MySQL version 5.0.0. You\'re using version :version',
+                            [':version' => $this->mysql_version(1)]
+                        );
 					break;
 					default:
 						$this->template->error = $error;
@@ -281,21 +273,18 @@ class Controller_Install_Install extends Controller_Template {
 		$this->template->title = __('Install');
 		$this->template->content = '';
 		$this->template->_activity = __('80');
-		$this->template->menu = array(
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'systemcheck')), __('System Check')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'database')), __('Database')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'install')), __('Install')),
-				__('Finish')
-			);
+        $this->template->menu = [
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'install']), __('Install')),
+            __('Finish')
+        ];
 
-		try
-		{
+        try {
 			$this->unpack_sql($config);
-			$this->request->redirect(Route::get('install')->uri(array('action' => 'finalize')));
-		}
-		catch (Exception $e)
-		{
+            $this->request->redirect(Route::get('install')->uri(['action' => 'finalize']));
+        } catch (Exception $e) {
 			$this->template->error = $e->getMessage();
 			$this->template->content = __('Please fix the errors!');
 		}
@@ -310,33 +299,32 @@ class Controller_Install_Install extends Controller_Template {
 	{
 		$data = $this->_session->get('database_data');
 		$this->template->_activity = __('80');
-		$this->template->menu = array(
-			HTML::anchor(Route::get('install')->uri(), __('Welcome')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'systemcheck')), __('System Check')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'database')), __('Database')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'install')), __('Install')),
-			HTML::anchor(Route::get('install')->uri(array('action' => 'finalize')), __('Finish')),
-			);
+        $this->template->menu = [
+            HTML::anchor(Route::get('install')->uri(), __('Welcome')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'systemcheck']), __('System Check')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'database']), __('Database')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'install']), __('Install')),
+            HTML::anchor(Route::get('install')->uri(['action' => 'finalize']), __('Finish')),
+        ];
 
-		if(isset($data))
-		{
-			if( ! $this->create_database_config($data['user'], $data['pass'], $data['hostname'], $data['database'], $data['table_prefix']))
-			{
+        if (isset($data)) {
+            if (!$this->create_database_config($data['user'], $data['pass'], $data['hostname'], $data['database'], $data['table_prefix'])) {
                 $this->template->error = __("Couldn't create application/config/database.php");
 			}
 
 			$password = $this->add_user();
 			chmod(APPPATH.'config/database.php', 0444);
 
-			$admin_user = Route::get('admin/user')->uri( array('action' => 'edit', 'id' => 2));
-			$admin_url = Route::get('user')->uri( array('action' => 'login')).URL::query(array('destination' => $admin_user));
+            $admin_user = Route::get('admin/user')->uri(['action' => 'edit', 'id' => 2]);
+            $admin_url = Route::get('user')->uri(['action' => 'login']) . URL::query(['destination' => $admin_user]);
 
 			$this->template->title = __('Success!');
 			$this->template->_activity = __('100');
-			$this->template->content = View::factory('install/finalize', array('password' => $password, 'admin_url' => $admin_url) );
-		}
-		else
-		{
+            $this->template->content = View::factory('install/finalize', [
+                'password' => $password,
+                'admin_url' => $admin_url
+            ]);
+        } else {
 			$this->request->redirect(Route::get('install')->uri());
 		}
 	}
@@ -346,47 +334,33 @@ class Controller_Install_Install extends Controller_Template {
      */
     public function check_database($username, $password, $hostname, $database): bool
     {
-
-		if ( ! $link = mysqli_connect($hostname, $username, $password))
-		{
-			if (strpos(mysqli_error($link), 'Access denied'))
-			{
+        if (!$link = mysqli_connect($hostname, $username, $password)) {
+            if (strpos(mysqli_error($link), 'Access denied')) {
 				throw new Exception('access');
-			}
-			elseif (strpos(mysqli_error($link), 'server host'))
-			{
+            } elseif (strpos(mysqli_error($link), 'server host')) {
 				throw new Exception('unknown_host');
-			}
-			elseif (strpos(mysqli_error($link), 'connect to'))
-			{
+            } elseif (strpos(mysqli_error($link), 'connect to')) {
 				throw new Exception('connect_to_host');
-			}
-			else
-			{
+            } else {
 				throw new Exception(mysqli_error($link));
 			}
 		}
 
-		if (! version_compare($this->mysql_version($link), "5.0.0", ">=") ) 
-		{
+        if (!version_compare($this->mysql_version($link), "5.0.0", ">=")) {
 			throw new Exception('version');
 		}
 
-        if (mysqli_select_db($link, $database))
-		{
-			return TRUE;
-		}
-		else 
-		{
+        if (mysqli_select_db($link, $database)) {
+            return true;
+        } else {
             mysqli_query($link, "CREATE DATABASE `$database`");
 
-            if (!mysqli_select_db($link, $database))
-			{
+            if (!mysqli_select_db($link, $database)) {
 				throw new Exception('select');
 			}
 		}
 
-		return TRUE;
+        return true;
 	}
 
     /**
@@ -409,7 +383,6 @@ class Controller_Install_Install extends Controller_Template {
 
 	private function mysql_version($link)
 	{
-
 		$result = mysqli_query($link, "SHOW VARIABLES WHERE variable_name = \"version\"");
 		$row = mysqli_fetch_object($result);
 
@@ -421,21 +394,18 @@ class Controller_Install_Install extends Controller_Template {
      */
     private function unpack_sql($config): void
     {
-		$prefix = $config["table_prefix"];
+        $prefix = $config['table_prefix'];
 		$buf = null;
 
-		$link = mysqli_connect($config["hostname"], $config["user"], $config["pass"]);
-		mysqli_select_db($link, $config["database"]);
+        $link = mysqli_connect($config['hostname'], $config['user'], $config['pass']);
+        mysqli_select_db($link, $config['database']);
 
 		$sql_file = MODPATH . "gleez/views/install/install.sql";
 
-		foreach (file($sql_file) as $line)
-		{
+        foreach (file($sql_file) as $line) {
 			$buf .= trim($line);
-			if (preg_match("/;$/", $buf))
-			{
-				if (!mysqli_query($link, $this->prepend_prefix($prefix, $buf)))
-				{
+            if (preg_match("/;$/", $buf)) {
+                if (!mysqli_query($link, $this->prepend_prefix($prefix, $buf))) {
 					throw new Exception(mysqli_error($link));
 				}
 				$buf = "";
@@ -454,11 +424,11 @@ class Controller_Install_Install extends Controller_Template {
     private function add_user(): string
     {
 		$config = $this->_session->get('database_data');
-		$link   = mysqli_connect($config["hostname"], $config["user"], $config["pass"]);
+        $link = mysqli_connect($config['hostname'], $config['user'], $config['pass']);
 
-		mysqli_select_db($link, $config["database"]);
+        mysqli_select_db($link, $config['database']);
 
-		$prefix = trim($config["table_prefix"]);
+        $prefix = trim($config['table_prefix']);
 		$time   = time();
 
 		// Gleez Private Key

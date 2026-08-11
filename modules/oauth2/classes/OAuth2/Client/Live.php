@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Gleez\OAuth\Client\Live
  * @author     Gleez Team
@@ -6,15 +7,15 @@
  * @license    https://gleezcms.org/license  Gleez CMS License
  *
  */
-class OAuth2_Client_Live extends OAuth2_Client {
-
+class OAuth2_Client_Live extends OAuth2_Client
+{
 	/**
 	 * Return the authorization endpoint
 	 *
 	 * @return  string
 	 */
-	public function get_authorization_endpoint()
-	{
+    public function get_authorization_endpoint(): string
+    {
 		return 'https://oauth.live.com/authorize';
 	}
 
@@ -23,8 +24,8 @@ class OAuth2_Client_Live extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_access_token_endpoint()
-	{
+    public function get_access_token_endpoint(): string
+    {
 		return 'https://oauth.live.com/token';
 	}
 
@@ -33,9 +34,9 @@ class OAuth2_Client_Live extends OAuth2_Client {
 	 *
 	 * @return  string
 	 */
-	public function get_user_profile_service_url()
-	{
-		return "https://apis.live.net/v5.0/me";
+    public function get_user_profile_service_url(): string
+    {
+        return 'https://apis.live.net/v5.0/me';
 	}
 
     /**
@@ -44,28 +45,26 @@ class OAuth2_Client_Live extends OAuth2_Client {
      * @return array
      * @throws OAuth2_Client_Exception|Kohana_Exception
      */
-	public function get_user_data()
-	{
+    public function get_user_data(): array
+    {
 		$url = $this->get_user_profile_service_url();
 		$response = $this->fetch($url);
 
 		return $this->parseResponse($response['result']);
 	}
 
-	protected function parseResponse($response)
-	{
-		$data     = array();
+    protected function parseResponse($response): array
+    {
+        $data = [];
 
 		//make sure the response is valid
-		if ( $response AND !array_key_exists('error', $response) )
-		{
-			if( $response['emails'] )
-			{
+        if ($response && !array_key_exists('error', $response)) {
+            if ($response['emails']) {
 				$data['id'] = $response['id'];
 				$data['email'] = $response['emails']['account']; //only account email is used
 				$data['nick'] = $response['name'];
-				$data['link']   = (isset($response['link']) && $response['link'] != NULL) ? $response['link'] : '';
-				$data['gender'] = (isset($response['gender']) && $response['gender'] != NULL) ? $response['gender'] : '';
+                $data['link'] = (isset($response['link']) && $response['link'] != null) ? $response['link'] : '';
+                $data['gender'] = (isset($response['gender']) && $response['gender'] != null) ? $response['gender'] : '';
 			}
 		}
 

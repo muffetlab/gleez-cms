@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Helper OAuth2 Code Response Type
  *
- * @package    Gleez\oAuth2
+ * @package    Gleez\OAuth2
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2013 Gleez Technologies
@@ -14,26 +15,25 @@ class Oauth2_ResponseType_AuthorizationCode
 	protected $request;
 	protected $response;
 
-	public function __construct(array $config = array())
+    public function __construct(array $config = [])
 	{
 		$this->config = $config;
 	}
 
-	public function getAuthorizeResponse($params, $user_id = null)
-	{
+    public function getAuthorizeResponse($params, $user_id = null): array
+    {
 		// build the URL to redirect to
-		$result = array('query' => array());
+        $result = ['query' => []];
 
-		$params += array('scope' => null, 'state' => null);
+        $params += ['scope' => null, 'state' => null];
 
-		$result["query"]["code"] = $this->createAuthorizationCode($params['client_id'], $user_id, $params['redirect_uri'], $params['scope']);
+        $result['query']['code'] = $this->createAuthorizationCode($params['client_id'], $user_id, $params['redirect_uri'], $params['scope']);
 
-		if (isset($params['state'])) 
-		{
-			$result["query"]["state"] = $params['state'];
+        if (isset($params['state'])) {
+            $result['query']['state'] = $params['state'];
 		}
 
-		return array($params['redirect_uri'], $result);
+        return [$params['redirect_uri'], $result];
 	}
 
 	/**
@@ -54,7 +54,6 @@ class Oauth2_ResponseType_AuthorizationCode
 	 */
 	protected function createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope = null)
 	{
-		return Model::factory('oauth')->createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope);
-		
+        return Model::factory('OAuth')->createAuthorizationCode($client_id, $user_id, $redirect_uri, $scope);
 	}
 }
