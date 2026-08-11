@@ -162,26 +162,6 @@ class Datatables
 	}
 
 	/**
-	 * Count total
-	 *
-	 * @return  integer
-	 */
-    protected function _count_total(): int
-    {
-        return $this->_object->reset(false)->count_all();
-	}
-
-	/**
-	 * Execute result on object
-	 *
-	 * @return	mixed
-	 */
-	protected function _execute()
-	{
-		return $this->_object->find_all();
-	}
-
-	/**
 	 * Set limit
 	 *
      * @param integer $start Offset
@@ -279,7 +259,7 @@ class Datatables
 		}
 
 		$columns = $this->columns();
-		$this->_count_total = $this->_count_total();
+        $this->_count_total = $this->_object->reset(false)->count_all();
 
 		$requestOrder   = $request->query('order');
         $requestColumns = (array) $request->query('columns');
@@ -324,7 +304,7 @@ class Datatables
 		}
 
 		// Execute the query
-		$this->_result = $this->_execute();
+        $this->_result = $this->_object->find_all();
 		$this->_count  = $this->_count();
 
 		// Count should always match total unless search is being applied
