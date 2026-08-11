@@ -11,7 +11,7 @@ Gleez stores the current database schema version in the `config` table (`group_n
 When an upgrade is needed:
 
 1. The admin dashboard displays a warning with a link to the upgrade page.
-2. Navigate to **Admin -> Tools -> Database Upgrade** at your convenience.
+2. Navigate to **Admin → Tools → Database Upgrade** at your convenience.
 3. The upgrade page shows your current version and the target version.
 
 To run the upgrade:
