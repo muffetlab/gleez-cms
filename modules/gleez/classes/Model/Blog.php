@@ -111,7 +111,7 @@ class Model_Blog extends Post
     /**
      * Deletes a single record or multiple records, ignoring relationships
      *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
      * @return  Post
      * @throws Kohana_Exception
      */

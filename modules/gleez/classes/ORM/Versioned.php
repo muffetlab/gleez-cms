@@ -147,7 +147,7 @@ class ORM_Versioned extends Gleez_Model
      * Overloads ORM::delete() to delete all versioned entries of current object
      * and the object itself
      *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
      * @return  ORM
      * @throws Kohana_Exception
      */

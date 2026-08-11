@@ -483,7 +483,7 @@ class Post extends ORM_Versioned
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships
 	 *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
 	 * @return  Post
 	 * @throws  Kohana_Exception
 	 *

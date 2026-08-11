@@ -382,11 +382,44 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Deletes the current node and all descendants.
 	 *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
-	 * @throws  Kohana_Exception
-	 */
+     * When `$soft` is `true` and `$_deleted_column` is configured, the node and all its descendants are marked as
+     * deleted via an UPDATE instead of being removed from the database. The tree structure is preserved to allow
+     * restoration.
+     *
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
+     * @throws Kohana_Exception
+     */
     public function delete(bool $soft = false): Kohana_ORM
     {
+        if (is_array($this->_deleted_column) && $soft) {
+            $column = $this->_deleted_column['column'];
+            $format = $this->_deleted_column['format'];
+            $value = $format === true ? time() : date($format);
+
+            $this->_object[$column] = $value;
+
+            // Start the transaction
+            $this->_db->begin();
+
+            try {
+                // Soft-delete the node and all its descendants
+                DB::update($this->_table_name)
+                    ->value($column, $value)
+                    ->where($this->left_column, ' >=', $this->left())
+                    ->where($this->right_column, ' <= ', $this->right())
+                    ->where($this->scope_column, ' = ', $this->scope())
+                    ->execute($this->_db);
+            } catch (Kohana_Exception $e) {
+                $this->_db->rollback();
+                throw $e;
+            }
+
+            // Commit the transaction
+            $this->_db->commit();
+
+            return $this;
+        }
+
 		// Start the transaction
 		$this->_db->begin();
 

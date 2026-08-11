@@ -26,6 +26,16 @@ class Model_Term extends ORM_MPTT
         'rgt' => ['type' => 'int'],
         'lvl' => ['type' => 'int'],
         'scp' => ['type' => 'int'],
+        'deleted' => ['type' => 'int'],
+    ];
+
+    /**
+     * Soft-delete column configuration
+     * @var array
+     */
+    protected $_deleted_column = [
+        'column' => 'deleted',
+        'format' => true
     ];
 
 	/**
@@ -124,6 +134,7 @@ class Model_Term extends ORM_MPTT
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships.
 	 *
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
 	 * @return  ORM
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
@@ -131,7 +142,7 @@ class Model_Term extends ORM_MPTT
     public function delete(bool $soft = false): Kohana_ORM
     {
         if (is_array($this->_deleted_column) && $soft) {
-
+            parent::delete($soft);
         } else {
 			$source = $this->rawurl;
 

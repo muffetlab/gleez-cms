@@ -19,6 +19,16 @@ class Model_Tag extends Gleez_Model
         'name' => ['type' => 'string'],
         'type' => ['type' => 'string'],
         'count' => ['type' => 'int'],
+        'deleted' => ['type' => 'int'],
+    ];
+
+    /**
+     * Soft-delete column configuration
+     * @var array
+     */
+    protected $_deleted_column = [
+        'column' => 'deleted',
+        'format' => true
     ];
 
 	/**
@@ -85,7 +95,7 @@ class Model_Tag extends Gleez_Model
 	/**
 	 * Deletes a single post or multiple posts, ignoring relationships.
 	 *
-     * @param boolean $soft Make delete as soft or hard. Default hard [Optional]
+     * @param bool $soft Whether to perform a soft or hard delete. Defaults to hard.
 	 * @return  ORM
 	 * @throws  Kohana_Exception
 	 * @uses    Path::delete
@@ -93,7 +103,7 @@ class Model_Tag extends Gleez_Model
     public function delete(bool $soft = false): Kohana_ORM
     {
         if (is_array($this->_deleted_column) && $soft) {
-
+            parent::delete($soft);
         } else {
 			$source = $this->rawurl;
 

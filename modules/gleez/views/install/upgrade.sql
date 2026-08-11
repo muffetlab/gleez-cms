@@ -11,6 +11,8 @@ ALTER TABLE {posts} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER u
 ALTER TABLE {posts_versions} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER updated;
 ALTER TABLE {users} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER updated;
 ALTER TABLE {roles} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER special;
+ALTER TABLE {tags} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER count;
+ALTER TABLE {terms} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER scp;
 
 -- 2. Remove hostname and user_id columns from sessions table
 ALTER TABLE {sessions} DROP COLUMN hostname;
