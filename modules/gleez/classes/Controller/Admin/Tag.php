@@ -178,6 +178,8 @@ class Controller_Admin_Tag extends Controller_Admin
 	public function action_delete()
 	{
 		$id  = (int) $this->request->param('id', 0);
+
+        /** @var Model_Tag $tag */
         $tag = ORM::factory('Tag', $id);
 
         if (!$tag->loaded()) {
@@ -201,7 +203,7 @@ class Controller_Admin_Tag extends Controller_Admin
 		// If deletion is confirmed
         if (isset($_POST['yes']) && $this->valid_post()) {
             try {
-				$tag->delete();
+                $tag->delete(true);
                 Message::success(__('Tag %name deleted successful!', ['%name' => $tag->name]));
 				$this->request->redirect(Route::get('admin/tag')->uri(), 200);
             } catch (Exception $e) {

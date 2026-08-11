@@ -746,7 +746,8 @@ class Post extends ORM_Versioned
 			->find_all();
 
         foreach ($posts as $post) {
-			$post->delete();
+            /** @var Model_Post $post */
+            $post->delete(true);
 		}
 	}
 

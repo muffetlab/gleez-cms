@@ -276,6 +276,7 @@ class Controller_Admin_User extends Controller_Admin
 	{
 		$id = (int) $this->request->param('id', 0);
 
+        /** @var Model_User $user */
         $user = ORM::factory('User', $id);
 
         if (!$user->loaded()) {
@@ -306,7 +307,7 @@ class Controller_Admin_User extends Controller_Admin
 		// If deletion is confirmed
         if (isset($_POST['yes']) && $this->valid_post()) {
             try {
-				$user->delete();
+                $user->delete(true);
                 Message::success(__('User %name deleted successful!', ['%name' => $user->name]));
 
 				$this->request->redirect(Route::get('admin/user')->uri());

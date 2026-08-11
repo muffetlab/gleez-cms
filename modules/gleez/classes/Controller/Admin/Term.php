@@ -226,6 +226,8 @@ class Controller_Admin_Term extends Controller_Admin
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
+
+        /** @var Model_Term $term */
         $term = ORM::factory('Term', $id);
 
         if (!$term->loaded()) {
@@ -251,7 +253,7 @@ class Controller_Admin_Term extends Controller_Admin
         if (isset($_POST['yes']) && $this->valid_post()) {
             try {
 				$name = $term->name;
-				$term->delete();
+                $term->delete(true);
 
                 Kohana::$log->add(Log::INFO, 'Category :name deleted successful.', [':name' => $name]);
                 Message::success(__('Category %name deleted successful!', ['%name' => $name]));

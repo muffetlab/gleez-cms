@@ -399,6 +399,8 @@ class Controller_Page extends Template
 	public function action_delete()
 	{
 		$id   = (int) $this->request->param('id', 0);
+
+        /** @var Model_Page $post */
         $post = ORM::factory('Page', $id);
 
         if (!ACL::post('delete', $post)) {
@@ -425,7 +427,7 @@ class Controller_Page extends Template
         if (isset($_POST['yes']) && $this->valid_post()) {
             try {
 				$title = $post->title;
-				$post->delete();
+                $post->delete(true);
 
                 Kohana::$log->add(Log::INFO, 'Page: :title deleted.', [':title' => $title]);
                 Message::success(__('Page: :title deleted successful!', [':title' => $title]));

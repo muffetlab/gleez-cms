@@ -412,6 +412,8 @@ class Controller_Blog extends Template
 	public function action_delete()
 	{
 		$id = (int) $this->request->param('id', 0);
+
+        /** @var Model_Blog $post */
         $post = ORM::factory('Blog', $id);
 
         if (!ACL::post('delete', $post)) {
@@ -442,7 +444,7 @@ class Controller_Blog extends Template
 			$title = $post->title;
 
             try {
-				$post->delete();
+                $post->delete(true);
 
                 Cache::instance()->delete('blog:blog-' . $id);
 

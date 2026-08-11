@@ -166,6 +166,7 @@ class Controller_Admin_Role extends Controller_Admin
 	{
 		$id = (int) $this->request->param('id', 0);
 
+        /** @var Model_Role $role */
         $role = ORM::factory('Role', $id);
 
         if (!$role->loaded()) {
@@ -188,7 +189,7 @@ class Controller_Admin_Role extends Controller_Admin
 		// If deletion is confirmed
         if (isset($_POST['yes']) && $this->valid_post()) {
             try {
-				$role->delete(); //delete the role
+                $role->delete(true);
                 Message::success(__('Role: :name deleted successful!', [':name' => $role->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri());
