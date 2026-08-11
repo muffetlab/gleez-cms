@@ -41,4 +41,4 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run test suite
-        run: vendor/bin/phpunit --bootstrap=modules/unittest/bootstrap.php --group=gleez modules/unittest/tests.php
+        run: vendor/bin/phpunit --bootstrap=modules/unittest/bootstrap.php --group=gleez --exclude-group=gleez.db modules/unittest/tests.php

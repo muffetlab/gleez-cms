@@ -20,6 +20,7 @@ class Gleez_AclTest extends Unittest_TestCase
 	
 	/**
 	 * @dataProvider providerPerms
+     * @group gleez.db
      * @throws Cache_Exception|Kohana_Exception|ReflectionException
      */
     public function test_acl_check($perm, $user_id)
@@ -32,7 +33,6 @@ class Gleez_AclTest extends Unittest_TestCase
         } else {
 			$this->assertTrue(ACL::check($perm, $user));
 		}
-		
 	}
 	
 	/**

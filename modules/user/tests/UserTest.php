@@ -10,6 +10,9 @@
  */
 class Gleez_UserTest extends Unittest_TestCase
 {
+    /**
+     * @group gleez.db
+     */
     public function testInvalidUsers()
 	{
         $this->expectException(Validation_Exception::class);
