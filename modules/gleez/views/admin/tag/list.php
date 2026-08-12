@@ -13,10 +13,10 @@
 	<table id = "admin-list-tags" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["0", "desc"]]'>
 		<thead>
 			<tr>
-                <th style="width: 30%;" class="sorting_desc"><?php echo __("Name"); ?></th>
-                <th style="width: 45%;" class="sorting_desc"><?php echo __("Slug"); ?></th>
-                <th style="width: 15%;" class="sorting_desc"><?php echo __("Type"); ?></th>
-                <th style="width: 10%;" data-columns='{"orderable":false, "searchable":false}'></th>
+                <th data-columns='{"width":"30%"}' class="sorting_desc"><?php echo __("Name"); ?></th>
+                <th data-columns='{"width":"45%"}' class="sorting_desc"><?php echo __("Slug"); ?></th>
+                <th data-columns='{"width":"15%"}' class="sorting_desc"><?php echo __("Type"); ?></th>
+                <th data-columns='{"orderable":false, "searchable":false, "width":"10%"}'></th>
 			</tr>
 		</thead>
 		<tbody>

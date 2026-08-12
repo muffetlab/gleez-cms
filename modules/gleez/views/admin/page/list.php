@@ -28,13 +28,12 @@
 			<table id="admin-list-pages" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["4", "desc"]]'>
 				<thead>
 					<tr>
-                        <th style="width: 5%" data-columns='{"orderable":false, "searchable":false}'> #</th>
-                        <th style="width: 40%"><?php echo __('Title'); ?></th>
-                        <th style="width: 20%" data-columns='{"searchable":false}'><?php echo __('Author'); ?></th>
-                        <th style="width: 10%"
-                            data-columns='{"searchable":false, "className": "status"}'><?php echo __('Status'); ?></th>
-                        <th style="width: 12%" data-columns='{"searchable":false}'><?php echo __('Updated'); ?></th>
-                        <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
+                        <th data-columns='{"orderable":false, "searchable":false, "width":"5%"}'> #</th>
+                        <th data-columns='{"width":"40%"}'><?php echo __('Title'); ?></th>
+                        <th data-columns='{"searchable":false, "width":"20%"}'><?php echo __('Author'); ?></th>
+                        <th data-columns='{"searchable":false, "className": "status", "width":"10%"}'><?php echo __('Status'); ?></th>
+                        <th data-columns='{"searchable":false, "width":"15%"}'><?php echo __('Updated'); ?></th>
+                        <th data-columns='{"orderable":false, "searchable":false, "width":"10%"}'></th>
 					</tr>
 				</thead>
 				<tbody>
