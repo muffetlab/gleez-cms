@@ -503,6 +503,9 @@ class Model_User extends Gleez_Model
 
 		$array = Validation::factory($array);
 
+        // Defaults to the username column; overridden when a login identifier is present.
+        $login_name = 'name';
+
 		// important to check isset to avoid unnecessary routing
         if (isset($array['name'])) {
 			$login_name = $this->unique_key($array['name']);
