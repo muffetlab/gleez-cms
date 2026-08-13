@@ -125,6 +125,7 @@ class Controller_Token extends Controller
 		}
 
 		$grantType = $this->grantTypes[$grantTypeIdentifier];
+        $clientId = null;
 
 		/* Retrieve the client information from the request
 		 * ClientCredentials allow for grant types which also assert the client data
