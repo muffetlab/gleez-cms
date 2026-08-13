@@ -50,7 +50,7 @@
 							<hr>
 							<blockquote>
 								<small>
-                                    <?php echo __('Did something go wrong? Try the :github.', [':github' => HTML::anchor('https://github.com/gleez/cms/issues', 'Github Issues')]); ?>
+                                    <?php echo __('Did something go wrong? Try the :github.', [':github' => HTML::anchor('https://github.com/muffetlab/gleez-cms/issues', 'Github Issues')]); ?>
 								</small>
 							</blockquote>
 						</div>
@@ -63,8 +63,8 @@
 	<div id="footer">
 		<div class="container">
 			<div class="credits">
-                <p class="text-muted"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'), '{gleez_version}' => Gleez::getVersion(false)]); ?></p>
-				<p class="text-muted">&copy; 2011-<?php echo date('Y') ?> Gleez Technologies</p>
+                <p class="text-muted"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleez.muffetlab.com/', 'Gleez CMS'), '{gleez_version}' => Gleez::getVersion(false)]); ?></p>
+                <p class="text-muted">&copy; 2025-<?php echo date('Y') ?> Muffet Lab</p>
 			</div>
 		</div>
 	</div>
