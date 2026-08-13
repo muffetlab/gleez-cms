@@ -61,17 +61,6 @@ return [
             'icon' => 'github'
         ],
         /**
-         * Gleez
-         */
-        'gleez' => [
-            'enable' => false,
-            'id' => 'your client id',
-            'secret' => 'your client secret',
-            'callback' => URL::site('/oauth2/gleez/callback', 'http'),
-            'scope' => 'userinfo.profile userinfo.email',
-            'icon' => 'gleez'
-        ],
-        /**
          * Google
          */
         'google' => [
