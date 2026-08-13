@@ -7,6 +7,7 @@ class Controller_Client extends Template
      * @throws View_Exception
      * @throws Kohana_Exception
      * @throws Cache_Exception
+     * @throws ReflectionException
      */
     public function action_list()
     {
@@ -178,6 +179,7 @@ class Controller_Client extends Template
      * @throws HTTP_Exception_404
      * @throws View_Exception
      * @throws Cache_Exception
+     * @throws ReflectionException
      */
     public function action_view()
 	{
@@ -204,6 +206,7 @@ class Controller_Client extends Template
      * @throws View_Exception
      * @throws Kohana_Exception
      * @throws Cache_Exception
+     * @throws ReflectionException
      */
     public function action_delete()
 	{
