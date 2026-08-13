@@ -2,6 +2,10 @@
 
 [Gleez CMS](https://gleezcms.org) is a user-friendly website [Content Management System](http://en.wikipedia.org/wiki/CMS).
 
+# License
+
+Gleez CMS is released under the [MIT License](LICENSE). Third-party attributions for bundled assets are listed in [`licenses/README.md`](licenses/README.md).
+
 With [Gleez CMS](https://gleezcms.org) you can easily build dynamic websites within a matter of minutes with just the click of your mouse! Maintain your web content, navigation and even limit what groups or specific users can access, from anywhere in the world with just a web browser!
 
 With an emphasis on security and functionality, [Gleez CMS](https://gleezcms.org) is a professional and robust system suitable for any business or organization website. Built on the [PHP](http://php.net) programming language and the [MySQL](http://www.mysql.com) database, [Gleez CMS](https://gleezcms.org) delivers superb performance on any size website.
