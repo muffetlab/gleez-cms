@@ -210,10 +210,6 @@ class Controller_Client extends Template
      */
     public function action_delete()
 	{
-        if (!ACL::check('delete oauth2 client')) {
-			throw new HTTP_Exception_404('You have no permission to delete oauth2 clients.');
-		}
-		
 		$id       = (int) $this->request->param('id');
         $redirect = empty($this->redirect) ? Route::get('oauth2/client')->uri(['action' => 'list']) : $this->redirect;
         $client = ORM::factory('Client', $id);
@@ -225,10 +221,9 @@ class Controller_Client extends Template
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 
-        if (!Access::oaclient('delete', $client)) {
-			// If the lead was not loaded, we return access denied.
-            throw new HTTP_Exception_404('Attempt to non-existent client.');
-		}
+        if (!ACL::client('delete', $client)) {
+            throw new HTTP_Exception_404('You have no permission to delete oauth2 clients.');
+        }
 
         $this->title = __('Delete Client');
         $this->subtitle = HTML::chars($client->client_id);

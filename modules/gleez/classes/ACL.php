@@ -586,4 +586,67 @@ class ACL
         return true;
 	}
 
+    /**
+     * Make sure the user has permission to perform a certain action on an OAuth2 client.
+     *
+     * Similar to [ACL::post] but for OAuth2 clients; returns true/false instead of an exception when permission is
+     * denied (throws 404 if the client is not loaded).
+     *
+     * @param string $action The action `view|edit|delete|add|list`, defaults to `view`
+     * @param ORM $client The client object
+     * @param Model_User|null $user The user to check permission for; defaults to the active user
+     * @return bool
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @uses User::active_user
+     * @uses Module::event
+     */
+    public static function client(string $action, ORM $client, Model_User $user = null): bool
+    {
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true)) {
+            Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
+
+            return false;
+        }
+
+        if (!$client->loaded()) {
+            throw HTTP_Exception::factory(404, 'Attempt to access non-existent client.');
+        }
+
+        if (is_null($user)) {
+            $user = User::active_user();
+        }
+
+        if (self::check('administer oauth2', $user)) {
+            return true;
+        }
+
+        Module::event('oauth2_client_access', $action, $client);
+
+        $is_owner = (int) $client->user_id === (int) $user->id && $user->id != User::GUEST_ID;
+
+        $allowed = true;
+
+        switch ($action) {
+            case 'view':
+            case 'list':
+                $allowed = self::check('access oauth2 client', $user) || $is_owner;
+                break;
+            case 'edit':
+                $allowed = self::check('edit oauth2 client', $user)
+                    || (self::check('edit own oauth2 client', $user) && $is_owner);
+                break;
+            case 'delete':
+                $allowed = self::check('delete oauth2 client', $user)
+                    || (self::check('delete own oauth2 client', $user) && $is_owner);
+                break;
+        }
+
+        return $allowed;
+    }
+
 }
