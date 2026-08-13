@@ -8,7 +8,6 @@
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class PM
 {

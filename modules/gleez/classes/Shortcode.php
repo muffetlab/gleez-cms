@@ -19,7 +19,6 @@
  * @version    1.0.1
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    http://wordpress.org/about/license
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Shortcode
 {

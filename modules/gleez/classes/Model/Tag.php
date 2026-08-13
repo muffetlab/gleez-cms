@@ -6,7 +6,6 @@
  * @package    Gleez\Tags
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Tag extends Gleez_Model
 {

@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.7.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class System
 {
@@ -334,7 +333,6 @@ class System
      * @param string $class_prefix change this if the class names does not start with `fa-`
 	* @return   array
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
-	* @license  MIT
 	*/
     public static function faGetArray(string $path, string $class_prefix = 'fa-'): array
     {
@@ -369,7 +367,6 @@ class System
      * @param string $class_prefix change this if the class names does not start with `fa-`
 	* @return   array
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
-	* @license  MIT
 	*/
     public static function faReadableName(array $array, string $class_prefix = 'fa-'): array
     {

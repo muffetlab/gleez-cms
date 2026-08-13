@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.5.0
  * @copyright  (c) 2011-2018 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 abstract class Template extends Controller
 {

@@ -17,7 +17,6 @@
  * @version    1.0.1
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @copyright  (c) 2007-2012 Kohana Team
- * @license    https://gleezcms.org/license  Gleez CMS License
  * @license    http://kohanaframework.org/license
  *
  * @uses       Kohana::cache

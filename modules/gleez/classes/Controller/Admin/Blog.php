@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.0.1
  * @copyright  (c) 2011-2013 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Controller_Admin_Blog extends Controller_Admin
 {

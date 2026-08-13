@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.0.2
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License 
  */
 class Controller_Media extends Controller
 {

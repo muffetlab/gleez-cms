@@ -6,7 +6,6 @@
  * @package    Gleez\ORM\Page
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Page extends Post
 {

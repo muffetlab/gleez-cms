@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.1.1
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class URL extends Kohana_URL
 {

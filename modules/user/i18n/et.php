@@ -6,7 +6,6 @@
  * @package   Gleez\I18n
  * @author    Sergei Moroz <sergeimoroz@gmail.com>
  * @copyright (c) 2011-2013 Gleez Technologies
- * @license   https://gleezcms.org/license Gleez CMS License
  */
 return [
     // :

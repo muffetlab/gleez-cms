@@ -23,7 +23,6 @@
  * @copyright  (c) 2008-2012 Kohana Team
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    http://kohanaframework.org/license
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Gleez_I18n extends I18n
 {

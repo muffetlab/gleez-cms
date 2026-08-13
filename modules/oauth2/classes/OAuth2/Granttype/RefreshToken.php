@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2013 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Oauth2_GrantType_RefreshToken implements Oauth2_GrantType_Interface
 {
