@@ -8,6 +8,7 @@ class Controller_Client extends Template
      * @throws Kohana_Exception
      * @throws Cache_Exception
      * @throws ReflectionException
+     * @throws Exception
      */
     public function action_list()
     {
@@ -30,7 +31,7 @@ class Controller_Client extends Template
                     HTML::anchor($client->url, HTML::chars($client->title)),
                     $client->client_id,
                     $client->user->nick,
-                    System::date('M d, Y', $client->created),
+                    Date::formatted_time($client->created, 'M d, Y'),
                     HTML::icon($client->edit_url, 'far fa-edit', [
                         'class' => 'action-edit',
                         'data-toggle' => 'popup1',
