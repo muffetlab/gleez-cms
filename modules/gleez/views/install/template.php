@@ -36,9 +36,11 @@
 							</div>
 							<?php echo $content; ?>
 							<div class="progress progress-striped active">
-								<div style="width:<?php echo $_activity; ?>%" class="progress-bar progress-bar-info" role="progressbar"  aria-valuenow="<?php echo $_activity; ?>" aria-valuemin="0" aria-valuemax="100">
-									<span class="sr-only"><?php echo $_activity; ?>% Complete </span>
-								</div>
+                                <div style="width:<?php echo $_activity; ?>%" class="progress-bar progress-bar-info"
+                                     role="progressbar" aria-valuenow="<?php echo $_activity; ?>" aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    <span class="sr-only"><?php echo $_activity; ?>% Complete</span>
+                                </div>
 							</div>
 						</div>
 						<div class="col-md-3 menu">
