@@ -29,9 +29,7 @@ class Controller_Authorize extends Template
 	private $redirect_uri;
 	private $response_type;
 
-    private $is_authorized = false;
-
-	// These 2 vars are not part of oauth2
+    // These 2 vars are not part of oauth2
 	private $approval_prompt = 'auto';
 	private $access_type 	 = 'online';
 

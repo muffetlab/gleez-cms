@@ -17,10 +17,6 @@ class Controller_Token extends Controller
 	protected $scopeUtil;
 	protected $config;
 
-	private $client;
-	private $client_id;
-	private $clientData;
-
     /**
      * The before() method is called before controller action
      *
