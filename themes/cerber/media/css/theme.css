@@ -65,7 +65,6 @@ a {
 #wrap {
 	min-height: 100%;
 	height: auto !important;
-	height: 100%;
 	/* Negative indent footer by it's height */
 	margin: 0 auto -100px;
 }
@@ -80,9 +79,7 @@ a {
 .navbar {
 	background: #292929;
 	border: 0;
-	-webkit-box-shadow: 0 1px 10px rgba(0,0,0,.4);
-	   -moz-box-shadow: 0 1px 10px rgba(0,0,0,.4);
-	        box-shadow: 0 1px 10px rgba(0,0,0,.4);
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .4);
 }
 
 /*.navbar-fixed-top .nav.level-1 {
@@ -124,13 +121,8 @@ a {
 	z-index: 999;
 	font-weight: normal;
 	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
-	   -moz-box-shadow: 0 1px 3px rgba(0,0,0,.1);
-	         box-shadow: 0 1px 3px rgba(0,0,0,.1);
-	-webkit-border-radius: 3px;
-	   -moz-border-radius: 3px;
-	     -o-border-radius: 3px;
-	        border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+    border-radius: 3px;
 }
 
 .alert-danger h4, .alert-error h4 {
@@ -229,10 +221,7 @@ a {
 	background: #fff;
 	/*padding: 0 1em 1em;*/
 	margin-bottom: 1em;
-	-webkit-border-radius: 4px;
-	   -moz-border-radius: 4px;
-	     -o-border-radius: 4px;
-	        border-radius: 4px;
+    border-radius: 4px;
 }
 
 .post-rss {
@@ -251,7 +240,6 @@ a {
 .post-bookmark {
 	background: transparent url("../images/bookmark.png") no-repeat 0 0;
 	display: inline-block;
-	speak: none;
 	position: absolute;
 	width: 42px;
 	height: 46px;
@@ -305,12 +293,8 @@ a {
 }
 
 .panel-body ul.menus li .fa {
-	color: #999;
-	-webkit-transition: color .25s ease-in 0;
-	   -moz-transition: color .25s ease-in 0;
-	     -o-transition: color .25s ease-in 0;
-	    -ms-transition: color .25s ease-in 0;
-	          transition: color .25s ease-in;
+    color: #999;
+    transition: color .25s ease-in;
 }
 
 .panel-body ul.menus li a {
@@ -345,9 +329,7 @@ a {
 	width: 3px;
 	top: -1px;
 	bottom: -1px;
-	-webkit-box-shadow: inset -1px -1px 0 rgba(0,0,0,0.1);
-	   -moz-box-shadow: inset -1px -1px 0 rgba(0,0,0,0.1);
-	        box-shadow: inset -1px -1px 0 rgba(0,0,0,0.1);
+    box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.1);
     background: linear-gradient(to right, #d26911 0%, #ba5d0f 100%);
 }
 
@@ -399,18 +381,7 @@ a {
 	position: relative;
 	padding: 30px 20px;
 	background-color: #eee;
-	-webkit-border-top-right-radius: 5px;
-	    -moz-border-radius-topright: 5px;
-	        border-top-right-radius: 5px;
-	 -webkit-border-top-left-radius: 5px;
-	     -moz-border-radius-topleft: 5px;
-	         border-top-left-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	    -moz-border-radius-bottomright: 5px;
-	        border-bottom-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	    -moz-border-radius-bottomleft: 5px;
-	        border-bottom-left-radius: 5px;
+    border-radius: 5px;
 	overflow: hidden;
 }
 
@@ -515,18 +486,13 @@ a {
 
 .microwidget .visual i {
 	position: absolute;
-	left: 0;
 	left: auto;
 	right: 0;
 	bottom: 0;
 	display: block;
 	height: 72px;
 	font-size: 72px;
-	-webkit-transform: rotate(-30deg);
-	   -moz-transform: rotate(-30deg);
-	     -o-transform: rotate(-30deg);
-	    -ms-transform: rotate(-30deg);
-	        transform: rotate(-30deg);
+    transform: rotate(-30deg);
 	text-shadow: none;
 }
 
@@ -588,10 +554,7 @@ li.comment{
 	margin-bottom: 2em;
 	border: 1px solid #e1e1e8;
 	border-top: none;
-	-webkit-border-radius: 0 0 4px 4px;
-	   -moz-border-radius: 0 0 4px 4px;
-	     -o-border-radius: 0 0 4px 4px;
-	        border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
 }
 
 .widget .panel-title {
