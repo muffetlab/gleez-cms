@@ -184,13 +184,13 @@ class Auth_ORM extends Kohana_Auth_ORM
     /**
      * Logs a user in.
      *
-     * @param string $user Username
+     * @param string $username Username
      * @param string $password Password
      * @param bool $remember Enable autologin
      * @return bool
      * @throws Kohana_Exception|ReflectionException
      */
-    protected function _login($user, $password, $remember): bool
+	protected function _login($username, $password, $remember): bool
     {
         $config = Kohana::$config->load('auth')->get('auth');
         $cache = Cache::instance();
@@ -198,7 +198,7 @@ class Auth_ORM extends Kohana_Auth_ORM
         $maxFailedLogins = (int) ($config['max_failed_logins'] ?? 0);
         $loginJailTime = (int) ($config['login_jail_time'] ?? 0);
 
-        $failedAttemptsKey = 'auth:failed_attempts:' . $user;
+        $failedAttemptsKey = 'auth:failed_attempts:' . $username;
         $failedAttempts = (int) $cache->get($failedAttemptsKey, 0);
 
         if ($maxFailedLogins > 0 && $failedAttempts >= $maxFailedLogins) {
@@ -220,7 +220,7 @@ class Auth_ORM extends Kohana_Auth_ORM
 
         // Load the user
         $user = ORM::factory('User');
-        $user->where($user->unique_key($user), '=', $user)->find();
+        $user->where($user->unique_key($username), '=', $username)->find();
 
         // If user not found, introduce a delay to prevent enumeration
         if (!$user->loaded()) {
