@@ -11,7 +11,7 @@
  * @version    1.1.2
  * @copyright  (c) 2011-2014 Gleez Technologies
  */
-class Auth_ORM extends Kohana_Auth_ORM
+class Auth_ORM extends Auth
 {
     /**
      * Stores the last error key for failed login attempts.
