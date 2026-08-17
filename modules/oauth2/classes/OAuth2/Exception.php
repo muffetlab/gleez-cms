@@ -53,7 +53,7 @@ class Oauth2_Exception extends Exception
      * throw new Oauth2_Exception(400, 'invalid_client', 'The client id (:id) supplied is invalid', array(':id' => $client_id));
      * ~~~
      *
-     * @param integer $code The status code
+     * @param int $code The status code
      * @param string $error The oauth2 error
      * @param null $message Error message [Optional]
      * @param array|null $variables Translation variables [Optional]
@@ -79,7 +79,7 @@ class Oauth2_Exception extends Exception
      * throw new Oauth2_Exception(400, 'invalid_client', 'The client id (:id) supplied is invalid', array(':id' => $client_id));
      * ~~~
      *
-     * @param integer $code The status code
+     * @param int $code The status code
      * @param string $error The oauth2 error
      * @param null $message Error message [Optional]
      * @param array|null $variables Translation variables [Optional]
