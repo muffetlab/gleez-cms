@@ -12,13 +12,13 @@ class System
 {
 	/**
 	 * Windows OS
-	 * @type string
+     * @var string
 	 */
 	const WIN = 'WINDOWS';
 
 	/**
 	 * Linux OS
-	 * @type string
+     * @var string
 	 */
 	const LIN = 'LINUX';
 
@@ -26,7 +26,7 @@ class System
 	 * Minimum amount of memory allocated to php-script.
      * Can be used if ini_get('memory_limit') returns 0, -1, null or false.
 	 * This amount is used by default since PHP 5.3
-     * @type int
+     * @var int
 	 */
 	const MIN_MEMORY_LIMIT = 16777216;
 

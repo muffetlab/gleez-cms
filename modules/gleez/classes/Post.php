@@ -26,13 +26,13 @@ class Post extends ORM_Versioned
 
 	/**
 	 * Special tag for stopping widgets setting
-	 * @type string
+     * @var string
 	 */
 	const NO_WIDGETS_TAG = '<!--nowidgets-->';
 
 	/**
 	 * Special tag for stopping teaser setting
-	 * @type string
+     * @var string
 	 */
 	const TEASER_TAG = '<!--break-->';
 

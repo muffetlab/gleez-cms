@@ -12,19 +12,19 @@ class Gleez
 {
 	/**
 	 * Release version
-	 * @type string
+     * @var string
 	 */
 	const VERSION = '1.3.0';
 
 	/**
 	 * Minimal required version of php
-	 * @type string
+     * @var string
 	 */
     const PHP_MIN_REQ = '7.1.0';
 
 	/**
 	 * Default message for maintenance mode
-	 * @type string
+     * @var string
 	 */
 	const MAINTENANCE_MESSAGE = 'This site is down for maintenance';
 

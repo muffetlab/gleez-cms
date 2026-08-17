@@ -12,7 +12,7 @@ class Path
 {
 	/**
      * Default alias for the front page
-	 * @type string
+     * @var string
 	 */
 	const FRONT_ALIAS = '<front>';
 

@@ -15,7 +15,7 @@ class Request extends Kohana_Request
 {
 	/**
 	 * Default maximum size of POST data
-	 * @type string
+     * @var string
 	 */
 	const DEFAULT_POST_MAX_SIZE = '1M';
 
