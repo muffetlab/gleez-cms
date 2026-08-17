@@ -674,8 +674,8 @@ li.comment{
 	}
 }
 
-/* Here, rules for anything less than Ipads width, with the advice to design
-   for the smallest common width, 320px. This is the majority of smarthphones. */
+/* Here, rules for anything less than Ipads width, with the advice to design for the smallest common width, 320px. This
+ is the majority of smartphones. */
 @media only screen and (max-width: 767px) {
 	.form-actions-right {
 		text-align: left;
