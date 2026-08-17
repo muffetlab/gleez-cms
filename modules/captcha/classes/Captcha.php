@@ -164,7 +164,7 @@ abstract class Captcha
      *
      * @staticvar integer $counted Captcha attempts counter
      * @param string $response User's captcha response
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      */
     public static function valid(string $response): bool
@@ -200,7 +200,7 @@ abstract class Captcha
      * Gets or sets the number of valid Captcha responses for this session.
      *
      * @param int|null $new_count New counter value
-     * @param boolean $invalid Trigger invalid counter (for internal use only)
+     * @param bool $invalid Trigger invalid counter (for internal use only)
      * @return integer Counter value
      * @throws Kohana_Exception
      */
@@ -256,7 +256,7 @@ abstract class Captcha
      * Checks whether user has been promoted after having given enough valid responses.
      *
      * @param int|null $threshold Valid response count threshold
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      */
     public function promoted(int $threshold = null): bool
@@ -414,7 +414,7 @@ abstract class Captcha
     /**
      * Returns the img html element or outputs the image to the browser.
      *
-     * @param boolean $html Output as HTML
+     * @param bool $html Output as HTML
      * @param string|null $type Image type override
      * @return string|void HTML, string or void
      * @throws Kohana_Exception
@@ -449,7 +449,7 @@ abstract class Captcha
 	/**
 	 * Output the Captcha challenge.
 	 *
-	 * @param boolean $html Render output as HTML
+     * @param bool $html Render output as HTML
      * @param string|null $type Image type override
 	 * @return mixed
 	 */
