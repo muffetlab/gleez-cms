@@ -377,7 +377,7 @@ a {
                            7. Widgets/Panels
 -------------------------------------------------------------------*/
 
-.microwidget {
+.micro-widget {
 	position: relative;
 	padding: 30px 20px;
 	background-color: #eee;
@@ -385,84 +385,95 @@ a {
 	overflow: hidden;
 }
 
-.microwidget,
-.microwidget:hover {
+.micro-widget,
+.micro-widget:hover {
 	color: #666;
 	text-decoration: none;
 	text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 	outline: none;
 }
 
-.microwidget i,
-.microwidget:hover i {
+.micro-widget i,
+.micro-widget:hover i {
 	color: #e4e4e4;
 }
-.microwidget:hover {
+
+.micro-widget:hover {
 	background-color: #e6e6e6;
 }
-.microwidget:hover i {
+
+.micro-widget:hover i {
 	color: #dcdcdc;
 }
 
-
-.microwidget.primary,
-.microwidget.primary:hover{
+.micro-widget.primary,
+.micro-widget.primary:hover {
 	color: #FFF;
 	background-color: #e5412d;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
-.microwidget.primary i,
-.microwidget.primary:hover i {
+
+.micro-widget.primary i,
+.micro-widget.primary:hover i {
 	color: #dd301b;
 }
-.microwidget.primary:hover {
+
+.micro-widget.primary:hover {
 	background-color: #e3351f;
 }
-.microwidget.primary:hover i {
+
+.micro-widget.primary:hover i {
 	color: #d42e1a;
 }
 
-.microwidget.secondary,
-.microwidget.secondary:hover {
+.micro-widget.secondary,
+.micro-widget.secondary:hover {
 	color: #FFF;
 	background-color: #f0ad4e;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
-.microwidget.secondary i,
-.microwidget.secondary:hover i {
+
+.micro-widget.secondary i,
+.micro-widget.secondary:hover i {
 	color: #eea236;
 }
-.microwidget.secondary:hover {
+
+.micro-widget.secondary:hover {
 	background-color: #eea236;
 }
-.microwidget.secondary:hover i {
+
+.micro-widget.secondary:hover i {
 	color: #ec9924;
 }
-.microwidget.tertiary,
-.microwidget.tertiary:hover {
+
+.micro-widget.tertiary,
+.micro-widget.tertiary:hover {
 	color: #FFF;
 	background-color: #888888;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
-.microwidget.tertiary i,
-.microwidget.tertiary:hover i {
+
+.micro-widget.tertiary i,
+.micro-widget.tertiary:hover i {
 	color: #7b7b7b;
 }
-.microwidget.tertiary:hover {
+
+.micro-widget.tertiary:hover {
 	background-color: #7b7b7b;
 }
-.microwidget.tertiary:hover i {
+
+.micro-widget.tertiary:hover i {
 	color: #717171;
 }
 
-.microwidget .visual {
+.micro-widget .visual {
 	z-index: 10;
 	float: right;
 	width: 54px;
 	height: 100%;
 }
 
-.microwidget .details {
+.micro-widget .details {
 	position: relative;
 	z-index: 11;
 	float: left;
@@ -470,13 +481,13 @@ a {
 	text-align: left;
 }
 
-.microwidget .value {
+.micro-widget .value {
 	display: block;
 	font-size: 32px;
 	font-weight: 600;
 }
 
-.microwidget .content {
+.micro-widget .content {
 	display: block;
 	margin-bottom: 1em;
 	font-size: 13px;
@@ -484,7 +495,7 @@ a {
 	text-transform: uppercase;
 }
 
-.microwidget .visual i {
+.micro-widget .visual i {
 	position: absolute;
 	left: auto;
 	right: 0;
@@ -496,7 +507,7 @@ a {
 	text-shadow: none;
 }
 
-.microwidget .more {
+.micro-widget .more {
 	position: absolute;
 	top: 10px;
 	right: 10px;
