@@ -26,7 +26,7 @@ class Upload extends Kohana_Upload
 	/**
 	 * Get PHP upload_max_filesize
 	 *
-	 * @return  integer
+     * @return int
 	 */
 	public static function getUploadMaxFilesize()
 	{

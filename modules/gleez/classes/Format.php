@@ -19,7 +19,7 @@ class Format
 	/** @var array Formats set */
     public static $formats = null;
 
-	/** @var integer Fallback format */
+    /** @var int Fallback format */
 	public static $fallback_format;
 
 	/** @var array Format configuration */
@@ -133,7 +133,7 @@ class Format
 	 *   $formats = Format::instance()->get(1);
 	 * </code>
 	 *
-     * @param integer $id Format ID
+     * @param int $id Format ID
 	 * @param   mixed    $default Default value
 	 * @return  mixed
 	 * @uses    Arr::get
@@ -151,7 +151,7 @@ class Format
 	 *   $total = Format::instance()->count_all();
 	 * </code>
 	 *
-	 * @return  integer
+     * @return int
 	 */
     public function count_all(): int
     {

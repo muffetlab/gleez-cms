@@ -12,7 +12,7 @@ class CSRF
 {
 	/**
 	 * Token time to live in seconds, 30 minutes
-	 * @var integer
+     * @var int
 	 */
 	public static $csrf_ttl = 1800;
 
@@ -21,7 +21,7 @@ class CSRF
      *
      * @param string $id Custom token id, e.g. uid [Optional]
      * @param string $action Optional action
-     * @param integer $time Used only internally [Optional]
+     * @param int $time Used only internally [Optional]
      * @return  string
      * @throws Kohana_Exception
      */

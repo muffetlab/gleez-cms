@@ -199,9 +199,9 @@ class Form extends Kohana_Form
      * Creates weight select field
      *
      * @param string $name Input name
-     * @param integer $selected Selected option int [Optional]
+     * @param int $selected Selected option int [Optional]
      * @param array|null $attrs HTML attributes [Optional]
-     * @param integer $delta Delta [Optional]
+     * @param int $delta Delta [Optional]
      * @return  string
      * @throws Kohana_Exception
      * @uses    Form::select

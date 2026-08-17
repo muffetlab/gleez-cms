@@ -388,7 +388,7 @@ class Post extends ORM_Versioned
 	/**
 	 * Get teaser from the body either by delimiter or size
 	 *
-     * @param integer $size Defaults to 105 words [Optional]
+     * @param int $size Defaults to 105 words [Optional]
 	 * @return  string   Teaser
 	 * @uses    Text::limit_words
 	 */
@@ -854,7 +854,7 @@ class Post extends ORM_Versioned
     /**
      * Dynamic per post cache for performance
      *
-     * @param integer $id The post id
+     * @param int $id The post ID
      * @param string $type The post type
      * @param object $config The post type config object
      * @return ORM $post The post object

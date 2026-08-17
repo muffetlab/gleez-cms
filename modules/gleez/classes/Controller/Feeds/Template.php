@@ -12,31 +12,31 @@ class Controller_Feeds_Template extends Controller
 {
 	/**
 	 * Default page size
-	 * @var integer
+     * @var int
 	 */
 	protected $_page_size = 30;
 
 	/**
 	 * Current page
-	 * @var integer
+     * @var int
 	 */
 	protected $_page;
 
 	/**
 	 * How Many Items Should We Retrieve?
-	 * @var integer
+     * @var int
 	 */
 	protected $_limit;
 
 	/**
 	 * The shift in list for getting
-	 * @var integer
+     * @var int
 	 */
 	protected $_offset;
 
 	/**
 	 * Current element ID
-	 * @var integer
+     * @var int
 	 */
 	protected $_id;
 
@@ -78,7 +78,7 @@ class Controller_Feeds_Template extends Controller
 
 	/**
 	 * Feed ttl (min.)
-	 * @var integer
+     * @var int
 	 */
 	protected $_ttl;
 

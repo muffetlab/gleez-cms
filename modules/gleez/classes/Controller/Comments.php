@@ -29,7 +29,7 @@ class Controller_Comments extends Controller
 
 	/**
 	 * Pagination per-page setting (based on group)
-	 * @var integer
+     * @var int
 	 */
 	protected $per_page = 10;
 

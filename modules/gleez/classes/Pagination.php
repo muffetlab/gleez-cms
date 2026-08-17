@@ -28,31 +28,31 @@ class Pagination
 
 	/**
 	 * Total item count
-	 * @var integer
+     * @var int
 	 */
 	protected $total_items;
 
 	/**
 	 * How many items to show per page
-	 * @var integer
+     * @var int
 	 */
 	protected $items_per_page;
 
 	/**
 	 * Total page count
-	 * @var integer
+     * @var int
 	 */
 	protected $total_pages;
 
 	/**
 	 * Item offset for the first item displayed on the current page
-	 * @var integer
+     * @var int
 	 */
 	protected $current_first_item;
 
 	/**
 	 * Item offset for the last item displayed on the current page
-	 * @var integer
+     * @var int
 	 */
 	protected $current_last_item;
 
@@ -82,7 +82,7 @@ class Pagination
 
 	/**
 	 * Query offset
-	 * @var integer
+     * @var int
 	 */
 	protected $offset;
 
@@ -261,7 +261,7 @@ class Pagination
     /**
      * Generates the full URL for a certain page
      *
-     * @param integer $page Page number [Optional
+     * @param int $page Page number [Optional
      * @return  string
      * @throws Kohana_Exception
      * @uses    URL::site
@@ -300,7 +300,7 @@ class Pagination
 	/**
 	 * Checks whether the given page number exists.
 	 *
-     * @param integer $page Page number
+     * @param int $page Page number
      * @return bool
 	 * @uses    Valid::digit
 	 */

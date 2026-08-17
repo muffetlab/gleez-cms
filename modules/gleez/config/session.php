@@ -5,10 +5,10 @@ return [
         /**
          * Database settings for session storage
          *
-         * string   group  Database config group name
-         * string   table  The name of the session table
-         * integer  gc     Number of requests before gc is invoked
-         * columns  array  Custom column names
+         * string   group   Database config group name
+         * string   table   The name of the session table
+         * int      gc      Number of requests before gc is invoked
+         * array    columns Custom column names
          */
         'group' => 'default',
         'table' => 'sessions',

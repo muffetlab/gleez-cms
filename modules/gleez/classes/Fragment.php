@@ -25,7 +25,7 @@ class Fragment
 {
 	/**
 	 * Default number of seconds to cache for
-	 * @var integer
+     * @var int
 	 */
 	public static $lifetime = 30;
 

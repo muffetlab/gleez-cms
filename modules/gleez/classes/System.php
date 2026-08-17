@@ -26,7 +26,7 @@ class System
 	 * Minimum amount of memory allocated to php-script.
      * Can be used if ini_get('memory_limit') returns 0, -1, null or false.
 	 * This amount is used by default since PHP 5.3
-	 * @type integer
+     * @type int
 	 */
 	const MIN_MEMORY_LIMIT = 16777216;
 
@@ -73,7 +73,7 @@ class System
 	 * to mkdir() must be specified.
 	 *
      * @param string $path The directory path
-     * @param integer $mode Set permission mode (as in chmod) [Optional]
+     * @param int $mode Set permission mode (as in chmod) [Optional]
      * @param bool $recursive Create directories recursively if necessary [Optional]
      * @return bool Returns true on success or false on failure
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()

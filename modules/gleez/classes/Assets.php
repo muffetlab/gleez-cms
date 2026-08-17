@@ -522,7 +522,7 @@ class Assets
 	 *
      * @param array $a
      * @param array $b
-     * @return  integer  The sorted order for assets
+     * @return int The sorted order for assets
 	 */
     protected static function sort_assets(array $a, array $b): int
     {

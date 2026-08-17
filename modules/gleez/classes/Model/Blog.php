@@ -97,7 +97,7 @@ class Model_Blog extends Post
     /**
      * Count the number of records in the table
      *
-     * @return  integer
+     * @return int
      * @throws Kohana_Exception
      */
     public function count_all(): int

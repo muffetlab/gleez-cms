@@ -117,7 +117,7 @@ class Request extends Kohana_Request
      * [!!] No further processing can be done after this method is called!
      *
      * @param string $url Redirect location
-     * @param integer $code Status code: 301, 302, etc
+     * @param int $code Status code: 301, 302, etc.
      * @return  void
      * @throws Kohana_Exception
      * @uses    Request::send_headers

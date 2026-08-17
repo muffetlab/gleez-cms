@@ -49,13 +49,13 @@ class Datatables
 
 	/**
 	 * Count for request
-	 * @var integer
+     * @var int
 	 */
 	protected $_count = 0;
 
 	/**
 	 * Total count
-	 * @var integer
+     * @var int
 	 */
 	protected $_count_total = 0;
 
@@ -103,8 +103,8 @@ class Datatables
 	/**
 	 * Apply limit
 	 *
-     * @param integer $start Offset
-     * @param integer $length Length
+     * @param int $start Offset
+     * @param int $length Length
 	 */
     protected function _limit(int $start, int $length)
 	{
@@ -153,7 +153,7 @@ class Datatables
 	/**
 	 * Count
 	 *
-	 * @return  integer
+     * @return int
 	 */
     protected function _count(): int
     {
@@ -163,8 +163,8 @@ class Datatables
 	/**
 	 * Set limit
 	 *
-     * @param integer $start Offset
-     * @param integer $length Length
+     * @param int $start Offset
+     * @param int $length Length
 	 * @return	$this
 	 */
     public function limit(int $start, int $length): Datatables
@@ -209,7 +209,7 @@ class Datatables
 	/**
 	 * Get count based on post operations
 	 *
-	 * @return  integer
+     * @return int
 	 */
     public function count(): int
     {

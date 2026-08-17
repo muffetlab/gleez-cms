@@ -206,8 +206,8 @@ class Cache_Redis extends Cache
 	 * tracking.
 	 *
      * @param string $id ID of cache entry to increment
-     * @param integer $step Step value to increment by [Optional]
-     * @return integer|bool
+     * @param int $step Step value to increment by [Optional]
+     * @return int|bool
 	 * @uses    System::sanitize_id
 	 */
     public function increment(string $id, int $step = 1)
@@ -222,8 +222,8 @@ class Cache_Redis extends Cache
 	 * tracking.
 	 *
      * @param string $id ID of cache entry to decrement
-     * @param integer $step Step value to decrement by [Optional]
-     * @return integer|bool
+     * @param int $step Step value to decrement by [Optional]
+     * @return int|bool
 	 * @uses    System::sanitize_id
 	 */
     public function decrement(string $id, int $step = 1)

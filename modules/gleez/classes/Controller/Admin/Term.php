@@ -360,16 +360,15 @@ class Controller_Admin_Term extends Controller_Admin
 		return $menu;
 	}
 
-	/*
+    /**
 	 * Private function to calculate and generate the new ordered left,
 	 * right and level values for bulk update
 	 *
 	 * @param  array    $tree
-	 * @param  integer  $parent [Optional]
+     * @param int $parent [Optional]
 	 * @param  array    $level [Optional]
-	 *
 	 * @todo Move to Model
-	 */
+     */
 	private function calculate_mptt($tree, $parent = 0, $level = 2)
 	{
         foreach ($tree as $id => $val) {

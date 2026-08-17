@@ -549,7 +549,7 @@ class Gleez_Locale
 	 * ~~~
 	 *
 	 * @param   string|Gleez_Locale  $locale   Locale to set
-     * @param integer $quality The quality to set from 0 to 1 [Optional]
+     * @param int $quality The quality to set from 0 to 1 [Optional]
 	 * @throws  Kohana_Exception
 	 *
 	 * @uses    Locale_Data::locale_data

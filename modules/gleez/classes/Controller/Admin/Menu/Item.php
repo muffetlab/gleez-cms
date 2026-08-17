@@ -318,8 +318,8 @@ class Controller_Admin_Menu_Item extends Controller_Admin
 	 * right and level values for bulk update.
 	 *
      * @param array $tree
-     * @param integer $parent
-     * @param integer $level
+     * @param int $parent
+     * @param int $level
 	 */
     private function calculate_mptt(array $tree, int $parent = 0, int $level = 2)
 	{

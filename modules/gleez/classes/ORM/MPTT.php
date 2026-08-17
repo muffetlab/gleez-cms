@@ -199,7 +199,7 @@ class ORM_MPTT extends Gleez_Model
      * Creates a new node as root, or moves a node to root
      *
      * @param Validation|null $validation Validation object
-     * @param integer|null $scope The new scope [Optional]
+     * @param int|null $scope The new scope [Optional]
      * @return ORM_MPTT
      * @throws Kohana_Exception
      * @throws ReflectionException
@@ -329,8 +329,8 @@ class ORM_MPTT extends Gleez_Model
      *
      * @param ORM|int $target primary key value or ORM_MPTT object of target node.
      * @param string $copy_left_from target object property to take new left value from
-     * @param integer $left_offset offset for left value
-     * @param integer $level_offset offset for level value
+     * @param int $left_offset Offset for left value
+     * @param int $level_offset Offset for level value
      * @return  ORM_MPTT
      * @throws  ORM_Validation_Exception
      * @throws Kohana_Exception|ReflectionException
@@ -577,7 +577,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns the next available value for scope.
      *
-     * @return  integer
+     * @return int
      * @throws Kohana_Exception
      */
     protected function get_next_scope(): int
@@ -596,7 +596,7 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Returns the root node of the current object instance.
 	 *
-     * @param integer|null $scope scope [Optional]
+     * @param int|null $scope Scope [Optional]
      * @return  Model|ORM
 	 * @throws  Kohana_Exception
 	 */
@@ -677,7 +677,7 @@ class ORM_MPTT extends Gleez_Model
      *
      * @param bool $self Include the current node [Optional]
      * @param string $direction direction to order the left column by [Optional]
-     * @param integer|bool $limit Number of children to get [Optional]
+     * @param int|bool $limit Number of children to get [Optional]
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
@@ -751,7 +751,7 @@ class ORM_MPTT extends Gleez_Model
      * @param string $direction direction to order the left column by [Optional]
      * @param bool $direct_children_only Include direct children only [Optional]
      * @param bool $leaves_only Include leaves only [Optional]
-     * @param integer|bool $limit Number of results to get [Optional]
+     * @param int|bool $limit Number of results to get [Optional]
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
@@ -792,7 +792,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Get all possible level values
      *
-     * @param integer|null $scope restrict to the given scope [Optional]
+     * @param int|null $scope Restrict to the given scope [Optional]
      * @return    Database_Result
      * @throws Kohana_Exception
      */
@@ -812,8 +812,8 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Adds space to the tree for adding or inserting nodes.
      *
-     * @param integer $start start position
-     * @param integer $size size of the gap to add [Optional]
+     * @param int $start Start position
+     * @param int $size Size of the gap to add [Optional]
      * @throws Kohana_Exception
      */
     protected function create_space(int $start, int $size = 2)
@@ -834,8 +834,8 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Removes space from the tree after deleting or moving nodes.
      *
-     * @param integer $start start position
-     * @param integer $size size of the gap to remove [Optional]
+     * @param int $start Start position
+     * @param int $size Size of the gap to remove [Optional]
      * @throws Kohana_Exception
      */
     protected function delete_space(int $start, int $size = 2)
@@ -879,7 +879,7 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Returns the value of the current nodes left column.
 	 *
-	 * @return  integer
+     * @return int
 	 */
     public function left(): int
     {
@@ -889,7 +889,7 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Returns the value of the current nodes right column.
 	 *
-	 * @return  integer
+     * @return int
 	 */
     public function right(): int
     {
@@ -898,8 +898,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Returns the value of the current nodes level column.
-	 * 
-	 * @return  integer
+     *
+     * @return int
 	 */
     public function level(): int
     {
@@ -908,8 +908,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Returns the value of the current nodes scope column.
-	 * 
-	 * @return  integer
+     *
+     * @return int
 	 */
     public function scope(): int
     {
@@ -918,8 +918,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Returns the size of the current node.
-	 * 
-	 * @return  integer
+     *
+     * @return int
 	 */
     public function size(): int
     {
@@ -928,8 +928,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Returns the number of descendants the current node has.
-	 * 
-	 * @return  integer
+     *
+     * @return int
 	 */
 	public function count()
 	{
@@ -939,7 +939,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Checks if the supplied scope is available.
      *
-     * @param integer $scope scope to check availability of
+     * @param int $scope Scope to check availability of
      * @return bool
      * @throws Kohana_Exception
      */
@@ -956,9 +956,9 @@ class ORM_MPTT extends Gleez_Model
      * tree structure to eliminating any holes. If you have a child node that is outside
      * the left/right constraints it will not be moved under the root.
      *
-     * @param integer $left Starting value for left branch [Optional]
+     * @param int $left Starting value for left branch [Optional]
      * @param null $target Target node to use as root [Optional]
-     * @return  integer
+     * @return int
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException

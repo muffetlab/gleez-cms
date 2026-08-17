@@ -71,7 +71,7 @@ class Tags
      *
      * @param string $tags The raw string form of the tag to delete. See above for notes.
      * @param Model $object The Model Object
-     * @param bool|integer $user_id The User id [Optional]
+     * @param bool|int $user_id The User ID [Optional]
      * @param bool $skip_updates Whether to skip the update portion for objects that haven't been tagged [Optional]
      * @return bool Returns true if successful, false otherwise.
      * @throws Kohana_Exception
@@ -116,7 +116,7 @@ class Tags
      *
      * Private method to add tags to an object from an array.
      *
-     * @param integer $user_id The User id [Optional]
+     * @param int $user_id The User ID [Optional]
      * @param Model $object The Model Object
      * @param array $tags Array of tags to be add
      * @return void
@@ -141,7 +141,7 @@ class Tags
      * set a tag on an object. If the tag in its raw form does not yet exist,
      * this function will create it.
      *
-     * @param integer $user_id The user_id unique ID of the person who tagged the object with this tag
+     * @param int $user_id The user_id unique ID of the person who tagged the object with this tag
      * @param Model $object The Model Object
      * @param string $tag A raw string from a web form containing tags
      * @return bool
