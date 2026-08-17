@@ -30,7 +30,7 @@ class Shortcode
 
 	/**
 	 * Indicates whether shortcodes are cached
-	 * @var  boolean
+     * @var bool
 	 */
     protected static $_cache = false;
 
@@ -44,7 +44,7 @@ class Shortcode
 	 *
      * @param string $tag Shortcode tag to be searched in post content.
      * @param callable $callback Hook to run when shortcode is found.
-	 * @param   string|boolean  $asset     CSS or JS or both to be added. css|js|both [Optional]
+     * @param string|bool $asset CSS or JS or both to be added. css|js|both [Optional]
 	 * @return  array
 	 * @throws  Kohana_Exception
 	 * @uses    Assets::css
@@ -123,9 +123,9 @@ class Shortcode
      * }
      * ~~~
      *
-     * @param boolean $save Cache the current Shortcodes [Optional]
-     * @param boolean $append Append, rather than replace, cached Shortcodes when loading [Optional]
-     * @return  boolean
+     * @param bool $save Cache the current Shortcodes [Optional]
+     * @param bool $append Append, rather than replace, cached Shortcodes when loading [Optional]
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses    Kohana::cache

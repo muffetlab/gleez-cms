@@ -19,13 +19,13 @@ abstract class Template extends Controller
 
 	/**
 	 * Auto render template?
-	 * @var boolean
+     * @var bool
 	 */
     public $auto_render = true;
 
 	/**
 	 * Turn debugging on?
-	 * @var boolean
+     * @var bool
 	 */
     public $debug = false;
 
@@ -67,7 +67,7 @@ abstract class Template extends Controller
 
 	/**
 	 * Turn bare template on?
-	 * @var boolean
+     * @var bool
 	 */
     public $bare = false;
 
@@ -79,13 +79,13 @@ abstract class Template extends Controller
 
 	/**
 	 * Is ajax request?
-	 * @var boolean
+     * @var bool
 	 */
     protected $_ajax = false;
 
 	/**
 	 * is internal request?
-	 * @var boolean
+     * @var bool
 	 */
     protected $_internal = false;
 
@@ -180,7 +180,7 @@ abstract class Template extends Controller
 	/**
 	 * Enable sidebars for this request?
      * For example, adding or editing pages don't require sidebars.
-	 * @var boolean
+     * @var bool
 	 */
     protected $_sidebars = true;
 
@@ -205,7 +205,7 @@ abstract class Template extends Controller
 
 	/**
 	 * Allows overriding 'FormSaved' property to send with JSON.
-	 * @var boolean
+     * @var bool
 	 */
     protected $formSaved = false;
 
@@ -700,7 +700,7 @@ abstract class Template extends Controller
      * </code>
      *
      * @param string|null $submit Submit value [Optional]
-     * @return boolean Return true if it's valid $_POST
+     * @return bool Return true if it's valid $_POST
      * @throws Kohana_Exception
      * @uses    Request::is_post
      * @uses    Request::post_max_size_exceeded
@@ -804,8 +804,7 @@ abstract class Template extends Controller
 	/**
 	 * Is frontpage?
 	 *
-	 * @return boolean
-	 *
+     * @return bool
 	 * @uses  Request::uri
 	 */
     public function is_frontpage(): bool

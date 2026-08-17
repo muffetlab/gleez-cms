@@ -74,9 +74,8 @@ class System
 	 *
      * @param string $path The directory path
      * @param integer $mode Set permission mode (as in chmod) [Optional]
-     * @param boolean $recursive Create directories recursively if necessary [Optional]
-     * @return boolean Returns true on success or false on failure
-	 *
+     * @param bool $recursive Create directories recursively if necessary [Optional]
+     * @return bool Returns true on success or false on failure
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
     public static function mkdir(string $path, int $mode = 0777, bool $recursive = true): bool
@@ -276,7 +275,7 @@ class System
 	/**
 	 * Get PHP version
 	 *
-	 * @param  boolean $idOnly Return PHP version as an integer? [Optional]
+     * @param bool $idOnly Return PHP version as an integer? [Optional]
 	 * @return string
      * @since   1.6.0
 	 */

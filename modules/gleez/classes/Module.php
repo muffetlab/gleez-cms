@@ -95,7 +95,7 @@ class Module
 	 * Check to see if a module is installed
 	 *
      * @param string $name Module name
-	 * @return  boolean
+     * @return bool
 	 */
     public static function is_installed(string $name): bool
     {
@@ -106,7 +106,7 @@ class Module
 	 * Check to see if a module is active
 	 *
      * @param string $name Module name
-	 * @return  boolean
+     * @return bool
 	 */
     public static function is_active(string $name): bool
     {
@@ -477,7 +477,7 @@ class Module
      *
      * This is called at bootstrap time
      *
-     * @param boolean $reset Reset true to clear the cache.
+     * @param bool $reset Reset true to clear the cache.
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses   Cache::get
@@ -545,7 +545,7 @@ class Module
 	 * Check to see if a module installed and active
 	 *
      * @param string $module_name Module name
-	 * @return boolean
+     * @return bool
 	 */
     public static function exists(string $module_name): bool
     {

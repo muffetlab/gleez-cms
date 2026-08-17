@@ -38,7 +38,7 @@ class ACL
 	const PERM_ALLOW = 1;
 
 	/**
-	 * @var boolean Indicates whether perms are cached
+     * @var bool Indicates whether perms are cached
 	 */
     public static $cache = false;
 
@@ -147,9 +147,9 @@ class ACL
      *  }
      * ~~~
      *
-     * @param boolean $save Cache the current perms [Optional]
-     * @param boolean $append Append, rather than replace, cached perms when loading [Optional]
-     * @return  boolean
+     * @param bool $save Cache the current perms [Optional]
+     * @param bool $append Append, rather than replace, cached perms when loading [Optional]
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses    Cache::set
@@ -270,7 +270,7 @@ class ACL
      *
      * @param string $perm_name Permission name
      * @param Model_User|null $user User object [Optional]
-     * @return  boolean
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @throws ReflectionException
@@ -309,7 +309,7 @@ class ACL
      * be checked for only available roles.
      *
      * @param string $role Role name to look up
-     * @return  boolean
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
@@ -420,7 +420,7 @@ class ACL
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $post The post object
      * @param Model_User|null $user The user object to check permission, defaults to loaded in user
-     * @return  boolean
+     * @return bool
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
@@ -508,7 +508,7 @@ class ACL
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $comment The comment object
      * @param Model_User|null $user The user object to check permission, defaults to loaded in user
-     * @return  boolean
+     * @return bool
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception

@@ -27,7 +27,7 @@ class Email
     /**
      * Create a new email message
      *
-     * @param boolean $exceptions PHPMailer should throw external exceptions? [Optional]
+     * @param bool $exceptions PHPMailer should throw external exceptions? [Optional]
      * @return  Email
      * @throws Kohana_Exception
      * @throws \PHPMailer\PHPMailer\Exception
@@ -40,7 +40,7 @@ class Email
     /**
      * Class constructor
      *
-     * @param boolean $exceptions PHPMailer should throw external exceptions? [Optional]
+     * @param bool $exceptions PHPMailer should throw external exceptions? [Optional]
      * @throws \PHPMailer\PHPMailer\Exception|Kohana_Exception
      */
     public function __construct(bool $exceptions = true)
@@ -212,7 +212,7 @@ class Email
 	/**
 	 * Sends the email
 	 *
-	 * @return  boolean
+     * @return bool
 	 */
     public function send(): bool
     {

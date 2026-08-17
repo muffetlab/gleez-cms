@@ -83,7 +83,7 @@ class Menu
 	 * Remove an item from the menu
 	 *
      * @param string $target_id Id of link
-     * @param boolean $parent_id Parent Id of link [Optional]
+     * @param bool $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
     public function remove(string $target_id, bool $parent_id = false): Menu
@@ -102,7 +102,7 @@ class Menu
 	 *
      * @param string $target_id Id of link item
      * @param string $title New Title for the item
-     * @param boolean $parent_id Parent Id of link [Optional]
+     * @param bool $parent_id Parent Id of link [Optional]
 	 * @return  Menu
 	 */
     public function set_title(string $target_id, string $title, bool $parent_id = false): Menu
@@ -121,7 +121,7 @@ class Menu
 	 *
      * @param string $target_id Id of link
      * @param string $url New url of the item
-     * @param boolean $parent_id Parent Id of link [Optional]
+     * @param bool $parent_id Parent Id of link [Optional]
 	 * @return  MENU
 	 */
     public function set_url(string $target_id, string $url, bool $parent_id = false): Menu
@@ -421,7 +421,7 @@ class Menu
      * @param string $id The new id of menu
      * @param string $title The new title
      * @param string $url The new url
-     * @param string|boolean $descp The additional text of url [Optional]
+     * @param string|bool $descp The additional text of url [Optional]
      * @param array|null $params The new params [Optional]
      * @param string|null $image The image or icon of url [Optional]
      * @param Menu|null $children The new children [Optional]

@@ -22,7 +22,7 @@ class Filter
 
 	/**
 	 * Indicates whether filters are cached
-	 * @var boolean
+     * @var bool
 	 */
     public static $cache = false;
 
@@ -121,9 +121,9 @@ class Filter
      *     Filter::cache(true);
      * }
      *
-     * @param boolean $save Cache the current filters [Optional]
-     * @param boolean $append Append, rather than replace, cached filters when loading [Optional]
-     * @return  boolean
+     * @param bool $save Cache the current filters [Optional]
+     * @param bool $append Append, rather than replace, cached filters when loading [Optional]
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses    Cache::get

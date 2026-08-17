@@ -31,7 +31,7 @@ class Fragment
 
 	/**
 	 * Use multilingual fragment support?
-	 * @var boolean
+     * @var bool
 	 */
     public static $i18n = false;
 
@@ -52,10 +52,8 @@ class Fragment
 	 * ~~~
 	 *
      * @param string $name Fragment name
-     * @param boolean|null $i18n Multilingual fragment support [Optional]
-	 *
+     * @param bool|null $i18n Multilingual fragment support [Optional]
 	 * @return  string
-	 *
 	 * @uses    I18n::lang
 	 */
     protected static function _cache_key(string $name, bool $i18n = null): string
@@ -89,7 +87,7 @@ class Fragment
      *
      * @param string $name Fragment name
      * @param null $i18n Multilingual fragment support [Optional]
-     * @return  boolean
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses    Cache::get

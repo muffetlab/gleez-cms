@@ -138,7 +138,7 @@ class Model_Path extends Gleez_Model
      * Process URI
      *
      * @param string $uri URI
-     * @return  array|boolean
+     * @return array|bool
      * @throws Kohana_Exception
      * @throws Request_Exception
      * @uses    Route::all

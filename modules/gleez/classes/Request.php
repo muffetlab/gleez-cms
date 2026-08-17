@@ -35,8 +35,7 @@ class Request extends Kohana_Request
 	 * Checks whether the request called by mobile device by useragent string
 	 * Preg is faster than for loop
 	 *
-	 * @return boolean
-	 *
+     * @return bool
 	 * @todo use Request::$user_agent but it is null
 	 */
     public static function is_mobile(): bool
@@ -54,7 +53,7 @@ class Request extends Kohana_Request
      * Whether current request is DataTables.
 	 *
      * @param mixed $request Request
-	 * @return  boolean
+     * @return bool
 	 * @uses    Request::current
 	 */
     public static function is_datatables(Request $request = null): bool
@@ -231,7 +230,7 @@ class Request extends Kohana_Request
 	 * $response = $request->create_response();
 	 * ~~~
 	 *
-     * @param boolean $bind Bind to this request
+     * @param bool $bind Bind to this request
 	 * @return  Response
 	 * @since   3.1.0
 	 */
@@ -255,7 +254,7 @@ class Request extends Kohana_Request
 	 * $this->request->is_post();
 	 * ~~~
 	 *
-	 * @return  boolean  Whether the request is a POST request or not
+     * @return bool Whether the request is a POST request or not
 	 */
     public function is_post(): bool
     {

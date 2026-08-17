@@ -69,7 +69,7 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Checks if the current node has any children.
 	 *
-	 * @return  boolean
+     * @return bool
 	 */
     public function has_children(): bool
     {
@@ -79,7 +79,7 @@ class ORM_MPTT extends Gleez_Model
 	/**
 	 * Is the current node a leaf node?
 	 *
-	 * @return  boolean
+     * @return bool
 	 */
     public function is_leaf(): bool
     {
@@ -107,7 +107,7 @@ class ORM_MPTT extends Gleez_Model
 	 * Checks if the current node is a direct child of the supplied node.
      *
      * @param ORM_MPTT|int $target ORM_MPTT object or primary key value of target node
-	 * @return  boolean
+     * @return bool
 	 */
     public function is_child($target): bool
     {
@@ -122,7 +122,7 @@ class ORM_MPTT extends Gleez_Model
 	 * Checks if the current node is a direct parent of a specific node.
      *
      * @param ORM_MPTT|int $target ORM_MPTT object or primary key value of child node
-	 * @return  boolean
+     * @return bool
 	 */
     public function is_parent($target): bool
     {
@@ -138,7 +138,7 @@ class ORM_MPTT extends Gleez_Model
 	 * (Both have the same direct parent)
      *
      * @param ORM_MPTT|int $target ORM_MPTT object or primary key value of target node
-	 * @return  boolean
+     * @return bool
 	 */
     public function is_sibling($target): bool
     {
@@ -154,8 +154,8 @@ class ORM_MPTT extends Gleez_Model
 
 	/**
 	 * Checks if the current node is a root node.
-	 * 
-	 * @return  boolean
+     *
+     * @return bool
 	 */
     public function is_root(): bool
     {
@@ -166,7 +166,7 @@ class ORM_MPTT extends Gleez_Model
 	 * Checks if the current node is one of the parents of a specific node.
      *
      * @param int|ORM_MPTT $target ID or object of parent node
-	 * @return  boolean
+     * @return bool
 	 */
     public function is_in_parents($target): bool
     {
@@ -642,10 +642,10 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns all the current nodes parents.
      *
-     * @param boolean $root include root node [optional
-     * @param boolean $with_self include current node [optional
-     * @param string $direction direction to order the left column by [optional
-     * @param boolean $direct_parent_only retrieve the direct parent only [Optional]
+     * @param bool $root Include root node [optional
+     * @param bool $with_self Include current node [optional
+     * @param string $direction Direction to order the left column by [optional
+     * @param bool $direct_parent_only Retrieve the direct parent only [Optional]
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
@@ -675,9 +675,9 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns direct children of the current node.
      *
-     * @param boolean $self include the current node [Optional]
+     * @param bool $self Include the current node [Optional]
      * @param string $direction direction to order the left column by [Optional]
-     * @param integer|boolean $limit number of children to get [Optional]
+     * @param integer|bool $limit Number of children to get [Optional]
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
@@ -689,7 +689,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns a full hierarchical tree, with or without scope checking.
      *
-     * @param boolean|null $scope only retrieve nodes with specified scope [Optional]
+     * @param bool|null $scope Only retrieve nodes with specified scope [Optional]
      * @return  object
      * @throws Kohana_Exception
      */
@@ -710,7 +710,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns the siblings of the current node
      *
-     * @param boolean $self include the current node [Optional]
+     * @param bool $self Include the current node [Optional]
      * @param string $direction direction to order the left column by [Optional]
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
@@ -734,7 +734,7 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns the leaves of the current node.
      *
-     * @param boolean $self include the current node [Optional]
+     * @param bool $self Include the current node [Optional]
      * @param string $direction direction to order the left column by [Optional]
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
@@ -747,11 +747,11 @@ class ORM_MPTT extends Gleez_Model
     /**
      * Returns the descendants of the current node
      *
-     * @param boolean $self include the current node [Optional]
+     * @param bool $self Include the current node [Optional]
      * @param string $direction direction to order the left column by [Optional]
-     * @param boolean $direct_children_only include direct children only [Optional]
-     * @param boolean $leaves_only include leaves only [Optional]
-     * @param integer|boolean $limit number of results to get [Optional]
+     * @param bool $direct_children_only Include direct children only [Optional]
+     * @param bool $leaves_only Include leaves only [Optional]
+     * @param integer|bool $limit Number of results to get [Optional]
      * @return Database_Result|Database_Result_Cached|Kohana_ORM|object
      * @throws Kohana_Exception
      */
@@ -940,7 +940,7 @@ class ORM_MPTT extends Gleez_Model
      * Checks if the supplied scope is available.
      *
      * @param integer $scope scope to check availability of
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      */
     protected function scope_available(int $scope): bool

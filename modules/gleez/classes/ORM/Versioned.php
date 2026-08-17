@@ -15,7 +15,7 @@ class ORM_Versioned extends Gleez_Model
 
 	/**
 	 * The version state
-	 * @var boolean
+     * @var bool
 	 */
     protected $_restore = false;
 

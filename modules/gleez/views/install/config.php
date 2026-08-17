@@ -10,7 +10,7 @@ return [
              * string   database     Database name
 			 * string   username     database username
 			 * string   password     database password
-			 * boolean  persistent   use persistent connections?
+             * bool     persistent   Use persistent connections?
 			 *
 			 * Ports and sockets may be appended to the hostname.
 			 */

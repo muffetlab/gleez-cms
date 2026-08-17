@@ -208,7 +208,7 @@ class Assets
      * @param mixed $handle Asset name if `string`, sets `$footer` if boolean
      * @param string|null $src Asset source [Optional]
      * @param mixed $deps Dependencies [Optional]
-     * @param boolean $footer Whether to show in header or footer [Optional]
+     * @param bool $footer Whether to show in header or footer [Optional]
      * @param array|null $attrs An array of attributes for the <script> element [Optional]
      * @param string $format Format that be returned [Optional]
      * @return array|string|null Setting returns asset array, getting returns asset HTML
@@ -278,7 +278,7 @@ class Assets
 	/**
      * Get all JavaScript assets of section (header or footer).
 	 *
-     * @param boolean $footer false for head, true for footer
+     * @param bool $footer false for head, true for footer
      * @param string $format Format that be returned [Optional]
      * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
@@ -327,7 +327,7 @@ class Assets
      * @param mixed $handle Asset name if string, sets $footer if boolean
      * @param string|null $code Asset code/CSP nonce [Optional]
      * @param mixed $deps Dependencies [Optional]
-     * @param boolean $footer Whether to show in header or footer [Optional]
+     * @param bool $footer Whether to show in header or footer [Optional]
      * @param array|null $attrs An array of attributes for the <script> element [Optional]
      * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
@@ -381,7 +381,7 @@ class Assets
     /**
      * Get all JavaScript codes of section (header or footer).
      *
-     * @param boolean $footer false for head, true for footer [Optional]
+     * @param bool $footer false for head, true for footer [Optional]
      * @param string|null $nonce CSP nonce [Optional]
      * @return  string   Asset HTML
      * @throws Kohana_Exception

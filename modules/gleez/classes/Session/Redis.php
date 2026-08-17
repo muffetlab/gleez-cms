@@ -138,7 +138,7 @@ class Session_Redis extends Session
     /**
      * Writes the current session.
      *
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      */
 	protected function _write(): bool
@@ -155,7 +155,7 @@ class Session_Redis extends Session
 	/**
 	 * Destroys the current session.
 	 *
-	 * @return  boolean
+     * @return bool
 	 */
 	protected function _destroy(): bool
     {
@@ -176,7 +176,7 @@ class Session_Redis extends Session
 	/**
 	 * Restarts the current session.
 	 *
-	 * @return  boolean
+     * @return bool
 	 */
 	protected function _restart(): bool
     {

@@ -15,7 +15,7 @@ class File extends Kohana_File
 	 *
      * @param string|null $name Filename [Optional]
      * @param integer $length Length of filename to return [Optional]
-     * @param boolean $remove_spaces Remove spaces from file name [Optional]
+     * @param bool $remove_spaces Remove spaces from file name [Optional]
      * @param string $replacement Replacement for spaces [Optional]
 	 * @return  string
      * @since   1.0.1

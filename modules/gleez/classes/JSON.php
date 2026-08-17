@@ -52,7 +52,7 @@ class JSON
 	 * ~~~
 	 *
      * @param string $json The JSON string to be decoded
-     * @param boolean $assoc When true, returned objects will be converted into associative arrays [Optional]
+     * @param bool $assoc When true, returned objects will be converted into associative arrays [Optional]
      * @param integer $depth User specified recursion depth [Optional]
      * @param integer $options Bitmask of JSON decode options. PHP 5.4 or higher [Optional]
 	 * @return  mixed

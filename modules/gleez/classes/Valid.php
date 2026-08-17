@@ -28,7 +28,7 @@ class Valid extends Kohana_Valid
 	 * @since   1.1.1   Replaced by a faster algorithm
 	 *
      * @param string $string The text to check
-	 * @return  boolean
+     * @return bool
 	 */
     public static function utf8(string $string): bool
     {

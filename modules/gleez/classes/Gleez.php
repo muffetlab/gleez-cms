@@ -30,7 +30,7 @@ class Gleez
 
 	/**
 	 * Gleez installed?
-	 * @var boolean
+     * @var bool
 	 */
     public static $installed = false;
 
@@ -45,20 +45,20 @@ class Gleez
 
 	/**
 	 * Has [Gleez::ready] been called?
-	 * @var boolean
+     * @var bool
 	 */
     protected static $_init = false;
 
 	/**
 	 * Set the X-Powered-By header?
-	 * @var  boolean
+     * @var bool
 	 */
     public static $expose = false;
 
 	/**
 	 * Whether to enable [profiling](gleez/profiling)
 	 * @todo  May be set by [Gleez::init or Gleez::ready]
-	 * @var boolean
+     * @var bool
 	 */
     public static $profiling = true;
 
@@ -70,7 +70,7 @@ class Gleez
 
 	/**
      * True if Kohana is running on Windows
-	 * @var boolean
+     * @var bool
 	 */
 	public static $isWindows= false;
 
@@ -274,8 +274,8 @@ class Gleez
 	/**
 	 * Gets current Gleez version
 	 *
-     * @param boolean $with_v If set, return the version number with the prefix `v` [Optional]
-     * @param boolean $full If set, return the full version with `Gleez CMS` prefix [Optional]
+     * @param bool $with_v If set, return the version number with the prefix `v` [Optional]
+     * @param bool $full If set, return the full version with `Gleez CMS` prefix [Optional]
 	 * @return  string   The version of Gleez
 	 */
     public static function getVersion(bool $with_v = true, bool $full = false): string

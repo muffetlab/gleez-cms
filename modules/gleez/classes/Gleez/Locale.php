@@ -452,7 +452,7 @@ class Gleez_Locale
 	 * Static alias for [Gleez_Locale::get_region]
 	 *
      * @param string $locale Locale (eg. en_US, ru_RU, ar_JO, ...)
-	 * @return  boolean|string
+     * @return bool|string
 	 */
     public static function get_region_by_locale(string $locale)
 	{
@@ -492,7 +492,7 @@ class Gleez_Locale
 	 * ~~~
 	 *
 	 * @return  string   Region part of the locale if available
-     * @return  boolean  false if not available
+     * @return bool false if not available
 	 */
 	public function get_region()
 	{
@@ -602,7 +602,7 @@ class Gleez_Locale
 	 * ~~~
 	 *
 	 * @param   Gleez_Locale  $locale  Locale to check for equality
-	 * @return  boolean
+     * @return  bool
 	 */
     public function equals(Gleez_Locale $locale): bool
     {

@@ -187,7 +187,7 @@ class Date extends Kohana_Date
 	/**
 	 * Return available date time formats
 	 *
-	 * @param boolean $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp [Optional]
 	 * @return array
 	 *
 	 * @todo   Need add i18n ability
@@ -246,7 +246,7 @@ class Date extends Kohana_Date
 	/**
 	 * Return available date formats
 	 *
-     * @param boolean $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp [Optional]
 	 * @return array
 	 *
 	 * @todo   Need add i18n ability
@@ -294,7 +294,7 @@ class Date extends Kohana_Date
 	/**
 	 * Return available time formats
 	 *
-     * @param boolean $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp [Optional]
 	 * @return array
 	 *
 	 * @todo   Need add i18n ability

@@ -80,7 +80,7 @@ class HTML extends Kohana_HTML
      * @param string $file File name
      * @param array|null $attributes Default attributes + type = crop|ratio [Optional]
      * @param mixed $protocol Protocol to pass to `URL::base()` [Optional]
-     * @param boolean $index Include the index page [Optional]
+     * @param bool $index Include the index page [Optional]
      * @return  string
      * @throws Kohana_Exception
      * @uses    URL::base
@@ -236,7 +236,7 @@ class HTML extends Kohana_HTML
      * the start) of the current request URI.
      *
      * @param string $uri URI
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      * @uses    URL::is_active
      */

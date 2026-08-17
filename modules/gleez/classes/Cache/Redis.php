@@ -141,7 +141,7 @@ class Cache_Redis extends Cache
      * @param string $id ID of cache entry
      * @param string $data Data to set to cache
      * @param int|null $lifetime Lifetime in seconds [Optional]
-     * @return  boolean
+     * @return bool
      * @uses    System::sanitize_id
      */
     public function set(string $id, $data, int $lifetime = null): bool
@@ -172,9 +172,7 @@ class Cache_Redis extends Cache
 	 * ~~~
 	 *
 	 * @param   string  $id  ID to remove from cache
-	 *
-	 * @return  boolean
-	 *
+     * @return  bool
 	 * @uses    System::sanitize_id
 	 */
     public function delete(string $id): bool
@@ -194,7 +192,7 @@ class Cache_Redis extends Cache
 	 * Cache::instance('redis')->delete_all();
 	 * ~~~
 	 *
-	 * @return  boolean
+     * @return bool
 	 */
     public function delete_all(): bool
     {
@@ -209,7 +207,7 @@ class Cache_Redis extends Cache
 	 *
      * @param string $id ID of cache entry to increment
      * @param integer $step Step value to increment by [Optional]
-	 * @return  integer|boolean
+     * @return integer|bool
 	 * @uses    System::sanitize_id
 	 */
     public function increment(string $id, int $step = 1)
@@ -225,7 +223,7 @@ class Cache_Redis extends Cache
 	 *
      * @param string $id ID of cache entry to decrement
      * @param integer $step Step value to decrement by [Optional]
-	 * @return  integer|boolean
+     * @return integer|bool
 	 * @uses    System::sanitize_id
 	 */
     public function decrement(string $id, int $step = 1)
@@ -237,7 +235,7 @@ class Cache_Redis extends Cache
 	 * Tests whether an id exists or not
 	 *
      * @param string $id ID of cache entry
-	 * @return  boolean
+     * @return bool
      * @uses    System::sanitize_id
 	 */
     protected function exists(string $id): bool

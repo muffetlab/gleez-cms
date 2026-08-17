@@ -278,7 +278,7 @@ class Model_Comment extends Gleez_Model
     /**
      * Make sure the user has permission to do the action on this object
      *
-     * @param boolean|string $action The action view|edit|delete default view [Optional]
+     * @param bool|string $action The action view|edit|delete default view [Optional]
      * @param Model_User|null $user The user object to check permission, defaults to logged in user [Optional]
      * @return Model_Comment
      * @throws Cache_Exception
@@ -371,7 +371,7 @@ class Model_Comment extends Gleez_Model
      *
      * @param bool|string $action The action view|edit|delete default view
      * @param Model_User|null $user The user object to check permission, defaults to logged in user
-     * @return  boolean|Model_Comment
+     * @return bool|Model_Comment
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception

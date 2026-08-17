@@ -273,7 +273,7 @@ class Widgets
      * Returns the named widget
      *
      * @param string $name Name of the widget
-     * @param boolean $visible Visibility permission from widget or false to skip
+     * @param bool $visible Visibility permission from widget or false to skip
      * @param mixed $format The format of the output ex:xhtml, html or false for object
      * @return  object|string|null Widget object, HTML string, or null
      * @throws Kohana_Exception

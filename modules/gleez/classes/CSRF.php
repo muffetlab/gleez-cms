@@ -42,7 +42,7 @@ class CSRF
      * @param string|null $token Token [Optional]
      * @param string $action Optional action [Optional]
      * @param string $id Custom token id, e.g. uid [Optional]
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      */
     public static function valid(string $token = null, string $action = '', string $id = ''): bool

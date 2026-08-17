@@ -71,9 +71,9 @@ class Tags
      *
      * @param string $tags The raw string form of the tag to delete. See above for notes.
      * @param Model $object The Model Object
-     * @param boolean|integer $user_id The User id [Optional]
-     * @param boolean $skip_updates Whether to skip the update portion for objects that haven't been tagged [Optional]
-     * @return boolean Returns true if successful, false otherwise.
+     * @param bool|integer $user_id The User id [Optional]
+     * @param bool $skip_updates Whether to skip the update portion for objects that haven't been tagged [Optional]
+     * @return bool Returns true if successful, false otherwise.
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
@@ -144,7 +144,7 @@ class Tags
      * @param integer $user_id The user_id unique ID of the person who tagged the object with this tag
      * @param Model $object The Model Object
      * @param string $tag A raw string from a web form containing tags
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception|ReflectionException
      * @uses    Inflector::singular
      */

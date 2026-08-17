@@ -274,7 +274,7 @@ class Post extends ORM_Versioned
 	 * Make sure that the state is legal
 	 *
      * @param string $value Status name
-	 * @return  boolean
+     * @return bool
 	 * @uses    Post::status
 	 */
     public static function valid_state(string $value): bool
@@ -622,7 +622,7 @@ class Post extends ORM_Versioned
 	/**
 	 * Bulk actions
 	 *
-     * @param boolean $list true for dropdown for bulk actions [Optional]
+     * @param bool $list true for dropdown for bulk actions [Optional]
      * @param string $type Type of post [Optional]
 	 * @return  mixed    States
 	 * @uses    Post::bulk_update

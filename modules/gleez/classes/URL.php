@@ -38,7 +38,7 @@ class URL extends Kohana_URL
 	 * Test whether a URL is absolute
 	 *
      * @param string $url The URL to test
-	 * @return  boolean
+     * @return bool
 	 */
     public static function is_absolute(string $url): bool
     {
@@ -49,7 +49,7 @@ class URL extends Kohana_URL
      * Test whether a URL is remote
      *
      * @param string $url The URL to test
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      * @since   1.0.1  Better handling
      * @since   1.0.0  Initial functional
@@ -103,8 +103,8 @@ class URL extends Kohana_URL
      * Determine current url
      *
      * @param mixed $protocol
-     * @param boolean $index
-     * @param boolean $with_query_params
+     * @param bool $index
+     * @param bool $with_query_params
      * @return  string
      * @throws Kohana_Exception
      */
@@ -127,7 +127,7 @@ class URL extends Kohana_URL
      * Determine if current url is active
      *
      * @param string $url
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      */
     public static function is_active(string $url): bool

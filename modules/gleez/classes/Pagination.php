@@ -301,7 +301,7 @@ class Pagination
 	 * Checks whether the given page number exists.
 	 *
      * @param integer $page Page number
-	 * @return  boolean
+     * @return bool
 	 * @uses    Valid::digit
 	 */
     public function valid_page(int $page): bool
