@@ -67,7 +67,7 @@ class User
     /**
      * Check if current user is guest
      *
-     * @return boolean true if current user is guest
+     * @return bool true if current user is guest
      * @throws Kohana_Exception
      */
     public static function is_guest(): bool
@@ -78,7 +78,7 @@ class User
     /**
      * Check if current user is admin
      *
-     * @return boolean true if current user is admin
+     * @return bool true if current user is admin
      * @throws Kohana_Exception
      */
     public static function is_admin(): bool
@@ -136,7 +136,7 @@ class User
      * Checks if user belongs to group(s)
      *
      * @param mixed $groups Group(s)
-     * @return boolean true if user belongs to group(s)
+     * @return bool true if user belongs to group(s)
      * @throws Kohana_Exception
      */
     public static function belongsTo($groups): bool
@@ -177,7 +177,7 @@ class User
 	 * Look up a user by ID.
      *
      * @param int $id The user ID
-     * @return ORM|bool The user object, or boolean if the ID was invalid
+     * @return ORM|bool The user object, or bool if the ID was invalid
 	 */
     public static function lookup(int $id)
 	{
@@ -188,7 +188,7 @@ class User
      * Look up a user by name.
      *
      * @param string $name The user name
-     * @return ORM|bool The user object, or boolean if the name was invalid
+     * @return ORM|bool The user object, or bool if the name was invalid
      */
     public static function lookup_by_name(string $name)
 	{
@@ -199,7 +199,7 @@ class User
      * Look up a user by email.
      *
      * @param string $email The user email
-     * @return ORM|bool The user object, or boolean if the email was invalid
+     * @return ORM|bool The user object, or bool if the email was invalid
      */
     public static function lookup_by_mail(string $email)
 	{
@@ -211,7 +211,7 @@ class User
 	 *
      * @param string $field Search field
      * @param string $value Search value
-     * @return ORM|bool The user object, or boolean if the name was invalid
+     * @return ORM|bool The user object, or bool if the name was invalid
 	 */
     private static function _lookup_by_field(string $field, string $value)
 	{
@@ -253,7 +253,7 @@ class User
      *
      * @param ORM $user User
      * @param string $password A plaintext password
-     * @return boolean true if the password is correct
+     * @return bool true if the password is correct
      * @throws Kohana_Exception
      * @uses   Auth_ORM::hash
      */
@@ -359,7 +359,7 @@ class User
      * @param ORM $user User model
      * @param array $attrs Default attributes + type = crop|ratio [Optional]
      * @param mixed $protocol Protocol to pass to `URL::base()` [Optional]
-     * @param boolean $index Include the index page [Optional]
+     * @param bool $index Include the index page [Optional]
      * @return string
      * @throws Kohana_Exception
      * @since 1.1.0

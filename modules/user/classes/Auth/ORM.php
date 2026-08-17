@@ -52,7 +52,7 @@ class Auth_ORM extends Auth
      * Checks if a user logged in via an OAuth provider.
      *
      * @param null $provider Provider name (e.g. 'twitter', 'google', etc.) [Optional]
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
@@ -149,8 +149,8 @@ class Auth_ORM extends Auth
      * Forces a user to be logged in when using SSO, without specifying a password.
      *
      * @param ORM $user
-     * @param boolean $mark_session_as_forced
-     * @return boolean
+     * @param bool $mark_session_as_forced
+     * @return bool
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException

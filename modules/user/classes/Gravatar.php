@@ -55,7 +55,7 @@ class Gravatar
 
 	/**
 	 * Should we use the secure (HTTPS) URL base?
-	 * @var boolean
+     * @var bool
 	 */
     protected $_secure_url = false;
 
@@ -67,7 +67,7 @@ class Gravatar
 
 	/**
      * If default image shall be shown even if user the has a gravatar profile.
-	 * @var boolean
+     * @var bool
 	 */
     protected $_default_force = false;
 
@@ -265,8 +265,7 @@ class Gravatar
 	/**
 	 * Get the current default image
 	 *
-	 * @return  string   If one is set
-     * @return  boolean  false if no default image set
+     * @return  string|false  The default image, or false if none is set
      * @since   1.2.0
 	 */
 	public function getDefaultImage()
@@ -284,7 +283,7 @@ class Gravatar
      *
      * @param array $attrs Default attributes [Optional]
      * @param mixed $protocol Protocol string, [Request], or boolean [Optional]
-     * @param boolean $index Add index file to URL? [Optional]
+     * @param bool $index Add index file to URL? [Optional]
      * @return string
      * @throws Kohana_Exception
      * @uses Arr::merge
@@ -474,7 +473,7 @@ class Gravatar
 	 * Set the default image to use for avatars
 	 *
 	 * Possible $image formats:
-     * + boolean false for the gravatar default
+     * + bool false for the gravatar default
 	 * + string containing a valid image URL
 	 * + a string specifying a recognized gravatar "default"
 	 *
@@ -487,7 +486,7 @@ class Gravatar
     public function setDefaultImage($image): Gravatar
     {
         if ($image === false) {
-            $this->default_image = false;
+            $this->_default_image = false;
 
 			return $this;
 		}
@@ -533,7 +532,7 @@ class Gravatar
 	/**
 	 * Forces gravatar to display default image
 	 *
-	 * @param   boolean  $force  Force default? [Optional]
+     * @param bool $force Force default? [Optional]
 	 * @return  Gravatar
      * @since   1.2.0
 	 */
@@ -589,9 +588,8 @@ class Gravatar
 	/**
 	 * Check if we are using the secure protocol for the image URLs
 	 *
+     * @return  bool
 	 * @since   1.2.0
-	 *
-	 * @return  boolean
 	 */
     public function useSecureURL(): bool
     {
@@ -629,7 +627,7 @@ class Gravatar
 	/**
      * Check if we need to force the default image to always load.
 	 *
-	 * @return boolean
+     * @return bool
      * @since 1.2.0
 	 */
     public function isForceDefault(): bool

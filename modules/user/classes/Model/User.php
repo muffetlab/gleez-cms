@@ -394,7 +394,7 @@ class Model_User extends Gleez_Model
      *
      * @param mixed $value The value to test
      * @param string|null $field Field name
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      */
     public function unique_key_exists($value, string $field = null): bool
@@ -485,7 +485,7 @@ class Model_User extends Gleez_Model
      * after a successful login.
      *
      * @param array $array Values to check
-     * @param boolean|string $redirect URI or URL to redirect to
+     * @param bool|string $redirect URI or URL to redirect to
      * @return Model_User
      * @throws ReflectionException
      * @throws Validation_Exception
@@ -670,7 +670,7 @@ class Model_User extends Gleez_Model
      * Validates sign-up information and creates a new user with the "login" role only.
      *
      * @param array $data Values to check
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
@@ -733,7 +733,7 @@ class Model_User extends Gleez_Model
      *
      * @param integer $id User id
      * @param string $token Confirmation token
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      * @throws \PHPMailer\PHPMailer\Exception
      * @throws ReflectionException
@@ -774,7 +774,7 @@ class Model_User extends Gleez_Model
     /**
      * Welcome email to confirmed users/oauth users
      *
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      * @throws View_Exception
      * @throws \PHPMailer\PHPMailer\Exception
@@ -815,7 +815,7 @@ class Model_User extends Gleez_Model
      * The form where a user enters the email address he signed up with.
      *
      * @param array $data Values to check
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      * @throws ReflectionException
      * @throws Validation_Exception
@@ -898,7 +898,7 @@ class Model_User extends Gleez_Model
      * @param integer $id User id
      * @param string $token Confirmation token
      * @param integer $time UNIX timestamp
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      * @uses Auth_ORM::hash
      * @uses Config::get
@@ -943,7 +943,7 @@ class Model_User extends Gleez_Model
      * Also adds the "user" role to the user, in case his sign-up wasn't confirmed yet.
      *
      * @param array $data Values to check
-     * @return boolean
+     * @return bool
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
