@@ -18,7 +18,6 @@ version        = 1.0.0
 license        = MIT
 themeURL       = https://github.com/sergeyklay/gleez-cerber
 depends        = gleez
-optonalDepends = slider,block
 author         = "Gleez Team"
 authorURL      = http://www.gleeztech.com/
 site           = 1
