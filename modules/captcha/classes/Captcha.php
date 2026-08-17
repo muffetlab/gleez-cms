@@ -288,9 +288,10 @@ abstract class Captcha
 	 * Returns the image type.
 	 *
 	 * @param string $filename Filename
-	 * @return string|boolean Image type ("png", "gif" or "jpeg")
+     * @return string Image type ("png", "gif" or "jpeg")
+     * @throws Kohana_Exception If the file extension is not supported
 	 */
-    public function image_type(string $filename)
+    public function image_type(string $filename): string
 	{
         switch (strtolower(substr(strrchr($filename, '.'), 1))) {
 			case 'png':
@@ -305,7 +306,9 @@ abstract class Captcha
 				return 'jpeg';
 
 			default:
-                return false;
+                throw new Kohana_Exception('The file :filename has an unsupported image type', [
+                    ':filename' => $filename
+                ]);
 		}
 	}
 
