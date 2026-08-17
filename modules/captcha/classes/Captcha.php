@@ -162,7 +162,6 @@ abstract class Captcha
     /**
      * Validates user's Captcha response and updates response counter.
      *
-     * @staticvar integer $counted Captcha attempts counter
      * @param string $response User's captcha response
      * @return bool
      * @throws Kohana_Exception
@@ -201,7 +200,7 @@ abstract class Captcha
      *
      * @param int|null $new_count New counter value
      * @param bool $invalid Trigger invalid counter (for internal use only)
-     * @return integer Counter value
+     * @return int Counter value
      * @throws Kohana_Exception
      */
     public function valid_count(int $new_count = null, bool $invalid = false): int
@@ -232,7 +231,7 @@ abstract class Captcha
      * Gets or sets the number of invalid Captcha responses for this session.
      *
      * @param int|null $new_count New counter value
-     * @return integer Counter value
+     * @return int Counter value
      * @throws Kohana_Exception
      */
     public function invalid_count(int $new_count = null): int
