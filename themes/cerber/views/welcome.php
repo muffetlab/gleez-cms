@@ -16,8 +16,8 @@
 
     <div class="doc-body">
 		<h3>What Is Gleez CMS?</h3>
-        <p>Gleez is an open source, <a href="http://en.wikipedia.org/wiki/Content_management_system">extensible Content
-                Management System</a> that is built on the <a href="http://kohanaframework.org">Kohana Framework</a>.
+        <p>Gleez is an open source, <a href="https://en.wikipedia.org/wiki/Content_management_system">extensible Content
+                Management System</a> that is built on the <a href="https://kohana.top">Kohana Framework</a>.
             Gleez is the fusion of many good concepts from the 4 most popular systems: Joomla, Drupal, WordPress and
             Ruby Rails. With years of experience using these, we've gathered great ideas and in some cases, improved on
             them.</p>
@@ -70,7 +70,9 @@
                         <i class="fas fa-folder-open fa-stack-1x fa-inverse"></i>
 					</span>
 					<h4>Taxonomy & Tags</h4>
-					<p>Gleez uses <a href="http://www.sitepoint.com/hierarchical-data-database-2/">MPTT</a> system for classifying content, which is known as taxonomy and implemented in the core. You can define your own vocabularies (groups of taxonomy terms), and add terms to each vocabulary.</p>
+                    <p>Gleez uses <a href="https://www.sitepoint.com/hierarchical-data-database-2/">MPTT</a> system for
+                        classifying content, which is known as taxonomy and implemented in the core. You can define your
+                        own vocabularies (groups of taxonomy terms), and add terms to each vocabulary.</p>
 				</div>
 				<div class="col-md-4 seo">
 					<span class="fa-stack fa-3x">
