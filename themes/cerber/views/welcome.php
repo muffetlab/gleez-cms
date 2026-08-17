@@ -80,7 +80,9 @@
                         <i class="fas fa-globe fa-stack-1x fa-inverse"></i>
 					</span>
 					<h4>SEO</h4>
-					<p> Canonical URL: the search engine friendly URL that you want the search engines to treat as authoritative. Clean url's, canocial & shortlinks are in core for SEO. Gleez adds meta tags support and url aliases handled by path class.</p>
+                    <p>Canonical URL: the search-engine-friendly URL that you want search engines to treat as
+                        authoritative. Clean URLs, canonical URLs, and shortlinks are part of the core for SEO. Gleez
+                        adds meta tag support, and URL aliases are handled by the Path class.</p>
 				</div>
 			</div>
 		</div>
