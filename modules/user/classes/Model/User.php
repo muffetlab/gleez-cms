@@ -731,7 +731,7 @@ class Model_User extends Gleez_Model
      * Confirms a user sign-up by validating the confirmation link.
      * Adds the "user" role to the user.
      *
-     * @param integer $id User id
+     * @param int $id User ID
      * @param string $token Confirmation token
      * @return bool
      * @throws Kohana_Exception
@@ -895,9 +895,9 @@ class Model_User extends Gleez_Model
      * Reset password: step 2a.
      * Validates the confirmation link for a password reset.
      *
-     * @param integer $id User id
+     * @param int $id User ID
      * @param string $token Confirmation token
-     * @param integer $time UNIX timestamp
+     * @param int $time UNIX timestamp
      * @return bool
      * @throws Kohana_Exception
      * @uses Auth_ORM::hash

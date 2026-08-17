@@ -43,7 +43,7 @@ class Gravatar
 
 	/**
 	 * Default size of the returned gravatar
-	 * @var integer
+     * @var int
 	 */
 	protected $_size = 250;
 
@@ -215,9 +215,8 @@ class Gravatar
 	 *
 	 * The current avatar size in use.
 	 *
-	 * @since   1.1.0
-	 *
-	 * @return  integer
+     * @return  int
+     * @since   1.1.0
 	 */
     public function getSize(): int
     {
@@ -229,9 +228,8 @@ class Gravatar
 	 *
 	 * The string representing the current maximum allowed rating ('g', 'pg', 'r', 'x').
 	 *
-	 * @since   1.1.0
-	 *
-	 * @return  integer
+     * @return  int
+     * @since   1.1.0
 	 */
     public function getRating(): int
     {
@@ -371,7 +369,7 @@ class Gravatar
 	 *
 	 * [!!] Note: By default, images from Gravatar.com will be returned as 80x80 px
 	 *
-	 * @param   integer  $size  The avatar size to use, must be less than 512 and greater than 0
+     * @param int $size The avatar size to use, must be less than 512 and greater than 0
 	 * @return  Gravatar
 	 * @throws Kohana_Exception
      * @since 1.1.0

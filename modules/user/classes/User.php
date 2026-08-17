@@ -12,37 +12,37 @@ class User
 {
 	/**
 	 * Guest user ID
-	 * @type integer
+     * @var int
 	 */
 	const GUEST_ID = 1;
 
 	/**
 	 * Main admin user ID
-	 * @type integer
+     * @var int
 	 */
 	const ADMIN_ID = 2;
 
 	/**
 	 * Anonymous role ID
-	 * @type integer
+     * @var int
 	 */
 	const GUEST_ROLE_ID = 1;
 
 	/**
 	 * Login role ID
-	 * @type integer
+     * @var int
 	 */
 	const LOGIN_ROLE_ID = 2;
 
 	/**
 	 * User role ID
-	 * @type integer
+     * @var int
 	 */
 	const USER_ROLE_ID = 3;
 
 	/**
 	 * Admin role ID
-	 * @type integer
+     * @var int
 	 */
 	const ADMIN_ROLE_ID = 4;
 
@@ -111,7 +111,7 @@ class User
     /**
      * Counting all users
      *
-     * @return integer Total number of registered users
+     * @return int Total number of registered users
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */

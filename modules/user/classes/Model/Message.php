@@ -154,7 +154,7 @@ class Model_Message extends Gleez_Model
      *
      * For message type constants see [PM] class
      *
-     * @param integer $type Message type, eg. PM::INBOX, PM::OUTBOX, PM::DRAFTS [Optional]
+     * @param int $type Message type, eg. PM::INBOX, PM::OUTBOX, PM::DRAFTS [Optional]
      * @param string $direction Sort mode of messages [Optional]
      * @return Model_Message
      * @throws Kohana_Exception

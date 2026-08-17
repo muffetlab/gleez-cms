@@ -14,21 +14,21 @@ class PM
 	/**
 	 * Inbox virtual folder name.
 	 * Can be used when determining the type of messages received.
-	 * @type integer
+     * @var int
 	 */
 	const INBOX = 0x01;
 
 	/**
 	 * Outbox virtual folder name.
 	 * Can be used when determining the type of messages received.
-	 * @type integer
+     * @var int
 	 */
 	const OUTBOX = 0x02;
 
 	/**
 	 * Drafts virtual folder name.
 	 * Can be used when determining the type of messages received.
-	 * @type integer
+     * @var int
 	 */
 	const DRAFTS = 0x03;
 
