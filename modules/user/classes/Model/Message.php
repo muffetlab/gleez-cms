@@ -12,13 +12,13 @@ class Model_Message extends Gleez_Model
 {
 	/**
 	 * Sort mode of messages - ascending
-	 * @type string
+     * @var string
 	 */
 	const ASC = 'ASC';
 
 	/**
 	 * Sort mode of messages - descending
-	 * @type string
+     * @var string
 	 */
 	const DESC = 'DESC';
 

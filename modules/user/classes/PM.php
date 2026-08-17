@@ -34,19 +34,19 @@ class PM
 
 	/**
 	 * Message status - read
-	 * @type string
+     * @var string
 	 */
 	const STATUS_READ = 'read';
 
 	/**
 	 * Message status - unread
-	 * @type string
+     * @var string
 	 */
 	const STATUS_UNREAD = 'unread';
 
 	/**
 	 * Message status - draft
-	 * @type string
+     * @var string
 	 */
 	const STATUS_DRAFT = 'draft';
 
