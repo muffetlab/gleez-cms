@@ -248,7 +248,7 @@ class HTMLFilter
 		// Named entities
 		$string = preg_replace('/&amp;([A-Za-z][A-Za-z0-9]*;)/', '&\1', $string);
 
-        return preg_replace_callback('%<(?=[^a-zA-Z!/])|<!--.*?-->|<[^>]*(>|$)|>%', [$this, 'xss_split'], $string);
+        return preg_replace_callback('%(<(?=[^a-zA-Z!/])|<!--.*?-->|<[^>]*(>|$)|>)%', [$this, 'xss_split'], $string);
 	}
 
     protected function xss_split($m): string
