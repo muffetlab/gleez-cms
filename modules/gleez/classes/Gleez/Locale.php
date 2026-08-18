@@ -86,7 +86,7 @@ class Gleez_Locale
     /**
      * Singleton instance of Gleez_Locale
      *
-     * @param string|Gleez_Locale $locale Locale for parsing input [Optional]
+     * @param string|Gleez_Locale $locale Locale for parsing input
      * @return  Gleez_Locale
      * @throws Kohana_Exception
      */
@@ -132,8 +132,7 @@ class Gleez_Locale
 	 * $locale = new Gleez_Locale(Gleez_Locale::FRAMEWORK);
 	 * ~~~
 	 *
-	 * @param   string|Gleez_Locale  $locale  Locale for parsing input [Optional]
-	 *
+     * @param string|Gleez_Locale $locale Locale for parsing input
 	 * @throws  Kohana_Exception
 	 */
     public function __construct($locale = null)
@@ -508,7 +507,7 @@ class Gleez_Locale
     /**
      * Sets a new locale
      *
-     * @param string|Gleez_Locale $locale New locale to set [Optional]
+     * @param string|Gleez_Locale $locale New locale to set
      * @throws Kohana_Exception
      * @uses   Locale_Data::getLocaleData
      */
@@ -549,9 +548,8 @@ class Gleez_Locale
 	 * ~~~
 	 *
 	 * @param   string|Gleez_Locale  $locale   Locale to set
-     * @param int $quality The quality to set from 0 to 1 [Optional]
+     * @param int $quality The quality to set from 0 to 1
 	 * @throws  Kohana_Exception
-	 *
 	 * @uses    Locale_Data::locale_data
 	 */
     public static function set_default($locale, int $quality = 1)

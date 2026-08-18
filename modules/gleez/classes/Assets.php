@@ -92,11 +92,11 @@ class Assets
      *
      * Gets or sets CSS assets
      *
-     * @param string|null $handle Asset name [Optional]
-     * @param string|null $src Asset source [Optional]
-     * @param mixed $deps Dependencies [Optional]
-     * @param array|null $attrs An array of attributes for the <link> element [Optional]
-     * @param string $format Format that be returned [Optional]
+     * @param string|null $handle Asset name
+     * @param string|null $src Asset source
+     * @param mixed $deps Dependencies
+     * @param array|null $attrs An array of attributes for the <link> element
+     * @param string $format Format that be returned
      * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @throws Exception
@@ -143,7 +143,7 @@ class Assets
 	 * Get a single CSS asset
 	 *
      * @param string $handle Asset name
-     * @param string $format Format that be returned [Optional]
+     * @param string $format Format that be returned
      * @return string|null Asset HTML or null if not found
 	 * @throws  Exception
 	 * @uses    HTML::style
@@ -170,7 +170,7 @@ class Assets
 	/**
 	 * Get all CSS assets, sorted by dependencies
 	 *
-     * @param string $format Format that be returned [Optional]
+     * @param string $format Format that be returned
      * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
 	 */
@@ -206,11 +206,11 @@ class Assets
      * Gets or sets javascript assets
      *
      * @param mixed $handle Asset name if `string`, sets `$footer` if boolean
-     * @param string|null $src Asset source [Optional]
-     * @param mixed $deps Dependencies [Optional]
-     * @param bool $footer Whether to show in header or footer [Optional]
-     * @param array|null $attrs An array of attributes for the <script> element [Optional]
-     * @param string $format Format that be returned [Optional]
+     * @param string|null $src Asset source
+     * @param mixed $deps Dependencies
+     * @param bool $footer Whether to show in header or footer
+     * @param array|null $attrs An array of attributes for the <script> element
+     * @param string $format Format that be returned
      * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @throws Exception
@@ -251,7 +251,7 @@ class Assets
      * Get a single JavaScript asset.
 	 *
      * @param string $handle Asset name
-     * @param string $format Format that be returned [Optional]
+     * @param string $format Format that be returned
      * @return string|null Asset HTML or null if not found
 	 * @throws  Exception
 	 * @uses    HTML::script
@@ -279,7 +279,7 @@ class Assets
      * Get all JavaScript assets of section (header or footer).
 	 *
      * @param bool $footer false for head, true for footer
-     * @param string $format Format that be returned [Optional]
+     * @param string $format Format that be returned
      * @return string|array Asset HTML or array of filenames
 	 * @throws  Exception
 	 */
@@ -325,10 +325,10 @@ class Assets
      * Gets or sets JavaScript code.
      *
      * @param mixed $handle Asset name if string, sets $footer if boolean
-     * @param string|null $code Asset code/CSP nonce [Optional]
-     * @param mixed $deps Dependencies [Optional]
-     * @param bool $footer Whether to show in header or footer [Optional]
-     * @param array|null $attrs An array of attributes for the <script> element [Optional]
+     * @param string|null $code Asset code/CSP nonce
+     * @param mixed $deps Dependencies
+     * @param bool $footer Whether to show in header or footer
+     * @param array|null $attrs An array of attributes for the <script> element
      * @return array|string|null Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      */
@@ -362,7 +362,7 @@ class Assets
      * Get a single JavaScript code.
 	 *
      * @param string $handle Asset name
-     * @param string|null $nonce CSP nonce [Optional]
+     * @param string|null $nonce CSP nonce
      * @return string|null Asset HTML or null if not found
 	 * @uses    HTML::attributes
 	 */
@@ -381,8 +381,8 @@ class Assets
     /**
      * Get all JavaScript codes of section (header or footer).
      *
-     * @param bool $footer false for head, true for footer [Optional]
-     * @param string|null $nonce CSP nonce [Optional]
+     * @param bool $footer false for head, true for footer
+     * @param string|null $nonce CSP nonce
      * @return  string   Asset HTML
      * @throws Kohana_Exception
      */
@@ -419,7 +419,7 @@ class Assets
      * Gets or sets JavaScript code.
 	 *
 	 * @param   mixed   $handle  Asset name if `string`, sets `$footer` if boolean
-     * @param string|null $code Asset code [Optional]
+     * @param string|null $code Asset code
      * @return string|null Setting returns asset array, getting returns asset HTML
 	 */
     public static function settings($handle, string $code = null): ?string
@@ -431,10 +431,10 @@ class Assets
 	 * Group wrapper
 	 *
      * @param string $group Group name
-     * @param string|null $handle Asset name [Optional]
-     * @param string|null $content Asset content [Optional]
-	 * @param   mixed   $deps     Dependencies [Optional]
-     * @param array|null $attrs An array of attributes [Optional]
+     * @param string|null $handle Asset name
+     * @param string|null $content Asset content
+     * @param mixed $deps Dependencies
+     * @param array|null $attrs An array of attributes
      * @return array|string|null Setting returns asset array, getting returns asset content
 	 */
     public static function group(string $group, string $handle = null, string $content = null, $deps = null, array $attrs = null)
@@ -572,8 +572,8 @@ class Assets
      * By default, Gleez uses TinyMCE as its rich text editor.
      *
      * @link https://www.tiny.cloud/tinymce/
-     * @param string $name CSS class or ID of editable area [Optional]
-     * @param string $lang Language  [Optional]
+     * @param string $name CSS class or ID of editable area
+     * @param string $lang Language
      * @throws Kohana_Exception
      */
     public static function editor(string $name = '.textarea', string $lang = 'en-us')
@@ -704,9 +704,9 @@ class Assets
 	/**
 	 * Compiles multiple files into one
 	 *
-     * @param array $files The files to compile [Optional]
-     * @param string $format The format to return the compiled files in [Optional]
-     * @param string $type The type js or css [Optional]
+     * @param array $files The files to compile
+     * @param string $format The format to return the compiled files in
+     * @param string $type The type js or css
 	 * @return string
 	 * @throws Exception
 	 * @uses   HTML::style
@@ -773,7 +773,7 @@ class Assets
      * Get file path
      *
      * @param string $file File name
-     * @param string $type File type [Optional]
+     * @param string $type File type
      * @return string
      * @uses Kohana::find_file
      */

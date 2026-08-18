@@ -13,10 +13,10 @@ class File extends Kohana_File
 	/**
 	 * Generate a unique filename to avoid conflicts
 	 *
-     * @param string|null $name Filename [Optional]
-     * @param int $length Length of filename to return [Optional]
-     * @param bool $remove_spaces Remove spaces from file name [Optional]
-     * @param string $replacement Replacement for spaces [Optional]
+     * @param string|null $name Filename
+     * @param int $length Length of filename to return
+     * @param bool $remove_spaces Remove spaces from file name
+     * @param string $replacement Replacement for spaces
 	 * @return  string
      * @since   1.0.1
 	 * @uses    Text::random

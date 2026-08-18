@@ -98,10 +98,8 @@ class Cache_Redis extends Cache
 	 * ~~~
 	 *
 	 * @param   string  $id       ID of cache to entry
-	 * @param   string  $default  Default value to return if cache miss [Optional]
-	 *
+     * @param string $default Default value to return if cache miss
 	 * @return  mixed
-	 *
 	 * @uses    System::sanitize_id
 	 * @uses    Log::add
 	 */
@@ -140,7 +138,7 @@ class Cache_Redis extends Cache
      *
      * @param string $id ID of cache entry
      * @param string $data Data to set to cache
-     * @param int|null $lifetime Lifetime in seconds [Optional]
+     * @param int|null $lifetime Lifetime in seconds
      * @return bool
      * @uses    System::sanitize_id
      */
@@ -206,7 +204,7 @@ class Cache_Redis extends Cache
 	 * tracking.
 	 *
      * @param string $id ID of cache entry to increment
-     * @param int $step Step value to increment by [Optional]
+     * @param int $step Step value to increment by
      * @return int|bool
 	 * @uses    System::sanitize_id
 	 */
@@ -222,7 +220,7 @@ class Cache_Redis extends Cache
 	 * tracking.
 	 *
      * @param string $id ID of cache entry to decrement
-     * @param int $step Step value to decrement by [Optional]
+     * @param int $step Step value to decrement by
      * @return int|bool
 	 * @uses    System::sanitize_id
 	 */

@@ -89,8 +89,8 @@ class Text extends Kohana_Text
 	 *
 	 * @param  DOMDocument  $dom_document   The DOMDocument containing the $dom_element
 	 * @param  DOMElement   $dom_element    The element potentially containing a CDATA node
-     * @param string $comment_start String to use as a comment start marker to escape the CDATA declaration [Optional]
-     * @param string $comment_end String to use as a comment end marker to escape the CDATA declaration [Optional]
+     * @param string $comment_start String to use as a comment start marker to escape the CDATA declaration
+     * @param string $comment_end String to use as a comment end marker to escape the CDATA declaration
 	*/
     private static function escape_cdata_element(DOMDocument $dom_document, DOMElement $dom_element, string $comment_start = '//', string $comment_end = '')
 	{
@@ -124,9 +124,9 @@ class Text extends Kohana_Text
      * of content in a disallowed format.
      *
      * @param string $text The text to be filtered
-     * @param int|null $format_id The format ID of the text to be filtered. If no format is assigned, the fallback format will be used [Optional]
-     * @param string|null $langCode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented [Optional]
-     * @param bool $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to false when the output is already cached elsewhere to avoid duplicate cache lookups and storage [Optional]
+     * @param int|null $format_id The format ID of the text to be filtered. If no format is assigned, the fallback format will be used.
+     * @param string|null $langCode The language code of the text to be filtered, e.g. 'en' for English. This allows filters to be language aware so language specific text replacement can be implemented.
+     * @param bool $cache Boolean whether to cache the filtered output in the {cache_filter} table. The caller may set this to false when the output is already cached elsewhere to avoid duplicate cache lookups and storage.
      * @return  mixed
      * @throws Kohana_Exception
      * @uses    Config::load

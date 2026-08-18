@@ -49,7 +49,7 @@ class Model_Widget extends ORM
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation|null $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return  ORM
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception

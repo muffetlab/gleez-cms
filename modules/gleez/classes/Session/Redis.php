@@ -45,8 +45,8 @@ class Session_Redis extends Session
     /**
      * Class constructor
      *
-     * @param array|null $config Configuration [Optional]
-     * @param string|null $id Session id [Optional]
+     * @param array|null $config Configuration
+     * @param string|null $id Session ID
      * @throws Kohana_Exception
      * @throws Session_Exception
      */
@@ -98,7 +98,7 @@ class Session_Redis extends Session
     /**
      * Loads the raw session data string and returns it.
      *
-     * @param string|null $id Session id [Optional]
+     * @param string|null $id Session ID
      * @return  string
      * @throws Kohana_Exception
      */

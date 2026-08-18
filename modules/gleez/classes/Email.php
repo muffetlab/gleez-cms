@@ -27,7 +27,7 @@ class Email
     /**
      * Create a new email message
      *
-     * @param bool $exceptions PHPMailer should throw external exceptions? [Optional]
+     * @param bool $exceptions PHPMailer should throw external exceptions?
      * @return  Email
      * @throws Kohana_Exception
      * @throws \PHPMailer\PHPMailer\Exception
@@ -40,7 +40,7 @@ class Email
     /**
      * Class constructor
      *
-     * @param bool $exceptions PHPMailer should throw external exceptions? [Optional]
+     * @param bool $exceptions PHPMailer should throw external exceptions?
      * @throws \PHPMailer\PHPMailer\Exception|Kohana_Exception
      */
     public function __construct(bool $exceptions = true)
@@ -78,7 +78,7 @@ class Email
      * multiple times. Every email is required to have a "plain" message body.
      *
      * @param string $body New message body
-     * @param string|null $type Mime type: text/html, text/plain [Optional]
+     * @param string|null $type Mime type: text/html, text/plain
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
@@ -105,7 +105,7 @@ class Email
      * ~~~
      *
      * @param string $email Single email address
-     * @param string|null $name Full name [Optional]
+     * @param string|null $name Full name
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
@@ -120,7 +120,7 @@ class Email
      * Add a "carbon copy" email recipient
      *
      * @param string $email Email address
-     * @param string|null $name Full name [Optional]
+     * @param string|null $name Full name
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
@@ -135,7 +135,7 @@ class Email
      * Add a "blind carbon copy" email recipient
      *
      * @param string $email Email address
-     * @param string|null $name Full name [Optional]
+     * @param string|null $name Full name
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
@@ -150,7 +150,7 @@ class Email
      * Add email senders
      *
      * @param string $email Email address
-     * @param string|null $name Full name [Optional]
+     * @param string|null $name Full name
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */
@@ -165,7 +165,7 @@ class Email
      * Add "reply to" email sender
      *
      * @param string $email Email address
-     * @param string|null $name Full name [Optional]
+     * @param string|null $name Full name
      * @return  Email
      * @throws \PHPMailer\PHPMailer\Exception
      */

@@ -110,7 +110,7 @@ class Model_Term extends ORM_MPTT
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation|null $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return  ORM
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception

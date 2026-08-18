@@ -147,8 +147,8 @@ class ACL
      *  }
      * ~~~
      *
-     * @param bool $save Cache the current perms [Optional]
-     * @param bool $append Append, rather than replace, cached perms when loading [Optional]
+     * @param bool $save Cache the current perms
+     * @param bool $append Append, rather than replace, cached perms when loading
      * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
@@ -202,8 +202,8 @@ class ACL
      * ~~~
      *
      * @param string $perm_name Permission name
-     * @param Model_User|null $user User object [Optional]
-     * @param callable|null $callback A callable function that execute if it is defined [Optional]
+     * @param Model_User|null $user User object
+     * @param callable|null $callback A callable function that execute if it is defined
      * @param array $args The callback arguments
      * @throws Cache_Exception
      * @throws HTTP_Exception
@@ -238,8 +238,8 @@ class ACL
      * defined in `$route`
      *
      * @param string $perm_name Permission name
-     * @param null $route Route name [Optional]
-     * @param array $uri Additional route params [Optional]
+     * @param null $route Route name
+     * @param array $uri Additional route params
      * @throws HTTP_Exception
      * @throws Kohana_Exception
      * @throws ReflectionException
@@ -269,7 +269,7 @@ class ACL
      * If the user is not given, used currently active user
      *
      * @param string $perm_name Permission name
-     * @param Model_User|null $user User object [Optional]
+     * @param Model_User|null $user User object
      * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception

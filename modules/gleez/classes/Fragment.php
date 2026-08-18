@@ -52,7 +52,7 @@ class Fragment
 	 * ~~~
 	 *
      * @param string $name Fragment name
-     * @param bool|null $i18n Multilingual fragment support [Optional]
+     * @param bool|null $i18n Multilingual fragment support
 	 * @return  string
 	 * @uses    I18n::lang
 	 */
@@ -86,7 +86,7 @@ class Fragment
      * ~~~
      *
      * @param string $name Fragment name
-     * @param null $i18n Multilingual fragment support [Optional]
+     * @param null $i18n Multilingual fragment support
      * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
@@ -123,7 +123,7 @@ class Fragment
      * Fragment::setCache();
      * ~~~
      *
-     * @param null $lifetime Fragment cache lifetime [Optional]
+     * @param null $lifetime Fragment cache lifetime
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
@@ -158,7 +158,7 @@ class Fragment
      * ~~~
      *
      * @param string $name Fragment name
-     * @param null $i18n Multilingual fragment support [Optional]
+     * @param null $i18n Multilingual fragment support
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */

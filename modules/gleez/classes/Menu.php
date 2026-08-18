@@ -29,7 +29,7 @@ class Menu
     /**
      * Creates and returns a new menu object
      *
-     * @param array|null $items Array of list items (instead of using add() method) [Optional]
+     * @param array|null $items Array of list items (instead of using add() method)
      * @return Menu
      */
     public static function factory(array $items = null): Menu
@@ -40,7 +40,7 @@ class Menu
     /**
      * Constructor, globally sets $items array
      *
-     * @param array|null $items Array of list items (instead of using add() method) [Optional]
+     * @param array|null $items Array of list items (instead of using add() method)
      */
     public function __construct(array $items = null)
 	{
@@ -53,11 +53,11 @@ class Menu
      * @param string $id Unique id
      * @param string $title Title of link
      * @param string $url URL (address) of link
-     * @param string $descp Additional text of link [Optional]
-     * @param array|null $params Params of the item to handle logic [Optional]
-     * @param string|null $image Menu icon [Optional]
-     * @param string|null $parent_id Parent Id of the link [Optional]
-     * @param Menu|null $children Instance of class that contain children [Optional]
+     * @param string $descp Additional text of link
+     * @param array|null $params Params of the item to handle logic
+     * @param string|null $image Menu icon
+     * @param string|null $parent_id Parent Id of the link
+     * @param Menu|null $children Instance of class that contain children
      * @return Menu
      */
     public function add(string $id, string $title, string $url, string $descp = '', array $params = null, string $image = null, string $parent_id = null, Menu $children = null): Menu
@@ -83,7 +83,7 @@ class Menu
 	 * Remove an item from the menu
 	 *
      * @param string $target_id Id of link
-     * @param bool $parent_id Parent Id of link [Optional]
+     * @param bool $parent_id Parent Id of link
 	 * @return  Menu
 	 */
     public function remove(string $target_id, bool $parent_id = false): Menu
@@ -102,7 +102,7 @@ class Menu
 	 *
      * @param string $target_id Id of link item
      * @param string $title New Title for the item
-     * @param bool $parent_id Parent Id of link [Optional]
+     * @param bool $parent_id Parent Id of link
 	 * @return  Menu
 	 */
     public function set_title(string $target_id, string $title, bool $parent_id = false): Menu
@@ -121,7 +121,7 @@ class Menu
 	 *
      * @param string $target_id Id of link
      * @param string $url New url of the item
-     * @param bool $parent_id Parent Id of link [Optional]
+     * @param bool $parent_id Parent Id of link
 	 * @return  MENU
 	 */
     public function set_url(string $target_id, string $url, bool $parent_id = false): Menu
@@ -138,8 +138,8 @@ class Menu
     /**
      * Renders the HTML output for the menu
      *
-     * @param array|null $attributes Associative array of html attributes [Optional]
-     * @param array|null $items The parent item's array, only used internally [Optional]
+     * @param array|null $attributes Associative array of html attributes
+     * @param array|null $items The parent item's array, only used internally
      * @return  string  HTML unordered list
      * @throws Kohana_Exception
      */
@@ -390,7 +390,7 @@ class Menu
      * @param string $needle The name of the menu
 	 * @param   array    $array  The array of items
      * @param string $string The new value
-     * @param string $op The action title/url to change [Optional]
+     * @param string $op The action title/url to change
 	 *
 	 * @return  array
 	 */
@@ -421,10 +421,10 @@ class Menu
      * @param string $id The new id of menu
      * @param string $title The new title
      * @param string $url The new url
-     * @param string|bool $descp The additional text of url [Optional]
-     * @param array|null $params The new params [Optional]
-     * @param string|null $image The image or icon of url [Optional]
-     * @param Menu|null $children The new children [Optional]
+     * @param string|bool $descp The additional text of url
+     * @param array|null $params The new params
+     * @param string|null $image The image or icon of url
+     * @param Menu|null $children The new children
      * @return array
      */
     private static function add_child(string $needle, array $array, string $id, string $title, string $url, $descp = false, array $params = null, string $image = null, Menu $children = null): array

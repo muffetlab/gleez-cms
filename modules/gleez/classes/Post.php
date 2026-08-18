@@ -156,7 +156,7 @@ class Post extends ORM_Versioned
     /**
      * Constructs a new model and loads a record if given
      *
-     * @param mixed $id Parameter for find or object to load [Optional]
+     * @param mixed $id Parameter for find or object to load
      * @throws Kohana_Exception
      */
     public function __construct($id = null)
@@ -330,7 +330,7 @@ class Post extends ORM_Versioned
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation|null $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return  Post
      * @throws Cache_Exception
      * @throws Kohana_Exception
@@ -388,7 +388,7 @@ class Post extends ORM_Versioned
 	/**
 	 * Get teaser from the body either by delimiter or size
 	 *
-     * @param int $size Defaults to 105 words [Optional]
+     * @param int $size Defaults to 105 words
 	 * @return  string   Teaser
 	 * @uses    Text::limit_words
 	 */
@@ -622,8 +622,8 @@ class Post extends ORM_Versioned
 	/**
 	 * Bulk actions
 	 *
-     * @param bool $list true for dropdown for bulk actions [Optional]
-     * @param string $type Type of post [Optional]
+     * @param bool $list true for dropdown for bulk actions
+     * @param string $type Type of post
 	 * @return  mixed    States
 	 * @uses    Post::bulk_update
 	 * @uses    Post::bulk_convert
@@ -709,7 +709,7 @@ class Post extends ORM_Versioned
      *
      * @param array $ids Array of post id's
      * @param array $actions Array of post actions
-     * @param string $type Type of post [Optional]
+     * @param string $type Type of post
      * @throws Kohana_Exception
      */
     public static function bulk_update(array $ids, array $actions, string $type = 'post')
@@ -735,7 +735,7 @@ class Post extends ORM_Versioned
      * ~~~
      *
      * @param array $ids Array of post id's
-     * @param string $type Type of post [Optional]
+     * @param string $type Type of post
      * @throws Kohana_Exception
      */
     public static function bulk_delete(array $ids, string $type = 'post')
@@ -760,7 +760,7 @@ class Post extends ORM_Versioned
      *
      * @param array $ids Array of post id's
      * @param array $actions Array of post type (new type)
-     * @param string $type Type of post [Optional]
+     * @param string $type Type of post
      * @uses    Path::delete
      * @throws Kohana_Exception
      */
@@ -905,7 +905,7 @@ class Post extends ORM_Versioned
      *
      * Return false if articles not found
      *
-     * @param array $args Array of arguments. Overrides defaults [Optional]
+     * @param array $args Array of arguments. Overrides defaults
      * @return  mixed
      * @throws Cache_Exception
      * @throws Kohana_Exception

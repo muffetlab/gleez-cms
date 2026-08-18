@@ -274,8 +274,8 @@ class Gleez
 	/**
 	 * Gets current Gleez version
 	 *
-     * @param bool $with_v If set, return the version number with the prefix `v` [Optional]
-     * @param bool $full If set, return the full version with `Gleez CMS` prefix [Optional]
+     * @param bool $with_v If set, return the version number with the prefix `v`
+     * @param bool $full If set, return the full version with `Gleez CMS` prefix
 	 * @return  string   The version of Gleez
 	 */
     public static function getVersion(bool $with_v = true, bool $full = false): string

@@ -23,8 +23,8 @@ class JSON
 	 * @link    http://www.php.net/manual/en/json.constants.php JSON Predefined Constants
 	 *
 	 * @param   mixed    $value    The data to be encoded
-     * @param int $options Bitmask consisting of JSON Predefined Constants [Optional]
-     * @param int $depth PHP 5.5 or higher [Optional]
+     * @param int $options Bitmask consisting of JSON Predefined Constants
+     * @param int $depth PHP 5.5 or higher
 	 * @return  string
 	 */
     public static function encode($value, int $options = 0, int $depth = 512): string
@@ -52,9 +52,9 @@ class JSON
 	 * ~~~
 	 *
      * @param string $json The JSON string to be decoded
-     * @param bool $assoc When true, returned objects will be converted into associative arrays [Optional]
-     * @param int $depth User specified recursion depth [Optional]
-     * @param int $options Bitmask of JSON decode options. PHP 5.4 or higher [Optional]
+     * @param bool $assoc When true, returned objects will be converted into associative arrays
+     * @param int $depth User specified recursion depth
+     * @param int $options Bitmask of JSON decode options. PHP 5.4 or higher
 	 * @return  mixed
 	 * @throws Kohana_Exception
 	 */

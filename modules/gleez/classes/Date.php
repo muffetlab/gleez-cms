@@ -187,9 +187,8 @@ class Date extends Kohana_Date
 	/**
 	 * Return available date time formats
 	 *
-     * @param bool $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp
 	 * @return array
-	 *
 	 * @todo   Need add i18n ability
 	 */
     public static function date_time_formats(bool $timestamp = false): array
@@ -246,9 +245,8 @@ class Date extends Kohana_Date
 	/**
 	 * Return available date formats
 	 *
-     * @param bool $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp
 	 * @return array
-	 *
 	 * @todo   Need add i18n ability
 	 */
     public static function date_formats(bool $timestamp = false): array
@@ -294,9 +292,8 @@ class Date extends Kohana_Date
 	/**
 	 * Return available time formats
 	 *
-     * @param bool $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp
 	 * @return array
-	 *
 	 * @todo   Need add i18n ability
 	 */
     public static function time_formats(bool $timestamp = false): array
@@ -325,7 +322,7 @@ class Date extends Kohana_Date
      * Return a Unix timestamp in a user specified format including date and time.
      *
      * @param int $timestamp Unix timestamp
-     * @param string|null $format Timestamp format [Optional]
+     * @param string|null $format Timestamp format
      * @return string
      * @throws Exception
      * @uses   Config::get
@@ -339,7 +336,7 @@ class Date extends Kohana_Date
      * Return a Unix timestamp in a user specified format that's just the date.
      *
      * @param int $timestamp Unix timestamp
-     * @param string|null $format Timestamp format [Optional]
+     * @param string|null $format Timestamp format
      * @return string
      * @throws Exception
      * @uses   Config::get

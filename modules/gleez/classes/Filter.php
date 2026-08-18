@@ -121,8 +121,8 @@ class Filter
      *     Filter::cache(true);
      * }
      *
-     * @param bool $save Cache the current filters [Optional]
-     * @param bool $append Append, rather than replace, cached filters when loading [Optional]
+     * @param bool $save Cache the current filters
+     * @param bool $append Append, rather than replace, cached filters when loading
      * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception

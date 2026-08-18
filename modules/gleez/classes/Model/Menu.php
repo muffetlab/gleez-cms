@@ -156,7 +156,7 @@ class Model_Menu extends ORM_MPTT
      * - if `$location` is an int, the term will be the next sibling of term with id $location
      *
      * @param ORM_MPTT|int $parent The parent
-     * @param string|int $location The location [Optional]
+     * @param string|int $location The location
      * @return  Model_Menu
      * @throws  Kohana_Exception
      * @throws ReflectionException

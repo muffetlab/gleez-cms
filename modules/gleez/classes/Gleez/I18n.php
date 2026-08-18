@@ -516,7 +516,7 @@ if (!function_exists('__')) {
      * [!!] The target language is defined by [Gleez_I18n::$lang].
      *
      * @param string $string Text to translate
-     * @param array|null $values Values to replace in the translated text. [Optional]
+     * @param array|null $values Values to replace in the translated text.
      *     An associative array of replacements to make after translation.
      *     Incidences of any key in this array are replaced with the corresponding value.
      *     Based on the first character of the key, the value is escaped and/or themed:
@@ -526,7 +526,7 @@ if (!function_exists('__')) {
      *     - %variable: escape text and theme as a placeholder for user-submitted
      *     - ^variable: escape text and uppercase the first character of each word in a string
      *     - ~variable: escape text and make a string's first character uppercase
-     * @param string $lang Source language [Optional]
+     * @param string $lang Source language
      * @return string
      * @uses Gleez_I18n::get
      * @uses HTML::chars
@@ -577,8 +577,8 @@ if (!function_exists('__')) {
  * Displays the returned translated text from __()
  *
  * @param string $string Text to translate
- * @param array|null $values Values to replace in the translated text. [Optional]
- * @param string $lang Source language [Optional]
+ * @param array|null $values Values to replace in the translated text
+ * @param string $lang Source language
  */
 function _e(string $string, array $values = null, string $lang = 'en-us')
 {

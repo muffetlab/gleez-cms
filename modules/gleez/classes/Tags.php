@@ -71,8 +71,8 @@ class Tags
      *
      * @param string $tags The raw string form of the tag to delete. See above for notes.
      * @param Model $object The Model Object
-     * @param bool|int $user_id The User ID [Optional]
-     * @param bool $skip_updates Whether to skip the update portion for objects that haven't been tagged [Optional]
+     * @param bool|int $user_id The User ID
+     * @param bool $skip_updates Whether to skip the update portion for objects that haven't been tagged
      * @return bool Returns true if successful, false otherwise.
      * @throws Kohana_Exception
      * @throws ReflectionException
@@ -116,7 +116,7 @@ class Tags
      *
      * Private method to add tags to an object from an array.
      *
-     * @param int $user_id The User ID [Optional]
+     * @param int $user_id The User ID
      * @param Model $object The Model Object
      * @param array $tags Array of tags to be add
      * @return void

@@ -365,8 +365,8 @@ class Controller_Admin_Term extends Controller_Admin
 	 * right and level values for bulk update
 	 *
 	 * @param  array    $tree
-     * @param int $parent [Optional]
-	 * @param  array    $level [Optional]
+     * @param int $parent
+     * @param array $level
 	 * @todo Move to Model
      */
 	private function calculate_mptt($tree, $parent = 0, $level = 2)

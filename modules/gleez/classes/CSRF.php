@@ -19,9 +19,9 @@ class CSRF
     /**
      * Get CSRF token
      *
-     * @param string $id Custom token id, e.g. uid [Optional]
+     * @param string $id Custom token ID, e.g. uid
      * @param string $action Optional action
-     * @param int $time Used only internally [Optional]
+     * @param int $time Used only internally
      * @return  string
      * @throws Kohana_Exception
      */
@@ -39,9 +39,9 @@ class CSRF
     /**
      * Validate CSRF token
      *
-     * @param string|null $token Token [Optional]
-     * @param string $action Optional action [Optional]
-     * @param string $id Custom token id, e.g. uid [Optional]
+     * @param string|null $token Token
+     * @param string $action Optional action
+     * @param string $id Custom token ID, e.g. uid
      * @return bool
      * @throws Kohana_Exception
      */

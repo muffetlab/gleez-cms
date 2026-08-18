@@ -14,9 +14,9 @@ class URL extends Kohana_URL
      * Get the canonical URL
      *
      * @param mixed $url The request object or string URL
-     * @param object $pagination The pagination object [Optional]
-     * @param array|null $query The query string parameters [Optional]
-     * @param mixed $protocol The route protocol [Optional]
+     * @param object $pagination The pagination object
+     * @param array|null $query The query string parameters
+     * @param mixed $protocol The route protocol
      * @return  string
      * @throws Kohana_Exception
      * @uses    Request::uri

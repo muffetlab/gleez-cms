@@ -125,7 +125,7 @@ class HTMLFilter
      * Create new Core object and initialize our own settings
      *
      * @param string $text Text string to filter html
-     * @param array|null $filter Array of allowed tags [Optional]
+     * @param array|null $filter Array of allowed tags
      * @throws Kohana_Exception
      * @used   Config::load
      * @used   Config::get
@@ -194,7 +194,7 @@ class HTMLFilter
      * string if `$string` is not valid UTF-8.
      *
      * @param string $text Text string to filter html
-     * @param array|null $filter Array of allowed tags [Optional]
+     * @param array|null $filter Array of allowed tags
      * @return  HTMLFilter
      * @throws Kohana_Exception
      */

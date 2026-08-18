@@ -219,7 +219,7 @@ class Datatables
     /**
      * Set or get columns
      *
-     * @param array|null $columns Columns for setting [Optional]
+     * @param array|null $columns Columns for setting
      * @return array|Datatables
      */
     public function columns(array $columns = null)

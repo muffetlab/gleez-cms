@@ -699,7 +699,7 @@ abstract class Template extends Controller
      *    if ($this->valid_post('upload_photo')) { ... }
      * </code>
      *
-     * @param string|null $submit Submit value [Optional]
+     * @param string|null $submit Submit value
      * @return bool Return true if it's valid $_POST
      * @throws Kohana_Exception
      * @uses    Request::is_post
@@ -868,7 +868,7 @@ abstract class Template extends Controller
 	 * extra values to the JSON array.
 	 *
      * @param string $Key The name of the array key to add.
-     * @param mixed $Value The value to be added. If empty, nothing will be added [Optional]
+     * @param mixed $Value The value to be added. If empty, nothing will be added
 	 */
     public function SetJson(string $Key, $Value = '')
 	{
@@ -900,7 +900,7 @@ abstract class Template extends Controller
      *
      * It is just helper, which gets site name
      *
-     * @param mixed $default The return value if the site name isn't found [Optional]
+     * @param mixed $default The return value if the site name isn't found
      * @return  mixed
      * @throws Kohana_Exception
      * @since   1.2.0

@@ -25,7 +25,7 @@ class Model_Blog extends Post
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation|null $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return  Post
      * @throws Cache_Exception
      * @throws Kohana_Exception

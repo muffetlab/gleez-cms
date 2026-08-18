@@ -77,7 +77,7 @@ class Theme
     /**
      * Sets active theme if none supplied or uses the supplied one
      *
-     * @param bool|string $theme Theme name [Optional]
+     * @param bool|string $theme Theme name
      * @throws Kohana_Exception
      */
     public static function set_theme($theme = false)
@@ -102,7 +102,7 @@ class Theme
 	/**
 	 * Gets info about theme
 	 *
-     * @param bool|string $name Theme name [Optional]
+     * @param bool|string $name Theme name
      * @return object|null An object containing information about theme
 	 */
 	public static function getTheme($name = false)

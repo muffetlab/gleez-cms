@@ -33,7 +33,7 @@ class Format
      *   Format::$instance;
      * </code>
      *
-     * @param array $config Pass a configuration array to bypass the Kohana config [Optional]
+     * @param array $config Pass a configuration array to bypass the Kohana config
      * @return  Format  Format instance
      * @throws Kohana_Exception
      */

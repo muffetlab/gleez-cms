@@ -73,8 +73,8 @@ class System
 	 * to mkdir() must be specified.
 	 *
      * @param string $path The directory path
-     * @param int $mode Set permission mode (as in chmod) [Optional]
-     * @param bool $recursive Create directories recursively if necessary [Optional]
+     * @param int $mode Set permission mode (as in chmod)
+     * @param bool $recursive Create directories recursively if necessary
      * @return bool Returns true on success or false on failure
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
@@ -181,11 +181,10 @@ class System
 	 * This function is used throughout Gleez to allow for both string
 	 * or array to be merged into another array.
 	 *
-	 * @since  1.1.0
-	 *
 	 * @param   string|array  $args      Value to merge with `$defaults`
-	 * @param   array         $defaults  Array that serves as the defaults [Optional]
-	 * @return  array                    Merged user defined values with defaults
+     * @param array $defaults Array that serves as the defaults
+     * @return array Merged user defined values with defaults
+     * @since 1.1.0
 	 */
     public static function parse_args($args, array $defaults = []): array
     {
@@ -275,7 +274,7 @@ class System
 	/**
 	 * Get PHP version
 	 *
-     * @param bool $idOnly Return PHP version as an integer? [Optional]
+     * @param bool $idOnly Return PHP version as an integer?
 	 * @return string
      * @since   1.6.0
 	 */

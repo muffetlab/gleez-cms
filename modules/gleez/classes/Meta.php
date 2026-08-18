@@ -27,8 +27,8 @@ class Meta
      *
      * Gets or sets Meta Links
      *
-     * @param string|null $handle The link URL [Optional]
-     * @param array $attrs An associative array of link settings [Optional]
+     * @param string|null $handle The link URL
+     * @param array $attrs An associative array of link settings
      * @return array|string Setting returns asset array, getting returns asset HTML
      * @throws Kohana_Exception
      * @uses    URL::site
@@ -112,9 +112,9 @@ class Meta
 	 *
 	 * Gets or sets Meta Tags
 	 *
-     * @param string|null $handle The meta tag name [Optional]
-     * @param string|null $value The meta tag value [Optional]
-     * @param array $attrs An associative array of tag settings [Optional]
+     * @param string|null $handle The meta tag name
+     * @param string|null $value The meta tag value
+     * @param array $attrs An associative array of tag settings
      * @return array|string Setting returns asset array, getting returns asset HTML
 	 */
     public static function tags(string $handle = null, string $value = null, array $attrs = [])
