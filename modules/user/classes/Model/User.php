@@ -11,38 +11,6 @@
 class Model_User extends Gleez_Model
 {
 	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'pass' => ['type' => 'string'],
-        'mail' => ['type' => 'string'],
-        'homepage' => ['type' => 'string'],
-        'bio' => ['type' => 'string'],
-        'nick' => ['type' => 'string'],
-        'gender' => ['type' => 'int'],
-        'dob' => ['type' => 'int'],
-        'theme' => ['type' => 'string'],
-        'signature' => ['type' => 'string'],
-        'signature_format' => ['type' => 'int'],
-        'access' => ['type' => 'int'],
-        'logins' => ['type' => 'int'],
-        'created' => ['type' => 'int'],
-        'updated' => ['type' => 'int'],
-        'deleted' => ['type' => 'int'],
-        'login' => ['type' => 'int'],
-        'status' => ['type' => 'int'],
-        'timezone' => ['type' => 'string'],
-        'language' => ['type' => 'string'],
-        'picture' => ['type' => 'string'],
-        'init' => ['type' => 'string'],
-        'hash' => ['type' => 'string'],
-        'data' => ['type' => 'string'],
-    ];
-
-	/**
      * Autofill create column
 	 * @var array
 	 */

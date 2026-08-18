@@ -9,18 +9,6 @@
  */
 class Model_Tag extends Gleez_Model
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'type' => ['type' => 'string'],
-        'count' => ['type' => 'int'],
-        'deleted' => ['type' => 'int'],
-    ];
-
     /**
      * Soft-delete column configuration
      * @var array

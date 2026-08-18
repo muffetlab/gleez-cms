@@ -11,26 +11,6 @@
 class Model_Menu extends ORM_MPTT
 {
 	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'title' => ['type' => 'string'],
-        'name' => ['type' => 'string'],
-        'descp' => ['type' => 'string'],
-        'image' => ['type' => 'string'],
-        'url' => ['type' => 'string'],
-        'params' => ['type' => 'string'],
-        'active' => ['type' => 'int'],
-        'pid' => ['type' => 'int'],
-        'lft' => ['type' => 'int'],
-        'rgt' => ['type' => 'int'],
-        'lvl' => ['type' => 'int'],
-        'scp' => ['type' => 'int'],
-    ];
-
-	/**
 	 * Scope column name
 	 * @var string
 	 */

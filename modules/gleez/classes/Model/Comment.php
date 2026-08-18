@@ -11,30 +11,6 @@
 class Model_Comment extends Gleez_Model
 {
 	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'post_id' => ['type' => 'int'],
-        'pid' => ['type' => 'int'],
-        'author' => ['type' => 'int'],
-        'title' => ['type' => 'string'],
-        'body' => ['type' => 'string'],
-        'hostname' => ['type' => 'string'],
-        'created' => ['type' => 'int'],
-        'updated' => ['type' => 'int'],
-        'status' => ['type' => 'string'],
-        'type' => ['type' => 'string'],
-        'format' => ['type' => 'int'],
-        'thread' => ['type' => 'string'],
-        'guest_email' => ['type' => 'string'],
-        'guest_name' => ['type' => 'string'],
-        'guest_url' => ['type' => 'string'],
-        'karma' => ['type' => 'int'],
-    ];
-
-	/**
 	 * "Belongs to" relationships
 	 * @var array
 	 */

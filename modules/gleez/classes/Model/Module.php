@@ -9,18 +9,4 @@
  */
 class Model_Module extends ORM
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'type' => ['type' => 'string'],
-        'active' => ['type' => 'int'],
-        'weight' => ['type' => 'int'],
-        'version' => ['type' => 'string'],
-        'path' => ['type' => 'string']
-    ];
-
 }

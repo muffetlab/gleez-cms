@@ -9,22 +9,6 @@
  */
 class Model_Path extends Gleez_Model
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'source' => ['type' => 'string'],
-        'alias' => ['type' => 'string'],
-        'lang' => ['type' => 'string'],
-        'route_name' => ['type' => 'string'],
-        'route_directory' => ['type' => 'string'],
-        'route_controller' => ['type' => 'string'],
-        'route_action' => ['type' => 'string'],
-        'route_id' => ['type' => 'string'],
-    ];
-
  	/**
 	 * The language code used when no language is explicitly assigned.
 	 * Defined by ISO639-2 for "Undetermined".

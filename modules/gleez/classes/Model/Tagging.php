@@ -16,18 +16,6 @@ class Model_Tagging extends ORM
 	protected $_table_name = 'posts_tags';
 
 	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'post_id' => ['type' => 'int'],
-        'tag_id' => ['type' => 'int'],
-        'author' => ['type' => 'int'],
-        'type' => ['type' => 'string'],
-        'created' => ['type' => 'int'],
-    ];
-
-	/**
 	 * "Belongs to" relationships
 	 * @var array
 	 */

@@ -10,29 +10,6 @@
 class Model_Widget extends ORM
 {
 	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'title' => ['type' => 'string'],
-        'module' => ['type' => 'string'],
-        'theme' => ['type' => 'string'],
-        'status' => ['type' => 'int'],
-        'region' => ['type' => 'string'],
-        'weight' => ['type' => 'int'],
-        'cache' => ['type' => 'int'],
-        'visibility' => ['type' => 'int'],
-        'pages' => ['type' => 'string'],
-        'show_title' => ['type' => 'int'],
-        'roles' => ['type' => 'string'],
-        'body' => ['type' => 'string'],
-        'format' => ['type' => 'int'],
-        'icon' => ['type' => 'string'],
-    ];
-
-	/**
 	 * Rules for the post model
 	 *
 	 * @return  array  Rules

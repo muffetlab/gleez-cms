@@ -23,23 +23,6 @@ class Model_Message extends Gleez_Model
 	const DESC = 'DESC';
 
 	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'sender' => ['type' => 'int'],
-        'recipient' => ['type' => 'int'],
-        'subject' => ['type' => 'string'],
-        'body' => ['type' => 'string'],
-        'status' => ['type' => 'string'],
-        'format' => ['type' => 'int'],
-        'created' => ['type' => 'int'],
-        'sent' => ['type' => 'int'],
-        'lang' => ['type' => 'string'],
-    ];
-
-	/**
      * Autofill created column
 	 * @var array
 	 */

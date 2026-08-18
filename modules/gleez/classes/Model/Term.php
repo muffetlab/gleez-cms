@@ -10,24 +10,6 @@
  */
 class Model_Term extends ORM_MPTT
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'description' => ['type' => 'string'],
-        'image' => ['type' => 'string'],
-        'type' => ['type' => 'string'],
-        'pid' => ['type' => 'int'],
-        'lft' => ['type' => 'int'],
-        'rgt' => ['type' => 'int'],
-        'lvl' => ['type' => 'int'],
-        'scp' => ['type' => 'int'],
-        'deleted' => ['type' => 'int'],
-    ];
-
     /**
      * Soft-delete column configuration
      * @var array
