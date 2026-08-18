@@ -25,16 +25,16 @@
  */
 class ACL
 {
-	/** Rule type: deny */
+    /** @var bool Rule type: deny */
     const DENY = false;
 
-	/** Rule type: allow */
+    /** @var bool Rule type: allow */
     const ALLOW = true;
 
-	/** Rule type: deny */
+    /** @var int Rule type: deny */
 	const PERM_DENY = 2;
 
-	/** Rule type: allow */
+    /** @var int Rule type: allow */
 	const PERM_ALLOW = 1;
 
 	/**
