@@ -70,14 +70,6 @@ class HTMLFilter
         'tt', 'i', 'b', 'big', 'small',
         // http://www.w3.org/TR/html4/present/graphics.html#h-15.3
         'hr',
-        // http://www.w3.org/TR/html4/present/frames.html#h-16.2.1
-        'frameset',
-        // http://www.w3.org/TR/html4/present/frames.html#h-16.2.2
-        'frame',
-        // http://www.w3.org/TR/html4/present/frames.html#h-16.4.1
-        'noframes',
-        // http://www.w3.org/TR/html4/present/frames.html#h-16.5
-        'iframe',
     ];
 
 	/**
@@ -223,8 +215,8 @@ class HTMLFilter
 	 */
     public function filter_xss(string $string): string
     {
-		// Only operate on valid UTF-8 strings. This is necessary to prevent cross
-		// site scripting issues on Internet Explorer 6.
+        // Only operate on valid UTF-8 strings. Invalid byte sequences can be used to bypass downstream filtering via
+        // encoding tricks.
         if (!Valid::utf8($string)) {
 			return '';
 		}
