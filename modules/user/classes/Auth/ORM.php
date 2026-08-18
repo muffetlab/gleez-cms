@@ -51,7 +51,7 @@ class Auth_ORM extends Auth
     /**
      * Checks if a user logged in via an OAuth provider.
      *
-     * @param null $provider Provider name (e.g. 'twitter', 'google', etc.) [Optional]
+     * @param null $provider Provider name (e.g. 'twitter', 'google', etc.)
      * @return bool
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception

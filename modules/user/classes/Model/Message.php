@@ -154,8 +154,8 @@ class Model_Message extends Gleez_Model
      *
      * For message type constants see [PM] class
      *
-     * @param int $type Message type, eg. PM::INBOX, PM::OUTBOX, PM::DRAFTS [Optional]
-     * @param string $direction Sort mode of messages [Optional]
+     * @param int $type Message type, eg. PM::INBOX, PM::OUTBOX, PM::DRAFTS
+     * @param string $direction Sort mode of messages
      * @return Model_Message
      * @throws Kohana_Exception
      * @todo Cache
@@ -208,7 +208,7 @@ class Model_Message extends Gleez_Model
      * [!!] Note: The $direction may be 'asc' for ascending sort mode,
      *            or 'desc' for descending sort mode.
      *
-     * @param string $direction Sort mode of messages [Optional]
+     * @param string $direction Sort mode of messages
      * @return Model_Message
      * @throws Kohana_Exception
      */
@@ -228,7 +228,7 @@ class Model_Message extends Gleez_Model
      * [!!] Note: The $direction may be 'asc' for ascending sort mode,
      *            or 'desc' for descending sort mode.
      *
-     * @param string $direction Sort mode of messages [Optional]
+     * @param string $direction Sort mode of messages
      * @return Model_Message
      * @throws Kohana_Exception
      */
@@ -248,7 +248,7 @@ class Model_Message extends Gleez_Model
      * [!!] Note: The $direction may be 'asc' for ascending sort mode,
      *            or 'desc' for descending sort mode.
      *
-     * @param string $direction Sort mode of messages [Optional]
+     * @param string $direction Sort mode of messages
      * @return Model_Message
      * @throws Kohana_Exception
      */

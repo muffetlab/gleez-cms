@@ -279,9 +279,9 @@ class Gravatar
      * echo Gravatar::instance('username@site.com')->getImage();
      * ~~~
      *
-     * @param array $attrs Default attributes [Optional]
-     * @param mixed $protocol Protocol string, [Request], or boolean [Optional]
-     * @param bool $index Add index file to URL? [Optional]
+     * @param array $attrs Default attributes
+     * @param mixed $protocol Protocol string, [Request], or boolean
+     * @param bool $index Add index file to URL?
      * @return string
      * @throws Kohana_Exception
      * @uses Arr::merge
@@ -530,7 +530,7 @@ class Gravatar
 	/**
 	 * Forces gravatar to display default image
 	 *
-     * @param bool $force Force default? [Optional]
+     * @param bool $force Force default?
 	 * @return  Gravatar
      * @since   1.2.0
 	 */

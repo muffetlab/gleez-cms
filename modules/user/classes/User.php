@@ -357,9 +357,9 @@ class User
      * ~~~
      *
      * @param ORM $user User model
-     * @param array $attrs Default attributes + type = crop|ratio [Optional]
-     * @param mixed $protocol Protocol to pass to `URL::base()` [Optional]
-     * @param bool $index Include the index page [Optional]
+     * @param array $attrs Default attributes + type = crop|ratio
+     * @param mixed $protocol Protocol to pass to `URL::base()`
+     * @param bool $index Include the index page
      * @return string
      * @throws Kohana_Exception
      * @since 1.1.0
