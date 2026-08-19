@@ -506,8 +506,8 @@ class ORM_MPTT extends Gleez_Model
 		// Start the transaction
 		$this->_db->begin();
 		$this->reload();
-		 
-		// Catch any database or other exceptions and unlock
+
+        // Catch any database or other exceptions and roll back
         try {
             if (!$target instanceof $this) {
                 $target = self::factory($this->object_name(), [$this->primary_key() => $target]);
@@ -853,29 +853,6 @@ class ORM_MPTT extends Gleez_Model
             ->execute($this->_db);
 	}
 
-    /**
-     * Locks the current table.
-     *
-     * @return  void
-     * @throws Kohana_Exception
-     */
-	protected function lock()
-	{
-        $this->_db->query(
-            Database::UPDATE,
-            'LOCK TABLE ' . $this->_db->quote_table($this->_table_name) . ' WRITE',
-            true
-        );
-	}
-
-	/**
-	 * Unlocks the current table.
-	 */
-	protected function unlock()
-	{
-        $this->_db->query(Database::UPDATE, 'UNLOCK TABLES', true);
-	}
-
 	/**
 	 * Returns the value of the current nodes left column.
 	 *
@@ -998,7 +975,7 @@ class ORM_MPTT extends Gleez_Model
 		$target->{$target->left_column} = $left;
 		$target->{$target->right_column} = $right;
 		$target->save();
-		//$target->unlock();
+
 		// Commit the transaction
 		$this->_db->commit();
 
