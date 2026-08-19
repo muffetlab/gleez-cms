@@ -64,12 +64,10 @@
 
 .popup-backdrop.fade {
   opacity: 0;
-  filter: alpha(opacity=0);
 }
 
 .popup-backdrop.fade.in {
   opacity: 0.5;
-  filter: alpha(opacity=50);
 }
 
 .popup-header {
