@@ -212,8 +212,7 @@ class Text extends Kohana_Text
 	/**
 	 * Markdown filter. Allows content to be submitted using Markdown.
 	 *
-	 * @link http://michelf.ca/projects/php-markdown/
-	 * @link http://littoral.michelf.ca/code/php-markdown/php-markdown-extra-1.2.6.zip
+     * @link https://michelf.ca/projects/php-markdown/
 	 */
     public static function markdown($text): string
     {
