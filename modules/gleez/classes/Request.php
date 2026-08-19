@@ -40,10 +40,10 @@ class Request extends Kohana_Request
 	 */
     public static function is_mobile(): bool
     {
-		$devices = 'android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos';
+        $devices = 'android|blackberry|iphone|ipad|mini|mobi|palm|phone|tablet|webos';
 
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-			return (preg_match("/$devices/i", $_SERVER['HTTP_USER_AGENT']) > 0);
+            return preg_match("/$devices/i", $_SERVER['HTTP_USER_AGENT']) > 0;
 		}
 
         return false;
