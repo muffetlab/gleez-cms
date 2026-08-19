@@ -594,20 +594,11 @@ abstract class Template extends Controller
 
         if ($tags) {
             foreach ($tags as $handle => $value) {
-                $conditional = null;
-
                 if (is_array($value)) {
-					$conditional = Arr::get($value, 'conditional');
 					$value       = Arr::get($value, 'value', '');
 				}
 
-                $attrs = [];
-
-                if (isset($conditional)) {
-					$attrs['conditional'] = $conditional;
-				}
-
-				Meta::tags($handle, $value, $attrs);
+                Meta::tags($handle, $value);
 			}
 		}
 	}

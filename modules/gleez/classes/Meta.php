@@ -66,23 +66,8 @@ class Meta
 		}
 
 		$asset       = self::$links[$handle];
-		$attrs       = $asset['attrs'];
-		$output      = '';
-		$conditional = Arr::get($attrs, 'conditional');
 
-        if (!empty($conditional)) {
-			unset($attrs['conditional']);
-		}
-
-		$link = '<link'.HTML::attributes($attrs).'>';
-
-        if (empty($conditional)) {
-			$output .= $link;
-        } else {
-            $output .= "<!--[if $conditional]>$link<![endif]-->";
-		}
-
-		return $output;
+        return '<link' . HTML::attributes($asset['attrs']) . '>';
 	}
 
 	/**
@@ -114,27 +99,16 @@ class Meta
 	 *
      * @param string|null $handle The meta tag name
      * @param string|null $value The meta tag value
-     * @param array $attrs An associative array of tag settings
      * @return array|string Setting returns asset array, getting returns asset HTML
 	 */
-    public static function tags(string $handle = null, string $value = null, array $attrs = [])
+    public static function tags(string $handle = null, string $value = null)
 	{
-		// Return all meta links
+        // Return all meta tags
         if (is_null($handle)) {
 			return self::all_tags();
 		}
 
-        if (!is_array($attrs)) {
-            $attrs = [];
-		}
-
-		$name_type = isset($attrs['http_equiv']) ? 'http-equiv' : 'name';
-		$attrs[$name_type] = $handle;
-		$attrs['content'] = $value;
-
-        if ($handle == 'charset') {
-            $attrs = [];
-		}
+        $attrs = $handle === 'charset' ? [] : ['name' => $handle, 'content' => $value];
 
         return self::$tags[$handle] = ['handle' => $handle, 'value' => $value, 'attrs' => $attrs];
 	}
@@ -153,26 +127,12 @@ class Meta
 		}
 
 		$asset       = self::$tags[$handle];
-		$attrs       = $asset['attrs'];
-		$output      = '';
-		$conditional = Arr::get($attrs, 'conditional');
 
         if ($asset['handle'] == 'charset') {
 			return '<meta charset="'.$asset['value'].'">';
 		}
 
-        if (!empty($conditional)) {
-			unset($attrs['conditional']);
-		}
-
-		$meta = '<meta'.HTML::attributes($attrs).'>';
-        if (empty($conditional)) {
-			$output .= $meta;
-        } else {
-            $output .= "<!--[if $conditional]>$meta<![endif]-->";
-		}
-
-		return $output;
+        return '<meta' . HTML::attributes($asset['attrs']) . '>';
 	}
 
 	/**
