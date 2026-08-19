@@ -174,7 +174,7 @@ abstract class Template extends Controller
         'application/csv' => 'csv',
         'text/plain' => 'php',
         'text/javascript' => 'jsonp',
-        '*/*' => 'xhtml' //ie7 ie8
+        '*/*' => 'html'
     ];
 
 	/**
