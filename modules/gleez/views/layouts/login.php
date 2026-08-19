@@ -3,7 +3,6 @@
 <head>
 	<title><?php echo $head_title ?></title>
 	<?php echo Meta::tags(); ?>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<?php echo Meta::links(); ?>
 	<?php echo Assets::css(); ?>
 </head>

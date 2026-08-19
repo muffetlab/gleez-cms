@@ -2,7 +2,6 @@
 <html lang="<?php echo $lang; ?>">
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?php echo $title; ?> | Gleez CMS</title>
 	<?php
     foreach ($styles as $style => $media) {
