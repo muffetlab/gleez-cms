@@ -17,7 +17,6 @@
  * @version    1.0.1
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @copyright  (c) 2007-2012 Kohana Team
- * @license    https://gleezcms.org/license  Gleez CMS License
  * @license    http://kohanaframework.org/license
  *
  * @uses       Kohana::cache
@@ -26,13 +25,13 @@ class Fragment
 {
 	/**
 	 * Default number of seconds to cache for
-	 * @var integer
+     * @var int
 	 */
 	public static $lifetime = 30;
 
 	/**
 	 * Use multilingual fragment support?
-	 * @var boolean
+     * @var bool
 	 */
     public static $i18n = false;
 
@@ -53,10 +52,8 @@ class Fragment
 	 * ~~~
 	 *
      * @param string $name Fragment name
-     * @param boolean|null $i18n Multilingual fragment support [Optional]
-	 *
+     * @param bool|null $i18n Multilingual fragment support
 	 * @return  string
-	 *
 	 * @uses    I18n::lang
 	 */
     protected static function _cache_key(string $name, bool $i18n = null): string
@@ -81,16 +78,15 @@ class Fragment
      *
      * Example:
      * ~~~
-     * if ( ! Fragment::getCache('footer'))
-     * {
+     * if (!Fragment::getCache('footer')) {
      *     // Anything that is echoed here will be saved
      *     Fragment::setCache();
      * }
      * ~~~
      *
      * @param string $name Fragment name
-     * @param null $i18n Multilingual fragment support [Optional]
-     * @return  boolean
+     * @param null $i18n Multilingual fragment support
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses    Cache::get
@@ -126,7 +122,7 @@ class Fragment
      * Fragment::setCache();
      * ~~~
      *
-     * @param null $lifetime Fragment cache lifetime [Optional]
+     * @param null $lifetime Fragment cache lifetime
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
@@ -161,7 +157,7 @@ class Fragment
      * ~~~
      *
      * @param string $name Fragment name
-     * @param null $i18n Multilingual fragment support [Optional]
+     * @param null $i18n Multilingual fragment support
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */

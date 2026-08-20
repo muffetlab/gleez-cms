@@ -31,11 +31,11 @@
 					<table id="user-message-inbox" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["3", "desc"]]'>
 						<thead>
 							<tr>
-								<th width="5%" data-columns='{"orderable":false, "searchable":false}'> # </th>
-								<th width="15%" data-columns='{"searchable":false}'><?php _e('Sender'); ?></th>
-								<th width="60%"><?php _e('Message'); ?></th>
-								<th width="12%" data-columns='{"searchable":false}'><?php _e('Sent'); ?></th>
-								<th width="8%" data-columns='{"orderable":false, "searchable":false}'></th>
+                                <th data-columns='{"orderable":false, "searchable":false, "width":"5%"}'> #</th>
+                                <th data-columns='{"searchable":false, "width":"15%"}'><?php _e('Sender'); ?></th>
+                                <th data-columns='{"width":"60%"}'><?php _e('Message'); ?></th>
+                                <th data-columns='{"searchable":false, "width":"12%"}'><?php _e('Sent'); ?></th>
+                                <th data-columns='{"orderable":false, "searchable":false, "width":"8%"}'></th>
 							</tr>
 						</thead>
 						<tbody>

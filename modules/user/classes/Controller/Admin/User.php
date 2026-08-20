@@ -7,7 +7,6 @@
  * @author    Gleez Team
  * @version   1.0.5
  * @copyright (c) 2011-2014 Gleez Technologies
- * @license   https://gleezcms.org/license
  */
 class Controller_Admin_User extends Controller_Admin
 {

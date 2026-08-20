@@ -20,14 +20,13 @@
  * @author     Gleez Team
  * @version    1.2.1
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Upload extends Kohana_Upload
 {
 	/**
 	 * Get PHP upload_max_filesize
 	 *
-	 * @return  integer
+     * @return int
 	 */
 	public static function getUploadMaxFilesize()
 	{
@@ -41,14 +40,13 @@ class Upload extends Kohana_Upload
     /**
      * Picture validation for image upload
      *
-     * @param array $file $_FILES item
-     * @param string|null $upload_dir Relative upload dir [Optional]
-     *
      * Example:
      * ~~~
      * $filepath = Upload::uploadImage($_FILES);
      * ~~~
      *
+     * @param array $file $_FILES item
+     * @param string|null $upload_dir Relative upload directory
      * @return null|string Returns null when failed, otherwise file path
      * @throws Kohana_Exception
      * @since   1.2.0

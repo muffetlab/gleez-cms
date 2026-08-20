@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.0.1
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Controller_Comments extends Controller
 {
@@ -30,7 +29,7 @@ class Controller_Comments extends Controller
 
 	/**
 	 * Pagination per-page setting (based on group)
-	 * @var integer
+     * @var int
 	 */
 	protected $per_page = 10;
 

@@ -12,7 +12,6 @@
  * @author     Gleez Team
  * @version    1.1.2
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class HTMLFilter
 {
@@ -71,14 +70,6 @@ class HTMLFilter
         'tt', 'i', 'b', 'big', 'small',
         // http://www.w3.org/TR/html4/present/graphics.html#h-15.3
         'hr',
-        // http://www.w3.org/TR/html4/present/frames.html#h-16.2.1
-        'frameset',
-        // http://www.w3.org/TR/html4/present/frames.html#h-16.2.2
-        'frame',
-        // http://www.w3.org/TR/html4/present/frames.html#h-16.4.1
-        'noframes',
-        // http://www.w3.org/TR/html4/present/frames.html#h-16.5
-        'iframe',
     ];
 
 	/**
@@ -126,7 +117,7 @@ class HTMLFilter
      * Create new Core object and initialize our own settings
      *
      * @param string $text Text string to filter html
-     * @param array|null $filter Array of allowed tags [Optional]
+     * @param array|null $filter Array of allowed tags
      * @throws Kohana_Exception
      * @used   Config::load
      * @used   Config::get
@@ -195,7 +186,7 @@ class HTMLFilter
      * string if `$string` is not valid UTF-8.
      *
      * @param string $text Text string to filter html
-     * @param array|null $filter Array of allowed tags [Optional]
+     * @param array|null $filter Array of allowed tags
      * @return  HTMLFilter
      * @throws Kohana_Exception
      */
@@ -224,17 +215,14 @@ class HTMLFilter
 	 */
     public function filter_xss(string $string): string
     {
-		// Only operate on valid UTF-8 strings. This is necessary to prevent cross
-		// site scripting issues on Internet Explorer 6.
+        // Only operate on valid UTF-8 strings. Invalid byte sequences can be used to bypass downstream filtering via
+        // encoding tricks.
         if (!Valid::utf8($string)) {
 			return '';
 		}
 
         // Remove null characters (ignored by some browsers)
 		$string = str_replace(chr(0), '', $string);
-
-		// Remove Netscape 4 JS entities
-		$string = preg_replace('%&\s*\{[^}]*(\}\s*;?|$)%', '', $string);
 
 		// Defuse all HTML entities
 		$string = str_replace('&', '&amp;', $string);
@@ -249,7 +237,7 @@ class HTMLFilter
 		// Named entities
 		$string = preg_replace('/&amp;([A-Za-z][A-Za-z0-9]*;)/', '&\1', $string);
 
-        return preg_replace_callback('%<(?=[^a-zA-Z!/])|<!--.*?-->|<[^>]*(>|$)|>%', [$this, 'xss_split'], $string);
+        return preg_replace_callback('%(<(?=[^a-zA-Z!/])|<!--.*?-->|<[^>]*(>|$)|>)%', [$this, 'xss_split'], $string);
 	}
 
     protected function xss_split($m): string

@@ -7,38 +7,20 @@
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Message extends Gleez_Model
 {
 	/**
 	 * Sort mode of messages - ascending
-	 * @type string
+     * @var string
 	 */
 	const ASC = 'ASC';
 
 	/**
 	 * Sort mode of messages - descending
-	 * @type string
+     * @var string
 	 */
 	const DESC = 'DESC';
-
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'sender' => ['type' => 'int'],
-        'recipient' => ['type' => 'int'],
-        'subject' => ['type' => 'string'],
-        'body' => ['type' => 'string'],
-        'status' => ['type' => 'string'],
-        'format' => ['type' => 'int'],
-        'created' => ['type' => 'int'],
-        'sent' => ['type' => 'int'],
-        'lang' => ['type' => 'string'],
-    ];
 
 	/**
      * Autofill created column
@@ -155,8 +137,8 @@ class Model_Message extends Gleez_Model
      *
      * For message type constants see [PM] class
      *
-     * @param integer $type Message type, eg. PM::INBOX, PM::OUTBOX, PM::DRAFTS [Optional]
-     * @param string $direction Sort mode of messages [Optional]
+     * @param int $type Message type, eg. PM::INBOX, PM::OUTBOX, PM::DRAFTS
+     * @param string $direction Sort mode of messages
      * @return Model_Message
      * @throws Kohana_Exception
      * @todo Cache
@@ -209,7 +191,7 @@ class Model_Message extends Gleez_Model
      * [!!] Note: The $direction may be 'asc' for ascending sort mode,
      *            or 'desc' for descending sort mode.
      *
-     * @param string $direction Sort mode of messages [Optional]
+     * @param string $direction Sort mode of messages
      * @return Model_Message
      * @throws Kohana_Exception
      */
@@ -229,7 +211,7 @@ class Model_Message extends Gleez_Model
      * [!!] Note: The $direction may be 'asc' for ascending sort mode,
      *            or 'desc' for descending sort mode.
      *
-     * @param string $direction Sort mode of messages [Optional]
+     * @param string $direction Sort mode of messages
      * @return Model_Message
      * @throws Kohana_Exception
      */
@@ -249,7 +231,7 @@ class Model_Message extends Gleez_Model
      * [!!] Note: The $direction may be 'asc' for ascending sort mode,
      *            or 'desc' for descending sort mode.
      *
-     * @param string $direction Sort mode of messages [Optional]
+     * @param string $direction Sort mode of messages
      * @return Model_Message
      * @throws Kohana_Exception
      */

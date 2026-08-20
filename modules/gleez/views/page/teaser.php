@@ -33,7 +33,7 @@
 			</span>
 		</div>
 	<?php endif;?>
-	<div class="post-postarea">
+    <div class="post-post-area">
         <?php echo HTML::anchor($post->url, __('Read More'), ['title' => __('Read more about :title', [':title' => $post->title]), 'class' => 'read-more btn btn-default btn-xs', 'itemprop' => 'url']); ?>
-	</div>
+    </div>
 </section>

@@ -1,0 +1,11 @@
+Font Awesome Free 7.2.0
+Copyright (c) Fonticons, Inc.
+
+Font Awesome Free is free, open source, and GPL friendly. You can use it for
+commercial projects, open source projects, or really almost whatever you want.
+
+- Icons: CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/
+- Fonts: SIL OFL 1.1 — see OFL1.1.txt in this directory
+- Code: MIT License — https://opensource.org/licenses/MIT
+
+Full license details: https://fontawesome.com/license/free

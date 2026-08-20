@@ -7,22 +7,21 @@
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class CSRF
 {
 	/**
 	 * Token time to live in seconds, 30 minutes
-	 * @var integer
+     * @var int
 	 */
 	public static $csrf_ttl = 1800;
 
     /**
      * Get CSRF token
      *
-     * @param string $id Custom token id, e.g. uid [Optional]
+     * @param string $id Custom token ID, e.g. uid
      * @param string $action Optional action
-     * @param integer $time Used only internally [Optional]
+     * @param int $time Used only internally
      * @return  string
      * @throws Kohana_Exception
      */
@@ -40,10 +39,10 @@ class CSRF
     /**
      * Validate CSRF token
      *
-     * @param string|null $token Token [Optional]
-     * @param string $action Optional action [Optional]
-     * @param string $id Custom token id, e.g. uid [Optional]
-     * @return  boolean
+     * @param string|null $token Token
+     * @param string $action Optional action
+     * @param string $id Custom token ID, e.g. uid
+     * @return bool
      * @throws Kohana_Exception
      */
     public static function valid(string $token = null, string $action = '', string $id = ''): bool

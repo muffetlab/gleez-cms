@@ -20,26 +20,25 @@
  * @version    2.2.0
  * @author     Gleez Team
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  *
  * @todo       Implement their own exceptions (eg. ACL_Exception)
  */
 class ACL
 {
-	/** Rule type: deny */
+    /** @var bool Rule type: deny */
     const DENY = false;
 
-	/** Rule type: allow */
+    /** @var bool Rule type: allow */
     const ALLOW = true;
 
-	/** Rule type: deny */
+    /** @var int Rule type: deny */
 	const PERM_DENY = 2;
 
-	/** Rule type: allow */
+    /** @var int Rule type: allow */
 	const PERM_ALLOW = 1;
 
 	/**
-	 * @var boolean Indicates whether perms are cached
+     * @var bool Indicates whether perms are cached
 	 */
     public static $cache = false;
 
@@ -141,16 +140,15 @@ class ACL
      *
      * Example:
      * ~~~
-     *  if ( ! ACL::cache())
-     *  {
-     *    // Set perms here
-     *    ACL::cache(true);
-     *  }
+     * if (!ACL::cache()) {
+     *     // Set perms here
+     *     ACL::cache(true);
+     * }
      * ~~~
      *
-     * @param boolean $save Cache the current perms [Optional]
-     * @param boolean $append Append, rather than replace, cached perms when loading [Optional]
-     * @return  boolean
+     * @param bool $save Cache the current perms
+     * @param bool $append Append, rather than replace, cached perms when loading
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses    Cache::set
@@ -203,8 +201,8 @@ class ACL
      * ~~~
      *
      * @param string $perm_name Permission name
-     * @param Model_User|null $user User object [Optional]
-     * @param callable|null $callback A callable function that execute if it is defined [Optional]
+     * @param Model_User|null $user User object
+     * @param callable|null $callback A callable function that execute if it is defined
      * @param array $args The callback arguments
      * @throws Cache_Exception
      * @throws HTTP_Exception
@@ -239,8 +237,8 @@ class ACL
      * defined in `$route`
      *
      * @param string $perm_name Permission name
-     * @param null $route Route name [Optional]
-     * @param array $uri Additional route params [Optional]
+     * @param null $route Route name
+     * @param array $uri Additional route params
      * @throws HTTP_Exception
      * @throws Kohana_Exception
      * @throws ReflectionException
@@ -270,8 +268,8 @@ class ACL
      * If the user is not given, used currently active user
      *
      * @param string $perm_name Permission name
-     * @param Model_User|null $user User object [Optional]
-     * @return  boolean
+     * @param Model_User|null $user User object
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @throws ReflectionException
@@ -310,7 +308,7 @@ class ACL
      * be checked for only available roles.
      *
      * @param string $role Role name to look up
-     * @return  boolean
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      */
@@ -421,7 +419,7 @@ class ACL
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $post The post object
      * @param Model_User|null $user The user object to check permission, defaults to loaded in user
-     * @return  boolean
+     * @return bool
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
@@ -509,7 +507,7 @@ class ACL
      * @param string $action The action `view|edit|delete` default `view`
      * @param ORM $comment The comment object
      * @param Model_User|null $user The user object to check permission, defaults to loaded in user
-     * @return  boolean
+     * @return bool
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception
@@ -585,5 +583,68 @@ class ACL
 
         return true;
 	}
+
+    /**
+     * Make sure the user has permission to perform a certain action on an OAuth2 client.
+     *
+     * Similar to [ACL::post] but for OAuth2 clients; returns true/false instead of an exception when permission is
+     * denied (throws 404 if the client is not loaded).
+     *
+     * @param string $action The action `view|edit|delete|add|list`, defaults to `view`
+     * @param ORM $client The client object
+     * @param Model_User|null $user The user to check permission for; defaults to the active user
+     * @return bool
+     * @throws Cache_Exception
+     * @throws HTTP_Exception
+     * @throws Kohana_Exception
+     * @throws ReflectionException
+     * @uses User::active_user
+     * @uses Module::event
+     */
+    public static function client(string $action, ORM $client, Model_User $user = null): bool
+    {
+        if (!in_array($action, ['view', 'edit', 'delete', 'add', 'list'], true)) {
+            Kohana::$log->add(Log::NOTICE, 'Unauthorized attempt to access non-existent action :act.', [
+                ':act' => $action
+            ]);
+
+            return false;
+        }
+
+        if (!$client->loaded()) {
+            throw HTTP_Exception::factory(404, 'Attempt to access non-existent client.');
+        }
+
+        if (is_null($user)) {
+            $user = User::active_user();
+        }
+
+        if (self::check('administer oauth2', $user)) {
+            return true;
+        }
+
+        Module::event('oauth2_client_access', $action, $client);
+
+        $is_owner = (int) $client->user_id === (int) $user->id && $user->id != User::GUEST_ID;
+
+        $allowed = true;
+
+        switch ($action) {
+            case 'view':
+            case 'list':
+                $allowed = self::check('access oauth2 client', $user) || $is_owner;
+                break;
+            case 'edit':
+                $allowed = self::check('edit oauth2 client', $user)
+                    || (self::check('edit own oauth2 client', $user) && $is_owner);
+                break;
+            case 'delete':
+                $allowed = self::check('delete oauth2 client', $user)
+                    || (self::check('delete own oauth2 client', $user) && $is_owner);
+                break;
+        }
+
+        return $allowed;
+    }
 
 }

@@ -1,0 +1,44 @@
+{
+    "name": "gleez-cms",
+    "version": "1.3.0",
+    "description": "A user-friendly website Content Management System",
+    "keywords": [
+        "cms",
+        "gleez",
+        "kohana",
+        "php"
+    ],
+    "homepage": "https://gleez.muffetlab.com",
+    "bugs": {
+        "url": "https://github.com/muffetlab/gleez-cms/issues"
+    },
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Loong Yeung",
+            "email": "loong2460@gmail.com"
+        },
+        {
+            "name": "Sandeep Sangamreddi",
+            "email": "info@gleeztech.com"
+        },
+        {
+            "name": "Serghei Iakovlev",
+            "email": "sadhooklay@gmail.com"
+        },
+        {
+            "name": "Gleez Community"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/muffetlab/gleez-cms.git"
+    },
+    "scripts": {
+        "release": "commit-and-tag-version"
+    },
+    "devDependencies": {
+        "commit-and-tag-version": "^13.1.2"
+    },
+    "private": true
+}

@@ -2,7 +2,6 @@
 ;
 ; Author:     Gleez Team
 ; Copyright:  (c) 2011-2013 Gleez Technologies
-; License:    http://gleezcms.org/license
 ;
 ; This file format fully consistent with the ini-file
 ; Empty strings and strings beginning with ; symbols ignored
@@ -16,12 +15,11 @@ name           = "cerber"
 title          = "Cerber Theme"
 description    = "New responsive cool theme for Gleez CMS with left & right sidebar"
 version        = 1.0.0
-license        = http://gleezcms.org/license
+license        = MIT
 themeURL       = https://github.com/sergeyklay/gleez-cerber
 depends        = gleez
-optonalDepends = slider,block
 author         = "Gleez Team"
-authorURL      = http://www.gleeztech.com/
+authorURL      = https://gleez.tech/
 site           = 1
 admin          = 1
 

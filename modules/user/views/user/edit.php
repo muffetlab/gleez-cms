@@ -7,7 +7,7 @@
 		<?php include Kohana::find_file('views', 'errors/partial'); ?>
         <?php echo Form::open($action, ['class' => 'form form-horizontal']); ?>
 		<div class="stacked-content">
-			<div class="tab-pane fade in active" id="profile-tab">
+            <div class="tab-pane fade in active">
 				<div class="panel panel-default window-shadow">
 					<div class="panel-body">
 						<div class="form-group <?php echo isset($errors['nick']) ? 'has-error': ''; ?>">
@@ -129,7 +129,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+            </div>
 		</div>
 		<?php echo Form::close() ?>
 	</div>

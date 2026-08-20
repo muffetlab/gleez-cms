@@ -10,6 +10,7 @@
 <hr>
 <p>
 	<?php echo __('Best Regards'); ?>,<br>
-	<?php echo $config->get('site_url', 'www.gleezcms.org'); ?><br>
+    <?php echo $config->get('site_url'); ?>
+    <br>
 	<?php echo Template::getSiteName() ?>
 </p>

@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Format
 {
@@ -20,7 +19,7 @@ class Format
 	/** @var array Formats set */
     public static $formats = null;
 
-	/** @var integer Fallback format */
+    /** @var int Fallback format */
 	public static $fallback_format;
 
 	/** @var array Format configuration */
@@ -34,7 +33,7 @@ class Format
      *   Format::$instance;
      * </code>
      *
-     * @param array $config Pass a configuration array to bypass the Kohana config [Optional]
+     * @param array $config Pass a configuration array to bypass the Kohana config
      * @return  Format  Format instance
      * @throws Kohana_Exception
      */
@@ -134,7 +133,7 @@ class Format
 	 *   $formats = Format::instance()->get(1);
 	 * </code>
 	 *
-     * @param integer $id Format ID
+     * @param int $id Format ID
 	 * @param   mixed    $default Default value
 	 * @return  mixed
 	 * @uses    Arr::get
@@ -152,7 +151,7 @@ class Format
 	 *   $total = Format::instance()->count_all();
 	 * </code>
 	 *
-	 * @return  integer
+     * @return int
 	 */
     public function count_all(): int
     {

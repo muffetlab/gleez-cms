@@ -15,7 +15,7 @@
 class Controller_Captcha extends Controller
 {
 	/**
-	 * @var boolean Auto render template
+     * @var bool Auto render template
 	 **/
     public $auto_render = false;
 

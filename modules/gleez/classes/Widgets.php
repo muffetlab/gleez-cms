@@ -9,7 +9,6 @@
  * @author     Gleez Team
  * @version    1.1.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license
  */
 class Widgets
 {
@@ -58,8 +57,8 @@ class Widgets
     /**
      * Singleton pattern
      *
-     * @param string $region Region. By default `right`. [Optional]
-     * @param string $format Format. By default `html`. [Optional]
+     * @param string $region Region. By default `right`.
+     * @param string $format Format. By default `html`.
      * @return Widgets instance
      * @throws Cache_Exception
      * @throws Kohana_Exception
@@ -159,8 +158,8 @@ class Widgets
      * $widget = $region->remove(false, 'login');
 	 * ~~~
 	 *
-     * @param string|null $region Region name [Optional]
-     * @param string|null $widget Widget name [Optional]
+     * @param string|null $region Region name
+     * @param string|null $widget Widget name
 	 */
     public function remove(string $region = null, string $widget = null)
 	{
@@ -186,7 +185,7 @@ class Widgets
 	 * $widget = $region->region('right');
 	 * ~~~
 	 *
-     * @param string|null $region Region name [Optional]
+     * @param string|null $region Region name
 	 * @return  $this|string
 	 */
     public function region(string $region = null)
@@ -209,7 +208,7 @@ class Widgets
 	 * $widget = $region->format('html');
 	 * ~~~
 	 *
-     * @param string|null $format Format name [Optional]
+     * @param string|null $format Format name
 	 * @return  $this|string
 	 */
     public function format(string $format = null)
@@ -240,8 +239,8 @@ class Widgets
     /**
      * Renders the HTML output for the widgets
      *
-     * @param string|null $region Theme region [Optional]
-     * @param string|null $format Widget format [Optional]
+     * @param string|null $region Theme region
+     * @param string|null $format Widget format
      * @return  string  HTML widgets
      * @throws Kohana_Exception
      */
@@ -274,7 +273,7 @@ class Widgets
      * Returns the named widget
      *
      * @param string $name Name of the widget
-     * @param boolean $visible Visibility permission from widget or false to skip
+     * @param bool $visible Visibility permission from widget or false to skip
      * @param mixed $format The format of the output ex:xhtml, html or false for object
      * @return  object|string|null Widget object, HTML string, or null
      * @throws Kohana_Exception

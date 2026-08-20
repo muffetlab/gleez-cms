@@ -7,20 +7,9 @@
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license
  */
 class Model_User_Token extends ORM
 {
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'user_id' => ['type' => 'int'],
-        'user_agent' => ['type' => 'string'],
-        'token' => ['type' => 'string'],
-        'type' => ['type' => 'string', 'column_default' => null],
-        'created' => ['type' => 'int'],
-        'expires' => ['type' => 'int'],
-    ];
-
 	// Relationships
     protected $_belongs_to = ['user' => []];
 

@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="col-md-3 col-sm-6">
-		<div class="microwidget primary">
+        <div class="micro-widget primary">
 			<div class="visual">
                 <i class="fas fa-folder-open"></i>
 			</div>
@@ -13,10 +13,10 @@
                 <span class="value"><?php _e('Total: %sum', ['%sum' => $stats['categories']['total']]); ?></span>
 			</div>
             <?php echo HTML::anchor(Route::get('admin/taxonomy')->uri(['action' => 'list']), '<i class="fas fa-play-circle more"></i>') ?>
-		</div>
+        </div>
 	</div>
 	<div class="col-md-3 col-sm-6">
-		<div class="microwidget secondary">
+        <div class="micro-widget secondary">
 			<div class="visual">
                 <i class="fas fa-tags"></i>
 			</div>
@@ -25,10 +25,10 @@
                 <span class="value"><?php _e('Total: %sum', ['%sum' => $stats['tags']['total']]); ?></span>
 			</div>
             <?php echo HTML::anchor(Route::get('admin/tag')->uri(['action' => 'list']), '<i class="fas fa-play-circle more"></i>') ?>
-		</div>
+        </div>
 	</div>
 	<div class="col-md-3 col-sm-6">
-		<div class="microwidget tertiary">
+        <div class="micro-widget tertiary">
 			<div class="visual">
                 <i class="fas fa-file"></i>
 			</div>
@@ -37,10 +37,10 @@
                 <span class="value"><?php _e('Total: %sum', ['%sum' => $stats['articles']['total']]); ?></span>
 			</div>
             <?php echo HTML::anchor(Route::get('admin/page')->uri(['action' => 'list']), '<i class="fas fa-play-circle more"></i>') ?>
-		</div>
+        </div>
 	</div>
 	<div class="col-md-3 col-sm-6">
-		<div class="microwidget">
+        <div class="micro-widget">
 			<div class="visual">
                 <i class="fas fa-comments"></i>
 			</div>
@@ -49,6 +49,6 @@
                 <span class="value"><?php _e('Total: %sum', ['%sum' => $stats['comments']['total']]); ?></span>
 			</div>
             <?php echo HTML::anchor(Route::get('admin/comment')->uri(['action' => 'list']), '<i class="fas fa-play-circle more"></i>') ?>
-		</div>
+        </div>
 	</div>
 </div>

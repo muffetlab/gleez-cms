@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Controller_Token extends Controller
 {
@@ -16,10 +15,6 @@ class Controller_Token extends Controller
 	protected $clientAssertionType;
 	protected $scopeUtil;
 	protected $config;
-
-	private $client;
-	private $client_id;
-	private $clientData;
 
     /**
      * The before() method is called before controller action
@@ -125,6 +120,7 @@ class Controller_Token extends Controller
 		}
 
 		$grantType = $this->grantTypes[$grantTypeIdentifier];
+        $clientId = null;
 
 		/* Retrieve the client information from the request
 		 * ClientCredentials allow for grant types which also assert the client data

@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.1.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  *
  * @todo      [!!] This class does not do any permission checking
  */
@@ -96,7 +95,7 @@ class Module
 	 * Check to see if a module is installed
 	 *
      * @param string $name Module name
-	 * @return  boolean
+     * @return bool
 	 */
     public static function is_installed(string $name): bool
     {
@@ -107,7 +106,7 @@ class Module
 	 * Check to see if a module is active
 	 *
      * @param string $name Module name
-	 * @return  boolean
+     * @return bool
 	 */
     public static function is_active(string $name): bool
     {
@@ -148,8 +147,8 @@ class Module
                     $m->version = self::get_version($name) ?: $m->code_version;
 					$m->locked       = false;
                     $m->visible = !isset($m->visible) || $m->visible;
-					$m->author    	 = isset($m->author)    ? (string) $m->author 	 : 'Gleez Team';
-					$m->authorURL    = isset($m->authorURL) ? (string) $m->authorURL : 'https://gleezcms.org/';
+                    $m->author = isset($m->author) ? (string) $m->author : 'Muffet Lab';
+                    $m->authorURL = isset($m->authorURL) ? (string) $m->authorURL : 'https://muffetlab.com/';
 					$m->path 		 = realpath( dirname($file) ).DIRECTORY_SEPARATOR;
 
 					// Skip this module in list if the module is hidden
@@ -478,7 +477,7 @@ class Module
      *
      * This is called at bootstrap time
      *
-     * @param boolean $reset Reset true to clear the cache.
+     * @param bool $reset Reset true to clear the cache.
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses   Cache::get
@@ -546,7 +545,7 @@ class Module
 	 * Check to see if a module installed and active
 	 *
      * @param string $module_name Module name
-	 * @return boolean
+     * @return bool
 	 */
     public static function exists(string $module_name): bool
     {

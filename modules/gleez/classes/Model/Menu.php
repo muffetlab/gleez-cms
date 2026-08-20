@@ -7,30 +7,9 @@
  * @author     Sandeep Sangamreddi - Gleez
  * @version    1.1.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Menu extends ORM_MPTT
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'title' => ['type' => 'string'],
-        'name' => ['type' => 'string'],
-        'descp' => ['type' => 'string'],
-        'image' => ['type' => 'string'],
-        'url' => ['type' => 'string'],
-        'params' => ['type' => 'string'],
-        'active' => ['type' => 'int'],
-        'pid' => ['type' => 'int'],
-        'lft' => ['type' => 'int'],
-        'rgt' => ['type' => 'int'],
-        'lvl' => ['type' => 'int'],
-        'scp' => ['type' => 'int'],
-    ];
-
 	/**
 	 * Scope column name
 	 * @var string
@@ -156,8 +135,8 @@ class Model_Menu extends ORM_MPTT
      * - if `$location` is "first" or "last" the term will be the first or last child
      * - if `$location` is an int, the term will be the next sibling of term with id $location
      *
-     * @param ORM_MPTT|integer $parent The parent
-     * @param string|integer $location The location [Optional]
+     * @param ORM_MPTT|int $parent The parent
+     * @param string|int $location The location
      * @return  Model_Menu
      * @throws  Kohana_Exception
      * @throws ReflectionException
@@ -186,7 +165,7 @@ class Model_Menu extends ORM_MPTT
     /**
      * Move the item to $target based on action
      *
-     * @param   $target  integer  The target term id
+     * @param $target int The target term ID
      * @param   $action  string   The action to perform (before/after/first/last) after
      * @throws  Kohana_Exception
      * @throws ReflectionException

@@ -6,22 +6,9 @@
  * @package    Gleez\Tags
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Tag extends Gleez_Model
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'type' => ['type' => 'string'],
-        'count' => ['type' => 'int'],
-        'deleted' => ['type' => 'int'],
-    ];
-
     /**
      * Soft-delete column configuration
      * @var array
@@ -74,7 +61,7 @@ class Model_Tag extends Gleez_Model
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation|null $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return  ORM
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception

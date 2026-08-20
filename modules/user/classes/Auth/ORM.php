@@ -10,9 +10,8 @@
  * @author     Gleez Team
  * @version    1.1.2
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
-class Auth_ORM extends Kohana_Auth_ORM
+class Auth_ORM extends Auth
 {
     /**
      * Stores the last error key for failed login attempts.
@@ -52,8 +51,8 @@ class Auth_ORM extends Kohana_Auth_ORM
     /**
      * Checks if a user logged in via an OAuth provider.
      *
-     * @param null $provider Provider name (e.g. 'twitter', 'google', etc.) [Optional]
-     * @return boolean
+     * @param null $provider Provider name (e.g. 'twitter', 'google', etc.)
+     * @return bool
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException
@@ -150,8 +149,8 @@ class Auth_ORM extends Kohana_Auth_ORM
      * Forces a user to be logged in when using SSO, without specifying a password.
      *
      * @param ORM $user
-     * @param boolean $mark_session_as_forced
-     * @return boolean
+     * @param bool $mark_session_as_forced
+     * @return bool
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception
      * @throws ReflectionException

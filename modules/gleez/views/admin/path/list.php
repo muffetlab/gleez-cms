@@ -12,9 +12,9 @@
 	<table id="admin-list-paths" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["1", "desc"]]'>
 		<thead>
 		<tr>
-            <th style="width: 50%" class="sorting_desc"><?php echo __("URL Path"); ?></th>
-            <th style="width: 40%" class="sorting_desc"><?php echo __("Alias"); ?></th>
-            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
+            <th data-columns='{"width": "50%"}' class="sorting_desc"><?php echo __("URL Path"); ?></th>
+            <th data-columns='{"width": "40%"}' class="sorting_desc"><?php echo __("Alias"); ?></th>
+            <th data-columns='{"orderable":false, "searchable":false, "width":"10%"}'></th>
 		</tr>
 		</thead>
 		<tbody>

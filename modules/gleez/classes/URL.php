@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.1.1
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class URL extends Kohana_URL
 {
@@ -15,9 +14,9 @@ class URL extends Kohana_URL
      * Get the canonical URL
      *
      * @param mixed $url The request object or string URL
-     * @param object $pagination The pagination object [Optional]
-     * @param array|null $query The query string parameters [Optional]
-     * @param mixed $protocol The route protocol [Optional]
+     * @param object $pagination The pagination object
+     * @param array|null $query The query string parameters
+     * @param mixed $protocol The route protocol
      * @return  string
      * @throws Kohana_Exception
      * @uses    Request::uri
@@ -39,7 +38,7 @@ class URL extends Kohana_URL
 	 * Test whether a URL is absolute
 	 *
      * @param string $url The URL to test
-	 * @return  boolean
+     * @return bool
 	 */
     public static function is_absolute(string $url): bool
     {
@@ -50,7 +49,7 @@ class URL extends Kohana_URL
      * Test whether a URL is remote
      *
      * @param string $url The URL to test
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      * @since   1.0.1  Better handling
      * @since   1.0.0  Initial functional
@@ -104,8 +103,8 @@ class URL extends Kohana_URL
      * Determine current url
      *
      * @param mixed $protocol
-     * @param boolean $index
-     * @param boolean $with_query_params
+     * @param bool $index
+     * @param bool $with_query_params
      * @return  string
      * @throws Kohana_Exception
      */
@@ -125,10 +124,10 @@ class URL extends Kohana_URL
 	}
 
     /**
-     * Determine if current url is active
+     * Determine if current URL is active.
      *
      * @param string $url
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      */
     public static function is_active(string $url): bool

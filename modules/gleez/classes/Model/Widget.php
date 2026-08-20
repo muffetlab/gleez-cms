@@ -6,33 +6,9 @@
  * @package    Gleez\ORM\Widget
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Widget extends ORM
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'title' => ['type' => 'string'],
-        'module' => ['type' => 'string'],
-        'theme' => ['type' => 'string'],
-        'status' => ['type' => 'int'],
-        'region' => ['type' => 'string'],
-        'weight' => ['type' => 'int'],
-        'cache' => ['type' => 'int'],
-        'visibility' => ['type' => 'int'],
-        'pages' => ['type' => 'string'],
-        'show_title' => ['type' => 'int'],
-        'roles' => ['type' => 'string'],
-        'body' => ['type' => 'string'],
-        'format' => ['type' => 'int'],
-        'icon' => ['type' => 'string'],
-    ];
-
 	/**
 	 * Rules for the post model
 	 *
@@ -50,7 +26,7 @@ class Model_Widget extends ORM
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation|null $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return  ORM
      * @throws Kohana_Exception
      * @throws ORM_Validation_Exception

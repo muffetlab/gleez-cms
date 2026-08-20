@@ -83,10 +83,7 @@ In `application/bootstrap.php`
     'base_url' => 'https://example.com/subfolder/',
 ```
 
-Please use full absolute url in base_url when running in subfolder is mandatory.
-
-
-Please use full absolute url in base_url when running in subfolder is mandatory.
+Please use full absolute URL in base_url when running in subfolder is mandatory.
 If you put Gleez in a subfolder, the links on all your pages will probably be broken, especially if you move a site that is already made. You could probably fix it by adding a [<base\>](http://w3schools.com/tags/tag_base.asp) tag.
 
 ## Setting up a production environment

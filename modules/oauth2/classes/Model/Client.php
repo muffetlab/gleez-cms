@@ -4,21 +4,6 @@ class Model_Client extends Gleez_Model
 {
     protected $_table_name = 'oauth_clients';
 
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'title' => ['type' => 'string'],
-        'user_id' => ['type' => 'int'],
-        'client_id' => ['type' => 'string'],
-        'client_secret' => ['type' => 'string'],
-        'redirect_uri' => ['type' => 'string'],
-        'grant_types' => ['type' => 'string'],
-        'description' => ['type' => 'string'],
-        'logo' => ['type' => 'string'],
-        'status' => ['type' => 'int'],
-        'created' => ['type' => 'int'],
-        'updated' => ['type' => 'int'],
-    ];
-
 	/**
      * Autofill create and update columns
 	 */

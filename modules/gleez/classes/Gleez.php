@@ -7,31 +7,30 @@
  * @author     Gleez Team
  * @version    1.3.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Gleez
 {
 	/**
 	 * Release version
-	 * @type string
+     * @var string
 	 */
 	const VERSION = '1.3.0';
 
 	/**
 	 * Minimal required version of php
-	 * @type string
+     * @var string
 	 */
     const PHP_MIN_REQ = '7.1.0';
 
 	/**
 	 * Default message for maintenance mode
-	 * @type string
+     * @var string
 	 */
 	const MAINTENANCE_MESSAGE = 'This site is down for maintenance';
 
 	/**
 	 * Gleez installed?
-	 * @var boolean
+     * @var bool
 	 */
     public static $installed = false;
 
@@ -46,20 +45,20 @@ class Gleez
 
 	/**
 	 * Has [Gleez::ready] been called?
-	 * @var boolean
+     * @var bool
 	 */
     protected static $_init = false;
 
 	/**
 	 * Set the X-Powered-By header?
-	 * @var  boolean
+     * @var bool
 	 */
     public static $expose = false;
 
 	/**
 	 * Whether to enable [profiling](gleez/profiling)
 	 * @todo  May be set by [Gleez::init or Gleez::ready]
-	 * @var boolean
+     * @var bool
 	 */
     public static $profiling = true;
 
@@ -71,7 +70,7 @@ class Gleez
 
 	/**
      * True if Kohana is running on Windows
-	 * @var boolean
+     * @var bool
 	 */
 	public static $isWindows= false;
 
@@ -275,8 +274,8 @@ class Gleez
 	/**
 	 * Gets current Gleez version
 	 *
-     * @param boolean $with_v If set, return the version number with the prefix `v` [Optional]
-     * @param boolean $full If set, return the full version with `Gleez CMS` prefix [Optional]
+     * @param bool $with_v If set, return the version number with the prefix `v`
+     * @param bool $full If set, return the full version with `Gleez CMS` prefix
 	 * @return  string   The version of Gleez
 	 */
     public static function getVersion(bool $with_v = true, bool $full = false): string

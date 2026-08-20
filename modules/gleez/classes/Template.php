@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.5.0
  * @copyright  (c) 2011-2018 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 abstract class Template extends Controller
 {
@@ -20,13 +19,13 @@ abstract class Template extends Controller
 
 	/**
 	 * Auto render template?
-	 * @var boolean
+     * @var bool
 	 */
     public $auto_render = true;
 
 	/**
 	 * Turn debugging on?
-	 * @var boolean
+     * @var bool
 	 */
     public $debug = false;
 
@@ -68,7 +67,7 @@ abstract class Template extends Controller
 
 	/**
 	 * Turn bare template on?
-	 * @var boolean
+     * @var bool
 	 */
     public $bare = false;
 
@@ -80,13 +79,13 @@ abstract class Template extends Controller
 
 	/**
 	 * Is ajax request?
-	 * @var boolean
+     * @var bool
 	 */
     protected $_ajax = false;
 
 	/**
 	 * is internal request?
-	 * @var boolean
+     * @var bool
 	 */
     protected $_internal = false;
 
@@ -175,13 +174,13 @@ abstract class Template extends Controller
         'application/csv' => 'csv',
         'text/plain' => 'php',
         'text/javascript' => 'jsonp',
-        '*/*' => 'xhtml' //ie7 ie8
+        '*/*' => 'html'
     ];
 
 	/**
 	 * Enable sidebars for this request?
      * For example, adding or editing pages don't require sidebars.
-	 * @var boolean
+     * @var bool
 	 */
     protected $_sidebars = true;
 
@@ -206,7 +205,7 @@ abstract class Template extends Controller
 
 	/**
 	 * Allows overriding 'FormSaved' property to send with JSON.
-	 * @var boolean
+     * @var bool
 	 */
     protected $formSaved = false;
 
@@ -595,20 +594,11 @@ abstract class Template extends Controller
 
         if ($tags) {
             foreach ($tags as $handle => $value) {
-                $conditional = null;
-
                 if (is_array($value)) {
-					$conditional = Arr::get($value, 'conditional');
 					$value       = Arr::get($value, 'value', '');
 				}
 
-                $attrs = [];
-
-                if (isset($conditional)) {
-					$attrs['conditional'] = $conditional;
-				}
-
-				Meta::tags($handle, $value, $attrs);
+                Meta::tags($handle, $value);
 			}
 		}
 	}
@@ -700,8 +690,8 @@ abstract class Template extends Controller
      *    if ($this->valid_post('upload_photo')) { ... }
      * </code>
      *
-     * @param string|null $submit Submit value [Optional]
-     * @return boolean Return true if it's valid $_POST
+     * @param string|null $submit Submit value
+     * @return bool Return true if it's valid $_POST
      * @throws Kohana_Exception
      * @uses    Request::is_post
      * @uses    Request::post_max_size_exceeded
@@ -805,8 +795,7 @@ abstract class Template extends Controller
 	/**
 	 * Is frontpage?
 	 *
-	 * @return boolean
-	 *
+     * @return bool
 	 * @uses  Request::uri
 	 */
     public function is_frontpage(): bool
@@ -870,7 +859,7 @@ abstract class Template extends Controller
 	 * extra values to the JSON array.
 	 *
      * @param string $Key The name of the array key to add.
-     * @param mixed $Value The value to be added. If empty, nothing will be added [Optional]
+     * @param mixed $Value The value to be added. If empty, nothing will be added
 	 */
     public function SetJson(string $Key, $Value = '')
 	{
@@ -902,7 +891,7 @@ abstract class Template extends Controller
      *
      * It is just helper, which gets site name
      *
-     * @param mixed $default The return value if the site name isn't found [Optional]
+     * @param mixed $default The return value if the site name isn't found
      * @return  mixed
      * @throws Kohana_Exception
      * @since   1.2.0

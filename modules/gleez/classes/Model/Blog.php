@@ -6,7 +6,6 @@
  * @package    Gleez\ORM\Blog
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Blog extends Post
 {
@@ -26,7 +25,7 @@ class Model_Blog extends Post
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation|null $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return  Post
      * @throws Cache_Exception
      * @throws Kohana_Exception
@@ -98,7 +97,7 @@ class Model_Blog extends Post
     /**
      * Count the number of records in the table
      *
-     * @return  integer
+     * @return int
      * @throws Kohana_Exception
      */
     public function count_all(): int

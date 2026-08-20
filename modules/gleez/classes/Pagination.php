@@ -7,7 +7,6 @@
  * @version    1.0.1
  * @author     Gleez Team
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Pagination
 {
@@ -29,31 +28,31 @@ class Pagination
 
 	/**
 	 * Total item count
-	 * @var integer
+     * @var int
 	 */
 	protected $total_items;
 
 	/**
 	 * How many items to show per page
-	 * @var integer
+     * @var int
 	 */
 	protected $items_per_page;
 
 	/**
 	 * Total page count
-	 * @var integer
+     * @var int
 	 */
 	protected $total_pages;
 
 	/**
 	 * Item offset for the first item displayed on the current page
-	 * @var integer
+     * @var int
 	 */
 	protected $current_first_item;
 
 	/**
 	 * Item offset for the last item displayed on the current page
-	 * @var integer
+     * @var int
 	 */
 	protected $current_last_item;
 
@@ -83,7 +82,7 @@ class Pagination
 
 	/**
 	 * Query offset
-	 * @var integer
+     * @var int
 	 */
 	protected $offset;
 
@@ -114,8 +113,8 @@ class Pagination
     /**
      * Creates a new Pagination object
      *
-     * @param array $config Configuration [Optional]
-     * @param Request|null $request Request [Optional]
+     * @param array $config Configuration
+     * @param Request|null $request Request
      * @return  Pagination
      * @throws Kohana_Exception
      */
@@ -127,8 +126,8 @@ class Pagination
     /**
      * Class constructor
      *
-     * @param array $config Configuration [Optional]
-     * @param Request|null $request Request [Optional]
+     * @param array $config Configuration
+     * @param Request|null $request Request
      * @throws Kohana_Exception
      */
     public function __construct(array $config = [], Request $request = null)
@@ -163,7 +162,7 @@ class Pagination
      * One config group can refer to another as its parent, which will be
      * recursively loaded.
      *
-     * @param string $group Pagination config group [Optional]
+     * @param string $group Pagination config group
      * @return  array
      * @throws Kohana_Exception
      * @uses    Config::load
@@ -200,7 +199,7 @@ class Pagination
      * Allows you to update config settings after a Pagination object
      * has been constructed.
      *
-     * @param array $config Configuration [Optional]
+     * @param array $config Configuration
      * @return  object  Pagination
      * @throws Kohana_Exception
      */
@@ -262,7 +261,7 @@ class Pagination
     /**
      * Generates the full URL for a certain page
      *
-     * @param integer $page Page number [Optional
+     * @param int $page Page number [Optional
      * @return  string
      * @throws Kohana_Exception
      * @uses    URL::site
@@ -301,8 +300,8 @@ class Pagination
 	/**
 	 * Checks whether the given page number exists.
 	 *
-     * @param integer $page Page number
-	 * @return  boolean
+     * @param int $page Page number
+     * @return bool
 	 * @uses    Valid::digit
 	 */
     public function valid_page(int $page): bool
@@ -349,7 +348,7 @@ class Pagination
      *
      * [!!] Note: This doesn't change the initial Route
      *
-     * @param Request|null $request Request [Optional]
+     * @param Request|null $request Request
      * @return Request|Pagination Route if used as getter, chainable as setter
      */
     public function request(Request $request = null)
@@ -366,7 +365,7 @@ class Pagination
     /**
      * Route setter/getter
      *
-     * @param mixed $route String route name/ Route object [Optional]
+     * @param mixed $route String route name/ Route object
      * @return Route|Pagination Route if used as getter, chainable as setter
      * @throws Kohana_Exception
      * @uses    Route::get
@@ -389,7 +388,7 @@ class Pagination
     /**
      * Route parameters setter/getter
      *
-     * @param array|null $route_params Route parameters to set [Optional]
+     * @param array|null $route_params Route parameters to set
      * @return array|Pagination Route parameters if used as getter, chainable as setter
      */
     public function route_params(array $route_params = null)
@@ -406,7 +405,7 @@ class Pagination
 	/**
 	 * HMVC URI setter/getter
 	 *
-     * @param string|null $uri Route uri to set [Optional]
+     * @param string|null $uri Route uri to set
      * @return string|Pagination Route uri if used as getter, chainable as setter
 	 */
     public function uri(string $uri = null)
@@ -423,7 +422,7 @@ class Pagination
     /**
      * URL::query() replacement for Pagination use only
      *
-     * @param array|null $params Parameters to override [Optional]
+     * @param array|null $params Parameters to override
      * @return string
      */
     public function query(array $params = null): string

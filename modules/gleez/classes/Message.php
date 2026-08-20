@@ -8,7 +8,6 @@
  * @author     Gleez Team
  * @version    1.0.1
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license	   https://gleezcms.org/license  Gleez CMS License
  */
 class Message
 {
@@ -40,7 +39,7 @@ class Message
      *
      * @param string $type Message type (e.g. Message::SUCCESS)
      * @param array|string $message Array/String for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @return  void
      * @throws Kohana_Exception
      */
@@ -74,7 +73,7 @@ class Message
      * Sets an error message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function error($message, array $options = null)
@@ -86,7 +85,7 @@ class Message
      * Sets a ALERT message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function alert($message, array $options = null)
@@ -98,7 +97,7 @@ class Message
      * Sets a CRITICAL message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function critical($message, array $options = null)
@@ -110,7 +109,7 @@ class Message
      * Sets a notice.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function notice($message, array $options = null)
@@ -122,7 +121,7 @@ class Message
      * Sets a success message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function success($message, array $options = null)
@@ -134,7 +133,7 @@ class Message
      * Sets a warning message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function warn($message, array $options = null)
@@ -146,7 +145,7 @@ class Message
      * Sets an info message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function info($message, array $options = null)
@@ -158,7 +157,7 @@ class Message
      * Sets a ACCESS message.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function access($message, array $options = null)
@@ -170,7 +169,7 @@ class Message
      * Sets a debug message, not in production stage.
      *
      * @param mixed $message String/Array for the message(s)
-     * @param array|null $options Any options for the message [Optional]
+     * @param array|null $options Any options for the message
      * @throws Kohana_Exception
      */
     public static function debug($message, array $options = null)
@@ -183,9 +182,9 @@ class Message
     /**
      * The same as display - used to mold to Kohana standards
      *
-     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT)) [Optional]
-     * @param bool $delete Delete the messages? [Optional]
-     * @param mixed $view View filename or View object [Optional]
+     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
+     * @param bool $delete Delete the messages?
+     * @param mixed $view View filename or View object
      * @return    string    HTML for message
      * @throws Kohana_Exception
      * @throws View_Exception
@@ -213,7 +212,7 @@ class Message
      * ~~~
      *
      * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
-     * @param mixed $default Default value to return [Optional]
+     * @param mixed $default Default value to return
      * @param bool $delete Delete the messages?
      * @return mixed Returns messages array or null
      * @throws Kohana_Exception
@@ -298,9 +297,9 @@ class Message
     /**
      * Displays the message
      *
-     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT)) [Optional]
-     * @param bool $delete Delete the messages? [Optional]
-     * @param mixed $view View filename or View object [Optional]
+     * @param mixed $type Message type (e.g. Message::SUCCESS, array(Message::ERROR, Message::ALERT))
+     * @param bool $delete Delete the messages?
+     * @param mixed $view View filename or View object
      * @return   string   Message to string
      * @throws View_Exception|Kohana_Exception
      */
