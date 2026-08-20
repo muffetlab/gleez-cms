@@ -3,7 +3,6 @@
  * http://github.com/gleez/cms
  *
  * Copyright 2011-2013 Gleez Technologies
- * Gleez CMS License http://gleezcms.org/license
  * ============================================== */
 (function ($) {
 

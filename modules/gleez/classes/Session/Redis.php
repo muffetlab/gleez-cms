@@ -8,7 +8,6 @@
  * @author     Gleez Team
  * @version    1.1.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 
 class Session_Redis extends Session
@@ -46,8 +45,8 @@ class Session_Redis extends Session
     /**
      * Class constructor
      *
-     * @param array|null $config Configuration [Optional]
-     * @param string|null $id Session id [Optional]
+     * @param array|null $config Configuration
+     * @param string|null $id Session ID
      * @throws Kohana_Exception
      * @throws Session_Exception
      */
@@ -99,7 +98,7 @@ class Session_Redis extends Session
     /**
      * Loads the raw session data string and returns it.
      *
-     * @param string|null $id Session id [Optional]
+     * @param string|null $id Session ID
      * @return  string
      * @throws Kohana_Exception
      */
@@ -139,7 +138,7 @@ class Session_Redis extends Session
     /**
      * Writes the current session.
      *
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      */
 	protected function _write(): bool
@@ -156,7 +155,7 @@ class Session_Redis extends Session
 	/**
 	 * Destroys the current session.
 	 *
-	 * @return  boolean
+     * @return bool
 	 */
 	protected function _destroy(): bool
     {
@@ -177,7 +176,7 @@ class Session_Redis extends Session
 	/**
 	 * Restarts the current session.
 	 *
-	 * @return  boolean
+     * @return bool
 	 */
 	protected function _restart(): bool
     {

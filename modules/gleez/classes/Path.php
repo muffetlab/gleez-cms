@@ -7,13 +7,12 @@
  * @author     Gleez Team
  * @version    1.0.1
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Path
 {
 	/**
      * Default alias for the front page
-	 * @type string
+     * @var string
 	 */
 	const FRONT_ALIAS = '<front>';
 
@@ -109,7 +108,7 @@ class Path
 	 * Deletes path alias
 	 *
 	 * @param   mixed  $criteria  A number representing the pid or an array of criteria
-	 * @return  boolean
+     * @return  bool
 	 */
     public static function delete($criteria): bool
     {
@@ -234,7 +233,7 @@ class Path
      *
      * @param string $path The path to match
      * @param string $patterns String containing a set of patterns separated by \n, \r or \r\n.
-     * @return boolean Returns true if the path matches a pattern, false otherwise
+     * @return bool Returns true if the path matches a pattern, false otherwise
      * @throws Kohana_Exception
      */
     public static function match_path(string $path, string $patterns): bool

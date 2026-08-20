@@ -5,7 +5,7 @@
 </p>
 <p>
     <?php _e('The admin menu provides quick access to all of :cms_url\'s options and settings. Here are a few of the most used options to get you started.', [
-        ':cms_url' => HTML::anchor('https://gleezcms.org', 'Gleez CMS', ['target' => '_blank'])
+        ':cms_url' => HTML::anchor('https://gleez.muffetlab.com', 'Gleez CMS', ['target' => '_blank'])
     ]); ?>
 </p>
 

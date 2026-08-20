@@ -16,7 +16,7 @@
 		<tbody>
 		<?php foreach ($items as $item): ?>
 			<tr id="item-row-<?php echo $item['id'] ?>" class="draggable">
-				<td id="item-<?php echo $item['id'] ?>"  class="lid-<?php echo $item['lvl'] ?>">
+                <td id="item-<?php echo $item['id'] ?>" class="lid-<?php echo $item['lvl'] ?>">
 					<?php
 						$c = 2;
                     while ($c < $item['lvl']) {
@@ -25,7 +25,7 @@
 						}
 						echo HTML::chars($item['title'])
 					?>
-				</td>
+                </td>
 
 				<td>
                     <?php echo Form::checkbox('mlid:' . $item['id'] . '[hidden]', true, (bool) $item['active']); ?>

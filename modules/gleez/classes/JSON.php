@@ -8,7 +8,6 @@
  * @author     Igal Alkon <igal.alkon@gmail.com>
  * @version    1.2.2
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class JSON
 {
@@ -24,17 +23,13 @@ class JSON
 	 * @link    http://www.php.net/manual/en/json.constants.php JSON Predefined Constants
 	 *
 	 * @param   mixed    $value    The data to be encoded
-     * @param integer $options Bitmask consisting of JSON Predefined Constants [Optional]
-     * @param integer $depth PHP 5.5 or higher [Optional]
+     * @param int $options Bitmask consisting of JSON Predefined Constants
+     * @param int $depth PHP 5.5 or higher
 	 * @return  string
 	 */
     public static function encode($value, int $options = 0, int $depth = 512): string
     {
-        if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
-			$raw = json_encode($value, $options, $depth);
-        } else {
-			$raw = json_encode($value, $options);
-		}
+        $raw = json_encode($value, $options, $depth);
 
 		// json_encode() does not escape <, > and &, so we do it with str_replace().
         return str_replace(['<', '>', '&'], ['\u003c', '\u003e', '\u0026'], $raw);
@@ -53,19 +48,15 @@ class JSON
 	 * ~~~
 	 *
      * @param string $json The JSON string to be decoded
-     * @param boolean $assoc When true, returned objects will be converted into associative arrays [Optional]
-     * @param integer $depth User specified recursion depth [Optional]
-     * @param integer $options Bitmask of JSON decode options. PHP 5.4 or higher [Optional]
+     * @param bool $assoc When true, returned objects will be converted into associative arrays
+     * @param int $depth User specified recursion depth
+     * @param int $options Bitmask of JSON decode options. PHP 5.4 or higher
 	 * @return  mixed
 	 * @throws Kohana_Exception
 	 */
     public static function decode(string $json, bool $assoc = true, int $depth = 512, int $options = 0)
 	{
-        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
-			$result = json_decode($json, $assoc, $depth, $options);
-        } else {
-			$result = json_decode($json, $assoc, $depth);
-		}
+        $result = json_decode($json, $assoc, $depth, $options);
 
 		$error = '';
 

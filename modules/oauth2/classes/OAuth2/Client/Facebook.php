@@ -4,7 +4,6 @@
  * @package    Gleez\OAuth\Client\Facebook
  * @author     Gleez Team
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  *
  */
 class OAuth2_Client_Facebook extends OAuth2_Client

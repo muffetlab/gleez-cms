@@ -2,7 +2,7 @@
 
 Gleez is an open source, [extensible Content Management System](http://en.wikipedia.org/wiki/Content_management_system) that is built on the [Kohana Framework](https://kohana.top). Gleez is the fusion of many good concepts from the 4 most popular CMS: Joomla, Drupal, WordPress and Ruby Rails. With years of experience using these, we've gathered great ideas and in some cases, improved on them.
 
-[!!] Gleez CMS is licensed under a [Gleez CMS License](http://gleezcms.org/license), so you can legally use it for any kind of open source, commercial, or personal project.
+[!!] Gleez CMS is licensed under the [MIT License](LICENSE), so you can legally use it for any kind of open source, commercial, or personal project.
 
 But creating this CMS quickly would have been nearly impossible without its foundational framework - Kohana 3.
 

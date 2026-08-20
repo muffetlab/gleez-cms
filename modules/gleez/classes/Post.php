@@ -10,7 +10,6 @@
  * @author     Gleez Team
  * @version    1.2.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  *
  * @todo       This class does not do any permission checking
  */
@@ -27,13 +26,13 @@ class Post extends ORM_Versioned
 
 	/**
 	 * Special tag for stopping widgets setting
-	 * @type string
+     * @var string
 	 */
 	const NO_WIDGETS_TAG = '<!--nowidgets-->';
 
 	/**
 	 * Special tag for stopping teaser setting
-	 * @type string
+     * @var string
 	 */
 	const TEASER_TAG = '<!--break-->';
 
@@ -157,7 +156,7 @@ class Post extends ORM_Versioned
     /**
      * Constructs a new model and loads a record if given
      *
-     * @param mixed $id Parameter for find or object to load [Optional]
+     * @param mixed $id Parameter for find or object to load
      * @throws Kohana_Exception
      */
     public function __construct($id = null)
@@ -275,7 +274,7 @@ class Post extends ORM_Versioned
 	 * Make sure that the state is legal
 	 *
      * @param string $value Status name
-	 * @return  boolean
+     * @return bool
 	 * @uses    Post::status
 	 */
     public static function valid_state(string $value): bool
@@ -331,7 +330,7 @@ class Post extends ORM_Versioned
     /**
      * Updates or Creates the record depending on loaded()
      *
-     * @param Validation|null $validation Validation object [Optional]
+     * @param Validation|null $validation Validation object
      * @return  Post
      * @throws Cache_Exception
      * @throws Kohana_Exception
@@ -389,7 +388,7 @@ class Post extends ORM_Versioned
 	/**
 	 * Get teaser from the body either by delimiter or size
 	 *
-     * @param integer $size Defaults to 105 words [Optional]
+     * @param int $size Defaults to 105 words
 	 * @return  string   Teaser
 	 * @uses    Text::limit_words
 	 */
@@ -623,8 +622,8 @@ class Post extends ORM_Versioned
 	/**
 	 * Bulk actions
 	 *
-     * @param boolean $list true for dropdown for bulk actions [Optional]
-     * @param string $type Type of post [Optional]
+     * @param bool $list true for dropdown for bulk actions
+     * @param string $type Type of post
 	 * @return  mixed    States
 	 * @uses    Post::bulk_update
 	 * @uses    Post::bulk_convert
@@ -710,7 +709,7 @@ class Post extends ORM_Versioned
      *
      * @param array $ids Array of post id's
      * @param array $actions Array of post actions
-     * @param string $type Type of post [Optional]
+     * @param string $type Type of post
      * @throws Kohana_Exception
      */
     public static function bulk_update(array $ids, array $actions, string $type = 'post')
@@ -736,7 +735,7 @@ class Post extends ORM_Versioned
      * ~~~
      *
      * @param array $ids Array of post id's
-     * @param string $type Type of post [Optional]
+     * @param string $type Type of post
      * @throws Kohana_Exception
      */
     public static function bulk_delete(array $ids, string $type = 'post')
@@ -761,7 +760,7 @@ class Post extends ORM_Versioned
      *
      * @param array $ids Array of post id's
      * @param array $actions Array of post type (new type)
-     * @param string $type Type of post [Optional]
+     * @param string $type Type of post
      * @uses    Path::delete
      * @throws Kohana_Exception
      */
@@ -840,7 +839,7 @@ class Post extends ORM_Versioned
 		}
 
 		// Cut the doc in half, so the widgets don't go past the end of the article.
-        $pickMe = $poses[ceil(sizeof($poses) / 2) - 1];
+        $pickMe = $poses[ceil(count($poses) / 2) - 1];
 
 		$widgets     = Widgets::instance()->render($region);
         $replaceWith = $widgets ? '<div id="' . $region . '" class="clear-block">' . $widgets . '</div>' : null;
@@ -855,7 +854,7 @@ class Post extends ORM_Versioned
     /**
      * Dynamic per post cache for performance
      *
-     * @param integer $id The post id
+     * @param int $id The post ID
      * @param string $type The post type
      * @param object $config The post type config object
      * @return ORM $post The post object
@@ -906,7 +905,7 @@ class Post extends ORM_Versioned
      *
      * Return false if articles not found
      *
-     * @param array $args Array of arguments. Overrides defaults [Optional]
+     * @param array $args Array of arguments. Overrides defaults
      * @return  mixed
      * @throws Cache_Exception
      * @throws Kohana_Exception

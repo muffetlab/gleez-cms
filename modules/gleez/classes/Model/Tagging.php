@@ -6,7 +6,6 @@
  * @package    Gleez\ORM\Tagging
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Tagging extends ORM
 {
@@ -15,18 +14,6 @@ class Model_Tagging extends ORM
 	 * @var string
 	 */
 	protected $_table_name = 'posts_tags';
-
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'post_id' => ['type' => 'int'],
-        'tag_id' => ['type' => 'int'],
-        'author' => ['type' => 'int'],
-        'type' => ['type' => 'string'],
-        'created' => ['type' => 'int'],
-    ];
 
 	/**
 	 * "Belongs to" relationships

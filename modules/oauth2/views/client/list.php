@@ -8,11 +8,11 @@
                data-ajax="<?php echo $url ?>" data-order='[["3", "desc"]]'>
 		<thead>
 			<tr>
-                <th width="20%"><?php echo __('Title'); ?></th>
-                <th width="30%"><?php echo __('Client Id'); ?></th>
-                <th width="20%"><?php echo __('Created By'); ?></th>
-                <th width="20%" data-columns='{"searchable":false}'><?php echo __('Created On'); ?></th>
-				<th width="10%"  data-columns='{"orderable":false, "searchable":false}'></th>
+                <th data-columns='{"width":"20%"}'><?php echo __('Title'); ?></th>
+                <th data-columns='{"width":"30%"}'><?php echo __('Client Id'); ?></th>
+                <th data-columns='{"width":"20%"}'><?php echo __('Created By'); ?></th>
+                <th data-columns='{"searchable":false, "width":"20%"}'><?php echo __('Created On'); ?></th>
+                <th data-columns='{"orderable":false, "searchable":false, "width":"10%"}'></th>
 			</tr>
 		</thead>
 		<tbody>

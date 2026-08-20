@@ -11,7 +11,6 @@
  * @author     Gleez Team
  * @version    1.1.2
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Filter
 {
@@ -23,7 +22,7 @@ class Filter
 
 	/**
 	 * Indicates whether filters are cached
-	 * @var boolean
+     * @var bool
 	 */
     public static $cache = false;
 
@@ -116,15 +115,14 @@ class Filter
      *
      * Example:
      * ~~~
-     * if ( ! Filter::cache())
-     * {
+     * if (!Filter::cache()) {
      *     // Set filters here
      *     Filter::cache(true);
      * }
      *
-     * @param boolean $save Cache the current filters [Optional]
-     * @param boolean $append Append, rather than replace, cached filters when loading [Optional]
-     * @return  boolean
+     * @param bool $save Cache the current filters
+     * @param bool $append Append, rather than replace, cached filters when loading
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses    Cache::get

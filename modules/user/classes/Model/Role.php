@@ -7,22 +7,9 @@
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license
  */
 class Model_Role extends Gleez_Model
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'description' => ['type' => 'string'],
-        'special' => ['type' => 'int'],
-        'deleted' => ['type' => 'int'],
-    ];
-
     /**
      * Soft-delete column
      * @var array

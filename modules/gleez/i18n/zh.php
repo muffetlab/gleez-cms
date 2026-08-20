@@ -6,7 +6,6 @@
  * @package   Gleez\I18n
  * @author    dishuostec <dishuostec@gmail.com>
  * @copyright (c) 2011-2013 Gleez Technologies
- * @license   https://gleezcms.org/license Gleez CMS License
  */
 return [
     '(:count) Comments' => '（:count）评论',

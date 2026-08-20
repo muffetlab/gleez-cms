@@ -10,7 +10,6 @@
  * @author     Gleez Team
  * @version    1.1.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  *
  * @todo       This class does not do any permission checking
  */
@@ -24,7 +23,7 @@ class Theme
 
 	/**
 	 * Admin?
-	 * @var boolean
+     * @var bool
 	 */
     public static $is_admin = false;
 
@@ -78,7 +77,7 @@ class Theme
     /**
      * Sets active theme if none supplied or uses the supplied one
      *
-     * @param boolean|string $theme Theme name [Optional]
+     * @param bool|string $theme Theme name
      * @throws Kohana_Exception
      */
     public static function set_theme($theme = false)
@@ -103,7 +102,7 @@ class Theme
 	/**
 	 * Gets info about theme
 	 *
-	 * @param   boolean|string  $name  Theme name [Optional]
+     * @param bool|string $name Theme name
      * @return object|null An object containing information about theme
 	 */
 	public static function getTheme($name = false)
@@ -146,7 +145,7 @@ class Theme
     /**
      * Gets list of available themes
      *
-     * @param boolean $title returns only title if its true or full object
+     * @param bool $title Returns only title if its true or full object
      * @return  array  Available themes array
      * @throws Kohana_Exception
      */

@@ -14,11 +14,11 @@
 	<table id="admin-list-vocabs" class="table table-striped table-bordered table-highlight" data-toggle="datatable" data-ajax="<?php echo $url?>" data-order='[["0", "desc"]]'>
 		<thead>
 		<tr>
-            <th style="width: 60%" class="sorting_desc"><?php _e('Group name and description'); ?></th>
-            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
-            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
-            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
-            <th style="width: 10%" data-columns='{"orderable":false, "searchable":false}'></th>
+            <th data-columns='{"width": "60%"}' class="sorting_desc"><?php _e('Group name and description'); ?></th>
+            <th data-columns='{"orderable":false, "searchable":false, "width":"10%"}'></th>
+            <th data-columns='{"orderable":false, "searchable":false, "width":"10%"}'></th>
+            <th data-columns='{"orderable":false, "searchable":false, "width":"10%"}'></th>
+            <th data-columns='{"orderable":false, "searchable":false, "width":"10%"}'></th>
 		</tr>
 		</thead>
 		<tbody>

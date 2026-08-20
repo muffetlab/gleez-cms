@@ -14,7 +14,6 @@
  * @author     Sergey Yakovlev - Gleez
  * @version    1.0.1
  * @copyright  (c) 2011-2013 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  *
  * @link       http://msdn.microsoft.com/en-us/library/39cwe7zf.aspx MSDN: Language Strings
  * @link       http://msdn.microsoft.com/en-us/library/cdax410z.aspx MSDN: Country/Region Strings

@@ -2,7 +2,6 @@
 <html lang="<?php echo $lang; ?>">
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?php echo $title; ?> | Gleez CMS</title>
 	<?php
     foreach ($styles as $style => $media) {
@@ -36,9 +35,11 @@
 							</div>
 							<?php echo $content; ?>
 							<div class="progress progress-striped active">
-								<div style="width:<?php echo $_activity; ?>%" class="progress-bar progress-bar-info" role="progressbar"  aria-valuenow="<?php echo $_activity; ?>" aria-valuemin="0" aria-valuemax="100">
-									<span class="sr-only"><?php echo $_activity; ?>% Complete </span>
-								</div>
+                                <div style="width:<?php echo $_activity; ?>%" class="progress-bar progress-bar-info"
+                                     role="progressbar" aria-valuenow="<?php echo $_activity; ?>" aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    <span class="sr-only"><?php echo $_activity; ?>% Complete</span>
+                                </div>
 							</div>
 						</div>
 						<div class="col-md-3 menu">
@@ -50,7 +51,7 @@
 							<hr>
 							<blockquote>
 								<small>
-                                    <?php echo __('Did something go wrong? Try the :github.', [':github' => HTML::anchor('https://github.com/gleez/cms/issues', 'Github Issues')]); ?>
+                                    <?php echo __('Did something go wrong? Try the :github.', [':github' => HTML::anchor('https://github.com/muffetlab/gleez-cms/issues', 'Github Issues')]); ?>
 								</small>
 							</blockquote>
 						</div>
@@ -63,8 +64,8 @@
 	<div id="footer">
 		<div class="container">
 			<div class="credits">
-                <p class="text-muted"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS'), '{gleez_version}' => Gleez::getVersion(false)]); ?></p>
-				<p class="text-muted">&copy; 2011-<?php echo date('Y') ?> Gleez Technologies</p>
+                <p class="text-muted"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleez.muffetlab.com/', 'Gleez CMS'), '{gleez_version}' => Gleez::getVersion(false)]); ?></p>
+                <p class="text-muted">&copy; 2025-<?php echo date('Y') ?> Muffet Lab</p>
 			</div>
 		</div>
 	</div>

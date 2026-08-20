@@ -10,13 +10,12 @@
  * @version    1.2.0
  * @author     Gleez Team
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Request extends Kohana_Request
 {
 	/**
 	 * Default maximum size of POST data
-	 * @type string
+     * @var string
 	 */
 	const DEFAULT_POST_MAX_SIZE = '1M';
 
@@ -36,16 +35,15 @@ class Request extends Kohana_Request
 	 * Checks whether the request called by mobile device by useragent string
 	 * Preg is faster than for loop
 	 *
-	 * @return boolean
-	 *
+     * @return bool
 	 * @todo use Request::$user_agent but it is null
 	 */
     public static function is_mobile(): bool
     {
-		$devices = 'android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos';
+        $devices = 'android|blackberry|iphone|ipad|mini|mobi|palm|phone|tablet|webos';
 
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-			return (preg_match("/$devices/i", $_SERVER['HTTP_USER_AGENT']) > 0);
+            return preg_match("/$devices/i", $_SERVER['HTTP_USER_AGENT']) > 0;
 		}
 
         return false;
@@ -55,7 +53,7 @@ class Request extends Kohana_Request
      * Whether current request is DataTables.
 	 *
      * @param mixed $request Request
-	 * @return  boolean
+     * @return bool
 	 * @uses    Request::current
 	 */
     public static function is_datatables(Request $request = null): bool
@@ -119,7 +117,7 @@ class Request extends Kohana_Request
      * [!!] No further processing can be done after this method is called!
      *
      * @param string $url Redirect location
-     * @param integer $code Status code: 301, 302, etc
+     * @param int $code Status code: 301, 302, etc.
      * @return  void
      * @throws Kohana_Exception
      * @uses    Request::send_headers
@@ -232,7 +230,7 @@ class Request extends Kohana_Request
 	 * $response = $request->create_response();
 	 * ~~~
 	 *
-     * @param boolean $bind Bind to this request
+     * @param bool $bind Bind to this request
 	 * @return  Response
 	 * @since   3.1.0
 	 */
@@ -256,7 +254,7 @@ class Request extends Kohana_Request
 	 * $this->request->is_post();
 	 * ~~~
 	 *
-	 * @return  boolean  Whether the request is a POST request or not
+     * @return bool Whether the request is a POST request or not
 	 */
     public function is_post(): bool
     {

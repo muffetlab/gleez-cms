@@ -15,10 +15,10 @@ return [
     'site_favicon' => '/media/icons/favicon.ico',
 
     // Site email
-    'site_email' => 'webmaster@gleezcms.org',
+    'site_email' => 'webmaster@gleez.muffetlab.com',
 
-    // Site url used for background tasks
-    'site_url' => 'www.gleezcms.org',
+    // Site URL used for background tasks
+    'site_url' => 'gleez.muffetlab.com',
 
     // Site mission
     'site_mission' => '',
@@ -70,7 +70,7 @@ return [
 
     // Default headers
     'headers' => [
-        'X-Powered-By' => 'Gleez CMS (https://gleezcms.org)',
+        'X-Powered-By' => 'Gleez CMS (https://gleez.muffetlab.com)',
         //	'Content-Security-Policy'   => "script-src 'self' '{NONCE}' metrics.gleez.com; frame-ancestors 'self';"
     ],
 
@@ -102,7 +102,7 @@ return [
         ],
         'tags' => [
             'charset' => Kohana::$charset,
-            'generator' => 'Gleez ' . Gleez::VERSION . ' (https://gleezcms.org)',
+            'generator' => 'Gleez ' . Gleez::VERSION . ' (https://gleez.muffetlab.com)',
             'author' => 'Gleez Team',
             'copyright' => 'Copyright (c) Gleez Technologies (P) Limited 2011-2018. All rights reserved.',
             'robots' => 'index, follow, noodp',

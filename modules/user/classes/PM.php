@@ -8,53 +8,52 @@
  * @author     Gleez Team
  * @version    1.0.0
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class PM
 {
 	/**
 	 * Inbox virtual folder name.
 	 * Can be used when determining the type of messages received.
-	 * @type integer
+     * @var int
 	 */
 	const INBOX = 0x01;
 
 	/**
 	 * Outbox virtual folder name.
 	 * Can be used when determining the type of messages received.
-	 * @type integer
+     * @var int
 	 */
 	const OUTBOX = 0x02;
 
 	/**
 	 * Drafts virtual folder name.
 	 * Can be used when determining the type of messages received.
-	 * @type integer
+     * @var int
 	 */
 	const DRAFTS = 0x03;
 
 	/**
 	 * Message status - read
-	 * @type string
+     * @var string
 	 */
 	const STATUS_READ = 'read';
 
 	/**
 	 * Message status - unread
-	 * @type string
+     * @var string
 	 */
 	const STATUS_UNREAD = 'unread';
 
 	/**
 	 * Message status - draft
-	 * @type string
+     * @var string
 	 */
 	const STATUS_DRAFT = 'draft';
 
 	/**
 	 * Bulk Actions
 	 *
-     * @param boolean $list true for dropdown for bulk actions
+     * @param bool $list true for dropdown for bulk actions
 	 * @return  mixed
 	 * @uses    Module::action
 	 */

@@ -6,22 +6,7 @@
  * @package    Gleez\ORM\Module
  * @author     Gleez Team
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Model_Module extends ORM
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'name' => ['type' => 'string'],
-        'type' => ['type' => 'string'],
-        'active' => ['type' => 'int'],
-        'weight' => ['type' => 'int'],
-        'version' => ['type' => 'string'],
-        'path' => ['type' => 'string']
-    ];
-
 }

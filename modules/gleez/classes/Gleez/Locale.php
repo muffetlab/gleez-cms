@@ -15,7 +15,6 @@
  * @author     Sergey Yakovlev - Gleez
  * @version    1.0.1
  * @copyright  (c) 2011-2013 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Gleez_Locale
 {
@@ -87,7 +86,7 @@ class Gleez_Locale
     /**
      * Singleton instance of Gleez_Locale
      *
-     * @param string|Gleez_Locale $locale Locale for parsing input [Optional]
+     * @param string|Gleez_Locale $locale Locale for parsing input
      * @return  Gleez_Locale
      * @throws Kohana_Exception
      */
@@ -133,8 +132,7 @@ class Gleez_Locale
 	 * $locale = new Gleez_Locale(Gleez_Locale::FRAMEWORK);
 	 * ~~~
 	 *
-	 * @param   string|Gleez_Locale  $locale  Locale for parsing input [Optional]
-	 *
+     * @param string|Gleez_Locale $locale Locale for parsing input
 	 * @throws  Kohana_Exception
 	 */
     public function __construct($locale = null)
@@ -453,7 +451,7 @@ class Gleez_Locale
 	 * Static alias for [Gleez_Locale::get_region]
 	 *
      * @param string $locale Locale (eg. en_US, ru_RU, ar_JO, ...)
-	 * @return  boolean|string
+     * @return bool|string
 	 */
     public static function get_region_by_locale(string $locale)
 	{
@@ -493,7 +491,7 @@ class Gleez_Locale
 	 * ~~~
 	 *
 	 * @return  string   Region part of the locale if available
-     * @return  boolean  false if not available
+     * @return bool false if not available
 	 */
 	public function get_region()
 	{
@@ -509,7 +507,7 @@ class Gleez_Locale
     /**
      * Sets a new locale
      *
-     * @param string|Gleez_Locale $locale New locale to set [Optional]
+     * @param string|Gleez_Locale $locale New locale to set
      * @throws Kohana_Exception
      * @uses   Locale_Data::getLocaleData
      */
@@ -550,9 +548,8 @@ class Gleez_Locale
 	 * ~~~
 	 *
 	 * @param   string|Gleez_Locale  $locale   Locale to set
-     * @param integer $quality The quality to set from 0 to 1 [Optional]
+     * @param int $quality The quality to set from 0 to 1
 	 * @throws  Kohana_Exception
-	 *
 	 * @uses    Locale_Data::locale_data
 	 */
     public static function set_default($locale, int $quality = 1)
@@ -603,7 +600,7 @@ class Gleez_Locale
 	 * ~~~
 	 *
 	 * @param   Gleez_Locale  $locale  Locale to check for equality
-	 * @return  boolean
+     * @return  bool
 	 */
     public function equals(Gleez_Locale $locale): bool
     {

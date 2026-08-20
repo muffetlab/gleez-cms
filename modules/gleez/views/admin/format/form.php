@@ -67,7 +67,7 @@
 				<div class="tab-content">
 					<?php foreach($filters as $name => $filter): ?>
 						<?php $settings = $filter->settings; if( !empty($settings) ):?>
-							<div class="tab-pane"  id="<?php echo URL::title($filter->title)?>">
+                            <div class="tab-pane" id="<?php echo URL::title($filter->title) ?>">
 								<?php foreach($filter->settings as $key => $value): ?>
 								   <div class="form-group">
                                        <?php echo Form::label('edit-filters', str_replace('_', ' ', ucfirst($key)), ['class' => 'control-label']) ?>
@@ -75,7 +75,7 @@
                                        <div class="description"><?php //echo HTML::chars($filter->description) ?></div>
 								   </div>
 								<?php endforeach; ?>
-							</div>
+                            </div>
 						<?php endif; ?>
 					<?php endforeach; ?>
 				</div>

@@ -7,7 +7,6 @@
  * @author     Gleez Team
  * @version    1.1.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Date extends Kohana_Date
 {
@@ -188,9 +187,8 @@ class Date extends Kohana_Date
 	/**
 	 * Return available date time formats
 	 *
-	 * @param boolean $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp
 	 * @return array
-	 *
 	 * @todo   Need add i18n ability
 	 */
     public static function date_time_formats(bool $timestamp = false): array
@@ -247,9 +245,8 @@ class Date extends Kohana_Date
 	/**
 	 * Return available date formats
 	 *
-     * @param boolean $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp
 	 * @return array
-	 *
 	 * @todo   Need add i18n ability
 	 */
     public static function date_formats(bool $timestamp = false): array
@@ -295,9 +292,8 @@ class Date extends Kohana_Date
 	/**
 	 * Return available time formats
 	 *
-     * @param boolean $timestamp Unix timestamp [Optional]
+     * @param bool $timestamp Unix timestamp
 	 * @return array
-	 *
 	 * @todo   Need add i18n ability
 	 */
     public static function time_formats(bool $timestamp = false): array
@@ -325,8 +321,8 @@ class Date extends Kohana_Date
     /**
      * Return a Unix timestamp in a user specified format including date and time.
      *
-     * @param integer $timestamp Unix timestamp
-     * @param string|null $format Timestamp format [Optional]
+     * @param int $timestamp Unix timestamp
+     * @param string|null $format Timestamp format
      * @return string
      * @throws Exception
      * @uses   Config::get
@@ -339,8 +335,8 @@ class Date extends Kohana_Date
     /**
      * Return a Unix timestamp in a user specified format that's just the date.
      *
-     * @param integer $timestamp Unix timestamp
-     * @param string|null $format Timestamp format [Optional]
+     * @param int $timestamp Unix timestamp
+     * @param string|null $format Timestamp format
      * @return string
      * @throws Exception
      * @uses   Config::get
@@ -353,7 +349,7 @@ class Date extends Kohana_Date
     /**
      * Return a Unix timestamp in a user specified format that's just the time.
      *
-     * @param integer $timestamp Unix timestamp
+     * @param int $timestamp Unix timestamp
      * @param string|null $format
      * @return string
      * @throws Kohana_Exception

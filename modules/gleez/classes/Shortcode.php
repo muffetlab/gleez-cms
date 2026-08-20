@@ -19,7 +19,6 @@
  * @version    1.0.1
  * @copyright  (c) 2011-2015 Gleez Technologies
  * @license    http://wordpress.org/about/license
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Shortcode
 {
@@ -31,7 +30,7 @@ class Shortcode
 
 	/**
 	 * Indicates whether shortcodes are cached
-	 * @var  boolean
+     * @var bool
 	 */
     protected static $_cache = false;
 
@@ -45,7 +44,7 @@ class Shortcode
 	 *
      * @param string $tag Shortcode tag to be searched in post content.
      * @param callable $callback Hook to run when shortcode is found.
-	 * @param   string|boolean  $asset     CSS or JS or both to be added. css|js|both [Optional]
+     * @param string|bool $asset CSS or JS or both to be added. css|js|both
 	 * @return  array
 	 * @throws  Kohana_Exception
 	 * @uses    Assets::css
@@ -117,16 +116,15 @@ class Shortcode
      *
      * Example:
      * ~~~
-     * if ( ! Shortcode::cache())
-     * {
+     * if (!Shortcode::cache()) {
      *     // Set Shortcodes here
      *     Shortcode::cache(true);
      * }
      * ~~~
      *
-     * @param boolean $save Cache the current Shortcodes [Optional]
-     * @param boolean $append Append, rather than replace, cached Shortcodes when loading [Optional]
-     * @return  boolean
+     * @param bool $save Cache the current Shortcodes
+     * @param bool $append Append, rather than replace, cached Shortcodes when loading
+     * @return bool
      * @throws Cache_Exception
      * @throws Kohana_Exception
      * @uses    Kohana::cache

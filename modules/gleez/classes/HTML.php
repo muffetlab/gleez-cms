@@ -10,7 +10,6 @@
  * @author     Gleez Team
  * @version    1.1.4
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class HTML extends Kohana_HTML
 {
@@ -79,9 +78,9 @@ class HTML extends Kohana_HTML
      * ~~~
      *
      * @param string $file File name
-     * @param array|null $attributes Default attributes + type = crop|ratio [Optional]
-     * @param mixed $protocol Protocol to pass to `URL::base()` [Optional]
-     * @param boolean $index Include the index page [Optional]
+     * @param array|null $attributes Default attributes + type = crop|ratio
+     * @param mixed $protocol Protocol to pass to `URL::base()`
+     * @param bool $index Include the index page
      * @return  string
      * @throws Kohana_Exception
      * @uses    URL::base
@@ -130,7 +129,7 @@ class HTML extends Kohana_HTML
      * Print out a themed set of links
      *
      * @param array $links Links
-     * @param array $attributes Attributes, for example CSS class [Optional]
+     * @param array $attributes Attributes, for example CSS class
      * @return  string
      * @throws Kohana_Exception
      */
@@ -183,7 +182,7 @@ class HTML extends Kohana_HTML
      * Print out a themed set of tabs
      *
      * @param array $tabs Tabs
-     * @param array $attributes Attributes, for example CSS class [Optional]
+     * @param array $attributes Attributes, for example CSS class
      * @return  string Prepared HTML
      * @throws Kohana_Exception
      * @uses    HTML::chars
@@ -237,7 +236,7 @@ class HTML extends Kohana_HTML
      * the start) of the current request URI.
      *
      * @param string $uri URI
-     * @return  boolean
+     * @return bool
      * @throws Kohana_Exception
      * @uses    URL::is_active
      */
@@ -257,7 +256,7 @@ class HTML extends Kohana_HTML
      * @link    http://fontawesome.io/
      * @param string $url URL
      * @param string $icon FontAwesome like icon  class
-     * @param array $attrs Attributes, for example CSS class or title [Optional]
+     * @param array $attrs Attributes, for example CSS class or title
      * @return  string
      * @throws Kohana_Exception
      */
@@ -275,7 +274,7 @@ class HTML extends Kohana_HTML
 	 * ~~~
 	 *
      * @param string $text Text
-     * @param string $label Bootstrap label class [Optional]
+     * @param string $label Bootstrap label class
 	 *
 	 * @return  string
 	 */

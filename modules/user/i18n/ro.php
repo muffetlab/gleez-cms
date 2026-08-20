@@ -6,7 +6,6 @@
  * @package   User\I18n
  * @author    Sorin Iclanzan
  * @copyright (c) 2011-2013 Gleez Technologies
- * @license   https://gleezcms.org/license Gleez CMS License
  */
 return [
     // :

@@ -17,23 +17,6 @@
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.masthead-links {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	padding-left: 0;
-	list-style: none;
-	text-align: center;
-}
-
-.masthead-links li {
-	display: inline;
-	color: #999;
-}
-
-.masthead-links li + li {
-	margin-left: 20px;
-}
-
 .doc-head {
 	padding: 15px 20px;
 	color: #777;
@@ -51,23 +34,6 @@
 
 .doc-head .container-fluid {
 	text-align: center;
-}
-
-.masthead-social {
-	margin: 20px 0 30px;
-	text-align: center;
-}
-
-.social-buttons {
-	display: inline-block;
-	margin-bottom: 0;
-	padding-left: 0;
-	list-style: none;
-}
-
-.social-buttons li {
-	display: inline-block;
-	line-height: 1;
 }
 
 .doc-body {

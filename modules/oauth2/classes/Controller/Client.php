@@ -7,6 +7,8 @@ class Controller_Client extends Template
      * @throws View_Exception
      * @throws Kohana_Exception
      * @throws Cache_Exception
+     * @throws ReflectionException
+     * @throws Exception
      */
     public function action_list()
     {
@@ -29,7 +31,7 @@ class Controller_Client extends Template
                     HTML::anchor($client->url, HTML::chars($client->title)),
                     $client->client_id,
                     $client->user->nick,
-                    System::date('M d, Y', $client->created),
+                    Date::formatted_time($client->created, 'M d, Y'),
                     HTML::icon($client->edit_url, 'far fa-edit', [
                         'class' => 'action-edit',
                         'data-toggle' => 'popup1',
@@ -178,6 +180,7 @@ class Controller_Client extends Template
      * @throws HTTP_Exception_404
      * @throws View_Exception
      * @throws Cache_Exception
+     * @throws ReflectionException
      */
     public function action_view()
 	{
@@ -204,13 +207,10 @@ class Controller_Client extends Template
      * @throws View_Exception
      * @throws Kohana_Exception
      * @throws Cache_Exception
+     * @throws ReflectionException
      */
     public function action_delete()
 	{
-        if (!ACL::check('delete oauth2 client')) {
-			throw new HTTP_Exception_404('You have no permission to delete oauth2 clients.');
-		}
-		
 		$id       = (int) $this->request->param('id');
         $redirect = empty($this->redirect) ? Route::get('oauth2/client')->uri(['action' => 'list']) : $this->redirect;
         $client = ORM::factory('Client', $id);
@@ -222,10 +222,9 @@ class Controller_Client extends Template
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 
-        if (!Access::oaclient('delete', $client)) {
-			// If the lead was not loaded, we return access denied.
-            throw new HTTP_Exception_404('Attempt to non-existent client.');
-		}
+        if (!ACL::client('delete', $client)) {
+            throw new HTTP_Exception_404('You have no permission to delete oauth2 clients.');
+        }
 
         $this->title = __('Delete Client');
         $this->subtitle = HTML::chars($client->client_id);

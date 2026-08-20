@@ -7,7 +7,6 @@
  * @version    1.1.1
  * @author     Gleez Team
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license Gleez CMS License
  */
 class Valid extends Kohana_Valid
 {
@@ -29,7 +28,7 @@ class Valid extends Kohana_Valid
 	 * @since   1.1.1   Replaced by a faster algorithm
 	 *
      * @param string $string The text to check
-	 * @return  boolean
+     * @return bool
 	 */
     public static function utf8(string $string): bool
     {

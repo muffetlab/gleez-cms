@@ -7,7 +7,6 @@
  * @author	   Gleez Team
  * @version    1.0.1
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Comment
 {
@@ -114,7 +113,7 @@ class Comment
 	/**
 	 * List of actions
 	 *
-     * @param boolean $list true for dropdown for bult actions
+     * @param bool $list true for dropdown for bult actions
 	 * @return  array
 	 */
     public static function bulk_actions(bool $list = false): array

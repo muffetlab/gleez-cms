@@ -6,26 +6,9 @@
  * @package    Gleez\ORM\Path
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Path extends Gleez_Model
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'source' => ['type' => 'string'],
-        'alias' => ['type' => 'string'],
-        'lang' => ['type' => 'string'],
-        'route_name' => ['type' => 'string'],
-        'route_directory' => ['type' => 'string'],
-        'route_controller' => ['type' => 'string'],
-        'route_action' => ['type' => 'string'],
-        'route_id' => ['type' => 'string'],
-    ];
-
  	/**
 	 * The language code used when no language is explicitly assigned.
 	 * Defined by ISO639-2 for "Undetermined".
@@ -139,7 +122,7 @@ class Model_Path extends Gleez_Model
      * Process URI
      *
      * @param string $uri URI
-     * @return  array|boolean
+     * @return array|bool
      * @throws Kohana_Exception
      * @throws Request_Exception
      * @uses    Route::all

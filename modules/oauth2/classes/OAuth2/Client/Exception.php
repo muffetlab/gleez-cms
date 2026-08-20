@@ -4,7 +4,6 @@
  * @package    Gleez\OAuth\Client\Exception
  * @author     Gleez Team
  * @copyright  (c) 2011-2014 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  *
  */
 class OAuth2_Client_Exception extends Kohana_Exception

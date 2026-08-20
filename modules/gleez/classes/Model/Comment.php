@@ -7,34 +7,9 @@
  * @author     Gleez Team
  * @version    1.0.2
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class Model_Comment extends Gleez_Model
 {
-	/**
-	 * Table columns
-	 * @var array
-	 */
-    protected $_table_columns = [
-        'id' => ['type' => 'int'],
-        'post_id' => ['type' => 'int'],
-        'pid' => ['type' => 'int'],
-        'author' => ['type' => 'int'],
-        'title' => ['type' => 'string'],
-        'body' => ['type' => 'string'],
-        'hostname' => ['type' => 'string'],
-        'created' => ['type' => 'int'],
-        'updated' => ['type' => 'int'],
-        'status' => ['type' => 'string'],
-        'type' => ['type' => 'string'],
-        'format' => ['type' => 'int'],
-        'thread' => ['type' => 'string'],
-        'guest_email' => ['type' => 'string'],
-        'guest_name' => ['type' => 'string'],
-        'guest_url' => ['type' => 'string'],
-        'karma' => ['type' => 'int'],
-    ];
-
 	/**
 	 * "Belongs to" relationships
 	 * @var array
@@ -279,8 +254,8 @@ class Model_Comment extends Gleez_Model
     /**
      * Make sure the user has permission to do the action on this object
      *
-     * @param boolean|string $action The action view|edit|delete default view [Optional]
-     * @param Model_User|null $user The user object to check permission, defaults to logged in user [Optional]
+     * @param bool|string $action The action view|edit|delete default view
+     * @param Model_User|null $user The user object to check permission, defaults to logged in user
      * @return Model_Comment
      * @throws Cache_Exception
      * @throws HTTP_Exception
@@ -372,7 +347,7 @@ class Model_Comment extends Gleez_Model
      *
      * @param bool|string $action The action view|edit|delete default view
      * @param Model_User|null $user The user object to check permission, defaults to logged in user
-     * @return  boolean|Model_Comment
+     * @return bool|Model_Comment
      * @throws Cache_Exception
      * @throws HTTP_Exception
      * @throws Kohana_Exception

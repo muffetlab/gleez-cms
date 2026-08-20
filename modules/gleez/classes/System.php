@@ -7,19 +7,18 @@
  * @author     Gleez Team
  * @version    1.7.0
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class System
 {
 	/**
 	 * Windows OS
-	 * @type string
+     * @var string
 	 */
 	const WIN = 'WINDOWS';
 
 	/**
 	 * Linux OS
-	 * @type string
+     * @var string
 	 */
 	const LIN = 'LINUX';
 
@@ -27,7 +26,7 @@ class System
 	 * Minimum amount of memory allocated to php-script.
      * Can be used if ini_get('memory_limit') returns 0, -1, null or false.
 	 * This amount is used by default since PHP 5.3
-	 * @type integer
+     * @var int
 	 */
 	const MIN_MEMORY_LIMIT = 16777216;
 
@@ -44,7 +43,9 @@ class System
 
         if (function_exists('sys_getloadavg') && is_array(sys_getloadavg())) {
 			$load_averages = sys_getloadavg();
-			array_walk($load_averages, create_function('&$v', '$v = round($v, 3);'));
+            array_walk($load_averages, function (&$v) {
+                $v = round($v, 3);
+            });
 			$server_load = $load_averages[0] . ' ' . $load_averages[1] . ' ' . $load_averages[2];
         } elseif (@is_readable('/proc/loadavg')) {
 			// We use @ just in case
@@ -74,10 +75,9 @@ class System
 	 * to mkdir() must be specified.
 	 *
      * @param string $path The directory path
-     * @param integer $mode Set permission mode (as in chmod) [Optional]
-     * @param boolean $recursive Create directories recursively if necessary [Optional]
-     * @return boolean Returns true on success or false on failure
-	 *
+     * @param int $mode Set permission mode (as in chmod)
+     * @param bool $recursive Create directories recursively if necessary
+     * @return bool Returns true on success or false on failure
 	 * @link    http://php.net/manual/en/function.mkdir.php mkdir()
 	 */
     public static function mkdir(string $path, int $mode = 0777, bool $recursive = true): bool
@@ -183,11 +183,10 @@ class System
 	 * This function is used throughout Gleez to allow for both string
 	 * or array to be merged into another array.
 	 *
-	 * @since  1.1.0
-	 *
 	 * @param   string|array  $args      Value to merge with `$defaults`
-	 * @param   array         $defaults  Array that serves as the defaults [Optional]
-	 * @return  array                    Merged user defined values with defaults
+     * @param array $defaults Array that serves as the defaults
+     * @return array Merged user defined values with defaults
+     * @since 1.1.0
 	 */
     public static function parse_args($args, array $defaults = []): array
     {
@@ -277,7 +276,7 @@ class System
 	/**
 	 * Get PHP version
 	 *
-	 * @param  boolean $idOnly Return PHP version as an integer? [Optional]
+     * @param bool $idOnly Return PHP version as an integer?
 	 * @return string
      * @since   1.6.0
 	 */
@@ -334,7 +333,6 @@ class System
      * @param string $class_prefix change this if the class names does not start with `fa-`
 	* @return   array
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
-	* @license  MIT
 	*/
     public static function faGetArray(string $path, string $class_prefix = 'fa-'): array
     {
@@ -369,7 +367,6 @@ class System
      * @param string $class_prefix change this if the class names does not start with `fa-`
 	* @return   array
 	* @link     https://github.com/Smartik89/SMK-Font-Awesome-PHP-JSON
-	* @license  MIT
 	*/
     public static function faReadableName(array $array, string $class_prefix = 'fa-'): array
     {

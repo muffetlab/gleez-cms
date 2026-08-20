@@ -8,7 +8,6 @@
  * @package    Gleez\ORM
  * @author     Sandeep Sangamreddi - Gleez
  * @copyright  (c) 2011-2015 Gleez Technologies
- * @license    https://gleezcms.org/license  Gleez CMS License
  */
 class ORM_Versioned extends Gleez_Model
 {
@@ -16,7 +15,7 @@ class ORM_Versioned extends Gleez_Model
 
 	/**
 	 * The version state
-	 * @var boolean
+     * @var bool
 	 */
     protected $_restore = false;
 
