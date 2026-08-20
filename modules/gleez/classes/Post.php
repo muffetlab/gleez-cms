@@ -839,7 +839,7 @@ class Post extends ORM_Versioned
 		}
 
 		// Cut the doc in half, so the widgets don't go past the end of the article.
-        $pickMe = $poses[ceil(sizeof($poses) / 2) - 1];
+        $pickMe = $poses[ceil(count($poses) / 2) - 1];
 
 		$widgets     = Widgets::instance()->render($region);
         $replaceWith = $widgets ? '<div id="' . $region . '" class="clear-block">' . $widgets . '</div>' : null;
