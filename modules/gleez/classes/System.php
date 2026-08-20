@@ -43,7 +43,9 @@ class System
 
         if (function_exists('sys_getloadavg') && is_array(sys_getloadavg())) {
 			$load_averages = sys_getloadavg();
-			array_walk($load_averages, create_function('&$v', '$v = round($v, 3);'));
+            array_walk($load_averages, function (&$v) {
+                $v = round($v, 3);
+            });
 			$server_load = $load_averages[0] . ' ' . $load_averages[1] . ' ' . $load_averages[2];
         } elseif (@is_readable('/proc/loadavg')) {
 			// We use @ just in case
