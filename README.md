@@ -1,14 +1,19 @@
 # What Is Gleez CMS?
 
-[Gleez CMS](https://gleezcms.org) is a user-friendly website [Content Management System](http://en.wikipedia.org/wiki/CMS).
+[Gleez CMS](https://gleez.muffetlab.com) is a user-friendly website [Content Management System](http://en.wikipedia.org/wiki/CMS).
 
-# License
+With [Gleez CMS](https://gleez.muffetlab.com) you can easily build dynamic websites within a matter of minutes with just the click of your mouse! Maintain your web content, navigation and even limit what groups or specific users can access, from anywhere in the world with just a web browser!
 
-Gleez CMS is released under the [MIT License](LICENSE). Third-party attributions for bundled assets are listed in [`licenses/README.md`](licenses/README.md).
+With an emphasis on security and functionality, [Gleez CMS](https://gleez.muffetlab.com) is a professional and robust system suitable for any business or organization website. Built on the [PHP](http://php.net) programming language and the [MySQL](http://www.mysql.com) database, [Gleez CMS](https://gleez.muffetlab.com) delivers superb performance on any size website.
 
-With [Gleez CMS](https://gleezcms.org) you can easily build dynamic websites within a matter of minutes with just the click of your mouse! Maintain your web content, navigation and even limit what groups or specific users can access, from anywhere in the world with just a web browser!
+# Supported Versions
 
-With an emphasis on security and functionality, [Gleez CMS](https://gleezcms.org) is a professional and robust system suitable for any business or organization website. Built on the [PHP](http://php.net) programming language and the [MySQL](http://www.mysql.com) database, [Gleez CMS](https://gleezcms.org) delivers superb performance on any size website.
+| Release | Supported PHP versions | Released    | Active Support | Security Support | Latest                                                              |
+|---------|------------------------|-------------|----------------|------------------|---------------------------------------------------------------------|
+| 1.3     | 7.1 – 7.3              | 20 Aug 2026 | Yes            | Yes              | [1.3.0](https://github.com/muffetlab/gleez-cms/releases/tag/v1.3.0) |
+| 1.2     | 5.4 – 5.6              | 14 Jun 2015 | End of life    | End of life      | [1.2.0](https://github.com/muffetlab/gleez-cms/releases/tag/v1.2.0) |
+| 1.1     | 5.3 – 5.5              | 04 Aug 2014 | End of life    | End of life      | [1.1.5](https://github.com/gleez/cms/releases/tag/1.1.5)            |
+| 1.0     | 5.3 – 5.5              | 02 Jun 2014 | End of life    | End of life      | [1.0.1](https://github.com/gleez/cms/releases/tag/1.0.1)            |
 
 # Features
 
@@ -97,3 +102,7 @@ an administrator.
 ## Editing Content
 
 Log in with the credentials produced by the installer and manage content from the admin interface.
+
+# License
+
+Gleez CMS is released under the [MIT License](LICENSE). Third-party attributions for bundled assets are listed in [`licenses/README.md`](licenses/README.md).
