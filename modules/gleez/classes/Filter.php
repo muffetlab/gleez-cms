@@ -115,8 +115,7 @@ class Filter
      *
      * Example:
      * ~~~
-     * if ( ! Filter::cache())
-     * {
+     * if (!Filter::cache()) {
      *     // Set filters here
      *     Filter::cache(true);
      * }

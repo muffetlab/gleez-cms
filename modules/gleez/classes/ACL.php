@@ -140,11 +140,10 @@ class ACL
      *
      * Example:
      * ~~~
-     *  if ( ! ACL::cache())
-     *  {
-     *    // Set perms here
-     *    ACL::cache(true);
-     *  }
+     * if (!ACL::cache()) {
+     *     // Set perms here
+     *     ACL::cache(true);
+     * }
      * ~~~
      *
      * @param bool $save Cache the current perms

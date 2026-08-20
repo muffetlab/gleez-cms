@@ -116,8 +116,7 @@ class Shortcode
      *
      * Example:
      * ~~~
-     * if ( ! Shortcode::cache())
-     * {
+     * if (!Shortcode::cache()) {
      *     // Set Shortcodes here
      *     Shortcode::cache(true);
      * }

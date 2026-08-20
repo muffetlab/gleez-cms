@@ -78,8 +78,7 @@ class Fragment
      *
      * Example:
      * ~~~
-     * if ( ! Fragment::getCache('footer'))
-     * {
+     * if (!Fragment::getCache('footer')) {
      *     // Anything that is echoed here will be saved
      *     Fragment::setCache();
      * }
