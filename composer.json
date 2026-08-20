@@ -5,7 +5,9 @@
     "homepage": "https://gleez.muffetlab.com",
     "keywords": [
         "cms",
-        "gleez"
+        "gleez",
+        "kohana",
+        "php"
     ],
     "license": "MIT",
     "authors": [
