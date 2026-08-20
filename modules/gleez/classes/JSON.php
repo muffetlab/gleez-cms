@@ -29,11 +29,7 @@ class JSON
 	 */
     public static function encode($value, int $options = 0, int $depth = 512): string
     {
-        if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
-			$raw = json_encode($value, $options, $depth);
-        } else {
-			$raw = json_encode($value, $options);
-		}
+        $raw = json_encode($value, $options, $depth);
 
 		// json_encode() does not escape <, > and &, so we do it with str_replace().
         return str_replace(['<', '>', '&'], ['\u003c', '\u003e', '\u0026'], $raw);
@@ -60,11 +56,7 @@ class JSON
 	 */
     public static function decode(string $json, bool $assoc = true, int $depth = 512, int $options = 0)
 	{
-        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
-			$result = json_decode($json, $assoc, $depth, $options);
-        } else {
-			$result = json_decode($json, $assoc, $depth);
-		}
+        $result = json_decode($json, $assoc, $depth, $options);
 
 		$error = '';
 
