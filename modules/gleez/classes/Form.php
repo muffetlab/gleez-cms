@@ -42,7 +42,7 @@ class Form extends Kohana_Form
      */
     public static function open($action = null, array $attributes = null): string
     {
-		// Dynamically sets destination url to from action if exists in url
+        // Dynamically sets destination URL to from action if exists in URL
         if (PHP_SAPI !== 'cli' && ($destination = Request::current()->query('destination')) && !empty($destination)) {
 			// Properly parse the path and query
 			$url = URL::explode($action);
@@ -84,7 +84,7 @@ class Form extends Kohana_Form
      * @param string $name Input name
      * @param string|null $value Input value
      * @param array|null $attributes HTML attributes
-     * @param string $url Input url (autocomplete url)
+     * @param string $url Autocomplete source URL
      * @return string
      * @throws Kohana_Exception
      * @uses    HTML::attributes

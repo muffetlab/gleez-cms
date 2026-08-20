@@ -124,7 +124,7 @@ class URL extends Kohana_URL
 	}
 
     /**
-     * Determine if current url is active
+     * Determine if current URL is active.
      *
      * @param string $url
      * @return bool

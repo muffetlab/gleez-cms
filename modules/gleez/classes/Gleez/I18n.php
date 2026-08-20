@@ -75,7 +75,7 @@ class Gleez_I18n extends I18n
 			$locale = Gleez_I18n::requestLocale();
 		}
 
-		// 4. Check the url preference and get the language from url
+        // 4. Check the URL preference and get the language from URL
         if (!$locale && ($locale_override == 'ALL' || $locale_override == 'URL')) {
 			$locale = Gleez_I18n::urlLocale();
 		}

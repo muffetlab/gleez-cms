@@ -17,7 +17,7 @@ return [
     // Site email
     'site_email' => 'webmaster@gleez.muffetlab.com',
 
-    // Site url used for background tasks
+    // Site URL used for background tasks
     'site_url' => 'gleez.muffetlab.com',
 
     // Site mission

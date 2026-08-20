@@ -117,10 +117,10 @@ class Menu
 	}
 
 	/**
-	 * Change an item url of this menu
+     * Change an item URL of this menu.
 	 *
      * @param string $target_id Id of link
-     * @param string $url New url of the item
+     * @param string $url New URL of the item
      * @param bool $parent_id Parent Id of link
 	 * @return  MENU
 	 */
