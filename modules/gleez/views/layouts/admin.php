@@ -50,7 +50,7 @@
                     <p class="pull-left"><?php echo __('&copy; :year :site', [':year' => date('Y'), ':site' => HTML::anchor(URL::site(false, true), $site_name)]); ?></p>
 				</div>
 				<div class="col-xs-6 col-md-6">
-                    <p class="pull-right"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleezcms.org/', 'Gleez CMS')]) ?></p>
+                    <p class="pull-right"><?php echo __('Powered by :gleez v{gleez_version}', [':gleez' => HTML::anchor('https://gleez.muffetlab.com/', 'Gleez CMS')]) ?></p>
 				</div>
 			</div>
 			<div class="row">

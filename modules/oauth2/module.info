@@ -4,4 +4,4 @@ description  = "Gleez oAuth2 Server and Clients"
 version      = 1.0
 visible      = 1
 author       = "Gleez Team"
-authorURL    = http://gleezcms.org/
+authorURL    = https://gleezcms.org/

@@ -19,7 +19,7 @@ license        = MIT
 themeURL       = https://github.com/sergeyklay/gleez-cerber
 depends        = gleez
 author         = "Gleez Team"
-authorURL      = http://www.gleeztech.com/
+authorURL      = https://gleez.tech/
 site           = 1
 admin          = 1
 

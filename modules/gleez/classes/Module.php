@@ -147,8 +147,8 @@ class Module
                     $m->version = self::get_version($name) ?: $m->code_version;
 					$m->locked       = false;
                     $m->visible = !isset($m->visible) || $m->visible;
-					$m->author    	 = isset($m->author)    ? (string) $m->author 	 : 'Gleez Team';
-					$m->authorURL    = isset($m->authorURL) ? (string) $m->authorURL : 'https://gleezcms.org/';
+                    $m->author = isset($m->author) ? (string) $m->author : 'Muffet Lab';
+                    $m->authorURL = isset($m->authorURL) ? (string) $m->authorURL : 'https://muffetlab.com/';
 					$m->path 		 = realpath( dirname($file) ).DIRECTORY_SEPARATOR;
 
 					// Skip this module in list if the module is hidden

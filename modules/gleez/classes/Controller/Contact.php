@@ -130,7 +130,7 @@ class Controller_Contact extends Template
 				// Create an email message
                 $email = Email::factory()
                     ->to(
-                        HTML::chars($this->_config->get('site_email', 'webmaster@gleezcms.org')),
+                        HTML::chars($this->_config->get('site_email', '')),
                         __('Webmaster :site', [':site' => Template::getSiteName()])
                     )
                     ->subject($subject)
