@@ -7,10 +7,8 @@
  * @group gleez.core
  * @group gleez.core.i18n
  * @package     Gleez
- * @category    Tests
  * @author      Loong <loong2460@gmail.com>
  * @copyright   (c) 2026 Muffet Lab
- * @license     https://gleez.muffetlab.com/license
  */
 class Gleez_I18nTest extends Unittest_TestCase
 {
