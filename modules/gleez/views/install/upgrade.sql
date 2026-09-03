@@ -1,22 +1,24 @@
 -- Upgrade SQL from Gleez 1.2.0 to 1.3.0
 -- Apply this script to an existing Gleez 1.2.0 database
--- Note: This script should only be run once
+--
+-- This script is idempotent: it can be run multiple times without errors.
+-- All DDL statements use IF EXISTS or IF NOT EXISTS guards.
 
 -- Disable foreign key checks to allow altering columns that participate in foreign key constraints (charset conversion,
--- column type changes)
+-- column type changes).
 SET FOREIGN_KEY_CHECKS = 0;
 
--- 1. Add soft-delete columns
-ALTER TABLE {posts} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER updated;
-ALTER TABLE {posts_versions} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER updated;
-ALTER TABLE {users} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER updated;
-ALTER TABLE {roles} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER special;
-ALTER TABLE {tags} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER count;
-ALTER TABLE {terms} ADD COLUMN deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER scp;
+-- 1. Add soft-delete columns (1.3.0 new feature)
+ALTER TABLE {posts} ADD COLUMN IF NOT EXISTS deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER updated;
+ALTER TABLE {posts_versions} ADD COLUMN IF NOT EXISTS deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER updated;
+ALTER TABLE {users} ADD COLUMN IF NOT EXISTS deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER updated;
+ALTER TABLE {roles} ADD COLUMN IF NOT EXISTS deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER special;
+ALTER TABLE {tags} ADD COLUMN IF NOT EXISTS deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER count;
+ALTER TABLE {terms} ADD COLUMN IF NOT EXISTS deleted INT UNSIGNED NOT NULL DEFAULT '0' AFTER scp;
 
--- 2. Remove hostname and user_id columns from sessions table
-ALTER TABLE {sessions} DROP COLUMN hostname;
-ALTER TABLE {sessions} DROP COLUMN user_id;
+-- 2. Remove legacy hostname and user_id columns from sessions table
+ALTER TABLE {sessions} DROP COLUMN IF EXISTS hostname;
+ALTER TABLE {sessions} DROP COLUMN IF EXISTS user_id;
 
 -- 3. Remove 'access profiles' permission from Anonymous role (rid=1)
 DELETE FROM {permissions} WHERE rid = 1 AND permission = 'access profiles';
@@ -141,8 +143,8 @@ ALTER TABLE {posts_versions} MODIFY COLUMN layout VARCHAR(255) NOT NULL DEFAULT 
 ALTER TABLE {buddies} MODIFY COLUMN `accepted` TINYINT UNSIGNED NOT NULL DEFAULT '0';
 
 -- 9. Remove redundant indexes
-ALTER TABLE {sessions} DROP INDEX `session`;
-ALTER TABLE {messages} DROP INDEX `message_id`;
+ALTER TABLE {sessions} DROP INDEX IF EXISTS `session`;
+ALTER TABLE {messages} DROP INDEX IF EXISTS `message_id`;
 
 -- 10. Optimize small table IDs from BIGINT to INT
 ALTER TABLE {tags} MODIFY COLUMN id INT UNSIGNED NOT NULL AUTO_INCREMENT;

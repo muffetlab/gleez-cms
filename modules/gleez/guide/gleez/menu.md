@@ -3,7 +3,7 @@
    - [Introduction](gleez.introduction)
    - [Conventions](gleez.conventions)
    - [Installation](about.install)
-   - [Upgrading](gleez.upgrade)
+   - [Upgrading](upgrade)
 - Basic Usage
    - [Assets](assets)
    - [Breadcrumb](breadcrumb)
