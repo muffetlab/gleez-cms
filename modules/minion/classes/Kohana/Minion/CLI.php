@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Minion CLI helper class for command-line interaction utilities.
+ *
+ * Provides methods for parsing command-line options, reading user input (including hidden passwords), writing output
+ * with replaceable lines, waiting with countdown, and applying ANSI color codes.
+ *
+ * @package    Kohana
+ * @category   Minion
+ * @author     Kohana Team
+ * @copyright  (c) 2009-2011 Kohana Team
+ * @license    https://kohana.top/license
+ */
 class Kohana_Minion_CLI
 {
     public static $wait_msg = 'Press any key to continue...';
@@ -33,18 +45,18 @@ class Kohana_Minion_CLI
     ];
 
     /**
-     * Returns one or more command-line options. Options are specified using
-     * standard CLI syntax:
+     * Returns one or more command-line options. Options are specified using standard CLI syntax:
      *
-     *     php index.php --username=john.smith --password=secret --var="some value with spaces"
+     *     php public/index.php --username=john.smith --password=secret --var="some value with spaces"
      *
      *     // Get the values of "username" and "password"
      *     $auth = Minion_CLI::options('username', 'password');
      *
-     * @param string ...$options option name
-     * @return  array
+     * @param string ...$options Option name
+     * @return array|string|null All parsed options (array), the value of a single requested option (string), or null
+     *                           if the requested option is not found
      */
-    public static function options(...$options): array
+    public static function options(...$options)
     {
         // Found option values
         $values = [];
@@ -78,10 +90,15 @@ class Kohana_Minion_CLI
             $values[$opt] = $value;
         }
 
-        foreach ($values as $opt => $value) {
-            if (!in_array($opt, $options)) {
-                // Set the given value
-                unset($values[$opt]);
+        // Only filter the values when specific options were requested; otherwise, all parsed options are passed through
+        // (e.g., --task=...).
+        if ($options) {
+            foreach ($values as $opt => $value) {
+                // Strict mode needed for PHP 7.x: in_array(0, ['task']) is true due to int-to-string coercion. Safe to
+                // remove the third argument once PHP 7.x support is dropped.
+                if (!in_array($opt, $options, true)) {
+                    unset($values[$opt]);
+                }
             }
         }
 

@@ -6,6 +6,7 @@
  * This class extends Kohana ORM implementation to provide additional functionality including jQuery DataTables
  * integration.
  *
+ * @package    Gleez\ORM
  * @author     Gleez Team
  * @copyright  (c) 2011-2015 Gleez Technologies
  */
