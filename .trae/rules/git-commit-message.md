@@ -13,6 +13,8 @@ All commit messages MUST follow the [Conventional Commits](mdc:https:/www.conven
 <type>[optional scope]: <description>
 ```
 
+Commit messages MUST contain ONLY the header line shown above. Never add a body or footer, except the `BREAKING CHANGE:` footer when marking a breaking change.
+
 ### Types
 
 - `build`: Changes that affect the build system or external dependencies
