@@ -166,7 +166,7 @@ class Tags
 		$normalized_tag = $this->normalize_tag( strtolower($tag) );
 
 		//this is required to avoid duplicate tags, ex: 'demo, demo, test'
-        $result = ORM::factory(Inflector::singular($this->config['tagging_model']))
+        $result = ORM::factory('Tagging')
             ->join($this->config['tag_table'], 'INNER')
             ->on('tag_id', '=', $this->config['tag_table'] . '.id')
             ->where($this->config['object_foreign_key'], '=', $object_id)
@@ -208,7 +208,7 @@ class Tags
             return false;
 		}
 
-		$new_tagging = ORM::factory(Inflector::singular($this->config['tagging_model']));
+        $new_tagging = ORM::factory('Tagging');
 		$new_tagging->tag_id = $tag_id;
 		$new_tagging->author = $user_id;
 		$new_tagging->type   = $object->type;

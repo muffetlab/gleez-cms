@@ -24,10 +24,6 @@ return [
     // The tags table name, tags are stored. Must be plural to properly handle joins.
     'tag_table' => 'tags',
 
-    // The taggings model name, where taggings (when an object is tagged) are stored.
-    //Must be plural to properly handle joins.
-    'tagging_model' => 'tagging',
-
     // The taggings table name, where taggings (when an object is tagged) are stored.
     //Must be plural to properly handle joins.
     'tagging_table' => 'posts_tags',
