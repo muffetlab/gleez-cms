@@ -229,7 +229,7 @@ class Controller_Admin_User extends Controller_Admin
 						unset($_POST['pass']);
 					}
 
-                    $post->values($_POST, ['name', 'nick', 'mail', 'status']);
+                    $post->values($_POST, ['name', 'nick', 'mail', 'status', 'pass']);
 					$post->save();
 
                     // Ensure $_POST['roles'] is set and is an array
