@@ -68,7 +68,9 @@ The upgrade is executed via `modules/gleez/views/install/upgrade.sql`. This SQL 
 - Optimizes column types (e.g., `BIGINT` to `INT` where appropriate)
 - Updates the schema version in the `config` table
 
-Foreign key checks are temporarily disabled during the upgrade to allow column type and charset changes on columns that participate in foreign key constraints.
+Foreign key checks are temporarily disabled during the upgrade. The few foreign keys whose columns must be altered
+(charset conversion, `BIGINT` to `INT` optimization) are dropped beforehand and re-created afterwards, because MySQL
+rejects such changes even when foreign key checks are off.
 
 ## Password Hash Method
 
