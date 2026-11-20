@@ -94,11 +94,12 @@ class Controller_Admin_Page extends Controller_Admin
 					->set('action',  $action);
 
         if ($this->valid_post('page_settings')) {
-			unset($_POST['page_settings'], $_POST['_token'], $_POST['_action']);
+            $post = $this->request->post();
+            unset($post['page_settings'], $post['_token'], $post['_action']);
 
             $cats = $config->get('category', []);
 
-            foreach ($_POST as $key => $value) {
+            foreach ($post as $key => $value) {
                 if ($key == 'category') {
 					$terms = array_diff($cats, $value);
                     if ($terms) {
@@ -108,7 +109,7 @@ class Controller_Admin_Page extends Controller_Admin
 					}
 				}
                 $config->set($key, $value);
-			}
+            }
 
 			Kohana::$log->add(Log::INFO, 'Page Settings updated.');
 			Message::success(__('Page Settings updated!'));
@@ -140,10 +141,11 @@ class Controller_Admin_Page extends Controller_Admin
 
         if ($is_datatables) {
             $this->_datatables = $pages->dataTables(['id', 'title', 'author', 'status', 'updated']);
+            $posts = $this->request->post('posts') ?? [];
 
             foreach ($this->_datatables->result() as $page) {
                 $this->_datatables->add_row([
-                    Form::checkbox('posts[' . $page->id . ']', $page->id, isset($_POST['posts'][$page->id])),
+                    Form::checkbox('posts[' . $page->id . ']', $page->id, isset($posts[$page->id])),
                     HTML::anchor($page->url, $page->title),
                     HTML::anchor($page->user->url, $page->user->nick),
                     HTML::label(__($page->status), $page->status),

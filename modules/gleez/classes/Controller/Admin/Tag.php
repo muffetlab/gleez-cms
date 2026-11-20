@@ -97,7 +97,7 @@ class Controller_Admin_Tag extends Controller_Admin
         $action = Route::get('admin/tag')->uri(['action' => 'add']);
 
         if ($this->valid_post('tag')) {
-            $post->values($_POST, ['name', 'type']);
+            $post->values($this->request->post(), ['name', 'type']);
             try {
 				$post->save();
                 Message::success(__('Tag %name saved successful!', ['%name' => $post->name]));
@@ -142,7 +142,7 @@ class Controller_Admin_Tag extends Controller_Admin
         $this->title = __('Edit Tag %name', ['%name' => $post->name]);
 
         if ($this->valid_post('tag')) {
-            $post->values($_POST, ['name', 'type']);
+            $post->values($this->request->post(), ['name', 'type']);
             try {
 				$post->save();
 
@@ -194,13 +194,13 @@ class Controller_Admin_Tag extends Controller_Admin
 				->set('action', $tag->delete_url)
 				->set('title',  $tag->name);
 
-		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to list
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/tag')->uri());
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
                 $tag->delete(true);
                 Message::success(__('Tag %name deleted successful!', ['%name' => $tag->name]));
@@ -214,8 +214,8 @@ class Controller_Admin_Tag extends Controller_Admin
                 $this->_errors = [__('An error occurred while deleting tag %tag', ['%tag' => $tag->name])];
 
 				$this->request->redirect(Route::get('admin/tag')->uri(), 503);
-			}
-		}
+            }
+        }
 
 		$this->response->body($view);
 	}

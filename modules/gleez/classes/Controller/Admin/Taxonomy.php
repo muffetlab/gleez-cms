@@ -115,7 +115,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin
         $post = ORM::factory('Term');
 
         if ($this->valid_post('vocab')) {
-            $post->values($_POST, ['name', 'type', 'description']);
+            $post->values($this->request->post(), ['name', 'type', 'description']);
             try {
 				$post->make_root();
 
@@ -157,7 +157,7 @@ class Controller_Admin_Taxonomy extends Controller_Admin
 				->bind('errors', $this->_errors);
 
         if ($this->valid_post('vocab')) {
-            $post->values($_POST, ['name', 'type', 'description']);
+            $post->values($this->request->post(), ['name', 'type', 'description']);
             try {
 				$post->save();
 
@@ -202,13 +202,13 @@ class Controller_Admin_Taxonomy extends Controller_Admin
             ->set('action', Route::url('admin/taxonomy', ['action' => 'delete', 'id' => $term->id]))
             ->set('title', $term->name);
 
-		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to list
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
 				$term->delete();
                 Message::success(__('Category Group %name deleted successful!', ['%name' => $term->name]));
@@ -223,8 +223,8 @@ class Controller_Admin_Taxonomy extends Controller_Admin
                 $this->_errors = [__('An error occurred deleting category group %term', ['%term' => $term->name])];
 
                 $this->request->redirect(Route::get('admin/taxonomy')->uri(['action' => 'list']));
-			}
-		}
+            }
+        }
 
 		$this->response->body($view);
 	}

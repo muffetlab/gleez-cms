@@ -80,7 +80,7 @@ class Controller_Admin_Widget extends Controller_Admin
 		}
 
         if ($this->valid_post('widget-list')) {
-            foreach ($_POST['widgets'] as $widget) {
+            foreach ($this->request->post('widgets') as $widget) {
 				$widget['status'] = (int) ($widget['region'] != self::$WIDGET_REGION_NONE);
 				$widget['region'] = $widget['status'] ? $widget['region'] : self::$WIDGET_REGION_NONE;
 
@@ -92,7 +92,7 @@ class Controller_Admin_Widget extends Controller_Admin
                     ])
                     ->where('id', '=', $widget['id'])
                     ->execute();
-			}
+            }
 
 			Message::success(__('The Widget settings have been updated.'));
             Cache::instance()->delete_all();
@@ -127,7 +127,7 @@ class Controller_Admin_Widget extends Controller_Admin
 					->set('regions', $widget_regions);
 
         if ($this->valid_post('widget')) {
-            $widget->values($_POST, [
+            $widget->values($this->request->post(), [
                 'title',
                 'region',
                 'status',
@@ -191,14 +191,23 @@ class Controller_Admin_Widget extends Controller_Admin
 					->set('regions', $widget_regions);
 
         if ($this->valid_post('widget')) {
-            $widget->values($_POST, ['title', 'region', 'status', 'icon', 'show_title', 'visibility', 'pages']);
+            $widget->values($this->request->post(), [
+                'title',
+                'region',
+                'status',
+                'icon',
+                'show_title',
+                'visibility',
+                'pages'
+            ]);
             try {
 				$widget->save();
-                if (isset($_POST['widget'])) {
-					unset($_POST['widget'], $_POST['_token'], $_POST['_action']);
-				}
+                $post = $this->request->post();
+                if (isset($post['widget'])) {
+                    unset($post['widget'], $post['_token'], $post['_action']);
+                }
 
-				$handler->save($_POST);
+                $handler->save($post);
                 Message::success(__('Widget %name updated successful!', ['%name' => $widget->title]));
                 Cache::instance()->delete_all();
 
@@ -250,17 +259,17 @@ class Controller_Admin_Widget extends Controller_Admin
                 ]) . URL::query($destination))
             ->set('title', $widget->title);
 
-		// If deletion is not desired, redirect to post
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to post
+        if ($this->request->post('no') !== null && $this->valid_post()) {
             $this->request->redirect(Route::get('admin/widget')->uri(['id' => $widget->id]));
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
 				$title = $widget->title;
 				$widget->delete();
-				$handler->delete($_POST);
+                $handler->delete($this->request->post());
 
                 Message::success(__('Widget :title deleted successful!', [':title' => $title]));
                 Cache::instance()->delete_all();
@@ -276,7 +285,7 @@ class Controller_Admin_Widget extends Controller_Admin
 			$this->request->query('destination');
 
 			$this->request->redirect($redirect);
-		}
+        }
 
 		$this->response->body($view);
 	}

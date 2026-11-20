@@ -258,7 +258,7 @@ class Controller_Blog extends Template
             ->set('created', false)
             ->set('author', false)
             ->set('path', false)
-            ->set('tags', $_POST['form_tags'] ?? false)
+            ->set('tags', $this->request->post('form_tags') ?? false)
             ->set('image', false)
             ->bind('errors', $this->_errors)
             ->bind('terms', $terms)
@@ -279,7 +279,15 @@ class Controller_Blog extends Template
 
         if ($this->valid_post('blog')) {
             try {
-                $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
+                $post->values($this->request->post(), [
+                    'title',
+                    'body',
+                    'format',
+                    'status',
+                    'sticky',
+                    'promote',
+                    'comment'
+                ])->save();
 
                 Kohana::$log->add(Log::INFO, 'Blog :title created.', [':title' => $post->title]);
                 Message::success(__('Blog %title created', ['%title' => $post->title]));
@@ -364,7 +372,15 @@ class Controller_Blog extends Template
 
         if ($this->valid_post('blog')) {
             try {
-                $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
+                $post->values($this->request->post(), [
+                    'title',
+                    'body',
+                    'format',
+                    'status',
+                    'sticky',
+                    'promote',
+                    'comment'
+                ])->save();
 
                 Kohana::$log->add(Log::INFO, 'Blog :title updated.', [':title' => $post->title]);
                 Message::success(__('Blog %title updated', ['%title' => $post->title]));

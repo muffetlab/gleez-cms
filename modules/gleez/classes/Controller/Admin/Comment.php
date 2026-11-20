@@ -267,6 +267,7 @@ class Controller_Admin_Comment extends Controller_Admin
 	{
         if (Request::is_datatables()) {
             $this->_datatables = $posts->dataTables(['id', 'title', 'author', 'guest_name', 'created']);
+            $comments = $this->request->post('comments') ?? [];
 
             foreach ($this->_datatables->result() as $post) {
                 if ($post->author == 1 && !is_null($post->guest_name)) {
@@ -279,7 +280,7 @@ class Controller_Admin_Comment extends Controller_Admin
 				}
 
                 $this->_datatables->add_row([
-                    Form::checkbox('comments[' . $post->id . ']', $post->id, isset($_POST['comments'][$post->id])),
+                    Form::checkbox('comments[' . $post->id . ']', $post->id, isset($comments[$post->id])),
                     HTML::anchor($post->url, Text::limit_chars($post->title, 40), [
                         'class' => 'action-view',
                         'title' => Text::limit_chars($post->rawbody, 120)
