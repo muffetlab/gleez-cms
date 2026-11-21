@@ -106,7 +106,7 @@
 			<?php if ($filters_enabled): ?>
 				<td><?php echo __('Pass') ?></td>
 			<?php else: ?>
-                <td><?php echo __('The :filer extension is either not loaded or not compiled in.', [':filter' => HTML::anchor('https://www.php.net/filter', 'filter')]); ?></td>
+                <td><?php echo __('The :filter extension is either not loaded or not compiled in.', [':filter' => HTML::anchor('https://www.php.net/filter', 'filter')]); ?></td>
 			<?php endif ?>
 		</tr>
 
