@@ -127,33 +127,32 @@ class Controller_Admin_Tool extends Controller_Admin
             $db = Database::instance();
             $prefix = $db->table_prefix();
 
-            $sqlFile = MODPATH . 'gleez/views/install/upgrade.sql';
             $buf = '';
-            $version = serialize($targetVersion);
 
-            foreach (file($sqlFile) as $line) {
-                $line = trim($line);
+            foreach (Gleez_Upgrade::scripts($dbVersion, $targetVersion) as $sqlFile) {
+                foreach (file($sqlFile) as $line) {
+                    $line = trim($line);
 
-                if ($line === '' || strncmp($line, '--', 2) === 0) {
-                    continue;
-                }
-
-                $buf .= ' ' . $line;
-
-                if (preg_match('/;$/', $buf)) {
-                    // Replace the version token before table prefix expansion
-                    $sql = str_replace('{version}', $version, trim($buf));
-                    $sql = preg_replace('/{(\w+)}/', $prefix . '$1', $sql);
-                    try {
-                        $db->query(Database::UPDATE, $sql);
-                    } catch (Database_Exception $e) {
-                        $errors[] = $e->getMessage();
+                    if ($line === '' || strncmp($line, '--', 2) === 0) {
+                        continue;
                     }
-                    $buf = '';
+
+                    $buf .= ' ' . $line;
+
+                    if (preg_match('/;$/', $buf)) {
+                        $sql = preg_replace('/{(\w+)}/', $prefix . '$1', trim($buf));
+                        try {
+                            $db->query(Database::UPDATE, $sql);
+                        } catch (Database_Exception $e) {
+                            $errors[] = $e->getMessage();
+                        }
+                        $buf = '';
+                    }
                 }
             }
 
             if (empty($errors)) {
+                Gleez_Upgrade::stamp($prefix, $targetVersion);
                 Cache::instance()->delete_all();
 
                 Message::success(__('Upgrade completed successfully! Database is now at version :version.', [':version' => $targetVersion]));

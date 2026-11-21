@@ -400,7 +400,7 @@ class Controller_Install_Install extends Controller_Template
         $link = mysqli_connect($config['hostname'], $config['user'], $config['pass']);
         mysqli_select_db($link, $config['database']);
 
-		$sql_file = MODPATH . "gleez/views/install/install.sql";
+        $sql_file = MODPATH . 'gleez/sql/install.sql';
 
         foreach (file($sql_file) as $line) {
 			$buf .= trim($line);
