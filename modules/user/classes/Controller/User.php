@@ -326,13 +326,17 @@ class Controller_User extends Template
 
 		// Form submitted
         if ($this->valid_post('user_edit')) {
-			// Creating user age
-			$dob = strtotime(Arr::get($_POST, 'days').'-'.Arr::get($_POST, 'month').'-'.Arr::get($_POST, 'years'));
+            $post = $this->request->post();
 
-			// Unset not needed field
-			unset($_POST['years'], $_POST['month'], $_POST['days'], $_POST['name']);
+            // Creating user age
+            $dob = strtotime(Arr::get($post, 'days')
+                . '-' . Arr::get($post, 'month')
+                . '-' . Arr::get($post, 'years'));
 
-            $post = Arr::merge($_POST, ['dob' => $dob]);
+            // Unset not needed field
+            unset($post['years'], $post['month'], $post['days'], $post['name']);
+
+            $post = Arr::merge($post, ['dob' => $dob]);
 
             try {
                 $user->values($post, ['nick', 'homepage', 'mail', 'bio', 'dob'])->save();
@@ -500,15 +504,16 @@ class Controller_User extends Template
 		// Form submitted
         if ($this->valid_post('reset_pass')) {
             try {
-				// Try to reset the password
-				$this->_user->reset_password($_POST);
+                // Try to reset the password
+                $form = $this->request->post();
+                $this->_user->reset_password($form);
 
                 Message::success(__('Instructions to reset your password are being sent to your email address %mail.', [
-                    '%mail' => $_POST['mail']
+                    '%mail' => $this->request->post('mail')
                 ]));
                 Kohana::$log->add(Log::INFO, 'Password reset instructions mailed to :name at :mail.', [
                     ':name' => $this->_user->name,
-                    ':mail' => $_POST['mail']
+                    ':mail' => $this->request->post('mail')
                 ]);
 
                 $this->request->redirect(Route::get('user')->uri(['action' => 'login']));
@@ -568,7 +573,8 @@ class Controller_User extends Template
 		// Form submitted
         if ($this->valid_post('password_confirm')) {
             try {
-				$this->_user->confirm_reset_password_form($_POST);
+                $form = $this->request->post();
+                $this->_user->confirm_reset_password_form($form);
 				
 				Message::success(__('You can now sign in with your new password.'));
                 $this->request->redirect(Route::get('user')->uri(['action' => 'login']));

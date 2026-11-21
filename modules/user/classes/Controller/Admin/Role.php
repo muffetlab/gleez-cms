@@ -95,7 +95,7 @@ class Controller_Admin_Role extends Controller_Admin
         $post = ORM::factory('Role');
 
         if ($this->valid_post('role')) {
-            $post->values($_POST, ['name', 'description', 'special']);
+            $post->values($this->request->post(), ['name', 'description', 'special']);
             try {
 				$post->save();
                 Message::success(__('Role %name saved successful!', ['%name' => $post->name]));
@@ -141,7 +141,7 @@ class Controller_Admin_Role extends Controller_Admin
 					->bind('post',  $post);
 
         if ($this->valid_post('role')) {
-            $post->values($_POST, ['name', 'description', 'special']);
+            $post->values($this->request->post(), ['name', 'description', 'special']);
 
             try {
 				$post->save();
@@ -180,13 +180,13 @@ class Controller_Admin_Role extends Controller_Admin
             ->set('action', Route::url('admin/role', ['action' => 'delete', 'id' => $role->id]))
             ->set('title', $role->name);
 
-		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to list
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/role')->uri());
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
                 $role->delete(true);
                 Message::success(__('Role: :name deleted successful!', [':name' => $role->name]));
@@ -200,8 +200,8 @@ class Controller_Admin_Role extends Controller_Admin
                 Message::error(__('An error occurred while deleting the role :name.', [':name' => $role->name]));
 
 				$this->request->redirect(Route::get('admin/role')->uri());
-			}
-		}
+            }
+        }
 
 		$this->response->body($view);
 	}

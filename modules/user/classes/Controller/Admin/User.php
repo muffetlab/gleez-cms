@@ -141,20 +141,21 @@ class Controller_Admin_User extends Controller_Admin
 					// Create the User
 					$post->save();
 
-                    // Ensure $_POST['roles'] is set and is an array
-                    if (!isset($_POST['roles']) || !is_array($_POST['roles'])) {
-                        $_POST['roles'] = [];
-					}
+                    // Ensure roles is set and is an array
+                    $roles = $this->request->post('roles');
+                    if (!is_array($roles)) {
+                        $roles = [];
+                    }
 
-					// Make sure to add an empty if none of the roles checked to avoid errors
-                    if (empty($_POST['roles']) || is_null(Arr::get($_POST['roles'], 'login'))) {
-                        $_POST['roles'] = Arr::merge($_POST['roles'], ['login' => '']);
-					}
+                    // Make sure to add an empty if none of the roles checked to avoid errors
+                    if (empty($roles) || is_null(Arr::get($roles, 'login'))) {
+                        $roles = Arr::merge($roles, ['login' => '']);
+                    }
 
-                    foreach (array_keys($_POST['roles']) as $role) {
-						// add() executes the query immediately, and saves the data
+                    foreach (array_keys($roles) as $role) {
+                        // add() executes the query immediately, and saves the data
                         $post->add('roles', ORM::factory('Role', ['name' => $role]));
-					}
+                    }
 
                     Message::success(__('User %name saved successful!', ['%name' => $post->name]));
 
@@ -224,33 +225,35 @@ class Controller_Admin_User extends Controller_Admin
 
             if ($data->check()) {
                 try {
-					// password can be empty - it will be ignored in save.
-                    if (empty($_POST['pass']) || (trim($_POST['pass']) == '')) {
-						unset($_POST['pass']);
-					}
+                    // password can be empty - it will be ignored in save.
+                    $values = $this->request->post();
+                    if (empty($values['pass']) || (trim($values['pass']) == '')) {
+                        unset($values['pass']);
+                    }
 
-                    $post->values($_POST, ['name', 'nick', 'mail', 'status', 'pass']);
+                    $post->values($values, ['name', 'nick', 'mail', 'status', 'pass']);
 					$post->save();
 
-                    // Ensure $_POST['roles'] is set and is an array
-                    if (!isset($_POST['roles']) || !is_array($_POST['roles'])) {
-                        $_POST['roles'] = [];
-					}
+                    // Ensure roles is set and is an array
+                    $roles = $this->request->post('roles');
+                    if (!is_array($roles)) {
+                        $roles = [];
+                    }
 
-					// Make sure to add an empty if none of the roles checked to avoid errors
-                    if (empty($_POST['roles']) || is_null(Arr::get($_POST['roles'], 'login'))) {
-                        $_POST['roles'] = Arr::merge($_POST['roles'], ['login' => '']);
-					}
+                    // Make sure to add an empty if none of the roles checked to avoid errors
+                    if (empty($roles) || is_null(Arr::get($roles, 'login'))) {
+                        $roles = Arr::merge($roles, ['login' => '']);
+                    }
 
 					// Roles have to be added separately, and all users have to have the login role
 					// you first have to remove the items, otherwise add() will try to add duplicates
 					// could also use array_diff, but this is much simpler
 					DB::delete('roles_users')->where('user_id', '=', $id)->execute();
 
-                    foreach (array_keys($_POST['roles']) as $role) {
-						// add() executes the query immediately, and saves the data
+                    foreach (array_keys($roles) as $role) {
+                        // add() executes the query immediately, and saves the data
                         $post->add('roles', ORM::factory('Role', ['name' => $role]));
-					}
+                    }
 
                     Message::success(__('User %name saved successful!', ['%name' => $post->name]));
 
@@ -298,13 +301,12 @@ class Controller_Admin_User extends Controller_Admin
 				->set('action',$user->delete_url)
 				->set('title', $user->name);
 
-		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to list
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/user')->uri());
-		}
-
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        }
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
                 $user->delete(true);
                 Message::success(__('User %name deleted successful!', ['%name' => $user->name]));
@@ -322,8 +324,8 @@ class Controller_Admin_User extends Controller_Admin
                     ])
                 ];
 				$this->request->redirect(Route::get('admin/user')->uri());
-			}
-		}
+            }
+        }
 
 		$this->response->body($view);
 	}
