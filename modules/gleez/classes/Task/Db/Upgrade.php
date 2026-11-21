@@ -72,6 +72,7 @@ class Task_Db_Upgrade extends Minion_Task
         $buf = '';
         $errors = [];
         $statements = 0;
+        $version = serialize($targetVersion);
 
         foreach (file($sqlFile) as $line) {
             $line = trim($line);
@@ -83,7 +84,9 @@ class Task_Db_Upgrade extends Minion_Task
             $buf .= ' ' . $line;
 
             if (preg_match('/;$/', $buf)) {
-                $sql = preg_replace('/{(\w+)}/', $prefix . '$1', trim($buf));
+                // Replace the version token before table prefix expansion
+                $sql = str_replace('{version}', $version, trim($buf));
+                $sql = preg_replace('/{(\w+)}/', $prefix . '$1', $sql);
 
                 try {
                     $db->query(Database::UPDATE, $sql);

@@ -224,9 +224,9 @@ PREPARE upgrade_fk FROM @sql;
 EXECUTE upgrade_fk;
 DEALLOCATE PREPARE upgrade_fk;
 
--- 11. Update schema version to 1.3.0
+-- 11. Stamp the schema version with the current release (the {version} token is replaced by the upgrade executors)
 REPLACE INTO {config} (`group_name`, `config_key`, `config_value`) VALUES
-('site', 'version', 's:5:"1.3.0";');
+('site', 'version', '{version}');
 
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;

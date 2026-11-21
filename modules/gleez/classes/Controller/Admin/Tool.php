@@ -129,6 +129,7 @@ class Controller_Admin_Tool extends Controller_Admin
 
             $sqlFile = MODPATH . 'gleez/views/install/upgrade.sql';
             $buf = '';
+            $version = serialize($targetVersion);
 
             foreach (file($sqlFile) as $line) {
                 $line = trim($line);
@@ -140,7 +141,9 @@ class Controller_Admin_Tool extends Controller_Admin
                 $buf .= ' ' . $line;
 
                 if (preg_match('/;$/', $buf)) {
-                    $sql = preg_replace('/{(\w+)}/', $prefix . '$1', trim($buf));
+                    // Replace the version token before table prefix expansion
+                    $sql = str_replace('{version}', $version, trim($buf));
+                    $sql = preg_replace('/{(\w+)}/', $prefix . '$1', $sql);
                     try {
                         $db->query(Database::UPDATE, $sql);
                     } catch (Database_Exception $e) {
