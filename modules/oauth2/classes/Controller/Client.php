@@ -72,18 +72,18 @@ class Controller_Client extends Template
 
         $client = ORM::factory('Client');
 
-        if (isset($_POST['cancel']) && $this->valid_post()) {
+        if ($this->request->post('cancel') !== null && $this->valid_post()) {
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
-		}
+        }
 
         if ($this->valid_post('save')) {
             $client->values($this->request->post(), ['title', 'redirect_uri', 'description', 'status']);
 
             try {
-                if (!empty($_POST['grant_types'])) {
-                    $grant_types_selected = implode(' ', $_POST['grant_types']);
+                if (!empty($this->request->post('grant_types'))) {
+                    $grant_types_selected = implode(' ', $this->request->post('grant_types'));
                     $client->grant_types = $grant_types_selected;
-			    }
+                }
 
                 if (isset($_FILES['logo'])) {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
@@ -134,19 +134,19 @@ class Controller_Client extends Template
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
 		}
 
-        if (isset($_POST['cancel']) && $this->valid_post()) {
+        if ($this->request->post('cancel') !== null && $this->valid_post()) {
             $this->request->redirect(Route::get('oauth2/client')->uri(['action' => 'list']));
-		}
+        }
 
         if ($this->valid_post('save')) {
             $client->values($this->request->post(), ['title', 'redirect_uri', 'description', 'status']);
 
             try {
 			    //$grant_types_selected = 'authorization_code';
-                if (!empty($_POST['grant_types'])) {
-                    $grant_types_selected = implode(' ', $_POST['grant_types']);
+                if (!empty($this->request->post('grant_types'))) {
+                    $grant_types_selected = implode(' ', $this->request->post('grant_types'));
                     $client->grant_types = $grant_types_selected;
-			    }
+                }
 
                 if (isset($_FILES['logo'])) {
 				    $filename = uniqid().preg_replace('/\s+/u', '_', $_FILES['logo']['name']);
@@ -230,12 +230,13 @@ class Controller_Client extends Template
         $this->subtitle = HTML::chars($client->client_id);
         $form = View::factory('form/confirm')->set('action', $client->delete_url)->set('title', $client->client_id);
 
-		// If deletion is not desired, redirect to post
-        if (isset($_POST['no']) && $this->valid_post())
-			$this->request->redirect( 'oauth2/client' );
+        // If deletion is not desired, redirect to post
+        if ($this->request->post('no') !== null && $this->valid_post()) {
+            $this->request->redirect('oauth2/client');
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             $clonedClient = clone $client;
 
             try {
@@ -248,8 +249,8 @@ class Controller_Client extends Template
                     ':title' => $clonedClient->client_id
                 ]));
 				$this->request->redirect($redirect);
-			}			
-		}
+            }
+        }
 		
 		$this->response->body($form);		
 	}
