@@ -65,8 +65,8 @@ class Theme
 			Theme::$active = $config->get('mobile_theme', 'cerber');
 		}
 
-		// Admins can override the site theme, temporarily. This lets us preview themes.
-        if (User::is_admin() && isset($_GET['theme']) && ($override = HTML::chars($_GET['theme']))) {
+        // Admins can override the site theme, temporarily. This lets us preview themes.
+        if (User::is_admin() && ($theme = Request::initial()->query('theme')) !== null && ($override = HTML::chars($theme))) {
 			Theme::$active = $override;
 		}
 

@@ -150,8 +150,8 @@ class Controller_User extends Template
 		// Disable sidebars on login page
         $this->_sidebars = false;
 
-		// Create form action
-        $destination = $_GET['destination'] ?? Request::initial()->uri();
+        // Create form action
+        $destination = Request::initial()->query('destination') ?? Request::initial()->uri();
         $params = ['action' => 'login'];
         $action = Route::get('user')->uri($params) . URL::query(['destination' => $destination]);
 
@@ -172,8 +172,8 @@ class Controller_User extends Template
                 Message::success(__('Welcome, %title!', ['%title' => $user->nick]));
                 Kohana::$log->add(Log::INFO, 'User :name logged in.', [':name' => $user->name]);
 
-				// redirect to the user account
-                $this->request->redirect($_GET['destination'] ?? '', 200);
+                // redirect to the user account
+                $this->request->redirect(Request::initial()->query('destination') ?? '', 200);
 
             } catch (Validation_Exception $e) {
                 $this->_errors = $e->array->errors('login');

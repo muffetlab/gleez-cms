@@ -43,8 +43,8 @@ class Widget_User extends Widget
 
         Assets::css('user', 'media/css/user.css', ['weight' => 2]);
 
-		// Create form action
-        $destination = $_GET['destination'] ?? Request::initial()->uri();
+        // Create form action
+        $destination = Request::initial()->query('destination') ?? Request::initial()->uri();
         $params = ['action' => 'login'];
         $action = Route::get('user')->uri($params) . URL::query(['destination' => $destination]);
 
