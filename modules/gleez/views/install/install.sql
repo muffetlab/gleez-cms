@@ -177,7 +177,7 @@ INSERT INTO {config} (`group_name`, `config_key`, `config_value`) VALUES
 ('site', 'time_format', 's:5:"H:i:s";'),
 ('site', 'gleez_private_key', 's:72:"d6b7050911d1fa78e8f8eb648feacbb61a03805fa62126cbc303cab12dba77067655674c";'),
 ('site', 'auth_hash_key', 's:72:"d6b7050911d1fa78e8f8eb648feacbb61a03805fa62126cbc303cab12dba77067655674c";'),
-('site', 'version', 's:5:"1.3.0";');
+('site', 'version', '{version}');
 
 DROP TABLE IF EXISTS {menus};
 CREATE TABLE {menus} (

@@ -395,6 +395,7 @@ class Controller_Install_Install extends Controller_Template
     {
         $prefix = $config['table_prefix'];
 		$buf = null;
+        $version = serialize(Gleez::VERSION);
 
         $link = mysqli_connect($config['hostname'], $config['user'], $config['pass']);
         mysqli_select_db($link, $config['database']);
@@ -404,9 +405,12 @@ class Controller_Install_Install extends Controller_Template
         foreach (file($sql_file) as $line) {
 			$buf .= trim($line);
             if (preg_match("/;$/", $buf)) {
-                if (!mysqli_query($link, $this->prepend_prefix($prefix, $buf))) {
-					throw new Exception(mysqli_error($link));
-				}
+                // Replace the version token before table prefix expansion
+                $sql = str_replace('{version}', $version, $buf);
+
+                if (!mysqli_query($link, $this->prepend_prefix($prefix, $sql))) {
+                    throw new Exception(mysqli_error($link));
+                }
 				$buf = "";
 			}
 		}
