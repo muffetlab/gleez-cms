@@ -23,6 +23,7 @@ return [
     'Ability to publish comments without approval by the moderator' => 'Kemampuan untuk mempublikasikan komentar tanpa persetujuan moderator',
     'Access comments' => 'Akses komentar',
     'Access to any published comments' => 'Akses ke setiap komentar yang dipublikasikan',
+    'A database upgrade is required. Your current schema version is :current, the installed Gleez CMS requires version :target. Please back up your database before proceeding.' => 'Pembaruan basis data diperlukan. Versi skema saat ini :current, Gleez CMS yang terinstal memerlukan versi :target. Silakan cadangkan basis data Anda sebelum melanjutkan.',
     'Account' => 'Akun',
     'Actions' => 'Tindakan',
     'activate Google Chrome Frame' => 'mengaktifkan Google Chrome Frame',
@@ -73,6 +74,7 @@ return [
     'An error occurred deleting post %post' => 'Terjadi kesalahan menghapus posting %post',
     'An error occurred while deleting tag %tag' => 'Terjadi kesalahan menghapus tag %tag',
     'An error occurred deleting term %term' => 'Terjadi kesalahan menghapus %term jangka',
+    'Are you sure? Do not refresh the page during the process.' => 'Anda yakin? Jangan muat ulang halaman selama proses berlangsung.',
     'Are you sure you want to delete %title?' => 'Apakah Anda yakin ingin menghapus %title?',
     'Application Directory' => 'Directory aplikasi',
     'Apply' => 'Terapkan',
@@ -123,6 +125,7 @@ return [
     'Database' => 'Basis Data',
     'Database Configuration' => 'Konfigurasi Database',
     'Database Name' => 'Nama Basis Data',
+    'Database upgrade completed successfully!' => 'Pembaruan basis data berhasil diselesaikan!',
     'Date' => 'Tanggal',
     'Date Format' => 'Format Tanggal',
     'Date Time Format' => 'Format Tanggal Waktu',
@@ -342,6 +345,7 @@ return [
     'Rendered in {execution_time}, using {memory_usage} of memory.' => 'Di-render dalam {execution_time} , menggunakan memori {memory_usage}.',
     'Right Sidebar' => 'Sidebar Kanan',
     'Roles' => 'Peran',
+    'Run Upgrade' => 'Jalankan Pembaruan',
 
     // S
     'Save' => 'Simpan',
@@ -430,6 +434,7 @@ return [
     'The tags module allows you to create free-tagging for everything, to define the various properties of your content, for example \'Countries\' or \'Colors\'.' => 'Tag modul memungkinkan Anda untuk membuat bebas penandaan untuk semuanya , untuk mendefinisikan berbagai properti dari konten Anda , misalnya Negara atau Warna.',
     'The update has been performed!' => 'Pembaruan telah dilakukan !',
     'The update has not been performed!' => 'Pembaruan belum dilakukan !',
+    'The upgrade completed with the following errors. You may need to manually fix these.' => 'Pembaruan selesai dengan kesalahan berikut. Anda mungkin perlu memperbaikinya secara manual.',
     'The username :param1 does not exist' => 'Username :param1 tidak ada',
     'The Widget settings have been updated.' => 'Pengaturan Widget telah diperbarui .',
     'The main parameters of the site set up here. The following are all of the settings that define your site as a whole: settings which determine how your site behaves, how you interact with your site, and how the rest of the world interacts with your site.'
@@ -461,6 +466,8 @@ return [
     'Updated' => 'Diperbaharui',
     'Unpublish' => 'Membatalkan publikasi',
     'upgrade your browser' => 'Meng-upgrade browser Anda',
+    'Upgrade completed with errors' => 'Pembaruan selesai dengan kesalahan',
+    'Upgrade Required' => 'Pembaruan Diperlukan',
     'URI Determination' => 'URI Penentuan',
     'URL Path' => 'Jalur URL',
     'User' => 'Pengguna',
@@ -497,6 +504,7 @@ return [
     // Y
     'Yes' => 'Ya',
     'You are using an :out browser. Please :url or :frame to improve your experience' => 'Anda menggunakan :out peramban. Silahkan :url atau :frame untuk meningkatkan pengalaman Anda',
+    'Your database is up to date (version :version). No upgrade is needed.' => 'Basis data Anda sudah terbaru (versi :version). Tidak perlu pembaruan.',
     'Your Gleez install is complete!' => 'Instalasi Gleez anda selesai!',
 
     // Z

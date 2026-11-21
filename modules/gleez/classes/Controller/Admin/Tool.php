@@ -155,8 +155,8 @@ class Controller_Admin_Tool extends Controller_Admin
                 Gleez_Upgrade::stamp($prefix, $targetVersion);
                 Cache::instance()->delete_all();
 
-                Message::success(__('Upgrade completed successfully! Database is now at version :version.', [':version' => $targetVersion]));
-                $this->request->redirect(Route::get('admin')->uri(['controller' => 'tool']));
+                Message::success(__('Database upgrade completed successfully!'));
+                $this->request->redirect(Route::get('admin')->uri(['controller' => 'tool', 'action' => 'upgrade']));
             }
         }
 

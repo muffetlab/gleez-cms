@@ -23,6 +23,7 @@ return [
     'Ability to publish comments without approval by the moderator' => 'Possibilit&agrave; di pubblicare commenti senza l\'approvazione del moderatore',
     'Access comments' => 'Accedi ai commenti',
     'Access to any published comments' => 'Accesso a qualsiasi commento pubblicato',
+    'A database upgrade is required. Your current schema version is :current, the installed Gleez CMS requires version :target. Please back up your database before proceeding.' => 'È necessario un aggiornamento del database. La versione attuale dello schema è :current, il Gleez CMS installato richiede la versione :target. Effettua un backup del database prima di procedere.',
     'Account' => 'Profilo utente',
     'Actions' => 'Azioni',
     'activate Google Chrome Frame' => 'attivare Google Chrome Frame',
@@ -73,6 +74,7 @@ return [
     'An error occurred deleting post %post' => 'Si &#269; verificato un errore durante l\'eliminazione del post %post',
     'An error occurred while deleting tag %tag' => 'Si &#269; verificato un errore durante l\'eliminazione del tag %tag',
     'An error occurred deleting term %term' => 'Si &#269; verificato un errore durante l\'eliminazione %term',
+    'Are you sure? Do not refresh the page during the process.' => 'Sei sicuro? Durante il processo non aggiornare la pagina.',
     'Are you sure you want to delete %title?' => 'Sei sicuro di voler cancellare %title?',
     'Application Directory' => 'Cartella dell\'applicazione',
     'Apply' => 'Applica',
@@ -116,6 +118,7 @@ return [
     'Database' => 'Database',
     'Database Configuration' => 'Configurazione Database',
     'Database Name' => 'Nome del database',
+    'Database upgrade completed successfully!' => 'Aggiornamento del database completato correttamente!',
     'Date' => 'Data',
     'Date Format' => 'Formato della data',
     'Date Time Format' => 'Formato data-ora',
@@ -322,6 +325,7 @@ return [
     'Rendered in {execution_time}, using {memory_usage} of memory.' => 'Pagina caricata in {execution_time}, usando {memory_usage} di memoria.',
     'Right Sidebar' => 'Sidebar destra',
     'Roles' => 'Ruoli',
+    'Run Upgrade' => 'Esegui aggiornamento',
     // S
     'Save' => 'Salva',
     'Save Changes' => 'Salva i cambiamenti',
@@ -405,6 +409,7 @@ return [
     'The tags module allows you to create free-tagging for everything, to define the various properties of your content, for example \'Countries\' or \'Colors\'.' => 'Il modulo tag ti consente di creare etichette (tag) liberamente, per definire le varie propriet&agrave; dei tuoi contenuti, per esempio \'Paesi\' o \'Colori\'.',
     'The update has been performed!' => 'L\'aggiornamento &#269; stato effettuato!',
     'The update has not been performed!' => 'L\'aggiornamento non &#269; stato effettuato!',
+    'The upgrade completed with the following errors. You may need to manually fix these.' => 'L\'aggiornamento è terminato con i seguenti errori. Potrebbe essere necessario correggerli manualmente.',
     'The username :param1 does not exist' => 'Lo username :param1 non esiste',
     'The Widget settings have been updated.' => 'Le impostazioni del widget sono state aggiornate.',
     'There are no Comments.' => 'Non ci sono commenti.',
@@ -433,6 +438,8 @@ return [
     'Updated' => 'Aggiornato',
     'Unpublish' => 'Annulla la pubblicazione',
     'upgrade your browser' => 'aggiorna il tuo browser',
+    'Upgrade completed with errors' => 'Aggiornamento completato con errori',
+    'Upgrade Required' => 'Aggiornamento necessario',
     'URI Determination' => 'Determinazione URI',
     'URL Path' => 'Percorso URL',
     'User' => 'Utente',
@@ -464,6 +471,7 @@ return [
     // Y
     'Yes' => 'Si',
     'You are using an :out browser. Please :url or :frame to improve your experience' => 'Si sta utilizzando un browser :out. Si prega di visualizzare :url o :frame per migliorare la vostra esperienza',
+    'Your database is up to date (version :version). No upgrade is needed.' => 'Il database è aggiornato (versione :version). Nessun aggiornamento necessario.',
     'Your Gleez install is complete!' => 'L\'installazione di Gleez &#269; completa!',
     // Z
 ];

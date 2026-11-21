@@ -23,6 +23,7 @@ return [
     'Ability to publish comments without approval by the moderator' => 'Capacitatea de a publica comentarii fără aprobarea moderatorului',
     'Access comments' => 'Acces comentarii',
     'Access to any published comments' => 'Acces la toate comentariile publicate',
+    'A database upgrade is required. Your current schema version is :current, the installed Gleez CMS requires version :target. Please back up your database before proceeding.' => 'Este necesară o actualizare a bazei de date. Versiunea curentă a schemei este :current, Gleez CMS instalat necesită versiunea :target. Faceți o copie de rezervă a bazei de date înainte de a continua.',
     'Account' => 'Cont',
     'Actions' => 'Acțiuni',
     'activate Google Chrome Frame' => 'activează Google Chrome Frame',
@@ -73,6 +74,7 @@ return [
     'An error occurred deleting post %post' => 'A intervenit o eroare îndepărtând articolul %post',
     'An error occurred while deleting tag %tag' => 'A intervenit o eroare îndepărtând eticheta %tag',
     'An error occurred deleting term %term' => 'A intervenit o eroare îndepărtând termenul %term',
+    'Are you sure? Do not refresh the page during the process.' => 'Sunteți sigur? Nu reîncărcați pagina în timpul procesului.',
     'Are you sure you want to delete %title?' => 'Sigur vrei sa îndepărtezi %title?',
     'Application Directory' => 'Director de Aplicații',
     'Apply' => 'Aplică',
@@ -116,6 +118,7 @@ return [
     'Database' => 'Bază de Date',
     'Database Configuration' => 'Configurație Bază de Date',
     'Database Name' => 'Nume Bază de Date',
+    'Database upgrade completed successfully!' => 'Actualizarea bazei de date a fost finalizată cu succes!',
     'Date' => 'Data',
     'Date Format' => 'Format Dată',
     'Date Time Format' => 'Format Dată-Oră',
@@ -322,6 +325,7 @@ return [
     'Rendered in {execution_time}, using {memory_usage} of memory.' => 'Redat in {execution_time}, utilizând {memory_usage} de memorie.',
     'Right Sidebar' => 'Bară Laterală Dreapta',
     'Roles' => 'Roluri',
+    'Run Upgrade' => 'Rulează actualizarea',
     // S
     'Save' => 'Salvează',
     'Save Changes' => 'Salvează Modificări',
@@ -405,6 +409,7 @@ return [
     'The tags module allows you to create free-tagging for everything, to define the various properties of your content, for example \'Countries\' or \'Colors\'.' => 'Modulul de etichete te ajută să creezi etichete pentru orice, sa definești diferite proprietați pentru conținutul tău, cum ar fi “Țări” sau “Culori”.',
     'The update has been performed!' => 'Actualizarea a fost efectuată!',
     'The update has not been performed!' => 'Actualizarea nu a fost efectuată!',
+    'The upgrade completed with the following errors. You may need to manually fix these.' => 'Actualizarea s-a încheiat cu următoarele erori. Poate fi necesar să le reparați manual.',
     'The username :param1 does not exist' => 'Numele de utilizator :param1 nu exista',
     'The Widget settings have been updated.' => 'Setările Widgetului au fost actualizate.',
     'There are no Comments.' => 'Nu există Comentarii.',
@@ -433,6 +438,8 @@ return [
     'Updated' => 'Actualizat',
     'Unpublish' => 'Anulare Publicare',
     'upgrade your browser' => 'actualizează browserul',
+    'Upgrade completed with errors' => 'Actualizare finalizată cu erori',
+    'Upgrade Required' => 'Actualizare necesară',
     'URI Determination' => 'Determinare URI',
     'URL Path' => 'Cale URL',
     'User' => 'Utilizator',
@@ -464,6 +471,7 @@ return [
     // Y
     'Yes' => 'Da',
     'You are using an :out browser. Please :url or :frame to improve your experience' => 'Folosești un browser :out. Te rog :url sau :frame pentru a avea o experiență mai bună',
+    'Your database is up to date (version :version). No upgrade is needed.' => 'Baza de date este la zi (versiunea :version). Nu este necesară nicio actualizare.',
     'Your Gleez install is complete!' => 'Instalarea Gleez este completă!',
     // Z
 ];
