@@ -10,11 +10,11 @@
  */
 class Gleez
 {
-	/**
-	 * Release version
+    /**
+     * Release version
      * @var string
-	 */
-	const VERSION = '1.3.0';
+     */
+    const VERSION = '1.3.1';
 
 	/**
 	 * Minimal required version of php
