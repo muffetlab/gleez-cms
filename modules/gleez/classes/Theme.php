@@ -66,9 +66,11 @@ class Theme
 		}
 
         // Admins can override the site theme, temporarily. This lets us preview themes.
-        if (User::is_admin() && ($theme = Request::initial()->query('theme')) !== null && ($override = HTML::chars($theme))) {
+        // Note: this runs at bootstrap time (Gleez::ready), before Request::$initial
+        // exists, so the raw superglobal must be used here.
+        if (User::is_admin() && isset($_GET['theme']) && ($override = HTML::chars($_GET['theme']))) {
 			Theme::$active = $override;
-		}
+        }
 
 		//Finally set the active theme
 		Theme::set_theme();
