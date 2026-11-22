@@ -102,7 +102,6 @@ class Controller_Admin_Format extends Controller_Admin
 			->set('params', $params);
 
         if ($this->valid_post('filter')) {
-			unset($_POST['filter'], $_POST['_token'], $_POST['_action']);
 			Message::info(__('Not implemented yet!'));
 		}
 

@@ -104,7 +104,7 @@ class Controller_Admin_Path extends Controller_Admin
         $post = ORM::factory('Path');
 
         if ($this->valid_post('add_path')) {
-            $post->values($_POST, ['source', 'alias']);
+            $post->values($this->request->post(), ['source', 'alias']);
             try {
 				$post->save();
 
@@ -152,7 +152,7 @@ class Controller_Admin_Path extends Controller_Admin
             ->set('action', $action);
 
         if ($this->valid_post('add_path')) {
-            $post->values($_POST, ['source', 'alias']);
+            $post->values($this->request->post(), ['source', 'alias']);
 
             try {
 				$post->save();
@@ -195,13 +195,13 @@ class Controller_Admin_Path extends Controller_Admin
 			->set('action',  $path->delete_url)
 			->set('title',   $path->alias);
 
-		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to list
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/path')->uri());
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
 				$path->delete();
                 Message::success(__('Alias %name deleted successful!', ['%name' => $path->alias]));
@@ -214,8 +214,8 @@ class Controller_Admin_Path extends Controller_Admin
                 Message::error(__('An error occurred while deleting alias %path', ['%path' => $path->alias]));
 
                 $this->request->redirect(Route::get('admin/path')->uri(['action' => 'list']), 503);
-			}
-		}
+            }
+        }
 
 		$this->response->body($view);
 	}

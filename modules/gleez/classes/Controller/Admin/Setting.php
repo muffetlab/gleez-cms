@@ -47,15 +47,16 @@ class Controller_Admin_Setting extends Controller_Admin
 			->set('post',               $config);
 
         if ($this->valid_post('settings')) {
-			unset($_POST['settings'], $_POST['_token'], $_POST['_action']);
+            $post = $this->request->post();
+            unset($post['settings'], $post['_token'], $post['_action']);
 
-            foreach ($_POST as $key => $value) {
+            foreach ($post as $key => $value) {
 				$config->set($key, $value);
 
                 if ($key == 'front_page') {
 					$this->_set_front_page($value);
-				}
-			}
+                }
+            }
 
 			Kohana::$log->add(Log::INFO, 'Site configuration updated.');
 			Message::success(__('Site configuration updated!'));

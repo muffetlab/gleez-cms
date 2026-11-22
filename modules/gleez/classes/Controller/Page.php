@@ -248,7 +248,7 @@ class Controller_Page extends Template
             ->set('created', false)
             ->set('author', false)
             ->set('path', false)
-            ->set('tags', $_POST['form_tags'] ?? false)
+            ->set('tags', $this->request->post('form_tags') ?? false)
             ->bind('errors', $this->_errors)
             ->bind('terms', $terms)
             ->bind('post', $post);
@@ -269,7 +269,15 @@ class Controller_Page extends Template
         if ($this->valid_post('page')) {
             try {
                 $post->formTags = $this->request->post('form_tags');
-                $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
+                $post->values($this->request->post(), [
+                    'title',
+                    'body',
+                    'format',
+                    'status',
+                    'sticky',
+                    'promote',
+                    'comment'
+                ])->save();
 
                 Kohana::$log->add(Log::INFO, 'Page :title created.', [':title' => $post->title]);
                 Message::success(__('Page %title created', ['%title' => $post->title]));
@@ -353,7 +361,15 @@ class Controller_Page extends Template
         if ($this->valid_post('page')) {
             try {
                 $post->formTags = $this->request->post('form_tags');
-                $post->values($_POST, ['title', 'body', 'format', 'status', 'sticky', 'promote', 'comment'])->save();
+                $post->values($this->request->post(), [
+                    'title',
+                    'body',
+                    'format',
+                    'status',
+                    'sticky',
+                    'promote',
+                    'comment'
+                ])->save();
 
                 Kohana::$log->add(Log::INFO, 'Page: :title updated.', [':title' => $post->title]);
                 Message::success(__('Page %title updated', ['%title' => $post->title]));
@@ -417,13 +433,13 @@ class Controller_Page extends Template
 					->set('action', $post->delete_url.URL::query($destination))
 					->set('title',  $post->title);
 
-		// If deletion is not desired, redirect to post
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to post
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect($post->url);
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
 				$title = $post->title;
                 $post->delete(true);
@@ -441,7 +457,7 @@ class Controller_Page extends Template
 			$redirect = empty($destination) ? Route::get('page')->uri() : $this->request->query('destination');
 
 			$this->request->redirect($redirect);
-		}
+        }
 
 		$this->response->body($view);
 	}

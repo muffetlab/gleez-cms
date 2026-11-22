@@ -143,7 +143,7 @@ class Controller_Admin_Term extends Controller_Admin
             try {
                 $post->values(Arr::merge($this->request->post(), $_FILES), ['name', 'image', 'description']);
 				$post->type = $vocab->type;
-				$post->create_at($id, Arr::get($_POST, 'parent', 'last'));
+                $post->create_at($id, $this->request->post('parent') ?? 'last');
 
                 Message::success(__('Category %name saved successful!', ['%name' => $post->name]));
 
@@ -245,13 +245,13 @@ class Controller_Admin_Term extends Controller_Admin
 					->set('title', $term->name)
 					->set('action', $action);
 
-		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to list
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/taxonomy')->uri());
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
 				$name = $term->name;
                 $term->delete(true);
@@ -268,8 +268,8 @@ class Controller_Admin_Term extends Controller_Admin
                 Message::error(__('An error occurred deleting category %term.', ['%term' => $term->name]));
 
                 $this->request->redirect(Route::get('admin/term')->uri(['action' => 'list', 'id' => $term->id]), 500);
-			}
-		}
+            }
+        }
 
 		$this->response->body($view);
 	}
@@ -287,12 +287,11 @@ class Controller_Admin_Term extends Controller_Admin
         if ($this->valid_post('term-list') && !is_null($id)) {
             $updated_items = [];
 
-            foreach ($_POST as $val) {
+            foreach ($this->request->post() as $val) {
                 if (isset($val['tid']) && is_array($val)) {
                     $updated_items[$val['tid']] = $val;
-				}
-
-			}
+                }
+            }
 
             $this->tree = [];
 			$this->counter = 1;

@@ -10,7 +10,7 @@ With an emphasis on security and functionality, [Gleez CMS](https://gleez.muffet
 
 | Release | Supported PHP versions | Released    | Active Support | Security Support | Latest                                                              |
 |---------|------------------------|-------------|----------------|------------------|---------------------------------------------------------------------|
-| 1.3     | 7.1 – 7.3              | 20 Aug 2026 | Yes            | Yes              | [1.3.0](https://github.com/muffetlab/gleez-cms/releases/tag/v1.3.0) |
+| 1.3     | 7.1 – 7.3              | 20 Aug 2026 | Yes            | Yes              | [1.3.1](https://github.com/muffetlab/gleez-cms/releases/tag/v1.3.1) |
 | 1.2     | 5.4 – 5.6              | 14 Jun 2015 | End of life    | End of life      | [1.2.0](https://github.com/muffetlab/gleez-cms/releases/tag/v1.2.0) |
 | 1.1     | 5.3 – 5.5              | 04 Aug 2014 | End of life    | End of life      | [1.1.5](https://github.com/gleez/cms/releases/tag/1.1.5)            |
 | 1.0     | 5.3 – 5.5              | 02 Jun 2014 | End of life    | End of life      | [1.0.1](https://github.com/gleez/cms/releases/tag/1.0.1)            |

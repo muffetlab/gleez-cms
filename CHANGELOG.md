@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.1](https://github.com/muffetlab/gleez-cms/compare/v1.3.0...v1.3.1) (2026-11-22)
+
+### Bug Fixes
+
+* **gleez:** add CLI database upgrade task ([0b48748](https://github.com/muffetlab/gleez-cms/commit/0b4874847b3a7ab0e36025efaf77c8055260cb4f))
+* **gleez:** correct translation placeholder in system check view ([9ce20d9](https://github.com/muffetlab/gleez-cms/commit/9ce20d92b159f89672b2435f5e148a29a3ba31ca))
+* **gleez:** implement versioned schema migration system for upgrades ([b2caab3](https://github.com/muffetlab/gleez-cms/commit/b2caab37c7354737a8b3a4bddaa27c0d39df58de))
+* **gleez:** improve database upgrade workflow and add multilingual translations ([e03fe59](https://github.com/muffetlab/gleez-cms/commit/e03fe59ad3f1390ed3c21004a067dd54e3e64162))
+* **gleez:** make upgrade script idempotent with IF EXISTS guards ([a3341c1](https://github.com/muffetlab/gleez-cms/commit/a3341c1ba45d701a1c4370d3ca64d8b8e1503f05))
+* **gleez:** properly replace version token during database upgrade ([f3452ee](https://github.com/muffetlab/gleez-cms/commit/f3452ee0e3f74eb58231f1cd52305f06e61d63e1))
+* **gleez:** replace tagging model config with direct Tagging ORM factory ([a0c445f](https://github.com/muffetlab/gleez-cms/commit/a0c445f34ed740dfb2d79f2d52426129441399ac))
+* **gleez:** resolve upgrade issues with foreign key constraints ([fb9a0c5](https://github.com/muffetlab/gleez-cms/commit/fb9a0c551f51c3a9e05aafa12cab84fd7be02df3))
+* **gleez:** unify i18n keys and complete translations for et, id, it, ro, ru and zh ([d0d5dd6](https://github.com/muffetlab/gleez-cms/commit/d0d5dd6e9c47a972129b544cb66ed82c8213d244))
+* **user:** include password field when updating user profile ([f01ab8e](https://github.com/muffetlab/gleez-cms/commit/f01ab8e540f434fa56d9c1eee279cb9caad5ef45))
+
 ## [1.3.0](https://github.com/muffetlab/gleez-cms/compare/v1.2.0...v1.3.0) (2026-08-20)
 
 ### ⚠ BREAKING CHANGES

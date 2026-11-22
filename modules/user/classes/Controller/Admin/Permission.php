@@ -57,10 +57,10 @@ class Controller_Admin_Permission extends Controller_Admin
 			throw HTTP_Exception::factory(404, 'Attempt to access non-existent role.');
 		}
 
-        if (isset($_POST['permissions']) && $this->valid_post('role')) {
+        if ($this->request->post('permissions') !== null && $this->valid_post('role')) {
             $per_insert = DB::insert('permissions', ['rid', 'permission', 'module']);
 
-            foreach ($_POST['role'] as $key => $val) {
+            foreach ($this->request->post('role') as $key => $val) {
                 if (isset($val['name'])) {
                     $per_insert->values([$role->id, $val['name'], $val['module']]);
 				}
@@ -120,7 +120,7 @@ class Controller_Admin_Permission extends Controller_Admin
 			->bind('errors',     $this->_errors);
 
         if ($this->valid_post('permissions')) {
-			$perms = array_filter($_POST['perms']);
+            $perms = array_filter($this->request->post('perms'));
             $post->data = ['permissions' => $perms];
 
             try {

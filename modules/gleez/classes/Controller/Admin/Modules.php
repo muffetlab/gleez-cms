@@ -99,7 +99,7 @@ class Controller_Admin_Modules extends Controller_Admin
 			}
 
             try {
-				$desired = Arr::get($_POST, $module_name) == 1;
+                $desired = $this->request->post($module_name) == 1;
 
                 if ($info->active && !$desired && Module::is_active($module_name)) {
 					Module::deactivate($module_name);

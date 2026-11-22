@@ -12,7 +12,7 @@ echo Form::open(Route::get('admin/user')->uri($params) . URL::query([$destinatio
 <div class="form-group <?php echo isset($errors['name']) ? 'has-error': ''; ?>">
     <?php echo Form::label('username', __('User name'), ['class' => 'control-label col-sm-3']) ?>
 	<div class="controls col-sm-5">
-        <?php print Form::input('name', $_POST['name'] ?? $post->name, ['class' => 'form-control']); ?>
+        <?php print Form::input('name', Request::initial()->post('name') ?? $post->name, ['class' => 'form-control']); ?>
 	</div>
 </div>
 
@@ -26,14 +26,14 @@ echo Form::open(Route::get('admin/user')->uri($params) . URL::query([$destinatio
 <div class="form-group <?php echo isset($errors['nick']) ? 'has-error': ''; ?>">
     <?php echo Form::label('nick', __('Nick name'), ['class' => 'control-label col-sm-3']) ?>
 	<div class="controls col-sm-5">
-        <?php print Form::input('nick', $_POST['nick'] ?? $post->nick, ['class' => 'form-control']); ?>
+        <?php print Form::input('nick', Request::initial()->post('nick') ?? $post->nick, ['class' => 'form-control']); ?>
 	</div>
 </div>
 
 <div class="form-group <?php echo isset($errors['mail']) ? 'has-error': ''; ?>">
     <?php echo Form::label('mail', __('Email'), ['class' => 'control-label col-sm-3']) ?>
 	<div class="controls col-sm-5">
-        <?php print Form::input('mail', $_POST['mail'] ?? $post->mail, ['class' => 'form-control']); ?>
+        <?php print Form::input('mail', Request::initial()->post('mail') ?? $post->mail, ['class' => 'form-control']); ?>
 	</div>
 </div>
 

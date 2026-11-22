@@ -146,7 +146,6 @@ class Tags
      * @param string $tag A raw string from a web form containing tags
      * @return bool
      * @throws Kohana_Exception|ReflectionException
-     * @uses    Inflector::singular
      */
     public function safe_tag(int $user_id, Model $object, string $tag = ''): bool
     {
@@ -166,12 +165,12 @@ class Tags
 		$normalized_tag = $this->normalize_tag( strtolower($tag) );
 
 		//this is required to avoid duplicate tags, ex: 'demo, demo, test'
-        $result = ORM::factory(Inflector::singular($this->config['tagging_model']))
-            ->join($this->config['tag_table'], 'INNER')
-            ->on('tag_id', '=', $this->config['tag_table'] . '.id')
-            ->where($this->config['object_foreign_key'], '=', $object_id)
-            ->where($this->config['tag_table'] . '.type', '=', $object->type)
-            ->where($this->config['tag_table'] . '.deleted', '=', 0)
+        $result = ORM::factory('Tagging')
+            ->join('tags', 'INNER')
+            ->on('tag_id', '=', 'tags.id')
+            ->where('post_id', '=', $object_id)
+            ->where('tags.type', '=', $object->type)
+            ->where('tags.deleted', '=', 0)
             ->where('name', '=', $normalized_tag);
 
         if ($result->find()->loaded()) {
@@ -179,7 +178,7 @@ class Tags
 		}
 
         // Then see if a tag in this form exists (including soft-deleted, for UNIQUE name/type).
-        $result = ORM::factory(Inflector::singular($this->config['tag_table']))
+        $result = ORM::factory('Tag')
             ->withDeleted()
             ->where('name', '=', $tag)
             ->where('type', '=', $object->type);
@@ -195,8 +194,8 @@ class Tags
 
 			$tag_id = $result->id;
         } else {
-			// Add new tag!
-			$new_tag = ORM::factory(Inflector::singular($this->config['tag_table']));
+            // Add new tag!
+            $new_tag = ORM::factory('Tag');
 			$new_tag->name = $normalized_tag;
 			$new_tag->type = $object->type;
 			$new_tag->save();
@@ -208,11 +207,11 @@ class Tags
             return false;
 		}
 
-		$new_tagging = ORM::factory(Inflector::singular($this->config['tagging_model']));
+        $new_tagging = ORM::factory('Tagging');
 		$new_tagging->tag_id = $tag_id;
 		$new_tagging->author = $user_id;
 		$new_tagging->type   = $object->type;
-		$new_tagging->{$this->config['object_foreign_key']} = $object_id;
+        $new_tagging->post_id = $object_id;
 		$new_tagging->save();
 
         return true;

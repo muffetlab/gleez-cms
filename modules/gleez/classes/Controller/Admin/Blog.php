@@ -100,11 +100,12 @@ class Controller_Admin_Blog extends Controller_Admin
         $vocabs = Arr::merge($vocabs, ORM::factory('Term')->where('lft', '=', 1)->where('type', '=', 'blog')->find_all()->as_array('id', 'name'));
 
         if ($this->valid_post('blog_settings')) {
-			unset($_POST['blog_settings'], $_POST['_token'], $_POST['_action']);
+            $post = $this->request->post();
+            unset($post['blog_settings'], $post['_token'], $post['_action']);
 
             $cats = $config->get('category', []);
 
-            foreach ($_POST as $key => $value) {
+            foreach ($post as $key => $value) {
                 if ($key == 'category') {
 					$terms = array_diff($cats, $value);
                     if ($terms) {
@@ -114,7 +115,7 @@ class Controller_Admin_Blog extends Controller_Admin
 					}
 				}
 				$config->set($key, $value);
-			}
+            }
 
 			Kohana::$log->add(Log::INFO, 'Blog Settings updated.');
 			Message::success(__('Blog Settings updated!'));
@@ -157,10 +158,11 @@ class Controller_Admin_Blog extends Controller_Admin
 
         if ($is_datatables) {
             $this->_datatables = $blogs->dataTables(['id', 'title', 'author', 'status', 'updated']);
+            $blogsPost = $this->request->post('blogs') ?? [];
 
             foreach ($this->_datatables->result() as $blog) {
                 $this->_datatables->add_row([
-                    Form::checkbox('blogs[' . $blog->id . ']', $blog->id, isset($_POST['blogs'][$blog->id])),
+                    Form::checkbox('blogs[' . $blog->id . ']', $blog->id, isset($blogsPost[$blog->id])),
                     HTML::anchor($blog->url, $blog->title),
                     HTML::anchor($blog->user->url, $blog->user->nick),
                     HTML::label(__($blog->status), $blog->status),

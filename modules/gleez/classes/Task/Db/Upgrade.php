@@ -18,7 +18,7 @@
 class Task_Db_Upgrade extends Minion_Task
 {
     /**
-     * Applies the upgrade SQL script to the configured database.
+     * Applies the pending versioned migration scripts to the configured database.
      *
      * @param array $params CLI parameters (unused)
      * @throws Cache_Exception
@@ -61,42 +61,45 @@ class Task_Db_Upgrade extends Minion_Task
 
         Minion_CLI::write();
 
-        $sqlFile = MODPATH . 'gleez/views/install/upgrade.sql';
+        $scripts = Gleez_Upgrade::scripts($dbVersion, $targetVersion);
 
-        if (!is_file($sqlFile)) {
-            Minion_CLI::write(Minion_CLI::color('Unable to find the upgrade SQL file: ' . $sqlFile, 'red'));
-
-            return;
+        if (empty($scripts)) {
+            Minion_CLI::write('No schema migration scripts required for this upgrade; updating the version stamp only.');
         }
 
         $buf = '';
         $errors = [];
         $statements = 0;
 
-        foreach (file($sqlFile) as $line) {
-            $line = trim($line);
+        foreach ($scripts as $sqlFile) {
+            Minion_CLI::write('Applying ' . basename($sqlFile) . ' ...');
 
-            if ($line === '' || strncmp($line, '--', 2) === 0) {
-                continue;
-            }
+            foreach (file($sqlFile) as $line) {
+                $line = trim($line);
 
-            $buf .= ' ' . $line;
-
-            if (preg_match('/;$/', $buf)) {
-                $sql = preg_replace('/{(\w+)}/', $prefix . '$1', trim($buf));
-
-                try {
-                    $db->query(Database::UPDATE, $sql);
-                    $statements++;
-                } catch (Database_Exception $e) {
-                    $errors[] = $e->getMessage();
+                if ($line === '' || strncmp($line, '--', 2) === 0) {
+                    continue;
                 }
 
-                $buf = '';
+                $buf .= ' ' . $line;
+
+                if (preg_match('/;$/', $buf)) {
+                    $sql = preg_replace('/{(\w+)}/', $prefix . '$1', trim($buf));
+
+                    try {
+                        $db->query(Database::UPDATE, $sql);
+                        $statements++;
+                    } catch (Database_Exception $e) {
+                        $errors[] = $e->getMessage();
+                    }
+
+                    $buf = '';
+                }
             }
         }
 
         if (empty($errors)) {
+            Gleez_Upgrade::stamp($prefix, $targetVersion);
             Cache::instance()->delete_all();
 
             Minion_CLI::write(Minion_CLI::color('Upgrade completed successfully! ' . $statements . ' SQL statements executed.', 'green'));

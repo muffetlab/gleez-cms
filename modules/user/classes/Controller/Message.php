@@ -106,7 +106,7 @@ class Controller_Message extends Template
                     Form::checkbox(
                         'messages[' . $message->id . ']',
                         $message->id,
-                        isset($_POST['messages'][$message->id])
+                        isset($this->request->post('messages')[$message->id])
                     ),
                     HTML::anchor($message->user->url, $message->user->nick, [
                         'class' => 'message-' . $message->status
@@ -223,7 +223,7 @@ class Controller_Message extends Template
         $message = ORM::factory('Message');
 
         if ($this->valid_post('message')) {
-            $sent = isset($_POST['draft']) && $_POST['draft'] ? 0 : time();
+            $sent = $this->request->post('draft') ? 0 : time();
 			$sender = Auth_ORM::instance()->get_user();
 			$status = $sent == 0 ? PM::STATUS_DRAFT : PM::STATUS_UNREAD;
 			$act    = $sent == 0 ? __('saved') : __('sent');
@@ -231,11 +231,11 @@ class Controller_Message extends Template
             try {
                 $message->values([
                     'sender' => $sender->id,
-                    'recipient' => User::lookup_by_name($_POST['recipient']),
-                    'subject' => $_POST['subject'],
-                    'body' => $_POST['body'],
+                    'recipient' => User::lookup_by_name($this->request->post('recipient')),
+                    'subject' => $this->request->post('subject'),
+                    'body' => $this->request->post('body'),
                     'status' => $status,
-                    'format' => $_POST['format'],
+                    'format' => $this->request->post('format'),
                     'sent' => $sent
                 ], ['sender', 'recipient', 'subject', 'body', 'status', 'format', 'sent'])->save();
 
@@ -290,13 +290,13 @@ class Controller_Message extends Template
 			->set('action', $message->delete_url.URL::query($destination))
 			->set('title',  $message->subject);
 
-		// If deletion is not desired, redirect
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect($redirect);
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
 				$title = $message->subject;
 				$id    = $message->id;
@@ -313,7 +313,7 @@ class Controller_Message extends Template
 			}
 
 			$this->request->redirect($redirect);
-		}
+        }
 
 		$this->response->body($view);
 	}

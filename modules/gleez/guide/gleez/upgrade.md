@@ -50,8 +50,9 @@ The task connects to the database configured in `application/config/database.php
 1. Shows the current and the target version.
 2. Detects legacy `sha1` password hashes and warns you to keep the hash method configured accordingly.
 3. Asks for confirmation — back up your database first.
-4. Applies `modules/gleez/views/install/upgrade.sql` to the database.
-5. Clears the cache after a successful upgrade.
+4. Applies the pending migration scripts from `modules/gleez/sql/upgrade/` — only the `<version>.sql` files newer than the installed schema version are executed.
+5. Stamps the `version` value in the `config` table with the current release.
+6. Clears the cache after a successful upgrade.
 
 If errors occur, every failed SQL statement is listed so you can review and fix it manually, then run the task again.
 
@@ -59,16 +60,17 @@ If errors occur, every failed SQL statement is listed so you can review and fix 
 
 ## What the Upgrade Does
 
-The upgrade is executed via `modules/gleez/views/install/upgrade.sql`. This SQL script:
+The schema migration up to 1.3.0 is executed via `modules/gleez/sql/upgrade/1.3.0.sql`. This SQL script:
 
 - Adds new columns (e.g., soft-delete columns)
 - Removes obsolete columns
 - Changes column types (e.g., timestamps to `INT UNSIGNED`)
 - Converts tables to `utf8mb4` character set
 - Optimizes column types (e.g., `BIGINT` to `INT` where appropriate)
-- Updates the schema version in the `config` table
 
-Foreign key checks are temporarily disabled during the upgrade to allow column type and charset changes on columns that participate in foreign key constraints.
+Foreign key checks are temporarily disabled during the upgrade. The few foreign keys whose columns must be altered
+(charset conversion, `BIGINT` to `INT` optimization) are dropped beforehand and re-created afterwards, because MySQL
+rejects such changes even when foreign key checks are off.
 
 ## Password Hash Method
 

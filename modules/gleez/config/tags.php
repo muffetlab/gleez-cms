@@ -18,21 +18,4 @@ return [
     // The maximum length of a tag.
     'max_tag_length' => 32,
 
-    // The minimum length of a tag.
-    'min_tag_length' => 3,
-
-    // The tags table name, tags are stored. Must be plural to properly handle joins.
-    'tag_table' => 'tags',
-
-    // The taggings model name, where taggings (when an object is tagged) are stored.
-    //Must be plural to properly handle joins.
-    'tagging_model' => 'tagging',
-
-    // The taggings table name, where taggings (when an object is tagged) are stored.
-    //Must be plural to properly handle joins.
-    'tagging_table' => 'posts_tags',
-
-    // The foreign key name of the object being tagged (i.e. blog_id, comment_id, etc.)
-    'object_foreign_key' => 'post_id',
-
 ];

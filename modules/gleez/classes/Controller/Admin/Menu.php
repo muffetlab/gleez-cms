@@ -110,7 +110,7 @@ class Controller_Admin_Menu extends Controller_Admin
         $action = Route::get('admin/menu')->uri(['action' => 'add']);
 
         if ($this->valid_post('menu')) {
-            $post->values($_POST, ['title', 'descp']);
+            $post->values($this->request->post(), ['title', 'descp']);
             try {
 				$post->make_root();
                 DB::insert('widgets', ['name', 'title', 'module'])
@@ -166,7 +166,7 @@ class Controller_Admin_Menu extends Controller_Admin
         $action = Route::get('admin/menu')->uri(['action' => 'edit', 'id' => $id]);
 
         if ($this->valid_post('menu')) {
-            $post->values($_POST, ['title', 'descp']);
+            $post->values($this->request->post(), ['title', 'descp']);
             try {
 				$post->save();
                 Message::success(__('Menu %name saved successful!', ['%name' => $post->title]));
@@ -231,13 +231,13 @@ class Controller_Admin_Menu extends Controller_Admin
 			->set('title',  $menu->title);
 
 
-		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to list
+        if ($this->request->post('no') !== null && $this->valid_post()) {
 			$this->request->redirect(Route::get('admin/menu')->uri());
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             // If it is an internal request (e.g., popup dialog) and id < 3
             if ($menu->id == 2) {
 				Kohana::$log->add(Log::ERROR, 'Attempt to delete system menu.');
@@ -264,7 +264,7 @@ class Controller_Admin_Menu extends Controller_Admin
 			}
 
 			$this->request->redirect(Route::get('admin/menu')->uri());
-		}
+        }
 
 		$this->response->body($view);
 	}

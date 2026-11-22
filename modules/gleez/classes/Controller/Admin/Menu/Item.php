@@ -109,11 +109,11 @@ class Controller_Admin_Menu_Item extends Controller_Admin
 					->bind('post', $post)
 					->bind('errors', $this->_errors);
 
-        $post = ORM::factory('Menu')->values($_POST, ['title', 'url', 'image', 'descp']);
+        $post = ORM::factory('Menu')->values($this->request->post(), ['title', 'url', 'image', 'descp']);
 
         if ($this->valid_post('menu-item')) {
             try {
-				$post->create_at($id, Arr::get($_POST, 'parent', 'last'));
+                $post->create_at($id, $this->request->post('parent') ?? 'last');
                 Message::success(__('Menu Item %name saved successful!', ['%name' => $post->title]));
                 Cache::instance()->delete('menus:' . $menu->name);
 
@@ -157,7 +157,7 @@ class Controller_Admin_Menu_Item extends Controller_Admin
 					->bind('errors', $this->_errors);
 
         $post = ORM::factory('Menu', $id)
-            ->values($_POST, ['title', 'url', 'image', 'descp']);
+            ->values($this->request->post(), ['title', 'url', 'image', 'descp']);
 
         if ($this->valid_post('menu-item')) {
             try {
@@ -209,13 +209,13 @@ class Controller_Admin_Menu_Item extends Controller_Admin
 					->set('title', $menu->title)
 					->set('action', $action);
 
-		// If deletion is not desired, redirect to list
-        if (isset($_POST['no']) && $this->valid_post()) {
+        // If deletion is not desired, redirect to list
+        if ($this->request->post('no') !== null && $this->valid_post()) {
             $this->request->redirect(Route::get('admin/menu/item')->uri(['id' => $menu->pid]));
-		}
+        }
 
-		// If deletion is confirmed
-        if (isset($_POST['yes']) && $this->valid_post()) {
+        // If deletion is confirmed
+        if ($this->request->post('yes') !== null && $this->valid_post()) {
             try {
 				$name = $menu->title;
 				$menu->delete();
@@ -230,8 +230,8 @@ class Controller_Admin_Menu_Item extends Controller_Admin
                 Message::error(__('An error occurred deleting menu item %term', ['%term' => $menu->title]));
 
                 $this->request->redirect(Route::get('admin/menu')->uri(['action' => 'list', 'id' => $menu->scp]));
-			}
-		}
+            }
+        }
 
 		$this->response->body($view);
 	}
@@ -246,11 +246,11 @@ class Controller_Admin_Menu_Item extends Controller_Admin
 
         if ($this->valid_post('menu-item-list') && $id) {
             $updated_items = [];
-            foreach ($_POST as $val) {
+            foreach ($this->request->post() as $val) {
                 if (isset($val['mlid']) && is_array($val)) {
                     $updated_items[$val['mlid']] = $val;
-				}
-			}
+                }
+            }
             $this->tree = [];
 			$this->counter = 1;
 			$this->level_zero = 1;

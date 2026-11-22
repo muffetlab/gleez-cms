@@ -91,8 +91,8 @@ class Controller_Comment extends Template
 
         if ($this->valid_post('comment')) {
             try {
-				/** @var $comment ORM */
-                $comment->values($_POST, ['status', 'body'])->save();
+                /** @var $comment ORM */
+                $comment->values($this->request->post(), ['status', 'body'])->save();
 
                 Kohana::$log->add(Log::INFO, 'Comment: :title updated.', [':title' => $comment->title]);
                 Message::success(__('Comment %title has been updated.', ['%title' => $comment->title]));

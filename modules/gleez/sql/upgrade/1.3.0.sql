@@ -4,8 +4,9 @@
 -- This script is idempotent: it can be run multiple times without errors.
 -- All DDL statements use IF EXISTS or IF NOT EXISTS guards.
 
--- Disable foreign key checks to allow altering columns that participate in foreign key constraints (charset conversion,
--- column type changes).
+-- Disable foreign key checks for data changes. Note: this does NOT permit altering columns used in foreign key
+-- constraints (MySQL errors 1832/1833), so the blocking constraints are dropped before the charset conversion and
+-- re-created after the ID type changes in section 10.
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- 1. Add soft-delete columns (1.3.0 new feature)
@@ -99,6 +100,37 @@ ALTER TABLE {mail_queue} MODIFY COLUMN max_attempts TINYINT UNSIGNED NOT NULL DE
 ALTER TABLE {mail_queue} MODIFY COLUMN attempts TINYINT UNSIGNED NOT NULL DEFAULT '0';
 
 -- 7. Convert all tables to utf8mb4 character set
+--
+-- Drop the foreign keys that block the charset conversion below and the ID type changes in section 10. Constraint
+-- names are auto-generated and differ between MySQL and MariaDB, so each is looked up dynamically.
+SET @fk = (SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = '{oauth_codes}' AND COLUMN_NAME = 'client_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1);
+SET @sql = IF(@fk IS NULL, 'SELECT 1', CONCAT('ALTER TABLE `{oauth_codes}` DROP FOREIGN KEY `', @fk, '`'));
+PREPARE upgrade_fk FROM @sql;
+EXECUTE upgrade_fk;
+DEALLOCATE PREPARE upgrade_fk;
+
+SET @fk = (SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = '{oauth_tokens}' AND COLUMN_NAME = 'client_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1);
+SET @sql = IF(@fk IS NULL, 'SELECT 1', CONCAT('ALTER TABLE `{oauth_tokens}` DROP FOREIGN KEY `', @fk, '`'));
+PREPARE upgrade_fk FROM @sql;
+EXECUTE upgrade_fk;
+DEALLOCATE PREPARE upgrade_fk;
+
+SET @fk = (SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = '{posts_tags}' AND COLUMN_NAME = 'tag_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1);
+SET @sql = IF(@fk IS NULL, 'SELECT 1', CONCAT('ALTER TABLE `{posts_tags}` DROP FOREIGN KEY `', @fk, '`'));
+PREPARE upgrade_fk FROM @sql;
+EXECUTE upgrade_fk;
+DEALLOCATE PREPARE upgrade_fk;
+
+SET @fk = (SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = '{posts_terms}' AND COLUMN_NAME = 'term_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1);
+SET @sql = IF(@fk IS NULL, 'SELECT 1', CONCAT('ALTER TABLE `{posts_terms}` DROP FOREIGN KEY `', @fk, '`'));
+PREPARE upgrade_fk FROM @sql;
+EXECUTE upgrade_fk;
+DEALLOCATE PREPARE upgrade_fk;
+
 ALTER TABLE {posts} CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE {tags} CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE {terms} CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -155,9 +187,42 @@ ALTER TABLE {posts_terms} MODIFY COLUMN parent_id INT UNSIGNED NOT NULL DEFAULT 
 ALTER TABLE {buddies} MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE {sitemaps} MODIFY COLUMN id INT UNSIGNED NOT NULL DEFAULT '0';
 
--- 11. Update schema version to 1.3.0
-REPLACE INTO {config} (`group_name`, `config_key`, `config_value`) VALUES
-('site', 'version', 's:5:"1.3.0";');
+-- Re-create the foreign keys dropped before the charset conversion.
+SET @fk = (SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = '{oauth_codes}' AND COLUMN_NAME = 'client_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1);
+SET @sql = IF(@fk IS NULL,
+    'ALTER TABLE `{oauth_codes}` ADD FOREIGN KEY (`client_id`) REFERENCES `{oauth_clients}` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE',
+    'SELECT 1');
+PREPARE upgrade_fk FROM @sql;
+EXECUTE upgrade_fk;
+DEALLOCATE PREPARE upgrade_fk;
+
+SET @fk = (SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = '{oauth_tokens}' AND COLUMN_NAME = 'client_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1);
+SET @sql = IF(@fk IS NULL,
+    'ALTER TABLE `{oauth_tokens}` ADD FOREIGN KEY (`client_id`) REFERENCES `{oauth_clients}` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE',
+    'SELECT 1');
+PREPARE upgrade_fk FROM @sql;
+EXECUTE upgrade_fk;
+DEALLOCATE PREPARE upgrade_fk;
+
+SET @fk = (SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = '{posts_tags}' AND COLUMN_NAME = 'tag_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1);
+SET @sql = IF(@fk IS NULL,
+    'ALTER TABLE `{posts_tags}` ADD FOREIGN KEY (`tag_id`) REFERENCES `{tags}` (`id`) ON DELETE CASCADE ON UPDATE CASCADE',
+    'SELECT 1');
+PREPARE upgrade_fk FROM @sql;
+EXECUTE upgrade_fk;
+DEALLOCATE PREPARE upgrade_fk;
+
+SET @fk = (SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = '{posts_terms}' AND COLUMN_NAME = 'term_id' AND REFERENCED_TABLE_NAME IS NOT NULL LIMIT 1);
+SET @sql = IF(@fk IS NULL,
+    'ALTER TABLE `{posts_terms}` ADD FOREIGN KEY (`term_id`) REFERENCES `{terms}` (`id`) ON DELETE CASCADE ON UPDATE CASCADE',
+    'SELECT 1');
+PREPARE upgrade_fk FROM @sql;
+EXECUTE upgrade_fk;
+DEALLOCATE PREPARE upgrade_fk;
 
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;
