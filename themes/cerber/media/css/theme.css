@@ -205,6 +205,11 @@ a {
     padding-bottom: 15px;
 }
 
+#content-body.without-tabs #delete-form,
+#content-body.without-tabs #multi-delete-form {
+    padding-bottom: 15px;
+}
+
 .widget-menu .panel-body {
 	padding: 0;
 }
