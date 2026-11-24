@@ -190,13 +190,19 @@ a {
 	margin-bottom: 20px;
 }
 
-#content.with-tabs .post-page-wrapper {
-	border: 1px solid #ddd;
-	border-top: none;
+#content-body.with-tabs {
+    border: 1px solid #ddd;
+    border-top: none;
+    padding: 15px;
+    display: flow-root;
 }
 
-#content.with-tabs .post-page {
-	padding-top: 15px;
+#content-body.with-tabs .post-page-wrapper {
+    padding: 0;
+}
+
+.page-container:has(#content-body.with-tabs) {
+    padding-bottom: 15px;
 }
 
 .widget-menu .panel-body {
@@ -254,6 +260,22 @@ a {
 
 .post-entry {
 	clear: both;
+}
+
+.post-page h1 code,
+.post-page h2 code,
+.post-page h3 code {
+    font-size: .7em;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.post-page h1 code {
+    font-size: .62em;
+}
+
+.post-page .tagcloud {
+    margin-bottom: 20px;
 }
 
 .post-post-area {
@@ -586,8 +608,10 @@ li.comment{
 	margin-bottom: 0;
 }
 
-.sidebar .panel:first-child {
-	margin-top: 1em;
+.sidebar .panel:first-child,
+#left .panel:first-child,
+#right .panel:first-child {
+    margin-top: 1em;
 }
 
 .page-header h1 {
@@ -601,8 +625,40 @@ li.comment{
 	font-size: 18px;
 }
 
+#major-publishing-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 10px;
+}
+
+#major-publishing-actions #publishing-action {
+    margin-left: auto;
+}
+
+#major-publishing-actions #delete-action,
+#major-publishing-actions #publishing-action,
 #publishing-action .btn {
-	margin-right: 20px;
+    float: none;
+}
+
+#major-publishing-actions #delete-action {
+    margin-left: 0;
+}
+
+#publishing-action .btn {
+    margin-right: 0;
+}
+
+#major-publishing-actions .btn {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#side-info-column .form-control[readonly] {
+    font-size: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .page-img .form-control, .blog-img .form-control {

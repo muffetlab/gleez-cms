@@ -99,7 +99,7 @@
 
 <?php if (!ACL::check('administer comment') || !$is_edit): ?>
 		<div class="form-actions">
-            <?php echo Form::submit('comment', __('Post Comment'), ['class' => 'btn btn-default bth-lg']); ?>
+            <?php echo Form::submit('comment', __('Post Comment'), ['class' => 'btn btn-default']); ?>
 		</div>
 	<?php endif; ?>
 

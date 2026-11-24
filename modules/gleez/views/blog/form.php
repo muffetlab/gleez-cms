@@ -195,7 +195,7 @@
 	</div>
 
 	<div class="form-actions">
-        <?php echo Form::submit('blog', __('Save'), ['class' => 'btn btn-success bth-lg']); ?>
+        <?php echo Form::submit('blog', __('Save'), ['class' => 'btn btn-success']); ?>
 	</div>
 
 <?php echo Form::close() ?>

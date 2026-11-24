@@ -1,4 +1,4 @@
-<?php echo Form::open($action, ['id' => 'delete-form ', 'class' => 'form']); ?>
+<?php echo Form::open($action, ['id' => 'delete-form', 'class' => 'form']); ?>
 
     <p><?php echo __('Are you sure you want to :del %title?', [':del' => '<strong>' . __('delete') . '</strong>', '%title' => $title]) ?></p>
 	<p><?php echo __('This action cannot be undone.'); ?></p>

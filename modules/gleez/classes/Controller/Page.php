@@ -429,6 +429,13 @@ class Controller_Page extends Template
             ? ['destination' => $this->request->query('destination')]
             : [];
 
+        if (ACL::post('edit', $post)) {
+            $this->_tabs[] = ['link' => $post->url, 'text' => __('View')];
+            $this->_tabs[] = ['link' => $post->edit_url, 'text' => __('Edit')];
+        }
+
+        $this->_tabs[] = ['link' => $post->delete_url, 'text' => __('Delete'), 'active' => true];
+
 		$view = View::factory('form/confirm')
 					->set('action', $post->delete_url.URL::query($destination))
 					->set('title',  $post->title);
@@ -459,7 +466,7 @@ class Controller_Page extends Template
 			$this->request->redirect($redirect);
         }
 
-		$this->response->body($view);
+        $this->response->body(View::factory('page/post')->set('page', $view));
 	}
 
     /**

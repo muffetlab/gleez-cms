@@ -1,4 +1,4 @@
-<?php echo Form::open($action, ['id'=>'multi-delete-form ', 'class'=>'form']); ?>
+<?php echo Form::open($action, ['id'=>'multi-delete-form', 'class'=>'form']); ?>
 
 <p>
 	<?php echo __n( count($items),

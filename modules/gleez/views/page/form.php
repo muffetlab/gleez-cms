@@ -199,7 +199,7 @@ echo Form::open($action, ['id' => 'page-form', 'class' => 'post-form form', 'enc
 	</div>
 
 	<div class="form-actions">
-        <?php echo Form::submit('page', __('Save'), ['class' => 'btn btn-success bth-lg']); ?>
+        <?php echo Form::submit('page', __('Save'), ['class' => 'btn btn-success']); ?>
 	</div>
 
 <?php echo Form::close() ?>
