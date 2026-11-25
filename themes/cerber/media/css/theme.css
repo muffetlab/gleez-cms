@@ -205,6 +205,8 @@ a {
     padding-bottom: 15px;
 }
 
+#content-body.without-tabs #page-form,
+#content-body.without-tabs #blog-form,
 #content-body.without-tabs #delete-form,
 #content-body.without-tabs #multi-delete-form {
     padding-bottom: 15px;
