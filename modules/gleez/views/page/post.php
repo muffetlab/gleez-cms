@@ -6,13 +6,13 @@
 	<?php endif;?>
 </div>
 
-<?php if (isset($comments)): ?>
+<?php if (!empty($comments)): ?>
 	<div class="list-comments">
 		<div class="post-comments">
 			<?php echo $comments; ?>
 		</div>
 	</div>
-<?php endif;?>
+<?php endif; ?>
 
 <?php if (isset($provider_buttons) || isset($comment_form)): ?>
 <div class="post-comment-form-wrapper">
