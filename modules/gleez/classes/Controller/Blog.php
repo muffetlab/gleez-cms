@@ -442,6 +442,13 @@ class Controller_Blog extends Template
             ? ['destination' => $this->request->query('destination')]
             : [];
 
+        if (ACL::post('edit', $post)) {
+            $this->_tabs[] = ['link' => $post->url, 'text' => __('View')];
+            $this->_tabs[] = ['link' => $post->edit_url, 'text' => __('Edit')];
+        }
+
+        $this->_tabs[] = ['link' => $post->delete_url, 'text' => __('Delete'), 'active' => true];
+
         $view = View::factory('form/confirm')
             ->set('action', Route::get('blog')->uri([
                     'action' => 'delete',
@@ -480,7 +487,7 @@ class Controller_Blog extends Template
 			$this->request->redirect($redirect);
 		}
 
-		$this->response->body($view);
+        $this->response->body(View::factory('blog/post')->set('blog', $view));
 	}
 
     /**
