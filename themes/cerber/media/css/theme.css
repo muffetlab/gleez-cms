@@ -208,7 +208,8 @@ a {
 #content-body.without-tabs #page-form,
 #content-body.without-tabs #blog-form,
 #content-body.without-tabs #delete-form,
-#content-body.without-tabs #multi-delete-form {
+#content-body.without-tabs #multi-delete-form,
+#content-body.without-tabs .message-form {
     padding-bottom: 15px;
 }
 
