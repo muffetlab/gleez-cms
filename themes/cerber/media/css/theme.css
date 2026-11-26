@@ -616,9 +616,7 @@ li.comment{
 	margin-bottom: 0;
 }
 
-.sidebar .panel:first-child,
-#left .panel:first-child,
-#right .panel:first-child {
+.sidebar .panel:first-child {
     margin-top: 1em;
 }
 
