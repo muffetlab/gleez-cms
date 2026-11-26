@@ -106,14 +106,14 @@
 						<?php endif; ?>
 					</div>
 				</div>
-				<hr>
-				<div class="bio">
-					<?php if ($user->bio): ?>
-						<div title="<?php _e('Bio')?>">
+                <?php if ($user->bio): ?>
+                    <hr>
+                    <div class="bio">
+                        <div title="<?php _e('Bio') ?>">
                             <p><?php echo HTML::chars($user->bio); ?></p>
-						</div>
-					<?php endif; ?>
-				</div>
+                        </div>
+                    </div>
+                <?php endif; ?>
 			</div>
 		</div>
 	</div>
