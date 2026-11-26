@@ -701,6 +701,12 @@ li.comment{
 	color: #c09853!important;
 }
 
+/* Match the editor frame to the other form controls */
+.tox.tox-tinymce {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 .form-actions-right {
 	text-align: right;
 }
