@@ -237,21 +237,21 @@ ul{
 	padding: 0 1em;
 }
 
-#user .list-group .list-group-item .list-group-chevron {
+.list-group .list-group-item .list-group-chevron {
 	color: #BBB;
 	float: right;
 	margin-top: 5px;
 }
 
-#user .list-group .list-group-item i {
+.list-group .list-group-item i {
 	color: #333;
 }
 
-#user .vcard .caption-label{
+.vcard .caption-label {
 	padding-right: 10px;
 }
 
-#user .list-group-chevron + .badge {
+.list-group-chevron + .badge {
 	margin-right: 10px;
 }
 
