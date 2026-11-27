@@ -132,14 +132,15 @@ echo Form::open($action, ['id' => 'page-form', 'class' => 'post-form form', 'enc
 					<div class="panel-footer">
 						<div id="major-publishing-actions" class="row">
                             <?php if ($post->loaded() && ACL::post('delete', $post)): ?>
-								<div id="delete-action" class="btn btn-default pull-left">
-                                    <i class="fas fa-trash-can"></i>
-                                    <?php echo HTML::anchor($post->delete_url . URL::query($destination), __('Move to Trash')) ?>
-								</div>
+                                <?php echo HTML::anchor(
+                                    $post->delete_url . URL::query($destination),
+                                    '<i class="fas fa-trash-can"></i> ' . __('Move to Trash'),
+                                    ['id' => 'delete-action', 'class' => 'btn btn-default']
+                                ) ?>
 							<?php endif; ?>
 
 							<div id="publishing-action">
-                                <?php echo Form::submit('page', __('Save'), ['class' => 'btn btn-success pull-right']) ?>
+                                <?php echo Form::submit('page', __('Save'), ['class' => 'btn btn-success']) ?>
 							</div>
 						</div>
 					</div>

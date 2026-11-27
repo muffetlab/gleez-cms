@@ -129,14 +129,15 @@
 					<div class="panel-footer">
 						<div id="major-publishing-actions" class="row">
                             <?php if ($blog->loaded() && ACL::post('delete', $blog)): ?>
-								<div id="delete-action" class="btn btn-default pull-left">
-                                    <i class="fas fa-trash-can"></i>
-                                    <?php echo HTML::anchor($blog->delete_url . URL::query($destination), __('Move to Trash')) ?>
-								</div>
+                                <?php echo HTML::anchor(
+                                    $blog->delete_url . URL::query($destination),
+                                    '<i class="fas fa-trash-can"></i> ' . __('Move to Trash'),
+                                    ['id' => 'delete-action', 'class' => 'btn btn-default']
+                                ) ?>
 							<?php endif; ?>
 
 							<div id="publishing-action">
-                                <?php echo Form::submit('blog', __('Save'), ['class' => 'btn btn-success pull-right']) ?>
+                                <?php echo Form::submit('blog', __('Save'), ['class' => 'btn btn-success']) ?>
 							</div>
 						</div>
 					</div>

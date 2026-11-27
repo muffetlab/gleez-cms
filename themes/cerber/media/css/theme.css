@@ -633,32 +633,17 @@ li.comment{
 
 #major-publishing-actions {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0 10px;
+    flex-wrap: wrap;
+    gap: 10px 0;
+    padding: 0 15px;
 }
 
 #major-publishing-actions #publishing-action {
     margin-left: auto;
 }
 
-#major-publishing-actions #delete-action,
-#major-publishing-actions #publishing-action,
-#publishing-action .btn {
-    float: none;
-}
-
 #major-publishing-actions #delete-action {
     margin-left: 0;
-}
-
-#publishing-action .btn {
-    margin-right: 0;
-}
-
-#major-publishing-actions .btn {
-    padding-left: 8px;
-    padding-right: 8px;
 }
 
 #side-info-column .form-control[readonly] {
