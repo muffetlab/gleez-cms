@@ -97,43 +97,45 @@
 
 				<div class="form-group <?php echo isset($errors['dob']) ? 'has-error': ''; ?>">
                     <span id="dob-label" class="col-sm-3 control-label"><?php echo __('Birthday') ?></span>
-					<div class="col-sm-3">
-                        <?php echo Form::label('birth-month', __('Month'), [
-                            'id' => 'birth-month-label',
-                            'class' => 'sr-only'
-                        ]); ?>
-                        <?php echo Form::select('month', Date::months(Date::MONTHS_SHORT), '', [
-                            'id' => 'birth-month',
-                            'class' => 'form-control',
-                            'aria-labelledby' => 'dob-label birth-month-label'
-                        ]); ?>
-					</div>
-					<div class="col-sm-2">
-                        <?php echo Form::label('birth-days', __('Day'), [
-                            'id' => 'birth-days-label',
-                            'class' => 'sr-only'
-                        ]); ?>
-                        <?php echo Form::select('days', Date::days(Date::DAY), '', [
-                            'id' => 'birth-days',
-                            'class' => 'form-control',
-                            'aria-labelledby' => 'dob-label birth-days-label'
-                        ]); ?>
-					</div>
-					<div class="col-sm-3">
-                        <?php echo Form::label('birth-years', __('Year'), [
-                            'id' => 'birth-years-label',
-                            'class' => 'sr-only'
-                        ]); ?>
-                        <?php echo Form::select(
-                            'years',
-                            Date::years(date('Y') - 95, date('Y') - 5),
-                            date('Y') - 5,
-                            [
-                                'id' => 'birth-years',
+                    <div class="col-xs-12 col-sm-9 dob-fields">
+                        <div>
+                            <?php echo Form::label('birth-month', __('Month'), [
+                                'id' => 'birth-month-label',
+                                'class' => 'sr-only'
+                            ]); ?>
+                            <?php echo Form::select('month', Date::months(Date::MONTHS_SHORT), '', [
+                                'id' => 'birth-month',
                                 'class' => 'form-control',
-                                'aria-labelledby' => 'dob-label birth-years-label'
-                            ]
-                        ); ?>
+                                'aria-labelledby' => 'dob-label birth-month-label'
+                            ]); ?>
+                        </div>
+                        <div>
+                            <?php echo Form::label('birth-days', __('Day'), [
+                                'id' => 'birth-days-label',
+                                'class' => 'sr-only'
+                            ]); ?>
+                            <?php echo Form::select('days', Date::days(Date::DAY), '', [
+                                'id' => 'birth-days',
+                                'class' => 'form-control',
+                                'aria-labelledby' => 'dob-label birth-days-label'
+                            ]); ?>
+                        </div>
+                        <div>
+                            <?php echo Form::label('birth-years', __('Year'), [
+                                'id' => 'birth-years-label',
+                                'class' => 'sr-only'
+                            ]); ?>
+                            <?php echo Form::select(
+                                'years',
+                                Date::years(date('Y') - 95, date('Y') - 5),
+                                date('Y') - 5,
+                                [
+                                    'id' => 'birth-years',
+                                    'class' => 'form-control',
+                                    'aria-labelledby' => 'dob-label birth-years-label'
+                                ]
+                            ); ?>
+                        </div>
 					</div>
 				</div>
 

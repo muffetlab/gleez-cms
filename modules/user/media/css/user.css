@@ -327,3 +327,18 @@ ul{
 .list-group-item{
 	padding:10px 12px;
 }
+
+.dob-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dob-fields > div {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.dob-fields select {
+    width: 100%;
+}
