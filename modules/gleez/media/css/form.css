@@ -57,14 +57,17 @@ form .captcha label.captchal{
   list-style: none;
 }
 
-/* Animated throbber */
+/* Autocomplete status circle */
 html.js input.form-autocomplete {
-  background-image: url('../images/throbber.gif');
-  background-position: 100% 12px; /* LTR */
-  background-repeat: no-repeat;
+    padding-right: 36px;
+    background-image: radial-gradient(circle, transparent 3.5px, #b7b7b7 4px, #b7b7b7 6px, transparent 6.5px);
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
 }
-html.js input.form-autocomplete.throbbing{
-  background-position: 100% -12px; /* LTR */
+
+html.js input.form-autocomplete.throbbing {
+    background-image: radial-gradient(circle, transparent 3.5px, #4c8fbd 4px, #4c8fbd 6px, transparent 6.5px);
 }
 ul.ui-autocomplete{
     padding: 0;
