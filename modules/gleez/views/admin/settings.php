@@ -24,7 +24,7 @@
             <?php echo Form::label('site_name', __('Site Title'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::input('site_name', $post['site_name'], ['class' => 'form-control']) ?>
+                    <?php echo Form::input('site_name', $post['site_name'], ['id' => 'site_name', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
             <?php echo Form::label('site_slogan', __('Tagline'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::input('site_slogan', $post['site_slogan'], ['class' => 'form-control']) ?>
+                    <?php echo Form::input('site_slogan', $post['site_slogan'], ['id' => 'site_slogan', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
             <?php echo Form::label('site_email', __('E-mail address'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::input('site_email', $post['site_email'], ['class' => 'form-control', 'type' => 'email']) ?>
+                    <?php echo Form::input('site_email', $post['site_email'], ['id' => 'site_email', 'class' => 'form-control', 'type' => 'email']) ?>
 				</div>
 			</div>
 		</div>
@@ -51,7 +51,7 @@
             <?php echo Form::label('site_url', __('Website address'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-sm-8">
-                    <?php echo Form::input('site_url', $post['site_url'], ['class' => 'form-control']) ?>
+                    <?php echo Form::input('site_url', $post['site_url'], ['id' => 'site_url', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -60,7 +60,7 @@
             <?php echo Form::label('site_mission', __('Mission'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::textarea('site_mission', $post['site_mission'], ['class' => 'form-control', 'rows' => 6]) ?>
+                    <?php echo Form::textarea('site_mission', $post['site_mission'], ['id' => 'site_mission', 'class' => 'form-control', 'rows' => 6]) ?>
 				</div>
 			</div>
 		</div>
@@ -71,7 +71,7 @@
             <?php echo Form::label('site_logo', __('Logo'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::input('site_logo', $post['site_logo'], ['class' => 'form-control']) ?>
+                    <?php echo Form::input('site_logo', $post['site_logo'], ['id' => 'site_logo', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -80,16 +80,16 @@
             <?php echo Form::label('site_favicon', __('Favicon'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::input('site_favicon', $post['site_favicon'], ['class' => 'form-control']) ?>
+                    <?php echo Form::input('site_favicon', $post['site_favicon'], ['id' => 'site_favicon', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
 
 		<div class="form-group <?php echo isset($errors['theme']) ? 'has-error': ''; ?>">
-            <?php echo Form::label('theme', __('Site Theme'), ['class' => 'col-sm-3 control-label']) ?>
+            <?php echo Form::label('site-theme', __('Site Theme'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::select('theme', Theme::available(), $post['theme'], ['class' => 'form-control']) ?>
+                    <?php echo Form::select('theme', Theme::available(), $post['theme'], ['id' => 'site-theme', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -98,7 +98,7 @@
             <?php echo Form::label('admin_theme', __('Admin Theme'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::select('admin_theme', Theme::available(), $post['admin_theme'], ['class' => 'form-control']) ?>
+                    <?php echo Form::select('admin_theme', Theme::available(), $post['admin_theme'], ['id' => 'admin_theme', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -111,7 +111,7 @@
 						<?php
 							// @important the hidden filed should be before checkbox
 							echo Form::hidden('use_gravatars', 0);
-                        echo Form::label('use_gravatars', Form::checkbox('use_gravatars', true, isset($post['use_gravatars']) && $post['use_gravatars'] == 1));
+                        echo Form::checkbox('use_gravatars', true, isset($post['use_gravatars']) && $post['use_gravatars'] == 1, ['id' => 'use_gravatars']);
 						?>
 					</div>
 				</div>
@@ -121,10 +121,10 @@
 
 	<div class="tab-pane" id="timezone">
 		<div class="form-group <?php echo isset($errors['timezone']) ? 'has-error': ''; ?>">
-            <?php echo Form::label('time_zone', __('Time Zone'), ['class' => 'col-sm-3 control-label']) ?>
+            <?php echo Form::label('time-zone', __('Time Zone'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::select('timezone', $timezones, $post['timezone'], ['class' => 'form-control']) ?>
+                    <?php echo Form::select('timezone', $timezones, $post['timezone'], ['id' => 'time-zone', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -133,7 +133,7 @@
             <?php echo Form::label('date_time_format', __('Date Time Format'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::select('date_time_format', $date_time_formats, $post['date_time_format'], ['class' => 'form-control']) ?>
+                    <?php echo Form::select('date_time_format', $date_time_formats, $post['date_time_format'], ['id' => 'date_time_format', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -142,7 +142,7 @@
             <?php echo Form::label('date_format', __('Date Format'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::select('date_format', $date_formats, $post['date_format'], ['class' => 'form-control']) ?>
+                    <?php echo Form::select('date_format', $date_formats, $post['date_format'], ['id' => 'date_format', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -151,7 +151,7 @@
             <?php echo Form::label('time_format', __('Time Format'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::select('time_format', $time_formats, $post['time_format'], ['class' => 'form-control']) ?>
+                    <?php echo Form::select('time_format', $time_formats, $post['time_format'], ['id' => 'time_format', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -160,7 +160,7 @@
             <?php echo Form::label('date_first_day', __('Week Starts On'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::select('date_first_day', $date_weekdays, $post['date_first_day'], ['class' => 'form-control']) ?>
+                    <?php echo Form::select('date_first_day', $date_weekdays, $post['date_first_day'], ['id' => 'date_first_day', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -169,7 +169,7 @@
             <?php echo Form::label('feed_ttl', __('Feed lifetime (min.)'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-4">
-                    <?php echo Form::select('feed_ttl', Date::amounts_min(), $post['feed_ttl'], ['class' => 'form-control']) ?>
+                    <?php echo Form::select('feed_ttl', Date::amounts_min(), $post['feed_ttl'], ['id' => 'feed_ttl', 'class' => 'form-control']) ?>
 				</div>
 				<span class="help-block"><?php _e("It's a number of minutes that indicates how long a channel can be cached before refreshing from the source.")?></span>
 			</div>
@@ -181,7 +181,7 @@
             <?php echo Form::label('keywords', __('Keywords for search engines'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::textarea('keywords', $post['keywords'], ['class' => 'form-control', 'rows' => 4]) ?>
+                    <?php echo Form::textarea('keywords', $post['keywords'], ['id' => 'keywords', 'class' => 'form-control', 'rows' => 4]) ?>
 				</div>
 			</div>
 		</div>
@@ -190,7 +190,7 @@
             <?php echo Form::label('description', __('Description for search engines'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::textarea('description', $post['description'], ['class' => 'form-control', 'rows' => 4]) ?>
+                    <?php echo Form::textarea('description', $post['description'], ['id' => 'description', 'class' => 'form-control', 'rows' => 4]) ?>
 				</div>
 			</div>
 		</div>
@@ -199,7 +199,7 @@
             <?php echo Form::label('front_page', __('Front page'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::input('front_page', $post['front_page'], ['class' => 'form-control']) ?>
+                    <?php echo Form::input('front_page', $post['front_page'], ['id' => 'front_page', 'class' => 'form-control']) ?>
 				</div>
 			</div>
 		</div>
@@ -208,7 +208,7 @@
             <?php echo Form::label('google_ua', __('Google Analytics'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::input('google_ua', $post['google_ua'], ['class' => 'form-control', 'placeholder' => 'UA-12345678-9']) ?>
+                    <?php echo Form::input('google_ua', $post['google_ua'], ['id' => 'google_ua', 'class' => 'form-control', 'placeholder' => 'UA-12345678-9']) ?>
 				</div>
 			</div>
 		</div>
@@ -219,14 +219,14 @@
             <?php $offline0 = isset($post['maintenance_mode']) && $post['maintenance_mode'] == 0; ?>
             <?php $offline1 = isset($post['maintenance_mode']) && $post['maintenance_mode'] == 1; ?>
 
-            <?php echo Form::label('maintenance_mode', __('Maintenance Mode'), ['class' => 'col-sm-3 control-label']) ?>
+            <span id="maintenance-mode-label" class="col-sm-3 control-label"><?php echo __('Maintenance Mode') ?></span>
 			<div class="col-sm-9">
-				<div class="col-xs-8">
+                <div class="col-xs-8" role="radiogroup" aria-labelledby="maintenance-mode-label">
 					<div class="radio">
-						<?php echo Form::label('maintenance_mode', Form::radio('maintenance_mode', 0, $offline0).__('Off'))?>
+                        <?php echo Form::label('maintenance-mode-0', Form::radio('maintenance_mode', 0, $offline0, ['id' => 'maintenance-mode-0']) . __('Off')) ?>
 					</div>
 					<div class="radio">
-						<?php echo Form::label('maintenance_mode', Form::radio('maintenance_mode', 1, $offline1).__('On'))?>
+                        <?php echo Form::label('maintenance-mode-1', Form::radio('maintenance_mode', 1, $offline1, ['id' => 'maintenance-mode-1']) . __('On')) ?>
 					</div>
 				</div>
 			</div>
@@ -236,7 +236,7 @@
             <?php echo Form::label('offline_message', __('Offline Message'), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::textarea('offline_message', $post['offline_message'], ['class' => 'form-control', 'rows' => 3]) ?>
+                    <?php echo Form::textarea('offline_message', $post['offline_message'], ['id' => 'offline_message', 'class' => 'form-control', 'rows' => 3]) ?>
 				</div>
 			</div>
 		</div>
@@ -245,7 +245,7 @@
             <?php echo Form::label('blocked_ips', __("Blocked IP addresses"), ['class' => 'col-sm-3 control-label']) ?>
 			<div class="col-sm-9">
 				<div class="col-xs-8">
-                    <?php echo Form::textarea('blocked_ips', $post['blocked_ips'], ['class' => 'form-control', 'rows' => 3]) ?>
+                    <?php echo Form::textarea('blocked_ips', $post['blocked_ips'], ['id' => 'blocked_ips', 'class' => 'form-control', 'rows' => 3]) ?>
 					<span class="help-block"><?php echo __("Comma separated ip's for multiple addresses")?></span>
 				</div>
 			</div>
