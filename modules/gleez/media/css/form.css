@@ -2,6 +2,11 @@
     padding-left: 1em;
 }
 
+/* Keep group headings aligned with Bootstrap form labels. */
+.form-horizontal .control-label {
+    font-weight: 700;
+}
+
 .form-actions input[type="file"] {
   padding: 2px 3px;
   font-size: 11px;

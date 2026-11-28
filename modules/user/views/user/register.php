@@ -16,6 +16,7 @@
                         <?php echo Form::label('name', __('Username'), ['class' => 'col-sm-3 control-label']); ?>
 						<div class="col-xs-12 col-sm-8">
                             <?php echo Form::input('name', $post->name, [
+                                'id' => 'name',
                                 'class' => 'form-control',
                                 'type' => "text",
                                 'title' => __('Username for login')
@@ -28,6 +29,7 @@
                     <?php echo Form::label('mail', __('E-mail'), ['class' => 'col-sm-3 control-label']); ?>
 					<div class="col-xs-12 col-sm-8">
                         <?php echo Form::input('mail', $post->mail, [
+                            'id' => 'mail',
                             'class' => 'form-control',
                             'rel' => 'tooltip',
                             'data-placement' => 'right',
@@ -40,6 +42,7 @@
                     <?php echo Form::label('pass', __('Password'), ['class' => 'col-sm-3 control-label']); ?>
 					<div class="col-xs-12 col-sm-8">
                         <?php echo Form::password('pass', null, [
+                            'id' => 'pass',
                             'class' => 'form-control',
                             'rel' => 'tooltip',
                             'data-placement' => 'right',
@@ -55,6 +58,7 @@
                         ]); ?>
 						<div class="col-xs-12 col-sm-8">
                             <?php echo Form::password('pass_confirm', null, [
+                                'id' => 'pass_confirm',
                                 'class' => 'form-control',
                                 'rel' => 'tooltip',
                                 'data-placement' => 'right',
@@ -69,6 +73,7 @@
                         <?php echo Form::label('nick', __('Display Name'), ['class' => 'col-sm-3 control-label']); ?>
 						<div class="col-xs-12 col-sm-8">
                             <?php echo Form::input('nick', $post->nick, [
+                                'id' => 'nick',
                                 'class' => 'form-control',
                                 'rel' => 'tooltip',
                                 'data-placement' => 'right',
@@ -79,33 +84,55 @@
 				<?php endif ?>
 
 				<div class="form-group <?php echo isset($errors['gender']) ? 'has-error': ''; ?>">
-                    <?php echo Form::label('gender', __('Gender'), ['class' => 'col-sm-3 control-label']); ?>
-					<div class="col-xs-12 col-sm-8">
+                    <span id="gender-label" class="col-sm-3 control-label"><?php echo __('Gender') ?></span>
+                    <div class="col-xs-12 col-sm-8" role="radiogroup" aria-labelledby="gender-label">
 						<div class="radio">
-							<?php echo Form::label('gender1', Form::radio('gender', 1, $male) . __('Male')); ?>
+                            <?php echo Form::label('gender1', Form::radio('gender', 1, $male, ['id' => 'gender1']) . __('Male')); ?>
 						</div>
 						<div class="radio">
-							<?php echo Form::label('gender2', Form::radio('gender', 2, $female) . __('Female')); ?>
+                            <?php echo Form::label('gender2', Form::radio('gender', 2, $female, ['id' => 'gender2']) . __('Female')); ?>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group <?php echo isset($errors['dob']) ? 'has-error': ''; ?>">
-                    <?php echo Form::label('dob', __('Birthday'), ['class' => 'col-sm-3 control-label']); ?>
+                    <span id="dob-label" class="col-sm-3 control-label"><?php echo __('Birthday') ?></span>
 					<div class="col-sm-3">
+                        <?php echo Form::label('birth-month', __('Month'), [
+                            'id' => 'birth-month-label',
+                            'class' => 'sr-only'
+                        ]); ?>
                         <?php echo Form::select('month', Date::months(Date::MONTHS_SHORT), '', [
-                            'class' => 'form-control'
+                            'id' => 'birth-month',
+                            'class' => 'form-control',
+                            'aria-labelledby' => 'dob-label birth-month-label'
                         ]); ?>
 					</div>
 					<div class="col-sm-2">
-                        <?php echo Form::select('days', Date::days(Date::DAY), '', ['class' => 'form-control']); ?>
+                        <?php echo Form::label('birth-days', __('Day'), [
+                            'id' => 'birth-days-label',
+                            'class' => 'sr-only'
+                        ]); ?>
+                        <?php echo Form::select('days', Date::days(Date::DAY), '', [
+                            'id' => 'birth-days',
+                            'class' => 'form-control',
+                            'aria-labelledby' => 'dob-label birth-days-label'
+                        ]); ?>
 					</div>
 					<div class="col-sm-3">
+                        <?php echo Form::label('birth-years', __('Year'), [
+                            'id' => 'birth-years-label',
+                            'class' => 'sr-only'
+                        ]); ?>
                         <?php echo Form::select(
                             'years',
                             Date::years(date('Y') - 95, date('Y') - 5),
                             date('Y') - 5,
-                            ['class' => 'form-control']
+                            [
+                                'id' => 'birth-years',
+                                'class' => 'form-control',
+                                'aria-labelledby' => 'dob-label birth-years-label'
+                            ]
                         ); ?>
 					</div>
 				</div>
@@ -116,7 +143,10 @@
                             'class' => 'col-sm-3 control-label'
                         ]); ?>
 						<div class="col-sm-4">
-                            <?php echo Form::input('_captcha', '', ['class' => 'form-control input-md']); ?>
+                            <?php echo Form::input('_captcha', '', [
+                                'id' => '_captcha',
+                                'class' => 'form-control input-md'
+                            ]); ?>
 							<br><span class="captcha-image"><?php echo $captcha; ?></span>
 						</div>
 						<div class="clearfix"></div><br>
