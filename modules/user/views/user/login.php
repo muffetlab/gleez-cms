@@ -39,7 +39,8 @@ Assets::css('user', 'media/css/user.css', ['weight' => 2]);
 					<div class="col-sm-10 col-sm-offset-1">
 						<div class="checkbox">
 							<label for="remember">
-								<input id="remember" name="remember" type="checkbox" class="field login-checkbox" value="1" tabindex="4">&nbsp;
+                                <input id="remember" name="remember" type="checkbox" class="field login-checkbox"
+                                       value="1" tabindex="4">
 								<?php _e('Stay Signed in'); ?>
 							</label>
 						</div>
