@@ -48,7 +48,7 @@ Assets::css('user', 'media/css/user.css', ['weight' => 2]);
 				<div class="form-group">
 					<div class="col-sm-10 col-sm-offset-1">
                         <?php echo Form::submit('login', __('Login'), [
-                            'class' => 'btn btn-primary btn-lg btn-block',
+                            'class' => 'btn btn-primary btn-block',
                             'type' => 'submit'
                         ]); ?>
 					</div>
