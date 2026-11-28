@@ -105,7 +105,7 @@
                             ]); ?>
                             <?php echo Form::select('month', Date::months(Date::MONTHS_SHORT), '', [
                                 'id' => 'birth-month',
-                                'class' => 'form-control',
+                                'class' => 'form-control select-caret',
                                 'aria-labelledby' => 'dob-label birth-month-label'
                             ]); ?>
                         </div>
@@ -116,7 +116,7 @@
                             ]); ?>
                             <?php echo Form::select('days', Date::days(Date::DAY), '', [
                                 'id' => 'birth-days',
-                                'class' => 'form-control',
+                                'class' => 'form-control select-caret',
                                 'aria-labelledby' => 'dob-label birth-days-label'
                             ]); ?>
                         </div>
@@ -131,7 +131,7 @@
                                 date('Y') - 5,
                                 [
                                     'id' => 'birth-years',
-                                    'class' => 'form-control',
+                                    'class' => 'form-control select-caret',
                                     'aria-labelledby' => 'dob-label birth-years-label'
                                 ]
                             ); ?>
