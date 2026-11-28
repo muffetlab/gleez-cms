@@ -748,7 +748,7 @@ return [
     'PCRE UTF-8' => 'PCRE UTF-8',
     'Pending' => 'În așteptare',
     'Pending Comments' => 'Comentarii în așteptare',
-    'Permalink: %slug' => 'Permalink: %slug',
+    'Permalink' => 'Permalink',
     'Perth' => 'Perth',
     'Phnom Penh' => 'Phnom Penh',
     'Phoenix' => 'Phoenix',

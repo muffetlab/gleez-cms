@@ -748,7 +748,7 @@ return [
     'PCRE UTF-8' => 'PCRE UTF-8',
     'Pending' => 'В ожидании',
     'Pending Comments' => 'Комментарии ожидающие проверку',
-    'Permalink: %slug' => 'Постоянная ссылка: %slug',
+    'Permalink' => 'Постоянная ссылка',
     'Perth' => 'Перт',
     'Phnom Penh' => 'Пномпень',
     'Phoenix' => 'Феникс',

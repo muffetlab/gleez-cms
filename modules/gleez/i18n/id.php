@@ -748,7 +748,7 @@ return [
     'PCRE UTF-8' => 'PCRE UTF - 8',
     'Pending' => 'Tertunda',
     'Pending Comments' => 'Komentar Tertunda',
-    'Permalink: %slug' => 'Permalink : %slug',
+    'Permalink' => 'Permalink',
     'Perth' => 'Perth',
     'Phnom Penh' => 'Phnom Penh',
     'Phoenix' => 'Phoenix',

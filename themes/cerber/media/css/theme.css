@@ -646,6 +646,27 @@ li.comment{
     margin-left: 0;
 }
 
+.comment-fieldset {
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.comment-fieldset legend.control-label {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 5px;
+    font-size: inherit;
+    font-weight: 700;
+    color: inherit;
+    border: 0;
+}
+
+.comment-fieldset .controls.radio:last-of-type {
+    margin-bottom: 0;
+}
+
 #side-info-column .form-control[readonly] {
     font-size: 12px;
     padding-left: 8px;

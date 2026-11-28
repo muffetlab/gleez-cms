@@ -748,7 +748,7 @@ return [
     'PCRE UTF-8' => 'PCRE UTF-8',
     'Pending' => '待定',
     'Pending Comments' => '待定的评论',
-    'Permalink: %slug' => '固定链接：%slug',
+    'Permalink' => '固定链接',
     'Perth' => '珀斯',
     'Phnom Penh' => '金边',
     'Phoenix' => '菲尼克斯',

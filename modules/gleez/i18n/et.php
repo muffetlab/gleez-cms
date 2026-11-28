@@ -748,7 +748,7 @@ return [
     'PCRE UTF-8' => 'PCRE UTF-8',
     'Pending' => 'Ootel',
     'Pending Comments' => 'Kontrollimist ootavad kommentaariumid',
-    'Permalink: %slug' => 'Püsiviide: %slug',
+    'Permalink' => 'Püsiviide',
     'Perth' => 'Perth',
     'Phnom Penh' => 'Phnom Penh',
     'Phoenix' => 'Fööniks',
